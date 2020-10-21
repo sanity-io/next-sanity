@@ -18,7 +18,13 @@ export function createPreviewSubscriptionHook({projectId, dataset}: ProjectConfi
     options: SubscriptionOptions<R> = {}
   ) {
     const {params = {}, initialData, enabled} = options
-    return useQuerySubscription<R>(getStore, query, params, initialData as any, enabled)
+    return useQuerySubscription<R>(
+      getStore,
+      query,
+      params,
+      initialData as any,
+      enabled && typeof window !== 'undefined'
+    )
   }
 
   function getStore() {
@@ -40,16 +46,16 @@ function useQuerySubscription<R = any>(
   query: string,
   params: Record<string, unknown>,
   initialData: R,
-  preview = false
+  enabled = false
 ) {
-  const error: Error | undefined = undefined
+  const [error, setError] = useState<Error>()
   const [loading, setLoading] = useState(false)
   const [data, setData] = useState<R>(initialData)
 
   // Use "deep" dependency comparison because params are often not _referentially_ equal,
   // but contains the same shallow properties, eg `{"slug": "some-slug"}`
   useDeepCompareEffect(() => {
-    if (!preview) {
+    if (!enabled) {
       return () => {
         /* intentional noop */
       }
@@ -57,15 +63,20 @@ function useQuerySubscription<R = any>(
 
     setLoading(true)
 
-    const subscription = getStore().subscribe(query, params, (result) => {
+    const subscription = getStore().subscribe(query, params, (err, result) => {
+      if (err) {
+        setError(err)
+      } else {
+        setData(result)
+      }
+
       setLoading(false)
-      setData(result)
     })
 
     return () => {
       subscription.unsubscribe()
     }
-  }, [getStore, query, params, preview])
+  }, [getStore, query, params, enabled])
 
   return {data, loading, error}
 }
