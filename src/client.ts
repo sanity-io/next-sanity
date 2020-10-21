@@ -1,4 +1,4 @@
-import picoSanity from 'picosanity/legacy'
+import picoSanity from 'picosanity'
 import {ClientConfig} from './types'
 
 export function createClient(config: ClientConfig) {
