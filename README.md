@@ -40,6 +40,7 @@ export const previewClient = createClient({
 })
 
 export const getClient = (usePreview) => (usePreview ? previewClient : sanityClient)
+export const useCurrentUser = createUseCurrentUserHook(config)
 ```
 
 In a page component, eg `pages/posts/[slug].js`:
