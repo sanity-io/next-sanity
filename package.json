@@ -1,0 +1,97 @@
+{
+  "name": "@sanity/next-sanity",
+  "version": "0.0.1",
+  "author": "Sanity.io <hello@sanity.io>",
+  "license": "MIT",
+  "sideEffects": false,
+  "main": "dist/index.js",
+  "typings": "dist/index.d.ts",
+  "module": "dist/next-sanity.esm.js",
+  "files": [
+    "dist",
+    "src"
+  ],
+  "publishConfig": {
+    "access": "restricted"
+  },
+  "engines": {
+    "node": ">=10"
+  },
+  "scripts": {
+    "start": "tsdx watch",
+    "build": "tsdx build",
+    "test": "tsdx test",
+    "lint": "tsdx lint src",
+    "posttest": "npm run lint",
+    "prepublishOnly": "tsdx build && npm test",
+    "coverage": "tsdx test --coverage"
+  },
+  "dependencies": {
+    "@sanity/groq-store": "^0.0.3",
+    "@sanity/image-url": "^0.140.19",
+    "groq": "^2.0.1",
+    "picosanity": "^2.1.0",
+    "use-deep-compare-effect": "^1.4.0"
+  },
+  "devDependencies": {
+    "@types/jest": "^25.2.1",
+    "@typescript-eslint/eslint-plugin": "^2.30.0",
+    "@typescript-eslint/parser": "^2.30.0",
+    "eslint-config-prettier": "^6.11.0",
+    "eslint-config-sanity": "^1.150.8",
+    "eslint-plugin-prettier": "^3.1.4",
+    "prettier": "^2.1.2",
+    "react": "^16.14.0",
+    "tsdx": "^0.14.1",
+    "tslib": "^1.11.1",
+    "typescript": "^3.8.3"
+  },
+  "peerDependencies": {
+    "react": "^16.3.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/sanity-io/next-sanity.git"
+  },
+  "bugs": {
+    "url": "https://github.com/sanity-io/next-sanity/issues"
+  },
+  "homepage": "https://github.com/sanity-io/next-sanity#readme",
+  "keywords": [
+    "sanity",
+    "sanity.io",
+    "next.js"
+  ],
+  "eslintConfig": {
+    "root": true,
+    "env": {
+      "node": true,
+      "browser": true
+    },
+    "parser": "@typescript-eslint/parser",
+    "extends": [
+      "plugin:@typescript-eslint/recommended",
+      "prettier/@typescript-eslint",
+      "sanity",
+      "sanity/react",
+      "sanity/typescript",
+      "prettier"
+    ],
+    "rules": {
+      "prettier/prettier": "error",
+      "@typescript-eslint/explicit-module-boundary-types": "off"
+    },
+    "plugins": [
+      "@typescript-eslint",
+      "prettier",
+      "react"
+    ]
+  },
+  "jest": {
+    "globals": {
+      "ts-jest": {
+        "diagnostics": false
+      }
+    }
+  }
+}
