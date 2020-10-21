@@ -4,18 +4,21 @@ import {useDeepCompareEffectNoCheck as useDeepCompareEffect} from 'use-deep-comp
 import {ProjectConfig} from './types'
 
 interface SubscriptionOptions<R = any> {
-  preview?: boolean
+  enabled?: boolean
   params?: Record<string, unknown>
   initialData?: R
 }
 
-export function createSubscriptionHook({projectId, dataset}: ProjectConfig) {
+export function createPreviewSubscriptionHook({projectId, dataset}: ProjectConfig) {
   // Only construct/setup the store when `getStore()` is called
   let store: GroqStore
 
-  return function useSubscription<R = any>(query: string, options: SubscriptionOptions<R> = {}) {
-    const {params = {}, initialData, preview} = options
-    return useQuerySubscription<R>(getStore, query, params, initialData as any, preview)
+  return function usePreviewSubscription<R = any>(
+    query: string,
+    options: SubscriptionOptions<R> = {}
+  ) {
+    const {params = {}, initialData, enabled} = options
+    return useQuerySubscription<R>(getStore, query, params, initialData as any, enabled)
   }
 
   function getStore() {

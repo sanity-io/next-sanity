@@ -17,7 +17,7 @@ import {
   groq,
   createClient,
   createImageUrlBuilder,
-  createSubscriptionHook,
+  createPreviewSubscriptionHook,
 } from '@sanity/next-sanity'
 
 const config = {
@@ -31,7 +31,7 @@ const config = {
 }
 
 export const imageUrlBuilder = createImageUrlBuilder(config)
-export const useSubscription = createSubscriptionHook(config)
+export const usePreviewSubscription = createPreviewSubscriptionHook(config)
 export const sanityClient = createClient(config)
 export const previewClient = createClient({
   ...config,
@@ -47,7 +47,7 @@ In a page component, eg `pages/posts/[slug].js`:
 ```js
 import ErrorPage from 'next/error'
 import {useRouter} from 'next/router'
-import {getClient, useSubscription} from '../../lib/sanity'
+import {getClient, usePreviewSubscription} from '../../lib/sanity'
 import {groq} from '@sanity/next-sanity'
 
 const postQuery = groq`
@@ -67,10 +67,10 @@ export default function Post({data, preview}) {
     return <ErrorPage statusCode={404} />
   }
 
-  const {data: post} = useSubscription(postQuery, {
+  const {data: post} = usePreviewSubscription(postQuery, {
     params: {slug: data.post.slug},
     initialData: data,
-    preview,
+    enabled: preview,
   })
 
   return (
