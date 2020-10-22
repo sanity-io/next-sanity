@@ -1,6 +1,6 @@
 # next-sanity
 
-Sanity toolkit for next.js
+Sanity.io toolkit for Next.js
 
 ## Installing
 
