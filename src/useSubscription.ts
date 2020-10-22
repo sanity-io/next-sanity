@@ -11,7 +11,11 @@ interface SubscriptionOptions<R = any> {
   initialData?: R
 }
 
-export function createPreviewSubscriptionHook({projectId, dataset}: ProjectConfig) {
+export function createPreviewSubscriptionHook({
+  projectId,
+  dataset,
+  documentLimit = 3000,
+}: ProjectConfig & {documentLimit?: number}) {
   // Only construct/setup the store when `getStore()` is called
   let store: Promise<GroqStore>
 
@@ -36,6 +40,7 @@ export function createPreviewSubscriptionHook({projectId, dataset}: ProjectConfi
         groqStore({
           projectId,
           dataset,
+          documentLimit,
           listen: true,
           overlayDrafts: true,
           subscriptionThrottleMs: 10,

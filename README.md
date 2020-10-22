@@ -40,7 +40,7 @@ export const previewClient = createClient({
 })
 
 export const getClient = (usePreview) => (usePreview ? previewClient : sanityClient)
-export const useCurrentUser = createUseCurrentUserHook(config)
+export const useCurrentUser = createCurrentUserHook(config)
 ```
 
 In a page component, eg `pages/posts/[slug].js`:
@@ -48,8 +48,8 @@ In a page component, eg `pages/posts/[slug].js`:
 ```js
 import ErrorPage from 'next/error'
 import {useRouter} from 'next/router'
-import {getClient, usePreviewSubscription} from '../../lib/sanity'
 import {groq} from '@sanity/next-sanity'
+import {getClient, usePreviewSubscription} from '../../lib/sanity'
 
 const postQuery = groq`
   *[_type == "post" && slug.current == $slug][0] {
