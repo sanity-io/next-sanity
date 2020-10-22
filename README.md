@@ -5,7 +5,7 @@ Sanity toolkit for next.js
 ## Installing
 
 ```sh
-$ npm install @sanity/next-sanity
+$ npm install next-sanity
 ```
 
 ## Usage
@@ -18,7 +18,7 @@ import {
   createClient,
   createImageUrlBuilder,
   createPreviewSubscriptionHook,
-} from '@sanity/next-sanity'
+} from 'next-sanity'
 
 const config = {
   // Find your project ID and dataset in `sanity.json` in your studio project
@@ -48,7 +48,7 @@ In a page component, eg `pages/posts/[slug].js`:
 ```js
 import ErrorPage from 'next/error'
 import {useRouter} from 'next/router'
-import {groq} from '@sanity/next-sanity'
+import {groq} from 'next-sanity'
 import {getClient, usePreviewSubscription} from '../../lib/sanity'
 
 const postQuery = groq`
