@@ -1,5 +1,5 @@
 import {useState} from 'react'
-import {GroqStore, groqStore, Subscription} from '@sanity/groq-store'
+import {GroqStore, Subscription} from '@sanity/groq-store'
 import {useDeepCompareEffectNoCheck as useDeepCompareEffect} from 'use-deep-compare-effect'
 import {ProjectConfig} from './types'
 import {getCurrentUser} from './currentUser'
@@ -13,7 +13,7 @@ interface SubscriptionOptions<R = any> {
 
 export function createPreviewSubscriptionHook({projectId, dataset}: ProjectConfig) {
   // Only construct/setup the store when `getStore()` is called
-  let store: GroqStore
+  let store: Promise<GroqStore>
 
   return function usePreviewSubscription<R = any>(
     query: string,
@@ -32,20 +32,22 @@ export function createPreviewSubscriptionHook({projectId, dataset}: ProjectConfi
 
   function getStore() {
     if (!store) {
-      store = groqStore({
-        projectId,
-        dataset,
-        listen: true,
-        overlayDrafts: true,
-        subscriptionThrottleMs: 10,
-      })
+      store = import('@sanity/groq-store').then(({groqStore}) =>
+        groqStore({
+          projectId,
+          dataset,
+          listen: true,
+          overlayDrafts: true,
+          subscriptionThrottleMs: 10,
+        })
+      )
     }
     return store
   }
 }
 
 function useQuerySubscription<R = any>(options: {
-  getStore: () => GroqStore
+  getStore: () => Promise<GroqStore>
   projectId: string
   query: string
   params: Record<string, unknown>
@@ -72,25 +74,26 @@ function useQuerySubscription<R = any>(options: {
     let subscription: Subscription | undefined
     getCurrentUser(projectId, aborter)
       .then((user) => {
-        if (!user) {
-          // eslint-disable-next-line no-console
-          console.warn('Not authenticated - preview not available')
-          setError(new Error('Not authenticated - preview not available'))
+        if (user) {
           return
         }
 
-        // We have a user, so set up the subscription
-        subscription = getStore().subscribe(query, params, (err, result) => {
+        // eslint-disable-next-line no-console
+        console.warn('Not authenticated - preview not available')
+        throw new Error('Not authenticated - preview not available')
+      })
+      .then(getStore)
+      .then((store) => {
+        subscription = store.subscribe(query, params, (err, result) => {
           if (err) {
             setError(err)
           } else {
             setData(result)
           }
-
-          setLoading(false)
         })
       })
       .catch(setError)
+      .finally(() => setLoading(false))
 
     return () => {
       if (subscription) {
