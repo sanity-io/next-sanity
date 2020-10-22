@@ -1,7 +1,9 @@
 import {useState} from 'react'
-import {GroqStore, groqStore} from '@sanity/groq-store'
+import {GroqStore, groqStore, Subscription} from '@sanity/groq-store'
 import {useDeepCompareEffectNoCheck as useDeepCompareEffect} from 'use-deep-compare-effect'
 import {ProjectConfig} from './types'
+import {getCurrentUser} from './currentUser'
+import {getAborter} from './aborter'
 
 interface SubscriptionOptions<R = any> {
   enabled?: boolean
@@ -18,13 +20,14 @@ export function createPreviewSubscriptionHook({projectId, dataset}: ProjectConfi
     options: SubscriptionOptions<R> = {}
   ) {
     const {params = {}, initialData, enabled} = options
-    return useQuerySubscription<R>(
+    return useQuerySubscription<R>({
       getStore,
+      projectId,
       query,
       params,
-      initialData as any,
-      enabled && typeof window !== 'undefined'
-    )
+      initialData: initialData as any,
+      enabled: enabled ? typeof window !== 'undefined' : false,
+    })
   }
 
   function getStore() {
@@ -41,13 +44,15 @@ export function createPreviewSubscriptionHook({projectId, dataset}: ProjectConfi
   }
 }
 
-function useQuerySubscription<R = any>(
-  getStore: () => GroqStore,
-  query: string,
-  params: Record<string, unknown>,
-  initialData: R,
-  enabled = false
-) {
+function useQuerySubscription<R = any>(options: {
+  getStore: () => GroqStore
+  projectId: string
+  query: string
+  params: Record<string, unknown>
+  initialData: R
+  enabled: boolean
+}) {
+  const {getStore, projectId, query, params, initialData, enabled = false} = options
   const [error, setError] = useState<Error>()
   const [loading, setLoading] = useState(false)
   const [data, setData] = useState<R>(initialData)
@@ -63,18 +68,36 @@ function useQuerySubscription<R = any>(
 
     setLoading(true)
 
-    const subscription = getStore().subscribe(query, params, (err, result) => {
-      if (err) {
-        setError(err)
-      } else {
-        setData(result)
-      }
+    const aborter = getAborter()
+    let subscription: Subscription | undefined
+    getCurrentUser(projectId, aborter)
+      .then((user) => {
+        if (!user) {
+          // eslint-disable-next-line no-console
+          console.warn('Not authenticated - preview not available')
+          setError(new Error('Not authenticated - preview not available'))
+          return
+        }
 
-      setLoading(false)
-    })
+        // We have a user, so set up the subscription
+        subscription = getStore().subscribe(query, params, (err, result) => {
+          if (err) {
+            setError(err)
+          } else {
+            setData(result)
+          }
+
+          setLoading(false)
+        })
+      })
+      .catch(setError)
 
     return () => {
-      subscription.unsubscribe()
+      if (subscription) {
+        subscription.unsubscribe()
+      }
+
+      aborter.abort()
     }
   }, [getStore, query, params, enabled])
 

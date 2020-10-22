@@ -1,6 +1,6 @@
 export * from './types'
 export {createClient} from './client'
 export {createImageUrlBuilder} from './imageUrlBuilder'
-export {createCurrentUserHook} from './useCurrentUser'
+export {createCurrentUserHook} from './currentUser'
 export {createPreviewSubscriptionHook} from './useSubscription'
 export {default as groq} from 'groq'
