@@ -17,6 +17,7 @@ import {
   groq,
   createClient,
   createImageUrlBuilder,
+  createPortableTextComponent,
   createPreviewSubscriptionHook,
 } from 'next-sanity'
 
@@ -40,7 +41,13 @@ export const previewClient = createClient({
 })
 
 export const getClient = (usePreview) => (usePreview ? previewClient : sanityClient)
-export const useCurrentUser = createCurrentUserHook(config)
+export const PortableText = createPortableTextComponent({
+  ...config,
+
+  // Serializers passed to @sanity/block-content-to-react
+  // (https://github.com/sanity-io/block-content-to-react)
+  serializers: {},
+})
 ```
 
 In a page component, eg `pages/posts/[slug].js`:
@@ -49,7 +56,7 @@ In a page component, eg `pages/posts/[slug].js`:
 import ErrorPage from 'next/error'
 import {useRouter} from 'next/router'
 import {groq} from 'next-sanity'
-import {getClient, usePreviewSubscription} from '../../lib/sanity'
+import {getClient, PortableText, usePreviewSubscription} from '../../lib/sanity'
 
 const postQuery = groq`
   *[_type == "post" && slug.current == $slug][0] {
@@ -78,6 +85,9 @@ export default function Post({data, preview}) {
     <div>
       <h1>{post.title}</h1>
       <p>{post.excerpt}</p>
+      <div>
+        <PortableText blocks={post.content || []} />
+      </div>
     </div>
   )
 }

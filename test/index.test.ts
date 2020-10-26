@@ -4,7 +4,7 @@ const expected = [
   'createClient',
   'createImageUrlBuilder',
   'createPreviewSubscriptionHook',
-  'createCurrentUserHook',
+  'createPortableTextComponent',
   'groq',
 ]
 
