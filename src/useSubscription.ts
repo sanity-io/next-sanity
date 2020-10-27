@@ -62,7 +62,7 @@ function useQuerySubscription<R = any>(options: {
   const {getStore, projectId, query, params, initialData, enabled = false} = options
   const [error, setError] = useState<Error>()
   const [loading, setLoading] = useState(false)
-  const [data, setData] = useState<R>(initialData)
+  const [data, setData] = useState<R>()
 
   // Use "deep" dependency comparison because params are often not _referentially_ equal,
   // but contains the same shallow properties, eg `{"slug": "some-slug"}`
@@ -109,5 +109,9 @@ function useQuerySubscription<R = any>(options: {
     }
   }, [getStore, query, params, enabled])
 
-  return {data, loading, error}
+  return {
+    data: typeof data === 'undefined' ? initialData : data,
+    loading,
+    error,
+  }
 }
