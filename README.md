@@ -53,6 +53,7 @@ import {
   createImageUrlBuilder,
   createPortableTextComponent,
   createPreviewSubscriptionHook,
+  createCurrentUserHook,
 } from 'next-sanity'
 
 const config = {
