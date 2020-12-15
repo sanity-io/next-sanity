@@ -155,7 +155,7 @@ export default function Post({data, preview}) {
     <article>
       <h2>{title}</h2>
       <figure>
-        <img src={urlFor(mainImage).url()}>
+        <img src={urlFor(mainImage).url()} />
       </figure>
       <PortableText blocks={body} />
       <aside>
