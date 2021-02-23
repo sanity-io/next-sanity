@@ -80,7 +80,7 @@ const config = {
  **/
 export const urlFor = source => createImageUrlBuilder(config).image(source)
 
-// Set up the live preview subsscription hook
+// Set up the live preview subscription hook
 export const usePreviewSubscription = createPreviewSubscriptionHook(config)
 
 // Set up Portable Text serialization
