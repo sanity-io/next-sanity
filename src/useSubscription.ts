@@ -5,6 +5,8 @@ import {ProjectConfig} from './types'
 import {getCurrentUser} from './currentUser'
 import {getAborter} from './aborter'
 
+const EMPTY_PARAMS = {}
+
 interface SubscriptionOptions<R = any> {
   enabled?: boolean
   params?: Record<string, unknown>
@@ -23,7 +25,7 @@ export function createPreviewSubscriptionHook({
     query: string,
     options: SubscriptionOptions<R> = {}
   ) {
-    const {params = {}, initialData, enabled} = options
+    const {params = EMPTY_PARAMS, initialData, enabled} = options
     return useQuerySubscription<R>({
       getStore,
       projectId,
