@@ -1,6 +1,6 @@
-import picoSanity from 'picosanity'
+import sanityClient from '@sanity/client'
 import {ClientConfig} from './types'
 
 export function createClient(config: ClientConfig) {
-  return picoSanity(config)
+  return sanityClient(config)
 }
