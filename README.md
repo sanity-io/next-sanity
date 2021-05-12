@@ -16,6 +16,7 @@
 - [Installation](#installation)
 - [Live real-time preview](#live-real-time-preview)
   - [Limits](#limits)
+- [Optimizing bundle size](#optimizing-bundle-size)
 - [Usage](#usage)
 - [Example: Minimal blog post template](#example-minimal-blog-post-template)
 - [License](#license)
@@ -40,23 +41,26 @@ The real-time preview isn't optimized and comes with a configured limit of 3000 
 
 We have plans for optimizations in the roadmap.
 
+## Optimizing bundle size
+
+The first version of `next-sanity` shipped with the [`picosanity`](https://github.com/rexxars/picosanity) client built in. This caused some confusion for people who wants not only to pull data from their Sanity.io content lake, but also send patches and mutations via API routes. Since `picosanity` only supported fetching content, it had a smaller bundle size than the full SDK.
+
+You can leverage Next.js' treeshaking to avoid shipping uneccesary code to the browser. In order to do so, you first need to isolate the client configuration in its own file, and be sure to only use it inside of the data fetching functions (`getStaticProps`, `getServerProps`, and `getStaticPaths`) or in the function that goes into the API routes (`/pages/api/<your-serverless-function>.js`).
+
+You can follow the approach from the official Next.js preview example:
+
+1. Make a `/lib` folder and add `config.js`, `sanity.js`, and `sanity.server.js` to it
+2. In `/lib/config.js`, add and export the `projectId`, `dataset`, `apiVersion`, and other client configurations
+3. In `/lib/sanity.js`, import and export the configurated helper functions that you need in the client-side code (like `urlFor`, `usePreviewSubscription`, and `PortableText`)
+4. In `/lib/sanity.server.js`, create the client(s) you need for interacting with your content in the datafetching functions and in serverless API routes.
 
 ## Usage
 
-It’s practical to set up a decicated file where you import and set up your client etc. Below is a comprehensive example of the different things you can set up.
+It’s practical to set up a decicated files where you import and set up your client etc. Below is a comprehensive example of the different things you can set up.
 
 ```js
-// lib/sanity.js
-import {
-  groq,
-  createClient,
-  createImageUrlBuilder,
-  createPortableTextComponent,
-  createPreviewSubscriptionHook,
-  createCurrentUserHook,
-} from 'next-sanity'
-
-const config = {
+// lib/config.js
+export const config = {
   /**
     * Find your project ID and dataset in `sanity.json` in your studio project.
     * These are considered “public”, but you can use environment variables
@@ -66,13 +70,25 @@ const config = {
     **/
   dataset: process.env.NEXT_PUBLIC_SANITY_DATASET || 'production',
   projectId: process.env.NEXT_PUBLIC_SANITY_PROJECT_ID,
-  useCdn: process.env.NODE_ENV === 'production',
   /**
-    * Set useCdn to `false` if your application require the freshest possible
-    * data always (potentially slightly slower and a bit more expensive).
-    * Authenticated request (like preview) will always bypass the CDN
+   * Set useCdn to `false` if your application require the freshest possible
+   * data always (potentially slightly slower and a bit more expensive).
+   * Authenticated request (like preview) will always bypass the CDN
     **/
+   useCdn: process.env.NODE_ENV === 'production',
+   apiVersion: '2021-03-25',
 }
+```
+
+```js
+// lib/sanity.js
+import {
+  createImageUrlBuilder,
+  createPortableTextComponent,
+  createPreviewSubscriptionHook,
+  createCurrentUserHook,
+} from 'next-sanity'
+import {config} from './config'
 
 /**
  * Set up a helper function for generating Image URLs with only the asset reference data in your documents.
@@ -91,8 +107,18 @@ export const PortableText = createPortableTextComponent({
   serializers: {},
 })
 
+// Helper function for using the current logged in user account
+export const useCurrentUser = createCurrentUserHook(config)
+```
+
+```js
+// lib/sanity.server.js
+import {createClient} from 'next-sanity'
+import {config} from './config'
+
 // Set up the client for fetching data in the getProps page functions
 export const sanityClient = createClient(config)
+
 // Set up a preview client with serverless authentication for drafts
 export const previewClient = createClient({
   ...config,
@@ -102,9 +128,6 @@ export const previewClient = createClient({
 
 // Helper function for easily switching between normal client and preview client
 export const getClient = (usePreview) => (usePreview ? previewClient : sanityClient)
-
-// Helper function for using the current logged in user account
-export const useCurrentUser = createCurrentUserHook(config)
 ```
 
 ## Example: Minimal blog post template
@@ -122,6 +145,7 @@ import {
   urlFor,
   PortableText
   } from '../../lib/sanity'
+import {getClient} from '../../lib/sanity.server'
 
 const postQuery = groq`
   *[_type == "post" && slug.current == $slug][0] {
@@ -189,6 +213,7 @@ export async function getStaticPaths() {
   }
 }
 ```
+
 
 ## License
 
