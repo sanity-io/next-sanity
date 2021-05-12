@@ -5,7 +5,6 @@
 **Features:**
 
 - Client-side live real-time preview for authenticated users
-- Light-weight client for fetching data
 - URL-helper for Sanity’s image pipeline
 - Rich-text component for Portable Text
 - GROQ syntax highlighting
@@ -45,7 +44,7 @@ We have plans for optimizations in the roadmap.
 
 The first version of `next-sanity` shipped with the [`picosanity`](https://github.com/rexxars/picosanity) client built in. This caused some confusion for people who wants not only to pull data from their Sanity.io content lake, but also send patches and mutations via API routes. Since `picosanity` only supported fetching content, it had a smaller bundle size than the full SDK.
 
-You can leverage Next.js' treeshaking to avoid shipping uneccesary code to the browser. In order to do so, you first need to isolate the client configuration in its own file, and be sure to only use it inside of the data fetching functions (`getStaticProps`, `getServerProps`, and `getStaticPaths`) or in the function that goes into the API routes (`/pages/api/<your-serverless-function>.js`).
+You can leverage Next.js' treeshaking to avoid shipping unnecessary code to the browser. In order to do so, you first need to isolate the client configuration in its own file, and be sure to only use it inside of the data fetching functions (`getStaticProps`, `getServerProps`, and `getStaticPaths`) or in the function that goes into the API routes (`/pages/api/<your-serverless-function>.js`).
 
 You can follow the approach from the official Next.js preview example:
 
@@ -53,6 +52,8 @@ You can follow the approach from the official Next.js preview example:
 2. In `/lib/config.js`, add and export the `projectId`, `dataset`, `apiVersion`, and other client configurations
 3. In `/lib/sanity.js`, import and export the configurated helper functions that you need in the client-side code (like `urlFor`, `usePreviewSubscription`, and `PortableText`)
 4. In `/lib/sanity.server.js`, create the client(s) you need for interacting with your content in the datafetching functions and in serverless API routes.
+
+Should you want to do queries from the client side but want to avoid bundling the entire `@sanity/client`, you can of course still install and use [picosanity](https://github.com/rexxars/picosanity) manually.
 
 ## Usage
 
@@ -62,21 +63,21 @@ It’s practical to set up a decicated files where you import and set up your cl
 // lib/config.js
 export const config = {
   /**
-    * Find your project ID and dataset in `sanity.json` in your studio project.
-    * These are considered “public”, but you can use environment variables
-    * if you want differ between local dev and production.
-    *
-    * https://nextjs.org/docs/basic-features/environment-variables
-    **/
+   * Find your project ID and dataset in `sanity.json` in your studio project.
+   * These are considered “public”, but you can use environment variables
+   * if you want differ between local dev and production.
+   *
+   * https://nextjs.org/docs/basic-features/environment-variables
+   **/
   dataset: process.env.NEXT_PUBLIC_SANITY_DATASET || 'production',
   projectId: process.env.NEXT_PUBLIC_SANITY_PROJECT_ID,
+  apiVersion: '2021-03-25',
   /**
    * Set useCdn to `false` if your application require the freshest possible
    * data always (potentially slightly slower and a bit more expensive).
    * Authenticated request (like preview) will always bypass the CDN
-    **/
-   useCdn: process.env.NODE_ENV === 'production',
-   apiVersion: '2021-03-25',
+   **/
+  useCdn: process.env.NODE_ENV === 'production',
 }
 ```
 
@@ -94,7 +95,7 @@ import {config} from './config'
  * Set up a helper function for generating Image URLs with only the asset reference data in your documents.
  * Read more: https://www.sanity.io/docs/image-url
  **/
-export const urlFor = source => createImageUrlBuilder(config).image(source)
+export const urlFor = (source) => createImageUrlBuilder(config).image(source)
 
 // Set up the live preview subscription hook
 export const usePreviewSubscription = createPreviewSubscriptionHook(config)
@@ -139,12 +140,7 @@ A minimal example for a blog post template using the schema from from the Sanity
 import ErrorPage from 'next/error'
 import {useRouter} from 'next/router'
 import {groq} from 'next-sanity'
-import {
-  getClient,
-  usePreviewSubscription,
-  urlFor,
-  PortableText
-  } from '../../lib/sanity'
+import {getClient, usePreviewSubscription, urlFor, PortableText} from '../../lib/sanity'
 import {getClient} from '../../lib/sanity.server'
 
 const postQuery = groq`
@@ -182,9 +178,6 @@ export default function Post({data, preview}) {
         <img src={urlFor(mainImage).url()} />
       </figure>
       <PortableText blocks={body} />
-      <aside>
-
-      </aside>
     </article>
   )
 }
@@ -213,7 +206,6 @@ export async function getStaticPaths() {
   }
 }
 ```
-
 
 ## License
 
