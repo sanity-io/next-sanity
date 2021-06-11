@@ -57,7 +57,7 @@ Should you want to do queries from the client side but want to avoid bundling th
 
 ## Usage
 
-It’s practical to set up a decicated files where you import and set up your client etc. Below is a comprehensive example of the different things you can set up.
+It’s practical to set up dedicated files where you import and set up your client etc. Below is a comprehensive example of the different things you can set up.
 
 ```js
 // lib/config.js
