@@ -159,15 +159,16 @@ const postQuery = groq`
 
 export default function Post({data, preview}) {
   const router = useRouter()
+
+  const {data: post} = usePreviewSubscription(postQuery, {
+    params: {slug: data.post?.slug},
+    initialData: data.post,
+    enabled: preview && data.post?.slug,
+  })
+
   if (!router.isFallback && !data.post?.slug) {
     return <ErrorPage statusCode={404} />
   }
-
-  const {data: post} = usePreviewSubscription(postQuery, {
-    params: {slug: data.post.slug},
-    initialData: data.post,
-    enabled: preview,
-  })
 
   const {title, mainImage, body} = post
 
