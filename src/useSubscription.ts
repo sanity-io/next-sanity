@@ -16,8 +16,9 @@ interface SubscriptionOptions<R = any> {
 export function createPreviewSubscriptionHook({
   projectId,
   dataset,
+  useGroqBeta,
   documentLimit = 3000,
-}: ProjectConfig & {documentLimit?: number}) {
+}: ProjectConfig & {documentLimit?: number; useGroqBeta?: boolean}) {
   // Only construct/setup the store when `getStore()` is called
   let store: Promise<GroqStore>
 
@@ -43,6 +44,7 @@ export function createPreviewSubscriptionHook({
           projectId,
           dataset,
           documentLimit,
+          useGroqBeta,
           listen: true,
           overlayDrafts: true,
           subscriptionThrottleMs: 10,
