@@ -18,14 +18,15 @@
 - [Optimizing bundle size](#optimizing-bundle-size)
 - [Usage](#usage)
 - [Example: Minimal blog post template](#example-minimal-blog-post-template)
+- [Migrate](#migrate)
 - [License](#license)
 
 ## Installation
 
 ```sh
-$ npm install next-sanity
+$ npm install next-sanity @portabletext/react @sanity/image-url
 // or
-$ yarn add next-sanity
+$ yarn add next-sanity @portabletext/react @sanity/image-url
 ```
 
 ## Live real-time preview
@@ -83,12 +84,8 @@ export const config = {
 
 ```js
 // lib/sanity.js
-import {
-  createImageUrlBuilder,
-  createPortableTextComponent,
-  createPreviewSubscriptionHook,
-  createCurrentUserHook,
-} from 'next-sanity'
+import {createPreviewSubscriptionHook, createCurrentUserHook} from 'next-sanity'
+import createImageUrlBuilder from '@sanity/image-url'
 import {config} from './config'
 
 /**
@@ -99,14 +96,6 @@ export const urlFor = (source) => createImageUrlBuilder(config).image(source)
 
 // Set up the live preview subscription hook
 export const usePreviewSubscription = createPreviewSubscriptionHook(config)
-
-// Set up Portable Text serialization
-export const PortableText = createPortableTextComponent({
-  ...config,
-  // Serializers passed to @sanity/block-content-to-react
-  // (https://github.com/sanity-io/block-content-to-react)
-  serializers: {},
-})
 
 // Helper function for using the current logged in user account
 export const useCurrentUser = createCurrentUserHook(config)
@@ -140,7 +129,8 @@ A minimal example for a blog post template using the schema from from the Sanity
 import ErrorPage from 'next/error'
 import {useRouter} from 'next/router'
 import {groq} from 'next-sanity'
-import {usePreviewSubscription, urlFor, PortableText} from '../../lib/sanity'
+import {PortableText} from '@portabletext/react'
+import {usePreviewSubscription, urlFor} from '../../lib/sanity'
 import {getClient} from '../../lib/sanity.server'
 
 const postQuery = groq`
@@ -178,7 +168,7 @@ export default function Post({data, preview}) {
       <figure>
         <img src={urlFor(mainImage).url()} />
       </figure>
-      <PortableText blocks={body} />
+      <PortableText value={body} />
     </article>
   )
 }
@@ -206,6 +196,45 @@ export async function getStaticPaths() {
     fallback: true,
   }
 }
+```
+
+## Migrate
+
+### From `v0.4`
+
+#### `createPortableTextComponent` is removed
+
+This utility used to wrap `@sanity/block-content-to-react`. It's encouraged to upgrade to `@portabletext/react`.
+
+```sh
+$ npm install @portabletext/react
+// or
+$ yarn add @portabletext/react
+```
+
+```diff
+-import { createPortableTextComponent } from 'next-sanity'
++import { PortableText as PortableTextComponent } from '@portabletext/react'
+
+-export const PortableText = createPortableTextComponent({ serializers: {} })
++export const PortableText = (props) => <PortableTextComponent components={{}} {...props} />
+```
+
+[Check the full migration guide.](https://github.com/portabletext/react-portabletext/blob/main/MIGRATING.md)
+
+#### `createImageUrlBuilder` is removed
+
+This utility is no longer wrapped by `next-sanity` and you'll need to install the dependency yourself:
+
+```sh
+$ npm install @sanity/image-url
+// or
+$ yarn add @sanity/image-url
+```
+
+```diff
+-import { createImageUrlBuilder } from 'next-sanity'
++import createImageUrlBuilder from '@sanity/image-url'
 ```
 
 ## License
