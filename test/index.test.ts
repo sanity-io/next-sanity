@@ -1,12 +1,6 @@
 import * as exported from '../src'
 
-const expected = [
-  'createClient',
-  'createImageUrlBuilder',
-  'createPreviewSubscriptionHook',
-  'createPortableTextComponent',
-  'groq',
-]
+const expected = ['createClient', 'createPreviewSubscriptionHook', 'groq']
 
 test('index: provides all expected exports', () => {
   expected.forEach((thing) => {

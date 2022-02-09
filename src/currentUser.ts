@@ -6,14 +6,13 @@ export function createCurrentUserHook({projectId}: {projectId: string; dataset?:
   return () => useCurrentUser(projectId)
 }
 
-export function getCurrentUser(projectId: string, abort?: Aborter): Promise<CurrentUser | null> {
+export function getCurrentUser(projectId: string, abort: Aborter): Promise<CurrentUser | null> {
   return fetch(`https://${projectId}.api.sanity.io/v1/users/me`, {
     credentials: 'include',
-    signal: abort?.signal,
+    signal: abort.signal,
   })
     .then((res) => res.json())
     .then((res) => (res?.id ? res : null))
-    .catch((err: Error) => (err.name === 'AbortError' ? null : Promise.reject(err)))
 }
 
 function useCurrentUser(projectId: string) {
@@ -22,8 +21,13 @@ function useCurrentUser(projectId: string) {
 
   useEffect(() => {
     const aborter = getAborter()
-    getCurrentUser(projectId, aborter).then(setUser).catch(setError)
-    return () => aborter.abort()
+    getCurrentUser(projectId, aborter)
+      .then(setUser)
+      .catch((err: Error) => err.name !== 'AbortError' && setError(err))
+
+    return () => {
+      aborter.abort()
+    }
   }, [projectId])
 
   return {data, error, loading: data !== null || !error}
