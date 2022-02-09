@@ -16,9 +16,8 @@ interface SubscriptionOptions<R = any> {
 export function createPreviewSubscriptionHook({
   projectId,
   dataset,
-  useGroqBeta,
   documentLimit = 3000,
-}: ProjectConfig & {documentLimit?: number; useGroqBeta?: boolean}) {
+}: ProjectConfig & {documentLimit?: number}) {
   // Only construct/setup the store when `getStore()` is called
   let store: Promise<GroqStore>
 
@@ -52,7 +51,6 @@ export function createPreviewSubscriptionHook({
           projectId,
           dataset,
           documentLimit,
-          useGroqBeta,
           listen: true,
           overlayDrafts: true,
           subscriptionThrottleMs: 10,
@@ -111,7 +109,7 @@ function useQuerySubscription<R = any>(options: {
       .catch((err: Error) => (err.name === 'AbortError' ? null : setError(err)))
       .finally(() => setLoading(false))
 
-    // eslint-disable-next-line consistent-return -- useEffect hooks don't need consistent returns
+    // eslint-disable-next-line consistent-return
     return () => {
       if (subscription) {
         subscription.unsubscribe()
