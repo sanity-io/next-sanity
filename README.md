@@ -220,6 +220,8 @@ $ yarn add @portabletext/react
 +export const PortableText = (props) => <PortableTextComponent components={{}} {...props} />
 ```
 
+Please note that the `serializers` and `components` are not 100% equivalent.
+
 [Check the full migration guide.](https://github.com/portabletext/react-portabletext/blob/main/MIGRATING.md)
 
 #### `createImageUrlBuilder` is removed

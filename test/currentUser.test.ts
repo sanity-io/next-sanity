@@ -4,7 +4,17 @@ import {createCurrentUserHook} from '../src/currentUser'
 
 global.fetch = () => Promise.reject(new Error('Forgot to mock fetch'))
 
+const originalFetch = global.fetch
+
 describe('createCurrentUserHook', () => {
+  beforeEach(() => {
+    global.fetch = () => Promise.reject(new Error('Forgot to mock fetch'))
+  })
+
+  afterEach(() => {
+    global.fetch = originalFetch
+  })
+
   test('setError', async () => {
     const fetchMock = asyncFn()
     global.fetch = () => fetchMock()
