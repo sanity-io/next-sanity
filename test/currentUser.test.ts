@@ -2,8 +2,7 @@ import asyncFn from '@async-fn/jest'
 import {renderHook, act} from '@testing-library/react-hooks'
 import {createCurrentUserHook} from '../src/currentUser'
 
-// eslint-disable-next-line prefer-promise-reject-errors
-global.fetch = () => Promise.reject('Forgot to mock fetch')
+global.fetch = () => Promise.reject(new Error('Forgot to mock fetch'))
 
 describe('createCurrentUserHook', () => {
   test('setError', async () => {
