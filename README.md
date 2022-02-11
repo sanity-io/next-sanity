@@ -5,8 +5,6 @@
 **Features:**
 
 - Client-side live real-time preview for authenticated users
-- URL-helper for Sanity’s image pipeline
-- Rich-text component for Portable Text
 - GROQ syntax highlighting
 
 ## Table of contents
