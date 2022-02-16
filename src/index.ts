@@ -1,7 +1,5 @@
 export * from './types'
 export {createClient} from './client'
-export {createImageUrlBuilder} from './imageUrlBuilder'
 export {createCurrentUserHook} from './currentUser'
 export {createPreviewSubscriptionHook} from './useSubscription'
-export {createPortableTextComponent} from './portableText'
 export {default as groq} from 'groq'

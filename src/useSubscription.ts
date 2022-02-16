@@ -1,15 +1,15 @@
-import {useState} from 'react'
+import {useState, useEffect, useMemo} from 'react'
 import {GroqStore, Subscription} from '@sanity/groq-store'
-import {useDeepCompareEffectNoCheck as useDeepCompareEffect} from 'use-deep-compare-effect'
 import {ProjectConfig} from './types'
 import {getCurrentUser} from './currentUser'
-import {getAborter} from './aborter'
+import {getAborter, Aborter} from './aborter'
 
 const EMPTY_PARAMS = {}
 
+type Params = Record<string, unknown>
 interface SubscriptionOptions<R = any> {
   enabled?: boolean
-  params?: Record<string, unknown>
+  params?: Params
   initialData?: R
 }
 
@@ -36,10 +36,18 @@ export function createPreviewSubscriptionHook({
     })
   }
 
-  function getStore() {
+  function getStore(abort: Aborter) {
     if (!store) {
-      store = import('@sanity/groq-store').then(({groqStore}) =>
-        groqStore({
+      store = import('@sanity/groq-store').then(({groqStore}) => {
+        // Skip creating the groq store if we've been unmounted to save memory and reduce gc pressure
+        if (abort.signal.aborted) {
+          const error = new Error('Cancelling groq store creation')
+          // This ensures we can skip it in the catch block same way
+          error.name = 'AbortError'
+          return Promise.reject(error)
+        }
+
+        return groqStore({
           projectId,
           dataset,
           documentLimit,
@@ -47,32 +55,31 @@ export function createPreviewSubscriptionHook({
           overlayDrafts: true,
           subscriptionThrottleMs: 10,
         })
-      )
+      })
     }
     return store
   }
 }
 
 function useQuerySubscription<R = any>(options: {
-  getStore: () => Promise<GroqStore>
+  getStore: (abort: Aborter) => Promise<GroqStore>
   projectId: string
   query: string
-  params: Record<string, unknown>
+  params: Params
   initialData: R
   enabled: boolean
 }) {
-  const {getStore, projectId, query, params, initialData, enabled = false} = options
+  const {getStore, projectId, query, initialData, enabled = false} = options
   const [error, setError] = useState<Error>()
   const [loading, setLoading] = useState(false)
   const [data, setData] = useState<R>()
+  const params = useParams(options.params)
 
   // Use "deep" dependency comparison because params are often not _referentially_ equal,
   // but contains the same shallow properties, eg `{"slug": "some-slug"}`
-  useDeepCompareEffect(() => {
+  useEffect(() => {
     if (!enabled) {
-      return () => {
-        /* intentional noop */
-      }
+      return
     }
 
     setLoading(true)
@@ -89,7 +96,7 @@ function useQuerySubscription<R = any>(options: {
         console.warn('Not authenticated - preview not available')
         throw new Error('Not authenticated - preview not available')
       })
-      .then(getStore)
+      .then(() => getStore(aborter))
       .then((store) => {
         subscription = store.subscribe(query, params, (err, result) => {
           if (err) {
@@ -99,9 +106,10 @@ function useQuerySubscription<R = any>(options: {
           }
         })
       })
-      .catch(setError)
+      .catch((err: Error) => (err.name === 'AbortError' ? null : setError(err)))
       .finally(() => setLoading(false))
 
+    // eslint-disable-next-line consistent-return
     return () => {
       if (subscription) {
         subscription.unsubscribe()
@@ -116,4 +124,10 @@ function useQuerySubscription<R = any>(options: {
     loading,
     error,
   }
+}
+
+// Return params that are stable with deep equal as long as the key order is the same
+function useParams(params: Params): Params {
+  const stringifiedParams = useMemo(() => JSON.stringify(params), [params])
+  return useMemo(() => JSON.parse(stringifiedParams), [stringifiedParams])
 }
