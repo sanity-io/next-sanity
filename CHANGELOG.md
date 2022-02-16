@@ -10,9 +10,11 @@ All notable changes will be documented in this file.
 
 ### BREAKING
 
+- Upgraded `@sanity/client` to `v3`, see its [CHANGELOG](https://github.com/sanity-io/client/blob/main/CHANGELOG.md#300) for details.
 - `createPortableTextComponent` is removed.
 - `createImageUrlBuilder` is removed.
-  See README for migration instructions.
+
+See the [README](https://github.com/sanity-io/next-sanity#from-v04) for migration instructions.
 
 ## 0.4.0 - 2021-08-11
 
