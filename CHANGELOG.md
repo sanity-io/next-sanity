@@ -2,6 +2,12 @@
 
 All notable changes will be documented in this file.
 
+## 0.5.1 - 2022-03-04
+
+### Fixes
+
+- Export the `SubscriptionOptions` interface in `useSubscription`
+
 ## 0.5.0 - 2022-02-16
 
 ### Features

@@ -6,8 +6,8 @@ import {getAborter, Aborter} from './aborter'
 
 const EMPTY_PARAMS = {}
 
-type Params = Record<string, unknown>
-interface SubscriptionOptions<R = any> {
+export type Params = Record<string, unknown>
+export interface SubscriptionOptions<R = any> {
   enabled?: boolean
   params?: Params
   initialData?: R
