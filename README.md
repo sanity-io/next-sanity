@@ -31,7 +31,7 @@ $ yarn add next-sanity @portabletext/react @sanity/image-url
 
 You can implement real-time client side preview using `createPreviewSubscriptionHook`. It works by streaming the whole dataset to the browser, which it keeps updated using [listeners](https://www.sanity.io/docs/realtime-updates) and Mendoza patches. When it recieves updates, then the query is run against the client-side datastore using [groq-js](https://github.com/sanity-io/groq-js). This only happens if you're logged in and the hook is configured to run, which means you can use this code in production.
 
-You might want to use Vercel’s approach to previews, which is set up with a serverless functions that takes a preview secret, which in turn redirects you to a page with a `preview` prop set to `true`.
+Alternatively, you might want to use Vercel’s approach to previews, which is set up with a serverless functions that takes a preview secret, which in turn redirects you to a page with a `preview` prop set to `true`.
 
 ### Limits
 
