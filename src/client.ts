@@ -1,6 +1,6 @@
 import sanityClient from '@sanity/client'
-import {ClientConfig} from './types'
+import type {ClientConfig, SanityClient} from '@sanity/client'
 
-export function createClient(config: ClientConfig) {
+export function createClient(config: ClientConfig): SanityClient {
   return sanityClient(config)
 }
