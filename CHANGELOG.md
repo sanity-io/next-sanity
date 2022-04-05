@@ -2,6 +2,15 @@
 
 All notable changes will be documented in this file.
 
+## 0.5.2
+
+### Fixes
+
+- Exports the `Aborter` interface used in `AbortController` to support stricter TypeScript setups.
+- Allows stricter TypeScript setups by re-exporting `SanityClient` and `ClientConfig` from `@sanity/client`
+- Bumps `@sanity/client` to `v3.3.0`, `@sanity/groq-store` to `v0.3.1` and `groq` to `v2.29.3`
+- Typo in readme (#44)
+
 ## 0.5.1 - 2022-03-04
 
 ### Fixes
