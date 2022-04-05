@@ -2,7 +2,7 @@
 
 All notable changes will be documented in this file.
 
-## 0.5.2
+## 0.5.2 - 2022-04-05
 
 ### Fixes
 
