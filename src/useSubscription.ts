@@ -34,6 +34,7 @@ export function createPreviewSubscriptionHook({
       params,
       initialData: initialData as any,
       enabled: enabled ? typeof window !== 'undefined' : false,
+      token,
     })
   }
 
@@ -70,8 +71,9 @@ function useQuerySubscription<R = any>(options: {
   params: Params
   initialData: R
   enabled: boolean
+  token?: string
 }) {
-  const {getStore, projectId, query, initialData, enabled = false} = options
+  const {getStore, projectId, query, initialData, enabled = false, token} = options
   const [error, setError] = useState<Error>()
   const [loading, setLoading] = useState(false)
   const [data, setData] = useState<R>()
@@ -88,7 +90,7 @@ function useQuerySubscription<R = any>(options: {
 
     const aborter = getAborter()
     let subscription: Subscription | undefined
-    getCurrentUser(projectId, aborter)
+    getCurrentUser(projectId, aborter, token)
       .then((user) => {
         if (user) {
           return
