@@ -11,6 +11,7 @@ export function getCurrentUser(
   abort: Aborter,
   token?: string
 ): Promise<CurrentUser | null> {
+  const headers = token ? {Authorization: `Bearer ${token}`} : undefined
   // eslint-disable-next-line no-console
   console.log('🤡🤡🤡 getCurrentUser 🤡🤡🤡', {
     projectId,
@@ -18,13 +19,13 @@ export function getCurrentUser(
     fetchConfig: {
       credentials: 'include',
       signal: abort.signal,
-      ...(token ? {Authorization: `Bearer ${token}`} : {}),
+      headers,
     },
   })
   return fetch(`https://${projectId}.api.sanity.io/v1/users/me`, {
     credentials: 'include',
     signal: abort.signal,
-    ...(token ? {Authorization: `Bearer ${token}`} : {}),
+    headers,
   })
     .then((res) => {
       // eslint-disable-next-line no-console
