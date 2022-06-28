@@ -16,6 +16,7 @@ export interface SubscriptionOptions<R = any> {
 export function createPreviewSubscriptionHook({
   projectId,
   dataset,
+  token,
   documentLimit = 3000,
 }: ProjectConfig & {documentLimit?: number}) {
   // Only construct/setup the store when `getStore()` is called
@@ -51,6 +52,7 @@ export function createPreviewSubscriptionHook({
           projectId,
           dataset,
           documentLimit,
+          token,
           listen: true,
           overlayDrafts: true,
           subscriptionThrottleMs: 10,
