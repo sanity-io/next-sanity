@@ -94,23 +94,19 @@ function useQuerySubscription<R = any>(options: {
 
     const aborter = getAborter()
     let subscription: Subscription | undefined
-    // eslint-disable-next-line no-console
-    const logger = (tag: string) => (x: unknown) => typeof console.log(tag, x) === 'string' || x
     getCurrentUser(projectId, aborter, token)
-      .then(logger('1'))
       .then((user) => {
         // eslint-disable-next-line no-console
         console.log('🔥🔥🔥 getCurrentUser.then 🔥🔥🔥', {user})
         if (user) {
           return
         }
+
         // eslint-disable-next-line no-console
         console.warn('Not authenticated - preview not available')
         throw new Error('Not authenticated - preview not available')
       })
-      .then(logger('2'))
       .then(() => getStore(aborter))
-      .then(logger('3'))
       .then((store) => {
         // eslint-disable-next-line no-console
         console.log('🤯🤯🤯 store 🤯🤯🤯', store)
@@ -124,14 +120,12 @@ function useQuerySubscription<R = any>(options: {
           }
         })
       })
-      .then(logger('4'))
       .catch((err: Error) => {
         // eslint-disable-next-line no-console
         console.log('🐛🐛🐛 Error setting up store 🐛🐛🐛', err)
         if (err.name === 'AbortError') return
         setError(err)
       })
-      .then(logger('5'))
       .finally(() => {
         // eslint-disable-next-line no-console
         console.log('😬😬😬 Finished setting up store 😬😬😬')
