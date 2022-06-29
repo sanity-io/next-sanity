@@ -1,5 +1,5 @@
 import {useState, useEffect, useMemo} from 'react'
-import {GroqStore, Subscription} from '@sanity/groq-store'
+import {GroqStore, Subscription} from '@biblioteksentralen/groq-store'
 import {ProjectConfig} from './types'
 import {getCurrentUser} from './currentUser'
 import {getAborter, Aborter} from './aborter'
@@ -42,7 +42,7 @@ export function createPreviewSubscriptionHook({
 
   function getStore(abort: Aborter) {
     if (!store) {
-      store = import('@sanity/groq-store').then(({groqStore}) => {
+      store = import('@biblioteksentralen/groq-store').then(({groqStore}) => {
         // Skip creating the groq store if we've been unmounted to save memory and reduce gc pressure
         if (abort.signal.aborted) {
           const error = new Error('Cancelling groq store creation')

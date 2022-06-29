@@ -15,7 +15,7 @@ type MockStore = {
   unsubscribe: () => void
 }
 let mockGroqStore: AsyncFnMock<() => MockStore>
-jest.doMock('@sanity/groq-store', () => ({
+jest.doMock('@biblioteksentralen/groq-store', () => ({
   groqStore: async (options) => {
     // Since module imports are cached we update the mock returned by it, instead of having to deal with purging the module cache between test files
     const qroqStore = await mockGroqStore()
