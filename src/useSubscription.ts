@@ -109,6 +109,7 @@ function useQuerySubscription<R = any>(options: {
       .then(() => getStore(aborter))
       .then((store) => {
         subscription = store.subscribe(query, params, (err, result) => {
+          console.log('🤯🤯🤯 store.subscribe 🤯🤯🤯', {err, result})
           if (err) {
             setError(err)
           } else {
