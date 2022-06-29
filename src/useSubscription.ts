@@ -108,7 +108,10 @@ function useQuerySubscription<R = any>(options: {
       })
       .then(() => getStore(aborter))
       .then((store) => {
+        // eslint-disable-next-line no-console
+        console.log('🤯🤯🤯 store 🤯🤯🤯', store)
         subscription = store.subscribe(query, params, (err, result) => {
+          // eslint-disable-next-line no-console
           console.log('🤯🤯🤯 store.subscribe 🤯🤯🤯', {err, result})
           if (err) {
             setError(err)
@@ -117,8 +120,17 @@ function useQuerySubscription<R = any>(options: {
           }
         })
       })
-      .catch((err: Error) => (err.name === 'AbortError' ? null : setError(err)))
-      .finally(() => setLoading(false))
+      .catch((err: Error) => {
+        // eslint-disable-next-line no-console
+        console.log('🐛🐛🐛 Error setting up store 🐛🐛🐛', err)
+        if (err.name === 'AbortError') return
+        setError(err)
+      })
+      .finally(() => {
+        // eslint-disable-next-line no-console
+        console.log('😬😬😬 Finished setting up store 😬😬😬')
+        setLoading(false)
+      })
 
     // eslint-disable-next-line consistent-return
     return () => {
