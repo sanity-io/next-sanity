@@ -17,9 +17,7 @@ export function getCurrentUser(
     signal: abort.signal,
     headers,
   })
-    .then((res) => {
-      return res.json()
-    })
+    .then((res) => res.json())
     .then((res) => (res?.id ? res : null))
 }
 
