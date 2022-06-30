@@ -4,6 +4,8 @@ import {ProjectConfig} from './types'
 import {getCurrentUser} from './currentUser'
 import {getAborter, Aborter} from './aborter'
 
+// TODO: Import from upstream and update version
+
 const EMPTY_PARAMS = {}
 
 export type Params = Record<string, unknown>
