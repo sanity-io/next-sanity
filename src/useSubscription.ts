@@ -112,10 +112,7 @@ function useQuerySubscription<R = any>(options: {
           }
         })
       })
-      .catch((err: Error) => {
-        if (err.name === 'AbortError') return
-        setError(err)
-      })
+      .catch((err: Error) => (err.name === 'AbortError' ? null : setError(err)))
       .finally(() => setLoading(false))
 
     // eslint-disable-next-line consistent-return
