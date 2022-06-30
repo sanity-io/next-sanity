@@ -76,8 +76,6 @@ function useQuerySubscription<R = any>(options: {
   token?: string
 }) {
   const {getStore, projectId, query, initialData, enabled = false, token} = options
-  // eslint-disable-next-line no-console
-  console.log('🚀🚀🚀 useQuerySubscription 🚀🚀🚀', {token, enabled, projectId})
   const [error, setError] = useState<Error>()
   const [loading, setLoading] = useState(false)
   const [data, setData] = useState<R>()
@@ -121,16 +119,10 @@ function useQuerySubscription<R = any>(options: {
         })
       })
       .catch((err: Error) => {
-        // eslint-disable-next-line no-console
-        console.log('🐛🐛🐛 Error setting up store 🐛🐛🐛', err)
         if (err.name === 'AbortError') return
         setError(err)
       })
-      .finally(() => {
-        // eslint-disable-next-line no-console
-        console.log('😬😬😬 Finished setting up store 😬😬😬')
-        setLoading(false)
-      })
+      .finally(() => setLoading(false))
 
     // eslint-disable-next-line consistent-return
     return () => {
