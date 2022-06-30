@@ -21,8 +21,6 @@ export function createPreviewSubscriptionHook({
 }: ProjectConfig & {documentLimit?: number}) {
   // Only construct/setup the store when `getStore()` is called
   let store: Promise<GroqStore>
-  // eslint-disable-next-line no-console
-  console.log('🎉🎉🎉 createPreviewSubscriptionHook 🎉🎉🎉', {token, dataset, projectId})
 
   return function usePreviewSubscription<R = any>(
     query: string,
@@ -104,11 +102,7 @@ function useQuerySubscription<R = any>(options: {
       })
       .then(() => getStore(aborter))
       .then((store) => {
-        // eslint-disable-next-line no-console
-        console.log('🤯🤯🤯 store 🤯🤯🤯', store)
         subscription = store.subscribe(query, params, (err, result) => {
-          // eslint-disable-next-line no-console
-          console.log('🤯🤯🤯 store.subscribe 🤯🤯🤯', {err, result})
           if (err) {
             setError(err)
           } else {

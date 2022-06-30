@@ -18,8 +18,6 @@ export function getCurrentUser(
     headers,
   })
     .then((res) => {
-      // eslint-disable-next-line no-console
-      console.log('🐸🐸🐸 getCurrentUser: fetch.then 🐸🐸🐸', {res})
       return res.json()
     })
     .then((res) => (res?.id ? res : null))
