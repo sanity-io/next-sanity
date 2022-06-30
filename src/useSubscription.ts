@@ -4,6 +4,8 @@ import {ProjectConfig} from './types'
 import {getCurrentUser} from './currentUser'
 import {getAborter, Aborter} from './aborter'
 
+// TODO: Update groq-store version
+
 const EMPTY_PARAMS = {}
 
 export type Params = Record<string, unknown>
@@ -16,6 +18,7 @@ export interface SubscriptionOptions<R = any> {
 export function createPreviewSubscriptionHook({
   projectId,
   dataset,
+  token,
   documentLimit = 3000,
 }: ProjectConfig & {documentLimit?: number}) {
   // Only construct/setup the store when `getStore()` is called
@@ -33,6 +36,7 @@ export function createPreviewSubscriptionHook({
       params,
       initialData: initialData as any,
       enabled: enabled ? typeof window !== 'undefined' : false,
+      token,
     })
   }
 
@@ -51,6 +55,7 @@ export function createPreviewSubscriptionHook({
           projectId,
           dataset,
           documentLimit,
+          token,
           listen: true,
           overlayDrafts: true,
           subscriptionThrottleMs: 10,
@@ -68,8 +73,9 @@ function useQuerySubscription<R = any>(options: {
   params: Params
   initialData: R
   enabled: boolean
+  token?: string
 }) {
-  const {getStore, projectId, query, initialData, enabled = false} = options
+  const {getStore, projectId, query, initialData, enabled = false, token} = options
   const [error, setError] = useState<Error>()
   const [loading, setLoading] = useState(false)
   const [data, setData] = useState<R>()
@@ -86,7 +92,7 @@ function useQuerySubscription<R = any>(options: {
 
     const aborter = getAborter()
     let subscription: Subscription | undefined
-    getCurrentUser(projectId, aborter)
+    getCurrentUser(projectId, aborter, token)
       .then((user) => {
         if (user) {
           return
