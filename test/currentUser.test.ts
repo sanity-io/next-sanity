@@ -43,10 +43,9 @@ describe('createCurrentUserHook', () => {
     expect(result.current).toEqual({data, error: undefined, loading: true})
   })
 
-  test('abort on unmount', async () => {
+  test('abort on unmount', () => {
     const fetchMock = asyncFn()
     let abortSignal: AbortSignal
-    // @ts-expect-error no need to type it in this test
     global.fetch = (url: string, {signal}) => {
       abortSignal = signal
       return fetchMock()
@@ -66,7 +65,6 @@ describe('createCurrentUserHook', () => {
   test('setError skips AbortError', async () => {
     const fetchMock = asyncFn()
     let abortSignal: AbortSignal
-    // @ts-expect-error no need to type it in this test
     global.fetch = (url: string, {signal}) => {
       // This is called twice, but we only care about the abort signal of the first fetch
       if (!abortSignal) abortSignal = signal

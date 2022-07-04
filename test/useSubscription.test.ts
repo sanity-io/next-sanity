@@ -2,6 +2,7 @@
 import asyncFn, {AsyncFnMock} from '@async-fn/jest'
 import {renderHook, act} from '@testing-library/react-hooks'
 import {createPreviewSubscriptionHook} from '../src/useSubscription'
+import EventSource from 'eventsource'
 
 jest.mock('../src/currentUser', () => ({getCurrentUser: () => Promise.resolve({id: 'id'})}))
 
@@ -66,6 +67,24 @@ describe('createPreviewSubscriptionHook', () => {
 
       expect(subscribe).toBeCalled()
       expect(result.current.loading).toBe(false)
+    })
+
+    test('can pass token and EventSource', async () => {
+      const useQuerySubscription = createPreviewSubscriptionHook({
+        projectId: 'a',
+        dataset: 'b',
+        token: 'abc',
+        EventSource: EventSource,
+      })
+      const {waitForValueToChange} = renderHook(() =>
+        useQuerySubscription('query', {enabled: true})
+      )
+      await waitForValueToChange(() => mockGroqStore.mock.calls.length)
+
+      const subscribe = jest.fn()
+      await act(() => mockGroqStore.resolve(() => ({subscribe})))
+
+      expect(subscribe).toBeCalled()
     })
   })
 

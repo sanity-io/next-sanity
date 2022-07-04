@@ -4,8 +4,6 @@ import {ProjectConfig} from './types'
 import {getCurrentUser} from './currentUser'
 import {getAborter, Aborter} from './aborter'
 
-// TODO: Update groq-store version
-
 const EMPTY_PARAMS = {}
 
 export type Params = Record<string, unknown>
@@ -15,10 +13,12 @@ export interface SubscriptionOptions<R = any> {
   initialData?: R
 }
 
+// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
 export function createPreviewSubscriptionHook({
   projectId,
   dataset,
   token,
+  EventSource,
   documentLimit = 3000,
 }: ProjectConfig & {documentLimit?: number}) {
   // Only construct/setup the store when `getStore()` is called
@@ -56,6 +56,7 @@ export function createPreviewSubscriptionHook({
           dataset,
           documentLimit,
           token,
+          EventSource,
           listen: true,
           overlayDrafts: true,
           subscriptionThrottleMs: 10,
@@ -123,7 +124,7 @@ function useQuerySubscription<R = any>(options: {
 
       aborter.abort()
     }
-  }, [getStore, query, params, enabled])
+  }, [getStore, query, params, enabled, projectId, token])
 
   return {
     data: typeof data === 'undefined' ? initialData : data,
