@@ -29,6 +29,9 @@ jobs:
       needs: [ test ]
       runs-on: ubuntu-latest
       steps:
+        - uses: actions/checkout@v2
+          with:
+            fetch-depth: 0
         - uses: actions/setup-node@v3
           with:
             node-version: lts/*
