@@ -41,7 +41,7 @@ We have plans for optimizations in the roadmap.
 
 ## Optimizing bundle size
 
-The first version of `next-sanity` shipped with the [`picosanity`](https://github.com/rexxars/picosanity) client built-in. This caused some confusion for people who wants not only to pull data from their Sanity.io content lake, but also send patches and mutations via API routes. Since `picosanity` only supported fetching content, it had a smaller bundle size than the full SDK.
+The first version of `next-sanity` shipped with the [`picosanity`](https://github.com/rexxars/picosanity) client built-in. This caused some confusion for people who not only want to pull data from their Sanity.io content lake, but also send patches and mutations via API routes. Since `picosanity` only supported fetching content, it had a smaller bundle size than the full SDK.
 
 You can leverage Next.js' [tree shaking](https://developers.google.com/web/fundamentals/performance/optimizing-javascript/tree-shaking) to avoid shipping unnecessary code to the browser. In order to do so, you first need to isolate the client configuration in its own file, and be sure to only use it inside of the data fetching functions (`getStaticProps`, `getServerProps`, and `getStaticPaths`) or in the function that goes into the API routes (`/pages/api/<your-serverless-function>.js`).
 
@@ -127,7 +127,7 @@ export const getClient = (usePreview) => (usePreview ? previewClient : sanityCli
 
 ## Example: Minimal blog post template
 
-A minimal example for a blog post template using the schema from from the Sanity Studio blog example. Includes the real-time preview using the configuration illustrated above:
+A minimal example for a blog post template using the schema from the Sanity Studio blog example. It includes the real-time preview using the configuration illustrated above:
 
 ```jsx
 // pages/posts/[slug].js
@@ -246,4 +246,4 @@ $ yarn add @sanity/image-url
 
 ## License
 
-MIT-licensed. See LICENSE.
+MIT-licensed. See [LICENSE](LICENSE).
