@@ -37,13 +37,12 @@
     "src"
   ],
   "scripts": {
-    "build": "tsdx build",
+    "build": "tsdx build --tsconfig ./tsconfig.tsdx.json",
     "coverage": "npm test -- --coverage",
     "format": "npm run prettier -- --write . && npm run lint -- --fix",
     "lint": "eslint --ignore-path .gitignore .",
     "prepublishOnly": "npm run lint && npm run build && npm test",
     "prettier": "npx prettier --ignore-path .gitignore",
-    "start": "tsdx watch",
     "test": "jest",
     "type-check": "tsc --noEmit"
   },
