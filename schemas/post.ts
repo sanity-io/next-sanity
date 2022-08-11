@@ -1,4 +1,6 @@
-export default {
+import {defineType} from 'sanity'
+
+export default defineType({
   name: 'post',
   title: 'Post',
   type: 'document',
@@ -55,9 +57,9 @@ export default {
       author: 'author.name',
       media: 'mainImage',
     },
-    prepare(selection) {
+    prepare(selection: any) {
       const {author} = selection
       return {...selection, subtitle: author && `by ${author}`}
     },
   },
-}
+})
