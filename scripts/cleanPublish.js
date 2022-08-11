@@ -10,11 +10,6 @@ async function main() {
   const {
     // Only react is a peer dependency we require, the others are there to avoid parcel throwing errors on imports not specified in deps
     peerDependencies: {react: reactPeerDependency},
-    // Fields that are stripped out are underscored
-    scripts: _scripts,
-    browserslist: _browserslist,
-    prettier: _prettier,
-    targets: _targets,
     ...pkg
   } = require('../package.json')
   console.log('Modifying...')
