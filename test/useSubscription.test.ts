@@ -1,8 +1,9 @@
 /* eslint-disable max-nested-callbacks */
 import asyncFn, {AsyncFnMock} from '@async-fn/jest'
-import {renderHook, act} from '@testing-library/react-hooks'
-import {createPreviewSubscriptionHook} from '../src/useSubscription'
+import {act, renderHook} from '@testing-library/react-hooks'
 import EventSource from 'eventsource'
+
+import {createPreviewSubscriptionHook} from '../src/useSubscription'
 
 jest.mock('../src/currentUser', () => ({getCurrentUser: () => Promise.resolve({id: 'id'})}))
 

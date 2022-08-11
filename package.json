@@ -29,37 +29,14 @@
   "scripts": {
     "build": "tsdx build",
     "coverage": "tsdx test --coverage",
-    "lint": "eslint .",
+    "format": "npm run prettier -- --write . && npm run lint -- --fix",
+    "lint": "eslint --ignore-path .gitignore .",
     "prepublishOnly": "tsdx build && npm test",
+    "prettier": "npx prettier --ignore-path .gitignore",
     "start": "tsdx watch",
-    "test": "tsdx test",
-    "posttest": "npm run lint"
+    "test": "tsdx test"
   },
   "browserslist": "chrome 59, safari 11, firefox 56, edge 14, ie 11",
-  "eslintConfig": {
-    "env": {
-      "browser": true,
-      "node": true
-    },
-    "parser": "@typescript-eslint/parser",
-    "plugins": [
-      "@typescript-eslint",
-      "prettier",
-      "react"
-    ],
-    "extends": [
-      "plugin:@typescript-eslint/recommended",
-      "sanity",
-      "sanity/react",
-      "sanity/typescript",
-      "prettier"
-    ],
-    "rules": {
-      "@typescript-eslint/explicit-module-boundary-types": "off",
-      "prettier/prettier": "error"
-    },
-    "root": true
-  },
   "jest": {
     "globals": {
       "ts-jest": {
@@ -78,13 +55,15 @@
     "@types/jest": "^27.0.0",
     "@types/react": "^17.0.17",
     "@types/react-dom": "^17.0.9",
-    "@typescript-eslint/eslint-plugin": "^5.30.4",
-    "@typescript-eslint/parser": "^5.30.4",
-    "eslint": "^8.19.0",
+    "@typescript-eslint/eslint-plugin": "^5.33.0",
+    "eslint": "^8.21.0",
+    "eslint-config-next": "^12.2.4",
     "eslint-config-prettier": "^8.5.0",
-    "eslint-config-react-app": "^7.0.1",
-    "eslint-config-sanity": "^5.1.0",
+    "eslint-config-sanity": "^6.0.0",
     "eslint-plugin-prettier": "^4.2.1",
+    "eslint-plugin-react-hooks": "^4.6.0",
+    "eslint-plugin-simple-import-sort": "^7.0.0",
+    "next": "^12.2.4",
     "parcel": "^2.7.0",
     "prettier": "^2.7.1",
     "prettier-plugin-packagejson": "^2.2.18",
@@ -92,7 +71,6 @@
     "react-dom": "^17.0.2",
     "semantic-release": "^19.0.3",
     "tsdx": "^0.14.1",
-    "tslib": "^2.4.0",
     "typescript": "^4.7.4"
   },
   "peerDependencies": {

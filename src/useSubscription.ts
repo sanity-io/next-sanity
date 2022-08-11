@@ -1,8 +1,9 @@
-import {useState, useEffect, useMemo} from 'react'
 import {GroqStore, Subscription} from '@sanity/groq-store'
-import {ProjectConfig} from './types'
+import {useEffect, useMemo, useState} from 'react'
+
+import {Aborter, getAborter} from './aborter'
 import {getCurrentUser} from './currentUser'
-import {getAborter, Aborter} from './aborter'
+import {ProjectConfig} from './types'
 
 const EMPTY_PARAMS = {}
 

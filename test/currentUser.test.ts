@@ -1,5 +1,6 @@
 import asyncFn from '@async-fn/jest'
-import {renderHook, act} from '@testing-library/react-hooks'
+import {act, renderHook} from '@testing-library/react-hooks'
+
 import {createCurrentUserHook} from '../src/currentUser'
 
 global.fetch = () => Promise.reject(new Error('Forgot to mock fetch'))
