@@ -9,7 +9,7 @@ async function main() {
   console.log('Reading package.json')
   const {
     // Only react is a peer dependency we require, the others are there to avoid parcel throwing errors on imports not specified in deps
-    peerDependencies: {reactPeerDependency},
+    peerDependencies: {react: reactPeerDependency},
     // Fields that are stripped out are underscored
     scripts: _scripts,
     browserslist: _browserslist,
