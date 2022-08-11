@@ -11,14 +11,15 @@ async function main() {
     const pkg = require('../package.json')
     console.log('Modifying...')
     Object.assign(pkg.peerDependencies, {
-      next: pkg.dependencies.next,
-      sanity: pkg.dependencies.sanity,
-      'styled-components': pkg.dependencies['styled-components'],
+      next: pkg.devDependencies.next,
+      sanity: pkg.devDependencies.sanity,
+      'styled-components': pkg.devDependencies['styled-components'],
     })
     console.log('Writing package.json...')
     await writeFileAtomic(
       path.resolve(__dirname, '../package.json'),
-      JSON.stringify(pkg, null, 2),
+      // eslint-disable-next-line prefer-template
+      JSON.stringify(pkg, null, 2) + '\n',
       'utf8'
     )
     console.log('Finished!')

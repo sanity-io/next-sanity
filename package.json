@@ -37,16 +37,17 @@
     "src"
   ],
   "scripts": {
-    "prebuild": "npm run clean",
-    "build": "tsdx build --tsconfig ./tsconfig.tsdx.json && parcel build",
+    "prebuild": "npm run clean && node scripts/preParcel.js",
+    "build": "npm run tsdx build && parcel build",
     "clean": "rimraf lib",
     "coverage": "npm test -- --coverage",
     "dev": "next",
     "format": "npm run prettier -- --write . && eslint --fix .",
     "lint": "eslint --max-warnings 0 .",
-    "prepublishOnly": "npm run lint && npm run build && npm test",
+    "prepublishOnly": "npm run lint && npm run build && node scripts/postParcel",
     "prettier": "npx prettier --ignore-path .gitignore",
     "test": "jest",
+    "tsdx": "tsdx --tsconfig ./tsconfig.tsdx.json",
     "type-check": "tsc --noEmit"
   },
   "browserslist": "chrome 59, safari 11, firefox 56, edge 14, ie 11",
@@ -96,10 +97,10 @@
     "write-file-atomic": "^4.0.1"
   },
   "peerDependencies": {
-    "next": "^12.2",
+    "next": "^12.2.4",
     "react": "^16.3 || ^17 || ^18",
-    "sanity": "dev-preview",
-    "styled-components": "^5.2.0"
+    "sanity": "^3.0.0-dev-preview.12",
+    "styled-components": "^5.3.5"
   },
   "engines": {
     "node": ">=12"

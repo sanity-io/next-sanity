@@ -17,7 +17,8 @@ async function main() {
     console.log('Writing package.json...')
     await writeFileAtomic(
       path.resolve(__dirname, '../package.json'),
-      JSON.stringify(pkg, null, 2),
+      // eslint-disable-next-line prefer-template
+      JSON.stringify(pkg, null, 2) + '\n',
       'utf8'
     )
     console.log('Finished!')
