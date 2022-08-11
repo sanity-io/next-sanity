@@ -1,5 +1,9 @@
 import {defineType} from 'sanity'
 
+import authorType from './author'
+import blockContentType from './blockContent'
+import categoryType from './category'
+
 export default defineType({
   name: 'post',
   title: 'Post',
@@ -23,7 +27,7 @@ export default defineType({
       name: 'author',
       title: 'Author',
       type: 'reference',
-      to: {type: 'author'},
+      to: {type: authorType.name},
     },
     {
       name: 'mainImage',
@@ -37,7 +41,7 @@ export default defineType({
       name: 'categories',
       title: 'Categories',
       type: 'array',
-      of: [{type: 'reference', to: {type: 'category'}}],
+      of: [{type: 'reference', to: {type: categoryType.name}}],
     },
     {
       name: 'publishedAt',
@@ -47,7 +51,7 @@ export default defineType({
     {
       name: 'body',
       title: 'Body',
-      type: 'blockContent',
+      type: blockContentType.name,
     },
   ],
 
