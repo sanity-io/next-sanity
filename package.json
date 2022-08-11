@@ -38,13 +38,13 @@
   ],
   "scripts": {
     "build": "tsdx build",
-    "coverage": "tsdx test --coverage",
+    "coverage": "npm test -- --coverage",
     "format": "npm run prettier -- --write . && npm run lint -- --fix",
     "lint": "eslint --ignore-path .gitignore .",
     "prepublishOnly": "npm run lint && npm run build && npm test",
     "prettier": "npx prettier --ignore-path .gitignore",
     "start": "tsdx watch",
-    "test": "tsdx test",
+    "test": "jest",
     "type-check": "tsc --noEmit"
   },
   "browserslist": "chrome 59, safari 11, firefox 56, edge 14, ie 11",
@@ -53,13 +53,6 @@
     "printWidth": 98,
     "semi": false,
     "singleQuote": true
-  },
-  "jest": {
-    "globals": {
-      "ts-jest": {
-        "diagnostics": false
-      }
-    }
   },
   "dependencies": {
     "@sanity/client": "^3.3.3",
@@ -70,7 +63,7 @@
     "@async-fn/jest": "^1.5.3",
     "@testing-library/react-hooks": "^7.0.2",
     "@types/eventsource": "^1.1.9",
-    "@types/jest": "^27.0.0",
+    "@types/jest": "^27.5.2",
     "@types/react": "^17.0.17",
     "@types/react-dom": "^17.0.9",
     "@typescript-eslint/eslint-plugin": "^5.33.0",
@@ -81,6 +74,8 @@
     "eslint-plugin-prettier": "^4.2.1",
     "eslint-plugin-react-hooks": "^4.6.0",
     "eslint-plugin-simple-import-sort": "^7.0.0",
+    "jest": "^28.1.3",
+    "jest-environment-jsdom": "^28.1.3",
     "next": "^12.2.4",
     "parcel": "^2.7.0",
     "prettier": "^2.7.1",

@@ -1,3 +1,7 @@
+/**
+ * @jest-environment jsdom
+ */
+
 import asyncFn from '@async-fn/jest'
 import {act, renderHook} from '@testing-library/react-hooks'
 

@@ -1,3 +1,7 @@
+/**
+ * @jest-environment jsdom
+ */
+
 /* eslint-disable max-nested-callbacks */
 import asyncFn, {AsyncFnMock} from '@async-fn/jest'
 import {act, renderHook} from '@testing-library/react-hooks'
