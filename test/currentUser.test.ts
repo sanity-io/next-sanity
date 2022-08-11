@@ -47,18 +47,20 @@ describe('createCurrentUserHook', () => {
   test('abort on unmount', () => {
     const fetchMock = asyncFn()
     let abortSignal: AbortSignal
-    global.fetch = (url: string, {signal}) => {
-      abortSignal = signal
+    global.fetch = (_url: unknown, {signal}: {signal?: AbortSignal | null | undefined} = {}) => {
+      abortSignal = signal as AbortSignal
       return fetchMock()
     }
 
     const useCurrentUser = createCurrentUserHook({projectId: 'projectId'})
     const {unmount} = renderHook(() => useCurrentUser())
     // Sanity check, making sure we remembered to provide an abort signal
+    // @ts-expect-error not actually using before defined
     expect(abortSignal.aborted).toBe(false)
 
     unmount()
 
+    // @ts-expect-error not actually using before defined
     expect(abortSignal.aborted).toBe(true)
   })
 
@@ -66,9 +68,9 @@ describe('createCurrentUserHook', () => {
   test('setError skips AbortError', async () => {
     const fetchMock = asyncFn()
     let abortSignal: AbortSignal
-    global.fetch = (url: string, {signal}) => {
+    global.fetch = (_url: unknown, {signal}: {signal?: AbortSignal | null | undefined} = {}) => {
       // This is called twice, but we only care about the abort signal of the first fetch
-      if (!abortSignal) abortSignal = signal
+      if (!abortSignal) abortSignal = signal as AbortSignal
       return fetchMock()
     }
 
@@ -82,11 +84,13 @@ describe('createCurrentUserHook', () => {
       }
     )
     expect(result.current.error).toBe(undefined)
+    // @ts-expect-error not actually using before defined
     expect(abortSignal.aborted).toBe(false)
 
     // projectId is in the deps array of useEffect, and will run the teardown before running the second execution of the useEffect callback
     rerender({projectId: 'two'})
     // Ensure we aborted in the teardown
+    // @ts-expect-error not actually using before defined
     expect(abortSignal.aborted).toBe(true)
     // When a fetch is cancelled using an AbortController it will fire an Error with the name 'AbortError'
     // More info https://gist.github.com/stipsan/23bdb234ac71d3d2bc8351623dcc0dd0

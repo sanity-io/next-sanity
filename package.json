@@ -5,7 +5,9 @@
   "keywords": [
     "sanity",
     "sanity.io",
-    "next.js"
+    "next.js",
+    "studio",
+    "studio-v3"
   ],
   "homepage": "https://github.com/sanity-io/next-sanity#readme",
   "bugs": {
@@ -18,6 +20,14 @@
   "license": "MIT",
   "author": "Sanity.io <hello@sanity.io>",
   "sideEffects": false,
+  "exports": {
+    ".": {
+      "source": "./src/index.ts",
+      "require": "./dist/index.js",
+      "default": "./dist/next-sanity.esm.js"
+    },
+    "./package.json": "./package.json"
+  },
   "main": "dist/index.js",
   "module": "dist/next-sanity.esm.js",
   "typings": "dist/index.d.ts",
@@ -31,12 +41,19 @@
     "coverage": "tsdx test --coverage",
     "format": "npm run prettier -- --write . && npm run lint -- --fix",
     "lint": "eslint --ignore-path .gitignore .",
-    "prepublishOnly": "tsdx build && npm test",
+    "prepublishOnly": "npm run lint && npm run build && npm test",
     "prettier": "npx prettier --ignore-path .gitignore",
     "start": "tsdx watch",
-    "test": "tsdx test"
+    "test": "tsdx test",
+    "type-check": "tsc --noEmit"
   },
   "browserslist": "chrome 59, safari 11, firefox 56, edge 14, ie 11",
+  "prettier": {
+    "bracketSpacing": false,
+    "printWidth": 98,
+    "semi": false,
+    "singleQuote": true
+  },
   "jest": {
     "globals": {
       "ts-jest": {
@@ -52,6 +69,7 @@
   "devDependencies": {
     "@async-fn/jest": "^1.5.3",
     "@testing-library/react-hooks": "^7.0.2",
+    "@types/eventsource": "^1.1.9",
     "@types/jest": "^27.0.0",
     "@types/react": "^17.0.17",
     "@types/react-dom": "^17.0.9",
@@ -84,11 +102,6 @@
       "distDir": "./lib",
       "isLibrary": true,
       "source": "./src/studio/index.ts"
-    },
-    "preview": {
-      "distDir": "./lib",
-      "isLibrary": true,
-      "source": "./src/preview/index.ts"
     }
   }
 }

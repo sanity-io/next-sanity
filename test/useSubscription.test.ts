@@ -18,7 +18,7 @@ type MockStore = {
 }
 let mockGroqStore: AsyncFnMock<() => MockStore>
 jest.doMock('@sanity/groq-store', () => ({
-  groqStore: async (options) => {
+  groqStore: async (options: unknown) => {
     // Since module imports are cached we update the mock returned by it, instead of having to deal with purging the module cache between test files
     const qroqStore = await mockGroqStore()
     return qroqStore(options)
@@ -99,7 +99,7 @@ describe('createPreviewSubscriptionHook', () => {
     await waitForValueToChange(() => mockGroqStore.mock.calls.length)
 
     const error = new TypeError('Failed to subscribe')
-    const subscribe = (query, params, cb) => {
+    const subscribe = (_query: any, _params: any, cb: any) => {
       cb(error)
       // eslint-disable-next-line @typescript-eslint/no-empty-function, no-empty-function
       return {unsubscribe: () => {}}
@@ -119,7 +119,7 @@ describe('createPreviewSubscriptionHook', () => {
     await waitForValueToChange(() => mockGroqStore.mock.calls.length)
 
     const data = {}
-    const subscribe = (query, params, cb) => {
+    const subscribe = (_query: any, _params: any, cb: any) => {
       cb(null, data)
       // eslint-disable-next-line @typescript-eslint/no-empty-function, no-empty-function
       return {unsubscribe: () => {}}
