@@ -1,10 +1,10 @@
 import {createGlobalStyle, css} from 'styled-components'
 
-export interface StudioPageGlobalStyleProps {
+export interface NextStudioGlobalStyleProps {
   bg?: string
   unstable__tailwindSvgFix?: boolean
 }
-export const StudioPageGlobalStyle = createGlobalStyle<StudioPageGlobalStyleProps>`
+export const NextStudioGlobalStyle = createGlobalStyle<NextStudioGlobalStyleProps>`
 ${({bg}) =>
   bg
     ? css`

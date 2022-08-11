@@ -1,6 +1,6 @@
-import {Studio} from 'sanity'
 import config from 'sanity.config'
+import {NextStudio} from 'src/studio'
 
 export default function StudioPage() {
-  return <Studio config={config} />
+  return <NextStudio config={config} />
 }

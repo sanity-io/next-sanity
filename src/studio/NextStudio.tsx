@@ -1,27 +1,27 @@
-import { memo } from 'react'
-import { type StudioProps, Studio } from 'sanity'
+import {memo} from 'react'
+import {type StudioProps, Studio} from 'sanity'
 
 import {
-  type StudioPageHeadProps,
-  StudioPageGlobalStyle,
-  StudioPageGlobalStyleProps,
-  StudioPageHead,
+  type NextStudioHeadProps,
+  NextStudioGlobalStyle,
+  NextStudioGlobalStyleProps,
+  NextStudioHead,
   useBackgroundColorsFromTheme,
   useTheme,
 } from '.'
 
-export interface StudioPageLayoutProps extends StudioProps {
+export interface NextStudioProps extends StudioProps {
   /**
    * Override how the Studio renders by passing children.
    * This is useful for advanced use cases where you're using StudioProvider and StudioLayout instead of Studio:
    * import {StudioProvider, StudioLayout} from 'sanity'
-   * import {StudioPageLayout} from '@sanity/next-studio-layout'
-   * <StudioPageLayout config={config}>
+   * import {NextStudio} from 'next-sanity/studio'
+   * <NextStudio config={config}>
    *   <StudioProvider config={config}>
    *     <CustomComponentThatUsesContextFromStudioProvider />
    *     <StudioLayout />
    *   </StudioProvider>
-   * </StudioPageLayout>
+   * </NextStudio>
    */
   children?: React.ReactNode
   /**
@@ -31,19 +31,19 @@ export interface StudioPageLayoutProps extends StudioProps {
   /**
    * Apply fix with SVG icon centering that happens if TailwindCSS is loaded, on by defautl
    */
-  unstable__noTailwindSvgFix?: StudioPageGlobalStyleProps['unstable__tailwindSvgFix']
+  unstable__noTailwindSvgFix?: NextStudioGlobalStyleProps['unstable__tailwindSvgFix']
   /**
    * Add stuff to the head with next/head
    */
-  unstable__head?: StudioPageHeadProps['children']
+  unstable__head?: NextStudioHeadProps['children']
   /**
    * Sets the document title
    */
-  unstable__document_title?: StudioPageHeadProps['title']
+  unstable__document_title?: NextStudioHeadProps['title']
   /**
    * Sets the background color of <html>
    */
-  unstable__bg?: StudioPageGlobalStyleProps['bg']
+  unstable__bg?: NextStudioGlobalStyleProps['bg']
   /**
    * Don't load the favicon meta tags
    */
@@ -51,8 +51,9 @@ export interface StudioPageLayoutProps extends StudioProps {
 }
 /**
  * Intended to render at the root of a page, letting the Studio own that page and render much like it would if you used `npx sanity start` to render
+ * It's a drop-in replacement for `import {Studio} from 'sanity'`
  */
-export const StudioPageLayout = memo(function StudioPageLayout({
+const NextStudioComponent = ({
   children,
   config,
   unstable__noGlobalStyle,
@@ -62,27 +63,27 @@ export const StudioPageLayout = memo(function StudioPageLayout({
   unstable__bg,
   unstable__noFavicons,
   ...props
-}: StudioPageLayoutProps) {
+}: NextStudioProps) => {
   const theme = useTheme(config)
-  const { themeColorLight, themeColorDark } =
-    useBackgroundColorsFromTheme(theme)
+  const {themeColorLight, themeColorDark} = useBackgroundColorsFromTheme(theme)
   return (
     <>
       {children || <Studio config={config} {...props} />}
-      <StudioPageHead
+      <NextStudioHead
         themeColorLight={themeColorLight}
         themeColorDark={themeColorDark}
         title={unstable__document_title}
         favicons={!unstable__noFavicons}
       >
         {unstable__head}
-      </StudioPageHead>
+      </NextStudioHead>
       {!unstable__noGlobalStyle && (
-        <StudioPageGlobalStyle
+        <NextStudioGlobalStyle
           bg={unstable__bg ?? themeColorLight}
           unstable__tailwindSvgFix={!unstable__noTailwindSvgFix}
         />
       )}
     </>
   )
-})
+}
+export const NextStudio = memo(NextStudioComponent)
