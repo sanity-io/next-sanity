@@ -37,8 +37,11 @@
     "src"
   ],
   "scripts": {
+    "prebuild": "npm run clean",
     "build": "tsdx build --tsconfig ./tsconfig.tsdx.json",
+    "clean": "rimraf lib",
     "coverage": "npm test -- --coverage",
+    "dev": "next",
     "format": "npm run prettier -- --write . && npm run lint -- --fix",
     "lint": "eslint --ignore-path .gitignore .",
     "prepublishOnly": "npm run lint && npm run build && npm test",
@@ -56,7 +59,8 @@
   "dependencies": {
     "@sanity/client": "^3.3.3",
     "@sanity/groq-store": "^0.4.0",
-    "groq": "^2.29.3"
+    "groq": "^2.29.3",
+    "sanity": "^3.0.0-dev-preview.12"
   },
   "devDependencies": {
     "@async-fn/jest": "^1.5.3",
