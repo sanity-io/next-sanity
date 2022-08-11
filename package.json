@@ -26,7 +26,20 @@
       "require": "./dist/index.js",
       "default": "./dist/next-sanity.esm.js"
     },
-    "./package.json": "./package.json"
+    "./package.json": "./package.json",
+    "./studio": {
+      "source": "./src/studio.ts",
+      "require": "./lib/cjs/studio.js",
+      "default": "./lib/esm/studio.js"
+    }
+  },
+  "//": "the typesVersion config below is a workaround for TypeScript's lack of support for package exports",
+  "typesVersions": {
+    "*": {
+      "studio": [
+        "./dist/studio.d.ts"
+      ]
+    }
   },
   "main": "dist/index.js",
   "module": "dist/next-sanity.esm.js",
@@ -65,7 +78,6 @@
   "devDependencies": {
     "@async-fn/jest": "^1.5.3",
     "@sanity/eslint-config-studio": "^2.0.0",
-    "@semantic-release/exec": "^6.0.3",
     "@testing-library/react-hooks": "^7.0.2",
     "@types/eventsource": "^1.1.9",
     "@types/jest": "^28.1.6",
