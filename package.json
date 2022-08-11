@@ -1,28 +1,70 @@
 {
   "name": "next-sanity",
-  "description": "Sanity.io toolkit for Next.js",
   "version": "0.6.0",
-  "author": "Sanity.io <hello@sanity.io>",
+  "description": "Sanity.io toolkit for Next.js",
+  "keywords": [
+    "sanity",
+    "sanity.io",
+    "next.js"
+  ],
+  "homepage": "https://github.com/sanity-io/next-sanity#readme",
+  "bugs": {
+    "url": "https://github.com/sanity-io/next-sanity/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/sanity-io/next-sanity.git"
+  },
   "license": "MIT",
+  "author": "Sanity.io <hello@sanity.io>",
   "sideEffects": false,
   "main": "dist/index.js",
-  "typings": "dist/index.d.ts",
   "module": "dist/next-sanity.esm.js",
+  "typings": "dist/index.d.ts",
   "files": [
     "dist",
+    "lib",
     "src"
   ],
-  "engines": {
-    "node": ">=12"
-  },
   "scripts": {
-    "start": "tsdx watch",
     "build": "tsdx build",
-    "test": "tsdx test",
+    "coverage": "tsdx test --coverage",
     "lint": "eslint .",
-    "posttest": "npm run lint",
     "prepublishOnly": "tsdx build && npm test",
-    "coverage": "tsdx test --coverage"
+    "start": "tsdx watch",
+    "test": "tsdx test",
+    "posttest": "npm run lint"
+  },
+  "eslintConfig": {
+    "env": {
+      "browser": true,
+      "node": true
+    },
+    "parser": "@typescript-eslint/parser",
+    "plugins": [
+      "@typescript-eslint",
+      "prettier",
+      "react"
+    ],
+    "extends": [
+      "plugin:@typescript-eslint/recommended",
+      "sanity",
+      "sanity/react",
+      "sanity/typescript",
+      "prettier"
+    ],
+    "rules": {
+      "@typescript-eslint/explicit-module-boundary-types": "off",
+      "prettier/prettier": "error"
+    },
+    "root": true
+  },
+  "jest": {
+    "globals": {
+      "ts-jest": {
+        "diagnostics": false
+      }
+    }
   },
   "dependencies": {
     "@sanity/client": "^3.3.3",
@@ -42,7 +84,9 @@
     "eslint-config-react-app": "^7.0.1",
     "eslint-config-sanity": "^5.1.0",
     "eslint-plugin-prettier": "^4.2.1",
+    "parcel": "^2.7.0",
     "prettier": "^2.7.1",
+    "prettier-plugin-packagejson": "^2.2.18",
     "react": ">=17.0.2",
     "react-dom": "^17.0.2",
     "semantic-release": "^19.0.3",
@@ -51,50 +95,21 @@
     "typescript": "^4.7.4"
   },
   "peerDependencies": {
-    "react": ">=16.3.0"
+    "react": "^16.3 || ^17"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+ssh://git@github.com/sanity-io/next-sanity.git"
+  "engines": {
+    "node": ">=12"
   },
-  "bugs": {
-    "url": "https://github.com/sanity-io/next-sanity/issues"
-  },
-  "homepage": "https://github.com/sanity-io/next-sanity#readme",
-  "keywords": [
-    "sanity",
-    "sanity.io",
-    "next.js"
-  ],
-  "eslintConfig": {
-    "root": true,
-    "env": {
-      "node": true,
-      "browser": true
+  "targets": {
+    "studio": {
+      "distDir": "./lib",
+      "isLibrary": true,
+      "source": "./src/studio/index.ts"
     },
-    "parser": "@typescript-eslint/parser",
-    "extends": [
-      "plugin:@typescript-eslint/recommended",
-      "sanity",
-      "sanity/react",
-      "sanity/typescript",
-      "prettier"
-    ],
-    "rules": {
-      "prettier/prettier": "error",
-      "@typescript-eslint/explicit-module-boundary-types": "off"
-    },
-    "plugins": [
-      "@typescript-eslint",
-      "prettier",
-      "react"
-    ]
-  },
-  "jest": {
-    "globals": {
-      "ts-jest": {
-        "diagnostics": false
-      }
+    "preview": {
+      "distDir": "./lib",
+      "isLibrary": true,
+      "source": "./src/preview/index.ts"
     }
   }
 }
