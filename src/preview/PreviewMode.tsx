@@ -11,8 +11,8 @@ export interface PreviewModeProps extends PreviewSubscriptionProps {
   authMode: 'dual' | 'token' | 'cookie'
   onAuth: (authState: 'token' | 'cookie' | 'failed') => void
 }
-const PreviewModeComponent = ({authMode, onAuth, ...props}: PreviewModeProps) => {
-  const {projectId, token} = props
+const PreviewModeComponent = ({authMode, onAuth, token, ...props}: PreviewModeProps) => {
+  const {projectId} = props
   const authState = useAuthenticated({projectId, authMode, token})
 
   useEffect(() => {
@@ -30,9 +30,9 @@ const PreviewModeComponent = ({authMode, onAuth, ...props}: PreviewModeProps) =>
     case 'failed':
       return null
     case 'token':
-      return !props.EventSource && props.token ? (
+      return !props.EventSource && token ? (
         <Suspense fallback={null}>
-          <PreviewSubscriptionWithToken {...props} token={props.token!} />
+          <PreviewSubscriptionWithToken {...props} token={token!} />
         </Suspense>
       ) : (
         <PreviewSubscription {...props} />
