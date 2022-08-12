@@ -1,7 +1,7 @@
 import EventSource from 'eventsource'
 import {memo} from 'react'
 
-import {type PreviewSubscriptionProps, PreviewSubscription} from './PreviewSubscription'
+import {type PreviewSubscriptionProps, PreviewSubscription} from '.'
 
 // EventSource is a very chonky boi, that's why this is in a separate component
 // eslint-disable-next-line no-warning-comments
@@ -24,3 +24,6 @@ const PreviewSubscriptionWithTokenComponent = ({
 }
 
 export const PreviewSubscriptionWithToken = memo(PreviewSubscriptionWithTokenComponent)
+
+// Re-export as default to support React.lazy use cases
+export default PreviewSubscriptionWithToken
