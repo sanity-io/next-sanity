@@ -33,7 +33,8 @@
       "default": "./lib/esm/studio.js"
     }
   },
-  "//": "the typesVersion config below is a workaround for TypeScript's lack of support for package exports",
+  "main": "dist/index.js",
+  "module": "dist/next-sanity.esm.js",
   "typesVersions": {
     "*": {
       "studio": [
@@ -41,8 +42,6 @@
       ]
     }
   },
-  "main": "dist/index.js",
-  "module": "dist/next-sanity.esm.js",
   "typings": "dist/index.d.ts",
   "files": [
     "dist",
@@ -55,14 +54,14 @@
     "clean": "rimraf lib",
     "coverage": "npm test -- --coverage",
     "dev": "next",
-    "update:icons": "cp node_modules/@sanity/server/lib/static/favicons/* src/studio/static && cp src/studio/static/{favicon-192.png,favicon-512.png,manifest.webmanifest} public",
     "format": "npm run prettier -- --write . && eslint --fix .",
     "lint": "eslint --max-warnings 0 .",
     "prepublishOnly": "npm run lint && npm run build && node scripts/postParcel",
     "prettier": "npx prettier --ignore-path .gitignore",
     "test": "jest",
     "tsdx": "tsdx --tsconfig ./tsconfig.tsdx.json",
-    "type-check": "tsc --noEmit"
+    "type-check": "tsc --noEmit",
+    "update:icons": "cp node_modules/@sanity/server/lib/static/favicons/* src/studio/static && cp src/studio/static/favicon-{192,512}.png public && cp src/studio/static/webmanifest.json public/manifest.webmanifest"
   },
   "browserslist": "chrome 59, safari 11, firefox 56, edge 14, ie 11",
   "prettier": {
