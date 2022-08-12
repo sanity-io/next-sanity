@@ -1,8 +1,11 @@
-import {memo, useEffect} from 'react'
+import {memo, Suspense, useEffect} from 'react'
 
-import {type PreviewSubscriptionProps, PreviewSubscription} from './PreviewSubscription'
-import {PreviewSubscriptionWithToken} from './PreviewSubscriptionWithToken'
-import {useAuthenticated} from './useAuthenticated'
+import {
+  type PreviewSubscriptionProps,
+  PreviewSubscription,
+  PreviewSubscriptionWithToken,
+  useAuthenticated,
+} from '.'
 
 export interface PreviewModeProps extends PreviewSubscriptionProps {
   authMode: 'dual' | 'token' | 'cookie'
@@ -28,7 +31,9 @@ const PreviewModeComponent = ({authMode, onAuth, ...props}: PreviewModeProps) =>
       return null
     case 'token':
       return !props.EventSource && props.token ? (
-        <PreviewSubscriptionWithToken {...props} token={props.token!} />
+        <Suspense fallback={null}>
+          <PreviewSubscriptionWithToken {...props} token={props.token!} />
+        </Suspense>
       ) : (
         <PreviewSubscription {...props} />
       )
