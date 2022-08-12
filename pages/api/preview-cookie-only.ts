@@ -1,6 +1,8 @@
+import type {NextApiRequest, NextApiResponse} from 'next'
 /* eslint-disable no-process-env */
 
-export default async function preview(req, res) {
+// eslint-disable-next-line require-await, consistent-return
+export default async function preview(req: NextApiRequest, res: NextApiResponse): Promise<void> {
   const secret = process.env.NEXT_PUBLIC_PREVIEW_SECRET
   // Only require a secret when in production
   if (!secret && process.env.NODE_ENV === 'production') {
@@ -16,7 +18,7 @@ export default async function preview(req, res) {
     title: 'Preview Mode: Cookie',
     description:
       "Requires the user to be authenticated to the Studio, and allow cross-origin cookies (Safari doesn't)",
-    authMode: null,
+    authMode: 'cookie',
     token: null,
   })
   res.writeHead(307, {Location: '/'})
