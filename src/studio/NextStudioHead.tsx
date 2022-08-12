@@ -71,7 +71,7 @@ const NextStudioHeadComponent = ({
           href={
             process.env.NEXT_PUBLIC_VERCEL_URL
               ? inlineWebmanifest()
-              : 'https://next-studio-layout.sanity.build/manifest.webmanifest'
+              : 'https://next.sanity.build/manifest.webmanifest'
           }
         />
       )}
