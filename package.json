@@ -38,7 +38,7 @@
   "typesVersions": {
     "*": {
       "studio": [
-        "./dist/studio.d.ts"
+        "./lib/dts/studio.d.ts"
       ]
     }
   },
@@ -50,7 +50,7 @@
   ],
   "scripts": {
     "prebuild": "npm run clean && node scripts/preParcel.js",
-    "build": "npm run tsdx build && parcel build",
+    "build": "npm run tsdx build && parcel build && tsc --declarationDir lib/dts --project tsconfig.studio.json",
     "clean": "rimraf lib",
     "coverage": "npm test -- --coverage",
     "dev": "next",
@@ -61,7 +61,7 @@
     "test": "jest",
     "tsdx": "tsdx --tsconfig ./tsconfig.tsdx.json",
     "type-check": "tsc --noEmit",
-    "update:icons": "cp node_modules/@sanity/server/lib/static/favicons/* public"
+    "update:icons": "cp node_modules/@sanity/server/lib/static/favicons/* src/studio && cp src/studio/favicon-{192,512}.png publi && cp src/studio/webmanifest.json public/manifest.webmanifest"
   },
   "browserslist": "chrome 59, safari 11, firefox 56, edge 14, ie 11",
   "prettier": {
