@@ -63,7 +63,7 @@ const NextStudioHeadComponent = ({
       />
       <meta name="robots" content="noindex" />
       <meta name="referrer" content="same-origin" />
-      <title>{title}</title>
+      {title && <title>{title}</title>}
       {favicons && <link rel="icon" href={interop(iconIco)} sizes="any" />}
       {favicons && <link rel="icon" href={interop(iconSvg)} type="image/svg+xml" />}
       {favicons && <link rel="apple-touch-icon" href={interop(iconApple)} />}
