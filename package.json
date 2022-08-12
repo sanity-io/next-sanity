@@ -50,11 +50,12 @@
     "src"
   ],
   "scripts": {
-    "prebuild": "npm run clean && node scripts/preParcel.js",
+    "prebuild": "npm run clean && node scripts/preParcel.js && npm run update:icons",
     "build": "npm run tsdx build && parcel build",
     "clean": "rimraf lib",
     "coverage": "npm test -- --coverage",
     "dev": "next",
+    "update:icons": "cp node_modules/@sanity/server/lib/static/favicons/* src/studio/static && cp src/studio/static/{favicon-192.png,favicon-512.png,manifest.webmanifest} public",
     "format": "npm run prettier -- --write . && eslint --fix .",
     "lint": "eslint --max-warnings 0 .",
     "prepublishOnly": "npm run lint && npm run build && node scripts/postParcel",
@@ -121,12 +122,14 @@
     "cjs": {
       "distDir": "./lib/cjs",
       "isLibrary": true,
+      "context": "node",
       "source": "./src/studio.ts",
       "outputFormat": "commonjs"
     },
     "esm": {
       "distDir": "./lib/esm",
       "isLibrary": true,
+      "context": "node",
       "source": "./src/studio.ts",
       "outputFormat": "esmodule"
     }
