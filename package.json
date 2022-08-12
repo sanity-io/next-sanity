@@ -81,7 +81,6 @@
   "dependencies": {
     "@sanity/client": "^3.3.3",
     "@sanity/groq-store": "^0.4.0",
-    "@swc/helpers": "^0.4.6",
     "eventsource": "^2.0.2",
     "groq": "^2.29.3",
     "use-sync-external-store": "^1.2.0"
@@ -124,14 +123,14 @@
     "write-file-atomic": "^4.0.1"
   },
   "peerDependencies": {
-    "next": "^12.2.4",
+    "next": "^12.2.5",
     "react": "^16.3 || ^17 || ^18",
     "react-dom": "^16.3 || ^17 || ^18",
     "sanity": "^3.0.0-dev-preview.12",
     "styled-components": "^5.3.5"
   },
   "engines": {
-    "node": ">=12"
+    "node": ">=14"
   },
   "targets": {
     "cjs": {
@@ -144,7 +143,7 @@
       "isLibrary": true,
       "context": "browser",
       "engines": {
-        "browsers": "chrome 64, safari 12, firefox 62, edge 79"
+        "browsers": "chrome 80, safari 15, firefox 90"
       },
       "includeNodeModules": false
     },
@@ -158,7 +157,7 @@
       "isLibrary": true,
       "context": "browser",
       "engines": {
-        "browsers": "chrome 64, safari 12, firefox 62, edge 79"
+        "browsers": "chrome 80, safari 15, firefox 90"
       },
       "includeNodeModules": false
     }
