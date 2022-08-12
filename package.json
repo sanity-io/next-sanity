@@ -28,6 +28,13 @@
       "require": "./dist/index.js",
       "default": "./dist/index.esm.js"
     },
+    "./preview": {
+      "types": "./dist/preview.d.ts",
+      "source": "./src/preview/index.ts",
+      "import": "./dist/preview.esm.js",
+      "require": "./dist/preview.js",
+      "default": "./dist/preview.esm.js"
+    },
     "./studio": {
       "types": "./dist/studio.d.ts",
       "source": "./src/studio/index.ts",
@@ -42,6 +49,9 @@
   "types": "./dist/index.d.ts",
   "typesVersions": {
     "*": {
+      "preview": [
+        "./dist/preview.d.ts"
+      ],
       "studio": [
         "./dist/studio.d.ts"
       ]
@@ -81,6 +91,7 @@
   "dependencies": {
     "@sanity/client": "^3.4.1",
     "@sanity/groq-store": "^1.0.3",
+    "@swc/helpers": "^0.4.6",
     "eventsource": "^2.0.2",
     "groq": "^2.33.2",
     "use-sync-external-store": "^1.2.0"
