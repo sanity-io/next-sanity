@@ -73,6 +73,7 @@
   "dependencies": {
     "@sanity/client": "^3.3.3",
     "@sanity/groq-store": "^0.4.0",
+    "eventsource": "^2.0.2",
     "groq": "^2.29.3",
     "use-sync-external-store": "^1.2.0"
   },
@@ -116,6 +117,7 @@
   "peerDependencies": {
     "next": "^12.2.4",
     "react": "^16.3 || ^17 || ^18",
+    "react-dom": "^16.3 || ^17 || ^18",
     "sanity": "^3.0.0-dev-preview.12",
     "styled-components": "^5.3.5"
   },
@@ -125,7 +127,10 @@
   "targets": {
     "cjs": {
       "distDir": "./lib/cjs",
-      "source": "./src/studio.ts",
+      "source": [
+        "./src/studio/index.ts",
+        "./src/preview/index.ts"
+      ],
       "outputFormat": "commonjs",
       "isLibrary": true,
       "context": "browser",
@@ -136,7 +141,10 @@
     },
     "esm": {
       "distDir": "./lib/esm",
-      "source": "./src/studio.ts",
+      "source": [
+        "./src/studio/index.ts",
+        "./src/preview/index.ts"
+      ],
       "outputFormat": "esmodule",
       "isLibrary": true,
       "context": "browser",
