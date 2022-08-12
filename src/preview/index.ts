@@ -1,5 +1,3 @@
-import {lazy} from 'react'
-
 import {PreviewMode} from './PreviewMode'
 
 export default PreviewMode
@@ -10,4 +8,7 @@ export * from './useAuthenticated'
 export * from './useGroqStore'
 export * from './useSyncGroqStore'
 
-export const PreviewSubscriptionWithToken = lazy(() => import('./PreviewSubscriptionWithToken'))
+// eslint-disable-next-line no-warning-comments
+// @TODO revisit once Parcel handles dynamic imports properly
+//export const PreviewSubscriptionWithToken = lazy(() => import('./PreviewSubscriptionWithToken'))
+export {PreviewSubscriptionWithToken} from './PreviewSubscriptionWithToken'
