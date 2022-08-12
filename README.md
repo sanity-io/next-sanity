@@ -214,7 +214,7 @@ export async function getStaticPaths() {
 
 ## `next-sanity/studio` (dev-preview)
 
-> [See it live](https://next.sanity.build/)
+> [See it live](https://next.sanity.build/studio)
 
 The latest version of Sanity Studio allows you to embed a near-infinitely configurable content editing interface into any React application. This opens up many possibilities:
 
