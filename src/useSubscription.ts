@@ -135,7 +135,7 @@ function useQuerySubscription<R = any>(options: {
 }
 
 // Return params that are stable with deep equal as long as the key order is the same
-function useParams(params: Params): Params {
+export function useParams(params: Params): Params {
   const stringifiedParams = useMemo(() => JSON.stringify(params), [params])
   return useMemo(() => JSON.parse(stringifiedParams), [stringifiedParams])
 }
