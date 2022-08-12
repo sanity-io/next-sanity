@@ -73,6 +73,7 @@
   "dependencies": {
     "@sanity/client": "^3.4.1",
     "@sanity/groq-store": "^0.4.1",
+    "eventsource": "^2.0.2",
     "groq": "^2.33.2",
     "use-sync-external-store": "^1.2.0"
   },
@@ -125,7 +126,10 @@
   "targets": {
     "cjs": {
       "distDir": "./lib/cjs",
-      "source": "./src/studio.ts",
+      "source": [
+        "./src/studio/index.ts",
+        "./src/preview/index.ts"
+      ],
       "outputFormat": "commonjs",
       "isLibrary": true,
       "context": "browser",
@@ -136,7 +140,10 @@
     },
     "esm": {
       "distDir": "./lib/esm",
-      "source": "./src/studio.ts",
+      "source": [
+        "./src/studio/index.ts",
+        "./src/preview/index.ts"
+      ],
       "outputFormat": "esmodule",
       "isLibrary": true,
       "context": "browser",
