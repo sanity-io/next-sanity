@@ -2,14 +2,13 @@
 import Head from 'next/head'
 import {type ComponentProps, memo, useCallback} from 'react'
 
-import webmanifest from './static/webmanifest.json'
+import iconApple from '../../public/apple-touch-icon.png'
+import iconIco from '../../public/favicon.ico'
+import iconSvg from '../../public/favicon.svg'
+import icon192 from '../../public/favicon-192.png'
+import icon512 from '../../public/favicon-512.png'
+import webmanifest from '../../public/webmanifest.json'
 import type {MetaThemeColors} from './utils'
-
-const iconApple = new URL('static/apple-touch-icon.png', import.meta.url).toString()
-const iconSvg = new URL('static/favicon.svg', import.meta.url).toString()
-const iconIco = new URL('static/favicon.ico', import.meta.url).toString()
-const icon192 = new URL('static/favicon-192.png', import.meta.url).toString()
-const icon512 = new URL('static/favicon-512.png', import.meta.url).toString()
 
 // Interop between how Parcel and Next deals with asset imports
 const interop = (href: string | {src: string}): string =>
