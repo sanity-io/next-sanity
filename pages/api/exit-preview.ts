@@ -1,4 +1,7 @@
-export default async function exit(_, res) {
+import type {NextApiRequest, NextApiResponse} from 'next'
+
+// eslint-disable-next-line require-await
+export default async function exit(_: NextApiRequest, res: NextApiResponse): Promise<void> {
   // Exit the current user from "Preview Mode". This function accepts no args.
   res.clearPreviewData()
 
