@@ -1,7 +1,7 @@
 import {memo, useEffect} from 'react'
 import {unstable_batchedUpdates} from 'react-dom'
 
-import {type SyncGroqStoreHookProps, useSyncGroqStore} from './useSyncGroqStore'
+import {type SyncGroqStoreHookProps, useSyncGroqStore} from '.'
 
 export interface PreviewSubscriptionProps extends SyncGroqStoreHookProps {
   onChange: (data: any) => void
