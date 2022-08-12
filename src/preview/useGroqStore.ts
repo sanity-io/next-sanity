@@ -1,7 +1,8 @@
 import {groqStore} from '@sanity/groq-store'
 import {useMemo, useState} from 'react'
-import type {GroqStoreEventSource} from 'src/types'
-import {useParams} from 'src/useSubscription'
+
+import type {GroqStoreEventSource} from '../types'
+import {useParams} from '../useSubscription'
 
 const EMPTY_PARAMS = {}
 

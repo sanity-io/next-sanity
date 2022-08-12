@@ -27,18 +27,26 @@
       "default": "./dist/next-sanity.esm.js"
     },
     "./package.json": "./package.json",
+    "./preview": {
+      "source": "./src/preview/index.ts",
+      "require": "./lib/cjs/preview/index.js",
+      "default": "./lib/esm/preview/index.js"
+    },
     "./studio": {
-      "source": "./src/studio.ts",
-      "require": "./lib/cjs/studio.js",
-      "default": "./lib/esm/studio.js"
+      "source": "./src/studio/index.ts",
+      "require": "./lib/cjs/studio/index.js",
+      "default": "./lib/esm/studio/index.js"
     }
   },
   "main": "dist/index.js",
   "module": "dist/next-sanity.esm.js",
   "typesVersions": {
     "*": {
+      "preview": [
+        "./lib/dts/preview/index.d.ts"
+      ],
       "studio": [
-        "./lib/dts/studio.d.ts"
+        "./lib/dts/studio/index.d.ts"
       ]
     }
   },
@@ -73,6 +81,7 @@
   "dependencies": {
     "@sanity/client": "^3.3.3",
     "@sanity/groq-store": "^0.4.0",
+    "@swc/helpers": "^0.4.6",
     "eventsource": "^2.0.2",
     "groq": "^2.29.3",
     "use-sync-external-store": "^1.2.0"
