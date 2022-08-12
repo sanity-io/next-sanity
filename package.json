@@ -61,7 +61,7 @@
     "test": "jest",
     "tsdx": "tsdx --tsconfig ./tsconfig.tsdx.json",
     "type-check": "tsc --noEmit",
-    "update:icons": "cp node_modules/@sanity/server/lib/static/favicons/* src/studio/static && cp src/studio/static/favicon-{192,512}.png public && cp src/studio/static/webmanifest.json public/manifest.webmanifest"
+    "update:icons": "cp node_modules/@sanity/server/lib/static/favicons/* src/studio/static && cp src/studio/static/favicon-192.png public && cp src/studio/static/favicon-512.png public && cp src/studio/static/webmanifest.json public/manifest.webmanifest"
   },
   "browserslist": "chrome 59, safari 11, firefox 56, edge 14, ie 11",
   "prettier": {
