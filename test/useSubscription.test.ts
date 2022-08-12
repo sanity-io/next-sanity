@@ -25,6 +25,7 @@ jest.doMock('@sanity/groq-store', () => ({
   groqStore: async (options: unknown) => {
     // Since module imports are cached we update the mock returned by it, instead of having to deal with purging the module cache between test files
     const qroqStore = await mockGroqStore()
+    // @ts-expect-error
     return qroqStore(options)
   },
 }))
@@ -68,6 +69,7 @@ describe('createPreviewSubscriptionHook', () => {
       await waitForValueToChange(() => mockGroqStore.mock.calls.length)
 
       const subscribe = jest.fn()
+      // @ts-expect-error
       await act(() => mockGroqStore.resolve(() => ({subscribe})))
 
       expect(subscribe).toBeCalled()
@@ -87,6 +89,7 @@ describe('createPreviewSubscriptionHook', () => {
       await waitForValueToChange(() => mockGroqStore.mock.calls.length)
 
       const subscribe = jest.fn()
+      // @ts-expect-error
       await act(() => mockGroqStore.resolve(() => ({subscribe})))
 
       expect(subscribe).toBeCalled()
@@ -108,6 +111,7 @@ describe('createPreviewSubscriptionHook', () => {
       // eslint-disable-next-line @typescript-eslint/no-empty-function, no-empty-function
       return {unsubscribe: () => {}}
     }
+    // @ts-expect-error
     await act(() => mockGroqStore.resolve(() => ({subscribe})))
 
     expect(result.current.error).toBe(error)
@@ -128,6 +132,7 @@ describe('createPreviewSubscriptionHook', () => {
       // eslint-disable-next-line @typescript-eslint/no-empty-function, no-empty-function
       return {unsubscribe: () => {}}
     }
+    // @ts-expect-error
     await act(() => mockGroqStore.resolve(() => ({subscribe})))
 
     expect(result.current.data).toBe(data)
@@ -147,6 +152,7 @@ describe('createPreviewSubscriptionHook', () => {
 
     const unsubscribe = jest.fn()
     const subscribe = jest.fn(() => ({unsubscribe}))
+    // @ts-expect-error
     await act(() => mockGroqStore.resolve(() => ({subscribe})))
 
     expect(subscribe).toHaveBeenCalledTimes(1)
