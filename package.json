@@ -49,7 +49,7 @@
     "src"
   ],
   "scripts": {
-    "prebuild": "npm run clean && node scripts/preParcel.js && npm run update:icons",
+    "prebuild": "npm run clean && node scripts/preParcel.js",
     "build": "npm run tsdx build && parcel build",
     "clean": "rimraf lib",
     "coverage": "npm test -- --coverage",
@@ -61,7 +61,7 @@
     "test": "jest",
     "tsdx": "tsdx --tsconfig ./tsconfig.tsdx.json",
     "type-check": "tsc --noEmit",
-    "update:icons": "cp node_modules/@sanity/server/lib/static/favicons/* src/studio/static && cp src/studio/static/favicon-192.png public && cp src/studio/static/favicon-512.png public && cp src/studio/static/webmanifest.json public/manifest.webmanifest"
+    "update:icons": "cp node_modules/@sanity/server/lib/static/favicons/* src/studio/static && cp src/studio/static/favicon-{192,512}.png public && cp src/studio/static/webmanifest.json public/manifest.webmanifest"
   },
   "browserslist": "chrome 59, safari 11, firefox 56, edge 14, ie 11",
   "prettier": {
