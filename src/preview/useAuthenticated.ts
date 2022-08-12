@@ -1,6 +1,7 @@
 import {useEffect, useReducer, useRef} from 'react'
-import {getAborter} from 'src/aborter'
-import {getCurrentUser} from 'src/currentUser'
+
+import {getAborter} from '../aborter'
+import {getCurrentUser} from '../currentUser'
 
 export type AuthMode = 'dual' | 'token' | 'cookie'
 
