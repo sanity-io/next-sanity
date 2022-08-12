@@ -1,3 +1,4 @@
+/* eslint-disable no-process-env */
 import {useMemo} from 'react'
 import type {WorkspaceOptions} from 'sanity'
 import _config from 'sanity.config'
