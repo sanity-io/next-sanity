@@ -17,9 +17,7 @@ export default createConfig({
 
   plugins: [deskTool()],
 
-  schema: {
-    types: schemaTypes,
-  },
+  schema: {types: schemaTypes},
   document: {
     // eslint-disable-next-line require-await
     productionUrl: async (prev) => {
