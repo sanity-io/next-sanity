@@ -6,6 +6,7 @@ import {
   NextStudioGlobalStyle,
   NextStudioGlobalStyleProps,
   NextStudioHead,
+  NextStudioNoScript,
   useBackgroundColorsFromTheme,
   useTheme,
 } from '.'
@@ -48,6 +49,10 @@ export interface NextStudioProps extends StudioProps {
    * Don't load the favicon meta tags
    */
   unstable__noFavicons?: boolean
+  /**
+   * Don't render the <noscript> tag
+   */
+  unstable__noNoScript?: boolean
 }
 /**
  * Intended to render at the root of a page, letting the Studio own that page and render much like it would if you used `npx sanity start` to render
@@ -62,6 +67,7 @@ const NextStudioComponent = ({
   unstable__document_title,
   unstable__bg,
   unstable__noFavicons,
+  unstable__noNoScript,
   ...props
 }: NextStudioProps) => {
   const theme = useTheme(config)
@@ -83,6 +89,7 @@ const NextStudioComponent = ({
           unstable__tailwindSvgFix={!unstable__noTailwindSvgFix}
         />
       )}
+      {!unstable__noNoScript && <NextStudioNoScript />}
     </>
   )
 }
