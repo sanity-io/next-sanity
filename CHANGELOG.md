@@ -11,10 +11,6 @@ All notable changes to this project will be documented in this file. See
 
 - use `@sanity/semantic-release-preset` ([8dec077](https://github.com/sanity-io/next-sanity/commit/8dec077247d2d037f04e5e0fedbdd30c13e96f30))
 
-# Change Log
-
-All notable changes will be documented in this file.
-
 ## 0.5.2 - 2022-04-05
 
 ### Fixes
