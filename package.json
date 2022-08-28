@@ -61,7 +61,7 @@
     "test": "jest",
     "tsdx": "tsdx --tsconfig ./tsconfig.tsdx.json",
     "type-check": "tsc --noEmit",
-    "update:icons": "cp node_modules/@sanity/server/lib/static/favicons/* src/studio && cp src/studio/favicon-{192,512}.png publi && cp src/studio/webmanifest.json public/manifest.webmanifest"
+    "update:icons": "cp node_modules/@sanity/server/lib/static/favicons/* src/studio && cp src/studio/favicon-{192,512}.png public && cp src/studio/webmanifest.json public/manifest.webmanifest"
   },
   "browserslist": "chrome 59, safari 11, firefox 56, edge 14, ie 11",
   "prettier": {
@@ -102,7 +102,7 @@
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
     "react-is": "^17.0.2",
-    "sanity": "3.0.0-dev-preview.12",
+    "sanity": "3.0.0-dev-preview.15",
     "styled-components": "^5.3.5",
     "tsdx": "^0.14.1",
     "typescript": "^4.8.2",

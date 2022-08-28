@@ -1,23 +1,32 @@
 import {useRouter} from 'next/router'
 import {useMemo} from 'react'
-import {type Config, type StudioTheme, type WorkspaceOptions, defaultTheme} from 'sanity'
+import {
+  type Config,
+  type SingleWorkspace,
+  type StudioTheme,
+  type WorkspaceOptions,
+  defaultTheme,
+} from 'sanity'
+
+export type WithTheme = {
+  theme: StudioTheme
+}
+export type SingleWorkspaceWithTheme = Omit<SingleWorkspace, 'theme'> & WithTheme
+export type WorkspaceOptionsWithTheme = Omit<WorkspaceOptions, 'theme'> & WithTheme
+export type ConfigWithTheme = SingleWorkspaceWithTheme | WorkspaceOptionsWithTheme[]
 
 export function isWorkspaces(config: Config): config is WorkspaceOptions[] {
   return Array.isArray(config)
 }
 
-export interface WorkspaceWithTheme extends Omit<WorkspaceOptions, 'theme'> {
-  theme: StudioTheme
-}
-
 export function isWorkspaceWithTheme(
-  workspace: WorkspaceOptions
-): workspace is WorkspaceWithTheme {
+  workspace: SingleWorkspace | WorkspaceOptions
+): workspace is SingleWorkspaceWithTheme | WorkspaceOptionsWithTheme {
   return Boolean(workspace.theme)
 }
 
 export function useTheme(config: Config): StudioTheme {
-  const workspace = useMemo<WorkspaceOptions>(
+  const workspace = useMemo<SingleWorkspace | WorkspaceOptions>(
     () => (isWorkspaces(config) ? config[0] : config),
     [config]
   )
@@ -55,7 +64,8 @@ export function useBasePath(): string {
 export interface WorkspaceWithBasePath extends Omit<WorkspaceOptions, 'basePath'> {
   basePath: string
 }
-export type ConfigWithBasePath = WorkspaceWithBasePath | WorkspaceWithBasePath[]
+export type SingleWorkspaceWithBasePath = Omit<SingleWorkspace, 'basePath'> & {basePath: string}
+export type ConfigWithBasePath = SingleWorkspaceWithBasePath | WorkspaceOptions[]
 /**
  * Apply the base path from next to the config, prefixing any defined base path
  */
@@ -65,8 +75,7 @@ export function useConfigWithBasePath(config: Config): ConfigWithBasePath {
     if (isWorkspaces(config)) {
       return config.map((workspace) => ({
         ...workspace,
-        basePath:
-          workspace.basePath === '/' ? basePath : `${basePath}${workspace.basePath || ''}`,
+        basePath: workspace.basePath === '/' ? basePath : `${basePath}${workspace.basePath}`,
       }))
     }
     return {
