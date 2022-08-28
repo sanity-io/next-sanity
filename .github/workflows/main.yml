@@ -1,5 +1,15 @@
-name: CI
-on: push
+name: CI & Release
+
+on:
+  push:
+  workflow_dispatch:
+    inputs:
+      release:
+        description: 'Release new version'
+        required: true
+        default: false
+        type: boolean
+
 jobs:
   test:
     name: Node.js ${{ matrix.node-version }}
@@ -7,15 +17,13 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        node-version:
-          - 18
-          - 16
-          - 14
+        node-version: [14, lts/*, current]
     steps:
       - uses: actions/checkout@2541b1294d2704b0964813337f33b291d3f8596b # tag=v3
       - uses: actions/setup-node@2fddd8803e2f5c9604345a0b591c3020ee971a93 # tag=v3
         with:
           node-version: ${{ matrix.node-version }}
+          cache: npm
       - run: npm ci
       - run: npm run lint
       - run: npm run build
@@ -23,18 +31,33 @@ jobs:
 
   release:
     name: Semantic Release
-    if: ${{ github.ref_name == 'main' }}
-    needs: [test]
+    needs: test
     runs-on: ubuntu-latest
+    # only run if opt-in during workflow_dispatch
+    if: inputs.release == true
     steps:
       - uses: actions/checkout@2541b1294d2704b0964813337f33b291d3f8596b # tag=v3
         with:
+          # Need to fetch entire commit history to
+          # analyze every commit since last release
           fetch-depth: 0
       - uses: actions/setup-node@2fddd8803e2f5c9604345a0b591c3020ee971a93 # tag=v3
         with:
           node-version: lts/*
+          cache: npm
       - run: npm ci
-      - run: npx semantic-release
+        # Branches that will release new versions are defined in .releaserc.json
+      - run:
+          npx semantic-release
+          # Don't allow interrupting the release step if the job is cancelled, as it can lead to an inconsistent state
+        # e.g. git tags were pushed but it exited before `npm publish`
+        if: always()
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          NPM_TOKEN: ${{ secrets.NPM_PUBLISH_TOKEN }}
+        # Re-run semantic release with rich logs if it failed to publish for easier debugging
+      - run: npx semantic-release --debug
+        if: failure()
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           NPM_TOKEN: ${{ secrets.NPM_PUBLISH_TOKEN }}
