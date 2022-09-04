@@ -53,6 +53,10 @@ export interface NextStudioProps extends StudioProps {
    * Don't render the <noscript> tag
    */
   unstable__noNoScript?: boolean
+  /**
+   * Sets the sanity studio config
+   */
+  config: StudioProps['config']
 }
 /**
  * Intended to render at the root of a page, letting the Studio own that page and render much like it would if you used `npx sanity start` to render
