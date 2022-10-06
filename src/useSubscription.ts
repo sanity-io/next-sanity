@@ -21,7 +21,8 @@ export function createPreviewSubscriptionHook({
   token,
   EventSource,
   documentLimit = 3000,
-}: ProjectConfig & {documentLimit?: number}) {
+  listen = true,
+}: ProjectConfig & {documentLimit?: number, listen?: boolean}) {
   // Only construct/setup the store when `getStore()` is called
   let store: Promise<GroqStore>
 
@@ -58,7 +59,7 @@ export function createPreviewSubscriptionHook({
           documentLimit,
           token,
           EventSource,
-          listen: true,
+          listen,
           overlayDrafts: true,
           subscriptionThrottleMs: 10,
         })
