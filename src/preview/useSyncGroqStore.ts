@@ -1,6 +1,6 @@
 import {useSyncExternalStore} from 'use-sync-external-store/shim'
 
-import {type GroqStoreHookProps, useGroqStore} from '.'
+import {type GroqStoreHookProps, useGroqStore} from './useGroqStore'
 
 export type SyncGroqStoreHookProps = GroqStoreHookProps
 
