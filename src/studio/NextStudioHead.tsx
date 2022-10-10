@@ -15,7 +15,7 @@ import icon512 from './favicon-512.png'
 import type {MetaThemeColors} from './utils'
 import webmanifest from './webmanifest.json'
 
-// Interop between how Parcel and Next deals with asset imports
+// Interop between how `@rollup/plugin-url` and Next deals with asset imports
 const interop = (href: string | {src: string}): string =>
   typeof href === 'string' ? href : href.src
 
