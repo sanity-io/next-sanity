@@ -1,6 +1,6 @@
 import {memo, useEffect} from 'react'
 
-import {type SyncGroqStoreHookProps, useSyncGroqStore} from '.'
+import {type SyncGroqStoreHookProps, useSyncGroqStore} from './useSyncGroqStore'
 
 export interface PreviewSubscriptionProps extends SyncGroqStoreHookProps {
   onChange: (data: any) => void
