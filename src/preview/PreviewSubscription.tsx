@@ -1,5 +1,4 @@
 import {memo, useEffect} from 'react'
-import {unstable_batchedUpdates} from 'react-dom'
 
 import {type SyncGroqStoreHookProps, useSyncGroqStore} from '.'
 
@@ -9,7 +8,7 @@ export interface PreviewSubscriptionProps extends SyncGroqStoreHookProps {
 const PreviewSubscriptionComponent = ({onChange, ...props}: PreviewSubscriptionProps) => {
   const data = useSyncGroqStore(props)
   useEffect(() => {
-    unstable_batchedUpdates(() => onChange(data))
+    onChange(data)
   }, [data, onChange])
 
   return null
