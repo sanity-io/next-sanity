@@ -1,16 +1,10 @@
 import {memo} from 'react'
 import {type StudioProps, Studio} from 'sanity'
 
-import {
-  type NextStudioHeadProps,
-  NextStudioGlobalStyle,
-  NextStudioGlobalStyleProps,
-  NextStudioHead,
-  NextStudioNoScript,
-  useBackgroundColorsFromTheme,
-  useTextFontFamilyFromTheme,
-  useTheme,
-} from '.'
+import {NextStudioGlobalStyle, NextStudioGlobalStyleProps} from './NextStudioGlobalStyle'
+import {NextStudioHead, NextStudioHeadProps} from './NextStudioHead'
+import {NextStudioNoScript} from './NextStudioNoScript'
+import {useBackgroundColorsFromTheme, useTextFontFamilyFromTheme, useTheme} from './utils'
 
 export interface NextStudioProps extends StudioProps {
   /**
