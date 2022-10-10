@@ -1,7 +1,7 @@
 import EventSource from 'eventsource'
 import {memo} from 'react'
 
-import {type PreviewSubscriptionProps, PreviewSubscription} from '.'
+import {type PreviewSubscriptionProps, PreviewSubscription} from './PreviewSubscription'
 
 // EventSource is a very chonky boi, that's why this is in a separate component
 // eslint-disable-next-line no-warning-comments
