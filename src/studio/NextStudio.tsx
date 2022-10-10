@@ -8,6 +8,7 @@ import {
   NextStudioHead,
   NextStudioNoScript,
   useBackgroundColorsFromTheme,
+  useTextFontFamilyFromTheme,
   useTheme,
 } from '.'
 
@@ -46,6 +47,10 @@ export interface NextStudioProps extends StudioProps {
    */
   unstable__bg?: NextStudioGlobalStyleProps['bg']
   /**
+   * Sets the font-family of #__next
+   */
+  unstable__fontFamily?: NextStudioGlobalStyleProps['fontFamily']
+  /**
    * Don't load the favicon meta tags
    */
   unstable__noFavicons?: boolean
@@ -66,12 +71,14 @@ const NextStudioComponent = ({
   unstable__head,
   unstable__document_title,
   unstable__bg,
+  unstable__fontFamily,
   unstable__noFavicons,
   unstable__noNoScript,
   ...props
 }: NextStudioProps) => {
   const theme = useTheme(config)
   const {themeColorLight, themeColorDark} = useBackgroundColorsFromTheme(theme)
+  const themeFontFamily = useTextFontFamilyFromTheme(theme)
   return (
     <>
       {children || <Studio config={config} {...props} />}
@@ -86,6 +93,7 @@ const NextStudioComponent = ({
       {!unstable__noGlobalStyle && (
         <NextStudioGlobalStyle
           bg={unstable__bg ?? themeColorLight}
+          fontFamily={unstable__fontFamily ?? themeFontFamily}
           unstable__tailwindSvgFix={!unstable__noTailwindSvgFix}
         />
       )}

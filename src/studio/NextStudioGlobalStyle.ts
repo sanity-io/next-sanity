@@ -1,6 +1,7 @@
 import {createGlobalStyle, css} from 'styled-components'
 
 export interface NextStudioGlobalStyleProps {
+  fontFamily?: string
   bg?: string
   unstable__tailwindSvgFix?: boolean
 }
@@ -23,6 +24,14 @@ body {
   overscroll-behavior: none;
   -webkit-font-smoothing: antialiased;
 }
+${({fontFamily}) =>
+  fontFamily
+    ? css`
+        #__next {
+          font-family: ${fontFamily};
+        }
+      `
+    : ''}
 ${({unstable__tailwindSvgFix}) =>
   unstable__tailwindSvgFix
     ? css`

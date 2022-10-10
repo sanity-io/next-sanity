@@ -50,6 +50,10 @@ export const useBackgroundColorsFromTheme = (theme: StudioTheme): MetaThemeColor
   )
 }
 
+export const useTextFontFamilyFromTheme = (theme: StudioTheme): string => {
+  return useMemo<string>(() => theme.fonts.text.family, [theme])
+}
+
 /**
  * Parses the next route to determine the what the base path for Sanity Studio should be
  */
