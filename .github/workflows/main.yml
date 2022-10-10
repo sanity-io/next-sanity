@@ -1,7 +1,9 @@
 name: CI & Release
 
 on:
+  pull_request:
   push:
+    branches: [main]
   workflow_dispatch:
     inputs:
       release:
@@ -11,7 +13,7 @@ on:
         type: boolean
 
 concurrency:
-  group: ${{ github.workflow }}-${{ github.head_ref || github.ref }}
+  group: ${{ github.workflow }}-${{ github.head_ref || github.run_id }}
   cancel-in-progress: true
 
 jobs:
