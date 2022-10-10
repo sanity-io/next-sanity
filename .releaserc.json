@@ -1,4 +1,7 @@
 {
   "extends": "@sanity/semantic-release-preset",
-  "branches": ["main", {"name": "new-preview-mode", "prerelease": true}]
+  "branches": [
+    "main",
+    {"name": "chore/pkg-utils", "channel": "experimental-pkg-utils", "prerelease": true}
+  ]
 }
