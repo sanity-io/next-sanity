@@ -60,7 +60,7 @@
     "dev": "next",
     "format": "npm run prettier -- --write . && eslint --fix .",
     "lint": "eslint --max-warnings 0 .",
-    "prepublishOnly": "npm run lint && npm run build",
+    "prepublishOnly": "npm run build",
     "prettier": "npx prettier --ignore-path .gitignore",
     "test": "jest",
     "type-check": "tsc --noEmit",
@@ -111,11 +111,10 @@
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-is": "^18.2.0",
-    "rollup": "^3.1.0",
+    "rollup": "^2.79.1",
     "sanity": "3.0.0-purple-unicorn.6",
     "styled-components": "^5.3.6",
-    "typescript": "^4.8.4",
-    "write-file-atomic": "^4.0.2"
+    "typescript": "^4.8.4"
   },
   "peerDependencies": {
     "next": "^12",
