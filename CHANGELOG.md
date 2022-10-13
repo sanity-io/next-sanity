@@ -5,6 +5,17 @@
 All notable changes to this project will be documented in this file. See
 [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.0.0](https://github.com/sanity-io/next-sanity/compare/v0.8.5...v1.0.0) (2022-10-13)
+
+### ⚠ BREAKING CHANGES
+
+- upgrade to node v14 or later.
+
+### Bug Fixes
+
+- drop support for node v12 ([b831ef4](https://github.com/sanity-io/next-sanity/commit/b831ef4040687fe6f96323fa8ef141a0ce603343))
+- use `@sanity/pkg-utils` for bundling ([6929f98](https://github.com/sanity-io/next-sanity/commit/6929f984891866e272f9bd344950661bb895c15d))
+
 ## [0.8.5](https://github.com/sanity-io/next-sanity/compare/v0.8.4...v0.8.5) (2022-10-10)
 
 ### Bug Fixes
