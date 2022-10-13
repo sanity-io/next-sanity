@@ -34,6 +34,7 @@ All notable changes to this project will be documented in this file. See
 
 - drop support for node v12 ([b831ef4](https://github.com/sanity-io/next-sanity/commit/b831ef4040687fe6f96323fa8ef141a0ce603343))
 - use `@sanity/pkg-utils` for bundling ([6929f98](https://github.com/sanity-io/next-sanity/commit/6929f984891866e272f9bd344950661bb895c15d))
+
 ## [0.9.0-new-preview-mode.1](https://github.com/sanity-io/next-sanity/compare/v0.8.5...v0.9.0-new-preview-mode.1) (2022-10-10)
 
 ### Features
