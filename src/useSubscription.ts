@@ -3,16 +3,9 @@ import {useEffect, useMemo, useState} from 'react'
 
 import {Aborter, getAborter} from './aborter'
 import {getCurrentUser} from './currentUser'
-import {ProjectConfig} from './types'
+import {Params, ProjectConfig, SubscriptionOptions} from './types'
 
 const EMPTY_PARAMS = {}
-
-export type Params = Record<string, unknown>
-export interface SubscriptionOptions<R = any> {
-  enabled?: boolean
-  params?: Params
-  initialData?: R
-}
 
 // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
 export function createPreviewSubscriptionHook({
