@@ -5,6 +5,12 @@
 All notable changes to this project will be documented in this file. See
 [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.0.1](https://github.com/sanity-io/next-sanity/compare/v1.0.0...v1.0.1) (2022-10-25)
+
+### Bug Fixes
+
+- expand supported next version range to allow v13 ([5573e6d](https://github.com/sanity-io/next-sanity/commit/5573e6d23361f0b0b7370003aec6346cb9168d35))
+
 ## [1.0.0](https://github.com/sanity-io/next-sanity/compare/v0.8.5...v1.0.0) (2022-10-13)
 
 ### ⚠ BREAKING CHANGES
