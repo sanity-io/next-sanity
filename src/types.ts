@@ -15,3 +15,11 @@ export interface CurrentUser {
   name: string
   profileImage?: string
 }
+
+export type Params = Record<string, unknown>
+
+export interface SubscriptionOptions<R = any> {
+  enabled?: boolean
+  params?: Params
+  initialData?: R
+}
