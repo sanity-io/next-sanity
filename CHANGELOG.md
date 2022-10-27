@@ -5,6 +5,13 @@
 All notable changes to this project will be documented in this file. See
 [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.0.2](https://github.com/sanity-io/next-sanity/compare/v1.0.1...v1.0.2) (2022-10-27)
+
+### Bug Fixes
+
+- **deps:** update dependency @sanity/groq-store to v1 ([22f7b5a](https://github.com/sanity-io/next-sanity/commit/22f7b5a07ce38cb1df6efd1fd797e114543d979b))
+- export the subscription options to avoid ts errors ([#104](https://github.com/sanity-io/next-sanity/issues/104)) ([2fca80f](https://github.com/sanity-io/next-sanity/commit/2fca80fee7cb47bde119f6c9acf4fb57fcafc2d2))
+
 ## [1.0.1](https://github.com/sanity-io/next-sanity/compare/v1.0.0...v1.0.1) (2022-10-25)
 
 ### Bug Fixes
