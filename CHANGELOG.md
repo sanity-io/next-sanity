@@ -5,6 +5,22 @@
 All notable changes to this project will be documented in this file. See
 [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.1.0-new-preview-mode.1](https://github.com/sanity-io/next-sanity/compare/v1.0.3...v1.1.0-new-preview-mode.1) (2022-10-28)
+
+### Features
+
+- force release ([716ae69](https://github.com/sanity-io/next-sanity/commit/716ae69926a41e1e60407eb9af5eb5d85f681f05))
+
+### Bug Fixes
+
+- bump browserslist ([137b2ab](https://github.com/sanity-io/next-sanity/commit/137b2abd3cdf48721d67d20f2ce6f8fec69ae223))
+- don't use token when in cookie mode ([22c807c](https://github.com/sanity-io/next-sanity/commit/22c807ca1ea767fa1520128d1dd257ccb48bc407))
+- lazy import broken in parcel ([450f70c](https://github.com/sanity-io/next-sanity/commit/450f70cd02abd7eb04f639aaa09c98894a63acf8))
+- lazy load code splitting ([d716118](https://github.com/sanity-io/next-sanity/commit/d716118f58226e53d9cbab258a25d24536a52aea))
+- ready the first test ([6b25be2](https://github.com/sanity-io/next-sanity/commit/6b25be2eca8340ea04c12299f76643cf11939779))
+- replace parcel with pkg-utils ([1e00b7d](https://github.com/sanity-io/next-sanity/commit/1e00b7d373b5d62aa1218736f03757e4b5c6a039))
+- update package lock ([b62cb68](https://github.com/sanity-io/next-sanity/commit/b62cb680a3447921858e79e457e22d1ecdf69e55))
+
 ## [1.0.3](https://github.com/sanity-io/next-sanity/compare/v1.0.2...v1.0.3) (2022-10-28)
 
 ### Bug Fixes
