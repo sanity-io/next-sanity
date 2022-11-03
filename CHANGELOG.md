@@ -5,6 +5,12 @@
 All notable changes to this project will be documented in this file. See
 [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.0.5](https://github.com/sanity-io/next-sanity/compare/v1.0.4...v1.0.5) (2022-11-03)
+
+### Bug Fixes
+
+- enable node native ESM ([#133](https://github.com/sanity-io/next-sanity/issues/133)) ([a47c3a1](https://github.com/sanity-io/next-sanity/commit/a47c3a1a8e73da7671db20444e35b249832a3bc1))
+
 ## [1.0.4](https://github.com/sanity-io/next-sanity/compare/v1.0.3...v1.0.4) (2022-11-03)
 
 ### Bug Fixes
