@@ -32,6 +32,11 @@
     "./studio": {
       "types": "./dist/studio.d.ts",
       "source": "./src/studio/index.ts",
+      "node": {
+        "source": "./src/studio/index.ts",
+        "import": "./dist/studio.mjs",
+        "require": "./dist/studio.cjs"
+      },
       "import": "./dist/studio.js",
       "require": "./dist/studio.cjs",
       "default": "./dist/studio.js"
@@ -55,6 +60,8 @@
   ],
   "scripts": {
     "prebuild": "npm run clean",
+    "postbuild": "npm run build:studio.mjs",
+    "build:studio.mjs": "cp studio.mjs dist/studio.mjs",
     "build": "pkg build --tsconfig tsconfig.build.json",
     "clean": "rimraf dist",
     "coverage": "npm test -- --coverage",

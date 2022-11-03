@@ -15,17 +15,15 @@ assert.equal(typeof createCurrentUserHook, 'function')
 assert.equal(typeof createPreviewSubscriptionHook, 'function')
 assert.equal(typeof groq, 'function')
 
-/*
-// Commented out due to `next.head` not being declared in `next/package.json` exports.
 // Testing pkg.exports[./studio]
 import {
+  isWorkspaces,
+  isWorkspaceWithTheme,
   NextStudio,
   NextStudioGlobalStyle,
   NextStudioHead,
   NextStudioNoScript,
   ServerStyleSheetDocument,
-  isWorkspaceWithTheme,
-  isWorkspaces,
   useBackgroundColorsFromTheme,
   useBasePath,
   useConfigWithBasePath,
@@ -45,7 +43,6 @@ assert.equal(typeof useBasePath, 'function')
 assert.equal(typeof useConfigWithBasePath, 'function')
 assert.equal(typeof useTextFontFamilyFromTheme, 'function')
 assert.equal(typeof useTheme, 'function')
-// */
 
 /*
 // Ensure it's possible to check what version of next-sanity is being used
