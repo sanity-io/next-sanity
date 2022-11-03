@@ -9,6 +9,7 @@
     "studio",
     "studio-v3"
   ],
+  "type": "module",
   "homepage": "https://github.com/sanity-io/next-sanity#readme",
   "bugs": {
     "url": "https://github.com/sanity-io/next-sanity/issues"
@@ -24,20 +25,20 @@
     ".": {
       "types": "./dist/index.d.ts",
       "source": "./src/index.ts",
-      "import": "./dist/index.esm.js",
-      "require": "./dist/index.js",
-      "default": "./dist/index.esm.js"
+      "import": "./dist/index.js",
+      "require": "./dist/index.cjs",
+      "default": "./dist/index.js"
     },
     "./studio": {
       "types": "./dist/studio.d.ts",
       "source": "./src/studio/index.ts",
-      "import": "./dist/studio.esm.js",
-      "require": "./dist/studio.js",
-      "default": "./dist/studio.esm.js"
+      "import": "./dist/studio.js",
+      "require": "./dist/studio.cjs",
+      "default": "./dist/studio.js"
     }
   },
-  "main": "./dist/index.js",
-  "module": "./dist/index.esm.js",
+  "main": "./dist/index.cjs",
+  "module": "./dist/index.js",
   "source": "./src/index.ts",
   "types": "./dist/index.d.ts",
   "typesVersions": {
@@ -63,6 +64,7 @@
     "prepublishOnly": "npm run build",
     "prettier": "npx prettier --ignore-path .gitignore",
     "test": "jest",
+    "test:node-esm-cjs": "node test.mjs && node test.cjs",  
     "type-check": "tsc --noEmit",
     "update:icons": "cp node_modules/@sanity/server/lib/static/favicons/* src/studio && cp src/studio/favicon-{192,512}.png public && cp src/studio/webmanifest.json public/manifest.webmanifest"
   },
