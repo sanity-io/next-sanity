@@ -9,7 +9,6 @@
     "studio",
     "studio-v3"
   ],
-  "type": "module",
   "homepage": "https://github.com/sanity-io/next-sanity#readme",
   "bugs": {
     "url": "https://github.com/sanity-io/next-sanity/issues"
@@ -21,6 +20,7 @@
   "license": "MIT",
   "author": "Sanity.io <hello@sanity.io>",
   "sideEffects": false,
+  "type": "module",
   "exports": {
     ".": {
       "types": "./dist/index.d.ts",
@@ -64,7 +64,7 @@
     "prepublishOnly": "npm run build",
     "prettier": "npx prettier --ignore-path .gitignore",
     "test": "jest",
-    "test:node-esm-cjs": "node test.mjs && node test.cjs",  
+    "test:node-esm-cjs": "node test.mjs && node test.cjs",
     "type-check": "tsc --noEmit",
     "update:icons": "cp node_modules/@sanity/server/lib/static/favicons/* src/studio && cp src/studio/favicon-{192,512}.png public && cp src/studio/webmanifest.json public/manifest.webmanifest"
   },
