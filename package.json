@@ -64,7 +64,7 @@
     "prepublishOnly": "npm run build",
     "prettier": "npx prettier --ignore-path .gitignore",
     "test": "jest",
-    "test:node-esm-cjs": "node test.mjs && test.cjs",  
+    "test:node-esm-cjs": "node test.mjs && node test.cjs",  
     "type-check": "tsc --noEmit",
     "update:icons": "cp node_modules/@sanity/server/lib/static/favicons/* src/studio && cp src/studio/favicon-{192,512}.png public && cp src/studio/webmanifest.json public/manifest.webmanifest"
   },

@@ -1,13 +1,9 @@
 // Test that exports works when node runs in native ESM mode
 
-import {strict as assert} from 'node:assert'
+const {strict: assert} = require('node:assert')
 
-import {
-  createClient,
-  createCurrentUserHook,
-  createPreviewSubscriptionHook,
-  groq,
-} from 'next-sanity'
+const nextSanity = require('next-sanity')
+const {createClient, createCurrentUserHook, createPreviewSubscriptionHook, groq} = nextSanity
 
 // Testing pkg.exports[.]
 assert.equal(typeof createClient, 'function')
@@ -15,10 +11,9 @@ assert.equal(typeof createCurrentUserHook, 'function')
 assert.equal(typeof createPreviewSubscriptionHook, 'function')
 assert.equal(typeof groq, 'function')
 
-/*
-// Commented out due to `next.head` not being declared in `next/package.json` exports.
 // Testing pkg.exports[./studio]
-import {
+const nextSanityStudio = require('next-sanity/studio')
+const {
   NextStudio,
   NextStudioGlobalStyle,
   NextStudioHead,
@@ -31,8 +26,7 @@ import {
   useConfigWithBasePath,
   useTextFontFamilyFromTheme,
   useTheme,
-} from 'next-sanity/studio'
-
+} = nextSanityStudio
 assert.equal(typeof NextStudio?.type, 'function')
 assert.equal(typeof NextStudioGlobalStyle?.type, 'function')
 assert.equal(typeof NextStudioHead?.type, 'function')
@@ -45,11 +39,10 @@ assert.equal(typeof useBasePath, 'function')
 assert.equal(typeof useConfigWithBasePath, 'function')
 assert.equal(typeof useTextFontFamilyFromTheme, 'function')
 assert.equal(typeof useTheme, 'function')
-// */
 
 /*
 // Ensure it's possible to check what version of next-sanity is being used
-import {version} from 'next-sanity/package.json' assert {type: 'json'}
+const {version} = require('next-sanity/package.json')
 
-console.log(version)
+assert.equal(typeof version, 'string')
 // */
