@@ -5,6 +5,12 @@
 All notable changes to this project will be documented in this file. See
 [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.0.4](https://github.com/sanity-io/next-sanity/compare/v1.0.3...v1.0.4) (2022-11-03)
+
+### Bug Fixes
+
+- add TS release tags ([15d8c06](https://github.com/sanity-io/next-sanity/commit/15d8c0614722a070cf7734b4a2a5acef6a7ffa01))
+
 ## [1.0.3](https://github.com/sanity-io/next-sanity/compare/v1.0.2...v1.0.3) (2022-10-28)
 
 ### Bug Fixes
