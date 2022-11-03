@@ -51,5 +51,5 @@ assert.equal(typeof useTheme, 'function')
 // Ensure it's possible to check what version of next-sanity is being used
 import {version} from 'next-sanity/package.json' assert {type: 'json'}
 
-console.log(version)
+assert.equal(typeof version, 'string')
 // */
