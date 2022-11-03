@@ -10,6 +10,7 @@ const createJestConfig = nextJest({dir: './'})
  **/
 const customJestConfig = {
   moduleDirectories: ['node_modules', '<rootDir>/'],
+  extensionsToTreatAsEsm: ['.ts'],
 }
 
 // createJestConfig is exported this way to ensure that next/jest can load the Next.js config which is async
