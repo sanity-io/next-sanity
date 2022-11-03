@@ -6,50 +6,47 @@ import {type NextStudioHeadProps, NextStudioHead} from './NextStudioHead'
 import {NextStudioNoScript} from './NextStudioNoScript'
 import {useBackgroundColorsFromTheme, useTextFontFamilyFromTheme, useTheme} from './utils'
 
+/** @beta */
 export interface NextStudioProps extends StudioProps {
-  /**
-   * Override how the Studio renders by passing children.
-   * This is useful for advanced use cases where you're using StudioProvider and StudioLayout instead of Studio:
-   * import {StudioProvider, StudioLayout} from 'sanity'
-   * import {NextStudio} from 'next-sanity/studio'
-   * <NextStudio config={config}>
-   *   <StudioProvider config={config}>
-   *     <CustomComponentThatUsesContextFromStudioProvider />
-   *     <StudioLayout />
-   *   </StudioProvider>
-   * </NextStudio>
-   */
   children?: React.ReactNode
   /**
    * Turns off the default global styling
+   * @alpha
    */
   unstable__noGlobalStyle?: boolean
   /**
-   * Apply fix with SVG icon centering that happens if TailwindCSS is loaded, on by defautl
+   * Apply fix with SVG icon centering that happens if TailwindCSS is loaded, on by default
+   * @alpha
    */
   unstable__noTailwindSvgFix?: NextStudioGlobalStyleProps['unstable__tailwindSvgFix']
   /**
    * Add stuff to the head with next/head
+   * @alpha
    */
   unstable__head?: NextStudioHeadProps['children']
   /**
    * Sets the document title
+   * @alpha
    */
   unstable__document_title?: NextStudioHeadProps['title']
   /**
    * Sets the background color of <html>
+   * @alpha
    */
   unstable__bg?: NextStudioGlobalStyleProps['bg']
   /**
    * Sets the font-family of #__next
+   * @alpha
    */
   unstable__fontFamily?: NextStudioGlobalStyleProps['fontFamily']
   /**
    * Don't load the favicon meta tags
+   * @alpha
    */
   unstable__noFavicons?: boolean
   /**
    * Don't render the <noscript> tag
+   * @alpha
    */
   unstable__noNoScript?: boolean
 }
@@ -95,4 +92,20 @@ const NextStudioComponent = ({
     </>
   )
 }
+
+/**
+ * Override how the Studio renders by passing children.
+ * This is useful for advanced use cases where you're using StudioProvider and StudioLayout instead of Studio:
+ * ```
+ * import {StudioProvider, StudioLayout} from 'sanity'
+ * import {NextStudio} from 'next-sanity/studio'
+ * <NextStudio config={config}>
+ *   <StudioProvider config={config}>
+ *     <CustomComponentThatUsesContextFromStudioProvider />
+ *     <StudioLayout />
+ *   </StudioProvider>
+ * </NextStudio>
+ * ```
+ * @beta
+ */
 export const NextStudio = memo(NextStudioComponent)

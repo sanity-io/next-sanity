@@ -1,17 +1,7 @@
-import type {
-  ClientConfig as ClientConfigForExport,
-  SanityClient as SanityClientForExport,
-} from '@sanity/client'
-
-import type {Aborter as AborterForExport} from './aborter'
-
-// Re-export to support --isolatedMode and other strict mode features
-export type ClientConfig = ClientConfigForExport
-export type SanityClient = SanityClientForExport
-export type Aborter = AborterForExport
-
+export type {Aborter} from './aborter'
 export * from './client'
 export {createCurrentUserHook} from './currentUser'
 export * from './types'
 export {createPreviewSubscriptionHook} from './useSubscription'
+export type {ClientConfig, SanityClient} from '@sanity/client'
 export {default as groq} from 'groq'

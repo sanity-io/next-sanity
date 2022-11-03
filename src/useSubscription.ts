@@ -7,6 +7,7 @@ import {Params, ProjectConfig, SubscriptionOptions} from './types'
 
 const EMPTY_PARAMS = {}
 
+/** @public */
 // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
 export function createPreviewSubscriptionHook({
   projectId,

@@ -3,11 +3,13 @@ import {useEffect, useState} from 'react'
 import {Aborter, getAborter} from './aborter'
 import {CurrentUser} from './types'
 
+/** @public */
 export function createCurrentUserHook({projectId}: {projectId: string; dataset?: string}) {
   // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
   return () => useCurrentUser(projectId)
 }
 
+/** @internal */
 export function getCurrentUser(
   projectId: string,
   abort: Aborter,

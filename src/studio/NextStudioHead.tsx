@@ -19,6 +19,7 @@ import webmanifest from './webmanifest.json'
 const interop = (href: string | {src: string}): string =>
   typeof href === 'string' ? href : href.src
 
+/** @alpha */
 export interface NextStudioHeadProps extends Partial<MetaThemeColors> {
   children?: ComponentProps<typeof Head>['children']
   title?: string
@@ -101,4 +102,5 @@ const NextStudioHeadComponent = ({
   )
 }
 
+/** @alpha */
 export const NextStudioHead = memo(NextStudioHeadComponent)

@@ -5,11 +5,14 @@ import {ServerStyleSheet} from 'styled-components'
 
 /**
  * Usage, from a pages/_document.tsx file:
+ * ```
  * import {ServerStyleSheetDocument} from 'next-sanity/studio'
  *
  * export default class MyDocument extends ServerStyleSheetDocument {}
+ * ```
  *
  * To do extra stuff in getInitialProps:
+ * ```
  * import {ServerStyleSheetDocument} from 'next-sanity/studio'
  * import { type DocumentContext } from 'next/document'
  *
@@ -29,8 +32,9 @@ import {ServerStyleSheet} from 'styled-components'
  *    }
  *  }
  * }
+ * ```
+ * @beta
  */
-
 export class ServerStyleSheetDocument extends Document {
   static async getInitialProps(ctx: DocumentContext) {
     const sheet = new ServerStyleSheet()

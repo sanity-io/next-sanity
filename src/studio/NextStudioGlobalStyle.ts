@@ -1,10 +1,12 @@
 import {createGlobalStyle, css} from 'styled-components'
 
+/** @alpha */
 export interface NextStudioGlobalStyleProps {
   fontFamily?: string
   bg?: string
   unstable__tailwindSvgFix?: boolean
 }
+/** @alpha */
 export const NextStudioGlobalStyle = createGlobalStyle<NextStudioGlobalStyleProps>`
 ${({bg}) =>
   bg

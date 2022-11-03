@@ -3,14 +3,6 @@ import {defineConfig} from '@sanity/pkg-utils'
 import path from 'path'
 
 export default defineConfig({
-  extract: {
-    rules: {
-      'ae-forgotten-export': 'warn',
-      'ae-incompatible-release-tags': 'warn',
-      'ae-missing-release-tag': 'warn',
-    },
-  },
-
   minify: false,
 
   rollup: {

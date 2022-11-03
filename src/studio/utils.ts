@@ -8,23 +8,30 @@ import {
   defaultTheme,
 } from 'sanity'
 
+/** @alpha */
 export type WithTheme = {
   theme: StudioTheme
 }
+/** @alpha */
 export type SingleWorkspaceWithTheme = Omit<SingleWorkspace, 'theme'> & WithTheme
+/** @alpha */
 export type WorkspaceOptionsWithTheme = Omit<WorkspaceOptions, 'theme'> & WithTheme
+/** @alpha */
 export type ConfigWithTheme = SingleWorkspaceWithTheme | WorkspaceOptionsWithTheme[]
 
+/** @alpha */
 export function isWorkspaces(config: Config): config is WorkspaceOptions[] {
   return Array.isArray(config)
 }
 
+/** @alpha */
 export function isWorkspaceWithTheme(
   workspace: SingleWorkspace | WorkspaceOptions
 ): workspace is SingleWorkspaceWithTheme | WorkspaceOptionsWithTheme {
   return Boolean(workspace.theme)
 }
 
+/** @alpha */
 export function useTheme(config: Config): StudioTheme {
   const workspace = useMemo<SingleWorkspace | WorkspaceOptions>(
     () => (isWorkspaces(config) ? config[0] : config),
@@ -36,10 +43,12 @@ export function useTheme(config: Config): StudioTheme {
   )
 }
 
+/** @alpha */
 export type MetaThemeColors = {
   themeColorLight: string
   themeColorDark: string
 }
+/** @alpha */
 export const useBackgroundColorsFromTheme = (theme: StudioTheme): MetaThemeColors => {
   return useMemo<MetaThemeColors>(
     () => ({
@@ -50,12 +59,14 @@ export const useBackgroundColorsFromTheme = (theme: StudioTheme): MetaThemeColor
   )
 }
 
+/** @alpha */
 export const useTextFontFamilyFromTheme = (theme: StudioTheme): string => {
   return useMemo<string>(() => theme.fonts.text.family, [theme])
 }
 
 /**
  * Parses the next route to determine the what the base path for Sanity Studio should be
+ * @alpha
  */
 export function useBasePath(): string {
   const router = useRouter()
@@ -65,13 +76,17 @@ export function useBasePath(): string {
   }, [router.route])
 }
 
+/** @alpha */
 export interface WorkspaceWithBasePath extends Omit<WorkspaceOptions, 'basePath'> {
   basePath: string
 }
+/** @alpha */
 export type SingleWorkspaceWithBasePath = Omit<SingleWorkspace, 'basePath'> & {basePath: string}
+/** @alpha */
 export type ConfigWithBasePath = SingleWorkspaceWithBasePath | WorkspaceOptions[]
 /**
  * Apply the base path from next to the config, prefixing any defined base path
+ * @alpha
  */
 export function useConfigWithBasePath(config: Config): ConfigWithBasePath {
   const basePath = useBasePath()

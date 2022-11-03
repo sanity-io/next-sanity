@@ -1,3 +1,4 @@
+/** @public */
 export interface Aborter {
   abort(): void
   signal: AbortSignal
@@ -13,6 +14,7 @@ class MockAbortController {
   }
 }
 
+/** @internal */
 export function getAborter(): Aborter {
   return typeof AbortController === 'undefined'
     ? new MockAbortController()
