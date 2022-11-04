@@ -5,6 +5,12 @@
 All notable changes to this project will be documented in this file. See
 [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.0.8](https://github.com/sanity-io/next-sanity/compare/v1.0.7...v1.0.8) (2022-11-04)
+
+### Bug Fixes
+
+- mark internals ([5b714a9](https://github.com/sanity-io/next-sanity/commit/5b714a9a21ee3f7274ab683380e9430fb3148f27))
+
 ## [1.0.7](https://github.com/sanity-io/next-sanity/compare/v1.0.6...v1.0.7) (2022-11-04)
 
 ### Bug Fixes
