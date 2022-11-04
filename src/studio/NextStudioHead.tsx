@@ -16,6 +16,7 @@ import type {MetaThemeColors} from './utils'
 import webmanifest from './webmanifest.json'
 
 // Workaround ESM + CJS interop issues
+/** @internal */
 // @ts-expect-error
 const Head = 'default' in _Head ? _Head.default : _Head
 

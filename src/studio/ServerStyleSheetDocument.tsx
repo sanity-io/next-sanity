@@ -4,6 +4,7 @@ import _Document, {type DocumentContext} from 'next/document'
 import {ServerStyleSheet} from 'styled-components'
 
 // Workaround ESM + CJS interop issues
+/** @internal */
 // @ts-expect-error
 const Document = 'default' in _Document ? _Document.default : _Document
 
