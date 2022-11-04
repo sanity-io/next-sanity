@@ -1,7 +1,11 @@
 // We can disable this rule safely as we're not trying to use it outside pages/document, we're shipping a wrapper
 // eslint-disable-next-line @next/next/no-document-import-in-page
-import Document, {type DocumentContext} from 'next/document'
+import _Document, {type DocumentContext} from 'next/document'
 import {ServerStyleSheet} from 'styled-components'
+
+// Workaround ESM + CJS interop issues
+// @ts-expect-error
+const Document = 'default' in _Document ? _Document.default : _Document
 
 /**
  * Usage, from a pages/_document.tsx file:

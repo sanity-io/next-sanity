@@ -1,5 +1,5 @@
 /* eslint-disable no-process-env */
-import Head from 'next/head'
+import _Head from 'next/head'
 import {type ComponentProps, memo, useCallback} from 'react'
 
 // @ts-ignore
@@ -14,6 +14,10 @@ import icon192 from './favicon-192.png'
 import icon512 from './favicon-512.png'
 import type {MetaThemeColors} from './utils'
 import webmanifest from './webmanifest.json'
+
+// Workaround ESM + CJS interop issues
+// @ts-expect-error
+const Head = 'default' in _Head ? _Head.default : _Head
 
 // Interop between how Parcel and Next deals with asset imports
 const interop = (href: string | {src: string}): string =>
