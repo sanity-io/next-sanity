@@ -5,6 +5,12 @@
 All notable changes to this project will be documented in this file. See
 [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.0.7](https://github.com/sanity-io/next-sanity/compare/v1.0.6...v1.0.7) (2022-11-04)
+
+### Bug Fixes
+
+- ESM + CJS interop bugs with `next-sanity/studio` ([b272225](https://github.com/sanity-io/next-sanity/commit/b27222538b435cbad00daf3600b28cede85472f6))
+
 ## [1.0.6](https://github.com/sanity-io/next-sanity/compare/v1.0.5...v1.0.6) (2022-11-03)
 
 ### Bug Fixes
