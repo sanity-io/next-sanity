@@ -40,7 +40,8 @@
       "import": "./dist/studio.js",
       "require": "./dist/studio.cjs",
       "default": "./dist/studio.js"
-    }
+    },
+    "./package.json": "./package.json"
   },
   "main": "./dist/index.cjs",
   "module": "./dist/index.js",
@@ -60,7 +61,7 @@
   ],
   "scripts": {
     "prebuild": "npm run clean",
-    "build": "pkg build --tsconfig tsconfig.build.json",
+    "build": "pkg build --tsconfig tsconfig.build.json --strict",
     "postbuild": "npm run build:studio.mjs",
     "build:studio.mjs": "cp studio.mjs dist/studio.mjs",
     "clean": "rimraf dist",
