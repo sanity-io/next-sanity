@@ -5,6 +5,12 @@
 All notable changes to this project will be documented in this file. See
 [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.0.9](https://github.com/sanity-io/next-sanity/compare/v1.0.8...v1.0.9) (2022-11-07)
+
+### Bug Fixes
+
+- add `package.json` to exports ([6abbcb1](https://github.com/sanity-io/next-sanity/commit/6abbcb13d9250d41c7e2302b77f071a1270a4c25))
+
 ## [1.0.8](https://github.com/sanity-io/next-sanity/compare/v1.0.7...v1.0.8) (2022-11-04)
 
 ### Bug Fixes
