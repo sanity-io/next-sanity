@@ -1,4 +1,15 @@
+---
 name: CI & Release
+
+# Workflow name based on selected inputs. Fallback to default Github naming when expression evaluates to empty string
+run-name: >-
+  ${{
+    inputs.release && inputs.test && 'Build ➤ Test ➤ Publish to NPM' ||
+    inputs.release && !inputs.test && 'Build ➤ Skip Tests ➤ Publish to NPM' ||
+    github.event_name == 'workflow_dispatch' && inputs.test && 'Build ➤ Test' ||
+    github.event_name == 'workflow_dispatch' && !inputs.test && 'Build ➤ Skip Tests' ||
+    ''
+  }}
 
 on:
   pull_request:
