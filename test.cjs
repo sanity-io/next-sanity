@@ -40,9 +40,7 @@ assert.equal(typeof useConfigWithBasePath, 'function')
 assert.equal(typeof useTextFontFamilyFromTheme, 'function')
 assert.equal(typeof useTheme, 'function')
 
-/*
 // Ensure it's possible to check what version of next-sanity is being used
-const {version} = require('next-sanity/package.json')
+const pkg = require('next-sanity/package.json')
 
-assert.equal(typeof version, 'string')
-// */
+assert.equal(typeof pkg.version, 'string')
