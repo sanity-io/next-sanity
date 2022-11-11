@@ -26,6 +26,7 @@
   - [From `v0.4`](#from-v04)
     - [`createPortableTextComponent` is removed](#createportabletextcomponent-is-removed)
     - [`createImageUrlBuilder` is removed](#createimageurlbuilder-is-removed)
+- [Release new version](#release-new-version)
 - [License](#license)
 
 ## Installation
@@ -412,6 +413,13 @@ $ yarn add @sanity/image-url
 -import { createImageUrlBuilder } from 'next-sanity'
 +import createImageUrlBuilder from '@sanity/image-url'
 ```
+
+## Release new version
+
+Run ["CI & Release" workflow](https://github.com/sanity-io/next-sanity/actions/workflows/ci.yml).
+Make sure to select the main branch and check "Release new version".
+
+Semantic release will only release on configured branches, so it is safe to run release on any branch.
 
 ## License
 
