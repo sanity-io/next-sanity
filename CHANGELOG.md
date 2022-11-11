@@ -20,6 +20,42 @@ All notable changes to this project will be documented in this file. See
 ### Features
 
 - add support for fetching subset of dataset by type ([8416e74](https://github.com/sanity-io/next-sanity/commit/8416e74a47bc4cd9a0ef8420228941a178c198ea))
+## [2.0.0-preview-kit.1](https://github.com/sanity-io/next-sanity/compare/v1.0.9...v2.0.0-preview-kit.1) (2022-11-11)
+
+### ⚠ BREAKING CHANGES
+
+- General purpose preview mode is now maintained in `@sanity/preview-kit`. Use it on routes that don't live inside the `/app` folder introduced in Next 13.
+  The new mode for Next 13 provides two new APIs that supports `React.use` and `React.cache` as implemented in Next 13 React Server Components:
+
+```tsx
+import {PreviewSuspense, definePreview, groq} from 'next-sanity'
+import {previewData} from 'next/headers'
+
+const usePreview = definePreview({projectId, dataset})
+
+export default async function ServerComponent() {
+  const token = previewData()?.token
+  if (token)
+    return (
+      <PreviewSuspense fallback="Loading Preview Mode...">
+        <PreviewList token={token} />
+      </PreviewSuspense>
+    )
+
+  const client = createClient({projectId, dataset})
+  const data = await client.fetch(groq`*[]`)
+  return <List data={data} />
+}
+
+function PreviewList({token}) {
+  const data = usePreview(token, groq`*[]`)
+  return <List data={data} />
+}
+```
+
+### Features
+
+- add new preview mode for Next 13 ([a22ddb3](https://github.com/sanity-io/next-sanity/commit/a22ddb3be419a7dc4958d89aff16b37c0254beb3))
 
 ### Bug Fixes
 
