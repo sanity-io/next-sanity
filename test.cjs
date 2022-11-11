@@ -3,12 +3,10 @@
 const {strict: assert} = require('node:assert')
 
 const nextSanity = require('next-sanity')
-const {createClient, createCurrentUserHook, createPreviewSubscriptionHook, groq} = nextSanity
+const {createClient, groq} = nextSanity
 
 // Testing pkg.exports[.]
 assert.equal(typeof createClient, 'function')
-assert.equal(typeof createCurrentUserHook, 'function')
-assert.equal(typeof createPreviewSubscriptionHook, 'function')
 assert.equal(typeof groq, 'function')
 
 // Testing pkg.exports[./studio]

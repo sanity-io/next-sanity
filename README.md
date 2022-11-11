@@ -4,7 +4,7 @@
 
 **Features:**
 
-- Client-side live real-time preview for authenticated users
+- Client-side live real-time preview for Next 13 and `appDir`. For `pages`, or older versions of Next, you can use [`@sanity/preview-kit`](https://github.com/sanity-io/preview-kit).
 - GROQ syntax highlighting
 - [Embed](#next-sanitystudio-dev-preview) [Studio v3](https://www.sanity.io/studio-v3) in [Next.js](https://nextjs.org/) apps
 
@@ -39,9 +39,7 @@ $ yarn add next-sanity @portabletext/react @sanity/image-url
 
 ## Live real-time preview
 
-You can implement real-time client side preview using `createPreviewSubscriptionHook`. It works by streaming the whole dataset to the browser, which it keeps updated using [listeners](https://www.sanity.io/docs/realtime-updates) and Mendoza patches. When it receives updates, then the query is run against the client-side datastore using [groq-js](https://github.com/sanity-io/groq-js). This only happens if you're logged in and the hook is configured to run, which means you can use this code in production.
-
-You might want to use Vercel’s approach to previews, which is set up with a serverless functions that takes a preview secret, which in turn redirects you to a page with a `preview` prop set to `true`.
+You can implement real-time client side preview using `definePreview`. It works by streaming the whole dataset to the browser, which it keeps updated using [listeners](https://www.sanity.io/docs/realtime-updates) and Mendoza patches. When it receives updates, then the query is run against the client-side datastore using [groq-js](https://github.com/sanity-io/groq-js).
 
 ### Limits
 
@@ -219,7 +217,7 @@ export async function getStaticPaths() {
 
 ## `next-sanity/studio` (dev-preview)
 
-> [See it live](https://next.sanity.build/)
+> [See it live](https://next.sanity.build/studio)
 
 The latest version of Sanity Studio allows you to embed a near-infinitely configurable content editing interface into any React application. This opens up many possibilities:
 
