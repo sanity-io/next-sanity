@@ -2,8 +2,13 @@
   "extends": "./tsconfig.base",
   "compilerOptions": {
     "incremental": true,
-    "noEmit": true
+    "noEmit": true,
+    "plugins": [
+      {
+        "name": "next"
+      }
+    ]
   },
-  "include": ["**/*.ts", "**/*.tsx"],
+  "include": ["**/*.ts", "**/*.tsx", ".next/types/**/*.ts"],
   "exclude": ["dist", "node_modules"]
 }
