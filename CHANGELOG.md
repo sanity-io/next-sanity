@@ -5,6 +5,16 @@
 All notable changes to this project will be documented in this file. See
 [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.1.0-add-type-allowlist.1](https://github.com/sanity-io/next-sanity/compare/v1.0.9...v1.1.0-add-type-allowlist.1) (2022-11-14)
+
+### Features
+
+- add support for fetching subset of dataset by type ([8416e74](https://github.com/sanity-io/next-sanity/commit/8416e74a47bc4cd9a0ef8420228941a178c198ea))
+
+### Bug Fixes
+
+- **deps:** update dependency @sanity/groq-store to ^1.0.4 (main) ([#146](https://github.com/sanity-io/next-sanity/issues/146)) ([5043b01](https://github.com/sanity-io/next-sanity/commit/5043b011b0e0b290f01f763842b5ffae725271ce))
+
 ## [1.0.9](https://github.com/sanity-io/next-sanity/compare/v1.0.8...v1.0.9) (2022-11-07)
 
 ### Bug Fixes

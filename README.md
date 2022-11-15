@@ -93,7 +93,11 @@ export const config = {
    * You might need this if you host the preview on a different url than Sanity Studio
    */
   token: '<sanity access token>',
-  EventSource: /* provide your own event source implementation. Required in browsers to support the above token parameter. */
+  EventSource:
+    EventSourcePolyfill /* provide your own event source implementation. Required in browsers to support the above token parameter. */,
+
+  // Optional allow list filter for document types. You can use this to limit the amount of documents by declaring the types you want to sync. Note that since you're fetching a subset of your dataset, queries that works against your Content Lake might not work against the local groq-store.
+  includeTypes: ['page', 'product', 'sanity.imageAsset'],
 }
 ```
 
