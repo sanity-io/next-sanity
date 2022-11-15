@@ -74,7 +74,7 @@ jobs:
         with:
           node-version: ${{ matrix.node }}
           cache: npm
-      - run: npm install
+      - run: npm i
       - run: npm test
 
   release:
