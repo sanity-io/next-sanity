@@ -2,18 +2,17 @@
 
 import {strict as assert} from 'node:assert'
 
-import {
-  createClient,
-  createCurrentUserHook,
-  createPreviewSubscriptionHook,
-  groq,
-} from 'next-sanity'
+import {createClient, groq} from 'next-sanity'
 
 // Testing pkg.exports[.]
 assert.equal(typeof createClient, 'function')
-assert.equal(typeof createCurrentUserHook, 'function')
-assert.equal(typeof createPreviewSubscriptionHook, 'function')
 assert.equal(typeof groq, 'function')
+
+// Testing pkg.exports[./preview]
+import {definePreview, PreviewSuspense} from 'next-sanity/preview'
+
+assert.equal(typeof definePreview, 'function')
+assert.equal(typeof PreviewSuspense, 'function')
 
 // Testing pkg.exports[./studio]
 import {

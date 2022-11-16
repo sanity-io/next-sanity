@@ -1,7 +1,9 @@
-import config from 'sanity.config'
-import {NextStudio} from 'src/studio'
+import _config from 'sanity.config'
+import {NextStudio, useConfigWithBasePath} from 'src/studio'
 
 export default function StudioPage() {
+  const config = useConfigWithBasePath(_config)
+
   return (
     <NextStudio
       config={config}

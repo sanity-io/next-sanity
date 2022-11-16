@@ -3,13 +3,17 @@
 const {strict: assert} = require('node:assert')
 
 const nextSanity = require('next-sanity')
-const {createClient, createCurrentUserHook, createPreviewSubscriptionHook, groq} = nextSanity
+const {createClient, groq} = nextSanity
 
 // Testing pkg.exports[.]
 assert.equal(typeof createClient, 'function')
-assert.equal(typeof createCurrentUserHook, 'function')
-assert.equal(typeof createPreviewSubscriptionHook, 'function')
 assert.equal(typeof groq, 'function')
+
+// Testing pkg.exports[./preview]
+const nextSanityPreview = require('next-sanity/preview')
+const {definePreview, PreviewSuspense} = nextSanityPreview
+assert.equal(typeof definePreview, 'function')
+assert.equal(typeof PreviewSuspense, 'function')
 
 // Testing pkg.exports[./studio]
 const nextSanityStudio = require('next-sanity/studio')
