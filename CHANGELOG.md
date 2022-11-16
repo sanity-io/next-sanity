@@ -5,6 +5,30 @@
 All notable changes to this project will be documented in this file. See
 [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.0.0](https://github.com/sanity-io/next-sanity/compare/v1.1.0...v2.0.0) (2022-11-16)
+
+### ⚠ BREAKING CHANGES
+
+- # Requires Node `v16`, like `Next 13`
+
+# Migrating from `v1`
+
+## `createPreviewSubscriptionHook` is replaced with `definePreview`
+
+There are several differences between the hooks. First of all, `definePreview` requires React 18 and Suspense. And as it's designed to work with React Server Components you provide `token` in the hook itself instead of in the `definePreview` step. Secondly, `definePreview` encourages code-splitting using `React.lazy` and that means you only call the `usePreview` hook in a component that is lazy loaded. Quite different from `usePreviewSubscription` which was designed to be used in both preview mode, and in production by providing `initialData`.
+
+### Before
+
+### Features
+
+- add new preview mode for Next 13 ([#152](https://github.com/sanity-io/next-sanity/issues/152)) ([9eae92a](https://github.com/sanity-io/next-sanity/commit/9eae92a5c7f080e5c34c04f555135623be182a0a)), closes [#next-12](https://github.com/sanity-io/next-sanity/issues/next-12) [#65](https://github.com/sanity-io/next-sanity/issues/65) [#4](https://github.com/sanity-io/next-sanity/issues/4) [#8](https://github.com/sanity-io/next-sanity/issues/8) [#16](https://github.com/sanity-io/next-sanity/issues/16) [#53](https://github.com/sanity-io/next-sanity/issues/53) [#46](https://github.com/sanity-io/next-sanity/issues/46) [#35](https://github.com/sanity-io/next-sanity/issues/35) [#22](https://github.com/sanity-io/next-sanity/issues/22) [#154](https://github.com/sanity-io/next-sanity/issues/154)
+
+### Bug Fixes
+
+- **deps:** update dependency @sanity/groq-store to ^1.1.1 (main) ([#159](https://github.com/sanity-io/next-sanity/issues/159)) ([13c6d93](https://github.com/sanity-io/next-sanity/commit/13c6d9385eb8b443be6a7ca71cbe20f636627e50))
+- **deps:** update dependency @sanity/groq-store to ^1.1.2 (main) ([#165](https://github.com/sanity-io/next-sanity/issues/165)) ([4305d75](https://github.com/sanity-io/next-sanity/commit/4305d75a990f291442b74f79ce5686acf1d0cd09))
+- support TS `v4.9.x` ([#162](https://github.com/sanity-io/next-sanity/issues/162)) ([0afc823](https://github.com/sanity-io/next-sanity/commit/0afc823dd93023199356195d8aca182e91a93a5f))
+
 ## [1.1.0](https://github.com/sanity-io/next-sanity/compare/v1.0.9...v1.1.0) (2022-11-15)
 
 ### Features
