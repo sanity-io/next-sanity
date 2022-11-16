@@ -5,6 +5,13 @@
 All notable changes to this project will be documented in this file. See
 [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.0.1](https://github.com/sanity-io/next-sanity/compare/v2.0.0...v2.0.1) (2022-11-16)
+
+### Bug Fixes
+
+- **deps:** update dependency @sanity/groq-store to ^1.1.3 ([#172](https://github.com/sanity-io/next-sanity/issues/172)) ([77d4a98](https://github.com/sanity-io/next-sanity/commit/77d4a98b413737ffc0d20cf2064999a42891291a))
+- **deps:** update dependency @sanity/preview-kit to ^1.2.7 ([#173](https://github.com/sanity-io/next-sanity/issues/173)) ([7d580d7](https://github.com/sanity-io/next-sanity/commit/7d580d7567819a0dc519aa1249c41a94aa123627))
+
 ## [2.0.0](https://github.com/sanity-io/next-sanity/compare/v1.1.0...v2.0.0) (2022-11-16)
 
 ### ⚠ BREAKING CHANGES
