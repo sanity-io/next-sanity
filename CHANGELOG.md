@@ -5,6 +5,53 @@
 All notable changes to this project will be documented in this file. See
 [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.0.0-preview-kit.1](https://github.com/sanity-io/next-sanity/compare/v1.1.0...v2.0.0-preview-kit.1) (2022-11-16)
+
+### ⚠ BREAKING CHANGES
+
+- General purpose preview mode is now maintained in `@sanity/preview-kit`. Use it on routes that don't live inside the `/app` folder introduced in Next 13.
+  The new mode for Next 13 provides two new APIs that supports `React.use` and `React.cache` as implemented in Next 13 React Server Components:
+
+```tsx
+import {PreviewSuspense, definePreview, groq} from 'next-sanity'
+import {previewData} from 'next/headers'
+
+const usePreview = definePreview({projectId, dataset})
+
+export default async function ServerComponent() {
+  const token = previewData()?.token
+  if (token)
+    return (
+      <PreviewSuspense fallback="Loading Preview Mode...">
+        <PreviewList token={token} />
+      </PreviewSuspense>
+    )
+
+  const client = createClient({projectId, dataset})
+  const data = await client.fetch(groq`*[]`)
+  return <List data={data} />
+}
+
+function PreviewList({token}) {
+  const data = usePreview(token, groq`*[]`)
+  return <List data={data} />
+}
+```
+
+### Features
+
+- add new preview mode for Next 13 ([aae7ecd](https://github.com/sanity-io/next-sanity/commit/aae7ecdec12f8e122172bac6bf3527b91cf275f4))
+
+### Bug Fixes
+
+- **deps:** update dependencies (non-major) (preview-kit) ([#160](https://github.com/sanity-io/next-sanity/issues/160)) ([332df31](https://github.com/sanity-io/next-sanity/commit/332df319abb6de4d81cab70b444e7bb1b5803f71))
+- **deps:** update dependency @sanity/groq-store to ^1.1.1 (main) ([#159](https://github.com/sanity-io/next-sanity/issues/159)) ([13c6d93](https://github.com/sanity-io/next-sanity/commit/13c6d9385eb8b443be6a7ca71cbe20f636627e50))
+- **deps:** update dependency @sanity/groq-store to ^1.1.2 (main) ([#165](https://github.com/sanity-io/next-sanity/issues/165)) ([4305d75](https://github.com/sanity-io/next-sanity/commit/4305d75a990f291442b74f79ce5686acf1d0cd09))
+- **deps:** update dependency @sanity/preview-kit to ^1.1.3 (preview-kit) ([#153](https://github.com/sanity-io/next-sanity/issues/153)) ([fe94e20](https://github.com/sanity-io/next-sanity/commit/fe94e20e4b8464b47ca27c408a51930760ef93a0))
+- **deps:** update dependency @sanity/preview-kit to ^1.2.6 (preview-kit) ([#169](https://github.com/sanity-io/next-sanity/issues/169)) ([0c87983](https://github.com/sanity-io/next-sanity/commit/0c87983b898d0bc35eb6b4b5d79cc8f1629b4c77))
+- support TS `v4.9.x` ([#162](https://github.com/sanity-io/next-sanity/issues/162)) ([0afc823](https://github.com/sanity-io/next-sanity/commit/0afc823dd93023199356195d8aca182e91a93a5f))
+- use the core `definePreview` util ([1a84e91](https://github.com/sanity-io/next-sanity/commit/1a84e9169949463aaeee4c205de3b1a72f40cdc2))
+
 ## [1.1.0](https://github.com/sanity-io/next-sanity/compare/v1.0.9...v1.1.0) (2022-11-15)
 
 ### Features
@@ -20,6 +67,7 @@ All notable changes to this project will be documented in this file. See
 ### Features
 
 - add support for fetching subset of dataset by type ([8416e74](https://github.com/sanity-io/next-sanity/commit/8416e74a47bc4cd9a0ef8420228941a178c198ea))
+
 ## [2.0.0-preview-kit.1](https://github.com/sanity-io/next-sanity/compare/v1.0.9...v2.0.0-preview-kit.1) (2022-11-11)
 
 ### ⚠ BREAKING CHANGES
