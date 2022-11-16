@@ -1,3 +1,4 @@
+/*
 import type {GroqStore} from '@sanity/groq-store'
 import {
   type Params,
@@ -16,10 +17,12 @@ const checkAuth = cache(_checkAuth)
 const preload = cache((store: GroqStore, query: string, params?: Params) =>
   store.query<any>(query, params)
 )
+// */
 
 /**
  * @public
  */
+/*
 export const definePreview = (config: PreviewConfig): UsePreview =>
   _definePreview({
     ...config,
@@ -28,5 +31,7 @@ export const definePreview = (config: PreviewConfig): UsePreview =>
     checkAuth: (projectId, token) => use(checkAuth(projectId, token)),
     preload: (store, query, params) => use(preload(store, query, params)),
   })
+// */
 
-export type {Params, PreviewConfig, PreviewSuspenseProps, UsePreview} from '@sanity/preview-kit'
+export type {Params, PreviewConfig, UsePreview} from '@sanity/preview-kit'
+export {definePreview} from '@sanity/preview-kit'

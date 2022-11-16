@@ -1,2 +1,2 @@
 export * from './definePreview'
-export {PreviewSuspense} from '@sanity/preview-kit'
+export {type PreviewSuspenseProps, PreviewSuspense} from '@sanity/preview-kit'

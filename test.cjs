@@ -9,6 +9,12 @@ const {createClient, groq} = nextSanity
 assert.equal(typeof createClient, 'function')
 assert.equal(typeof groq, 'function')
 
+// Testing pkg.exports[./preview]
+const nextSanityPreview = require('next-sanity/preview')
+const {definePreview, PreviewSuspense} = nextSanityPreview
+assert.equal(typeof definePreview, 'function')
+assert.equal(typeof PreviewSuspense, 'function')
+
 // Testing pkg.exports[./studio]
 const nextSanityStudio = require('next-sanity/studio')
 const {

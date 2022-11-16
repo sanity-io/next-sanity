@@ -8,6 +8,12 @@ import {createClient, groq} from 'next-sanity'
 assert.equal(typeof createClient, 'function')
 assert.equal(typeof groq, 'function')
 
+// Testing pkg.exports[./preview]
+import {definePreview, PreviewSuspense} from 'next-sanity/preview'
+
+assert.equal(typeof definePreview, 'function')
+assert.equal(typeof PreviewSuspense, 'function')
+
 // Testing pkg.exports[./studio]
 import {
   isWorkspaces,
