@@ -428,6 +428,9 @@ export const usePreview = definePreview({
   dataset,
   documentLimit: 10000,
   includeTypes: ['page', 'product', 'sanity.imageAsset'],
+  // If you have a lot of editors changing content at the same time it might help to increase this value
+  // to reduce the amount of rerenders React have to perform.
+  subscriptionThrottleMs: 300,
 })
 ```
 
