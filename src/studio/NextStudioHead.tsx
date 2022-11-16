@@ -1,6 +1,6 @@
 /* eslint-disable no-process-env */
 import _Head from 'next/head'
-import {type ComponentProps, memo, useCallback} from 'react'
+import {type ReactNode, memo, useCallback} from 'react'
 
 // @ts-ignore
 import iconApple from './apple-touch-icon.png'
@@ -17,8 +17,7 @@ import webmanifest from './webmanifest.json'
 
 // Workaround ESM + CJS interop issues
 /** @internal */
-// @ts-expect-error
-const Head = 'default' in _Head ? _Head.default : _Head
+const Head = ('default' in _Head ? _Head.default : _Head) as typeof _Head
 
 // Interop between how Parcel and Next deals with asset imports
 const interop = (href: string | {src: string}): string =>
@@ -26,7 +25,7 @@ const interop = (href: string | {src: string}): string =>
 
 /** @alpha */
 export interface NextStudioHeadProps extends Partial<MetaThemeColors> {
-  children?: ComponentProps<typeof Head>['children']
+  children?: ReactNode
   title?: string
   favicons?: boolean
 }
