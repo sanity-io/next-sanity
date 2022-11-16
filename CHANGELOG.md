@@ -15,6 +15,7 @@ All notable changes to this project will be documented in this file. See
 ## [2.0.0](https://github.com/sanity-io/next-sanity/compare/v1.1.0...v2.0.0) (2022-11-16)
 
 ### ⚠ BREAKING CHANGES
+
 [Check the full migration guide for details.](https://github.com/sanity-io/next-sanity#from-v1)
 
 - Requires Node `v16`, like `Next 13`.
