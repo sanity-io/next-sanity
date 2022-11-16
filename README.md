@@ -4,8 +4,8 @@
 
 **Features:**
 
-- Client-side live real-time preview for Next 13 and `appDir`. For `pages`, or older versions of Next, you can use [`@sanity/preview-kit`](https://github.com/sanity-io/preview-kit).
-- GROQ syntax highlighting
+- [Client-side live real-time preview for authenticated users](#live-real-time-preview)
+- [GROQ syntax highlighting](https://marketplace.visualstudio.com/items?itemName=sanity-io.vscode-sanity)
 - [Embed](#next-sanitystudio-dev-preview) [Studio v3](https://www.sanity.io/studio-v3) in [Next.js](https://nextjs.org/) apps
 
 ## Table of contents
@@ -13,12 +13,15 @@
 - [Table of contents](#table-of-contents)
 - [Installation](#installation)
 - [Live real-time preview](#live-real-time-preview)
+  - [Examples](#examples)
+    - [Built-in Sanity auth](#built-in-sanity-auth)
+      - [Next 12](#next-12)
+      - [Next 13 `appDir`](#next-13-appdir)
+    - [Custom token auth](#custom-token-auth)
+  - [Starters](#starters)
   - [Limits](#limits)
-- [Optimizing bundle size](#optimizing-bundle-size)
-- [Usage](#usage)
-- [Example: Minimal blog post template](#example-minimal-blog-post-template)
 - [`next-sanity/studio` (dev-preview)](#next-sanitystudio-dev-preview)
-  - [Usage](#usage-1)
+  - [Usage](#usage)
   - [Opt-in to using `StudioProvider` and `StudioLayout`](#opt-in-to-using-studioprovider-and-studiolayout)
   - [Customize `<ServerStyleSheetDocument />`](#customize-serverstylesheetdocument-)
   - [Full-control mode](#full-control-mode)
@@ -40,180 +43,192 @@ $ yarn add next-sanity @portabletext/react @sanity/image-url
 ## Live real-time preview
 
 You can implement real-time client side preview using `definePreview`. It works by streaming the whole dataset to the browser, which it keeps updated using [listeners](https://www.sanity.io/docs/realtime-updates) and Mendoza patches. When it receives updates, then the query is run against the client-side datastore using [groq-js](https://github.com/sanity-io/groq-js).
+It uses [`@sanity/preview-kit`](https://github.com/sanity-io/preview-kit) under the hood, which can be used in frameworks other than Nextjs if it supports React 18 Suspense APIs.
+
+### Examples
+
+When running `next dev` locally these examples start and exit preview mode by opening [localhost:3000/api/preview](http://localhost:3000/api/preview) and [localhost:3000/api/exit-preview](http://localhost:3000/api/exit-preview).
+
+#### Built-in Sanity auth
+
+Pros:
+
+- Checks if the user is authenticated for you.
+- Pairs well with Sanity Studio preview panes.
+
+Cons:
+
+- Doesn't implement a login flow:
+  - Requires the user to login to a Sanity Studio prior to starting Preview mode.
+  - Requires your Sanity Studio to be hosted on the same origin.
+- Currently only supports cookie based auth, and not yet the `dual` [loginMethod in Sanity Studio](https://github.com/sanity-io/sanity/blob/9bf408d4cc8b3e14bac0bf94d3305d6960181d3c/packages/%40sanity/default-login/README.md?plain=1#L37):
+  - Safari based browsers (Desktop Safari on Macs, and all browsers on iOS) doesn't work.
+  - Doesn't support incognito browser modes.
+
+`pages/api/preview.js`:
+
+```js
+export default function preview(req, res) {
+  res.setPreviewData({})
+  res.writeHead(307, {Location: '/'})
+  res.end()
+}
+```
+
+`pages/api/exit-preview.js`:
+
+```js
+export default function exit(req, res) {
+  res.clearPreviewData()
+  res.writeHead(307, {Location: '/'})
+  res.end()
+}
+```
+
+`components/DocumentsCount.js`:
+
+```jsx
+import groq from 'groq'
+
+export const query = groq`count(*[])`
+
+export function DocumentsCount({data}) {
+  return (
+    <>
+      Documents: <strong>{data}</strong>
+    </>
+  )
+}
+```
+
+`lib/sanity.client.js`
+
+```js
+import createClient from '@sanity/client'
+
+const projectId = process.env.NEXT_PUBLIC_SANITY_PROJECT_ID // "pv8y60vp"
+const dataset = process.env.NEXT_PUBLIC_SANITY_DATASET // "production"
+const apiVersion = process.env.NEXT_PUBLIC_SANITY_API_VERSION // "2022-11-16"
+
+export const client = createClient({projectId, dataset, apiVersion, useCdn: false})
+```
+
+`lib/sanity.preview.js`
+
+```js
+'use client'
+
+import {definePreview} from '@sanity/preview-kit'
+import {projectId, dataset} from 'lib/sanity.client'
+
+function onPublicAccessOnly() {
+  throw new Error(`Unable to load preview as you're not logged in`)
+}
+export const usePreview = definePreview({projectId, dataset, onPublicAccessOnly})
+```
+
+`components/PreviewDocumentsCount.js`:
+
+```jsx
+'use client'
+
+import {usePreview} from 'lib/sanity.preview'
+import {query, DocumentsCount} from 'components/DocumentsCount'
+
+export default function PreviewDocumentsCount() {
+  const data = usePreview(null, query)
+  return <DocumentsCount data={data} />
+}
+```
+
+##### Next 12
+
+`pages/index.js`:
+
+```jsx
+import {PreviewSuspense} from '@sanity/preview-kit'
+import {lazy} from 'react'
+import {DocumentsCount, query} from 'components/DocumentsCount'
+import {client} from 'lib/sanity.client'
+
+const PreviewDocumentsCount = lazy(() => import('components/PreviewDocumentsCount'))
+
+export const getStaticProps = async ({preview = false}) => {
+  if (preview) {
+    return {props: {preview}}
+  }
+
+  const data = await client.fetch(query)
+
+  return {props: {preview, data}}
+}
+
+export default function IndexPage({preview, data}) {
+  if (preview) {
+    return (
+      <PreviewSuspense fallback="Loading...">
+        <PreviewDocumentsCount />
+      </PreviewSuspense>
+    )
+  }
+
+  return <DocumentsCount data={data} />
+}
+```
+
+##### Next 13 `appDir`
+
+`components/PreviewSuspense.js`:
+
+```jsx
+'use client'
+
+// Once rollup supports 'use client' module directives then 'next-sanity' will include them and this re-export will no longer be necessary
+export {PreviewSuspense as default} from '@sanity/preview-kit'
+```
+
+`app/page.js`:
+
+```jsx
+import {lazy} from 'react'
+import {previewData} from 'next/headers'
+import PreviewSuspense from 'components/PreviewSuspense'
+import {DocumentsCount, query} from 'components/DocumentsCount'
+import {client} from 'lib/sanity.client'
+
+const PreviewDocumentsCount = lazy(() => import('components/PreviewDocumentsCount'))
+
+export default async function IndexPage() {
+  if (previewData()) {
+    return (
+      <PreviewSuspense fallback="Loading...">
+        <PreviewDocumentsCount />
+      </PreviewSuspense>
+    )
+  }
+
+  const data = await client.fetch(query)
+  return <DocumentsCount data={data} />
+}
+```
+
+#### Custom token auth
+
+Pros:
+
+- Works in Safari
+  Cons:
+- It's a bit complicated
+
+### Starters
+
+- [A Next.js Blog with a Native Authoring Experience](https://github.com/sanity-io/nextjs-blog-cms-sanity-v3)
 
 ### Limits
 
 The real-time preview isn't optimized and comes with a configured limit of 3000 documents. You can experiment with larger datasets by configuring the hook with `documentLimit: <Integer>`. Be aware that this might significantly affect the preview performance.
 
 We have plans for optimizations in the roadmap.
-
-## Optimizing bundle size
-
-The first version of `next-sanity` shipped with the [`picosanity`](https://github.com/rexxars/picosanity) client built-in. This caused some confusion for people who not only want to pull data from their Sanity.io content lake, but also send patches and mutations via API routes. Since `picosanity` only supported fetching content, it had a smaller bundle size than the full SDK.
-
-You can leverage Next.js' [tree shaking](https://developers.google.com/web/fundamentals/performance/optimizing-javascript/tree-shaking) to avoid shipping unnecessary code to the browser. In order to do so, you first need to isolate the client configuration in its own file, and be sure to only use it inside of the data fetching functions (`getStaticProps`, `getServerProps`, and `getStaticPaths`) or in the function that goes into the API routes (`/pages/api/<your-serverless-function>.js`).
-
-You can follow the approach from the official Next.js preview example:
-
-1. Make a `/lib` folder and add `config.js`, `sanity.js`, and `sanity.server.js` to it
-2. In `/lib/config.js`, add and export the `projectId`, `dataset`, `apiVersion`, and other client configurations
-3. In `/lib/sanity.js`, import and export the configurated helper functions that you need in the client-side code (like `urlFor`, `usePreviewSubscription`, and `PortableText`)
-4. In `/lib/sanity.server.js`, create the client(s) you need for interacting with your content in the datafetching functions and in serverless API routes.
-
-Should you want to do queries from the client side but want to avoid bundling the entire `@sanity/client`, you can of course still install and use [picosanity](https://github.com/rexxars/picosanity) manually.
-
-## Usage
-
-It’s practical to set up dedicated files where you import and set up your client etc. Below is a comprehensive example of the different things you can set up.
-
-```js
-// lib/config.js
-export const config = {
-  /**
-   * Find your project ID and dataset in `sanity.json` in your studio project.
-   * These are considered “public”, but you can use environment variables
-   * if you want differ between local dev and production.
-   *
-   * https://nextjs.org/docs/basic-features/environment-variables
-   **/
-  dataset: process.env.NEXT_PUBLIC_SANITY_DATASET || 'production',
-  projectId: process.env.NEXT_PUBLIC_SANITY_PROJECT_ID,
-  apiVersion: '2021-10-21', // Learn more: https://www.sanity.io/docs/api-versioning
-  /**
-   * Set useCdn to `false` if your application require the freshest possible
-   * data always (potentially slightly slower and a bit more expensive).
-   * Authenticated request (like preview) will always bypass the CDN
-   **/
-  useCdn: process.env.NODE_ENV === 'production',
-
-  /**
-   * OPTIONAL config to enable authentication with custom token
-   * You might need this if you host the preview on a different url than Sanity Studio
-   */
-  token: '<sanity access token>',
-  EventSource:
-    EventSourcePolyfill /* provide your own event source implementation. Required in browsers to support the above token parameter. */,
-
-  // Optional allow list filter for document types. You can use this to limit the amount of documents by declaring the types you want to sync. Note that since you're fetching a subset of your dataset, queries that works against your Content Lake might not work against the local groq-store.
-  includeTypes: ['page', 'product', 'sanity.imageAsset'],
-}
-```
-
-```js
-// lib/sanity.js
-import {createPreviewSubscriptionHook, createCurrentUserHook} from 'next-sanity'
-import createImageUrlBuilder from '@sanity/image-url'
-import {config} from './config'
-
-/**
- * Set up a helper function for generating Image URLs with only the asset reference data in your documents.
- * Read more: https://www.sanity.io/docs/image-url
- **/
-export const urlFor = (source) => createImageUrlBuilder(config).image(source)
-
-// Set up the live preview subscription hook
-export const usePreviewSubscription = createPreviewSubscriptionHook(config)
-
-// Helper function for using the current logged in user account
-export const useCurrentUser = createCurrentUserHook(config)
-```
-
-```js
-// lib/sanity.server.js
-import {createClient} from 'next-sanity'
-import {config} from './config'
-
-// Set up the client for fetching data in the getProps page functions
-export const sanityClient = createClient(config)
-
-// Set up a preview client with serverless authentication for drafts
-export const previewClient = createClient({
-  ...config,
-  useCdn: false,
-  token: process.env.SANITY_API_TOKEN,
-})
-
-// Helper function for easily switching between normal client and preview client
-export const getClient = (usePreview) => (usePreview ? previewClient : sanityClient)
-```
-
-## Example: Minimal blog post template
-
-A minimal example for a blog post template using the schema from the Sanity Studio blog example. It includes the real-time preview using the configuration illustrated above:
-
-```jsx
-// pages/posts/[slug].js
-import ErrorPage from 'next/error'
-import {useRouter} from 'next/router'
-import {groq} from 'next-sanity'
-import {PortableText} from '@portabletext/react'
-import {usePreviewSubscription, urlFor} from '../../lib/sanity'
-import {getClient} from '../../lib/sanity.server'
-
-const postQuery = groq`
-  *[_type == "post" && slug.current == $slug][0] {
-    _id,
-    title,
-    body,
-    mainImage,
-    categories[]->{
-      _id,
-      title
-    },
-    "slug": slug.current
-  }
-`
-
-export default function Post({data, preview}) {
-  const router = useRouter()
-
-  const {data: post} = usePreviewSubscription(postQuery, {
-    params: {slug: data.post?.slug},
-    initialData: data.post,
-    enabled: preview && data.post?.slug,
-  })
-
-  if (!router.isFallback && !data.post?.slug) {
-    return <ErrorPage statusCode={404} />
-  }
-
-  const {title, mainImage, body} = post
-
-  return (
-    <article>
-      <h2>{title}</h2>
-      <figure>
-        <img src={urlFor(mainImage).url()} />
-      </figure>
-      <PortableText value={body} />
-    </article>
-  )
-}
-
-export async function getStaticProps({params, preview = false}) {
-  const post = await getClient(preview).fetch(postQuery, {
-    slug: params.slug,
-  })
-
-  return {
-    props: {
-      preview,
-      data: {post},
-    },
-  }
-}
-
-export async function getStaticPaths() {
-  const paths = await getClient().fetch(
-    groq`*[_type == "post" && defined(slug.current)][].slug.current`
-  )
-
-  return {
-    paths: paths.map((slug) => ({params: {slug}})),
-    fallback: true,
-  }
-}
-```
 
 ## `next-sanity/studio` (dev-preview)
 
