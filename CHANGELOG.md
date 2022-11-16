@@ -16,10 +16,6 @@ All notable changes to this project will be documented in this file. See
 
 ### ⚠ BREAKING CHANGES
 
-- # Requires Node `v16`, like `Next 13`
-
-# Migrating from `v1`
-
 - Requires Node `v16`, like `Next 13`.
 - `createPreviewSubscriptionHook` is replaced with `definePreview`.
 - `createCurrentUserHook` is removed
