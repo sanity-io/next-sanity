@@ -4,11 +4,16 @@ import {type UsePreview} from '@sanity/preview-kit'
 import {dataset, projectId} from 'app/config'
 import {definePreview} from 'src/preview'
 
+let alerted = false
 export const usePreview: UsePreview = definePreview({
   projectId,
   dataset,
   onPublicAccessOnly: () => {
-    throw new Error(`Unable to load preview as you're not logged in`)
+    if (!alerted) {
+      // eslint-disable-next-line no-alert
+      alert('You are not logged in. You will only see public data.')
+      alerted = true
+    }
   },
 })
 
