@@ -12,12 +12,15 @@
 
 - [Table of contents](#table-of-contents)
 - [Installation](#installation)
-- [Live real-time preview](#live-real-time-preview)
+- [`next-sanity` Running groq queries](#next-sanity-running-groq-queries)
+- [`next-sanity/preview` Live real-time preview](#next-sanitypreview-live-real-time-preview)
   - [Examples](#examples)
     - [Built-in Sanity auth](#built-in-sanity-auth)
       - [Next 12](#next-12)
       - [Next 13 `appDir`](#next-13-appdir)
     - [Custom token auth](#custom-token-auth)
+      - [Next 12](#next-12-1)
+      - [Next 13 `appDir`](#next-13-appdir-1)
   - [Starters](#starters)
   - [Limits](#limits)
 - [`next-sanity/studio` (dev-preview)](#next-sanitystudio-dev-preview)
@@ -26,6 +29,11 @@
   - [Customize `<ServerStyleSheetDocument />`](#customize-serverstylesheetdocument-)
   - [Full-control mode](#full-control-mode)
 - [Migrate](#migrate)
+  - [From `v1`](#from-v1)
+    - [`createPreviewSubscriptionHook` is replaced with `definePreview`](#createpreviewsubscriptionhook-is-replaced-with-definepreview)
+      - [Before](#before)
+      - [After](#after)
+    - [`createCurrentUserHook` is removed](#createcurrentuserhook-is-removed)
   - [From `v0.4`](#from-v04)
     - [`createPortableTextComponent` is removed](#createportabletextcomponent-is-removed)
     - [`createImageUrlBuilder` is removed](#createimageurlbuilder-is-removed)
@@ -40,7 +48,26 @@ $ npm install next-sanity @portabletext/react @sanity/image-url
 $ yarn add next-sanity @portabletext/react @sanity/image-url
 ```
 
-## Live real-time preview
+## `next-sanity` Running groq queries
+
+```ts
+import {createClient, groq} from 'next-sanity'
+
+const projectId = process.env.NEXT_PUBLIC_SANITY_PROJECT_ID // "pv8y60vp"
+const dataset = process.env.NEXT_PUBLIC_SANITY_DATASET // "production"
+const apiVersion = process.env.NEXT_PUBLIC_SANITY_API_VERSION // "2022-11-16"
+
+const client = createClient({
+  projectId,
+  dataset,
+  apiVersion,
+  useCdn: typeof document !== 'undefined',
+})
+
+const data = await client.fetch(groq`*[]`)
+```
+
+## `next-sanity/preview` Live real-time preview
 
 You can implement real-time client side preview using `definePreview`. It works by streaming the whole dataset to the browser, which it keeps updated using [listeners](https://www.sanity.io/docs/realtime-updates) and Mendoza patches. When it receives updates, then the query is run against the client-side datastore using [groq-js](https://github.com/sanity-io/groq-js).
 It uses [`@sanity/preview-kit`](https://github.com/sanity-io/preview-kit) under the hood, which can be used in frameworks other than Nextjs if it supports React 18 Suspense APIs.
@@ -104,7 +131,7 @@ export function DocumentsCount({data}) {
 `lib/sanity.client.js`
 
 ```js
-import createClient from '@sanity/client'
+import {createClient} from 'next-sanity'
 
 const projectId = process.env.NEXT_PUBLIC_SANITY_PROJECT_ID // "pv8y60vp"
 const dataset = process.env.NEXT_PUBLIC_SANITY_DATASET // "production"
@@ -118,7 +145,7 @@ export const client = createClient({projectId, dataset, apiVersion, useCdn: fals
 ```js
 'use client'
 
-import {definePreview} from '@sanity/preview-kit'
+import {definePreview} from 'next-sanity/preview'
 import {projectId, dataset} from 'lib/sanity.client'
 
 function onPublicAccessOnly() {
@@ -146,7 +173,7 @@ export default function PreviewDocumentsCount() {
 `pages/index.js`:
 
 ```jsx
-import {PreviewSuspense} from '@sanity/preview-kit'
+import {PreviewSuspense} from 'next-sanity/preview'
 import {lazy} from 'react'
 import {DocumentsCount, query} from 'components/DocumentsCount'
 import {client} from 'lib/sanity.client'
@@ -184,7 +211,7 @@ export default function IndexPage({preview, data}) {
 'use client'
 
 // Once rollup supports 'use client' module directives then 'next-sanity' will include them and this re-export will no longer be necessary
-export {PreviewSuspense as default} from '@sanity/preview-kit'
+export {PreviewSuspense as default} from 'next-sanity/preview'
 ```
 
 `app/page.js`:
@@ -214,11 +241,175 @@ export default async function IndexPage() {
 
 #### Custom token auth
 
+By providing a read token (Sanity API token with `viewer` rights) you override the built-in auth and get more control and flexibility.
+
 Pros:
 
-- Works in Safari
-  Cons:
-- It's a bit complicated
+- Allows launching previews for users without necessarily an Sanity account.
+- Hosting a Sanity Studio on the same origin is optional.
+- Can build preview experiences that start outside a Studio, like "Copy share link" functionality.
+- Works in all Safari based browsers (Desktop Safari on Macs, and all browsers on iOS).
+- Works with incognito browser modes.
+
+Cons:
+
+- Like all things with great power comes great responsibility. You're responsible for implementing adequate protection against leaking the `token` in your js bundle, or preventing the `/api/preview?secret=${secret}` from being easily guessable.
+- It results in a larger JS bundle as `@sanity/groq-store` currently requires `event-source-polyfill` since native `window.EventSource` does not support setting `Authorization` headers needed for the token auth.
+
+`pages/api/preview.js`:
+
+```js
+import getSecret from 'lib/getSecret'
+
+export default async function preview(req, res) {
+  // The secret can't be stored in an env variable with a NEXT_PUBLIC_ prefix, as it would make you vulnerable to leaking the token to anyone.
+  // If you don't have an custom API with authentication that can handle checking secrets, you may use https://github.com/sanity-io/sanity-studio-secrets to store the secret in your dataset.
+  const secret = await getSecret()
+
+  // This is the most common way to check for auth, but we encourage you to use your existing auth infra to protect your token and securely transmit it to the client
+  if (!req.query.secret || req.query.secret !== secret) {
+    return res.status(401).json({message: 'Invalid secret'})
+  }
+
+  res.setPreviewData({token: process.env.SANITY_API_READ_TOKEN})
+  res.writeHead(307, {Location: '/'})
+  res.end()
+}
+```
+
+`pages/api/exit-preview.js`:
+
+```js
+export default function exit(req, res) {
+  res.clearPreviewData()
+  res.writeHead(307, {Location: '/'})
+  res.end()
+}
+```
+
+`components/DocumentsCount.js`:
+
+```jsx
+import groq from 'groq'
+
+export const query = groq`count(*[])`
+
+export function DocumentsCount({data}) {
+  return (
+    <>
+      Documents: <strong>{data}</strong>
+    </>
+  )
+}
+```
+
+`lib/sanity.client.js`
+
+```js
+import {createClient} from 'next-sanity'
+
+const projectId = process.env.NEXT_PUBLIC_SANITY_PROJECT_ID // "pv8y60vp"
+const dataset = process.env.NEXT_PUBLIC_SANITY_DATASET // "production"
+const apiVersion = process.env.NEXT_PUBLIC_SANITY_API_VERSION // "2022-11-16"
+
+export const client = createClient({projectId, dataset, apiVersion, useCdn: false})
+```
+
+`lib/sanity.preview.js`
+
+```js
+'use client'
+
+import {definePreview} from 'next-sanity/preview'
+import {projectId, dataset} from 'lib/sanity.client'
+
+export const usePreview = definePreview({projectId, dataset})
+```
+
+`components/PreviewDocumentsCount.js`:
+
+```jsx
+'use client'
+
+import {usePreview} from 'lib/sanity.preview'
+import {query, DocumentsCount} from 'components/DocumentsCount'
+
+export default function PreviewDocumentsCount({token}) {
+  const data = usePreview(token, query)
+  return <DocumentsCount data={data} />
+}
+```
+
+##### Next 12
+
+`pages/index.js`:
+
+```jsx
+import {PreviewSuspense} from 'next-sanity/preview'
+import {lazy} from 'react'
+import {DocumentsCount, query} from 'components/DocumentsCount'
+import {client} from 'lib/sanity.client'
+
+const PreviewDocumentsCount = lazy(() => import('components/PreviewDocumentsCount'))
+
+export const getStaticProps = async ({preview = false, previewData = {}}) => {
+  if (preview && previewData?.token) {
+    return {props: {preview, token: previewData.token}}
+  }
+
+  const data = await client.fetch(query)
+
+  return {props: {preview, data}}
+}
+
+export default function IndexPage({preview, token, data}) {
+  if (preview) {
+    return (
+      <PreviewSuspense fallback="Loading...">
+        <PreviewDocumentsCount token={token} />
+      </PreviewSuspense>
+    )
+  }
+
+  return <DocumentsCount data={data} />
+}
+```
+
+##### Next 13 `appDir`
+
+`components/PreviewSuspense.js`:
+
+```jsx
+'use client'
+
+// Once rollup supports 'use client' module directives then 'next-sanity' will include them and this re-export will no longer be necessary
+export {PreviewSuspense as default} from 'next-sanity/preview'
+```
+
+`app/page.js`:
+
+```jsx
+import {lazy} from 'react'
+import {previewData} from 'next/headers'
+import PreviewSuspense from 'components/PreviewSuspense'
+import {DocumentsCount, query} from 'components/DocumentsCount'
+import {client} from 'lib/sanity.client'
+
+const PreviewDocumentsCount = lazy(() => import('components/PreviewDocumentsCount'))
+
+export default async function IndexPage() {
+  if (previewData()?.token) {
+    return (
+      <PreviewSuspense fallback="Loading...">
+        <PreviewDocumentsCount token={previewData().token} />
+      </PreviewSuspense>
+    )
+  }
+
+  const data = await client.fetch(query)
+  return <DocumentsCount data={data} />
+}
+```
 
 ### Starters
 
@@ -227,6 +418,18 @@ Pros:
 ### Limits
 
 The real-time preview isn't optimized and comes with a configured limit of 3000 documents. You can experiment with larger datasets by configuring the hook with `documentLimit: <Integer>`. Be aware that this might significantly affect the preview performance.
+You may use the `includeTypes` option to reduce the amount of documents and reduce the risk of hitting the `documentLimit`:
+
+```js
+import {definePreview} from 'next-sanity/preview'
+
+export const usePreview = definePreview({
+  projectId,
+  dataset,
+  documentLimit: 10000,
+  includeTypes: ['page', 'product', 'sanity.imageAsset'],
+})
+```
 
 We have plans for optimizations in the roadmap.
 
@@ -391,6 +594,113 @@ function Studiopage() {
 ```
 
 ## Migrate
+
+### From `v1`
+
+#### `createPreviewSubscriptionHook` is replaced with `definePreview`
+
+There are several differences between the hooks. First of all, `definePreview` requires React 18 and Suspense. And as it's designed to work with React Server Components you provide `token` in the hook itself instead of in the `definePreview` step. Secondly, `definePreview` encourages code-splitting using `React.lazy` and that means you only call the `usePreview` hook in a component that is lazy loaded. Quite different from `usePreviewSubscription` which was designed to be used in both preview mode, and in production by providing `initialData`.
+
+##### Before
+
+The files that are imported here are the same as the [Next 12 example](#next-12).
+
+`pages/index.js`
+
+```jsx
+import {createPreviewSubscriptionHook} from 'next-sanity'
+import {DocumentsCount, query} from 'components/DocumentsCount'
+import {client, projectId, dataset} from 'lib/sanity.client'
+
+export const getStaticProps = async ({preview = false}) => {
+  const data = await client.fetch(query)
+
+  return {props: {preview, data}}
+}
+
+const usePreviewSubscription = createPreviewSubscriptionHook({projectId, dataset})
+export default function IndexPage({preview, data: initialData}) {
+  const {data} = usePreviewSubscription(indexQuery, {initialData, enabled: preview})
+  return <DocumentsCount data={data} />
+}
+```
+
+##### After
+
+`components/PreviewDocumentsCount.js`
+
+```jsx
+import {definePreview} from 'next-sanity/preview'
+import {projectId, dataset} from 'lib/sanity.client'
+
+const usePreview = definePreview({projectId, dataset})
+export default function PreviewDocumentsCount() {
+  const data = usePreview(null, query)
+  return <DocumentsCount data={data} />
+}
+```
+
+`pages/index.js`
+
+```jsx
+import {lazy} from 'react'
+import {PreviewSuspense} from 'next-sanity/preview'
+import {DocumentsCount, query} from 'components/DocumentsCount'
+import {client} from 'lib/sanity.client'
+
+const PreviewDocumentsCount = lazy(() => import('components/PreviewDocumentsCount'))
+
+export const getStaticProps = async ({preview = false}) => {
+  const data = await client.fetch(query)
+
+  return {props: {preview, data}}
+}
+
+export default function IndexPage({preview, data}) {
+  if (preview) {
+    return (
+      <PreviewSuspense fallback={<DocumentsCount data={data} />}>
+        <PreviewDocumentsCount />
+      </PreviewSuspense>
+    )
+  }
+  return <DocumentsCount data={data} />
+}
+```
+
+#### `createCurrentUserHook` is removed
+
+If you used this hook to check if the user is cookie authenticated:
+
+```jsx
+import {createCurrentUserHook} from 'next-sanity'
+
+const projectId = process.env.NEXT_PUBLIC_SANITY_PROJECT_ID
+const useCurrentUser = createCurrentUserHook({projectId})
+const useCheckAuth = () => {
+  const {data, loading} = useCurrentUser()
+  return loading ? false : !!data
+}
+
+export default function Page() {
+  const isAuthenticated = useCheckAuth()
+}
+```
+
+Then you can achieve the same functionality using `@sanity/preview-kit` and `suspend-react`:
+
+```jsx
+import {suspend} from 'suspend-react'
+import {_checkAuth} from '@sanity/preview-kit'
+
+const projectId = process.env.NEXT_PUBLIC_SANITY_PROJECT_ID
+const useCheckAuth = () =>
+  suspend(() => _checkAuth(projectId, null), ['@sanity/preview-kit', 'checkAuth', projectId])
+
+export default function Page() {
+  const isAuthenticated = useCheckAuth()
+}
+```
 
 ### From `v0.4`
 
