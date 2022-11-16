@@ -5,8 +5,7 @@ import {ServerStyleSheet} from 'styled-components'
 
 // Workaround ESM + CJS interop issues
 /** @internal */
-// @ts-expect-error
-const Document = 'default' in _Document ? _Document.default : _Document
+const Document = ('default' in _Document ? _Document.default : _Document) as typeof _Document
 
 /**
  * Usage, from a pages/_document.tsx file:
