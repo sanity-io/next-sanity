@@ -12,12 +12,9 @@ All notable changes to this project will be documented in this file. See
 - # Requires Node `v16`, like `Next 13`
 
 # Migrating from `v1`
-
-## `createPreviewSubscriptionHook` is replaced with `definePreview`
-
-There are several differences between the hooks. First of all, `definePreview` requires React 18 and Suspense. And as it's designed to work with React Server Components you provide `token` in the hook itself instead of in the `definePreview` step. Secondly, `definePreview` encourages code-splitting using `React.lazy` and that means you only call the `usePreview` hook in a component that is lazy loaded. Quite different from `usePreviewSubscription` which was designed to be used in both preview mode, and in production by providing `initialData`.
-
-### Before
+- Requires Node `v16`, like `Next 13`.
+- `createPreviewSubscriptionHook` is replaced with `definePreview`.
+- `createCurrentUserHook` is removed
 
 ### Features
 
