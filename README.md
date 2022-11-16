@@ -60,8 +60,8 @@ const apiVersion = process.env.NEXT_PUBLIC_SANITY_API_VERSION // "2022-11-16"
 const client = createClient({
   projectId,
   dataset,
-  apiVersion,
-  useCdn: typeof document !== 'undefined',
+  apiVersion, // https://www.sanity.io/docs/api-versioning
+  useCdn: typeof document !== 'undefined', // server-side is statically generated, the CDN is only necessary beneficial if queries are called on-demand
 })
 
 const data = await client.fetch(groq`*[]`)
