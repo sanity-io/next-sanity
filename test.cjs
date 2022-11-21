@@ -44,6 +44,12 @@ assert.equal(typeof useConfigWithBasePath, 'function')
 assert.equal(typeof useTextFontFamilyFromTheme, 'function')
 assert.equal(typeof useTheme, 'function')
 
+// Testing pkg.exports[./webhook]
+const nextSanityWebhook = require('next-sanity/webhook')
+const {config, parseBody} = nextSanityWebhook
+assert.equal(typeof config, 'object')
+assert.equal(typeof parseBody, 'function')
+
 // Ensure it's possible to check what version of next-sanity is being used
 const pkg = require('next-sanity/package.json')
 

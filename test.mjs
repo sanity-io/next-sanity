@@ -43,6 +43,11 @@ assert.equal(typeof useConfigWithBasePath, 'function')
 assert.equal(typeof useTextFontFamilyFromTheme, 'function')
 assert.equal(typeof useTheme, 'function')
 
+// Testing pkg.exports[./webhook]
+import {config, parseBody} from 'next-sanity/webhook'
+assert.equal(typeof config, 'object')
+assert.equal(typeof parseBody, 'function')
+
 // Ensure it's possible to check what version of next-sanity is being used
 import pkg from 'next-sanity/package.json' assert {type: 'json'}
 

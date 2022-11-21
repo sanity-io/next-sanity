@@ -1,6 +1,6 @@
 {
   "name": "next-sanity",
-  "version": "2.0.2",
+  "version": "2.1.0-webhook.2",
   "description": "Sanity.io toolkit for Next.js",
   "keywords": [
     "sanity",
@@ -50,6 +50,13 @@
       "require": "./dist/studio.cjs",
       "default": "./dist/studio.js"
     },
+    "./webhook": {
+      "types": "./dist/webhook.d.ts",
+      "source": "./src/webhook/index.ts",
+      "import": "./dist/webhook.js",
+      "require": "./dist/webhook.cjs",
+      "default": "./dist/webhook.js"
+    },
     "./package.json": "./package.json"
   },
   "main": "./dist/index.cjs",
@@ -63,6 +70,9 @@
       ],
       "studio": [
         "./dist/studio.d.ts"
+      ],
+      "webhook": [
+        "./dist/webhook.d.ts"
       ]
     }
   },
@@ -101,6 +111,7 @@
   "dependencies": {
     "@sanity/client": "^3.4.1",
     "@sanity/preview-kit": "^1.2.8",
+    "@sanity/webhook": "^2.0.0",
     "groq": "^2.33.2"
   },
   "devDependencies": {
@@ -144,12 +155,16 @@
     "typescript": "^4.9.3"
   },
   "peerDependencies": {
+    "@sanity/types": "*",
     "next": "^12 || ^13",
     "react": "^16.3 || ^17 || ^18",
     "sanity": "dev-preview",
     "styled-components": "^5.2"
   },
   "peerDependenciesMeta": {
+    "@sanity/types": {
+      "optional": true
+    },
     "sanity": {
       "optional": true
     },
