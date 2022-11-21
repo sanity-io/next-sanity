@@ -5,6 +5,12 @@
 All notable changes to this project will be documented in this file. See
 [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.1.0](https://github.com/sanity-io/next-sanity/compare/v2.0.2...v2.1.0) (2022-11-21)
+
+### Features
+
+- add `next-sanity/webhook` ([#180](https://github.com/sanity-io/next-sanity/issues/180)) ([5a94a9f](https://github.com/sanity-io/next-sanity/commit/5a94a9f47a5dd98d435bf6ee7b718b627c0b7ffa))
+
 ## [2.0.2](https://github.com/sanity-io/next-sanity/compare/v2.0.1...v2.0.2) (2022-11-18)
 
 ### Bug Fixes
