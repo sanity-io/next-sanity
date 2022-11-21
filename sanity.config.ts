@@ -10,6 +10,7 @@ const dataset = process.env.NEXT_PUBLIC_SANITY_DATASET!
 
 export default defineConfig({
   title: 'next-sanity',
+  basePath: '/studio',
 
   projectId,
   dataset,
