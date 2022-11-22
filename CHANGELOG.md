@@ -5,6 +5,13 @@
 All notable changes to this project will be documented in this file. See
 [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [3.0.1](https://github.com/sanity-io/next-sanity/compare/v3.0.0...v3.0.1) (2022-11-22)
+
+### Bug Fixes
+
+- add `<meta charset="utf-8">` in Next 13 ([a4e9e1a](https://github.com/sanity-io/next-sanity/commit/a4e9e1aa3e8fcb9495767f7360cea612f0cc6b68))
+- don't negate `unstable__tailwindSvgFix` ([c6c540b](https://github.com/sanity-io/next-sanity/commit/c6c540bd51d88a72afc1d69e071a848d8498118e))
+
 ## [3.0.0](https://github.com/sanity-io/next-sanity/compare/v2.1.0...v3.0.0) (2022-11-22)
 
 ### ⚠ BREAKING CHANGES
