@@ -5,6 +5,10 @@ import faviconSvg from './favicon.svg'
 /** @public */
 export interface NextStudioHeadProps {
   /**
+   * @defaultValue 'utf-8'
+   */
+  charSet?: false | string
+  /**
    * Sets the viewport to `viewport-fit=cover` to integrate with iOS devices with display cutouts (The Notch, Dynamic Island).
    * Also sets `width=device-width, initial-scale=1` to make the studio page responsive.
    * @defaultValue true
@@ -74,6 +78,7 @@ export interface NextStudioHeadProps {
  */
 export function NextStudioHead(props: NextStudioHeadProps) {
   const {
+    charSet = 'utf-8',
     viewport = true,
     robots = 'noindex',
     referrer = 'same-origin',
@@ -83,6 +88,7 @@ export function NextStudioHead(props: NextStudioHeadProps) {
 
   return (
     <>
+      {charSet && <meta key="charset" charSet={charSet} />}
       {viewport && (
         <meta
           key="viewport"
