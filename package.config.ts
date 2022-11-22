@@ -18,7 +18,7 @@ export default defineConfig({
       url({
         fileName: '[dirname][hash][extname]',
         sourceDir: path.join(__dirname, 'src'),
-        include: ['**/*.ico', '**/*.svg', '**/*.png', '**/*.jp(e)?g', '**/*.gif', '**/*.webp'],
+        include: ['**/*.ico', '**/*.svg', '**/*.png'],
       }),
     ],
   },

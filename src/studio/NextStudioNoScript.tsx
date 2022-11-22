@@ -9,6 +9,7 @@ const style = {
   left: 0;
   bottom: 0;
   background: #fff;
+  z-index: 1;
 }
 
 .sanity-app-no-js__content {

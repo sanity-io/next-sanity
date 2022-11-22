@@ -4,6 +4,7 @@ import PreviewPosts from 'app/PreviewPosts'
 import {createClient} from 'app/sanity.client'
 import {PreviewSuspense} from 'app/sanity.preview'
 import {previewData} from 'next/headers'
+import Link from 'next/link'
 
 export default async function IndexPage() {
   const thePreviewData = previewData()
@@ -66,12 +67,12 @@ export default async function IndexPage() {
         </div>
       </div>
       <div className="text-center">
-        <a
+        <Link
           href="/studio"
           className="mx-2 my-4 inline-block rounded-full border border-gray-200 px-4 py-1 text-sm font-semibold text-gray-600 hover:border-transparent hover:bg-gray-600 hover:text-white focus:outline-none focus:ring-2 focus:ring-gray-600 focus:ring-offset-2"
         >
           Open Studio
-        </a>
+        </Link>
       </div>
     </>
   )

@@ -1,6 +1,6 @@
 {
   "name": "next-sanity",
-  "version": "2.1.0",
+  "version": "3.0.0-app-dir.3",
   "description": "Sanity.io toolkit for Next.js",
   "keywords": [
     "sanity",
@@ -39,16 +39,23 @@
       "default": "./dist/preview.js"
     },
     "./studio": {
-      "types": "./dist/studio.d.ts",
+      "types": "./dist/studio/index.d.ts",
       "source": "./src/studio/index.ts",
       "node": {
         "source": "./src/studio/index.ts",
-        "import": "./dist/studio.mjs",
-        "require": "./dist/studio.cjs"
+        "import": "./dist/studio/index.mjs",
+        "require": "./dist/studio/index.cjs"
       },
-      "import": "./dist/studio.js",
-      "require": "./dist/studio.cjs",
-      "default": "./dist/studio.js"
+      "import": "./dist/studio/index.js",
+      "require": "./dist/studio/index.cjs",
+      "default": "./dist/studio/index.js"
+    },
+    "./studio/head": {
+      "types": "./dist/studio/head.d.ts",
+      "source": "./src/studio/head/index.ts",
+      "import": "./dist/studio/head.js",
+      "require": "./dist/studio/head.cjs",
+      "default": "./dist/studio/head.js"
     },
     "./webhook": {
       "types": "./dist/webhook.d.ts",
@@ -69,7 +76,10 @@
         "./dist/preview.d.ts"
       ],
       "studio": [
-        "./dist/studio.d.ts"
+        "./dist/studio/index.d.ts"
+      ],
+      "studio/head": [
+        "./dist/studio/head.d.ts"
       ],
       "webhook": [
         "./dist/webhook.d.ts"
@@ -85,7 +95,7 @@
     "prebuild": "npm run clean",
     "build": "pkg build --tsconfig tsconfig.build.json --strict",
     "postbuild": "npm run build:studio.mjs",
-    "build:studio.mjs": "cp studio.mjs dist/studio.mjs",
+    "build:studio.mjs": "cp studio.mjs dist/studio/index.mjs",
     "clean": "rimraf dist",
     "coverage": "npm test -- --coverage",
     "dev": "next",
@@ -96,7 +106,7 @@
     "test": "jest",
     "test:node-esm-cjs": "node test.mjs && node test.cjs",
     "type-check": "tsc --noEmit",
-    "update:icons": "cp node_modules/@sanity/server/lib/static/favicons/* src/studio && cp src/studio/favicon-{192,512}.png public && cp src/studio/webmanifest.json public/manifest.webmanifest"
+    "update:icons": "cp node_modules/@sanity/server/static/favicons/{apple-touch-icon.png,favicon.ico,favicon.svg} src/studio/head"
   },
   "browserslist": [
     "> 0.2% and supports es6-module and supports es6-module-dynamic-import and not dead and not IE 11",
@@ -131,7 +141,7 @@
     "@typescript-eslint/eslint-plugin": "^5.43.0",
     "autoprefixer": "^10.4.13",
     "eslint": "^8.28.0",
-    "eslint-config-next": "13.0.5-canary.3",
+    "eslint-config-next": "13.0.5-canary.4",
     "eslint-config-prettier": "^8.5.0",
     "eslint-config-sanity": "^6.0.0",
     "eslint-gitignore": "^0.1.0",
@@ -140,7 +150,7 @@
     "groqd": "^0.0.4",
     "jest": "^29.3.1",
     "jest-environment-jsdom": "^29.3.1",
-    "next": "13.0.5-canary.3",
+    "next": "13.0.5-canary.4",
     "postcss": "^8.4.19",
     "prettier": "^2.7.1",
     "prettier-plugin-packagejson": "^2.3.0",
@@ -152,17 +162,26 @@
     "sanity": "3.0.0-rc.2",
     "styled-components": "^5.3.6",
     "tailwindcss": "^3.2.4",
-    "typescript": "^4.9.3"
+    "typescript": "^4.9.3",
+    "url-loader": "^4.1.1"
   },
   "peerDependencies": {
+    "@sanity/icons": "*",
     "@sanity/types": "*",
-    "next": "^12 || ^13",
-    "react": "^16.3 || ^17 || ^18",
-    "sanity": "dev-preview",
-    "styled-components": "^5.2"
+    "@sanity/ui": "*",
+    "next": "^13",
+    "react": "^18",
+    "sanity": "dev-preview || ^3",
+    "styled-components": "*"
   },
   "peerDependenciesMeta": {
+    "@sanity/icons": {
+      "optional": true
+    },
     "@sanity/types": {
+      "optional": true
+    },
+    "@sanity/ui": {
       "optional": true
     },
     "sanity": {

@@ -19,30 +19,25 @@ assert.equal(typeof PreviewSuspense, 'function')
 const nextSanityStudio = require('next-sanity/studio')
 const {
   NextStudio,
-  NextStudioGlobalStyle,
-  NextStudioHead,
+  NextStudioFallback,
+  NextStudioLayout,
   NextStudioNoScript,
-  ServerStyleSheetDocument,
-  isWorkspaceWithTheme,
-  isWorkspaces,
-  useBackgroundColorsFromTheme,
-  useBasePath,
-  useConfigWithBasePath,
-  useTextFontFamilyFromTheme,
+  NextStudioSuspense,
+  usePrefersColorScheme,
   useTheme,
 } = nextSanityStudio
 assert.equal(typeof NextStudio?.type, 'function')
-assert.equal(typeof NextStudioGlobalStyle?.type, 'function')
-assert.equal(typeof NextStudioHead?.type, 'function')
+assert.equal(typeof NextStudioFallback?.type, 'function')
+assert.equal(typeof NextStudioLayout?.type, 'function')
 assert.equal(typeof NextStudioNoScript, 'function')
-assert.equal(typeof ServerStyleSheetDocument, 'function')
-assert.equal(typeof isWorkspaceWithTheme, 'function')
-assert.equal(typeof isWorkspaces, 'function')
-assert.equal(typeof useBackgroundColorsFromTheme, 'function')
-assert.equal(typeof useBasePath, 'function')
-assert.equal(typeof useConfigWithBasePath, 'function')
-assert.equal(typeof useTextFontFamilyFromTheme, 'function')
+assert.equal(typeof NextStudioSuspense, 'function')
+assert.equal(typeof usePrefersColorScheme, 'function')
 assert.equal(typeof useTheme, 'function')
+
+// Testing pkg.exports[./studio/head]
+const nextSanityStudioHead = require('next-sanity/studio/head')
+const {NextStudioHead} = nextSanityStudioHead
+assert.equal(typeof NextStudioHead, 'function')
 
 // Testing pkg.exports[./webhook]
 const nextSanityWebhook = require('next-sanity/webhook')

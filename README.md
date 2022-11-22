@@ -25,11 +25,17 @@
   - [Limits](#limits)
 - [`next-sanity/studio` (dev-preview)](#next-sanitystudio-dev-preview)
   - [Usage](#usage)
+    - [Next 13 `app/studio`](#next-13-appstudio)
+    - [Next 12 or `pages/studio`](#next-12-or-pagesstudio)
   - [Opt-in to using `StudioProvider` and `StudioLayout`](#opt-in-to-using-studioprovider-and-studiolayout)
-  - [Customize `<ServerStyleSheetDocument />`](#customize-serverstylesheetdocument-)
-  - [Full-control mode](#full-control-mode)
 - [`next-sanity/webhook`](#next-sanitywebhook)
 - [Migrate](#migrate)
+  - [From `v2`](#from-v2)
+    - [`NextStudioGlobalStyle` is removed](#nextstudioglobalstyle-is-removed)
+    - [`ServerStyleSheetDocument` is removed](#serverstylesheetdocument-is-removed)
+    - [The internal `isWorkspaceWithTheme` and `isWorkspaces` utils are no longer exported](#the-internal-isworkspacewiththeme-and-isworkspaces-utils-are-no-longer-exported)
+    - [The `useBackgroundColorsFromTheme`, `useBasePath`, `useConfigWithBasePath`, and `useTextFontFamilyFromTheme`, hooks are removed](#the-usebackgroundcolorsfromtheme-usebasepath-useconfigwithbasepath-and-usetextfontfamilyfromtheme-hooks-are-removed)
+    - [The `NextStudioHead` component has moved from `next-sanity/studio` to `next-sanity/studio/head`](#the-nextstudiohead-component-has-moved-from-next-sanitystudio-to-next-sanitystudiohead)
   - [From `v1`](#from-v1)
     - [`createPreviewSubscriptionHook` is replaced with `definePreview`](#createpreviewsubscriptionhook-is-replaced-with-definepreview)
       - [Before](#before)
@@ -450,34 +456,122 @@ The latest version of Sanity Studio allows you to embed a near-infinitely config
 
 ### Usage
 
-The basic setup is two files:
+The basic setup is 2 components, `NextStudio` and `NextStudioHead`.
+`NextStudio` loads up the `import {Studio} from 'sanity'` component for you and wraps it in a Next-friendly layout.
+While `NextStudioHead` sets necessary `<head>` meta tags such as `<meta name="viewport">` to ensure the responsive CSS in the Studio works as expected.
 
-1. `pages/[[...index]].tsx`
+Both the Next 13 and 12 examples uses this config file:
+`sanity.config.ts`:
+
+```ts
+import {visionTool} from '@sanity/vision'
+import {defineConfig} from 'sanity'
+import {deskTool} from 'sanity/desk'
+
+import {schemaTypes} from './schemas'
+
+const projectId = process.env.NEXT_PUBLIC_SANITY_PROJECT_ID!
+const dataset = process.env.NEXT_PUBLIC_SANITY_DATASET!
+
+export default defineConfig({
+  basePath: '/studio', // <-- important that `basePath` matches the route you're mounting your studio from, it applies to both `/pages` and `/app`
+
+  projectId,
+  dataset,
+
+  plugins: [deskTool(), visionTool()],
+
+  schema: {
+    types: schemaTypes,
+  },
+})
+```
+
+To use `sanity.cli.ts` with the same `projectId` and `dataset` as your `sanity.config.ts`:
+
+```ts
+/* eslint-disable no-process-env */
+import {loadEnvConfig} from '@next/env'
+import {defineCliConfig} from 'sanity/cli'
+
+const dev = process.env.NODE_ENV !== 'production'
+loadEnvConfig(__dirname, dev, {info: () => null, error: console.error})
+
+const projectId = process.env.NEXT_PUBLIC_SANITY_PROJECT_ID
+const dataset = process.env.NEXT_PUBLIC_SANITY_DATASET
+
+export default defineCliConfig({api: {projectId, dataset}})
+```
+
+Now you can run commands like `npx sanity cors add`. See `npx sanity help` for a full list of what you can do.
+
+#### Next 13 `app/studio`
+
+In Next 13's `appDir` mode you use `page.tsx` to load `NextStudio`, and optionally (recommended, especially if you want great support for iPhones and other devices with display cutouts like "The Notch" or "Dynamic Island") export `NextStudioHead` in a `head.tsx`.
+In routes that load `NextStudio` ensure you have `'use client'` at the top of your file.
+
+`app/studio/[[...index]]/page.tsx`:
 
 ```tsx
-// Import your sanity.config.ts file
-import config from '../sanity.config'
+'use client'
+
 import {NextStudio} from 'next-sanity/studio'
 
+import config from '../../../sanity.config'
+
 export default function StudioPage() {
-  // Loads the Studio, with all the needed meta tags and global CSS required for it to render correctly
+  //  Supports the same props as `import {Studio} from 'sanity'`, `config` is required
   return <NextStudio config={config} />
 }
 ```
 
-The `<NextStudio />` wraps `<Studio />` component and supports forwarding all its props:
+`app/studio/[[...index]]/head.tsx`:
 
 ```tsx
-import {Studio} from 'sanity'
+// Re-export `NextStudioHead` as default if you're happy with the default behavior
+export {NextStudioHead as default} from 'next-sanity/studio/head'
+
+// To customize it, use it as a children component:
+import {NextStudioHead} from 'next-sanity/studio/head'
+
+export default function CustomStudioHead() {
+  return (
+    <>
+      <NextStudioHead favicons={false} />
+      <link
+        rel="icon"
+        type="image/png"
+        sizes="32x32"
+        href="https://www.sanity.io/static/images/favicons/favicon-32x32.png"
+      />
+    </>
+  )
+}
 ```
 
-2. `pages/_document.tsx`
+#### Next 12 or `pages/studio`
+
+Using just `NextStudio` gives you a fully working Sanity Studio v3. However we recommend also using `NextStudioHead` as it ensures CSS Media Queries that target mobile devices with display cutouts (for example iPhone's "The Notch" and "Dynamic Island") and other details.
+
+`/pages/studio/[[...index]].tsx`:
 
 ```tsx
-import {ServerStyleSheetDocument} from 'next-sanity/studio'
+import Head from 'next/head'
+import {NextStudio} from 'next-sanity/studio'
+import {NextStudioHead} from 'next-sanity/studio/head'
 
-// Set up SSR for styled-components, ensuring there's no missing CSS when deploying a Studio in Next.js into production
-export default class Document extends ServerStyleSheetDocument {}
+import config from '../../sanity.config'
+
+export default function StudioPage() {
+  return (
+    <>
+      <Head>
+        <NextStudioHead />
+      </Head>
+      <NextStudio config={config} />
+    </>
+  )
+}
 ```
 
 ### Opt-in to using `StudioProvider` and `StudioLayout`
@@ -488,7 +582,7 @@ If you want to go lower level and have more control over the studio you can pass
 import {NextStudio} from 'next-sanity/studio'
 import {StudioProvider, StudioLayout} from 'sanity'
 
-import config from '../sanity.config'
+import config from '../../../sanity.config'
 
 function StudioPage() {
   return (
@@ -498,101 +592,6 @@ function StudioPage() {
         <StudioLayout />
       </StudioProvider>
     </NextStudio>
-  )
-}
-```
-
-### Customize `<ServerStyleSheetDocument />`
-
-You can still customize `_document.tsx`, the same way you would the default `<Document />` component from `next/document`:
-
-```tsx
-import {ServerStyleSheetDocument} from 'next-sanity/studio'
-
-export default class Document extends ServerStyleSheetDocument {
-  static async getInitialProps(ctx: DocumentContext) {
-    // You can still override renderPage:
-    const originalRenderPage = ctx.renderPage
-    ctx.renderPage = () =>
-      originalRenderPage({
-        enhanceApp: (App) => (props) => <App {...props} />,
-      })
-
-    const initialProps = await ServerStyleSheetDocument.getInitialProps(ctx)
-
-    const extraStyles = await getStyles()
-    return {
-      ...initialProps,
-      // Add to the default styles if you want
-      styles: [initialProps.styles, extraStyles],
-    }
-  }
-  render() {
-    // do the same stuff as in `next/document`
-  }
-}
-```
-
-### Full-control mode
-
-If you only need parts of what `<NextStudio />` does for you, but not all of it.
-No problem. You can import any which one of the components that `<NextStudio />` is importing and assemble them in any way you want.
-
-```tsx
-import {Studio, type Config} from 'sanity'
-import {NextStudioGlobalStyle, NextStudioHead} from 'next-sanity/studio'
-// This implementation will only load the bare minimum of what's required for the Studio to render correctly. No favicons, fancy <meta name="theme-color"> tags or the like
-export default function CustomNextStudio({config}: {config: Config}) {
-  return (
-    <>
-      <Studio config={config} />
-      <NextStudioHead>{/* Custom extra stuff in <head> */}</NextStudioHead>
-      <NextStudioGlobalStyle />
-    </>
-  )
-}
-```
-
-And while `<NextStudio />` have all features enabled by default allowing you to opt-out by giving it props, the inner components `<NextStudioHead />` and `<NextStudioGlobalStyle />` are opt-in.
-This means that these two `StudioPage` components are functionally identical:
-
-```tsx
-import {
-  NextStudio,
-  NextStudioGlobalStyle,
-  NextStudioHead,
-  useTheme,
-  useBackgroundColorsFromTheme,
-} from 'next-sanity/studio'
-import {Studio} from 'sanity'
-import config from '../sanity.config'
-
-// Turning all the features off, leaving only bare minimum required meta tags and styling
-function StudioPage() {
-  return (
-    <NextStudio
-      config={config}
-      // an empty string turns off the CSS that sets a background on <html>
-      unstable__bg=""
-      unstable__noTailwindSvgFix
-      unstable__noFavicons
-      // an empty string turns off the <title> tag
-      unstable__document_title=""
-    />
-  )
-}
-
-// Since no features are enabled it works the same way
-function Studiopage() {
-  const theme = useTheme(config)
-  const {themeColorLight, themeColorDark} = useBackgroundColorsFromTheme(theme)
-
-  return (
-    <>
-      <Studio config={config} />
-      <NextStudioHead themeColorLight={themeColorLight} themeColorDark={themeColorDark} />
-      <NextStudioGlobalStyle />
-    </>
   )
 }
 ```
@@ -634,6 +633,51 @@ export default async function revalidate(req: NextApiRequest, res: NextApiRespon
 ```
 
 ## Migrate
+
+### From `v2`
+
+The `v3` release only contains breaking changes on the `next-sanity/studio` imports. If you're only using `import {createClient, groq} from 'next-sanity'` or `import {definePreview, PreviewSuspense} from 'next-sanity/preview'` then there's no migration for you to do.
+
+#### `NextStudioGlobalStyle` is removed
+
+The layout is no longer using global CSS to set the Studio height. The switch to local CSS helps interop between Next 12 and 13 layouts.
+
+#### `ServerStyleSheetDocument` is removed
+
+It's no longer necessary to setup `styled-components` SSR for the Studio to render correctly.
+
+#### The internal `isWorkspaceWithTheme` and `isWorkspaces` utils are no longer exported
+
+The `useTheme` hook is still available if you're building abstractions that need to know what the initial workspace theme variables are.
+
+#### The `useBackgroundColorsFromTheme`, `useBasePath`, `useConfigWithBasePath`, and `useTextFontFamilyFromTheme`, hooks are removed
+
+You can `useTheme` to replace `useBackgroundColorsFromTheme` and `useTextFontFamilyFromTheme`:
+
+```tsx
+import {useMemo} from 'react'
+import {useTheme} from 'next-sanity/studio'
+import type {StudioProps} from 'sanity'
+export default function MyComponent(props: Pick<StudioProps, 'config'>) {
+  const theme = useTheme(config)
+  // useBackgroundColorsFromTheme
+  const {themeColorLight, themeColorDark} = useMemo(
+    () => ({
+      themeColorLight: theme.color.light.default.base.bg,
+      themeColorDark: theme.color.dark.default.base.bg,
+    }),
+    [theme]
+  )
+  // useTextFontFamilyFromTheme
+  const fontFamily = useMemo(() => theme.fonts.text.family, [theme])
+}
+```
+
+The reason why `useBasePath` and `useConfigWithBasePath` got removed is because Next 12 and 13 diverge too much in how they declare dynamic segments. Thus you'll need to specify `basePath` in your `sanity.config.ts` manually to match the route you're loading the studio, for the time being.
+
+#### The `NextStudioHead` component has moved from `next-sanity/studio` to `next-sanity/studio/head`
+
+Its props are also quite different and it now requires you to wrap it in `import Head from 'next/head'` if you're not using a `head.tsx` in `appDir`. Make sure you use TypeScript to ease the migration.
 
 ### From `v1`
 

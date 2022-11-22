@@ -1,33 +1,23 @@
-// Copied into dist/ by the build process, to workaround `next/head` not being available to native Nodejs ESM
+// Copied into dist/studio/ by the build process, to workaround `@sanity/icons` and other packages not using "type": "module"
 
-import studioCjs from './studio.cjs'
+import studioCjs from './index.cjs'
 
 const {
-  isWorkspaces,
-  isWorkspaceWithTheme,
   NextStudio,
-  NextStudioGlobalStyle,
-  NextStudioHead,
+  NextStudioFallback,
+  NextStudioLayout,
   NextStudioNoScript,
-  ServerStyleSheetDocument,
-  useBackgroundColorsFromTheme,
-  useBasePath,
-  useConfigWithBasePath,
-  useTextFontFamilyFromTheme,
+  NextStudioSuspense,
+  usePrefersColorScheme,
   useTheme,
 } = studioCjs
 
 export {
-  isWorkspaces,
-  isWorkspaceWithTheme,
   NextStudio,
-  NextStudioGlobalStyle,
-  NextStudioHead,
+  NextStudioFallback,
+  NextStudioLayout,
   NextStudioNoScript,
-  ServerStyleSheetDocument,
-  useBackgroundColorsFromTheme,
-  useBasePath,
-  useConfigWithBasePath,
-  useTextFontFamilyFromTheme,
+  NextStudioSuspense,
+  usePrefersColorScheme,
   useTheme,
 }

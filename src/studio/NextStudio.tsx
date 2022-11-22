@@ -1,54 +1,28 @@
-import {memo} from 'react'
-import {type StudioProps, Studio} from 'sanity'
+import {lazy, memo} from 'react'
+import type {StudioProps} from 'sanity'
 
-import {NextStudioGlobalStyle, NextStudioGlobalStyleProps} from './NextStudioGlobalStyle'
-import {type NextStudioHeadProps, NextStudioHead} from './NextStudioHead'
+import {NextStudioFallback} from './NextStudioFallback'
+import {type NextStudioLayoutProps, NextStudioLayout} from './NextStudioLayout'
 import {NextStudioNoScript} from './NextStudioNoScript'
-import {useBackgroundColorsFromTheme, useTextFontFamilyFromTheme, useTheme} from './utils'
+import {NextStudioSuspense} from './NextStudioSuspense'
+
+const Studio = memo(lazy(() => import('./LazyStudio')))
 
 /** @beta */
 export interface NextStudioProps extends StudioProps {
   children?: React.ReactNode
   /**
-   * Turns off the default global styling
+   * Apply fix with SVG icon centering that happens if TailwindCSS is loaded
+   * @defaultValue true
    * @alpha
    */
-  unstable__noGlobalStyle?: boolean
+  unstable__tailwindSvgFix?: NextStudioLayoutProps['unstable__tailwindSvgFix']
   /**
-   * Apply fix with SVG icon centering that happens if TailwindCSS is loaded, on by default
+   * Render the <noscript> tag
+   * @defaultValue true
    * @alpha
    */
-  unstable__noTailwindSvgFix?: NextStudioGlobalStyleProps['unstable__tailwindSvgFix']
-  /**
-   * Add stuff to the head with next/head
-   * @alpha
-   */
-  unstable__head?: NextStudioHeadProps['children']
-  /**
-   * Sets the document title
-   * @alpha
-   */
-  unstable__document_title?: NextStudioHeadProps['title']
-  /**
-   * Sets the background color of <html>
-   * @alpha
-   */
-  unstable__bg?: NextStudioGlobalStyleProps['bg']
-  /**
-   * Sets the font-family of #__next
-   * @alpha
-   */
-  unstable__fontFamily?: NextStudioGlobalStyleProps['fontFamily']
-  /**
-   * Don't load the favicon meta tags
-   * @alpha
-   */
-  unstable__noFavicons?: boolean
-  /**
-   * Don't render the <noscript> tag
-   * @alpha
-   */
-  unstable__noNoScript?: boolean
+  unstable__noScript?: boolean
 }
 /**
  * Intended to render at the root of a page, letting the Studio own that page and render much like it would if you used `npx sanity start` to render
@@ -57,38 +31,25 @@ export interface NextStudioProps extends StudioProps {
 const NextStudioComponent = ({
   children,
   config,
-  unstable__noGlobalStyle,
-  unstable__noTailwindSvgFix,
-  unstable__head,
-  unstable__document_title,
-  unstable__bg,
-  unstable__fontFamily,
-  unstable__noFavicons,
-  unstable__noNoScript,
+  unstable__tailwindSvgFix = true,
+  unstable__noScript = true,
+  scheme,
   ...props
 }: NextStudioProps) => {
-  const theme = useTheme(config)
-  const {themeColorLight, themeColorDark} = useBackgroundColorsFromTheme(theme)
-  const themeFontFamily = useTextFontFamilyFromTheme(theme)
   return (
     <>
-      {children || <Studio config={config} {...props} />}
-      <NextStudioHead
-        themeColorLight={themeColorLight}
-        themeColorDark={themeColorDark}
-        title={unstable__document_title}
-        favicons={!unstable__noFavicons}
-      >
-        {unstable__head}
-      </NextStudioHead>
-      {!unstable__noGlobalStyle && (
-        <NextStudioGlobalStyle
-          bg={unstable__bg ?? themeColorLight}
-          fontFamily={unstable__fontFamily ?? themeFontFamily}
-          unstable__tailwindSvgFix={!unstable__noTailwindSvgFix}
-        />
-      )}
-      {!unstable__noNoScript && <NextStudioNoScript />}
+      {!unstable__noScript && <NextStudioNoScript />}
+      <NextStudioSuspense fallback={<NextStudioFallback config={config} scheme={scheme} />}>
+        <NextStudioLayout
+          config={config}
+          scheme={scheme}
+          unstable__tailwindSvgFix={unstable__tailwindSvgFix}
+        >
+          {children || (
+            <Studio config={config} scheme={scheme} unstable_globalStyles {...props} />
+          )}
+        </NextStudioLayout>
+      </NextStudioSuspense>
     </>
   )
 }
