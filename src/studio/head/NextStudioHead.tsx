@@ -94,9 +94,11 @@ export function NextStudioHead(props: NextStudioHeadProps) {
       {robots && <meta key="robots" name="robots" content={robots} />}
       {referrer && <meta key="referrer" name="referrer" content={referrer} />}
       {title && <title>{title}</title>}
-      {favicons && <link rel="icon" href={faviconIco} sizes="any" />}
-      {favicons && <link rel="icon" href={faviconSvg} type="image/svg+xml" />}
-      {favicons && <link rel="apple-touch-icon" href={faviconPng} />}
+      {favicons && <link rel="icon" href={faviconIco?.default || faviconIco} sizes="any" />}
+      {favicons && (
+        <link rel="icon" href={faviconSvg?.default || faviconSvg} type="image/svg+xml" />
+      )}
+      {favicons && <link rel="apple-touch-icon" href={faviconPng?.default || faviconSvg} />}
     </>
   )
 }
