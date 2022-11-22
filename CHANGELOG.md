@@ -9,7 +9,7 @@ All notable changes to this project will be documented in this file. See
 
 ### ⚠ BREAKING CHANGES
 
--
+- See the [Migration section in the README](https://github.com/sanity-io/next-sanity/tree/main#from-v2) for details.
 
 ### Features
 
