@@ -5,6 +5,12 @@
 All notable changes to this project will be documented in this file. See
 [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [3.0.2](https://github.com/sanity-io/next-sanity/compare/v3.0.1...v3.0.2) (2022-11-22)
+
+### Bug Fixes
+
+- wait for eventual consistency by default ([d76f111](https://github.com/sanity-io/next-sanity/commit/d76f111b4dc11a2337dd177f206641ffb4add7cd))
+
 ## [3.0.1](https://github.com/sanity-io/next-sanity/compare/v3.0.0...v3.0.1) (2022-11-22)
 
 ### Bug Fixes
