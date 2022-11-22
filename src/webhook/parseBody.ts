@@ -23,7 +23,7 @@ export type ParseBody = {
 export async function parseBody(
   req: NextApiRequest,
   secret?: string,
-  waitForContentLakeEventualConsistency?: boolean
+  waitForContentLakeEventualConsistency?: boolean = true
 ): Promise<ParseBody> {
   let signature = req.headers[SIGNATURE_HEADER_NAME]!
   if (Array.isArray(signature)) {
