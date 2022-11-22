@@ -51,7 +51,7 @@ const NextStudioLayoutComponent = ({
   return (
     <Layout
       data-ui="NextStudioLayout"
-      $unstable__tailwindSvgFix={!unstable__tailwindSvgFix}
+      $unstable__tailwindSvgFix={unstable__tailwindSvgFix}
       $fontFamily={theme.fonts.text.family}
       $bg={theme.color[scheme].default.base.bg}
     >
