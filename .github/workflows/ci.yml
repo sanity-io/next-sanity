@@ -44,7 +44,7 @@ jobs:
       - run: npm ci
       - run: npm run lint
         if: github.event.inputs.test != 'false'
-      # @TODO find out how to make this command work on the CI  
+      # @TODO find out how to make this command work on the CI
       #- run: npm run update:icons
       #  if: github.event.inputs.test != 'false'
       - run: npm run prepublishOnly
