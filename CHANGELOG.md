@@ -5,6 +5,16 @@
 All notable changes to this project will be documented in this file. See
 [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [3.0.0](https://github.com/sanity-io/next-sanity/compare/v2.1.0...v3.0.0) (2022-11-22)
+
+### ⚠ BREAKING CHANGES
+
+-
+
+### Features
+
+- add support for Next 13 `appDir` ([#184](https://github.com/sanity-io/next-sanity/issues/184)) ([0c80876](https://github.com/sanity-io/next-sanity/commit/0c80876ae1496cfb7f8cc6e27ef3537a82fcea15)), closes [/github.com/sanity-io/next-sanity/tree/main#from-v2](https://github.com/sanity-io//github.com/sanity-io/next-sanity/tree/main/issues/from-v2)
+
 ## [2.1.0](https://github.com/sanity-io/next-sanity/compare/v2.0.2...v2.1.0) (2022-11-21)
 
 ### Features
