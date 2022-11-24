@@ -18,6 +18,7 @@ jobs:
       - uses: actions/checkout@93ea575cb5d8a053eaa0ac8fa3b40d7e05a33cc8 # tag=v3
       - uses: actions/setup-node@8c91899e586c5b171469028077307d293428b516 # tag=v3
         with:
+          cache: npm
           node-version: lts/*
       - run: npm ci --ignore-scripts --only-dev
       - uses: actions/cache@v3
