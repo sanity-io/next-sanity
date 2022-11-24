@@ -5,6 +5,12 @@
 All notable changes to this project will be documented in this file. See
 [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [3.0.3](https://github.com/sanity-io/next-sanity/compare/v3.0.2...v3.0.3) (2022-11-24)
+
+### Bug Fixes
+
+- set `key` prop on favicon links ([edde50a](https://github.com/sanity-io/next-sanity/commit/edde50a28ec57f6463d67d028922dbd8dca56953))
+
 ## [3.0.2](https://github.com/sanity-io/next-sanity/compare/v3.0.1...v3.0.2) (2022-11-22)
 
 ### Bug Fixes
