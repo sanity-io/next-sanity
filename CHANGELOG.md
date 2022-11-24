@@ -5,6 +5,12 @@
 All notable changes to this project will be documented in this file. See
 [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [3.0.4](https://github.com/sanity-io/next-sanity/compare/v3.0.3...v3.0.4) (2022-11-24)
+
+### Bug Fixes
+
+- set the webhooks runtime to `nodejs` by default ([1cf0a72](https://github.com/sanity-io/next-sanity/commit/1cf0a7295c5e5b4526d0e010936069e9787bca63))
+
 ## [3.0.3](https://github.com/sanity-io/next-sanity/compare/v3.0.2...v3.0.3) (2022-11-24)
 
 ### Bug Fixes
