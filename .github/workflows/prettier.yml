@@ -20,6 +20,10 @@ jobs:
         with:
           node-version: lts/*
       - run: npm ci --ignore-scripts --only-dev
+      - uses: actions/cache@v3
+        with:
+          path: node_modules/.cache/prettier/.prettier-cache
+          key: prettier-${{ hashFiles('package-lock.json') }}-${{ hashFiles('.gitignore') }}
       - name: check if workflows needs prettier
         run: npx prettier --cache --check ".github/workflows/**/*.yml" || (echo "An action can't make changes to actions, you'll have to run prettier manually" && exit 1)
       - run: npx prettier --ignore-path .gitignore --cache --write .
