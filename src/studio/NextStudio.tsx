@@ -1,12 +1,14 @@
-import {lazy, memo} from 'react'
-import type {StudioProps} from 'sanity'
+import {memo} from 'react'
+import {type StudioProps, Studio} from 'sanity'
 
 import {NextStudioFallback} from './NextStudioFallback'
 import {type NextStudioLayoutProps, NextStudioLayout} from './NextStudioLayout'
 import {NextStudioNoScript} from './NextStudioNoScript'
 import {NextStudioSuspense} from './NextStudioSuspense'
 
-const Studio = memo(lazy(() => import('./LazyStudio')))
+// eslint-disable-next-line no-warning-comments
+// FIXME: https://github.com/vercel/next.js/issues/43147
+// const Studio = memo(lazy(() => import('./LazyStudio')))
 
 /** @beta */
 export interface NextStudioProps extends StudioProps {
