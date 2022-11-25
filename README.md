@@ -224,13 +224,11 @@ export {PreviewSuspense as default} from 'next-sanity/preview'
 `app/page.js`:
 
 ```jsx
-import {lazy} from 'react'
 import {previewData} from 'next/headers'
 import PreviewSuspense from 'components/PreviewSuspense'
 import {DocumentsCount, query} from 'components/DocumentsCount'
+import PreviewDocumentsCount from 'components/PreviewDocumentsCount'
 import {client} from 'lib/sanity.client'
-
-const PreviewDocumentsCount = lazy(() => import('components/PreviewDocumentsCount'))
 
 export default async function IndexPage() {
   if (previewData()) {
@@ -400,9 +398,8 @@ import {lazy} from 'react'
 import {previewData} from 'next/headers'
 import PreviewSuspense from 'components/PreviewSuspense'
 import {DocumentsCount, query} from 'components/DocumentsCount'
+import PreviewDocumentsCount from 'components/PreviewDocumentsCount'
 import {client} from 'lib/sanity.client'
-
-const PreviewDocumentsCount = lazy(() => import('components/PreviewDocumentsCount'))
 
 export default async function IndexPage() {
   if (previewData()?.token) {
