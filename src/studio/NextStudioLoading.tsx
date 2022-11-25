@@ -40,6 +40,7 @@ export function NextStudioLoading(props: NextStudioLoadingProps) {
 
     return {
       wrapper: {
+        display: 'block',
         animation: `${id} 500ms linear infinite`,
         color: theme.color[scheme].default.muted.default.enabled.muted.fg,
         width: rem(capHeight),
@@ -80,9 +81,30 @@ export function NextStudioLoading(props: NextStudioLoadingProps) {
             height: '100%',
             margin: 0,
             padding: 0,
+            // @TODO use rem calc
+            gap: '10px',
           }}
         >
           <style key={scheme}>{`@keyframes ${id} {${keyframes}}`}</style>
+          <div
+            data-ui="Text"
+            style={{
+              position: 'relative',
+              // @TODO read from theme
+              fontWeight: 400,
+              // @TODO read from theme
+              padding: '1px 0px',
+              // @TODO use rem calc
+              fontSize: '1rem',
+              // @TODO use rem calc
+              lineHeight: 'calc(1.3125)',
+              // @TODO use rem calc
+              transform: 'translateY(-5px)',
+              color: theme.color[scheme].default.muted.default.enabled.muted.fg,
+            }}
+          >
+            <span>Loading…</span>
+          </div>
           <div data-ui="Spinner" style={styles.wrapper}>
             <SpinnerIcon style={styles.svg} />
           </div>
