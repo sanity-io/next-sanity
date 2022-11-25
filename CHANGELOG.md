@@ -5,6 +5,14 @@
 All notable changes to this project will be documented in this file. See
 [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [3.0.5](https://github.com/sanity-io/next-sanity/compare/v3.0.4...v3.0.5) (2022-11-25)
+
+### Bug Fixes
+
+- add temp workaround for RSC compat ([1166b61](https://github.com/sanity-io/next-sanity/commit/1166b61331b96bb5470351f9f8c55d649b94d500))
+- call `store.close` on `beforeunload` ([#195](https://github.com/sanity-io/next-sanity/issues/195)) ([e7b9bf6](https://github.com/sanity-io/next-sanity/commit/e7b9bf60f9751abbe05c6cd86d4d33cb3147e219))
+- **docs:** Next 13 RSC auto code split client components ([80c2918](https://github.com/sanity-io/next-sanity/commit/80c29182fb3e723261cdcf929b44206661d85444))
+
 ## [3.0.4](https://github.com/sanity-io/next-sanity/compare/v3.0.3...v3.0.4) (2022-11-24)
 
 ### Bug Fixes
