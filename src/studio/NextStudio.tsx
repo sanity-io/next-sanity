@@ -1,10 +1,11 @@
 import {memo} from 'react'
 import {type StudioProps, Studio} from 'sanity'
 
-import {NextStudioFallback} from './NextStudioFallback'
+import {NextStudioClientOnly} from './NextStudioClientOnly'
 import {type NextStudioLayoutProps, NextStudioLayout} from './NextStudioLayout'
-import {NextStudioNoScript} from './NextStudioNoScript'
-import {NextStudioSuspense} from './NextStudioSuspense'
+import {type NextStudioLoadingProps, NextStudioLoading} from './NextStudioLoading'
+
+export type {NextStudioLoadingProps}
 
 // eslint-disable-next-line no-warning-comments
 // FIXME: https://github.com/vercel/next.js/issues/43147
@@ -24,7 +25,7 @@ export interface NextStudioProps extends StudioProps {
    * @defaultValue true
    * @alpha
    */
-  unstable__noScript?: boolean
+  unstable__noScript?: NextStudioLoadingProps['unstable__noScript']
 }
 /**
  * Intended to render at the root of a page, letting the Studio own that page and render much like it would if you used `npx sanity start` to render
@@ -34,27 +35,28 @@ const NextStudioComponent = ({
   children,
   config,
   unstable__tailwindSvgFix = true,
-  unstable__noScript = true,
+  unstable__noScript,
   scheme,
   ...props
-}: NextStudioProps) => {
-  return (
-    <>
-      {!unstable__noScript && <NextStudioNoScript />}
-      <NextStudioSuspense fallback={<NextStudioFallback config={config} scheme={scheme} />}>
-        <NextStudioLayout
-          config={config}
-          scheme={scheme}
-          unstable__tailwindSvgFix={unstable__tailwindSvgFix}
-        >
-          {children || (
-            <Studio config={config} scheme={scheme} unstable_globalStyles {...props} />
-          )}
-        </NextStudioLayout>
-      </NextStudioSuspense>
-    </>
-  )
-}
+}: NextStudioProps) => (
+  <NextStudioClientOnly
+    fallback={
+      <NextStudioLoading
+        unstable__noScript={unstable__noScript}
+        config={config}
+        scheme={scheme}
+      />
+    }
+  >
+    <NextStudioLayout
+      config={config}
+      scheme={scheme}
+      unstable__tailwindSvgFix={unstable__tailwindSvgFix}
+    >
+      {children || <Studio config={config} scheme={scheme} unstable_globalStyles {...props} />}
+    </NextStudioLayout>
+  </NextStudioClientOnly>
+)
 
 /**
  * Override how the Studio renders by passing children.

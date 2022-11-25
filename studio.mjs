@@ -4,20 +4,18 @@ import studioCjs from './index.cjs'
 
 const {
   NextStudio,
-  NextStudioFallback,
+  NextStudioClientOnly,
   NextStudioLayout,
   NextStudioNoScript,
-  NextStudioSuspense,
   usePrefersColorScheme,
   useTheme,
 } = studioCjs
 
 export {
   NextStudio,
-  NextStudioFallback,
+  NextStudioClientOnly,
   NextStudioLayout,
   NextStudioNoScript,
-  NextStudioSuspense,
   usePrefersColorScheme,
   useTheme,
 }
