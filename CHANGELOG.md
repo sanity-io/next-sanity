@@ -5,6 +5,12 @@
 All notable changes to this project will be documented in this file. See
 [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [3.1.1](https://github.com/sanity-io/next-sanity/compare/v3.1.0...v3.1.1) (2022-11-25)
+
+### Bug Fixes
+
+- show "Loading..." text over spinner ([6082652](https://github.com/sanity-io/next-sanity/commit/60826520db924046b4889f1df69f02a3a921cf02))
+
 ## [3.1.0](https://github.com/sanity-io/next-sanity/compare/v3.0.5...v3.1.0) (2022-11-25)
 
 ### Features
