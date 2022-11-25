@@ -522,6 +522,7 @@ export default function StudioPage() {
 }
 ```
 
+Set the right `viewport` meta tag, favicons and mroe
 `app/studio/[[...index]]/head.tsx`:
 
 ```tsx
@@ -543,6 +544,20 @@ export default function CustomStudioHead() {
       />
     </>
   )
+}
+```
+
+Improve the Studio loading experience by setting a `loading.tsx` route.
+`app/studio/[[...index]]/loading.tsx`:
+
+```tsx
+'use client'
+
+import config from '../../../sanity.config'
+import NextStudioLoading from 'next-sanity/studio/loading'
+
+export default function Loading() {
+  return <NextStudioLoading config={config} />
 }
 ```
 

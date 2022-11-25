@@ -57,6 +57,18 @@
       "require": "./dist/studio/head.cjs",
       "default": "./dist/studio/head.js"
     },
+    "./studio/loading": {
+      "types": "./dist/studio/loading.d.ts",
+      "source": "./src/studio/loading.ts",
+      "node": {
+        "source": "./src/studio/loading.ts",
+        "import": "./dist/studio/loading.mjs",
+        "require": "./dist/studio/loading.cjs"
+      },
+      "import": "./dist/studio/loading.js",
+      "require": "./dist/studio/loading.cjs",
+      "default": "./dist/studio/loading.js"
+    },
     "./webhook": {
       "types": "./dist/webhook.d.ts",
       "source": "./src/webhook/index.ts",
@@ -81,6 +93,9 @@
       "studio/head": [
         "./dist/studio/head.d.ts"
       ],
+      "studio/loading": [
+        "./dist/studio/loading.d.ts"
+      ],
       "webhook": [
         "./dist/webhook.d.ts"
       ]
@@ -94,8 +109,9 @@
   "scripts": {
     "prebuild": "npm run clean",
     "build": "pkg build --tsconfig tsconfig.build.json --strict",
-    "postbuild": "npm run build:studio.mjs",
+    "postbuild": "npm run build:studio.mjs && npm run build:loading.mjs",
     "build:studio.mjs": "cp studio.mjs dist/studio/index.mjs",
+    "build:loading.mjs": "cp loading.mjs dist/studio/loading.mjs",
     "clean": "rimraf dist",
     "coverage": "npm test -- --coverage",
     "dev": "next",
