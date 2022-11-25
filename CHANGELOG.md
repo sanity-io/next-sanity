@@ -5,6 +5,12 @@
 All notable changes to this project will be documented in this file. See
 [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [3.1.0](https://github.com/sanity-io/next-sanity/compare/v3.0.5...v3.1.0) (2022-11-25)
+
+### Features
+
+- add `next-sanity/studio/loading` ([#196](https://github.com/sanity-io/next-sanity/issues/196)) ([575964d](https://github.com/sanity-io/next-sanity/commit/575964df5e5e1c6247ee06bc6d0cf271e4bc64a5))
+
 ## [3.0.5](https://github.com/sanity-io/next-sanity/compare/v3.0.4...v3.0.5) (2022-11-25)
 
 ### Bug Fixes
