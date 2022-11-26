@@ -4,13 +4,17 @@
 
 import {SpinnerIcon} from '@sanity/icons'
 import {_responsive, rem} from '@sanity/ui'
-import type {StudioProps} from 'sanity'
+import type {Config, SingleWorkspace, StudioProps} from 'sanity'
 
 import {NextStudioNoScript} from './NextStudioNoScript'
 import {useTheme} from './useTheme'
 
 /** @alpha */
-export interface NextStudioLoadingProps extends Pick<StudioProps, 'config' | 'scheme'> {
+export interface NextStudioLoadingProps extends Pick<StudioProps, 'scheme'> {
+  /**
+   * If your Studio Config has a custom theme you can pass it here to ensure the loading screen matches your theme.
+   */
+  config?: Config | Required<Pick<SingleWorkspace, 'theme'>>
   /**
    * Render the <noscript> tag
    * @defaultValue true
