@@ -5,6 +5,13 @@
 All notable changes to this project will be documented in this file. See
 [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [3.1.2](https://github.com/sanity-io/next-sanity/compare/v3.1.1...v3.1.2) (2022-11-26)
+
+### Bug Fixes
+
+- make `config` optional in `NextStudioLoading` ([0af6f6c](https://github.com/sanity-io/next-sanity/commit/0af6f6c9be6fdf5094de49a78c66344ad255e3a9))
+- make `config` optional in `useTheme` ([6e35ebc](https://github.com/sanity-io/next-sanity/commit/6e35ebcee0659d0dc45e05db945119ed0232ba01))
+
 ## [3.1.1](https://github.com/sanity-io/next-sanity/compare/v3.1.0...v3.1.1) (2022-11-25)
 
 ### Bug Fixes
