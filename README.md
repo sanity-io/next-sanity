@@ -394,7 +394,6 @@ export {PreviewSuspense as default} from 'next-sanity/preview'
 `app/page.js`:
 
 ```jsx
-import {lazy} from 'react'
 import {previewData} from 'next/headers'
 import PreviewSuspense from 'components/PreviewSuspense'
 import {DocumentsCount, query} from 'components/DocumentsCount'
