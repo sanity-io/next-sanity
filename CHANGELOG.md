@@ -5,6 +5,12 @@
 All notable changes to this project will be documented in this file. See
 [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [3.1.5](https://github.com/sanity-io/next-sanity/compare/v3.1.4...v3.1.5) (2022-12-20)
+
+### Bug Fixes
+
+- remove tailwind SVG workaround ([#232](https://github.com/sanity-io/next-sanity/issues/232)) ([b8a2210](https://github.com/sanity-io/next-sanity/commit/b8a2210c7ec8fe46acf96c5025a91897d7654a57))
+
 ## [3.1.4](https://github.com/sanity-io/next-sanity/compare/v3.1.3...v3.1.4) (2022-12-18)
 
 ### Bug Fixes
