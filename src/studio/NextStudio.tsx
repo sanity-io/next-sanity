@@ -2,7 +2,7 @@ import {memo} from 'react'
 import {type StudioProps, Studio} from 'sanity'
 
 import {NextStudioClientOnly} from './NextStudioClientOnly'
-import {type NextStudioLayoutProps, NextStudioLayout} from './NextStudioLayout'
+import {NextStudioLayout} from './NextStudioLayout'
 import {type NextStudioLoadingProps, NextStudioLoading} from './NextStudioLoading'
 
 export type {NextStudioLoadingProps}
@@ -14,12 +14,6 @@ export type {NextStudioLoadingProps}
 /** @beta */
 export interface NextStudioProps extends StudioProps {
   children?: React.ReactNode
-  /**
-   * Apply fix with SVG icon centering that happens if TailwindCSS is loaded
-   * @defaultValue true
-   * @alpha
-   */
-  unstable__tailwindSvgFix?: NextStudioLayoutProps['unstable__tailwindSvgFix']
   /**
    * Render the <noscript> tag
    * @defaultValue true
@@ -34,7 +28,6 @@ export interface NextStudioProps extends StudioProps {
 const NextStudioComponent = ({
   children,
   config,
-  unstable__tailwindSvgFix = true,
   unstable__noScript,
   scheme,
   ...props
@@ -48,11 +41,7 @@ const NextStudioComponent = ({
       />
     }
   >
-    <NextStudioLayout
-      config={config}
-      scheme={scheme}
-      unstable__tailwindSvgFix={unstable__tailwindSvgFix}
-    >
+    <NextStudioLayout config={config} scheme={scheme}>
       {children || <Studio config={config} scheme={scheme} unstable_globalStyles {...props} />}
     </NextStudioLayout>
   </NextStudioClientOnly>
