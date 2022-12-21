@@ -439,7 +439,7 @@ export const usePreview = definePreview({
 
 We have plans for optimizations in the roadmap.
 
-## `next-sanity/studio` (dev-preview)
+## `next-sanity/studio`
 
 > [See it live](https://next.sanity.build/studio)
 
