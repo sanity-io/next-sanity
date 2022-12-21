@@ -6,7 +6,7 @@
 
 - [Client-side live real-time preview for authenticated users](#live-real-time-preview)
 - [GROQ syntax highlighting](https://marketplace.visualstudio.com/items?itemName=sanity-io.vscode-sanity)
-- [Embed](#next-sanitystudio-dev-preview) [Studio v3](https://www.sanity.io/studio-v3) in [Next.js](https://nextjs.org/) apps
+- [Embed](#next-sanitystudio) [Studio v3](https://www.sanity.io/studio-v3) in [Next.js](https://nextjs.org/) apps
 
 ## Table of contents
 
@@ -23,7 +23,7 @@
       - [Next 13 `appDir`](#next-13-appdir-1)
   - [Starters](#starters)
   - [Limits](#limits)
-- [`next-sanity/studio` (dev-preview)](#next-sanitystudio-dev-preview)
+- [`next-sanity/studio`](#next-sanitystudio)
   - [Usage](#usage)
     - [Next 13 `app/studio`](#next-13-appstudio)
     - [Next 12 or `pages/studio`](#next-12-or-pagesstudio)
