@@ -443,6 +443,12 @@ We have plans for optimizations in the roadmap.
 
 > [See it live](https://next.sanity.build/studio)
 
+In order to use this feature, you need to install the following peer dependencies:
+
+```sh
+npm install @sanity/ui react-is sanity styled-components
+```
+
 The latest version of Sanity Studio allows you to embed a near-infinitely configurable content editing interface into any React application. This opens up many possibilities:
 
 - Any service that hosts Next.js apps can now host your Studio.
