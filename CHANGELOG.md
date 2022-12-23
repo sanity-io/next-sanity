@@ -5,6 +5,12 @@
 All notable changes to this project will be documented in this file. See
 [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [3.1.7](https://github.com/sanity-io/next-sanity/compare/v3.1.6...v3.1.7) (2022-12-23)
+
+### Bug Fixes
+
+- **deps:** update dependency @sanity/pkg-utils to ^2.0.1 ([#246](https://github.com/sanity-io/next-sanity/issues/246)) ([14b5635](https://github.com/sanity-io/next-sanity/commit/14b563565ec9eacd87663af347078ea6d923f2a3))
+
 ## [3.1.6](https://github.com/sanity-io/next-sanity/compare/v3.1.5...v3.1.6) (2022-12-23)
 
 ### Bug Fixes
