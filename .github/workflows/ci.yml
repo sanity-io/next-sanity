@@ -36,7 +36,7 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@755da8c3cf115ac066823e79a1e1788f8940201b # v3
+      - uses: actions/checkout@ac593985615ec2ede58e132d2e21d2b1cbd6127c # v3
       - uses: actions/setup-node@8c91899e586c5b171469028077307d293428b516 # tag=v3
         with:
           node-version: lts/*
@@ -72,7 +72,7 @@ jobs:
         run: |
           git config --global core.autocrlf false
           git config --global core.eol lf
-      - uses: actions/checkout@755da8c3cf115ac066823e79a1e1788f8940201b # v3
+      - uses: actions/checkout@ac593985615ec2ede58e132d2e21d2b1cbd6127c # v3
       - uses: actions/setup-node@8c91899e586c5b171469028077307d293428b516 # tag=v3
         with:
           node-version: ${{ matrix.node }}
@@ -86,7 +86,7 @@ jobs:
     if: always() && github.event.inputs.release == 'true' && needs.build.result != 'failure' && needs.test.result != 'failure' && needs.test.result != 'cancelled'
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@755da8c3cf115ac066823e79a1e1788f8940201b # v3
+      - uses: actions/checkout@ac593985615ec2ede58e132d2e21d2b1cbd6127c # v3
         with:
           # Need to fetch entire commit history to
           # analyze every commit since last release
