@@ -22,4 +22,6 @@ export default defineConfig({
       }),
     ],
   },
+
+  tsconfig: 'tsconfig.build.json',
 })

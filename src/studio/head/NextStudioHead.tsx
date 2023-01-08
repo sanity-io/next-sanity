@@ -1,6 +1,10 @@
-import faviconPng from './apple-touch-icon.png'
-import faviconIco from './favicon.ico'
-import faviconSvg from './favicon.svg'
+import _faviconPng from './apple-touch-icon.png'
+import _faviconIco from './favicon.ico'
+import _faviconSvg from './favicon.svg'
+
+const faviconPng = typeof _faviconPng === 'string' ? _faviconPng : _faviconPng.default
+const faviconIco = typeof _faviconIco === 'string' ? _faviconIco : _faviconIco.default
+const faviconSvg = typeof _faviconSvg === 'string' ? _faviconSvg : _faviconSvg.default
 
 /** @public */
 export interface NextStudioHeadProps {
@@ -100,24 +104,9 @@ export function NextStudioHead(props: NextStudioHeadProps) {
       {robots && <meta key="robots" name="robots" content={robots} />}
       {referrer && <meta key="referrer" name="referrer" content={referrer} />}
       {title && <title>{title}</title>}
-      {favicons && (
-        <link key="favicon.ico" rel="icon" href={faviconIco?.default || faviconIco} sizes="any" />
-      )}
-      {favicons && (
-        <link
-          key="apple-touch-icon.png"
-          rel="apple-touch-icon"
-          href={faviconPng?.default || faviconSvg}
-        />
-      )}
-      {favicons && (
-        <link
-          key="favicon.svg"
-          rel="icon"
-          href={faviconSvg?.default || faviconSvg}
-          type="image/svg+xml"
-        />
-      )}
+      {favicons && <link key="favicon.ico" rel="icon" href={faviconIco} sizes="any" />}
+      {favicons && <link key="apple-touch-icon.png" rel="apple-touch-icon" href={faviconPng} />}
+      {favicons && <link key="favicon.svg" rel="icon" href={faviconSvg} type="image/svg+xml" />}
     </>
   )
 }

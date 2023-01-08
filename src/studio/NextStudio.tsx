@@ -7,10 +7,6 @@ import {type NextStudioLoadingProps, NextStudioLoading} from './NextStudioLoadin
 
 export type {NextStudioLoadingProps}
 
-// eslint-disable-next-line no-warning-comments
-// FIXME: https://github.com/vercel/next.js/issues/43147
-// const Studio = memo(lazy(() => import('./LazyStudio')))
-
 /** @beta */
 export interface NextStudioProps extends StudioProps {
   children?: React.ReactNode
