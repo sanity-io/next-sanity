@@ -39,7 +39,8 @@ assert.equal(typeof NextStudioHead, 'function')
 
 // Testing pkg.exports[./studio/loading]
 const nextSanityStudioLoading = require('next-sanity/studio/loading')
-assert.equal(typeof nextSanityStudioLoading, 'function')
+const {NextStudioLoading} = nextSanityStudioLoading
+assert.equal(typeof NextStudioLoading, 'function')
 
 // Testing pkg.exports[./webhook]
 const nextSanityWebhook = require('next-sanity/webhook')

@@ -559,7 +559,7 @@ Improve the Studio loading experience by setting a `loading.tsx` route.
 'use client'
 
 import config from '../../../sanity.config'
-import NextStudioLoading from 'next-sanity/studio/loading'
+import {NextStudioLoading} from 'next-sanity/studio/loading'
 
 export default function Loading() {
   return <NextStudioLoading config={config} />
