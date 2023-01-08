@@ -5,6 +5,25 @@
 All notable changes to this project will be documented in this file. See
 [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [4.0.0](https://github.com/sanity-io/next-sanity/compare/v3.1.9...v4.0.0) (2023-01-08)
+
+### ⚠ BREAKING CHANGES
+
+- change `import NextStudioLoading from 'next-sanity/studio/loading'` to `import {NextStudioLoading} from 'next-sanity/studio/loading'`
+
+### Bug Fixes
+
+- add full Node.js ESM runtime support ([ad3ceb7](https://github.com/sanity-io/next-sanity/commit/ad3ceb7262765a89e4138ec61f5ed49fbf7fd7e2))
+- **deps:** update dependency @sanity/client to ^4.0.1 ([#267](https://github.com/sanity-io/next-sanity/issues/267)) ([b489987](https://github.com/sanity-io/next-sanity/commit/b48998735045b1723b2da7b0297870d9bf3457f3))
+- **deps:** update dependency @sanity/client to v4 ([#262](https://github.com/sanity-io/next-sanity/issues/262)) ([a6ea4f3](https://github.com/sanity-io/next-sanity/commit/a6ea4f3ce35c28796f3ba3ec34dd549ac84220cd))
+- **deps:** update dependency @sanity/preview-kit to ^1.2.17 ([#264](https://github.com/sanity-io/next-sanity/issues/264)) ([006fac3](https://github.com/sanity-io/next-sanity/commit/006fac349b4bd7a7d3b725927bc7cb364c4f00ee))
+- **deps:** update dependency @sanity/preview-kit to ^1.2.18 ([#270](https://github.com/sanity-io/next-sanity/issues/270)) ([3d15213](https://github.com/sanity-io/next-sanity/commit/3d152138013da5553295b36c71670e4eb0b4bd3e))
+- **deps:** update dependency @sanity/preview-kit to ^1.2.19 ([#274](https://github.com/sanity-io/next-sanity/issues/274)) ([ca28e5b](https://github.com/sanity-io/next-sanity/commit/ca28e5b47ae6ca1987516c5814fc03a721c698c5))
+
+### Code Refactoring
+
+- make `NextStudioLoading` a named export ([086de6f](https://github.com/sanity-io/next-sanity/commit/086de6f44b8b5db15fe0470267a2f90ff4c62770))
+
 ## [3.1.9](https://github.com/sanity-io/next-sanity/compare/v3.1.8...v3.1.9) (2022-12-30)
 
 ### Bug Fixes
