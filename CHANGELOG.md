@@ -5,6 +5,12 @@
 All notable changes to this project will be documented in this file. See
 [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [4.0.1](https://github.com/sanity-io/next-sanity/compare/v4.0.0...v4.0.1) (2023-01-12)
+
+### Bug Fixes
+
+- **deps:** update dependency groq to v3 ([#280](https://github.com/sanity-io/next-sanity/issues/280)) ([a67ea30](https://github.com/sanity-io/next-sanity/commit/a67ea301b9f6cf9c3b92effa9a141fef4deb7274))
+
 ## [4.0.0](https://github.com/sanity-io/next-sanity/compare/v3.1.9...v4.0.0) (2023-01-08)
 
 ### ⚠ BREAKING CHANGES
