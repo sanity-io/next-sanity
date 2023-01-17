@@ -3,74 +3,22 @@ import {urlForImage} from 'app/sanity.image'
 import {q} from 'groqd'
 import {memo} from 'react'
 
-/*
-const postFields = groq`
-  _id,
-  title,
-  "slug": slug.current,
-  "author": author->{name, image},
-  mainImage,
-  publishedAt,
-`
-export const indexQuery = groq`
-*[_type == "post"] | order(publishedAt desc, _updatedAt desc) {
-  ${postFields}
-}`
-
-const imageWithCropAndHotspot = q.grab({
-  _type: q.string(),
-  asset: q(
-    'asset',
-    q.grab({
-      _ref: q.string(),
-      _type: q.string(),
-    })
-    ),
-    crop: q(
-      'crop',
-      q.grab({
-        _type: q.string(),
-        bottom: q.number(),
-        left: q.number(),
-        right: q.number(),
-        top: q.number(),
-      })
-      ),
-      hotspot: q(
-        'hotspot',
-        q.grab({
-          _type: q.string(),
-          height: q.number(),
-          width: q.number(),
-          x: q.number(),
-          y: q.number(),
-        })
-        ),
-      })
-      // */
-
-const {query, schema} = q(
-  '*',
-  q.filter("_type == 'post'"),
-  q.grab({
+const {query, schema} = q('*')
+  .filter("_type == 'post'")
+  .grab({
     _id: q.string(),
     title: q.string().optional(),
-    slug: q('slug', q.grabOne('current', q.string().optional())),
+    slug: q('slug').grabOne('current', q.string().optional()),
     // mainImage: q('mainImage', imageWithCropAndHotspot),
     mainImage: q.unknown().optional(),
     publishedAt: q.date().optional(),
-    author: q(
-      'author',
-      q.deref(),
-      q.grab({
-        name: q.string().optional(),
-        // image: q('image', imageWithCropAndHotspot),
-        image: q.unknown().optional(),
-      })
-    ),
-  }),
-  q.order('publishedAt desc', '_updatedAt desc')
-)
+    author: q('author').deref().grab({
+      name: q.string().optional(),
+      // image: q('image', imageWithCropAndHotspot),
+      image: q.unknown().optional(),
+    }),
+  })
+  .order('publishedAt desc', '_updatedAt desc')
 
 export {query}
 
