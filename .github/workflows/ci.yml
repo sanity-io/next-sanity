@@ -79,6 +79,7 @@ jobs:
           cache: npm
       - run: npm i
       - run: npm test
+      - run: npx ls-engines
 
   release:
     needs: [build, test]
