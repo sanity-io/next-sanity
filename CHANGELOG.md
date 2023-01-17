@@ -5,6 +5,16 @@
 All notable changes to this project will be documented in this file. See
 [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [4.1.0](https://github.com/sanity-io/next-sanity/compare/v4.0.6...v4.1.0) (2023-01-17)
+
+### Features
+
+- support modern npm peer deps ([b06546a](https://github.com/sanity-io/next-sanity/commit/b06546a84d0a505f3ed8522735f682d6ce529360))
+
+### Bug Fixes
+
+- improve npm deduping of shared deps ([5fb74ef](https://github.com/sanity-io/next-sanity/commit/5fb74ef08886f45b00eb83b03901d7c9db7562a3))
+
 ## [4.0.6](https://github.com/sanity-io/next-sanity/compare/v4.0.5...v4.0.6) (2023-01-14)
 
 ### Bug Fixes
