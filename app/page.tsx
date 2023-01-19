@@ -1,18 +1,28 @@
 /* eslint-disable @next/next/no-html-link-for-pages */
-import {Posts, query} from 'app/Posts'
+import {Posts, PostsProps, query} from 'app/Posts'
 import PreviewPosts from 'app/PreviewPosts'
 import {createClient} from 'app/sanity.client'
 import {PreviewSuspense} from 'app/sanity.preview'
 import {previewData} from 'next/headers'
 import Link from 'next/link'
+import {cache} from 'react'
+
+const client = createClient()
+const clientFetch = cache(client.fetch.bind(client))
 
 export default async function IndexPage() {
   const thePreviewData = previewData()
   const preview = !!thePreviewData
-  const token = thePreviewData?.token
+  const token = (thePreviewData as {token: string})?.token
 
-  const client = createClient()
-  const posts = await client.fetch(query)
+  let posts: PostsProps['data']
+
+  if (token) {
+    const previewClient = client.withConfig({token, useCdn: false})
+    posts = await previewClient.fetch(query)
+  } else {
+    posts = await clientFetch(query)
+  }
 
   return (
     <>
@@ -59,7 +69,7 @@ export default async function IndexPage() {
           </div>
           {preview ? (
             <PreviewSuspense fallback={<Posts data={posts} />}>
-              <PreviewPosts token={token} />
+              <PreviewPosts token={token} serverSnapshot={posts} />
             </PreviewSuspense>
           ) : (
             <Posts data={posts} />

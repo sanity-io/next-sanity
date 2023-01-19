@@ -6,7 +6,13 @@ import {type UsePreview} from 'src/preview'
 
 const usePreview: UsePreview<PostsProps['data']> = _usePreview
 
-export default function PreviewPosts({token = null}: {token: string | null}) {
-  const data = usePreview(token, query) || []
+export default function PreviewPosts({
+  token = null,
+  serverSnapshot,
+}: {
+  token: string | null
+  serverSnapshot: PostsProps['data']
+}) {
+  const data = usePreview(token, query, {}, serverSnapshot) || []
   return <Posts data={data} />
 }
