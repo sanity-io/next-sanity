@@ -3,16 +3,5 @@
   "extends": [
     "github>sanity-io/renovate-presets//ecosystem/auto",
     "github>sanity-io/renovate-presets//ecosystem/studio-v3"
-  ],
-  "packageRules": [
-    {
-      "description": "Follow canary releases of Nextjs to stay in sync with what's already fixed",
-      "groupName": "next-canary",
-      "packageNames": ["next", "eslint-config-next"],
-      "depTypeList": ["devDependencies"],
-      "rangeStrategy": "pin",
-      "followTag": "canary",
-      "schedule": ["at any time"]
-    }
   ]
 }
