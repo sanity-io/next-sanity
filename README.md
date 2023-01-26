@@ -50,7 +50,6 @@
 
 ## Installation
 
-
 ```bash
 npm install next-sanity @portabletext/react @sanity/image-url
 ```
