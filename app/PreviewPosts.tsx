@@ -1,6 +1,6 @@
 'use client'
 
-import {type PostsProps, Posts, query} from 'app/Posts'
+import {Posts, type PostsProps, query} from 'app/Posts'
 import {usePreview as _usePreview} from 'app/sanity.preview'
 import {type UsePreview} from 'src/preview'
 

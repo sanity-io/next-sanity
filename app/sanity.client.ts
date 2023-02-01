@@ -1,4 +1,4 @@
-import {type SanityClient, createClient as _createClient} from 'src'
+import {createClient as _createClient, type SanityClient} from 'src'
 
 import {apiVersion, dataset, projectId, useCdn} from './config'
 

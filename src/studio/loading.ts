@@ -1,1 +1,1 @@
-export {type NextStudioLoadingProps, NextStudioLoading} from './NextStudioLoading'
+export {NextStudioLoading, type NextStudioLoadingProps} from './NextStudioLoading'

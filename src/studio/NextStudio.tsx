@@ -1,9 +1,9 @@
 import {memo} from 'react'
-import {type StudioProps, Studio} from 'sanity'
+import {Studio, type StudioProps} from 'sanity'
 
 import {NextStudioClientOnly} from './NextStudioClientOnly'
 import {NextStudioLayout} from './NextStudioLayout'
-import {type NextStudioLoadingProps, NextStudioLoading} from './NextStudioLoading'
+import {NextStudioLoading, type NextStudioLoadingProps} from './NextStudioLoading'
 
 export type {NextStudioLoadingProps}
 
