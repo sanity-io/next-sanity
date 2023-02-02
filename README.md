@@ -51,28 +51,12 @@
 ## Installation
 
 ```bash
-npm install next-sanity @portabletext/react @sanity/image-url
+npm install next-sanity
 ```
-
-```bash
-yarn add next-sanity @portabletext/react @sanity/image-url
-```
-
-```bash
-pnpm install next-sanity @portabletext/react @sanity/image-url
-```
-
-### `next-sanity/studio` peer dependencies
-
-When using `npm` newer than `v7` you should end up with needed dependencies like `sanity` and `styled-components` when you `npm install next-sanity`. For other package managers you may need to do some extra steps.
-
-#### Yarn
 
 ```bash
 npx install-peerdeps --yarn next-sanity
 ```
-
-#### pnpm
 
 You can either setup [`auto-install-peers`](https://stackoverflow.com/questions/72468635/pnpm-peer-dependencies-auto-install/74835069#74835069) and `pnpm install next-sanity` is enough, or:
 
