@@ -5,6 +5,12 @@
 All notable changes to this project will be documented in this file. See
 [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [4.1.5](https://github.com/sanity-io/next-sanity/compare/v4.1.4...v4.1.5) (2023-02-15)
+
+### Bug Fixes
+
+- **client:** use named `createClient` export ([5c5f1a3](https://github.com/sanity-io/next-sanity/commit/5c5f1a37f8a101fff7403828514b213dcb7b0519))
+
 ## [4.1.4](https://github.com/sanity-io/next-sanity/compare/v4.1.3...v4.1.4) (2023-02-15)
 
 ### Bug Fixes
