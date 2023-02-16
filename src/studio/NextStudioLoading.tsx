@@ -1,6 +1,6 @@
 /* eslint-disable no-warning-comments */
 // Intentionally not using `styled-components` to ensure it works in any `next` setup.
-// Wether 'styled-components' SSR is setup or not.
+// Whether 'styled-components' SSR is setup or not.
 
 import {SpinnerIcon} from '@sanity/icons'
 import {_responsive, rem} from '@sanity/ui'
