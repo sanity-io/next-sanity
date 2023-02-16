@@ -123,7 +123,7 @@ const clientFetch = cache(client.fetch.bind(client))
 
 // Now use it just like before, fully deduped, cached and optimized by react
 const data = await clientFetch(groq`*[]`)
-// You can use the same generics as ebfore
+// You can use the same generics as before
 const total = await clientFetch<number>(groq`count*()`)
 ```
 
