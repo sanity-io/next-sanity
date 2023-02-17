@@ -476,6 +476,7 @@ export default async function IndexPage() {
 ### Starters
 
 - [A Next.js Blog with a Native Authoring Experience](https://github.com/sanity-io/nextjs-blog-cms-sanity-v3)
+- [A multi-country ecommerce template built with Commerce Layer and Next.js](https://github.com/commercelayer/commercelayer-sanity-template)
 
 ### Limits
 
