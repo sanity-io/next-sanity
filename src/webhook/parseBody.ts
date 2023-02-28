@@ -30,13 +30,10 @@ export async function parseBody(
     signature = signature[0]
   }
 
-  // Read the body into a string
   const body = await readBody(req)
-  // Then we're able to verify the checksum signature
   const validSignature = secret ? isValidSignature(body, signature, secret.trim()) : null
 
   if (validSignature !== false && waitForContentLakeEventualConsistency) {
-    // Wait a second to give Elastic Search time to reach eventual consistency
     await new Promise((resolve) => setTimeout(resolve, 1000))
   }
 
