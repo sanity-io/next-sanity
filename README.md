@@ -51,7 +51,7 @@
 ## Installation
 
 ```bash
-npm install next-sanity @portabletext/react @sanity/image-url
+npm install next-sanity @portabletext/react @sanity/image-url @sanity/vision
 ```
 
 ```bash
