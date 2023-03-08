@@ -520,7 +520,6 @@ Both the Next `/app` and `/pages` examples uses this config file:
 `sanity.config.ts`:
 
 ```ts
-import {visionTool} from '@sanity/vision'
 import {defineConfig} from 'sanity'
 import {deskTool} from 'sanity/desk'
 
@@ -535,7 +534,7 @@ export default defineConfig({
   projectId,
   dataset,
 
-  plugins: [deskTool(), visionTool()],
+  plugins: [deskTool()],
 
   schema: {
     types: schemaTypes,
