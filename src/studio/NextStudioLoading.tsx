@@ -36,6 +36,10 @@ to {
 }
 `
 
+/**
+ * @alpha
+ * @deprecated Will be removed in the next major release
+ */
 export function NextStudioLoading(props: NextStudioLoadingProps) {
   const {config, scheme = 'light', unstable__noScript = true} = props
   const id = 'next-sanity-spinner'
