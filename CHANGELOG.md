@@ -5,6 +5,12 @@
 All notable changes to this project will be documented in this file. See
 [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [4.1.8](https://github.com/sanity-io/next-sanity/compare/v4.1.7...v4.1.8) (2023-04-27)
+
+### Bug Fixes
+
+- **deps:** add `@types/styled-components` to peers ([3634dac](https://github.com/sanity-io/next-sanity/commit/3634dac6ae43b2f619d47bdfa1fa72124e55be82))
+
 ## [4.1.7](https://github.com/sanity-io/next-sanity/compare/v4.1.6...v4.1.7) (2023-04-12)
 
 ### Bug Fixes
