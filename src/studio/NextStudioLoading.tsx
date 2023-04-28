@@ -9,7 +9,10 @@ import type {Config, SingleWorkspace, StudioProps} from 'sanity'
 import {NextStudioNoScript} from './NextStudioNoScript'
 import {useTheme} from './useTheme'
 
-/** @alpha */
+/**
+ * @alpha
+ * @deprecated Will be removed in the next major release
+ */
 export interface NextStudioLoadingProps extends Pick<StudioProps, 'scheme'> {
   /**
    * If your Studio Config has a custom theme you can pass it here to ensure the loading screen matches your theme.
