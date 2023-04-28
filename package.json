@@ -81,7 +81,7 @@
     },
     "./studio/metadata": {
       "types": "./dist/studio/metadata.d.ts",
-      "source": "./src/studio/metadata/index.ts",
+      "source": "./src/studio/metadata.ts",
       "require": "./dist/studio/metadata.cjs",
       "node": {
         "import": "./dist/studio/metadata.cjs.js",
@@ -120,6 +120,9 @@
       ],
       "studio/loading": [
         "./dist/studio/loading.d.ts"
+      ],
+      "studio/metadata": [
+        "./dist/studio/metadata.d.ts"
       ],
       "webhook": [
         "./dist/webhook.d.ts"
