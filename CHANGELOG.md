@@ -5,6 +5,19 @@
 All notable changes to this project will be documented in this file. See
 [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [4.2.0](https://github.com/sanity-io/next-sanity/compare/v4.1.8...v4.2.0) (2023-04-28)
+
+### Features
+
+- add `unstable__fastRender` experiment ([60ef49e](https://github.com/sanity-io/next-sanity/commit/60ef49e0f0f48461a3bc481bc6c4389aaf717380))
+- add support for metadata API ([#405](https://github.com/sanity-io/next-sanity/issues/405)) ([5ed8609](https://github.com/sanity-io/next-sanity/commit/5ed8609fd83835d18a1b32e3f56a5838c6901e94))
+
+### Bug Fixes
+
+- deprecate `next-sanity/studio/loading` ([8e1c1bb](https://github.com/sanity-io/next-sanity/commit/8e1c1bb0c48f78a7c13de39eed449c4b4873dd4d))
+- **metadata:** use `next-sanity/studio/metadata` entrypoint ([8da05a1](https://github.com/sanity-io/next-sanity/commit/8da05a1cfb26b92631b721661e3903e78421e283))
+- support the `scheme="system"` studio prop ([17ab29c](https://github.com/sanity-io/next-sanity/commit/17ab29c1e4109b6797fe932618fb5c3140d8feff))
+
 ## [4.1.8](https://github.com/sanity-io/next-sanity/compare/v4.1.7...v4.1.8) (2023-04-27)
 
 ### Bug Fixes
