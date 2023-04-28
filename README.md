@@ -512,9 +512,7 @@ The latest version of Sanity Studio allows you to embed a near-infinitely config
 
 ### Usage
 
-The basic setup is 2 components, `NextStudio` and `NextStudioHead`.
-`NextStudio` loads up the `import {Studio} from 'sanity'` component for you and wraps it in a Next-friendly layout.
-While `NextStudioHead` sets necessary `<head>` meta tags such as `<meta name="viewport">` to ensure the responsive CSS in the Studio works as expected.
+`NextStudio` loads up the `import {Studio} from 'sanity'` component for you and wraps it in a Next-friendly layout. `metadata` specifies the necessary `<meta>` tags for making the Studio adapt to mobile devices, and prevents the route from being indexed by search engines.
 
 Both the Next `/app` and `/pages` examples uses this config file:
 `sanity.config.ts`:
@@ -563,9 +561,6 @@ Now you can run commands like `npx sanity cors add`. See `npx sanity help` for a
 #### Using the `/app` directory (experimental)
 
 We support the new `appDir` mode in Next, [but please note that `appDir` shouldn't be used in production before Vercel says it's stable](https://beta.nextjs.org/docs/getting-started).
-
-In Next 13's new `appDir` mode you use `page.tsx` to load `NextStudio`, and optionally (recommended, especially if you want great support for iPhones and other devices with display cutouts like "The Notch" or "Dynamic Island") export `NextStudioHead` in a `head.tsx`.
-In routes that load `NextStudio` ensure you have `'use client'` at the top of your file.
 
 `app/studio/[[...index]]/page.tsx`:
 
@@ -617,8 +612,6 @@ export default function StudioPage() {
 ```
 
 #### Using the `/pages` directory
-
-Using just `NextStudio` gives you a fully working Sanity Studio v3. However we recommend also using `NextStudioHead` as it ensures CSS Media Queries that target mobile devices with display cutouts (for example iPhone's "The Notch" and "Dynamic Island") and other details.
 
 `/pages/studio/[[...index]].tsx`:
 
