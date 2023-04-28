@@ -35,7 +35,7 @@ const NextStudioLayoutComponent = ({
     <Layout
       data-ui="NextStudioLayout"
       $fontFamily={theme.fonts.text.family}
-      $bg={theme.color[scheme].default.base.bg}
+      $bg={theme.color[scheme === 'dark' ? 'dark' : 'light'].default.base.bg}
     >
       {children}
     </Layout>

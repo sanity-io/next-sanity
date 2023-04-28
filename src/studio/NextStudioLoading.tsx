@@ -50,7 +50,9 @@ export function NextStudioLoading(props: NextStudioLoadingProps) {
       wrapper: {
         display: 'block',
         animation: `${id} 500ms linear infinite`,
-        color: theme.color[scheme].default.muted.default.enabled.muted.fg,
+        color:
+          theme.color[scheme === 'dark' ? 'dark' : 'light'].default.muted.default.enabled.muted
+            .fg,
         width: rem(capHeight),
         height: rem(capHeight),
       },
@@ -69,7 +71,7 @@ export function NextStudioLoading(props: NextStudioLoadingProps) {
       <div
         style={{
           fontFamily: fonts.text.family,
-          backgroundColor: theme.color[scheme].default.base.bg,
+          backgroundColor: theme.color[scheme === 'dark' ? 'dark' : 'light'].default.base.bg,
           height: '100vh',
           maxHeight: '100dvh',
           overscrollBehavior: 'none',
@@ -108,7 +110,9 @@ export function NextStudioLoading(props: NextStudioLoadingProps) {
               lineHeight: 'calc(1.3125)',
               // @TODO use rem calc
               transform: 'translateY(-5px)',
-              color: theme.color[scheme].default.muted.default.enabled.muted.fg,
+              color:
+                theme.color[scheme === 'dark' ? 'dark' : 'light'].default.muted.default.enabled
+                  .muted.fg,
             }}
           >
             <span>Loading…</span>
