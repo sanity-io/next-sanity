@@ -623,9 +623,11 @@ Using just `NextStudio` gives you a fully working Sanity Studio v3. However we r
 `/pages/studio/[[...index]].tsx`:
 
 ```tsx
-import config from '../../sanity.config'
 import Head from 'next/head'
-import {NextStudio, metadata} from 'next-sanity/studio'
+import {NextStudio} from 'next-sanity/studio'
+import {metadata} from 'next-sanity/studio/metadata'
+
+import config from '../../sanity.config'
 
 export default function StudioPage() {
   return (
