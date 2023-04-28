@@ -79,6 +79,7 @@ export interface NextStudioHeadProps {
  * }
  * ```
  * @public
+ * @deprecated Use `import {metadata} from 'next-sanity/studio'` instead, this component will be removed in the next major release.
  */
 export function NextStudioHead(props: NextStudioHeadProps) {
   const {

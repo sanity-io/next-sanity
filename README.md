@@ -586,11 +586,18 @@ Set the right `viewport` meta tag, favicons and mroe
 `app/studio/[[...index]]/head.tsx`:
 
 ```tsx
-// Re-export `NextStudioHead` as default if you're happy with the default behavior
-export {NextStudioHead as default} from 'next-sanity/studio/head'
+// Re-export `metadata` if you're happy with the default behavior
+export {metadata} from 'next-sanity/studio'
 
-// To customize it, use it as a children component:
-import {NextStudioHead} from 'next-sanity/studio/head'
+// To customize it, spread it on your own:
+import {metadata as studioMetadata} from 'next-sanity/studio'
+import type { Metadata } from 'next'
+
+export const metadata: Metadata = {
+   ...studioMetadata,
+    // Overrides the viewport to resize behavior
+    viewport: `${studioMetadata.viewport}, interactive-widget=resizes-content`,
+  })
 
 export default function CustomStudioHead() {
   return (
@@ -628,17 +635,17 @@ Using just `NextStudio` gives you a fully working Sanity Studio v3. However we r
 `/pages/studio/[[...index]].tsx`:
 
 ```tsx
-import Head from 'next/head'
-import {NextStudio} from 'next-sanity/studio'
-import {NextStudioHead} from 'next-sanity/studio/head'
-
 import config from '../../sanity.config'
+import Head from 'next/head'
+import {NextStudio, metadata} from 'next-sanity/studio'
 
 export default function StudioPage() {
   return (
     <>
       <Head>
-        <NextStudioHead />
+        {Object.entries(metadata).map(([key, value]) => (
+          <meta key={key} name={key} content={value} />
+        ))}
       </Head>
       <NextStudio config={config} />
     </>
