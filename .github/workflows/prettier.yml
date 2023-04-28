@@ -7,13 +7,18 @@ on:
   workflow_dispatch:
 
 concurrency:
-  group: ${{ github.workflow }}-${{ github.head_ref || github.run_id }}
+  group: ${{ github.workflow }}-${{ github.ref_name }}
   cancel-in-progress: true
+
+permissions:
+  contents: read
 
 jobs:
   run:
     name: Can the code be prettier? 🤔
     runs-on: ubuntu-latest
+    # workflow_dispatch always lets you select the branch ref, even though in this case we only ever want to run the action on `main` this we need an if check
+    if: ${{ github.ref_name == 'main' }}
     steps:
       - uses: actions/checkout@v3
       - uses: actions/setup-node@v3
@@ -25,11 +30,19 @@ jobs:
         with:
           path: node_modules/.cache/prettier/.prettier-cache
           key: prettier-${{ hashFiles('package-lock.json') }}-${{ hashFiles('.gitignore') }}
-      - name: check if workflows needs prettier
-        run: npx prettier --cache --check ".github/workflows/**/*.yml" || (echo "An action can't make changes to actions, you'll have to run prettier manually" && exit 1)
       - run: npx prettier --ignore-path .gitignore --cache --write .
-      - uses: EndBug/add-and-commit@61a88be553afe4206585b31aa72387c64295d08b # v9
+      - run: git restore .github/workflows
+      - uses: tibdex/github-app-token@b62528385c34dbc9f38e5f4225ac829252d1ea92 # v1
+        id: generate-token
         with:
-          default_author: github_actions
-          commit: --no-verify
-          message: 'chore(prettier): 🤖 ✨'
+          app_id: ${{ secrets.ECOSPARK_APP_ID }}
+          private_key: ${{ secrets.ECOSPARK_APP_PRIVATE_KEY }}
+      - uses: peter-evans/create-pull-request@5b4a9f6a9e2af26e5f02351490b90d01eb8ec1e5 # v5
+        with:
+          author: github-actions <41898282+github-actions[bot]@users.noreply.github.com>
+          body: I ran `npx prettier --ignore-path .gitignore --cache --write .` 🧑‍💻
+          branch: actions/prettier-if-needed
+          commit-message: 'chore(prettier): 🤖 ✨'
+          labels: 🤖 bot
+          title: 'chore(prettier): 🤖 ✨'
+          token: ${{ steps.generate-token.outputs.token }}
