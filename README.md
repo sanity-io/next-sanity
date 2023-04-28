@@ -570,61 +570,49 @@ In routes that load `NextStudio` ensure you have `'use client'` at the top of yo
 `app/studio/[[...index]]/page.tsx`:
 
 ```tsx
+import {Studio} from './Studio'
+
+// Set the right `viewport`, `robots` and `referer` meta tags
+export {metadata} from 'next-sanity/studio/metadata'
+
+export default function StudioPage() {
+  return <Studio />
+}
+```
+
+`app/studio/[[...index]]/Studio.tsx`:
+
+```tsx
 'use client'
 
 import {NextStudio} from 'next-sanity/studio'
 
 import config from '../../../sanity.config'
 
-export default function StudioPage() {
+export function Studio() {
   //  Supports the same props as `import {Studio} from 'sanity'`, `config` is required
   return <NextStudio config={config} />
 }
 ```
 
-Set the right `viewport` meta tag, favicons and mroe
-`app/studio/[[...index]]/head.tsx`:
+Customize meta tags
+`app/studio/[[...index]]/page.tsx`:
 
 ```tsx
-// Re-export `metadata` if you're happy with the default behavior
-export {metadata} from 'next-sanity/studio'
+import type {Metadata} from 'next'
+import {metadata as studioMetadata} from 'next-sanity/studio/metadata'
 
-// To customize it, spread it on your own:
-import {metadata as studioMetadata} from 'next-sanity/studio'
-import type { Metadata } from 'next'
+import {Studio} from './Studio'
 
+// Set the right `viewport`, `robots` and `referer` meta tags
 export const metadata: Metadata = {
-   ...studioMetadata,
-    // Overrides the viewport to resize behavior
-    viewport: `${studioMetadata.viewport}, interactive-widget=resizes-content`,
-  })
-
-export default function CustomStudioHead() {
-  return (
-    <>
-      <NextStudioHead favicons={false} />
-      <link
-        rel="icon"
-        type="image/png"
-        sizes="32x32"
-        href="https://www.sanity.io/static/images/favicons/favicon-32x32.png"
-      />
-    </>
-  )
+  ...studioMetadata,
+  // Overrides the viewport to resize behavior
+  viewport: `${studioMetadata.viewport}, interactive-widget=resizes-content`,
 }
-```
 
-Improve the Studio loading experience by setting a `loading.tsx` route.
-`app/studio/[[...index]]/loading.tsx`:
-
-```tsx
-'use client'
-
-import config from '../../../sanity.config'
-import {NextStudioLoading} from 'next-sanity/studio/loading'
-
-export default function Loading() {
-  return <NextStudioLoading config={config} />
+export default function StudioPage() {
+  return <Studio />
 }
 ```
 
