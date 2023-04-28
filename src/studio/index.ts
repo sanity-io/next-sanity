@@ -1,4 +1,3 @@
-export * from './metadata'
 export * from './NextStudio'
 export * from './NextStudioClientOnly'
 export * from './NextStudioLayout'
