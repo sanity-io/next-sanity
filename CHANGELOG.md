@@ -5,6 +5,12 @@
 All notable changes to this project will be documented in this file. See
 [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [4.3.1](https://github.com/sanity-io/next-sanity/compare/v4.3.0...v4.3.1) (2023-05-03)
+
+### Bug Fixes
+
+- add release notes ([9e9d4e0](https://github.com/sanity-io/next-sanity/commit/9e9d4e081c161db84a5e1d59890f05508be1b504))
+
 ## [4.3.0](https://github.com/sanity-io/next-sanity/compare/v4.2.1...v4.3.0) (2023-05-03)
 
 ### Introducing Visual Editing
