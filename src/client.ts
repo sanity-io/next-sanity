@@ -23,10 +23,13 @@ export interface ClientConfig extends Omit<_ClientConfig, 'studioUrl' | 'encodeS
   encodeSourceMap?: _ClientConfig['encodeSourceMap']
 }
 
+/** @public */
+export type SanityClient = ReturnType<typeof _createClient>
+
 /**
  * @public
  */
-export function createClient(config: ClientConfig): ReturnType<typeof _createClient> {
+export function createClient(config: ClientConfig): SanityClient {
   let {
     // eslint-disable-next-line prefer-const, no-process-env
     studioUrl = process.env.NEXT_PUBLIC_SANITY_STUDIO_URL! as _ClientConfig['studioUrl'],
