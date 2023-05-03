@@ -31,7 +31,7 @@ export default async function IndexPage() {
     <>
       <div className="relative bg-gray-50 px-4 pb-20 pt-16 sm:px-6 lg:px-8 lg:pb-28 lg:pt-24">
         <div className="absolute inset-0">
-          <div className="sm:h-2/3 h-1/3 bg-white" />
+          <div className="h-1/3 bg-white sm:h-2/3" />
         </div>
         <div className="relative mx-auto max-w-7xl">
           <div className="text-center">
