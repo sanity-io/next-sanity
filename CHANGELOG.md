@@ -5,6 +5,12 @@
 All notable changes to this project will be documented in this file. See
 [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [4.2.1](https://github.com/sanity-io/next-sanity/compare/v4.2.0...v4.2.1) (2023-05-03)
+
+### Bug Fixes
+
+- **docs:** update the `pages` metadata example ([7b30ea7](https://github.com/sanity-io/next-sanity/commit/7b30ea7fe638f10c049667f47ca7a4fbf6375f7e))
+
 ## [4.2.0](https://github.com/sanity-io/next-sanity/compare/v4.1.8...v4.2.0) (2023-04-28)
 
 ### Features
