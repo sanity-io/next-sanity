@@ -5,6 +5,28 @@
 All notable changes to this project will be documented in this file. See
 [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [4.3.0](https://github.com/sanity-io/next-sanity/compare/v4.2.1...v4.3.0) (2023-05-03)
+
+### Introducing Visual Editing
+
+> **Note**
+>
+> Visual Editing is available for select [Sanity enterprise customers](https://www.sanity.io/enterprise?utm_source=github.com&utm_medium=referral&utm_campaign=may-vercel-launch). If you would like to use Visual Editing with Vercel, you will also need to contact Vercel to enable this feature for your Vercel team. [You may contact our sales team for more information.](https://www.sanity.io/contact/sales?utm_source=github.com&utm_medium=referral&utm_campaign=may-vercel-launch)
+
+![](https://i.imgur.com/wt95U5Q.jpg)
+
+This release includes support for Visual Editing and Content Source Maps. This feature enables you to make deep edit links from components in a front end that takes you to respective fields in the Studio. This enables a new workflow that substantially reduces the time it takes to make changes by bringing you directly to the relevant field where you can make edits reliably in its appropriate context. For more information on Visual Editing, [check out the documentation here](https://www.sanity.io/docs/vercel-visual-editing?utm_source=github.com&utm_medium=referral&utm_campaign=may-vercel-launch).
+
+Existing Sanity enterprise customers can contact their dedicated customer success manager to enable this feature. [Customers interested in upgrading to an enterprise plan can contact our sales team for more information](https://www.sanity.io/contact/sales?utm_source=github.com&utm_medium=referral&utm_campaign=may-vercel-launch). You will also need to [contact Vercel sales](https://vercel.com/contact/sales) to enable this feature for your Vercel team.
+
+Sanity enterprise customers can also use the Content Source Maps with GROQ to build custom Visual Editing capabilities. For more information, [check out the Content Source Maps documentation here](https://www.sanity.io/docs/content-source-maps?utm_source=github.com&utm_medium=referral&utm_campaign=may-vercel-launch).
+
+---
+
+This release is also available on:
+
+- [npm package (@latest dist-tag)](https://www.npmjs.com/package/next-sanity/v/4.3.0)
+
 ## [4.2.1](https://github.com/sanity-io/next-sanity/compare/v4.2.0...v4.2.1) (2023-05-03)
 
 ### Bug Fixes

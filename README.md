@@ -14,6 +14,7 @@
 - [Installation](#installation)
 - [`next-sanity` Running groq queries](#next-sanity-running-groq-queries)
   - [`appDir`, React Server Components and caching](#appdir-react-server-components-and-caching)
+- [`next-sanity` Visual Editing with Content Source Maps](#next-sanity-visual-editing-with-content-source-maps)
 - [`next-sanity/preview` Live real-time preview](#next-sanitypreview-live-real-time-preview)
   - [Examples](#examples)
     - [Built-in Sanity auth](#built-in-sanity-auth)
@@ -64,20 +65,10 @@ pnpm install next-sanity @portabletext/react @sanity/image-url
 
 ### `next-sanity/studio` peer dependencies
 
-When using `npm` newer than `v7` you should end up with needed dependencies like `sanity` and `styled-components` when you `npm install next-sanity`. For other package managers you may need to do some extra steps.
-
-#### Yarn
+When using `npm` newer than `v7`, or `pnpm` newer than `v8`, you should end up with needed dependencies like `sanity` and `styled-components` when you `npm install next-sanity`. It also works in `yarn` `v1` using `install-peerdeps`:
 
 ```bash
 npx install-peerdeps --yarn next-sanity
-```
-
-#### pnpm
-
-You can either setup [`auto-install-peers`](https://stackoverflow.com/questions/72468635/pnpm-peer-dependencies-auto-install/74835069#74835069) and `pnpm install next-sanity` is enough, or:
-
-```bash
-npx install-peerdeps --pnpm next-sanity
 ```
 
 ## `next-sanity` Running groq queries
@@ -87,7 +78,7 @@ import {createClient, groq} from 'next-sanity'
 
 const projectId = process.env.NEXT_PUBLIC_SANITY_PROJECT_ID // "pv8y60vp"
 const dataset = process.env.NEXT_PUBLIC_SANITY_DATASET // "production"
-const apiVersion = process.env.NEXT_PUBLIC_SANITY_API_VERSION // "2022-11-16"
+const apiVersion = process.env.NEXT_PUBLIC_SANITY_API_VERSION // "2023-05-03"
 
 const client = createClient({
   projectId,
@@ -109,7 +100,7 @@ import {cache} from 'react'
 
 const projectId = process.env.NEXT_PUBLIC_SANITY_PROJECT_ID // "pv8y60vp"
 const dataset = process.env.NEXT_PUBLIC_SANITY_DATASET // "production"
-const apiVersion = process.env.NEXT_PUBLIC_SANITY_API_VERSION // "2022-11-16"
+const apiVersion = process.env.NEXT_PUBLIC_SANITY_API_VERSION // "2023-05-03"
 
 const client = createClient({
   projectId,
@@ -126,6 +117,33 @@ const data = await clientFetch(groq`*[]`)
 // You can use the same generics as before
 const total = await clientFetch<number>(groq`count*()`)
 ```
+
+## `next-sanity` Visual Editing with Content Source Maps
+
+> **Note**
+>
+> [Content Source Maps][content-source-maps-intro] are available [as an API][content-source-maps] for select [Sanity enterprise customers][enterprise-cta]. [Contact our sales team for more information.][sales-cta]
+
+The `createClient` method in `next-sanity` supports [visual editing][visual-editing-intro], it supports all the same options as [`@sanity/preview-kit/client`][preview-kit-client]. Add `studioUrl` to your client configuration and it'll automatically show up on Vercel Preview Deployments:
+
+```tsx
+import {createClient, groq} from 'next-sanity'
+
+const projectId = process.env.NEXT_PUBLIC_SANITY_PROJECT_ID // "pv8y60vp"
+const dataset = process.env.NEXT_PUBLIC_SANITY_DATASET // "production"
+const apiVersion = process.env.NEXT_PUBLIC_SANITY_API_VERSION // "2023-05-03"
+
+const client = createClient({
+  projectId,
+  dataset,
+  apiVersion, // https://www.sanity.io/docs/api-versioning
+  useCdn: true, // if you're using ISR or only static generation at build time then you can set this to `false` to guarantee no stale content
+  studioUrl: '/studio', // Or: 'https://my-cool-project.sanity.studio'
+  encodeSourceMap: true, // Optional. Default to: process.env.NEXT_PUBLIC_VERCEL_ENV === 'preview',
+})
+```
+
+[Our setup guide walks you through how to customize the experience.][visual-editing]
 
 ## `next-sanity/preview` Live real-time preview
 
@@ -195,7 +213,7 @@ import {createClient} from 'next-sanity'
 
 const projectId = process.env.NEXT_PUBLIC_SANITY_PROJECT_ID // "pv8y60vp"
 const dataset = process.env.NEXT_PUBLIC_SANITY_DATASET // "production"
-const apiVersion = process.env.NEXT_PUBLIC_SANITY_API_VERSION // "2022-11-16"
+const apiVersion = process.env.NEXT_PUBLIC_SANITY_API_VERSION // "2023-05-03"
 
 export const client = createClient({projectId, dataset, apiVersion})
 ```
@@ -372,7 +390,7 @@ import {createClient} from 'next-sanity'
 
 const projectId = process.env.NEXT_PUBLIC_SANITY_PROJECT_ID // "pv8y60vp"
 const dataset = process.env.NEXT_PUBLIC_SANITY_DATASET // "production"
-const apiVersion = process.env.NEXT_PUBLIC_SANITY_API_VERSION // "2022-11-16"
+const apiVersion = process.env.NEXT_PUBLIC_SANITY_API_VERSION // "2023-05-03"
 
 export const client = createClient({projectId, dataset, apiVersion})
 ```
@@ -897,3 +915,11 @@ Semantic release will only release on configured branches, so it is safe to run 
 ## License
 
 MIT-licensed. See [LICENSE](LICENSE).
+
+[visual-editing]: https://www.sanity.io/docs/vercel-visual-editing?utm_source=github.com&utm_medium=referral&utm_campaign=may-vercel-launch
+[visual-editing-intro]: https://www.sanity.io/blog/visual-editing-sanity-vercel?utm_source=github.com&utm_medium=referral&utm_campaign=may-vercel-launch
+[content-source-maps]: https://www.sanity.io/docs/content-source-maps?utm_source=github.com&utm_medium=referral&utm_campaign=may-vercel-launch
+[content-source-maps-intro]: https://www.sanity.io/blog/content-source-maps-announce?utm_source=github.com&utm_medium=referral&utm_campaign=may-vercel-launch
+[preview-kit-client]: https://github.com/sanity-io/preview-kit#sanitypreview-kitclient
+[sales-cta]: https://www.sanity.io/contact/sales?utm_source=github.com&utm_medium=referral&utm_campaign=may-vercel-launch
+[enterprise-cta]: https://www.sanity.io/enterprise?utm_source=github.com&utm_medium=referral&utm_campaign=may-vercel-launch
