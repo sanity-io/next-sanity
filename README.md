@@ -230,7 +230,7 @@ function onPublicAccessOnly() {
 export const usePreview = definePreview({projectId, dataset, onPublicAccessOnly})
 ```
 
-`components/PreviewDocumentsCount.ts`:
+`components/PreviewDocumentsCount.tsx`:
 
 ```tsx
 'use client'
