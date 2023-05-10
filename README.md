@@ -19,15 +19,15 @@
   - [Examples](#examples)
     - [Built-in Sanity auth](#built-in-sanity-auth)
       - [Using the `/pages` directory](#using-the-pages-directory)
-      - [Using the `/app` directory (experimental)](#using-the-app-directory-experimental)
+      - [Using the `/app` directory](#using-the-app-directory-experimental)
     - [Custom token auth](#custom-token-auth)
       - [Using the `/pages` directory](#using-the-pages-directory-1)
-      - [Using the `/app` directory (experimental)](#using-the-app-directory-experimental-1)
+      - [Using the `/app` directory](#using-the-app-directory-experimental-1)
   - [Starters](#starters)
   - [Limits](#limits)
 - [`next-sanity/studio`](#next-sanitystudio)
   - [Usage](#usage)
-    - [Using the `/app` directory (experimental)](#using-the-app-directory-experimental-2)
+    - [Using the `/app` directory](#using-the-app-directory-experimental-2)
     - [Using the `/pages` directory](#using-the-pages-directory-2)
   - [Opt-in to using `StudioProvider` and `StudioLayout`](#opt-in-to-using-studioprovider-and-studiolayout)
 - [`next-sanity/webhook`](#next-sanitywebhook)
@@ -279,7 +279,7 @@ export default function IndexPage({preview, data}) {
 }
 ```
 
-##### Using the `/app` directory (experimental)
+##### Using the `/app` directory
 
 We support the new `appDir` mode in Next, [but please note that `appDir` shouldn't be used in production before Vercel says it's stable](https://beta.nextjs.org/docs/getting-started).
 
@@ -454,7 +454,7 @@ export default function IndexPage({preview, token, data}) {
 }
 ```
 
-##### Using the `/app` directory (experimental)
+##### Using the `/app` directory
 
 We support the new `appDir` mode in Next, [but please note that `appDir` shouldn't be used in production before Vercel says it's stable](https://beta.nextjs.org/docs/getting-started).
 
@@ -576,9 +576,9 @@ export default defineCliConfig({api: {projectId, dataset}})
 
 Now you can run commands like `npx sanity cors add`. See `npx sanity help` for a full list of what you can do.
 
-#### Using the `/app` directory (experimental)
+#### Using the `/app` directory
 
-We support the new `appDir` mode in Next, [but please note that `appDir` shouldn't be used in production before Vercel says it's stable](https://beta.nextjs.org/docs/getting-started).
+We support the new `appDir` mode in Next.
 
 `app/studio/[[...index]]/page.tsx`:
 
