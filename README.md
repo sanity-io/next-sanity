@@ -281,8 +281,6 @@ export default function IndexPage({preview, data}) {
 
 ##### Using the `/app` directory
 
-We support the new `appDir` mode in Next, [but please note that `appDir` shouldn't be used in production before Vercel says it's stable](https://beta.nextjs.org/docs/getting-started).
-
 `components/PreviewSuspense.tsx`:
 
 ```tsx
@@ -455,8 +453,6 @@ export default function IndexPage({preview, token, data}) {
 ```
 
 ##### Using the `/app` directory
-
-We support the new `appDir` mode in Next, [but please note that `appDir` shouldn't be used in production before Vercel says it's stable](https://beta.nextjs.org/docs/getting-started).
 
 `components/PreviewSuspense.tsx`:
 
