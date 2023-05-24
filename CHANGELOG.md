@@ -5,6 +5,12 @@
 All notable changes to this project will be documented in this file. See
 [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [4.3.3](https://github.com/sanity-io/next-sanity/compare/v4.3.2...v4.3.3) (2023-05-24)
+
+### Bug Fixes
+
+- **deps:** upgrade `@sanity/preview-kit` to v1.5.4 ([7c7ec79](https://github.com/sanity-io/next-sanity/commit/7c7ec79e4aff6937ee4581bc7381e9457fc1b005))
+
 ## [4.3.2](https://github.com/sanity-io/next-sanity/compare/v4.3.1...v4.3.2) (2023-05-03)
 
 ### Bug Fixes
