@@ -37,7 +37,7 @@ export const Posts = memo(function Posts(props: PostsProps) {
             {post.mainImage ? (
               <img
                 className="h-48 w-full object-cover"
-                src={urlForImage(post.mainImage).url()}
+                src={urlForImage(post.mainImage).height(256).width(256).fit('crop').url()}
                 alt=""
               />
             ) : null}
