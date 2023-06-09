@@ -15,7 +15,7 @@ export default function PreviewProvider({
       projectId={projectId}
       dataset={dataset}
       token={token}
-      documentLimit={Infinity}
+      includeTypes={['author', 'post']}
     >
       {children}
     </GroqStoreProvider>
