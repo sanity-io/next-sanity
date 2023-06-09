@@ -11,9 +11,13 @@ assert.equal(typeof groq, 'function')
 
 // Testing pkg.exports[./preview]
 const nextSanityPreview = require('next-sanity/preview')
-const {definePreview, PreviewSuspense} = nextSanityPreview
-assert.equal(typeof definePreview, 'function')
-assert.equal(typeof PreviewSuspense, 'function')
+const {useListeningQuery} = nextSanityPreview
+assert.equal(typeof useListeningQuery, 'function')
+
+// Testing pkg.exports[./preview/groq-store]
+const nextSanityPreviewGroqStore = require('next-sanity/preview/groq-store')
+const {GroqStoreProvider} = nextSanityPreviewGroqStore
+assert.equal(typeof GroqStoreProvider?.type, 'function')
 
 // Testing pkg.exports[./studio]
 const nextSanityStudio = require('next-sanity/studio')
