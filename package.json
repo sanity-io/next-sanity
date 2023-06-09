@@ -36,15 +36,26 @@
       "default": "./dist/index.js"
     },
     "./preview": {
-      "types": "./dist/preview.d.ts",
+      "types": "./dist/preview/index.d.ts",
       "source": "./src/preview/index.ts",
-      "require": "./dist/preview.cjs",
+      "require": "./dist/preview/index.cjs",
       "node": {
-        "import": "./dist/preview.cjs.js",
-        "require": "./dist/preview.cjs"
+        "import": "./dist/preview/index.cjs.js",
+        "require": "./dist/preview/index.cjs"
       },
-      "import": "./dist/preview.js",
-      "default": "./dist/preview.js"
+      "import": "./dist/preview/index.js",
+      "default": "./dist/preview/index.js"
+    },
+    "./preview/groq-store": {
+      "types": "./dist/preview/groq-store.d.ts",
+      "source": "./src/preview/groq-store.ts",
+      "require": "./dist/preview/groq-store.cjs",
+      "node": {
+        "import": "./dist/preview/groq-store.cjs.js",
+        "require": "./dist/preview/groq-store.cjs"
+      },
+      "import": "./dist/preview/groq-store.js",
+      "default": "./dist/preview/groq-store.js"
     },
     "./studio": {
       "types": "./dist/studio/index.d.ts",
@@ -110,7 +121,10 @@
   "typesVersions": {
     "*": {
       "preview": [
-        "./dist/preview.d.ts"
+        "./dist/preview/index.d.ts"
+      ],
+      "preview/groq-store": [
+        "./dist/preview/groq-store.d.ts"
       ],
       "studio": [
         "./dist/studio/index.d.ts"
