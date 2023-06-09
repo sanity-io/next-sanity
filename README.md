@@ -52,15 +52,15 @@
 ## Installation
 
 ```bash
-npm install next-sanity @portabletext/react @sanity/image-url
+npm install next-sanity @sanity/client @portabletext/react @sanity/image-url
 ```
 
 ```bash
-yarn add next-sanity @portabletext/react @sanity/image-url
+yarn add next-sanity @sanity/client @portabletext/react @sanity/image-url
 ```
 
 ```bash
-pnpm install next-sanity @portabletext/react @sanity/image-url
+pnpm install next-sanity @sanity/client @portabletext/react @sanity/image-url
 ```
 
 ### `next-sanity/studio` peer dependencies
