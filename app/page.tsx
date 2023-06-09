@@ -1,8 +1,8 @@
 /* eslint-disable @next/next/no-html-link-for-pages */
 import {Posts, PostsProps, query} from 'app/Posts'
 import PreviewPosts from 'app/PreviewPosts'
+import PreviewProvider from 'app/PreviewProvider'
 import {createClient} from 'app/sanity.client'
-import {PreviewSuspense} from 'app/sanity.preview'
 import {draftMode} from 'next/headers'
 import Link from 'next/link'
 import {cache} from 'react'
@@ -63,9 +63,9 @@ export default async function IndexPage() {
             )}
           </div>
           {isDraftMode ? (
-            <PreviewSuspense fallback={<Posts data={posts} />}>
-              <PreviewPosts token={token} serverSnapshot={posts} />
-            </PreviewSuspense>
+            <PreviewProvider token={token!}>
+              <PreviewPosts data={posts} />
+            </PreviewProvider>
           ) : (
             <Posts data={posts} />
           )}

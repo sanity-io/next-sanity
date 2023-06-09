@@ -1,18 +1,9 @@
 'use client'
 
 import {Posts, type PostsProps, query} from 'app/Posts'
-import {usePreview as _usePreview} from 'app/sanity.preview'
-import {type UsePreview} from 'src/preview'
+import {useListeningQuery} from 'src/preview'
 
-const usePreview: UsePreview<PostsProps['data']> = _usePreview
-
-export default function PreviewPosts({
-  token = null,
-  serverSnapshot,
-}: {
-  token: string | null
-  serverSnapshot: PostsProps['data']
-}) {
-  const data = usePreview(token, query, {}, serverSnapshot) || []
+export default function PreviewPosts({data: serverSnapshot}: PostsProps) {
+  const data = useListeningQuery(serverSnapshot, query) || []
   return <Posts data={data} />
 }
