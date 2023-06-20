@@ -1,7 +1,10 @@
+/* eslint-disable no-process-env */
 import createImageUrlBuilder from '@sanity/image-url'
-import {dataset, projectId} from 'app/config'
 
-export const imageBuilder = createImageUrlBuilder({projectId, dataset})
+export const imageBuilder = createImageUrlBuilder({
+  projectId: process.env.NEXT_PUBLIC_SANITY_PROJECT_ID!,
+  dataset: process.env.NEXT_PUBLIC_SANITY_DATASET!,
+})
 
 // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
 export const urlForImage = (source: Parameters<(typeof imageBuilder)['image']>[0]) =>

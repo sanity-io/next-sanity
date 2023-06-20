@@ -2,30 +2,16 @@
 import {Posts, PostsProps, query} from 'app/Posts'
 import PreviewPosts from 'app/PreviewPosts'
 import PreviewProvider from 'app/PreviewProvider'
-import {createClient} from 'app/sanity.client'
 import {draftMode} from 'next/headers'
 import Link from 'next/link'
-import {cache} from 'react'
 
-const client = createClient()
-const clientFetch = cache(client.fetch.bind(client))
+import {getClient} from './sanity.client'
 
 export default async function IndexPage() {
-  const isDraftMode = draftMode().isEnabled
-  let token = null
-  let posts: PostsProps['data']
-
-  if (isDraftMode) {
-    // eslint-disable-next-line no-process-env
-    token = process.env.SANITY_API_READ_TOKEN
-    if (!token) {
-      throw new TypeError(`Missing SANITY_API_READ_TOKEN`)
-    }
-    const previewClient = client.withConfig({token, useCdn: false})
-    posts = await previewClient.fetch(query)
-  } else {
-    posts = await clientFetch(query)
-  }
+  // eslint-disable-next-line no-process-env
+  const preview = draftMode().isEnabled ? {token: process.env.SANITY_API_READ_TOKEN!} : undefined
+  const client = getClient(preview)
+  const posts = await client.fetch<PostsProps['data']>(query)
 
   return (
     <>
@@ -36,9 +22,9 @@ export default async function IndexPage() {
         <div className="relative mx-auto max-w-7xl">
           <div className="text-center">
             <h2 className="text-3xl font-extrabold tracking-tight text-gray-900 sm:text-4xl">
-              {isDraftMode ? 'Draft Mode' : 'Not in Draft Mode'}
+              {preview ? 'Draft Mode' : 'Not in Draft Mode'}
             </h2>
-            {isDraftMode && (
+            {preview && (
               <>
                 <p className="mx-auto mt-3 max-w-2xl text-xl text-gray-500 sm:mt-4">
                   Using a read token, works in Safari and Incognito mode.
@@ -51,7 +37,7 @@ export default async function IndexPage() {
                 </a>
               </>
             )}
-            {!isDraftMode && (
+            {!preview && (
               <>
                 <a
                   href="/enable"
@@ -62,8 +48,8 @@ export default async function IndexPage() {
               </>
             )}
           </div>
-          {isDraftMode ? (
-            <PreviewProvider token={token!}>
+          {preview ? (
+            <PreviewProvider token={preview.token}>
               <PreviewPosts data={posts} />
             </PreviewProvider>
           ) : (
@@ -82,7 +68,3 @@ export default async function IndexPage() {
     </>
   )
 }
-
-// eslint-disable-next-line no-warning-comments
-// @TODO remember to set useCdn = true
-export const revalidate = 60
