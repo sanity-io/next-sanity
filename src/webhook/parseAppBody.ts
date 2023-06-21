@@ -1,14 +1,12 @@
 import type {SanityDocument} from '@sanity/types'
 import sanityWebhook from '@sanity/webhook'
-import type {NextApiRequest} from 'next'
+import {NextRequest} from 'next/server'
 
 // As `@sanity/webhook` isn't shipping ESM, extracting from the default export have the best ecosystem support
 const {isValidSignature, SIGNATURE_HEADER_NAME} = sanityWebhook
 
-import {_readBody as readBody} from './readBody'
-
 /** @public */
-export type ParseBody = {
+export type ParseAppBody = {
   /**
    * If a secret is given then it returns a boolean. If no secret is provided then no validation is done on the signature, and it'll return `null`
    */
@@ -20,17 +18,14 @@ export type ParseBody = {
  * without worrying about getting stale data.
  * @public
  */
-export async function parseBody(
-  req: NextApiRequest,
+export async function parseAppBody(
+  req: NextRequest,
   secret?: string,
   waitForContentLakeEventualConsistency: boolean = true
-): Promise<ParseBody> {
-  let signature = req.headers[SIGNATURE_HEADER_NAME]!
-  if (Array.isArray(signature)) {
-    signature = signature[0]
-  }
+): Promise<ParseAppBody> {
+  let signature = req.headers.get(SIGNATURE_HEADER_NAME)!
 
-  const body = await readBody(req)
+  const body = JSON.stringify(await req.json())
   const validSignature = secret ? isValidSignature(body, signature, secret.trim()) : null
 
   if (validSignature !== false && waitForContentLakeEventualConsistency) {
