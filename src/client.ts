@@ -30,7 +30,7 @@ export type SanityClient = ReturnType<typeof createPreviewKitClient>
 /**
  * @public
  */
-export function createClient(config: PreviewKitClientConfig): SanityClient {
+export function createClient(config: ClientConfig): SanityClient {
   let {
     // eslint-disable-next-line prefer-const, no-process-env
     studioUrl = process.env.NEXT_PUBLIC_SANITY_STUDIO_URL! as PreviewKitClientConfig['studioUrl'],
