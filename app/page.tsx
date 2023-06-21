@@ -11,7 +11,11 @@ export default async function IndexPage() {
   // eslint-disable-next-line no-process-env
   const preview = draftMode().isEnabled ? {token: process.env.SANITY_API_READ_TOKEN!} : undefined
   const client = getClient(preview)
-  const posts = await client.fetch<PostsProps['data']>(query)
+  const posts = await client.fetch<PostsProps['data']>(
+    query,
+    {}
+    // {next: {revalidate: 30}}
+  )
 
   return (
     <>
@@ -25,22 +29,17 @@ export default async function IndexPage() {
               {preview ? 'Draft Mode' : 'Not in Draft Mode'}
             </h2>
             {preview && (
-              <>
-                <p className="mx-auto mt-3 max-w-2xl text-xl text-gray-500 sm:mt-4">
-                  Using a read token, works in Safari and Incognito mode.
-                </p>
-                <a
-                  href="/disable"
-                  className="mx-2 my-4 inline-block rounded-full border border-gray-200 px-4 py-1 text-sm font-semibold text-gray-600 hover:border-transparent hover:bg-gray-600 hover:text-white focus:outline-none focus:ring-2 focus:ring-gray-600 focus:ring-offset-2"
-                >
-                  Stop previewing drafts
-                </a>
-              </>
+              <a
+                href="/api/disable-draft"
+                className="mx-2 my-4 inline-block rounded-full border border-gray-200 px-4 py-1 text-sm font-semibold text-gray-600 hover:border-transparent hover:bg-gray-600 hover:text-white focus:outline-none focus:ring-2 focus:ring-gray-600 focus:ring-offset-2"
+              >
+                Stop previewing drafts
+              </a>
             )}
             {!preview && (
               <>
                 <a
-                  href="/enable"
+                  href="/api/draft"
                   className="mx-2 my-4 inline-block rounded-full border border-gray-200 px-4 py-1 text-sm font-semibold text-gray-600 hover:border-transparent hover:bg-gray-600 hover:text-white focus:outline-none focus:ring-2 focus:ring-gray-600 focus:ring-offset-2"
                 >
                   Preview drafts
@@ -50,10 +49,10 @@ export default async function IndexPage() {
           </div>
           {preview ? (
             <PreviewProvider token={preview.token}>
-              <PreviewPosts data={posts} />
+              <PreviewPosts data={posts} draftMode={draftMode().isEnabled} />
             </PreviewProvider>
           ) : (
-            <Posts data={posts} />
+            <Posts data={posts} draftMode={draftMode().isEnabled} />
           )}
         </div>
       </div>
