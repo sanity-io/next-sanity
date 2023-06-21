@@ -6,6 +6,7 @@ export function getClient(preview?: {token: string}): SanityClient {
     projectId: process.env.NEXT_PUBLIC_SANITY_PROJECT_ID!,
     dataset: process.env.NEXT_PUBLIC_SANITY_DATASET!,
     // apiVersion: '2022-11-11',
+    // eslint-disable-next-line no-warning-comments
     // @TODO perspectives require vX for now
     apiVersion: 'X',
     useCdn: true,

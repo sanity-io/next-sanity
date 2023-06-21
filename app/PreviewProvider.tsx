@@ -17,10 +17,7 @@ export default function PreviewProvider({
     <LiveQueryProvider
       client={client}
       logger={console}
-      cache={{
-        // includeTypes: ['author', 'post'],
-        maxDocuments: 30000,
-      }}
+      cache={{includeTypes: ['author', 'post']}}
     >
       {children}
     </LiveQueryProvider>
