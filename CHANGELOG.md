@@ -5,6 +5,20 @@
 All notable changes to this project will be documented in this file. See
 [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [5.0.0](https://github.com/sanity-io/next-sanity/compare/v4.3.3...v5.0.0) (2023-06-21)
+
+### ⚠ BREAKING CHANGES
+
+- `definePreview` and `<PreviewSuspense>` are replaced by `<LiveQueryProvider>`.
+- `usePreview` is replaced by `useLiveQuery`.
+- `@sanity/client` is now a peer dependency.
+
+[The migration guide outlines every breaking change and how to migrate your code](https://github.com/sanity-io/next-sanity/#migration-guides)
+
+### Bug Fixes
+
+- Preview hooks no longer perform queries while the initial dataset export is streaming, as this could lead to incomplete query results and unexpected cases of `null`.
+
 ## [4.3.3](https://github.com/sanity-io/next-sanity/compare/v4.3.2...v4.3.3) (2023-05-24)
 
 ### Bug Fixes
