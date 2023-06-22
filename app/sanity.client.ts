@@ -9,8 +9,7 @@ export function getClient(preview?: {token: string}): SanityClient {
     // eslint-disable-next-line no-warning-comments
     // @TODO perspectives require vX for now
     apiVersion: 'X',
-    useCdn: true,
-    token: process.env.SANITY_API_READ_TOKEN,
+    useCdn: true,    
     perspective: 'published',
     studioUrl: '/studio',
     logger: console,
