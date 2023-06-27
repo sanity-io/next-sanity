@@ -143,7 +143,7 @@ const client = createClient({
 Chose a setup guide for the router you're using:
 
 - [`app-router`](./PREVIEW-app-router.md)
-- [`pages-router`](./PREVIEW-app-router.md)
+- [`pages-router`](./PREVIEW-pages-router.md)
 
 Since `next-sanity/preview` is simply re-exporting `LiveQueryProvider` and `useLiveQuery` from [`@sanity/preview-kit` you'll find advanced usage and comprehensive docs in its README](https://github.com/sanity-io/preview-kit#sanitypreview-kit-1).
 
