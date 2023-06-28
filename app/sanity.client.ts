@@ -9,9 +9,9 @@ export function getClient(preview?: {token: string}): SanityClient {
     // eslint-disable-next-line no-warning-comments
     // @TODO perspectives require vX for now
     apiVersion: 'X',
-    useCdn: true,    
-     // Since the process.env var doesn't have a NEXT_PUBLIC_ prefix the token will be `undefined` in the browser bundle.
-     token: process.env.SANITY_API_READ_TOKEN,
+    useCdn: true,
+    // Since the process.env var doesn't have a NEXT_PUBLIC_ prefix the token will be `undefined` in the browser bundle.
+    token: process.env.SANITY_API_READ_TOKEN,
     perspective: 'published',
     studioUrl: '/studio',
     logger: console,
