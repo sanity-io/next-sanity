@@ -2,6 +2,7 @@
 const nextConfig = {
   experimental: {
     appDir: true,
+    logging: 'verbose',
   },
 
   // We run these checks in the CI pipeline, so we don't need to run them on Vercel

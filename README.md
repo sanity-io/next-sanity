@@ -12,6 +12,7 @@
 
 - [Installation](#installation)
 - [`next-sanity` Running groq queries](#next-sanity-running-groq-queries)
+  - [Using Perspectives](#using-perspectives)
   - [Should `useCdn` be `true` or `false`?](#should-usecdn-be-true-or-false)
   - [`app-router`, React Server Components and caching](#app-router-react-server-components-and-caching)
 - [`next-sanity` Visual Editing with Content Source Maps](#next-sanity-visual-editing-with-content-source-maps)
@@ -62,6 +63,11 @@ const client = createClient({
 
 const data = await client.fetch(groq`*[]`)
 ```
+### Using Perspectives
+
+The `perspective` option can be used to specify special filtering behavior for queries. The default value is `raw`, which means no special filtering is applied, while [`published`](#published) and [`previewDrafts`](#previewdrafts) can be used to optimize for specific use cases. Read more about this option:
+- [Perspectives in Sanity docs][perspectives-docs]
+- [Perspectives in @sanity/client README][perspectives-readme]
 
 ### Should `useCdn` be `true` or `false`?
 
@@ -365,3 +371,5 @@ MIT-licensed. See [LICENSE](LICENSE).
 [preview-kit-client]: https://github.com/sanity-io/preview-kit#sanitypreview-kitclient
 [sales-cta]: https://www.sanity.io/contact/sales?utm_source=github.com&utm_medium=referral&utm_campaign=may-vercel-launch
 [enterprise-cta]: https://www.sanity.io/enterprise?utm_source=github.com&utm_medium=referral&utm_campaign=may-vercel-launch
+[perspectives-docs]: https://www.sanity.io/docs/perspectives
+[perspectives-readme]: https://github.com/sanity-io/client/#performing-queries

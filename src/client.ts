@@ -34,9 +34,7 @@ export function createClient(config: ClientConfig): SanityClient {
   let {
     // eslint-disable-next-line prefer-const, no-process-env
     studioUrl = process.env.NEXT_PUBLIC_SANITY_STUDIO_URL! as PreviewKitClientConfig['studioUrl'],
-    encodeSourceMap = (studioUrl
-      ? 'auto'
-      : false) satisfies PreviewKitClientConfig['encodeSourceMap'],
+    encodeSourceMap = studioUrl ? 'auto' : false,
   } = config
   // eslint-disable-next-line no-process-env
   if (encodeSourceMap === 'auto' && process.env.NEXT_PUBLIC_VERCEL_ENV === 'preview') {

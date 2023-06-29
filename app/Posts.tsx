@@ -17,6 +17,10 @@ const {query, schema} = q('*')
       // image: q('image', imageWithCropAndHotspot),
       image: q.unknown().optional(),
     }),
+    status: q.select({
+      '_originalId in path("drafts.**")': ['"draft"', q.literal('draft')],
+      default: ['"published"', q.literal('published')],
+    }),
   })
   .order('publishedAt desc', '_updatedAt desc')
 
@@ -25,6 +29,7 @@ export {query}
 export type PostsProps = {
   data: unknown[]
   loading?: boolean
+  draftMode: boolean
 }
 
 export const Posts = memo(function Posts(props: PostsProps) {
@@ -37,7 +42,10 @@ export const Posts = memo(function Posts(props: PostsProps) {
       }`}
     >
       {posts.map((post) => (
-        <div key={post.title} className="flex flex-col overflow-hidden rounded-lg shadow-lg">
+        <div
+          key={post.title}
+          className="relative flex flex-col overflow-hidden rounded-lg shadow-lg"
+        >
           <div className="flex-shrink-0">
             {post.mainImage ? (
               <img
@@ -77,6 +85,11 @@ export const Posts = memo(function Posts(props: PostsProps) {
               </div>
             </div>
           </div>
+          {props.draftMode && post.status === 'draft' && (
+            <span className="absolute left-2 top-2 rounded-md bg-white/50 px-2 py-1 text-xs font-semibold uppercase backdrop-blur">
+              {post.status}
+            </span>
+          )}
         </div>
       ))}
     </div>
