@@ -63,9 +63,11 @@ const client = createClient({
 
 const data = await client.fetch(groq`*[]`)
 ```
+
 ### Using Perspectives
 
 The `perspective` option can be used to specify special filtering behavior for queries. The default value is `raw`, which means no special filtering is applied, while [`published`](#published) and [`previewDrafts`](#previewdrafts) can be used to optimize for specific use cases. Read more about this option:
+
 - [Perspectives in Sanity docs][perspectives-docs]
 - [Perspectives in @sanity/client README][perspectives-readme]
 
