@@ -5,6 +5,17 @@
 All notable changes to this project will be documented in this file. See
 [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [5.1.0](https://github.com/sanity-io/next-sanity/compare/v5.0.2...v5.1.0) (2023-06-29)
+
+### Features
+
+- use perspective features ([#465](https://github.com/sanity-io/next-sanity/issues/465)) ([76db810](https://github.com/sanity-io/next-sanity/commit/76db810105376386086d47df6c97dbb987270ff8))
+
+### Bug Fixes
+
+- **deps:** update non-major ([#473](https://github.com/sanity-io/next-sanity/issues/473)) ([a9eb461](https://github.com/sanity-io/next-sanity/commit/a9eb461ae7a30cb07d1213700fe3c37bcd9766e9))
+- **webhook:** revert `app-router` support from ([#460](https://github.com/sanity-io/next-sanity/issues/460)) ([2a5bfbb](https://github.com/sanity-io/next-sanity/commit/2a5bfbb88f97bc6a27c396c83586381a709fea2f))
+
 ## [5.0.2](https://github.com/sanity-io/next-sanity/compare/v5.0.1...v5.0.2) (2023-06-21)
 
 ### Bug Fixes
