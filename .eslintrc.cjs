@@ -8,7 +8,7 @@ module.exports = {
     'sanity/react',
     'sanity/typescript',
     '@sanity/eslint-config-studio',
-    'next/core-web-vitals',
+    'plugin:@next/next/recommended',
     'plugin:prettier/recommended',
   ],
   rules: {
