@@ -13,7 +13,7 @@ export default async function IndexPage() {
   const client = getClient(preview)
   const posts = await client.fetch<PostsProps['data']>(
     query,
-    {}
+    {},
     // {next: {revalidate: 30}}
   )
 
