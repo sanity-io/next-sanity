@@ -36,7 +36,7 @@ export default function MyComponent(props: Pick<StudioProps, 'config'>) {
       themeColorLight: theme.color.light.default.base.bg,
       themeColorDark: theme.color.dark.default.base.bg,
     }),
-    [theme]
+    [theme],
   )
   // useTextFontFamilyFromTheme
   const fontFamily = useMemo(() => theme.fonts.text.family, [theme])

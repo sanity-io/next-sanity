@@ -4,7 +4,7 @@ import type {Config, SingleWorkspace, StudioTheme} from 'sanity'
 
 /** @alpha */
 export function useTheme(
-  config?: Config | Required<Pick<SingleWorkspace, 'theme'>>
+  config?: Config | Required<Pick<SingleWorkspace, 'theme'>>,
 ): StudioTheme {
   const workspace = useMemo<
     SingleWorkspace | Required<Pick<SingleWorkspace, 'theme'>> | undefined
