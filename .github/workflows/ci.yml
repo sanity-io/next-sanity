@@ -31,6 +31,9 @@ concurrency:
   group: ${{ github.workflow }}-${{ github.head_ref || github.run_id }}
   cancel-in-progress: true
 
+permissions:
+  contents: read # for checkout
+
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -81,6 +84,11 @@ jobs:
       - run: npx ls-engines
 
   release:
+    permissions:
+      contents: write # to be able to publish a GitHub release
+      issues: write # to be able to comment on released issues
+      pull-requests: write # to be able to comment on released pull requests
+      id-token: write # to enable use of OIDC for npm provenance
     needs: [build, test]
     # only run if opt-in during workflow_dispatch
     if: always() && github.event.inputs.release == 'true' && needs.build.result != 'failure' && needs.test.result != 'failure' && needs.test.result != 'cancelled'
@@ -96,6 +104,7 @@ jobs:
           node-version: lts/*
           cache: npm
       - run: npm ci
+      - run: npm audit signatures
         # Branches that will release new versions are defined in .releaserc.json
       - run: npx semantic-release
         # Don't allow interrupting the release step if the job is cancelled, as it can lead to an inconsistent state
