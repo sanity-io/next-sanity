@@ -23,6 +23,8 @@ export default async function IndexPage() {
   const patch = [19, 1, 10, 1, 14, 'firstName', 11, 2, 20, 'Diffing', 21, 0, 2, 15]
   const right = applyPatch(left, patch)
   // eslint-disable-next-line no-console
+  console.log({left, right, patch})
+  // eslint-disable-next-line no-console
   console.log(
     assert.deepEqual(right, {
       firstName: 'Bob Bobson',
