@@ -4,6 +4,8 @@ import PreviewPosts from 'app/PreviewPosts'
 import PreviewProvider from 'app/PreviewProvider'
 import {draftMode} from 'next/headers'
 import Link from 'next/link'
+import {applyPatch} from 'mendoza'
+import assert from 'node:assert'
 
 import {getClient} from './sanity.client'
 
@@ -15,6 +17,18 @@ export default async function IndexPage() {
     query,
     {},
     // {next: {revalidate: 30}}
+  )
+
+  const left = {name: 'Bob Bobson', age: 30, skills: ['Go', 'Patching', 'Playing']}
+  const patch = [19, 1, 10, 1, 14, 'firstName', 11, 2, 20, 'Diffing', 21, 0, 2, 15]
+  const right = applyPatch(left, patch)
+  // eslint-disable-next-line no-console
+  console.log(
+    assert.deepEqual(right, {
+      firstName: 'Bob Bobson',
+      age: 30,
+      skills: ['Diffing', 'Go', 'Patching'],
+    }),
   )
 
   return (
