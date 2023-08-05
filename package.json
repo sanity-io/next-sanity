@@ -1,6 +1,6 @@
 {
   "name": "next-sanity",
-  "version": "5.2.0",
+  "version": "5.2.1-rsc.0",
   "description": "Sanity.io toolkit for Next.js",
   "keywords": [
     "sanity",
@@ -29,8 +29,8 @@
       "source": "./src/index.ts",
       "require": "./dist/index.cjs",
       "node": {
-        "import": "./dist/index.cjs.js",
-        "require": "./dist/index.cjs"
+        "module": "./dist/index.js",
+        "import": "./dist/index.cjs.js"
       },
       "import": "./dist/index.js",
       "default": "./dist/index.js"
@@ -40,8 +40,8 @@
       "source": "./src/preview/index.ts",
       "require": "./dist/preview/index.cjs",
       "node": {
-        "import": "./dist/preview/index.cjs.js",
-        "require": "./dist/preview/index.cjs"
+        "module": "./dist/preview/index.js",
+        "import": "./dist/preview/index.cjs.js"
       },
       "import": "./dist/preview/index.js",
       "default": "./dist/preview/index.js"
@@ -51,8 +51,8 @@
       "source": "./src/studio/index.ts",
       "require": "./dist/studio/index.cjs",
       "node": {
-        "import": "./dist/studio/index.cjs.js",
-        "require": "./dist/studio/index.cjs"
+        "module": "./dist/studio/index.js",
+        "import": "./dist/studio/index.cjs.js"
       },
       "import": "./dist/studio/index.js",
       "default": "./dist/studio/index.js"
@@ -62,8 +62,8 @@
       "source": "./src/studio/head/index.ts",
       "require": "./dist/studio/head.cjs",
       "node": {
-        "import": "./dist/studio/head.cjs.js",
-        "require": "./dist/studio/head.cjs"
+        "module": "./dist/studio/head.js",
+        "import": "./dist/studio/head.cjs.js"
       },
       "import": "./dist/studio/head.js",
       "default": "./dist/studio/head.js"
@@ -73,8 +73,8 @@
       "source": "./src/studio/loading.ts",
       "require": "./dist/studio/loading.cjs",
       "node": {
-        "import": "./dist/studio/loading.cjs.js",
-        "require": "./dist/studio/loading.cjs"
+        "module": "./dist/studio/loading.js",
+        "import": "./dist/studio/loading.cjs.js"
       },
       "import": "./dist/studio/loading.js",
       "default": "./dist/studio/loading.js"
@@ -84,8 +84,8 @@
       "source": "./src/studio/metadata.ts",
       "require": "./dist/studio/metadata.cjs",
       "node": {
-        "import": "./dist/studio/metadata.cjs.js",
-        "require": "./dist/studio/metadata.cjs"
+        "module": "./dist/studio/metadata.js",
+        "import": "./dist/studio/metadata.cjs.js"
       },
       "import": "./dist/studio/metadata.js",
       "default": "./dist/studio/metadata.js"
@@ -95,8 +95,8 @@
       "source": "./src/webhook/index.ts",
       "require": "./dist/webhook.cjs",
       "node": {
-        "import": "./dist/webhook.cjs.js",
-        "require": "./dist/webhook.cjs"
+        "module": "./dist/webhook.js",
+        "import": "./dist/webhook.cjs.js"
       },
       "import": "./dist/webhook.js",
       "default": "./dist/webhook.js"
@@ -160,17 +160,17 @@
     "singleQuote": true
   },
   "dependencies": {
-    "@sanity/preview-kit": "2.4.7",
+    "@sanity/preview-kit": "2.4.8-rsc.1",
     "@sanity/webhook": "2.0.0",
     "groq": "^3.0.0"
   },
   "devDependencies": {
     "@next/eslint-plugin-next": "13.4.12",
     "@rollup/plugin-url": "^8.0.1",
-    "@sanity/client": "6.4.0",
+    "@sanity/client": "^6.4.1-rsc.1",
     "@sanity/eslint-config-studio": "^3.0.0",
     "@sanity/image-url": "^1.0.2",
-    "@sanity/pkg-utils": "^2.3.12",
+    "@sanity/pkg-utils": "^2.3.13-canary.1",
     "@sanity/semantic-release-preset": "^4.1.2",
     "@sanity/ui": "^1.7.4",
     "@sanity/vision": "3.14.5",
@@ -207,7 +207,7 @@
     "url-loader": "^4.1.1"
   },
   "peerDependencies": {
-    "@sanity/client": "^6.1.4",
+    "@sanity/client": "^6.4.1-rsc.1",
     "@sanity/icons": "^2.0.0",
     "@sanity/types": "^3.0.0",
     "@sanity/ui": "^1.0.0",
