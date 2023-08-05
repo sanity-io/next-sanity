@@ -1,4 +1,5 @@
 /* eslint-disable @next/next/no-html-link-for-pages */
+import {unstable__adapter, unstable__environment} from '@sanity/client'
 import {Posts, PostsProps, query} from 'app/Posts'
 import PreviewPosts from 'app/PreviewPosts'
 import PreviewProvider from 'app/PreviewProvider'
@@ -11,15 +12,15 @@ export default async function IndexPage() {
   // eslint-disable-next-line no-process-env
   const preview = draftMode().isEnabled ? {token: process.env.SANITY_API_READ_TOKEN!} : undefined
   const client = getClient(preview)
-  const posts = await client.fetch<PostsProps['data']>(
-    query,
-    {},
-    // {next: {revalidate: 30}}
-  )
+  const posts = await client.fetch<PostsProps['data']>(query)
 
   return (
     <>
-      <div className="relative bg-gray-50 px-4 pb-20 pt-16 sm:px-6 lg:px-8 lg:pb-28 lg:pt-24">
+      <div
+        className="relative bg-gray-50 px-4 pb-20 pt-16 sm:px-6 lg:px-8 lg:pb-28 lg:pt-24"
+        data-adapter={unstable__adapter}
+        data-environment={unstable__environment}
+      >
         <div className="absolute inset-0">
           <div className="h-1/3 bg-white sm:h-2/3" />
         </div>

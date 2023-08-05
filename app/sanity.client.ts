@@ -12,7 +12,6 @@ export function getClient(preview?: {token: string}): SanityClient {
     perspective: 'published',
     studioUrl: '/studio',
     logger: console,
-    // fetch: true,
   })
   if (preview) {
     if (!preview.token) {
