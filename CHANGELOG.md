@@ -5,6 +5,12 @@
 All notable changes to this project will be documented in this file. See
 [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [5.2.0](https://github.com/sanity-io/next-sanity/compare/v5.1.7...v5.2.0) (2023-08-06)
+
+### Features
+
+- add `parseAppBody` [#467](https://github.com/sanity-io/next-sanity/issues/467) ([05489de](https://github.com/sanity-io/next-sanity/commit/05489de527a718de9a6d4bcf746fa2cb7cca48f8))
+
 ## [5.1.7](https://github.com/sanity-io/next-sanity/compare/v5.1.6...v5.1.7) (2023-08-06)
 
 ### Bug Fixes
