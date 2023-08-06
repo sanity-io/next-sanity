@@ -8,6 +8,7 @@ export default async function revalidate(
   res: NextApiResponse,
 ): Promise<any> {
   try {
+    // eslint-disable-next-line no-process-env
     const {body, isValidSignature} = await parseBody(req, process.env.SANITY_REVALIDATE_SECRET)
     if (isValidSignature === false) {
       const message = 'Invalid signature'

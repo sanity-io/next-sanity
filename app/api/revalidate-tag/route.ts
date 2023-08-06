@@ -6,6 +6,7 @@ import {parseAppBody} from 'src/webhook'
 // Triggers a revalidation of the static data in the example above
 export async function POST(req: NextRequest): Promise<any> {
   try {
+    // eslint-disable-next-line no-process-env
     const {body, isValidSignature} = await parseAppBody(req, process.env.SANITY_REVALIDATE_SECRET)
     if (isValidSignature === false) {
       const message = 'Invalid signature'
