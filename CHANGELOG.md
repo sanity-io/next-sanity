@@ -5,6 +5,12 @@
 All notable changes to this project will be documented in this file. See
 [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [5.1.7](https://github.com/sanity-io/next-sanity/compare/v5.1.6...v5.1.7) (2023-08-06)
+
+### Bug Fixes
+
+- **deps:** update dependency @sanity/pkg-utils to ^2.3.12 ([#504](https://github.com/sanity-io/next-sanity/issues/504)) ([bd0d801](https://github.com/sanity-io/next-sanity/commit/bd0d801e9750d7d96d72255358752066f2b527bd))
+
 ## [5.1.6](https://github.com/sanity-io/next-sanity/compare/v5.1.5...v5.1.6) (2023-08-05)
 
 ### Bug Fixes
