@@ -6,7 +6,7 @@ export function getClient(preview?: {token: string}): SanityClient {
     projectId: process.env.NEXT_PUBLIC_SANITY_PROJECT_ID!,
     dataset: process.env.NEXT_PUBLIC_SANITY_DATASET!,
     apiVersion: '2022-11-11',
-    useCdn: true,
+    useCdn: false,
     // Since the process.env var doesn't have a NEXT_PUBLIC_ prefix the token will be `undefined` in the browser bundle.
     token: process.env.SANITY_API_READ_TOKEN,
     perspective: 'published',
@@ -19,7 +19,6 @@ export function getClient(preview?: {token: string}): SanityClient {
     }
     return client.withConfig({
       token: preview.token,
-      useCdn: false,
       ignoreBrowserTokenWarning: true,
       perspective: 'previewDrafts',
     })

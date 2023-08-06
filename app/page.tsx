@@ -12,7 +12,15 @@ export default async function IndexPage() {
   // eslint-disable-next-line no-process-env
   const preview = draftMode().isEnabled ? {token: process.env.SANITY_API_READ_TOKEN!} : undefined
   const client = getClient(preview)
-  const posts = await client.fetch<PostsProps['data']>(query)
+  const posts = await client.fetch<PostsProps['data']>(
+    query,
+    {},
+    {
+      next: {
+        tags: ['post', 'author'],
+      },
+    },
+  )
 
   return (
     <>
