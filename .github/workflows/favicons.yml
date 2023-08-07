@@ -1,0 +1,45 @@
+---
+name: Update favicons
+
+on:
+  push:
+    branches: [main]
+    paths: 
+      - 'package-lock.json'
+  workflow_dispatch:
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref_name }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+
+jobs:
+  run:
+    name: Are the favicons up to date? 🤔
+    runs-on: ubuntu-latest
+    # workflow_dispatch always lets you select the branch ref, even though in this case we only ever want to run the action on `main` this we need an if check
+    if: ${{ github.ref_name == 'main' }}
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+        with:
+          cache: npm
+          node-version: lts/*
+      - run: npm ci --ignore-scripts --only-dev
+      - run: npm run update:icons
+      - uses: tibdex/github-app-token@b62528385c34dbc9f38e5f4225ac829252d1ea92 # v1
+        id: generate-token
+        with:
+          app_id: ${{ secrets.ECOSPARK_APP_ID }}
+          private_key: ${{ secrets.ECOSPARK_APP_PRIVATE_KEY }}
+      - uses: peter-evans/create-pull-request@153407881ec5c347639a548ade7d8ad1d6740e38 # v5
+        with:
+          author: github-actions <41898282+github-actions[bot]@users.noreply.github.com>
+          body: I ran `npm run update:icons` 🧑‍💻
+          branch: actions/update-favicons
+          commit-message: 'chore(favicons): 🤖 ✨'
+          labels: 🤖 bot
+          title: 'chore(favicons): 🤖 ✨'
+          token: ${{ steps.generate-token.outputs.token }}
