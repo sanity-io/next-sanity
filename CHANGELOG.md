@@ -5,6 +5,13 @@
 All notable changes to this project will be documented in this file. See
 [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [5.2.2](https://github.com/sanity-io/next-sanity/compare/v5.2.1...v5.2.2) (2023-08-07)
+
+### Bug Fixes
+
+- **deps:** add `react-server` export condition ([#510](https://github.com/sanity-io/next-sanity/issues/510)) ([b1b3af5](https://github.com/sanity-io/next-sanity/commit/b1b3af543ae9438b0a069b3dbf117f4c922219f3))
+- **deps:** Update dependency @sanity/preview-kit to v2.4.9 ([#513](https://github.com/sanity-io/next-sanity/issues/513)) ([dd59dc6](https://github.com/sanity-io/next-sanity/commit/dd59dc63d87559142351a3aaac0ce53f26796458))
+
 ## [5.2.1](https://github.com/sanity-io/next-sanity/compare/v5.2.0...v5.2.1) (2023-08-07)
 
 ### Bug Fixes
