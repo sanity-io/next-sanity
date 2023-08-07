@@ -5,6 +5,14 @@
 All notable changes to this project will be documented in this file. See
 [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [5.2.1](https://github.com/sanity-io/next-sanity/compare/v5.2.0...v5.2.1) (2023-08-07)
+
+### Bug Fixes
+
+- add `node.module` export condition ([a951940](https://github.com/sanity-io/next-sanity/commit/a9519401ee02b7336094d1f0ece77edd05d3abb5))
+- **deps:** update dependency @sanity/client to v6.4.2 ([145c953](https://github.com/sanity-io/next-sanity/commit/145c9539b1dd91b2d5aa6ad720890ecd2dec1d05))
+- **deps:** Update dependency @sanity/preview-kit to v2.4.8 ([#511](https://github.com/sanity-io/next-sanity/issues/511)) ([93ac424](https://github.com/sanity-io/next-sanity/commit/93ac4244f8b79431f755134103162e73dbeded69))
+
 ## [5.2.0](https://github.com/sanity-io/next-sanity/compare/v5.1.7...v5.2.0) (2023-08-06)
 
 ### Features
