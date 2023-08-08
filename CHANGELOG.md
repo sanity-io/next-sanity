@@ -5,6 +5,12 @@
 All notable changes to this project will be documented in this file. See
 [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [5.2.3](https://github.com/sanity-io/next-sanity/compare/v5.2.2...v5.2.3) (2023-08-08)
+
+### Bug Fixes
+
+- `styled-components` getting mangled in `next dev` ([ac4a288](https://github.com/sanity-io/next-sanity/commit/ac4a288e24460c83c3d25b51b6de3e23780bd88f)), closes [#515](https://github.com/sanity-io/next-sanity/issues/515)
+
 ## [5.2.2](https://github.com/sanity-io/next-sanity/compare/v5.2.1...v5.2.2) (2023-08-07)
 
 ### Bug Fixes
