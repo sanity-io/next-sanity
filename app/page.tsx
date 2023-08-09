@@ -8,7 +8,7 @@ import Link from 'next/link'
 
 import {getClient} from './sanity.client'
 
-export default async function IndexPage() {
+export default async function IndexPage({params}) {
   // eslint-disable-next-line no-process-env
   const preview = draftMode().isEnabled ? {token: process.env.SANITY_API_READ_TOKEN!} : undefined
   const client = getClient(preview)
@@ -17,7 +17,7 @@ export default async function IndexPage() {
     {},
     {
       next: {
-        tags: ['post', 'author'],
+        tags: ['post', 'author', params.slug],
       },
     },
   )

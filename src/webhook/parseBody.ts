@@ -6,23 +6,26 @@ import type {NextRequest} from 'next/server'
 import {_readBody as readBody} from './readBody'
 
 /** @public */
-export type ParseBody = {
+export type ParsedBody<T> = {
   /**
    * If a secret is given then it returns a boolean. If no secret is provided then no validation is done on the signature, and it'll return `null`
    */
   isValidSignature: boolean | null
-  body: SanityDocument
+  body: T
 }
+
+/** @public */
+export type ParseBody<Body = SanityDocument> = ParsedBody<Body>
 /**
  * Handles parsing the body JSON, and validating its signature. Also waits for Content Lake eventual consistency so you can run your queries
  * without worrying about getting stale data.
  * @public
  */
-export async function parseBody(
+export async function parseBody<Body = SanityDocument>(
   req: NextApiRequest,
   secret?: string,
   waitForContentLakeEventualConsistency: boolean = true,
-): Promise<ParseBody> {
+): Promise<ParseBody<Body>> {
   let signature = req.headers[SIGNATURE_HEADER_NAME]!
   if (Array.isArray(signature)) {
     signature = signature[0]
@@ -42,23 +45,17 @@ export async function parseBody(
 }
 
 /** @public */
-export type ParseAppBody = {
-  /**
-   * If a secret is given then it returns a boolean. If no secret is provided then no validation is done on the signature, and it'll return `null`
-   */
-  isValidSignature: boolean | null
-  body: SanityDocument
-}
+export type ParseAppBody<Body = SanityDocument> = ParsedBody<Body>
 /**
  * Handles parsing the body JSON, and validating its signature. Also waits for Content Lake eventual consistency so you can run your queries
  * without worrying about getting stale data.
  * @public
  */
-export async function parseAppBody(
+export async function parseAppBody<Body = SanityDocument>(
   req: NextRequest,
   secret?: string,
   waitForContentLakeEventualConsistency: boolean = true,
-): Promise<ParseAppBody> {
+): Promise<ParseAppBody<Body>> {
   const signature = req.headers.get(SIGNATURE_HEADER_NAME)!
 
   const body = await req.text()
