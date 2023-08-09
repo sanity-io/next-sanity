@@ -5,6 +5,12 @@
 All notable changes to this project will be documented in this file. See
 [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [5.2.4](https://github.com/sanity-io/next-sanity/compare/v5.2.3...v5.2.4) (2023-08-09)
+
+### Bug Fixes
+
+- **webhooks:** make webhook response type configurable ([bb4898b](https://github.com/sanity-io/next-sanity/commit/bb4898b2d05c4146e41b5ce7cf2b16c99a202522))
+
 ## [5.2.3](https://github.com/sanity-io/next-sanity/compare/v5.2.2...v5.2.3) (2023-08-08)
 
 ### Bug Fixes
