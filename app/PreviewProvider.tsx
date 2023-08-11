@@ -1,9 +1,13 @@
 'use client'
 
 import {useMemo} from 'react'
-import {LiveQueryProvider} from 'src/preview'
+// import dynamic from 'next/dynamic'
+// const LiveQueryProvider = dynamic(() => import('src/preview/LiveQueryProvider'))
+import LiveQueryProvider from 'src/preview/LiveQueryProvider'
 
 import {getClient} from './sanity.client'
+
+console.log('ONLY AFTER DRAFT MODE IS ON')
 
 export default function PreviewProvider({
   children,
