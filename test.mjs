@@ -11,7 +11,7 @@ assert.equal(typeof groq, 'function')
 // Testing pkg.exports[./preview]
 import {LiveQueryProvider, useLiveQuery} from 'next-sanity/preview'
 
-assert.equal(typeof LiveQueryProvider, 'object')
+assert.equal(typeof LiveQueryProvider, 'function')
 assert.equal(typeof useLiveQuery, 'function')
 
 // Testing pkg.exports[./studio]
