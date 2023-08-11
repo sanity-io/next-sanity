@@ -1,9 +1,10 @@
 'use client'
 
+import dynamic from 'next/dynamic'
 import {useMemo} from 'react'
-// import dynamic from 'next/dynamic'
-// const LiveQueryProvider = dynamic(() => import('src/preview/LiveQueryProvider'))
-import LiveQueryProvider from 'src/preview/LiveQueryProvider'
+
+const LiveQueryProvider = dynamic(() => import('src/preview/LiveQueryProvider'))
+// import LiveQueryProvider from 'src/preview/LiveQueryProvider'
 
 import {getClient} from './sanity.client'
 
