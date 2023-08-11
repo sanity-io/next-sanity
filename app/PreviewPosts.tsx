@@ -1,9 +1,9 @@
 'use client'
 
-import {Posts, type PostsProps, query} from 'app/Posts'
+import {PostsLayout, type PostsLayoutProps, query} from 'app/PostsLayout'
 import {useLiveQuery} from 'src/preview'
 
-export default function PreviewPosts({data: serverSnapshot, draftMode}: PostsProps) {
+export default function PreviewPosts({data: serverSnapshot, draftMode}: PostsLayoutProps) {
   const [data, loading] = useLiveQuery(serverSnapshot, query)
-  return <Posts data={data} loading={loading} draftMode={draftMode} />
+  return <PostsLayout data={data} loading={loading} draftMode={draftMode} />
 }
