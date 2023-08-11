@@ -3,7 +3,7 @@
 import config from 'sanity.config'
 import {NextStudio} from 'src/studio'
 
-export function Studio() {
+export default function Studio() {
   return (
     <NextStudio
       config={config}

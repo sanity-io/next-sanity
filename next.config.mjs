@@ -1,7 +1,8 @@
+import withBundleAnalyzer from '@next/bundle-analyzer'
+
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   experimental: {
-    appDir: true,
     logging: 'verbose',
   },
   productionBrowserSourceMaps: true,
@@ -22,4 +23,7 @@ const nextConfig = {
   images: {disableStaticImages: true},
 }
 
-export default nextConfig
+export default withBundleAnalyzer({
+  // eslint-disable-next-line no-process-env
+  enabled: process.env.ANALYZE === 'true',
+})(nextConfig)

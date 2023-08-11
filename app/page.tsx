@@ -1,14 +1,16 @@
 /* eslint-disable @next/next/no-html-link-for-pages */
 import {unstable__adapter, unstable__environment} from '@sanity/client'
 import {Posts, PostsProps, query} from 'app/Posts'
-import PreviewPosts from 'app/PreviewPosts'
-import PreviewProvider from 'app/PreviewProvider'
+import dynamic from 'next/dynamic'
 import {draftMode} from 'next/headers'
 import Link from 'next/link'
 
 import {getClient} from './sanity.client'
 
-export default async function IndexPage({params}) {
+const PreviewProvider = dynamic(() => import('./PreviewProvider'))
+const PreviewPosts = dynamic(() => import('./PreviewPosts'))
+
+export default async function IndexPage() {
   // eslint-disable-next-line no-process-env
   const preview = draftMode().isEnabled ? {token: process.env.SANITY_API_READ_TOKEN!} : undefined
   const client = getClient(preview)
@@ -16,8 +18,9 @@ export default async function IndexPage({params}) {
     query,
     {},
     {
+      cache: 'force-cache',
       next: {
-        tags: ['post', 'author', params.slug],
+        tags: ['post', 'author'],
       },
     },
   )

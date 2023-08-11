@@ -1,4 +1,6 @@
-import {Studio} from './Studio'
+import dynamic from 'next/dynamic'
+
+const Studio = dynamic(() => import('./Studio'))
 
 export {metadata} from 'src/studio/metadata'
 
