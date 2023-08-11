@@ -8,8 +8,6 @@ const LiveQueryProvider = dynamic(() => import('src/preview/LiveQueryProvider'))
 
 import {getClient} from './sanity.client'
 
-console.log('ONLY AFTER DRAFT MODE IS ON')
-
 export default function PreviewProvider({
   children,
   token,
