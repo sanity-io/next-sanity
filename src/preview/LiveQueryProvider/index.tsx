@@ -1,3 +1,5 @@
+'use client'
+
 // Tests the pattern used by next-sanity
 
 import type {LiveQueryProviderProps} from '@sanity/preview-kit'

@@ -1,16 +1,17 @@
-import {PostsLayout, PostsLayoutProps, query} from 'app/PostsLayout'
+import PostsLayout, {PostsLayoutProps, query} from 'app/PostsLayout'
 import dynamic from 'next/dynamic'
 import {draftMode} from 'next/headers'
+import {LiveQuery} from 'src/preview/LiveQuery/LiveQuery'
 
+import {getDraftModeToken} from './getDraftModeToken'
+// import {PreviewWrapper} from 'src/preview/LiveQuery/PreviewWrapper'
 import {getClient} from './sanity.client'
+import PreviewPostsLayout from './PreviewPostsLayout'
 
-const PreviewProvider = dynamic(() => import('./PreviewProvider'))
-const PreviewPosts = dynamic(() => import('./PreviewPosts'))
+// const PreviewPostsLayout = dynamic(() => import('./PreviewPostsLayout'))
 
 export default async function Posts() {
-  // eslint-disable-next-line no-process-env
-  const preview = draftMode().isEnabled ? {token: process.env.SANITY_API_READ_TOKEN!} : undefined
-  const client = getClient(preview)
+  const client = getClient(getDraftModeToken())
   const posts = await client.fetch<PostsLayoutProps['data']>(
     query,
     {},
@@ -22,6 +23,27 @@ export default async function Posts() {
     },
   )
 
+  /*
+  return (
+    <PreviewWrapper preview={draftMode().isEnabled} query={query} initialData={posts}>
+      <PostsLayout draftMode={draftMode().isEnabled} />
+    </PreviewWrapper>
+  )
+  // */
+
+  // /*
+  return (
+    <LiveQuery
+      enabled={draftMode().isEnabled}
+      query={query}
+      initialData={posts}
+      as={PreviewPostsLayout}
+    >
+      <PostsLayout data={posts} draftMode={draftMode().isEnabled} />
+    </LiveQuery>
+  )
+  // */
+  /*
   return preview ? (
     <PreviewProvider token={preview.token}>
       <PreviewPosts data={posts} draftMode={draftMode().isEnabled} />
@@ -29,4 +51,5 @@ export default async function Posts() {
   ) : (
     <PostsLayout data={posts} draftMode={draftMode().isEnabled} />
   )
+  // */
 }

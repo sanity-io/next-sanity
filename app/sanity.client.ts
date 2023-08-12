@@ -1,7 +1,7 @@
 /* eslint-disable no-process-env */
 import {createClient, type SanityClient} from 'src'
 
-export function getClient(preview?: {token: string}): SanityClient {
+export function getClient(draftModeToken?: string): SanityClient {
   const client = createClient({
     projectId: process.env.NEXT_PUBLIC_SANITY_PROJECT_ID!,
     dataset: process.env.NEXT_PUBLIC_SANITY_DATASET!,
@@ -13,12 +13,9 @@ export function getClient(preview?: {token: string}): SanityClient {
     studioUrl: '/studio',
     logger: console,
   })
-  if (preview) {
-    if (!preview.token) {
-      throw new Error('You must provide a token to preview drafts')
-    }
+  if (draftModeToken) {
     return client.withConfig({
-      token: preview.token,
+      token: draftModeToken,
       ignoreBrowserTokenWarning: true,
       perspective: 'previewDrafts',
     })

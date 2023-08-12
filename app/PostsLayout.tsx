@@ -27,12 +27,15 @@ const {query, schema} = q('*')
 export {query}
 
 export type PostsLayoutProps = {
-  data: unknown[]
+  data?: unknown[]
   loading?: boolean
   draftMode: boolean
 }
 
-export const PostsLayout = memo(function Posts(props: PostsLayoutProps) {
+// eslint-disable-next-line no-console
+console.error('PostsLayout.tsx', 'should only see this in the browser if draft mode is true')
+
+const PostsLayout = memo(function Posts(props: PostsLayoutProps) {
   const posts = schema.parse(props.data)
 
   return (
@@ -95,3 +98,5 @@ export const PostsLayout = memo(function Posts(props: PostsLayoutProps) {
     </div>
   )
 })
+
+export default PostsLayout

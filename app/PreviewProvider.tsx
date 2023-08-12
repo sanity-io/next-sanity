@@ -1,12 +1,11 @@
 'use client'
 
 import dynamic from 'next/dynamic'
-import {useMemo} from 'react'
+import {suspend} from 'suspend-react'
 
-const LiveQueryProvider = dynamic(() => import('src/preview/LiveQueryProvider'))
+// import {LiveQueryProvider} from 'src/preview'
 // import LiveQueryProvider from 'src/preview/LiveQueryProvider'
-
-import {getClient} from './sanity.client'
+const LiveQueryProvider = dynamic(() => import('src/preview/LiveQueryProvider'))
 
 export default function PreviewProvider({
   children,
@@ -15,7 +14,10 @@ export default function PreviewProvider({
   children: React.ReactNode
   token: string
 }) {
-  const client = useMemo(() => getClient({token}), [token])
+  const client = suspend(async () => {
+    const {getClient} = await import('./sanity.client')
+    return getClient(token)
+  }, ['@sanity/client', token])
   return (
     <LiveQueryProvider
       client={client}
