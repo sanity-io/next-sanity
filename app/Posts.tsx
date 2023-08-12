@@ -1,12 +1,12 @@
 import PostsLayout, {PostsLayoutProps, query} from 'app/PostsLayout'
-import dynamic from 'next/dynamic'
+// import dynamic from 'next/dynamic'
 import {draftMode} from 'next/headers'
-import {LiveQuery} from 'src/preview/LiveQuery/LiveQuery'
+import {LiveQuery} from 'src/preview/LiveQuery'
 
 import {getDraftModeToken} from './getDraftModeToken'
+import PreviewPostsLayout from './PreviewPostsLayout'
 // import {PreviewWrapper} from 'src/preview/LiveQuery/PreviewWrapper'
 import {getClient} from './sanity.client'
-import PreviewPostsLayout from './PreviewPostsLayout'
 
 // const PreviewPostsLayout = dynamic(() => import('./PreviewPostsLayout'))
 

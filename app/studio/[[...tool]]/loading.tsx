@@ -1,3 +1,1 @@
-'use client'
-
-export {NextStudioLoading as default} from 'src/studio/loading'
+export {default} from 'src/studio/loading'

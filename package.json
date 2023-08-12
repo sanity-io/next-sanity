@@ -1,6 +1,6 @@
 {
   "name": "next-sanity",
-  "version": "5.2.6",
+  "version": "5.2.7-canary.0",
   "description": "Sanity.io toolkit for Next.js",
   "keywords": [
     "sanity",
@@ -45,6 +45,28 @@
       },
       "import": "./dist/preview/index.js",
       "default": "./dist/preview/index.js"
+    },
+    "./preview/live-query": {
+      "types": "./dist/preview/live-query.d.ts",
+      "source": "./src/preview/LiveQuery/index.ts",
+      "require": "./dist/preview/live-query.cjs",
+      "node": {
+        "module": "./dist/preview/live-query.js",
+        "import": "./dist/preview/live-query.cjs.js"
+      },
+      "import": "./dist/preview/live-query.js",
+      "default": "./dist/preview/live-query.js"
+    },
+    "./preview/live-query-provider": {
+      "types": "./dist/preview/live-query-provider.d.ts",
+      "source": "./src/preview/LiveQueryProvider/index.ts",
+      "require": "./dist/preview/live-query-provider.cjs",
+      "node": {
+        "module": "./dist/preview/live-query-provider.js",
+        "import": "./dist/preview/live-query-provider.cjs.js"
+      },
+      "import": "./dist/preview/live-query-provider.js",
+      "default": "./dist/preview/live-query-provider.js"
     },
     "./studio": {
       "types": "./dist/studio/index.d.ts",
@@ -111,6 +133,12 @@
     "*": {
       "preview": [
         "./dist/preview/index.d.ts"
+      ],
+      "preview/live-query": [
+        "./dist/preview/live-query.d.ts"
+      ],
+      "preview/live-query-provider": [
+        "./dist/preview/live-query-provider.d.ts"
       ],
       "studio": [
         "./dist/studio/index.d.ts"

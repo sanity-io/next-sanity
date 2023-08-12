@@ -21,7 +21,7 @@ export interface LiveQueryProps<
   enabled: boolean
   // eslint-disable-next-line no-warning-comments
   // @TODO fix typing of this
-  as?: any
+  as?: React.ComponentType
 }
 
 const DEFAULT_PARAMS = {} as ClientQueryParams
@@ -44,7 +44,6 @@ export function LiveQuery<QueryResult, QueryParams extends ClientQueryParams = C
     if (!isValidElement(props.children)) {
       throw new Error('LiveQuery: `as` prop requires a valid `children` prop')
     }
-
     // All together now
     return (
       <LiveQueryEnabled<typeof initialData, typeof params>
