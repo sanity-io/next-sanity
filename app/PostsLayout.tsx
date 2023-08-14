@@ -32,7 +32,9 @@ export type PostsLayoutProps = {
   draftMode: boolean
 }
 
-export const PostsLayout = memo(function Posts(props: PostsLayoutProps) {
+console.log('PostsLayout.tsx')
+
+const PostsLayout = memo(function Posts(props: PostsLayoutProps) {
   const posts = schema.parse(props.data)
 
   return (
@@ -95,3 +97,5 @@ export const PostsLayout = memo(function Posts(props: PostsLayoutProps) {
     </div>
   )
 })
+
+export default PostsLayout

@@ -1,4 +1,3 @@
-export {default, LiveQueryProvider} from './LiveQueryProvider'
 export type {
   CacheOptions,
   ClientQueryParams,
@@ -8,4 +7,4 @@ export type {
   Logger,
   QueryLoading,
 } from '@sanity/preview-kit'
-export {useLiveQuery} from '@sanity/preview-kit'
+export {default, LiveQueryProvider, useLiveQuery} from '@sanity/preview-kit'

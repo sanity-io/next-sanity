@@ -46,6 +46,17 @@
       "import": "./dist/preview/index.js",
       "default": "./dist/preview/index.js"
     },
+    "./preview/live-query": {
+      "types": "./dist/preview/live-query.d.ts",
+      "source": "./src/preview/LiveQuery/index.ts",
+      "require": "./dist/preview/live-query.cjs",
+      "node": {
+        "module": "./dist/preview/live-query.js",
+        "import": "./dist/preview/live-query.cjs.js"
+      },
+      "import": "./dist/preview/live-query.js",
+      "default": "./dist/preview/live-query.js"
+    },
     "./studio": {
       "types": "./dist/studio/index.d.ts",
       "source": "./src/studio/index.ts",
@@ -112,6 +123,9 @@
       "preview": [
         "./dist/preview/index.d.ts"
       ],
+      "preview/live-query": [
+        "./dist/preview/live-query.d.ts"
+      ],
       "studio": [
         "./dist/studio/index.d.ts"
       ],
@@ -160,7 +174,7 @@
     "singleQuote": true
   },
   "dependencies": {
-    "@sanity/preview-kit": "3.0.0",
+    "@sanity/preview-kit": "3.1.0",
     "@sanity/webhook": "2.0.0",
     "groq": "^3.0.0"
   },
