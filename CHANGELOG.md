@@ -5,6 +5,16 @@
 All notable changes to this project will be documented in this file. See
 [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [5.4.0](https://github.com/sanity-io/next-sanity/compare/v5.3.0...v5.4.0) (2023-08-14)
+
+### Features
+
+- add experimental `LiveQuery` component ([0eb5c9b](https://github.com/sanity-io/next-sanity/commit/0eb5c9b48a2a2ed7c085020cf76462462217dea7))
+
+### Bug Fixes
+
+- **studio:** add `use client` to `next-sanity/studio/loading` ([1a9e002](https://github.com/sanity-io/next-sanity/commit/1a9e00285f5af96da5f073faa3dc449e62afc6c3))
+
 ## [5.3.0](https://github.com/sanity-io/next-sanity/compare/v5.2.7...v5.3.0) (2023-08-14)
 
 ### Features
