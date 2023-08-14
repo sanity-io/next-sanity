@@ -5,6 +5,16 @@
 All notable changes to this project will be documented in this file. See
 [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [5.3.0](https://github.com/sanity-io/next-sanity/compare/v5.2.7...v5.3.0) (2023-08-14)
+
+### Features
+
+- **preview:** lazy load `LiveQueryProvider` with `next/dynamic` ([8ecb50e](https://github.com/sanity-io/next-sanity/commit/8ecb50e62b91c13983e82b88ce50676e6d6c4fe4)), closes [#516](https://github.com/sanity-io/next-sanity/issues/516)
+
+### Bug Fixes
+
+- **deps:** Update dependency @sanity/preview-kit to v3 ([#538](https://github.com/sanity-io/next-sanity/issues/538)) ([761d586](https://github.com/sanity-io/next-sanity/commit/761d586ca727adc68a4d20d377820a4cdad5b4d3))
+
 ## [5.2.7](https://github.com/sanity-io/next-sanity/compare/v5.2.6...v5.2.7) (2023-08-13)
 
 ### Bug Fixes
