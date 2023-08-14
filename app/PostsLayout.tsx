@@ -32,8 +32,6 @@ export type PostsLayoutProps = {
   draftMode: boolean
 }
 
-console.log('PostsLayout.tsx')
-
 const PostsLayout = memo(function Posts(props: PostsLayoutProps) {
   const posts = schema.parse(props.data)
 
