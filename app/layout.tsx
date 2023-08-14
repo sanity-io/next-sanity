@@ -1,5 +1,6 @@
 import './globals.css'
 
+import ConditionalPreviewProvider from './ConditionalPreviewProvider'
 import StyledComponentsRegistry from './registry'
 
 export default function RootLayout({children}: {children: React.ReactNode}) {
@@ -7,7 +8,9 @@ export default function RootLayout({children}: {children: React.ReactNode}) {
     <html lang="en">
       <head />
       <body>
-        <StyledComponentsRegistry>{children}</StyledComponentsRegistry>
+        <StyledComponentsRegistry>
+          <ConditionalPreviewProvider>{children}</ConditionalPreviewProvider>
+        </StyledComponentsRegistry>
       </body>
     </html>
   )

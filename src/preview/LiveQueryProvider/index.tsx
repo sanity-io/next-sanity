@@ -1,6 +1,6 @@
-// Tests the pattern used by next-sanity
+'use client'
 
-import type {LiveQueryProviderProps} from '@sanity/preview-kit'
+import {createLiveQueryProvider} from '@sanity/preview-kit/internals/create-live-query-provider'
 import dynamic from 'next/dynamic'
 
 export type {CacheOptions, LiveQueryProviderProps, Logger} from '@sanity/preview-kit'
@@ -11,19 +11,8 @@ const GroqStoreProvider = dynamic(
 const LiveStoreProvider = dynamic(
   () => import('@sanity/preview-kit/internals/live-store-provider'),
 )
-const DynamicLiveQueryProvider = dynamic(
-  () => import('@sanity/preview-kit/internals/live-query-provider'),
-)
 
-// eslint-disable-next-line no-console
 console.log('app/LazyLiveQueryProvider.tsx')
 
-export default function LiveQueryProvider(props: LiveQueryProviderProps): React.JSX.Element {
-  return (
-    <DynamicLiveQueryProvider
-      {...props}
-      GroqStoreProvider={GroqStoreProvider}
-      LiveStoreProvider={LiveStoreProvider}
-    />
-  )
-}
+export const LiveQueryProvider = createLiveQueryProvider({GroqStoreProvider, LiveStoreProvider})
+export default LiveQueryProvider

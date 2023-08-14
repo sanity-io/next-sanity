@@ -1,12 +1,11 @@
 'use client'
 
 import dynamic from 'next/dynamic'
-import {useMemo} from 'react'
+import {suspend} from 'suspend-react'
 
-const LiveQueryProvider = dynamic(() => import('src/preview/LiveQueryProvider'))
-// import LiveQueryProvider from 'src/preview/LiveQueryProvider'
-
-import {getClient} from './sanity.client'
+const LiveQueryProvider = dynamic(() => import('src/preview'))
+// suspend-react cache is global, so we use a unique key to avoid collisions
+const UniqueKey = Symbol('./sanity.client')
 
 export default function PreviewProvider({
   children,
@@ -15,10 +14,12 @@ export default function PreviewProvider({
   children: React.ReactNode
   token: string
 }) {
-  const client = useMemo(() => getClient({token}), [token])
+  const {client} = suspend(() => import('./sanity.client'), [UniqueKey])
+  if (!token) throw new TypeError('Missing token')
   return (
     <LiveQueryProvider
       client={client}
+      token={token}
       logger={console}
       cache={{includeTypes: ['author', 'post']}}
     >

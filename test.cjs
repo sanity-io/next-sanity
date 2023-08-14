@@ -12,7 +12,7 @@ assert.equal(typeof groq, 'function')
 // Testing pkg.exports[./preview]
 const nextSanityPreview = require('next-sanity/preview')
 const {LiveQueryProvider, useLiveQuery} = nextSanityPreview
-assert.equal(typeof LiveQueryProvider, 'function')
+assert.equal(typeof LiveQueryProvider, 'object')
 assert.equal(typeof useLiveQuery, 'function')
 
 // Testing pkg.exports[./studio]

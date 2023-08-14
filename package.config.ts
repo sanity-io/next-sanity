@@ -12,6 +12,7 @@ export default defineConfig({
   },
 
   minify: false,
+  preserveModuleDirectives: true,
 
   rollup: {
     plugins: [
