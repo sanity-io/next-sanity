@@ -12,7 +12,5 @@ const LiveStoreProvider = dynamic(
   () => import('@sanity/preview-kit/internals/live-store-provider'),
 )
 
-console.log('app/LazyLiveQueryProvider.tsx')
-
 export const LiveQueryProvider = createLiveQueryProvider({GroqStoreProvider, LiveStoreProvider})
 export default LiveQueryProvider

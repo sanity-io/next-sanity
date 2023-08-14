@@ -1,4 +1,4 @@
-export {LiveQueryProvider, default} from './LiveQueryProvider'
+export {default, LiveQueryProvider} from './LiveQueryProvider'
 export type {
   CacheOptions,
   ClientQueryParams,
