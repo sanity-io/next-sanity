@@ -1,3 +1,5 @@
+'use client'
+
 /* eslint-disable no-warning-comments */
 // Intentionally not using `styled-components` to ensure it works in any `next` setup.
 // Whether 'styled-components' SSR is setup or not.
