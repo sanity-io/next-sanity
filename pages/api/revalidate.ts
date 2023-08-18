@@ -4,6 +4,8 @@ import {parseBody} from 'src/webhook'
 
 export {config} from 'src/webhook'
 
+export const runtime = 'edge'
+
 export default async function revalidate(
   req: NextApiRequest,
   res: NextApiResponse,

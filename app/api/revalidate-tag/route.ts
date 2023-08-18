@@ -4,6 +4,8 @@ import {NextRequest} from 'next/server'
 import {NextResponse} from 'next/server'
 import {parseAppBody} from 'src/webhook'
 
+export const runtime = 'edge'
+
 // Triggers a revalidation of the static data in the example above
 export async function POST(req: NextRequest): Promise<any> {
   try {
