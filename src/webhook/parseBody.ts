@@ -14,7 +14,10 @@ export type ParsedBody<T> = {
   body: T
 }
 
-/** @public */
+/**
+ * @deprecated Use `ParsedBody` instead
+ * @public
+ */
 export type ParseBody<Body = SanityDocument> = ParsedBody<Body>
 /**
  * Handles parsing the body JSON, and validating its signature. Also waits for Content Lake eventual consistency so you can run your queries
@@ -24,8 +27,39 @@ export type ParseBody<Body = SanityDocument> = ParsedBody<Body>
 export async function parseBody<Body = SanityDocument>(
   req: NextApiRequest,
   secret?: string,
+  waitForContentLakeEventualConsistency?: boolean,
+): Promise<ParsedBody<Body>>
+/**
+ * Handles parsing the body JSON, and validating its signature. Also waits for Content Lake eventual consistency so you can run your queries
+ * without worrying about getting stale data.
+ * @public
+ */
+export async function parseBody<Body = SanityDocument>(
+  req: NextRequest,
+  secret?: string,
+  waitForContentLakeEventualConsistency?: boolean,
+): Promise<ParsedBody<Body>>
+/**
+ * Handles parsing the body JSON, and validating its signature. Also waits for Content Lake eventual consistency so you can run your queries
+ * without worrying about getting stale data.
+ * @public
+ */
+// eslint-disable-next-line require-await
+export async function parseBody<Body = SanityDocument>(
+  req: NextApiRequest | NextRequest,
+  secret?: string,
   waitForContentLakeEventualConsistency: boolean = true,
-): Promise<ParseBody<Body>> {
+): Promise<ParsedBody<Body>> {
+  return 'text' in req
+    ? parseAppBody(req, secret, waitForContentLakeEventualConsistency)
+    : parsePageBody(req, secret, waitForContentLakeEventualConsistency)
+}
+
+async function parsePageBody<Body = SanityDocument>(
+  req: NextApiRequest,
+  secret?: string,
+  waitForContentLakeEventualConsistency: boolean = true,
+): Promise<ParsedBody<Body>> {
   let signature = req.headers[SIGNATURE_HEADER_NAME]!
   if (Array.isArray(signature)) {
     signature = signature[0]
@@ -44,18 +78,22 @@ export async function parseBody<Body = SanityDocument>(
   }
 }
 
-/** @public */
+/**
+ * @deprecated Use `ParsedBody` instead
+ * @public
+ */
 export type ParseAppBody<Body = SanityDocument> = ParsedBody<Body>
 /**
  * Handles parsing the body JSON, and validating its signature. Also waits for Content Lake eventual consistency so you can run your queries
  * without worrying about getting stale data.
+ * @deprecated Use `parseBody` instead
  * @public
  */
 export async function parseAppBody<Body = SanityDocument>(
   req: NextRequest,
   secret?: string,
   waitForContentLakeEventualConsistency: boolean = true,
-): Promise<ParseAppBody<Body>> {
+): Promise<ParsedBody<Body>> {
   const signature = req.headers.get(SIGNATURE_HEADER_NAME)!
 
   const body = await req.text()
