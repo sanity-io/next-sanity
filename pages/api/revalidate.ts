@@ -1,6 +1,6 @@
 /* eslint-disable no-process-env */
 import type {NextApiRequest, NextApiResponse} from 'next'
-import {parseBody} from 'src/webhook'
+import {parseAppBody} from 'src/webhook'
 
 export {config} from 'src/webhook'
 
@@ -11,7 +11,10 @@ export default async function revalidate(
   res: NextApiResponse,
 ): Promise<any> {
   try {
-    const {body, isValidSignature} = await parseBody(req, process.env.SANITY_REVALIDATE_SECRET)
+    const {body, isValidSignature} = await parseAppBody(
+      req as any,
+      process.env.SANITY_REVALIDATE_SECRET,
+    )
     if (isValidSignature === false) {
       const message = 'Invalid signature'
       return res.status(401).send(message)
