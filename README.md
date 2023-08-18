@@ -87,13 +87,15 @@ And it makes sense to set `useCdn` to `false` when:
 
 ### `app-router`, React Server Components and caching
 
-> We are working on bringing `fetch` support to `@sanity/client` when used by Next.js' `nodejs` runtime. If you're using the `edge` runtime your `client.fetch` calls are automatically deduped.
-
-As `@sanity/client` will only sometimes use `fetch` under the hood, it depends on the environment, [it's best to implement the cache function to ensure reliable deduping of requests.](https://beta.nextjs.org/docs/data-fetching/caching#per-request-cachingmd)
+> **Note**
+>
+> [`@sanity/client` now fully supports `fetch` based features](https://github.com/sanity-io/client#nextjs-app-router), [including the new `revalidateTag` API](https://nextjs.org/docs/app/api-reference/functions/revalidateTag). Using `React.cache` is unnecessary.
 
 ```ts
+import 'server-only'
+
+import type {QueryParams} from '@sanity/client'
 import {createClient, groq} from 'next-sanity'
-import {cache} from 'react'
 
 const projectId = process.env.NEXT_PUBLIC_SANITY_PROJECT_ID // "pv8y60vp"
 const dataset = process.env.NEXT_PUBLIC_SANITY_DATASET // "production"
@@ -103,21 +105,61 @@ const client = createClient({
   projectId,
   dataset,
   apiVersion, // https://www.sanity.io/docs/api-versioning
-  useCdn: true, // if you're using ISR or only static generation at build time then you can set this to `false` to guarantee no stale content
+  useCdn: false,
 })
 
-// Wrap the cache function in a way that reuses the TypeScript definitions
-const clientFetch = cache(client.fetch.bind(client))
+// Used by `PreviewProvider`
+export const token = process.env.SANITY_API_READ_TOKEN
 
-// Now use it just like before, fully deduped, cached and optimized by react
-const data = await clientFetch(groq`*[]`)
-// You can use the same generics as before
-const total = await clientFetch<number>(groq`count*()`)
+const DEFAULT_PARAMS = {} as QueryParams
+const DEFAULT_TAGS = [] as string[]
+
+export async function sanityFetch<QueryResponse>({
+  query,
+  params = DEFAULT_PARAMS,
+  tags = DEFAULT_TAGS,
+}: {
+  query: string
+  params?: QueryParams
+  tags: string[]
+}): Promise<QueryResponse> {
+  const isDraftMode = draftMode().isEnabled
+  if (isDraftMode && !token) {
+    throw new Error('The `SANITY_API_READ_TOKEN` environment variable is required.')
+  }
+
+  return sanityClient.fetch<QueryResponse>(query, params, {
+    cache: 'force-cache',
+    ...(isDraftMode && {
+      cache: undefined,
+      token: token,
+      perspective: 'previewDrafts',
+    }),
+    next: {
+      ...(isDraftMode && {revalidate: 30}),
+      tags,
+    },
+  })
+}
+
+// Inside a Server Component data is easily fetched and tagged
+async function HomePageLayout() {
+  const data = await sanityFetch<HomePageData>({
+    query: groq`*[_type == "home"][0]`,
+    // Now calling `revalidateTag('home')` will revalidate this query, and could be done with a simple GROQ webhook
+    tags: ['home'],
+  })
+
+  return (
+    <div>
+      <h1>{data.title}</h1>
+      <PortableText blocks={data.body} />
+    </div>
+  )
+}
 ```
 
-Until `@sanity/client` can be updated to use `fetch` in all environments, it's recommended that you configure cache rules and revalidation on the route segment level.
-
-The new `revalidateTags` API is not yet supported, but will be in a future release.
+[Checkout our Personal website template to see a feature complete example of how `revalidateTag` is used together with Live Previews.](https://github.com/sanity-io/sanity-template-nextjs-app-router-personal-website)
 
 ## `next-sanity` Visual Editing with Content Source Maps
 
@@ -154,6 +196,7 @@ Chose a setup guide for the router you're using:
 - [`pages-router`](./PREVIEW-pages-router.md)
 
 Since `next-sanity/preview` is simply re-exporting `LiveQueryProvider` and `useLiveQuery` from [`@sanity/preview-kit` you'll find advanced usage and comprehensive docs in its README](https://github.com/sanity-io/preview-kit#sanitypreview-kit-1).
+The [same is true](https://github.com/sanity-io/preview-kit#using-the-livequery-wrapper-component-instead-of-the-uselivequery-hook) for `next-sanity/preview/live-query`.
 
 ## `next-sanity/studio`
 
