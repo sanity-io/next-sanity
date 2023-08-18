@@ -5,6 +5,13 @@
 All notable changes to this project will be documented in this file. See
 [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [5.4.3](https://github.com/sanity-io/next-sanity/compare/v5.4.2...v5.4.3) (2023-08-18)
+
+### Bug Fixes
+
+- **deps:** Update dependency @sanity/webhook to v3 ([#562](https://github.com/sanity-io/next-sanity/issues/562)) ([4843f26](https://github.com/sanity-io/next-sanity/commit/4843f26db69d3dbd1e1a3b351fae4faa17db5947))
+- **webhook:** support both app and pages router with the same `parseBody` API ([4659898](https://github.com/sanity-io/next-sanity/commit/465989862044b16bb8c93e5914d61a1a30cc99c4))
+
 ## [5.4.2](https://github.com/sanity-io/next-sanity/compare/v5.4.1...v5.4.2) (2023-08-18)
 
 ### Bug Fixes
