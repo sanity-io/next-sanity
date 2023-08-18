@@ -2,18 +2,16 @@
 import {revalidateTag} from 'next/cache'
 import {NextRequest} from 'next/server'
 import {NextResponse} from 'next/server'
-import {parseAppBody} from 'src/webhook'
-
-export const runtime = 'edge'
+import {parseBody} from 'src/webhook'
 
 // Triggers a revalidation of the static data in the example above
 export async function POST(req: NextRequest): Promise<any> {
   try {
-    const {body, isValidSignature} = await parseAppBody<{
+    const {body, isValidSignature} = await parseBody<{
       _type: string
       _id: string
       slug?: string | undefined
-    }>(req, process.env.SANITY_REVALIDATE_SECRET)
+    }>(req as any, process.env.SANITY_REVALIDATE_SECRET)
     if (isValidSignature === false) {
       const message = 'Invalid signature'
       return new Response(message, {status: 401})
