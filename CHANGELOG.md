@@ -5,6 +5,14 @@
 All notable changes to this project will be documented in this file. See
 [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [5.4.2](https://github.com/sanity-io/next-sanity/compare/v5.4.1...v5.4.2) (2023-08-18)
+
+### Bug Fixes
+
+- **deps:** update dependency @sanity/client to v6.4.8 ([#560](https://github.com/sanity-io/next-sanity/issues/560)) ([ef46e52](https://github.com/sanity-io/next-sanity/commit/ef46e529e1e7ed3f89063370b99bc9e6ad6ab80f))
+- **deps:** update dependency @sanity/preview-kit to v3.1.3 ([49303b1](https://github.com/sanity-io/next-sanity/commit/49303b1c4a3bcfcefc304824453726f1f9735e53))
+- **docs:** update guide to use LiveQuery wrappers ([#557](https://github.com/sanity-io/next-sanity/issues/557)) ([3626f7d](https://github.com/sanity-io/next-sanity/commit/3626f7d36530f9a777ce5389c3b583aba4a831bd))
+
 ## [5.4.1](https://github.com/sanity-io/next-sanity/compare/v5.4.0...v5.4.1) (2023-08-17)
 
 ### Bug Fixes
