@@ -1,47 +1,84 @@
 # Setup Live Previews in `pages-router`
 
+```bash
+npm i @sanity/client@latest next-sanity@latest
+```
+
 ### `lib/sanity.client.ts`
 
 ```tsx
-import {createClient, type SanityClient} from 'next-sanity'
+import {createClient} from 'next-sanity'
 
-export function getClient({preview}: {preview?: {token: string}}): SanityClient {
-  const client = createClient({
-    projectId: 'your-project-id',
-    dataset: 'production',
-    apiVersion: '2023-06-20',
-    useCdn: true,
-    perspective: 'published',
-  })
-  if (preview) {
-    if (!preview.token) {
-      throw new Error('You must provide a token to preview drafts')
-    }
-    return client.withConfig({
-      token: preview.token,
-      useCdn: false,
-      ignoreBrowserTokenWarning: true,
-      perspective: 'previewDrafts',
-    })
+export const client = createClient({
+  projectId: process.env.NEXT_PUBLIC_SANITY_PROJECT_ID,
+  dataset: process.env.NEXT_PUBLIC_SANITY_DATASET,
+  apiVersion: process.env.NEXT_PUBLIC_SANITY_API_VERSION || '2022-11-15',
+  useCdn: false,
+  perspective: 'published',
+})
+```
+
+### `lib/sanity.fetch.ts`
+
+```tsx
+import type {QueryParams} from '@sanity/client'
+
+import {client} from './sanity.client'
+
+export const token = process.env.SANITY_API_READ_TOKEN
+
+const DEFAULT_PARAMS = {} as QueryParams
+
+export async function sanityFetch<QueryResponse>({
+  draftMode,
+  query,
+  params = DEFAULT_PARAMS,
+}: {
+  draftMode: boolean
+  query: string
+  params?: QueryParams
+}): Promise<QueryResponse> {
+  if (draftMode && !token) {
+    throw new Error('The `SANITY_API_READ_TOKEN` environment variable is required.')
   }
-  return client
+
+  return client.fetch<QueryResponse>(query, params, {
+    token,
+    perspective: draftMode ? 'previewDrafts' : 'published',
+  })
+}
+```
+
+### `components/DocumentsCount.tsx`:
+
+```tsx
+export const query = `count(*[_type == "page"])`
+
+export function DocumentsCount({data}: {data: number}) {
+  return <div>There are {data} documents</div>
 }
 ```
 
 ## Before
 
+### `pages/_app.tsx`
+
+```tsx
+import {AppProps} from 'next/app'
+
+export default function App({Component, pageProps}: AppProps) {
+  return <Component {...pageProps} />
+}
+```
+
 ### `pages/index.tsx`
 
 ```tsx
 import {DocumentsCount, query} from 'components/DocumentsCount'
-import {getClient} from 'lib/sanity.client'
+import {sanityFetch} from 'lib/sanity.fetch'
 
-export const getStaticProps = async (context) => {
-  const {token} = context.previewData ?? {}
-  const preview = context.preview ? {token} : undefined
-  const client = getClient(preview)
-
-  const data = await client.fetch(query)
+export const getStaticProps = async ({draftMode = false}) => {
+  const data = await sanityFetch({draftMode, query})
   return {props: {data}}
 }
 
@@ -52,64 +89,71 @@ export default function IndexPage({data}) {
 
 ## After
 
-### `pages/index.tsx`
+### `pages/_app.tsx`
 
 ```tsx
-import {DocumentsCount, query} from 'components/DocumentsCount'
-import PreviewDocumentsCount from 'components/PreviewDocumentsCount'
-import PreviewProvider from 'components/PreviewProvider'
-import {getClient} from 'lib/sanity.client'
+import {AppProps} from 'next/app'
+import dynamic from 'next/dynamic'
 
-export const getStaticProps = async (context) => {
-  const {token} = context.previewData ?? {}
-  const preview = context.preview ? {token} : undefined
-  const client = getClient(preview)
+const PreviewProvider = dynamic(() => import('components/PreviewProvider'))
 
-  const data = await client.fetch(query)
-  return {props: {preview, data}}
-}
-
-export default function IndexPage({preview, data}) {
-  if (preview) {
-    return (
-      <PreviewProvider token={preview.token}>
-        <PreviewDocumentsCount data={data} />
-      </PreviewProvider>
-    )
-  }
-
-  return <DocumentsCount data={data} />
+export default function App({
+  Component,
+  pageProps,
+}: AppProps<{
+  draftMode: boolean
+  token: string
+}>) {
+  const {draftMode, token} = pageProps
+  return draftMode ? (
+    <PreviewProvider token={token}>
+      <Component {...pageProps} />
+    </PreviewProvider>
+  ) : (
+    <Component {...pageProps} />
+  )
 }
 ```
 
-### `components/PreviewDocumentsCount.tsx`:
+### `pages/index.tsx`
 
 ```tsx
-import {useLiveQuery} from 'next-sanity/preview'
-import {query, DocumentsCount} from 'components/DocumentsCount'
+import {LiveQuery} from 'next-sanity/preview/live-query'
+import {DocumentsCount, query} from 'components/DocumentsCount'
+import {sanityFetch, token} from 'lib/sanity.fetch'
 
-export default function PreviewDocumentsCount({data: initialData}) {
-  const [data] = useLiveQuery(initialData, query)
+export const getStaticProps = async ({draftMode}) => {
+  const data = await sanityFetch({draftMode, query})
+  return {props: {draftMode, token: draftMode ? token : '', data}}
+}
 
-  return <DocumentsCount data={data} />
+export default function IndexPage({draftMode, data}) {
+  return (
+    <LiveQuery enabled={draftMode} query={query}>
+      <DocumentsCount data={data} />
+    </LiveQuery>
+  )
 }
 ```
 
 ### `components/PreviewProvider.tsx`
 
 ```tsx
-import {useMemo} from 'react'
 import {LiveQueryProvider} from 'next-sanity/preview'
-import {getClient} from 'lib/sanity.client'
+import {client} from 'lib/sanity.client'
 
 export default function PreviewProvider({
   children,
   token,
 }: {
   children: React.ReactNode
-  token: string
+  token?: string
 }) {
-  const client = useMemo(() => getClient({token}), [token])
-  return <LiveQueryProvider client={client}>{children}</LiveQueryProvider>
+  if (!token) throw new TypeError('Missing token')
+  return (
+    <LiveQueryProvider client={client} token={token} logger={console}>
+      {children}
+    </LiveQueryProvider>
+  )
 }
 ```
