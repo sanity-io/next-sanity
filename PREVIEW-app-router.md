@@ -135,8 +135,6 @@ import PreviewDocumentsCount from 'components/PreviewDocumentsCount'
 import {sanityFetch} from 'lib/sanity.fetch'
 
 export default async function IndexPage() {
-  const preview = draftMode().isEnabled ? {token: process.env.SANITY_API_READ_TOKEN} : undefined
-
   const data = await sanityFetch<number>({query, tags: ['post']})
 
   return (
