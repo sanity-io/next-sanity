@@ -26,7 +26,7 @@ export async function POST(req: NextRequest): Promise<any> {
         (tag) => typeof tag === 'string' && revalidateTag(tag),
       ),
     )
-    return NextResponse.json(body)
+    return NextResponse.json({...body, router: 'app'})
   } catch (err: any) {
     console.error(err)
     return new Response(err.message, {status: 500})

@@ -22,7 +22,7 @@ export default async function revalidate(
     }
 
     await res.revalidate('/')
-    return new Response(JSON.stringify(body), {
+    return new Response(JSON.stringify({...body, router: 'pages'}), {
       status: 200,
       headers: {'Content-Type': 'application/json'},
     })
