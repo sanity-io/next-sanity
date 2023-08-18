@@ -129,7 +129,7 @@ export const getStaticProps = async ({draftMode}) => {
 
 export default function IndexPage({draftMode, data}) {
   return (
-    <LiveQuery enabled={draftMode} query={query}>
+    <LiveQuery enabled={draftMode} query={query} initialData={data}>
       <DocumentsCount data={data} />
     </LiveQuery>
   )
