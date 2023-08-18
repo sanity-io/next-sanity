@@ -11,7 +11,7 @@ export type ParsedBody<T> = {
    * If a secret is given then it returns a boolean. If no secret is provided then no validation is done on the signature, and it'll return `null`
    */
   isValidSignature: boolean | null
-  body: T
+  body: T | null
 }
 
 /**
@@ -60,12 +60,20 @@ async function parsePageBody<Body = SanityDocument>(
   secret?: string,
   waitForContentLakeEventualConsistency: boolean = true,
 ): Promise<ParsedBody<Body>> {
-  let signature = req.headers[SIGNATURE_HEADER_NAME]!
+  let signature = req.headers[SIGNATURE_HEADER_NAME]
   if (Array.isArray(signature)) {
     signature = signature[0]
   }
+  if (!signature) {
+    console.error('Missing signature header')
+    return {body: null, isValidSignature: null}
+  }
+  // eslint-disable-next-line no-console
+  console.log('page', {signature, secret})
 
   const body = await readBody(req)
+  // eslint-disable-next-line no-console
+  console.log('page', {body})
   const validSignature = secret ? isValidSignature(body, signature, secret.trim()) : null
 
   if (validSignature !== false && waitForContentLakeEventualConsistency) {
@@ -73,7 +81,7 @@ async function parsePageBody<Body = SanityDocument>(
   }
 
   return {
-    body: body.trim() && JSON.parse(body),
+    body: body.trim() ? JSON.parse(body) : null,
     isValidSignature: validSignature,
   }
 }
@@ -95,8 +103,16 @@ export async function parseAppBody<Body = SanityDocument>(
   waitForContentLakeEventualConsistency: boolean = true,
 ): Promise<ParsedBody<Body>> {
   const signature = req.headers.get(SIGNATURE_HEADER_NAME)!
+  if (!signature) {
+    console.error('Missing signature header')
+    return {body: null, isValidSignature: null}
+  }
+  // eslint-disable-next-line no-console
+  console.log('app', {signature, secret})
 
   const body = await req.text()
+  // eslint-disable-next-line no-console
+  console.log('app', {body})
   const validSignature = secret ? isValidSignature(body, signature, secret.trim()) : null
 
   if (validSignature !== false && waitForContentLakeEventualConsistency) {
@@ -104,7 +120,7 @@ export async function parseAppBody<Body = SanityDocument>(
   }
 
   return {
-    body: body.trim() && JSON.parse(body),
+    body: body.trim() ? JSON.parse(body) : null,
     isValidSignature: validSignature,
   }
 }
