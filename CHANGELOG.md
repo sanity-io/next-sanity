@@ -5,6 +5,16 @@
 All notable changes to this project will be documented in this file. See
 [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [5.4.4](https://github.com/sanity-io/next-sanity/compare/v5.4.3...v5.4.4) (2023-08-19)
+
+### Bug Fixes
+
+- **deps:** update dependency @sanity/client to v6.4.9 ([#563](https://github.com/sanity-io/next-sanity/issues/563)) ([150d5f3](https://github.com/sanity-io/next-sanity/commit/150d5f36b85704214a3788a78ccdaa847e578b86))
+- **deps:** Update dependency @sanity/preview-kit to v3.1.4 ([#559](https://github.com/sanity-io/next-sanity/issues/559)) ([ced71f9](https://github.com/sanity-io/next-sanity/commit/ced71f9e61b2e8f7b01094c0a651185053c09d62))
+- **deps:** Update dependency @sanity/webhook to v3.0.1 ([#566](https://github.com/sanity-io/next-sanity/issues/566)) ([9e3ebe8](https://github.com/sanity-io/next-sanity/commit/9e3ebe8c15ae2ab0ba331228ab7090a489c835a6))
+- **webhook:** detect if `bodyParser` is `true` ([b62db0d](https://github.com/sanity-io/next-sanity/commit/b62db0d2125a2f0728a4b352f6d2f3d6d6e0392a))
+- **webhook:** throw if the edge runtime is detected ([ecf96fb](https://github.com/sanity-io/next-sanity/commit/ecf96fb0a18868e8fb3346011af78faf22f8aabd))
+
 ## [5.4.3](https://github.com/sanity-io/next-sanity/compare/v5.4.2...v5.4.3) (2023-08-18)
 
 ### Bug Fixes
