@@ -4,15 +4,6 @@ import {parseBody} from 'src/webhook'
 
 // export {config} from 'src/webhook'
 
-export const runtime = 'edge'
-
-export const config = {
-  /**
-   * `@sanity/webhook` isn't updated to support the edge runtime yet, and currently requires Node.js APIs such as Buffer.
-   */
-  runtime: 'nodejs',
-}
-
 export default async function revalidate(
   req: NextApiRequest,
   res: NextApiResponse,
