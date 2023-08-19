@@ -7,16 +7,10 @@ import {parseBody} from 'src/webhook'
 export const runtime = 'edge'
 
 export const config = {
-  api: {
-    /**
-     * Next.js will by default parse the body, which can lead to invalid signatures.
-     */
-    bodyParser: false,
-  },
   /**
    * `@sanity/webhook` isn't updated to support the edge runtime yet, and currently requires Node.js APIs such as Buffer.
    */
-  runtime: 'edge',
+  runtime: 'nodejs',
 }
 
 export default async function revalidate(
