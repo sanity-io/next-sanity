@@ -74,8 +74,6 @@ async function parsePageBody<Body = SanityDocument>(
     console.error('Missing signature header')
     return {body: null, isValidSignature: null}
   }
-  // eslint-disable-next-line no-console
-  console.log('page', {signature, secret})
 
   if (req.readableEnded) {
     throw new Error(
@@ -84,8 +82,6 @@ async function parsePageBody<Body = SanityDocument>(
   }
 
   const body = await readBody(req)
-  // eslint-disable-next-line no-console
-  console.log('page', {body})
   const validSignature = secret ? isValidSignature(body, signature, secret.trim()) : null
 
   if (validSignature !== false && waitForContentLakeEventualConsistency) {
@@ -119,12 +115,8 @@ export async function parseAppBody<Body = SanityDocument>(
     console.error('Missing signature header')
     return {body: null, isValidSignature: null}
   }
-  // eslint-disable-next-line no-console
-  console.log('app', {signature, secret})
 
   const body = await req.text()
-  // eslint-disable-next-line no-console
-  console.log('app', {body})
   const validSignature = secret ? isValidSignature(body, signature, secret.trim()) : null
 
   if (validSignature !== false && waitForContentLakeEventualConsistency) {
