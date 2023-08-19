@@ -12,12 +12,12 @@ export default async function revalidate(
 ): Promise<any> {
   try {
     const {body, isValidSignature} = await parseBody(req, process.env.SANITY_REVALIDATE_SECRET)
-    if (isValidSignature === false) {
+    if (!isValidSignature) {
       const message = 'Invalid signature'
       return new Response(message, {status: 401})
     }
 
-    if (!body._type) {
+    if (!body?._type) {
       return new Response('Bad Request', {status: 400})
     }
 
