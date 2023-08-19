@@ -161,6 +161,16 @@ async function HomePageLayout() {
 
 [Checkout our Personal website template to see a feature complete example of how `revalidateTag` is used together with Live Previews.](https://github.com/sanity-io/sanity-template-nextjs-app-router-personal-website)
 
+To aid in debugging and understanding what's in the cache, revalidated, skipped and more, add this to your `next.config.js`:
+
+```js
+module.exports = {
+  experimental: {
+    logging: 'verbose',
+  },
+}
+```
+
 ## `next-sanity` Visual Editing with Content Source Maps
 
 > **Note**
@@ -359,7 +369,47 @@ function StudioPage() {
 
 Implements [`@sanity/webhook`](https://github.com/sanity-io/webhook-toolkit) to parse and verify that a [Webhook](https://www.sanity.io/docs/webhooks) is indeed coming from Sanity infrastructure.
 
-`pages/api/revalidate`:
+### App Router
+
+`app/api/revalidate/route.ts`:
+
+```ts
+import {revalidateTag} from 'next/cache'
+import {type NextRequest, NextResponse} from 'next/server'
+import {parseBody} from 'next-sanity/webhook'
+
+export async function POST(req: NextRequest) {
+  try {
+    const {isValidSignature, body} = await parseBody<{_type}>(
+      req,
+      process.env.SANITY_REVALIDATE_SECRET,
+    )
+
+    if (!isValidSignature) {
+      const message = 'Invalid signature'
+      return new Response(JSON.stringify({message, isValidSignature, body}), {status: 401})
+    }
+
+    if (!body?._type) {
+      const message = 'Bad Request'
+      return new Response({message, body}, {status: 400})
+    }
+
+    // If the `_type` is `page`, then all `client.fetch` calls with
+    // `{next: {tags: ['page']}}` will be revalidated
+    await revalidateTag(body._type)
+
+    return NextResponse.json({body})
+  } catch (err) {
+    console.error(err)
+    return new Response(err.message, {status: 500})
+  }
+}
+```
+
+### Pages Router
+
+`pages/api/revalidate.ts`:
 
 ```ts
 import type {NextApiRequest, NextApiResponse} from 'next'
@@ -374,16 +424,13 @@ export default async function revalidate(req: NextApiRequest, res: NextApiRespon
 
     if (!isValidSignature) {
       const message = 'Invalid signature'
-      console.warn(message)
-      res.status(401).json({message})
-      return
+      return res.status(401).json({message, isValidSignature, body})
     }
 
     const staleRoute = `/${body.slug.current}`
     await res.revalidate(staleRoute)
     const message = `Updated route: ${staleRoute}`
-    console.log(message)
-    return res.status(200).json({message})
+    return res.status(200).json({message, body})
   } catch (err) {
     console.error(err)
     return res.status(500).json({message: err.message})
