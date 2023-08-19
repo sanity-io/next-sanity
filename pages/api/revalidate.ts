@@ -2,9 +2,22 @@
 import type {NextApiRequest, NextApiResponse} from 'next'
 import {parseBody} from 'src/webhook'
 
-export {config} from 'src/webhook'
+// export {config} from 'src/webhook'
 
-// export const runtime = 'edge'
+export const runtime = 'edge'
+
+export const config = {
+  api: {
+    /**
+     * Next.js will by default parse the body, which can lead to invalid signatures.
+     */
+    bodyParser: false,
+  },
+  /**
+   * `@sanity/webhook` isn't updated to support the edge runtime yet, and currently requires Node.js APIs such as Buffer.
+   */
+  runtime: 'edge',
+}
 
 export default async function revalidate(
   req: NextApiRequest,
