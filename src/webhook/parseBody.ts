@@ -50,6 +50,12 @@ export async function parseBody<Body = SanityDocument>(
   secret?: string,
   waitForContentLakeEventualConsistency: boolean = true,
 ): Promise<ParsedBody<Body>> {
+  // @ts-expect-error -- add global typings for EdgeRuntime
+  if (typeof EdgeRuntime !== 'undefined') {
+    throw new TypeError(
+      `The edge runtime isn't supported. You'll have to use the 'nodejs' runtime until the underlying \`@sanity/webhook\` package is updated to support it.`,
+    )
+  }
   return 'text' in req
     ? parseAppBody(req, secret, waitForContentLakeEventualConsistency)
     : parsePageBody(req, secret, waitForContentLakeEventualConsistency)
@@ -60,12 +66,6 @@ async function parsePageBody<Body = SanityDocument>(
   secret?: string,
   waitForContentLakeEventualConsistency: boolean = true,
 ): Promise<ParsedBody<Body>> {
-  // @ts-expect-error -- add global typings for EdgeRuntime
-  if (typeof EdgeRuntime !== 'undefined') {
-    throw new TypeError(
-      `The edge runtime isn't supported. Use \`export {config} from 'next-sanity/webhook'\` to ensure an unsupported runtime isn't used`,
-    )
-  }
   let signature = req.headers[SIGNATURE_HEADER_NAME]
   if (Array.isArray(signature)) {
     signature = signature[0]
@@ -108,12 +108,6 @@ export async function parseAppBody<Body = SanityDocument>(
   secret?: string,
   waitForContentLakeEventualConsistency: boolean = true,
 ): Promise<ParsedBody<Body>> {
-  // @ts-expect-error -- add global typings for EdgeRuntime
-  if (typeof EdgeRuntime !== 'undefined') {
-    throw new TypeError(
-      `The edge runtime isn't supported. Remove the \`export const runtime = 'edge'\` line from your webhook route handler to fix this error.`,
-    )
-  }
   const signature = req.headers.get(SIGNATURE_HEADER_NAME)!
   if (!signature) {
     console.error('Missing signature header')
