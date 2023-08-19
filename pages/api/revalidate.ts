@@ -23,6 +23,7 @@ export default async function revalidate(
   req: NextApiRequest,
   res: NextApiResponse,
 ): Promise<any> {
+  console.log(typeof EdgeRuntime, EdgeRuntime)
   try {
     const {body, isValidSignature} = await parseBody(req, process.env.SANITY_REVALIDATE_SECRET)
     if (!isValidSignature) {
