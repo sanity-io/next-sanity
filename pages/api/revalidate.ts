@@ -12,20 +12,17 @@ export default async function revalidate(
     const {body, isValidSignature} = await parseBody(req, process.env.SANITY_REVALIDATE_SECRET)
     if (!isValidSignature) {
       const message = 'Invalid signature'
-      return new Response(message, {status: 401})
+      return res.status(401).send(message)
     }
 
-    if (!body?._type) {
-      return new Response('Bad Request', {status: 400})
-    }
+    // if (!body?._type) {
+    // return res.status(400).send('Bad Request')
+    // }
 
     await res.revalidate('/')
-    return new Response(JSON.stringify({...body, router: 'pages'}), {
-      status: 200,
-      headers: {'Content-Type': 'application/json'},
-    })
+    return res.status(200).send(JSON.stringify({...body, router: 'pages'}))
   } catch (err: any) {
     console.error(err)
-    return new Response(err.message, {status: 500})
+    return res.status(500).send(err.message)
   }
 }

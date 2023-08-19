@@ -77,6 +77,12 @@ async function parsePageBody<Body = SanityDocument>(
   // eslint-disable-next-line no-console
   console.log('page', {signature, secret})
 
+  if (req.readableEnded) {
+    throw new Error(
+      `Request already ended and the POST body can't be read. Have you setup \`export {config} from 'next-sanity/webhook' in your webhook API handler?\``,
+    )
+  }
+
   const body = await readBody(req)
   // eslint-disable-next-line no-console
   console.log('page', {body})
