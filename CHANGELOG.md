@@ -5,6 +5,13 @@
 All notable changes to this project will be documented in this file. See
 [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [5.4.5](https://github.com/sanity-io/next-sanity/compare/v5.4.4...v5.4.5) (2023-08-23)
+
+### Bug Fixes
+
+- **deps:** allow `styled-components` v6 ([8bd981b](https://github.com/sanity-io/next-sanity/commit/8bd981bf92af29052ea3fc379081ffff346dce39))
+- **deps:** update dependency @sanity/preview-kit to v3.1.5 ([#578](https://github.com/sanity-io/next-sanity/issues/578)) ([0c977aa](https://github.com/sanity-io/next-sanity/commit/0c977aa14abd5ef86069dd277964b6fb8e434629))
+
 ## [5.4.4](https://github.com/sanity-io/next-sanity/compare/v5.4.3...v5.4.4) (2023-08-19)
 
 ### Bug Fixes
