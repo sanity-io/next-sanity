@@ -1,6 +1,6 @@
-import dynamic from 'next/dynamic'
+import Studio from './Studio'
 
-const Studio = dynamic(() => import('./Studio'))
+export const dynamic = 'force-static'
 
 export {metadata} from 'src/studio/metadata'
 
