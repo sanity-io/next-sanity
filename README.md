@@ -96,7 +96,7 @@ import 'server-only'
 
 import type {QueryParams} from '@sanity/client'
 import {createClient, groq} from 'next-sanity'
-import { draftMode } from "next/headers";
+import {draftMode} from 'next/headers'
 
 const projectId = process.env.NEXT_PUBLIC_SANITY_PROJECT_ID // "pv8y60vp"
 const dataset = process.env.NEXT_PUBLIC_SANITY_DATASET // "production"
