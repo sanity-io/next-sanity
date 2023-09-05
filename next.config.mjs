@@ -20,7 +20,7 @@ const nextConfig = {
 
     return config
   },
-  images: {disableStaticImages: true},
+  images: {disableStaticImages: true, loader: 'custom', loaderFile: './app/sanity.image.ts'},
 }
 
 export default withBundleAnalyzer({
