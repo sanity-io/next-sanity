@@ -463,7 +463,7 @@ The [same is true][preview-kit-livequery] for `next-sanity/preview/live-query`.
 
 ### Using `draftMode()` to de/activate previews
 
-Next.js gives you [a built-in `draftMode` variable][draft-mode] that can be used to activate features like Visual Edit or any preview implementation.
+Next.js gives you [a built-in `draftMode` variable][draft-mode] that can activate features like Visual Edit or any preview implementation.
 
 ```ts
 // ./src/utils/sanity/client.ts
@@ -505,20 +505,25 @@ export async function sanityFetch<QueryResponse>({
     throw new Error('The `SANITY_API_READ_TOKEN` environment variable is required.')
   }
 
+  const REVALIDATE_SKIP_CACHE = 0
+  const REVALIDATE_CACHE_FOREVER = false
+
   return client.fetch<QueryResponse>(query, params, {
-    cache: 'force-cache',
     ...(isDraftMode && {
-      cache: undefined,
       token: token,
       perspective: 'previewDrafts',
     }),
     next: {
-      ...(isDraftMode && {revalidate: 30}),
+      revalidate: isDraftMode ? REVALIDATE_SKIP_CACHE : REVALIDATE_CACHE_FOREVER,
       tags,
     },
   })
 }
 ```
+#### Using `cache` and `revalidation` at the same time
+
+Be aware that you can get errors if you use the `cache` and the `revalidate` configurations for Next.js cache at the same time. Go to [the Next.js docs][next-revalidate-docs] to learn more.
+
 
 ## Visual Editing with Content Source Maps
 
@@ -745,6 +750,7 @@ MIT-licensed. See [LICENSE][LICENSE].
 [next-cache]: https://nextjs.org/docs/app/building-your-application/caching
 [next-data-fetching]: https://nextjs.org/docs/basic-features/data-fetching/overview
 [next-preview-mode]: https://nextjs.org/docs/advanced-features/preview-mode
+[next-revalidate-docs]: https://nextjs.org/docs/app/api-reference/functions/fetch#optionsnextrevalidate
 [pages-router]: https://nextjs.org/docs/pages/building-your-application/routing
 [personal-website-template]: https://github.com/sanity-io/sanity-template-nextjs-app-router-personal-website
 [perspectives-docs]: https://www.sanity.io/docs/perspectives?utm_source=github&utm_medium=readme&utm_campaign=next-sanity
