@@ -83,7 +83,7 @@ pnpm install @portabletext/react @sanity/image-url
 bun install @portabletext/react @sanity/image-url
 ```
 
-### Peer dependencies for embedded Sanity Sudio
+### Peer dependencies for embedded Sanity Studio
 
 When using `npm` newer than `v7`, or `pnpm` newer than `v8`, you should end up with needed dependencies like `sanity` and `styled-components` when you `npm install next-sanity`. It also works in `yarn` `v1` using `install-peerdeps`:
 
@@ -93,7 +93,7 @@ npx install-peerdeps --yarn next-sanity
 
 ## Usage
 
-There are different ways to integrate Sanity with Next.js depending on your usage and needs for features like Live Preview, tag-based revalidation and so on. It's possible to start simple and add more functionality as your project progresses.
+There are different ways to integrate Sanity with Next.js depending on your usage and needs for features like Live Preview, tag-based revalidation, and so on. It's possible to start simple and add more functionality as your project progresses.
 
 ### Quick start
 
@@ -183,23 +183,23 @@ export async function HomePage(props) {
 
 ### Should `useCdn` be `true` or `false`?
 
-You might notice that you have to set the `useCdn` to `true` or `false` in the client configuration. Sanity offers [caching on a CDN for content queries][cdn]. Since Next.js often comes with its own caching, it might not be necssary, but there are some expections.
+You might notice that you have to set the `useCdn` to `true` or `false` in the client configuration. Sanity offers [caching on a CDN for content queries][cdn]. Since Next.js often comes with its own caching, it might not be necessary, but there are some exceptions.
 
 The general rule is that `useCdn` should be `true` when:
 
-- Data fetching happens client-side, e.g. in a `useEffect` hook or in response to a user interaction where the `client.fetch` call is made in the browser.
-- Server-Side Rendered (SSR) data fetching is dynamic and have a high number of unique requests per visitor, e.g. a "For You" feed.
+- Data fetching happens client-side, for example, in a `useEffect` hook or in response to a user interaction where the `client.fetch` call is made in the browser.
+- Server-Side Rendered (SSR) data fetching is dynamic and has a high number of unique requests per visitor, for example, a "For You" feed.
 
 And it makes sense to set `useCdn` to `false` when:
 
-- Used in a static site generation context, e.g. `getStaticProps` or `getStaticPaths`.
-- Used in a ISR on-demand webhook responder.
+- Used in a static site generation context, for example, `getStaticProps` or `getStaticPaths`.
+- Used in an ISR on-demand webhook responder.
 - Good `stale-while-revalidate` caching is in place that keeps API requests on a consistent low, even if traffic to Next.js spikes.
-- For Preview or Draft modes as part of an editorial workflow, and you need to ensure that the latest content is always fetched.
+- For Preview or Draft modes as part of an editorial workflow, you need to ensure that the latest content is always fetched.
 
 ### How does `apiVersion` work?
 
-Sanity uses [date-based API versioning][api-versioning]. The tl;dr is that you can send the date of implementation in a YYYY-MM-DD format, and it will automatically fall back on the latest API version of that time. Then, if a breaking change is introduced later, it won't break your application and give you time to test before upgrading (by setting the value to a date past the breaking change).
+Sanity uses [date-based API versioning][api-versioning]. The tl;dr is that you can send the implementation date in a YYYY-MM-DD format, and it will automatically fall back on the latest API version of that time. Then, if a breaking change is introduced later, it won't break your application and give you time to test before upgrading (by setting the value to a date past the breaking change).
 
 ## Cache revalidation
 
@@ -207,11 +207,11 @@ This toolkit includes the [`@sanity/client`][sanity-client] that fully supports 
 
 > **Note**
 >
-> Some hosts (like Vercel) will keep the content cache in its own data layer, and not part of the static app bundle, which means that it might not be revalidated from re-deploying the app like it has done earlier. We recommend reading up on caching behavior in the Next.js docs.
+> Some hosts (like Vercel) will keep the content cache in a dedicated data layer and not part of the static app bundle, which means that it might not be revalidated from re-deploying the app like it has done earlier. We recommend reading up on [caching behavior in the Next.js docs][next-cache].
 
 ### Time-based revalidation
 
-Time-based revalidation is best for less complex cases and where content updates don't need to be immediatly available.
+Time-based revalidation is best for less complex cases and where content updates don't need to be immediately available.
 
 ```ts
 // ./src/utils/sanity/client.ts
@@ -227,16 +227,16 @@ const client = createClient({
   apiVersion, // https://www.sanity.io/docs/api-versioning
   useCdn: true, // if you're using ISR or only static generation at build time then you can set this to `false` to guarantee no stale content
   next: {
-    revalidate: next - data - fetching00, // look for updates to revalidate cache every hour
+    revalidate: 3600, // look for updates to revalidate cache every hour
   },
 })
 ```
 
 ### Tag-based revalidation webhook
 
-Tag-based, or on-demand revalidation gives you more fine-grained and presice control for when to revalidate content. This is great for when you pull content from the same source across components and when content freshness is important.
+Tag-based or on-demand revalidation gives you more fine-grained and precise control for when to revalidate content. This is great for pulling content from the same source across components and when content freshness is important.
 
-Below is an example configuration that makes sure that the client is only bundled server-side and comes with some defaults. It‘s also easier to adapt for Live Preview functionality (see below) etc.
+Below is an example configuration that ensures the client is only bundled server-side and comes with some defaults. It‘s also easier to adapt for Live Preview functionality (see below).
 
 If you're planning to use `revalidateTag`, then remember to set up the webhook (see code below) as well.
 
@@ -294,7 +294,7 @@ type HomePageProps = {
 }
 
 export async function HomeLayout({children}) {
-  // revalidate if there's changes to either the home document, or to a page document (since they're referenced to in navItems)
+  // revalidate if there are changes to either the home document or to a page document (since they're referenced to in navItems)
   const home = await sanityFetch<HomePageProps>({
     query: `*[_id == "home"][0]{...,navItems[]->}`,
     tags: ['home', 'page']
@@ -320,7 +320,7 @@ In order to get `revalidateTag` to work you need to set up an API route in your 
 
 You can use this [template][webhook-template] to quickly configure the webhook for your Sanity project.
 
-The code example below uses the built-in `parseBody` function to validate that request comes from your Sanity project (using a shared secret + looking at the request headers). Then it looks at the document type information in the webhook payload and matches that against the revalidation tags in your app:
+The code example below uses the built-in `parseBody` function to validate that the request comes from your Sanity project (using a shared secret + looking at the request headers). Then it looks at the document type information in the webhook payload and matches that against the revalidation tags in your app:
 
 ```ts
 // ./src/app/api/revalidate.ts
@@ -357,11 +357,11 @@ export async function POST(req: NextRequest) {
 }
 ```
 
-You can choose to match tags based on any field or expression, since GROQ-Powered Webhooks allow you to freely define the payload.
+You can choose to match tags based on any field or expression since GROQ-Powered Webhooks allow you to freely define the payload.
 
 ### Slug-based revalidation for the Pages Router
 
-If you are using the Pages Router and want on-demand revalidation, you'll have to do this by targeting the URLs/slugs for the pages you want to revalidate. If you have nested routes, you will need to adopt the logic to accomodate for that. For example, using `_type` to determine the first segment: `/${body?._type}/${body?.slug.current}`.
+If you are using the Pages Router and want on-demand revalidation, you'll have to do this by targeting the URLs/slugs for the pages you want to revalidate. If you have nested routes, you will need to adopt the logic to accommodate for that. For example, using `_type` to determine the first segment: `/${body?._type}/${body?.slug.current}`.
 
 ```ts
 // ./pages/api/revalidate.ts
@@ -393,11 +393,11 @@ export default async function revalidate(req: NextApiRequest, res: NextApiRespon
 
 ### Working example implementation
 
-Check out our [Personal website template][personal-website-template] to see a feature complete example of how `revalidateTag` is used together with Live Previews.
+Check out our [Personal website template][personal-website-template] to see a feature-complete example of how `revalidateTag` is used together with Live Previews.
 
 ### Debugging caching and revalidation
 
-To aid in debugging and understanding what's in the cache, revalidated, skipped and more, add the following to your Next.js configuration file:
+To aid in debugging and understanding what's in the cache, revalidated, skipped, and more, add the following to your Next.js configuration file:
 
 ```js
 // ./next.config.js
@@ -439,12 +439,12 @@ const client = createClient({
 
 Live Preview gives you real-time preview across your whole app for your Sanity project members. The Live Preview can be set up to give the preview experience across the whole app. Live Preview works on the data layer and doesn't require specialized components or data attributes. However, it needs a thin component wrapper to load server-side components into client-side, in order to rehydrate on changes.
 
-Router specific setup guides for Live Preview:
+Router-specific setup guides for Live Preview:
 
 - [`app-router`][preivew-app-router]
 - [`pages-router`][preview-pages-router]
 
-Since `next-sanity/preview` is simply re-exporting `LiveQueryProvider` and `useLiveQuery` from [`@sanity/preview-kit` you'll find advanced usage and comprehensive docs in its README][preview-kit-documentation].
+Since `next-sanity/preview` is simply re-exporting `LiveQueryProvider` and `useLiveQuery` from [`@sanity/preview-kit`, you'll find advanced usage and comprehensive docs in its README][preview-kit-documentation].
 The [same is true][preview-kit-livequery] for `next-sanity/preview/live-query`.
 
 ### Using `draftMode()` to de/activate previews
@@ -525,7 +525,7 @@ const client = createClient({
   projectId,
   dataset,
   apiVersion, // https://www.sanity.io/docs/api-versioning
-  useCdn: true, // if you're using ISR or only static generation at build time then you can set this to `false` to guarantee no stale content
+  useCdn: true, // if you're using ISR or only static generation at build time, then you can set this to `false` to guarantee no stale content
   studioUrl: '/studio', // Or: 'https://my-cool-project.sanity.studio'
   encodeSourceMap: true, // Optional. Default to: process.env.NEXT_PUBLIC_VERCEL_ENV === 'preview',
 })
@@ -550,7 +550,7 @@ This opens up many possibilities:
 
 The `NextStudio` component loads up the `import {Studio} from 'sanity'` component for you and wraps it in a Next-friendly layout. `metadata` specifies the necessary `<meta>` tags for making the Studio adapt to mobile devices, and prevents the route from being indexed by search engines.
 
-To quickly scaffold the embedded studio and a Sanity project, you can run the following commmand in your project folder:
+To quickly scaffold the embedded studio and a Sanity project, you can run the following command in your project folder:
 
 ```bash
 npx sanity@latest init
@@ -558,7 +558,7 @@ npx sanity@latest init
 
 ### Manual installation
 
-Make a file called `sanity.config.ts` (or `.js` for non-TypeScript projects) in the project's root (same place as `next.config.ts`) and copy the example below. Both the Next `/app` and `/pages` examples uses this config file:
+Make a file called `sanity.config.ts` (or `.js` for non-TypeScript projects) in the project's root (same place as `next.config.ts`) and copy the example below. Both the Next `/app` and `/pages` examples use this config file:
 
 ```ts
 // ./sanity.config.ts
@@ -681,7 +681,7 @@ export default function StudioPage() {
 
 ### Lower level control with `StudioProvider` and `StudioLayout`
 
-If you want to go lower level and have more control over the Studio you can pass `StudioProvider` and `StudioLayout` from `sanity` as `children`:
+If you want to go to a lower level and have more control over the Studio, you can pass `StudioProvider` and `StudioLayout` from `sanity` as `children`:
 
 ```tsx
 import {NextStudio} from 'next-sanity/studio'
