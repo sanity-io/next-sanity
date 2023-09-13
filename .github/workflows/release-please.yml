@@ -36,14 +36,14 @@ jobs:
         with:
           cache: npm
           node-version: lts/*
+          registry-url: 'https://registry.npmjs.org'
       - run: npm ci --ignore-scripts
         # if: ${{ steps.release.outputs.releases_created }}
       - run: npm audit signatures
         # if: ${{ steps.release.outputs.releases_created }}
       # Release Please has already incremented versions and published tags, so we just
       # need to publish the new version to npm here
-      - run: npm publish
+      - run: npm publish --provenance
         # if: ${{ steps.release.outputs.releases_created }}
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           NODE_AUTH_TOKEN: ${{ secrets.NPM_PUBLISH_TOKEN }}
