@@ -1,0 +1,49 @@
+---
+name: Release Please
+
+on:
+  push:
+    branches:
+      - main
+
+permissions:
+  contents: read
+
+jobs:
+  release-please:
+    permissions:
+      id-token: write # to enable use of OIDC for npm provenance
+      # permissions for pushing commits and opening PRs are handled by the `generate-token` step
+    runs-on: ubuntu-latest
+    steps:
+      - uses: tibdex/github-app-token@0914d50df753bbc42180d982a6550f195390069f # v2
+        id: generate-token
+        with:
+          app_id: ${{ secrets.ECOSPARK_APP_ID }}
+          private_key: ${{ secrets.ECOSPARK_APP_PRIVATE_KEY }}
+      # This action will create a release PR when regular conventional commits are pushed to main, it'll also detect if a release PR is merged and npm publish should happen
+      - uses: google-github-actions/release-please-action@v3
+        id: release
+        with:
+          release-type: node
+          token: ${{ steps.generate-token.outputs.token }}
+
+      # Publish to NPM on new releases
+      - uses: actions/checkout@v4
+        if: ${{ steps.release.outputs.releases_created }}
+      - uses: actions/setup-node@v3
+        if: ${{ steps.release.outputs.releases_created }}
+        with:
+          cache: npm
+          node-version: lts/*
+      - run: npm ci --ignore-scripts
+        if: ${{ steps.release.outputs.releases_created }}
+      - run: npm audit signatures
+        if: ${{ steps.release.outputs.releases_created }}
+      # Release Please has already incremented versions and published tags, so we just
+      # need to publish the new version to npm here
+      - run: npm publish
+        if: ${{ steps.release.outputs.releases_created }}
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          NPM_TOKEN: ${{ secrets.NPM_PUBLISH_TOKEN }}

@@ -4,7 +4,7 @@ name: Update favicons
 on:
   push:
     branches: [main]
-    paths: 
+    paths:
       - 'package-lock.json'
   workflow_dispatch:
 
@@ -22,14 +22,14 @@ jobs:
     # workflow_dispatch always lets you select the branch ref, even though in this case we only ever want to run the action on `main` this we need an if check
     if: ${{ github.ref_name == 'main' }}
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
       - uses: actions/setup-node@v3
         with:
           cache: npm
           node-version: lts/*
       - run: npm ci --ignore-scripts --only-dev
       - run: npm run update:icons
-      - uses: tibdex/github-app-token@b62528385c34dbc9f38e5f4225ac829252d1ea92 # v1
+      - uses: tibdex/github-app-token@0914d50df753bbc42180d982a6550f195390069f # v2
         id: generate-token
         with:
           app_id: ${{ secrets.ECOSPARK_APP_ID }}
