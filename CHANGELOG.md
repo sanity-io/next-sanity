@@ -5,6 +5,13 @@
 All notable changes to this project will be documented in this file. See
 [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [5.5.1](https://github.com/sanity-io/next-sanity/compare/v5.5.0...v5.5.1) (2023-09-13)
+
+
+### Bug Fixes
+
+* give README a content hug ([#604](https://github.com/sanity-io/next-sanity/issues/604)) ([eb69b08](https://github.com/sanity-io/next-sanity/commit/eb69b08b57eda765cddce32c82d8fa8135cb7057))
+
 ## [5.5.0](https://github.com/sanity-io/next-sanity/compare/v5.4.6...v5.5.0) (2023-09-13)
 
 
