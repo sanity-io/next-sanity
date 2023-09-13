@@ -120,7 +120,7 @@ const client = createClient({
 To fetch data in a React Server Component using the [App Router][app-router]:
 
 ```tsx
-// ./src/components/PostIndex.tsx
+// ./src/app/page.tsx
 import {client} from '@/src/utils/sanity/client'
 
 type Post = {
@@ -151,7 +151,7 @@ export async function PostIndex() {
 If you're using the [Pages Router][pages-router], then you can do the following from a page component:
 
 ```tsx
-// ./src/pages/Index.tsx
+// ./src/pages/index.tsx
 import {client} from '@/src/utils/sanity/client'
 
 type Post = {
