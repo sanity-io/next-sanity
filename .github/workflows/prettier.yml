@@ -31,7 +31,7 @@ jobs:
           path: node_modules/.cache/prettier/.prettier-cache
           key: prettier-${{ hashFiles('package-lock.json') }}-${{ hashFiles('.gitignore') }}
       - run: npx prettier --ignore-path .gitignore --cache --write .
-      - run: git restore .github/workflows
+      - run: git restore .github/workflows CHANGELOG.md
       - uses: tibdex/github-app-token@0914d50df753bbc42180d982a6550f195390069f # v2
         id: generate-token
         with:
