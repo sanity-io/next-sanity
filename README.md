@@ -15,7 +15,7 @@ The official [Sanity.io][sanity] toolkit for Next.js apps.
 - [Table of contents](#table-of-contents)
 - [Installation](#installation)
   - [Common dependencies](#common-dependencies)
-  - [Peer dependencies for embedded Sanity Sudio](#peer-dependencies-for-embedded-sanity-sudio)
+  - [Peer dependencies for embedded Sanity Studio](#peer-dependencies-for-embedded-sanity-studio)
 - [Usage](#usage)
   - [Quick start](#quick-start)
   - [App Router Components](#app-router-components)
@@ -40,7 +40,6 @@ The official [Sanity.io][sanity] toolkit for Next.js apps.
   - [Studio Routes with Pages Router](#studio-routes-with-pages-router)
   - [Lower level control with `StudioProvider` and `StudioLayout`](#lower-level-control-with-studioprovider-and-studiolayout)
 - [Migration guides](#migration-guides)
-- [Release new version](#release-new-version)
 - [License](#license)
 
 ## Installation
@@ -213,23 +212,38 @@ This toolkit includes the [`@sanity/client`][sanity-client] that fully supports 
 
 Time-based revalidation is best for less complex cases and where content updates don't need to be immediately available.
 
-```ts
-// ./src/utils/sanity/client.ts
-import {createClient} from 'next-sanity'
+```tsx
+// ./src/app/home/layout.tsx
+import { client } from '@/src/utils/sanity/client'
+import { PageProps } from '@/src/app/(page)/Page.tsx'
 
-const projectId = process.env.NEXT_PUBLIC_SANITY_PROJECT_ID // "pv8y60vp"
-const dataset = process.env.NEXT_PUBLIC_SANITY_DATASET // "production"
-const apiVersion = process.env.NEXT_PUBLIC_SANITY_API_VERSION || '2023-05-03'
+type HomePageProps = {
+  _id: string
+  title?: string
+  navItems: PageProps[]
+}
 
-const client = createClient({
-  projectId,
-  dataset,
-  apiVersion, // https://www.sanity.io/docs/api-versioning
-  useCdn: true, // if you're using ISR or only static generation at build time then you can set this to `false` to guarantee no stale content
-  next: {
-    revalidate: 3600, // look for updates to revalidate cache every hour
-  },
-})
+export async function HomeLayout({children}) {
+  const home = await client.fetch<HomePageProps>(`*[_id == "home"][0]{...,navItems[]->}`,
+    next: {
+      revalidate: 3600 // look for updates to revalidate cache every hour
+    }
+  })
+
+  return (
+    <main>
+      <nav>
+        <span>{home?.title}</span>
+        <ul>
+        {home?.navItems.map(navItem => ({
+          <li key={navItem._id}><a href={navItem?.slug?.current}>{navItem?.title}</a></li>
+        }))}
+        </ul>
+      </nav>
+      {children}
+    </main>
+  )
+}
 ```
 
 ### Tag-based revalidation webhook
