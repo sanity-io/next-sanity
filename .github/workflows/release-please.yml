@@ -26,7 +26,6 @@ jobs:
         id: release
         with:
           release-type: node
-          package-name: next-sanity
           token: ${{ steps.generate-token.outputs.token }}
 
       # Publish to NPM on new releases
