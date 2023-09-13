@@ -30,20 +30,20 @@ jobs:
 
       # Publish to NPM on new releases
       - uses: actions/checkout@v4
-        if: ${{ steps.release.outputs.releases_created }}
+        # if: ${{ steps.release.outputs.releases_created }}
       - uses: actions/setup-node@v3
-        if: ${{ steps.release.outputs.releases_created }}
+        # if: ${{ steps.release.outputs.releases_created }}
         with:
           cache: npm
           node-version: lts/*
       - run: npm ci --ignore-scripts
-        if: ${{ steps.release.outputs.releases_created }}
+        # if: ${{ steps.release.outputs.releases_created }}
       - run: npm audit signatures
-        if: ${{ steps.release.outputs.releases_created }}
+        # if: ${{ steps.release.outputs.releases_created }}
       # Release Please has already incremented versions and published tags, so we just
       # need to publish the new version to npm here
       - run: npm publish
-        if: ${{ steps.release.outputs.releases_created }}
+        # if: ${{ steps.release.outputs.releases_created }}
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          NPM_TOKEN: ${{ secrets.NPM_PUBLISH_TOKEN }}
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_PUBLISH_TOKEN }}
