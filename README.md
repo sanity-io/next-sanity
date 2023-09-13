@@ -520,10 +520,10 @@ export async function sanityFetch<QueryResponse>({
   })
 }
 ```
+
 #### Using `cache` and `revalidation` at the same time
 
 Be aware that you can get errors if you use the `cache` and the `revalidate` configurations for Next.js cache at the same time. Go to [the Next.js docs][next-revalidate-docs] to learn more.
-
 
 ## Visual Editing with Content Source Maps
 
