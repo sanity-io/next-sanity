@@ -448,13 +448,6 @@ export default async function revalidate(req: NextApiRequest, res: NextApiRespon
   - [`pages-router`](./MIGRATE-v4-to-v5-pages-router.md)
 - [From `<0.4` to `v4`](./MIGRATE-v1-to-v4.md)
 
-## Release new version
-
-Run ["CI & Release" workflow](https://github.com/sanity-io/next-sanity/actions/workflows/ci.yml).
-Make sure to select the main branch and check "Release new version".
-
-Semantic release will only release on configured branches, so it is safe to run release on any branch.
-
 ## License
 
 MIT-licensed. See [LICENSE](LICENSE).

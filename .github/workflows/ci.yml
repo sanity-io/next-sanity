@@ -1,31 +1,11 @@
 ---
 name: CI
 
-run-name: >-
-  ${{
-    inputs.release && inputs.test && 'CI ➤ Test ➤ Release' ||
-    inputs.test && 'CI ➤ Test' ||
-    inputs.release && 'CI ➤ Release' ||
-    ''
-  }}
-
 on:
   pull_request:
     types: [opened, synchronize]
   push:
     branches: [main]
-  workflow_dispatch:
-    inputs:
-      test:
-        description: Test
-        required: true
-        default: true
-        type: boolean
-      release:
-        description: Release
-        required: true
-        default: false
-        type: boolean
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.head_ref || github.run_id }}
@@ -45,18 +25,15 @@ jobs:
           cache: npm
       - run: npm ci
       - run: npm run lint
-        if: github.event.inputs.test != 'false'
       # @TODO find out how to make this command work on the CI
       #- run: npm run update:icons
       #  if: github.event.inputs.test != 'false'
       - run: npm run prepublishOnly
       - run: npm run test:node-esm-cjs
         name: Test if Node.js ESM native modes works, without breaking CJS modes
-        if: github.event.inputs.test != 'false'
 
   test:
     needs: build
-    if: github.event.inputs.test != 'false'
     runs-on: ${{ matrix.os }}
     strategy:
       fail-fast: false
@@ -82,34 +59,3 @@ jobs:
       - run: npm i
       - run: npm test
       - run: npx ls-engines
-
-  release:
-    permissions:
-      contents: write # to be able to publish a GitHub release
-      issues: write # to be able to comment on released issues
-      pull-requests: write # to be able to comment on released pull requests
-      id-token: write # to enable use of OIDC for npm provenance
-    needs: [build, test]
-    # only run if opt-in during workflow_dispatch
-    if: always() && github.event.inputs.release == 'true' && needs.build.result != 'failure' && needs.test.result != 'failure' && needs.test.result != 'cancelled'
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-        with:
-          # Need to fetch entire commit history to
-          # analyze every commit since last release
-          fetch-depth: 0
-      - uses: actions/setup-node@v3
-        with:
-          node-version: lts/*
-          cache: npm
-      - run: npm ci
-      - run: npm audit signatures
-        # Branches that will release new versions are defined in .releaserc.json
-      - run: npx semantic-release
-        # Don't allow interrupting the release step if the job is cancelled, as it can lead to an inconsistent state
-        # e.g. git tags were pushed but it exited before `npm publish`
-        if: always()
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          NPM_TOKEN: ${{ secrets.NPM_PUBLISH_TOKEN }}
