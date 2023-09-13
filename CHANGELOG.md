@@ -5,6 +5,13 @@
 All notable changes to this project will be documented in this file. See
 [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [5.5.2](https://github.com/sanity-io/next-sanity/compare/v5.5.1...v5.5.2) (2023-09-13)
+
+
+### Bug Fixes
+
+* replace client configuration with client.fetch configuration ([#620](https://github.com/sanity-io/next-sanity/issues/620)) ([d3c0669](https://github.com/sanity-io/next-sanity/commit/d3c06695ffb201ce867e19d31d6ed5d7e88a6063))
+
 ## [5.5.1](https://github.com/sanity-io/next-sanity/compare/v5.5.0...v5.5.1) (2023-09-13)
 
 
