@@ -7,15 +7,13 @@ All notable changes to this project will be documented in this file. See
 
 ## [5.5.0](https://github.com/sanity-io/next-sanity/compare/v5.4.6...v5.5.0) (2023-09-13)
 
-
 ### Features
 
-* **deps:** `@sanity/client` is a regular dependency instead of a peer ([4a7dbb0](https://github.com/sanity-io/next-sanity/commit/4a7dbb0aaf715927ada2f2ecf4299dddc6f01962))
-
+- **deps:** `@sanity/client` is a regular dependency instead of a peer ([4a7dbb0](https://github.com/sanity-io/next-sanity/commit/4a7dbb0aaf715927ada2f2ecf4299dddc6f01962))
 
 ### Bug Fixes
 
-* **deps:** update dependency @sanity/client to ^6.4.11 ([#603](https://github.com/sanity-io/next-sanity/issues/603)) ([4d2790d](https://github.com/sanity-io/next-sanity/commit/4d2790de3c00b2a720cd54811b1656e237706482))
+- **deps:** update dependency @sanity/client to ^6.4.11 ([#603](https://github.com/sanity-io/next-sanity/issues/603)) ([4d2790d](https://github.com/sanity-io/next-sanity/commit/4d2790de3c00b2a720cd54811b1656e237706482))
 
 ## [5.4.6](https://github.com/sanity-io/next-sanity/compare/v5.4.5...v5.4.6) (2023-08-23)
 
