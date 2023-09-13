@@ -7,8 +7,8 @@
   ],
   "packageRules": [
     {
-      "matchDepTypes": ["peerDependencies"],
-      "matchPackageNames": ["@sanity/client"],
+      "matchDepTypes": ["dependencies"],
+      "matchPackageNames": ["@sanity/client", "@sanity/preview-kit", "@sanity/webhook"],
       "rangeStrategy": "bump",
       "semanticCommitType": "fix"
     }
