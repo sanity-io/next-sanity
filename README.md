@@ -225,9 +225,9 @@ type HomePageProps = {
 
 export async function HomeLayout({children}) {
   const home = await client.fetch<HomePageProps>(`*[_id == "home"][0]{...,navItems[]->}`,
-    next: {
+    {next: {
       revalidate: 3600 // look for updates to revalidate cache every hour
-    }
+    }}
   })
 
   return (
