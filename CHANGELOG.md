@@ -5,6 +5,13 @@
 All notable changes to this project will be documented in this file. See
 [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [5.5.5](https://github.com/sanity-io/next-sanity/compare/v5.5.4...v5.5.5) (2023-10-05)
+
+
+### Bug Fixes
+
+* **docs:** update revalidate app dir snippet ([#660](https://github.com/sanity-io/next-sanity/issues/660)) ([c6423a6](https://github.com/sanity-io/next-sanity/commit/c6423a6f1d22c48dcec2e4e0228aa4439b80f21f))
+
 ## [5.5.4](https://github.com/sanity-io/next-sanity/compare/v5.5.3...v5.5.4) (2023-09-19)
 
 
