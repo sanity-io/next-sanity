@@ -337,7 +337,7 @@ You can use this [template][webhook-template] to quickly configure the webhook f
 The code example below uses the built-in `parseBody` function to validate that the request comes from your Sanity project (using a shared secret + looking at the request headers). Then it looks at the document type information in the webhook payload and matches that against the revalidation tags in your app:
 
 ```ts
-// ./src/app/api/revalidate.ts
+// ./src/app/api/revalidate/route.ts
 import {revalidateTag} from 'next/cache'
 import {type NextRequest, NextResponse} from 'next/server'
 import {parseBody} from 'next-sanity/webhook'
@@ -361,7 +361,7 @@ export async function POST(req: NextRequest) {
 
     // If the `_type` is `page`, then all `client.fetch` calls with
     // `{next: {tags: ['page']}}` will be revalidated
-    await revalidateTag(body._type)
+    revalidateTag(body._type)
 
     return NextResponse.json({body})
   } catch (err) {
