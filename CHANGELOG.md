@@ -5,6 +5,13 @@
 All notable changes to this project will be documented in this file. See
 [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [5.5.6](https://github.com/sanity-io/next-sanity/compare/v5.5.5...v5.5.6) (2023-10-10)
+
+
+### Bug Fixes
+
+* bump `engines.node` to &gt;= 18 ([791f604](https://github.com/sanity-io/next-sanity/commit/791f6041c08ac8121baf18d9aa5c82d96f4294b2))
+
 ## [5.5.5](https://github.com/sanity-io/next-sanity/compare/v5.5.4...v5.5.5) (2023-10-05)
 
 
