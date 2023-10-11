@@ -158,7 +158,7 @@
     "lint": "eslint --max-warnings 0 .",
     "prepublishOnly": "npm run build",
     "prettier": "npx prettier --ignore-path .gitignore",
-    "test": "jest",
+    "test": "vitest",
     "test:node-esm-cjs": "node test.mjs && node test.cjs",
     "type-check": "tsc --noEmit",
     "update:icons": "cp node_modules/sanity/static/favicons/* src/studio/head"
@@ -174,10 +174,10 @@
     "singleQuote": true
   },
   "dependencies": {
+    "@sanity/client": "^6.4.9",
     "@sanity/preview-kit": "3.1.6",
     "@sanity/webhook": "3.0.1",
-    "groq": "^3.0.0",
-    "@sanity/client": "^6.5.0"
+    "groq": "^3.0.0"
   },
   "devDependencies": {
     "@next/bundle-analyzer": "^13.5.4",
@@ -188,11 +188,11 @@
     "@sanity/pkg-utils": "^3.0.0",
     "@sanity/ui": "^1.8.2",
     "@sanity/vision": "3.17.0",
-    "@types/jest": "^29.5.5",
     "@types/react": "^18.2.27",
     "@types/react-dom": "^18.2.12",
     "@types/styled-components": "^5.1.28",
     "@typescript-eslint/eslint-plugin": "^6.7.5",
+    "@vitest/coverage-v8": "^0.34.6",
     "autoprefixer": "^10.4.16",
     "eslint": "^8.51.0",
     "eslint-config-prettier": "^9.0.0",
@@ -201,8 +201,6 @@
     "eslint-plugin-prettier": "^5.0.0",
     "eslint-plugin-simple-import-sort": "^10.0.0",
     "groqd": "^0.15.9",
-    "jest": "^29.7.0",
-    "jest-environment-jsdom": "^29.7.0",
     "ls-engines": "^0.9.0",
     "next": "13.5.4",
     "postcss": "^8.4.31",
@@ -219,7 +217,9 @@
     "suspend-react": "^0.1.3",
     "tailwindcss": "^3.3.3",
     "typescript": "^5.2.2",
-    "url-loader": "^4.1.1"
+    "url-loader": "^4.1.1",
+    "vitest": "^0.34.6",
+    "vitest-github-actions-reporter": "^0.10.0"
   },
   "peerDependencies": {
     "@sanity/client": "^6.4.9",

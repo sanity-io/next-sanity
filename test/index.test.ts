@@ -1,3 +1,5 @@
+import {test, expect} from 'vitest'
+
 import * as exported from '../src'
 
 const expected = ['createClient', 'groq']
