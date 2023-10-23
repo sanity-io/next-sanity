@@ -31,7 +31,7 @@ jobs:
       # Publish to NPM on new releases
       - uses: actions/checkout@v4
         if: ${{ steps.release.outputs.releases_created }}
-      - uses: actions/setup-node@v3
+      - uses: actions/setup-node@v4
         if: ${{ steps.release.outputs.releases_created }}
         with:
           cache: npm
