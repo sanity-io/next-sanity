@@ -37,8 +37,6 @@ import type {Metadata} from 'next'
  * @public
  */
 export const metadata = {
-  // Studio implements display cutouts CSS (The iPhone Notch ™ ) and needs `viewport-fit=covered` for it to work correctly
-  viewport: 'width=device-width,initial-scale=1,viewport-fit=cover' as const,
   referrer: 'same-origin' as const,
   robots: 'noindex' as const,
 } satisfies Metadata
