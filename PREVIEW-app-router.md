@@ -48,14 +48,12 @@ export async function sanityFetch<QueryResponse>({
   }
 
   return client.fetch<QueryResponse>(query, params, {
-    cache: 'force-cache',
     ...(isDraftMode && {
-      cache: undefined,
       token: token,
       perspective: 'previewDrafts',
     }),
     next: {
-      ...(isDraftMode && {revalidate: 30}),
+      revalidate: isDraftMode ? 0 : false,
       tags,
     },
   })
