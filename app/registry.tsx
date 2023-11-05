@@ -1,9 +1,9 @@
-// https://beta.nextjs.org/docs/styling/css-in-js#styled-components
+// https://nextjs.org/docs/app/building-your-application/styling/css-in-js#styled-components
 
 'use client'
 
 import {useServerInsertedHTML} from 'next/navigation'
-import React, {useState} from 'react'
+import {useState} from 'react'
 import {ServerStyleSheet, StyleSheetManager} from 'styled-components'
 
 export default function StyledComponentsRegistry({children}: {children: React.ReactNode}) {
@@ -13,16 +13,13 @@ export default function StyledComponentsRegistry({children}: {children: React.Re
 
   useServerInsertedHTML(() => {
     const styles = styledComponentsStyleSheet.getStyleElement()
-    // @ts-expect-error -- clearTag exists but `@types/styled-components` is missing its definitions
     styledComponentsStyleSheet.instance.clearTag()
-    return styles
+    return <>{styles}</>
   })
 
-  if (typeof window !== 'undefined') return children as JSX.Element
+  if (typeof window !== 'undefined') return <>{children}</>
 
   return (
-    <StyleSheetManager sheet={styledComponentsStyleSheet.instance}>
-      {children as React.ReactNode}
-    </StyleSheetManager>
+    <StyleSheetManager sheet={styledComponentsStyleSheet.instance}>{children}</StyleSheetManager>
   )
 }
