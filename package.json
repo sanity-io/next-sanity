@@ -101,6 +101,17 @@
       "import": "./dist/studio/metadata.js",
       "default": "./dist/studio/metadata.js"
     },
+    "./studio/viewport": {
+      "types": "./dist/studio/viewport.d.ts",
+      "source": "./src/studio/viewport.ts",
+      "require": "./dist/studio/viewport.cjs",
+      "node": {
+        "module": "./dist/studio/viewport.js",
+        "import": "./dist/studio/viewport.cjs.js"
+      },
+      "import": "./dist/studio/viewport.js",
+      "default": "./dist/studio/viewport.js"
+    },
     "./webhook": {
       "types": "./dist/webhook.d.ts",
       "source": "./src/webhook/index.ts",
