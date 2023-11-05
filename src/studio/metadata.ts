@@ -1,38 +1,20 @@
 import type {Metadata} from 'next'
 
 /**
- * In Next 13 appDir mode (`/app/studio/[[...index]]/page.tsx`):
+ * In App Router segments (`/app/studio/[[...index]]/page.tsx`):
  * ```tsx
  * // If you don't want to change any defaults you can just re-export the metadata directly:
- * export {metadata} from 'next-sanity/studio'
+ * export {metadata} from 'next-sanity/studio/metadata'
  *
  * // To customize the metadata, spread it on the export:
- * import {metadata as studioMetadata} from 'next-sanity/studio'
+ * import {metadata as studioMetadata} from 'next-sanity/studio/metadata'
  * import type { Metadata } from 'next'
  *
  * export const metadata: Metadata = {
  *   ...studioMetadata,
- *   // Overrides the viewport to resize behavior
- *   viewport: `${studioMetadata.viewport}, interactive-widget=resizes-content`,
+ *   // Set another title
+ *   title: 'My Studio',
  * })
- * ```
- * If you're using Next 12 or the `pages` folder (`/pages/studio/[[...index]].tsx`):
- * ```tsx
- * import Head from 'next/head'
- * import {NextStudio, metadata} from 'next-sanity/studio'
- *
- * export default function StudioPage() {
- *   return (
- *     <>
- *       <Head>
- *         {Object.entries(metadata).map(([key, value]) => (
- *           <meta key={key} name={key} content={value} />
- *         ))}
- *       </Head>
- *       <NextStudio config={config} />
- *     </>
- *   )
- * }
  * ```
  * @public
  */

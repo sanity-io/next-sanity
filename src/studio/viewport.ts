@@ -1,13 +1,13 @@
 import type {Viewport} from 'next'
 
 /**
- * In Next 13 appDir mode (`/app/studio/[[...index]]/page.tsx`):
+ * In App Router segments (`/app/studio/[[...index]]/page.tsx`):
  * ```tsx
  * // If you don't want to change any defaults you can just re-export the viewport config directly:
- * export {viewport} from 'next-sanity/studio'
+ * export {viewport} from 'next-sanity/studio/viewport'
  *
  * // To customize the viewport config, spread it on the export:
- * import {viewport as studioViewport} from 'next-sanity/studio'
+ * import {viewport as studioViewport} from 'next-sanity/studio/viewport'
  * import type { Viewport } from 'next'
  *
  * export const viewport: Viewport = {

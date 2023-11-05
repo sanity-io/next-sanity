@@ -37,7 +37,6 @@ The official [Sanity.io][sanity] toolkit for Next.js apps.
   - [Configuring Sanity Studio on a route](#configuring-sanity-studio-on-a-route)
   - [Manual installation](#manual-installation)
   - [Studio route with App Router](#studio-route-with-app-router)
-  - [Studio Routes with Pages Router](#studio-routes-with-pages-router)
   - [Lower level control with `StudioProvider` and `StudioLayout`](#lower-level-control-with-studioprovider-and-studiolayout)
 - [Migration guides](#migration-guides)
 - [License](#license)
@@ -578,7 +577,7 @@ npx sanity@latest init
 
 ### Manual installation
 
-Make a file called `sanity.config.ts` (or `.js` for non-TypeScript projects) in the project's root (same place as `next.config.ts`) and copy the example below. Both the Next `/app` and `/pages` examples use this config file:
+Make a file called `sanity.config.ts` (or `.js` for non-TypeScript projects) in the project's root (same place as `next.config.ts`) and copy the example below:
 
 ```ts
 // ./sanity.config.ts
@@ -591,7 +590,7 @@ const projectId = process.env.NEXT_PUBLIC_SANITY_PROJECT_ID!
 const dataset = process.env.NEXT_PUBLIC_SANITY_DATASET!
 
 export default defineConfig({
-  basePath: '/admin', // <-- important that `basePath` matches the route you're mounting your studio from, it applies to both `/pages` and `/app`
+  basePath: '/admin', // <-- important that `basePath` matches the route you're mounting your studio from
 
   projectId,
   dataset,
@@ -625,6 +624,8 @@ Now you can run commands like `npx sanity cors add`. Run `npx sanity help` for a
 
 ### Studio route with App Router
 
+Even if the rest of your app is using Pages Router, you should still mount the Studio on an App Router route. [Next supports both routers in the same app.](https://nextjs.org/docs/app/building-your-application/upgrading/app-router-migration#migrating-from-pages-to-app)
+
 ```tsx
 // ./src/app/studio/[[...index]]/page.tsx
 import {Studio} from './Studio'
@@ -634,6 +635,7 @@ export const dynamic = 'force-static'
 
 // Set the right `viewport`, `robots` and `referer` meta tags
 export {metadata} from 'next-sanity/studio/metadata'
+export {viewport} from 'next-sanity/studio/viewport'
 
 export default function StudioPage() {
   return <Studio />
@@ -659,43 +661,27 @@ How to customize meta tags:
 ```tsx
 // ./src/app/studio/[[...index]]/page.tsx
 import type {Metadata} from 'next'
+import type {Viewport} from 'next'
 import {metadata as studioMetadata} from 'next-sanity/studio/metadata'
+import {viewport as studioViewport} from 'next-sanity/studio/viewport'
 
 import {Studio} from './Studio'
 
 // Set the right `viewport`, `robots` and `referer` meta tags
 export const metadata: Metadata = {
   ...studioMetadata,
-  // Overrides the viewport to resize behavior
-  viewport: `${studioMetadata.viewport}, interactive-widget=resizes-content`,
+  // Overrides the title until the Studio is loaded
+  title: 'Loading Studio…',
 }
+
+ export const viewport: Viewport = {
+   ...studioViewport,
+   // Overrides the viewport to resize behavior
+   interactiveWidget: 'resizes-content'
+ })
 
 export default function StudioPage() {
   return <Studio />
-}
-```
-
-### Studio Routes with Pages Router
-
-```tsx
-// ./pages/studio/[[...index]].tsx
-import Head from 'next/head'
-import {NextStudio} from 'next-sanity/studio'
-import {metadata} from 'next-sanity/studio/metadata'
-
-import config from '../../sanity.config'
-
-export default function StudioPage() {
-  return (
-    <>
-      <Head>
-        {Object.entries(metadata).map(([key, value]) => (
-          <meta key={key} name={key} content={value} />
-        ))}
-      </Head>
-      <NextStudio config={config} />
-    </>
-  )
 }
 ```
 
@@ -704,6 +690,8 @@ export default function StudioPage() {
 If you want to go to a lower level and have more control over the Studio, you can pass `StudioProvider` and `StudioLayout` from `sanity` as `children`:
 
 ```tsx
+'use client'
+
 import {NextStudio} from 'next-sanity/studio'
 import {StudioProvider, StudioLayout} from 'sanity'
 
@@ -723,6 +711,7 @@ function StudioPage() {
 
 ## Migration guides
 
+- [From `v5` to `v6`][migrate-v5-to-v6]
 - From `v4` to `v5`
   - [`app-router`][migrate-v4-to-v5-app]
   - [`pages-router`][migrate-v4-to-v5-pages]
@@ -748,6 +737,7 @@ MIT-licensed. See [LICENSE][LICENSE].
 [migrate-v1-to-v4]: ./MIGRATE-v1-to-v4.md
 [migrate-v4-to-v5-app]: ./MIGRATE-v4-to-v5-pages-app-router.md
 [migrate-v4-to-v5-pages]: ./MIGRATE-v4-to-v5-pages-pages-router.md
+[migrate-v5-to-v6]: ./MIGRATE-v5-to-v6.md
 [next-cache]: https://nextjs.org/docs/app/building-your-application/caching
 [next-data-fetching]: https://nextjs.org/docs/basic-features/data-fetching/overview
 [next-preview-mode]: https://nextjs.org/docs/advanced-features/preview-mode
