@@ -2,8 +2,10 @@ import withBundleAnalyzer from '@next/bundle-analyzer'
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  experimental: {
-    logging: 'verbose',
+  logging: {
+    fetches: {
+      fullUrl: true,
+    },
   },
   productionBrowserSourceMaps: true,
 

@@ -415,9 +415,9 @@ To aid in debugging and understanding what's in the cache, revalidated, skipped,
 ```js
 // ./next.config.js
 module.exports = {
-  experimental: {
-    logging: {
-      level: 'verbose',
+  logging: {
+    fetches: {
+      fullUrl: true,
     },
   },
 }
