@@ -5,6 +5,13 @@ on:
   push:
     branches:
       - main
+  workflow_dispatch:
+    inputs:
+      publish:
+        description: Publish to NPM
+        required: true
+        default: false
+        type: boolean
 
 permissions:
   contents: read
@@ -30,20 +37,20 @@ jobs:
 
       # Publish to NPM on new releases
       - uses: actions/checkout@v4
-        if: ${{ steps.release.outputs.releases_created }}
+        if: ${{ steps.release.outputs.releases_created || github.event.inputs.publish == 'true' }}
       - uses: actions/setup-node@v4
-        if: ${{ steps.release.outputs.releases_created }}
+        if: ${{ steps.release.outputs.releases_created || github.event.inputs.publish == 'true' }}
         with:
           cache: npm
           node-version: lts/*
           registry-url: 'https://registry.npmjs.org'
-      - run: npm ci --ignore-scripts
-        if: ${{ steps.release.outputs.releases_created }}
+      - run: npm clean-install --ignore-scripts
+        if: ${{ steps.release.outputs.releases_created || github.event.inputs.publish == 'true' }}
       - run: npm audit signatures
-        if: ${{ steps.release.outputs.releases_created }}
+        if: ${{ steps.release.outputs.releases_created || github.event.inputs.publish == 'true' }}
       # Release Please has already incremented versions and published tags, so we just
       # need to publish the new version to npm here
       - run: npm publish --provenance
-        if: ${{ steps.release.outputs.releases_created }}
+        if: ${{ steps.release.outputs.releases_created || github.event.inputs.publish == 'true' }}
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_PUBLISH_TOKEN }}
