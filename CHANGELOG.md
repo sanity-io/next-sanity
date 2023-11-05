@@ -5,6 +5,25 @@
 All notable changes to this project will be documented in this file. See
 [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [6.0.0](https://github.com/sanity-io/next-sanity/compare/v5.5.10...v6.0.0) (2023-11-05)
+
+
+### ⚠ BREAKING CHANGES
+
+* drop support for Next v13
+* add support for Next.js 14 viewport object ([#718](https://github.com/sanity-io/next-sanity/issues/718))
+
+### Features
+
+* add support for Next.js 14 viewport object ([#718](https://github.com/sanity-io/next-sanity/issues/718)) ([f46f091](https://github.com/sanity-io/next-sanity/commit/f46f091e5e31c6f9d317665b6006bdd87e389228))
+
+
+### Bug Fixes
+
+* **deps:** update dependency @sanity/client to ^6.7.1 ([7322ade](https://github.com/sanity-io/next-sanity/commit/7322adee1adbd465d252c174e1459688c90693ca))
+* drop support for Next v13 ([030bf16](https://github.com/sanity-io/next-sanity/commit/030bf16324089fa211042b018a7b332d0a14e9cf))
+* **README:** add migration guide for v6 ([74f10ba](https://github.com/sanity-io/next-sanity/commit/74f10ba215ae79930598ec4ae23c409fb03ec976))
+
 ## [5.5.10](https://github.com/sanity-io/next-sanity/compare/v5.5.9...v5.5.10) (2023-10-27)
 
 
