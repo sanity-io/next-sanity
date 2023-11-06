@@ -5,6 +5,13 @@
 All notable changes to this project will be documented in this file. See
 [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [6.0.1](https://github.com/sanity-io/next-sanity/compare/v6.0.0...v6.0.1) (2023-11-06)
+
+
+### Bug Fixes
+
+* add missing viewport type to package.json ([#730](https://github.com/sanity-io/next-sanity/issues/730)) ([c55193a](https://github.com/sanity-io/next-sanity/commit/c55193a5661d22f475a06f3dd71865b2e97ef27f))
+
 ## [6.0.0](https://github.com/sanity-io/next-sanity/compare/v5.5.10...v6.0.0) (2023-11-05)
 
 
