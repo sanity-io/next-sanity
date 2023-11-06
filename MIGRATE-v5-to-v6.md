@@ -15,9 +15,6 @@ export {metadata} from 'next-sanity/studio/metadata'
 
 For Pages Router:
 
-// Studio implements display cutouts CSS (The iPhone Notch ™ ) and needs `viewport-fit=covered` for it to work correctly
-viewport: 'width=device-width,initial-scale=1,viewport-fit=cover' as const,
-
 ```diff
 // ./pages/studio/[[...index]].tsx
 import Head from 'next/head'
