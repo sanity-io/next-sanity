@@ -1,6 +1,7 @@
+/* eslint-disable no-restricted-globals */
 /* eslint-disable no-process-env */
-import {visionTool} from '@sanity/vision'
 import {presentationTool} from '@sanity/presentation'
+import {visionTool} from '@sanity/vision'
 import {defineConfig} from 'sanity'
 import {deskTool} from 'sanity/desk'
 
