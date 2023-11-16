@@ -1,5 +1,6 @@
 /* eslint-disable no-process-env */
 import {visionTool} from '@sanity/vision'
+import {presentationTool} from '@sanity/presentation'
 import {defineConfig} from 'sanity'
 import {deskTool} from 'sanity/desk'
 
@@ -15,7 +16,18 @@ export default defineConfig({
   projectId,
   dataset,
 
-  plugins: [deskTool(), visionTool()],
+  plugins: [
+    deskTool(),
+    presentationTool({
+      previewUrl: {
+        origin: typeof location === 'undefined' ? 'http://localhost:3000' : location.origin,
+        draftMode: {
+          enable: '/api/draft',
+        },
+      },
+    }),
+    visionTool(),
+  ],
 
   schema: {
     types: schemaTypes,

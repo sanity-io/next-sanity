@@ -9,4 +9,5 @@ export const client = createClient({
   perspective: 'published',
   studioUrl: '/studio',
   logger: console,
+  encodeSourceMap: true,
 })
