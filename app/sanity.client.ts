@@ -10,4 +10,5 @@ export const client = createClient({
   studioUrl: '/studio',
   logger: console,
   encodeSourceMap: true,
+  resultSourceMap: 'withKeyArraySelector',
 })
