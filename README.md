@@ -678,7 +678,7 @@ export const metadata: Metadata = {
    ...studioViewport,
    // Overrides the viewport to resize behavior
    interactiveWidget: 'resizes-content'
- })
+ }
 
 export default function StudioPage() {
   return <Studio />
