@@ -674,11 +674,11 @@ export const metadata: Metadata = {
   title: 'Loading Studio…',
 }
 
- export const viewport: Viewport = {
-   ...studioViewport,
-   // Overrides the viewport to resize behavior
-   interactiveWidget: 'resizes-content'
- }
+export const viewport: Viewport = {
+  ...studioViewport,
+  // Overrides the viewport to resize behavior
+  interactiveWidget: 'resizes-content',
+}
 
 export default function StudioPage() {
   return <Studio />
