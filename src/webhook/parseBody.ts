@@ -50,12 +50,6 @@ export async function parseBody<Body = SanityDocument>(
   secret?: string,
   waitForContentLakeEventualConsistency: boolean = true,
 ): Promise<ParsedBody<Body>> {
-  // @ts-expect-error -- add global typings for EdgeRuntime
-  if (typeof EdgeRuntime !== 'undefined') {
-    throw new TypeError(
-      `The edge runtime isn't supported. You'll have to use the 'nodejs' runtime until the underlying \`@sanity/webhook\` package is updated to support it.`,
-    )
-  }
   return 'text' in req
     ? parseAppBody(req, secret, waitForContentLakeEventualConsistency)
     : parsePageBody(req, secret, waitForContentLakeEventualConsistency)
@@ -82,7 +76,7 @@ async function parsePageBody<Body = SanityDocument>(
   }
 
   const body = await readBody(req)
-  const validSignature = secret ? isValidSignature(body, signature, secret.trim()) : null
+  const validSignature = secret ? await isValidSignature(body, signature, secret.trim()) : null
 
   if (validSignature !== false && waitForContentLakeEventualConsistency) {
     await new Promise((resolve) => setTimeout(resolve, 1000))
@@ -117,10 +111,10 @@ export async function parseAppBody<Body = SanityDocument>(
   }
 
   const body = await req.text()
-  const validSignature = secret ? isValidSignature(body, signature, secret.trim()) : null
+  const validSignature = secret ? await isValidSignature(body, signature, secret.trim()) : null
 
   if (validSignature !== false && waitForContentLakeEventualConsistency) {
-    await new Promise((resolve) => setTimeout(resolve, 1000))
+    await new Promise((resolve) => setTimeout(resolve, 3000))
   }
 
   return {
