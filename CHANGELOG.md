@@ -5,6 +5,19 @@
 All notable changes to this project will be documented in this file. See
 [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [6.1.0](https://github.com/sanity-io/next-sanity/compare/v6.0.5...v6.1.0) (2023-11-27)
+
+
+### Features
+
+* **webhook:** the edge runtime is now supported ([fb75313](https://github.com/sanity-io/next-sanity/commit/fb75313362bb9f346d50791d87b4ea28adae6d88))
+
+
+### Bug Fixes
+
+* **deps:** update dependency @sanity/preview-kit to v4.0.1 ([#759](https://github.com/sanity-io/next-sanity/issues/759)) ([f44659d](https://github.com/sanity-io/next-sanity/commit/f44659d3e3d2d7e8ab4e118abb377ac21bd0c3fa))
+* **deps:** update dependency @sanity/webhook to v4 ([#767](https://github.com/sanity-io/next-sanity/issues/767)) ([b339cfe](https://github.com/sanity-io/next-sanity/commit/b339cfe56ad9ae768ae2a6a42424b361609dbf18))
+
 ## [6.0.5](https://github.com/sanity-io/next-sanity/compare/v6.0.4...v6.0.5) (2023-11-17)
 
 
