@@ -1,2 +1,1 @@
-export * from '@sanity/preview-kit/live-query'
-export {default} from '@sanity/preview-kit/live-query'
+export {LiveQuery as default, LiveQuery} from '@sanity/preview-kit/live-query'
