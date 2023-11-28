@@ -355,7 +355,7 @@ export async function POST(req: NextRequest) {
 
     if (!body?._type) {
       const message = 'Bad Request'
-      return new Response({message, body}, {status: 400})
+      return new Response(JSON.stringify({message, body}), {status: 400})
     }
 
     // If the `_type` is `page`, then all `client.fetch` calls with
