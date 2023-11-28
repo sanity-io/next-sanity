@@ -5,6 +5,14 @@
 All notable changes to this project will be documented in this file. See
 [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [6.1.1](https://github.com/sanity-io/next-sanity/compare/v6.1.0...v6.1.1) (2023-11-28)
+
+
+### Bug Fixes
+
+* **deps:** update dependency @sanity/client to ^6.9.0 ([#775](https://github.com/sanity-io/next-sanity/issues/775)) ([b4aba41](https://github.com/sanity-io/next-sanity/commit/b4aba4199b7d380d69eeee7a0cace60bedc83fce))
+* resolve `ReferenceError: liveQuery__namespace is not defined` error in pages router ([e0ea8ca](https://github.com/sanity-io/next-sanity/commit/e0ea8ca5dd027bac9e50a20ea7561cdbda7f3a76))
+
 ## [6.1.0](https://github.com/sanity-io/next-sanity/compare/v6.0.5...v6.1.0) (2023-11-27)
 
 
