@@ -5,6 +5,19 @@
 All notable changes to this project will be documented in this file. See
 [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [7.0.0](https://github.com/sanity-io/next-sanity/compare/v6.1.3...v7.0.0) (2023-11-29)
+
+
+### ⚠ BREAKING CHANGES
+
+* remove the deprecated `next-sanity/studio/head` export
+* **deps:** update dependency @sanity/preview-kit to v5 ([#782](https://github.com/sanity-io/next-sanity/issues/782))
+
+### Bug Fixes
+
+* **deps:** update dependency @sanity/preview-kit to v5 ([#782](https://github.com/sanity-io/next-sanity/issues/782)) ([b2eb9cf](https://github.com/sanity-io/next-sanity/commit/b2eb9cf50879cbd0b3493cd3eb7ac2a70c6839e7))
+* remove the deprecated `next-sanity/studio/head` export ([130a1ec](https://github.com/sanity-io/next-sanity/commit/130a1ec6d15c460585c81426efce27c87cc4f8db))
+
 ## [6.1.3](https://github.com/sanity-io/next-sanity/compare/v6.1.2...v6.1.3) (2023-11-29)
 
 
