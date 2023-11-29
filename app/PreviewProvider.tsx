@@ -1,9 +1,8 @@
 'use client'
 
-import dynamic from 'next/dynamic'
+import {LiveQueryProvider} from 'src/preview'
 import {suspend} from 'suspend-react'
 
-const LiveQueryProvider = dynamic(() => import('src/preview'))
 // suspend-react cache is global, so we use a unique key to avoid collisions
 const UniqueKey = Symbol('./sanity.client')
 

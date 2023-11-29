@@ -2,6 +2,7 @@
 import {unstable__adapter, unstable__environment} from '@sanity/client'
 import {draftMode} from 'next/headers'
 import Link from 'next/link'
+import {Suspense} from 'react'
 
 import Posts from './Posts'
 
@@ -42,7 +43,9 @@ export default function IndexPage() {
               </>
             )}
           </div>
-          <Posts />
+          <Suspense>
+            <Posts />
+          </Suspense>
         </div>
       </div>
       <div className="text-center">
