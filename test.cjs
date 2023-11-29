@@ -32,11 +32,6 @@ assert.equal(typeof NextStudioNoScript, 'function')
 assert.equal(typeof usePrefersColorScheme, 'function')
 assert.equal(typeof useTheme, 'function')
 
-// Testing pkg.exports[./studio/head]
-const nextSanityStudioHead = require('next-sanity/studio/head')
-const {NextStudioHead} = nextSanityStudioHead
-assert.equal(typeof NextStudioHead, 'function')
-
 // Testing pkg.exports[./studio/loading]
 const nextSanityStudioLoading = require('next-sanity/studio/loading')
 const {NextStudioLoading} = nextSanityStudioLoading

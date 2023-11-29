@@ -68,17 +68,6 @@
       "import": "./dist/studio/index.js",
       "default": "./dist/studio/index.js"
     },
-    "./studio/head": {
-      "types": "./dist/studio/head.d.ts",
-      "source": "./src/studio/head/index.ts",
-      "require": "./dist/studio/head.cjs",
-      "node": {
-        "module": "./dist/studio/head.js",
-        "import": "./dist/studio/head.cjs.js"
-      },
-      "import": "./dist/studio/head.js",
-      "default": "./dist/studio/head.js"
-    },
     "./studio/loading": {
       "types": "./dist/studio/loading.d.ts",
       "source": "./src/studio/loading.ts",
@@ -140,9 +129,6 @@
       "studio": [
         "./dist/studio/index.d.ts"
       ],
-      "studio/head": [
-        "./dist/studio/head.d.ts"
-      ],
       "studio/loading": [
         "./dist/studio/loading.d.ts"
       ],
@@ -174,8 +160,7 @@
     "prettier": "npx prettier --ignore-path .gitignore",
     "test": "vitest",
     "test:node-esm-cjs": "node test.mjs && node test.cjs",
-    "type-check": "tsc --noEmit",
-    "update:icons": "cp node_modules/sanity/static/favicons/* src/studio/head"
+    "type-check": "tsc --noEmit"
   },
   "browserslist": [
     "> 0.2% and supports es6-module and supports es6-module-dynamic-import and not dead and not IE 11",
@@ -197,7 +182,6 @@
     "@next/bundle-analyzer": "^14.0.3",
     "@next/eslint-plugin-next": "14.0.3",
     "@rollup/plugin-terser": "^0.4.4",
-    "@rollup/plugin-url": "^8.0.2",
     "@sanity/eslint-config-studio": "^3.0.1",
     "@sanity/image-url": "^1.0.2",
     "@sanity/overlays": "2.0.4",

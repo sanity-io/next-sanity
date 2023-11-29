@@ -31,10 +31,6 @@ assert.equal(typeof NextStudioNoScript, 'function')
 assert.equal(typeof usePrefersColorScheme, 'function')
 assert.equal(typeof useTheme, 'function')
 
-// Testing pkg.exports[./studio/head]
-import {NextStudioHead} from 'next-sanity/studio/head'
-assert.equal(typeof NextStudioHead, 'function')
-
 // Testing pkg.exports[./studio/loading]
 import {NextStudioLoading} from 'next-sanity/studio/loading'
 assert.equal(typeof NextStudioLoading, 'function')

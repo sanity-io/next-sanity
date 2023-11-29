@@ -3,20 +3,12 @@ import {defineConfig} from '@sanity/pkg-utils'
 
 const MODULE_PATHES_WHICH_USE_CLIENT_DIRECTIVE_SHOULD_BE_ADDED = ['NextStudioLoading.tsx']
 
-import url from '@rollup/plugin-url'
-import path from 'path'
-
 export default defineConfig({
   tsconfig: 'tsconfig.build.json',
   // Overriding the minify logiic in order to disable `compress: {directives: false}`
   minify: false,
   rollup: {
     plugins: [
-      url({
-        fileName: '[dirname][hash][extname]',
-        sourceDir: path.join(__dirname, 'src'),
-        include: ['**/*.ico', '**/*.svg', '**/*.png'],
-      }),
       terser({
         compress: {directives: false},
         output: {

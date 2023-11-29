@@ -26,9 +26,6 @@ jobs:
           cache: npm
       - run: npm ci
       - run: npm run lint
-      # @TODO find out how to make this command work on the CI
-      #- run: npm run update:icons
-      #  if: github.event.inputs.test != 'false'
       - run: npm run prepublishOnly
       - run: npm run test:node-esm-cjs
         name: Test if Node.js ESM native modes works, without breaking CJS modes

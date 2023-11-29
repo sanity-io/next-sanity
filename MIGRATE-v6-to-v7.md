@@ -27,3 +27,7 @@ Otherwise you'll see an error like this:
 ```
 Error: Element type is invalid. Received a promise that resolves to: [object Object]. Lazy element type must resolve to a class or function. Did you wrap a component in React.lazy() more than once?
 ```
+
+### The deprecated `next-sanity/studio/head` export has been removed
+
+Migrate to using `export {metadata} from 'next-sanity/studio/metadata'` and `export {viewport} from 'next-sanity/studio/viewport'` in your `page.tsx` instead.
