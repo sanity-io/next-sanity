@@ -2,6 +2,9 @@
 
 The official [Sanity.io][sanity] toolkit for Next.js apps.
 
+> [!IMPORTANT]  
+> You're looking at the README for v7, the README for [v6 is available here.](https://github.com/sanity-io/next-sanity/tree/v6?tab=readme-ov-file#next-sanity)
+
 **Features:**
 
 - The [Sanity Client][sanity-client] fully compatible with [Next.js’ caching features][next-cache]
@@ -711,6 +714,7 @@ function StudioPage() {
 
 ## Migration guides
 
+- [From `v6` to `v7`][migrate-v6-to-v7]
 - [From `v5` to `v6`][migrate-v5-to-v6]
 - From `v4` to `v5`
   - [`app-router`][migrate-v4-to-v5-app]
@@ -738,6 +742,7 @@ MIT-licensed. See [LICENSE][LICENSE].
 [migrate-v4-to-v5-app]: ./MIGRATE-v4-to-v5-pages-app-router.md
 [migrate-v4-to-v5-pages]: ./MIGRATE-v4-to-v5-pages-pages-router.md
 [migrate-v5-to-v6]: ./MIGRATE-v5-to-v6.md
+[migrate-v6-to-v7]: ./MIGRATE-v6-to-v7.md
 [next-cache]: https://nextjs.org/docs/app/building-your-application/caching
 [next-data-fetching]: https://nextjs.org/docs/basic-features/data-fetching/overview
 [next-preview-mode]: https://nextjs.org/docs/advanced-features/preview-mode
