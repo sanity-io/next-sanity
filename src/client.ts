@@ -16,8 +16,7 @@ export interface ClientConfig extends Omit<_ClientConfig, 'studioUrl' | 'encodeS
    */
   studioUrl?: _ClientConfig['studioUrl']
   /**
-   * If there's no `studioUrl` then the default value is `none` and the normal `@sanity/client` will be used. If `studioUrl` is set, then it's `auto` by default.
-   * @defaultValue process.env.MEXT_PUBLIC_SANITY_SOURCE_MAP || studioUrl ? 'auto' : 'none'
+   * @defaultValue false
    * @alpha
    */
   encodeSourceMap?: _ClientConfig['encodeSourceMap']
@@ -33,7 +32,7 @@ export function createClient(config: ClientConfig): SanityClient {
   let {
     // eslint-disable-next-line prefer-const, no-process-env
     studioUrl = process.env.NEXT_PUBLIC_SANITY_STUDIO_URL! as _ClientConfig['studioUrl'],
-    encodeSourceMap = (studioUrl ? 'auto' : false) satisfies _ClientConfig['encodeSourceMap'],
+    encodeSourceMap = false,
   } = config
   // eslint-disable-next-line no-process-env
   if (encodeSourceMap === 'auto' && process.env.NEXT_PUBLIC_VERCEL_ENV === 'preview') {
