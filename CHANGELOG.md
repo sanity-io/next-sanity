@@ -5,6 +5,14 @@
 All notable changes to this project will be documented in this file. See
 [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [7.0.1](https://github.com/sanity-io/next-sanity/compare/v7.0.0...v7.0.1) (2023-12-01)
+
+
+### Bug Fixes
+
+* **deps:** update dependency @sanity/preview-kit to v5.0.1 ([#790](https://github.com/sanity-io/next-sanity/issues/790)) ([4949905](https://github.com/sanity-io/next-sanity/commit/4949905cdf54e0c923e59fb5e914409ad42c1972))
+* set `encodeSourceMap` to `false` instead of `auto` by default ([#792](https://github.com/sanity-io/next-sanity/issues/792)) ([6827784](https://github.com/sanity-io/next-sanity/commit/6827784c77f9ef13ef2c40bfe9ac28adb1725592))
+
 ## [7.0.0](https://github.com/sanity-io/next-sanity/compare/v6.1.3...v7.0.0) (2023-11-29)
 
 
