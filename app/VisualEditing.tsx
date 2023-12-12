@@ -14,8 +14,6 @@ export default function VisualEditing() {
   }, [router])
   useEffect(() => {
     const disable = enableOverlays({
-      // eslint-disable-next-line no-restricted-globals
-      allowStudioOrigin: location.origin,
       history: {
         // eslint-disable-next-line no-shadow
         subscribe: (navigate) => {
