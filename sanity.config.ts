@@ -21,7 +21,6 @@ export default defineConfig({
     deskTool(),
     presentationTool({
       previewUrl: {
-        origin: typeof location === 'undefined' ? 'http://localhost:3000' : location.origin,
         draftMode: {
           enable: '/api/draft',
         },
