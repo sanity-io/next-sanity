@@ -5,6 +5,13 @@
 All notable changes to this project will be documented in this file. See
 [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [7.0.5](https://github.com/sanity-io/next-sanity/compare/v7.0.4...v7.0.5) (2023-12-22)
+
+
+### Bug Fixes
+
+* **deps:** widen @sanity/ui peer dependency range ([#842](https://github.com/sanity-io/next-sanity/issues/842)) ([14d4765](https://github.com/sanity-io/next-sanity/commit/14d47652875575892d7c83d2cf3af78a9884fb43))
+
 ## [7.0.4](https://github.com/sanity-io/next-sanity/compare/v7.0.3...v7.0.4) (2023-12-12)
 
 
