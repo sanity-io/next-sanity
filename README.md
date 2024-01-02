@@ -739,8 +739,8 @@ MIT-licensed. See [LICENSE][LICENSE].
 [image-url]: https://www.sanity.io/docs/presenting-images?utm_source=github&utm_medium=readme&utm_campaign=next-sanity
 [LICENSE]: LICENSE
 [migrate-v1-to-v4]: ./MIGRATE-v1-to-v4.md
-[migrate-v4-to-v5-app]: ./MIGRATE-v4-to-v5-pages-app-router.md
-[migrate-v4-to-v5-pages]: ./MIGRATE-v4-to-v5-pages-pages-router.md
+[migrate-v4-to-v5-app]: ./MIGRATE-v4-to-v5-app-router.md
+[migrate-v4-to-v5-pages]: ./MIGRATE-v4-to-v5-pages-router.md
 [migrate-v5-to-v6]: ./MIGRATE-v5-to-v6.md
 [migrate-v6-to-v7]: ./MIGRATE-v6-to-v7.md
 [next-cache]: https://nextjs.org/docs/app/building-your-application/caching
