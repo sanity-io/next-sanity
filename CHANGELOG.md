@@ -5,6 +5,13 @@
 All notable changes to this project will be documented in this file. See
 [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [7.0.10](https://github.com/sanity-io/next-sanity/compare/v7.0.9...v7.0.10) (2024-01-11)
+
+
+### Bug Fixes
+
+* add `unstable__adapter` and `unstable__environment` exports ([f35a00f](https://github.com/sanity-io/next-sanity/commit/f35a00f69111bae6b65911e032e68df6f02125e0))
+
 ## [7.0.9](https://github.com/sanity-io/next-sanity/compare/v7.0.8...v7.0.9) (2024-01-10)
 
 
