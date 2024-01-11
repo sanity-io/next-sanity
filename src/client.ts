@@ -3,6 +3,7 @@ import {
   type PreviewKitClientConfig,
 } from '@sanity/preview-kit/client'
 
+export {unstable__adapter, unstable__environment} from '@sanity/client'
 export type * from '@sanity/preview-kit/client'
 
 /** @public */
