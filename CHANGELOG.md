@@ -5,6 +5,14 @@
 All notable changes to this project will be documented in this file. See
 [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [7.0.11](https://github.com/sanity-io/next-sanity/compare/v7.0.10...v7.0.11) (2024-01-19)
+
+
+### Bug Fixes
+
+* **deps:** bump next to `v14.1.x` ([ff4e80a](https://github.com/sanity-io/next-sanity/commit/ff4e80ab92a9745b00ffffb9bfda3df87f8c1288))
+* **deps:** bump sanity to `v3.25.x` ([c1d8d62](https://github.com/sanity-io/next-sanity/commit/c1d8d6245d5abf9c95f6a458de2b655dbcd17e77))
+
 ## [7.0.10](https://github.com/sanity-io/next-sanity/compare/v7.0.9...v7.0.10) (2024-01-11)
 
 
