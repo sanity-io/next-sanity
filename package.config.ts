@@ -32,8 +32,8 @@ export default defineConfig({
       preserveModulesRoot: 'src',
       banner: (chunkInfo) => {
         if (
-          MODULE_PATHES_WHICH_USE_CLIENT_DIRECTIVE_SHOULD_BE_ADDED.find(
-            (modulePath) => chunkInfo.facadeModuleId?.endsWith(modulePath),
+          MODULE_PATHES_WHICH_USE_CLIENT_DIRECTIVE_SHOULD_BE_ADDED.find((modulePath) =>
+            chunkInfo.facadeModuleId?.endsWith(modulePath),
           )
         ) {
           return `"use client"`
