@@ -54,4 +54,4 @@ jobs:
           cache: npm
       - run: npm i
       - run: npm test
-      - run: npx ls-engines --peer
+      - run: npx ls-engines --no-production
