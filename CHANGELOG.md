@@ -5,6 +5,13 @@
 All notable changes to this project will be documented in this file. See
 [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [7.0.15](https://github.com/sanity-io/next-sanity/compare/v7.0.14...v7.0.15) (2024-01-25)
+
+
+### Bug Fixes
+
+* **deps:** update dependency @sanity/webhook to v4.0.1 ([#928](https://github.com/sanity-io/next-sanity/issues/928)) ([2a7f478](https://github.com/sanity-io/next-sanity/commit/2a7f478239bacf662bc59ade094e252140a78d16))
+
 ## [7.0.14](https://github.com/sanity-io/next-sanity/compare/v7.0.13...v7.0.14) (2024-01-25)
 
 
