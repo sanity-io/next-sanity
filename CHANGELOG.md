@@ -5,6 +5,16 @@
 All notable changes to this project will be documented in this file. See
 [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [7.0.14](https://github.com/sanity-io/next-sanity/compare/v7.0.13...v7.0.14) (2024-01-25)
+
+
+### Bug Fixes
+
+* add back beta peer dep range for `@sanity/ui` ([b0520e9](https://github.com/sanity-io/next-sanity/commit/b0520e9db4151e5f93848682ab8ff51fce8f0577)), closes [#920](https://github.com/sanity-io/next-sanity/issues/920)
+* **deps:** update dependency @sanity/client to ^6.11.3 ([#921](https://github.com/sanity-io/next-sanity/issues/921)) ([a45202e](https://github.com/sanity-io/next-sanity/commit/a45202e946946ac722f1e472e26c5f22e434ff69))
+* **deps:** update dependency @sanity/preview-kit to v5.0.13 ([#922](https://github.com/sanity-io/next-sanity/issues/922)) ([4d5d343](https://github.com/sanity-io/next-sanity/commit/4d5d3439bc115723c3e2b625885b2a706df7acec))
+* **deps:** update dependency @sanity/webhook to v4.0.1 ([#925](https://github.com/sanity-io/next-sanity/issues/925)) ([42a6736](https://github.com/sanity-io/next-sanity/commit/42a6736ca042d387c6f714702ee2c36f2c52f9ef))
+
 ## [7.0.13](https://github.com/sanity-io/next-sanity/compare/v7.0.12...v7.0.13) (2024-01-25)
 
 
