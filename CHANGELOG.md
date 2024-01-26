@@ -5,6 +5,18 @@
 All notable changes to this project will be documented in this file. See
 [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [7.0.15](https://github.com/sanity-io/next-sanity/compare/v7.0.14...v7.0.15) (2024-01-26)
+
+
+### Bug Fixes
+
+* **deps:** update dependency @sanity/client to ^6.12.0 ([#935](https://github.com/sanity-io/next-sanity/issues/935)) ([e66c335](https://github.com/sanity-io/next-sanity/commit/e66c3357e6d45f6347bd26f06b02ae4e7c695cd4))
+* **deps:** update dependency @sanity/client to ^6.12.1 ([#936](https://github.com/sanity-io/next-sanity/issues/936)) ([0e2803b](https://github.com/sanity-io/next-sanity/commit/0e2803bf9acf2635534ecff01422d1b95168c950))
+* **deps:** update dependency @sanity/preview-kit to v5.0.14 ([#930](https://github.com/sanity-io/next-sanity/issues/930)) ([47cf047](https://github.com/sanity-io/next-sanity/commit/47cf047aaedd922ea31686ae028495c2f8deefd3))
+* **deps:** update dependency @sanity/preview-kit to v5.0.15 ([#932](https://github.com/sanity-io/next-sanity/issues/932)) ([585eccb](https://github.com/sanity-io/next-sanity/commit/585eccb553f0a2b3310fa02a70be2075b4299359))
+* **deps:** update dependency @sanity/preview-kit to v5.0.17 ([#937](https://github.com/sanity-io/next-sanity/issues/937)) ([74014d6](https://github.com/sanity-io/next-sanity/commit/74014d6b1e698c3fa0ad094b36cdfab9ffad8598))
+* **deps:** update dependency @sanity/webhook to v4.0.1 ([#928](https://github.com/sanity-io/next-sanity/issues/928)) ([2a7f478](https://github.com/sanity-io/next-sanity/commit/2a7f478239bacf662bc59ade094e252140a78d16))
+
 ## [7.0.14](https://github.com/sanity-io/next-sanity/compare/v7.0.13...v7.0.14) (2024-01-25)
 
 
