@@ -162,11 +162,12 @@
     "test:node-esm-cjs": "node test.mjs && node test.cjs",
     "type-check": "tsc --noEmit"
   },
-  "browserslist": [
-    "> 0.2% and supports es6-module and supports es6-module-dynamic-import and not dead and not IE 11",
-    "maintained node versions"
-  ],
+  "browserslist": "extends @sanity/browserslist-config",
   "prettier": {
+    "plugins": [
+      "prettier-plugin-packagejson",
+      "prettier-plugin-tailwindcss"
+    ],
     "bracketSpacing": false,
     "printWidth": 98,
     "semi": false,
@@ -175,17 +176,18 @@
   "dependencies": {
     "@sanity/client": "^6.12.1",
     "@sanity/preview-kit": "5.0.17",
-    "@sanity/webhook": "4.0.1",
+    "@sanity/webhook": "4.0.0",
     "groq": "^3.19"
   },
   "devDependencies": {
     "@next/bundle-analyzer": "^14.1.0",
     "@next/eslint-plugin-next": "14.1.0",
     "@rollup/plugin-terser": "^0.4.4",
+    "@sanity/browserslist-config": "^1.0.0",
     "@sanity/eslint-config-studio": "^3.0.1",
     "@sanity/image-url": "^1.0.2",
     "@sanity/overlays": "2.3.8",
-    "@sanity/pkg-utils": "^4.1.0",
+    "@sanity/pkg-utils": "^4.1.1",
     "@sanity/ui": "^2.0.1",
     "@sanity/vision": "3.26.1",
     "@types/react": "^18.2.48",
