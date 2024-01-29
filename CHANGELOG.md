@@ -5,6 +5,17 @@
 All notable changes to this project will be documented in this file. See
 [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [7.0.16](https://github.com/sanity-io/next-sanity/compare/v7.0.15...v7.0.16) (2024-01-29)
+
+
+### Bug Fixes
+
+* **deps:** add back v1 `@sanity/ui` range to peers to support older plugins ([8ae54c4](https://github.com/sanity-io/next-sanity/commit/8ae54c4a7af3bb51036c5557e5bd791d73558988))
+* **deps:** downgrade webhooks package to solve engines warning ([#943](https://github.com/sanity-io/next-sanity/issues/943)) ([b35ffd3](https://github.com/sanity-io/next-sanity/commit/b35ffd35558335f887e936c21ecc5a8524505636))
+* **deps:** update dependency @sanity/client to ^6.12.2 ([14e7c9b](https://github.com/sanity-io/next-sanity/commit/14e7c9b90bf04ea81ea6eaab2f1ad57b044e4b80))
+* **deps:** update dependency @sanity/client to ^6.12.3 ([#947](https://github.com/sanity-io/next-sanity/issues/947)) ([05ca699](https://github.com/sanity-io/next-sanity/commit/05ca6996795a84c5c398d766b45df73ba71a1182))
+* **deps:** update dependency @sanity/preview-kit to v5.0.18 ([#951](https://github.com/sanity-io/next-sanity/issues/951)) ([bdf3099](https://github.com/sanity-io/next-sanity/commit/bdf30998b0bf2d3ca33807daf8e3ecab6da9992c))
+
 ## [7.0.15](https://github.com/sanity-io/next-sanity/compare/v7.0.14...v7.0.15) (2024-01-26)
 
 
