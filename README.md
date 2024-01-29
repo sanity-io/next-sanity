@@ -260,8 +260,7 @@ If you're planning to use `revalidateTag`, then remember to set up the webhook (
 // ./src/utils/sanity/client.ts
 import 'server-only'
 
-import type {QueryParams} from '@sanity/client'
-import {createClient} from 'next-sanity'
+import {createClient, type QueryParams} from 'next-sanity'
 
 const projectId = process.env.NEXT_PUBLIC_SANITY_PROJECT_ID // "pv8y60vp"
 const dataset = process.env.NEXT_PUBLIC_SANITY_DATASET // "production"
@@ -274,20 +273,16 @@ const client = createClient({
   useCdn: false,
 })
 
-const DEFAULT_PARAMS = {} as QueryParams
-const DEFAULT_TAGS = [] as string[]
-
 export async function sanityFetch<QueryResponse>({
   query,
-  params = DEFAULT_PARAMS,
-  tags = DEFAULT_TAGS,
+  params = {},
+  tags,
 }: {
   query: string
   params?: QueryParams
-  tags: string[]
-}): Promise<QueryResponse> {
+  tags?: string[]
+}) {
   return client.fetch<QueryResponse>(query, params, {
-    cache: 'force-cache',
     next: {
       //revalidate: 30, // for simple, time-based revalidation
       tags, // for tag-based revalidation
@@ -474,8 +469,7 @@ Next.js gives you [a built-in `draftMode` variable][draft-mode] that can activat
 import 'server-only'
 
 import {draftMode} from 'next/headers'
-import type {QueryParams} from '@sanity/client'
-import {createClient, groq} from 'next-sanity'
+import {createClient, type QueryOptions, type QueryParams} from 'next-sanity'
 
 const projectId = process.env.NEXT_PUBLIC_SANITY_PROJECT_ID // "pv8y60vp"
 const dataset = process.env.NEXT_PUBLIC_SANITY_DATASET // "production"
@@ -491,18 +485,15 @@ const client = createClient({
 // Used by `PreviewProvider`
 export const token = process.env.SANITY_API_READ_TOKEN
 
-const DEFAULT_PARAMS = {} as QueryParams
-const DEFAULT_TAGS = [] as string[]
-
 export async function sanityFetch<QueryResponse>({
   query,
-  params = DEFAULT_PARAMS,
-  tags = DEFAULT_TAGS,
+  params = {},
+  tags,
 }: {
   query: string
   params?: QueryParams
   tags: string[]
-}): Promise<QueryResponse> {
+}) {
   const isDraftMode = draftMode().isEnabled
   if (isDraftMode && !token) {
     throw new Error('The `SANITY_API_READ_TOKEN` environment variable is required.')
@@ -512,10 +503,11 @@ export async function sanityFetch<QueryResponse>({
   const REVALIDATE_CACHE_FOREVER = false
 
   return client.fetch<QueryResponse>(query, params, {
-    ...(isDraftMode && {
-      token: token,
-      perspective: 'previewDrafts',
-    }),
+    ...(isDraftMode &&
+      ({
+        token: token,
+        perspective: 'previewDrafts',
+      } satisfies QueryOptions)),
     next: {
       revalidate: isDraftMode ? REVALIDATE_SKIP_CACHE : REVALIDATE_CACHE_FOREVER,
       tags,

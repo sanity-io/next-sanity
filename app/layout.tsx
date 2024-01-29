@@ -1,10 +1,12 @@
 import './globals.css'
 
+import dynamic from 'next/dynamic'
 import {draftMode} from 'next/headers'
 
 import ConditionalPreviewProvider from './ConditionalPreviewProvider'
 import StyledComponentsRegistry from './registry'
-import VisualEditing from './VisualEditing'
+
+const VisualEditing = dynamic(() => import('./VisualEditing'))
 
 export default function RootLayout({children}: {children: React.ReactNode}) {
   return (
