@@ -1,6 +1,6 @@
 import Studio from './Studio'
 
-export const dynamic = 'force-static'
+export const dynamic = 'error'
 
 export {metadata} from 'src/studio/metadata'
 export {viewport} from 'src/studio/viewport'

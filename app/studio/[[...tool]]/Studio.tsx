@@ -1,9 +1,10 @@
 'use client'
 
-import config from 'sanity.config'
+import {use} from 'react'
 import {NextStudio} from 'src/studio'
 
 export default function Studio() {
+  const {default: config} = use(import('sanity.config'))
   return (
     <NextStudio
       config={config}

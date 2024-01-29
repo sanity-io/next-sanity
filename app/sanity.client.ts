@@ -12,3 +12,5 @@ export const client = createClient({
   encodeSourceMap: true,
   resultSourceMap: 'withKeyArraySelector',
 })
+
+export type {QueryOptions, QueryParams} from 'src'

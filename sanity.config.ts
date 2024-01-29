@@ -1,9 +1,10 @@
 /* eslint-disable no-restricted-globals */
 /* eslint-disable no-process-env */
+import {debugSecrets} from '@sanity/preview-url-secret/sanity-plugin-debug-secrets'
 import {visionTool} from '@sanity/vision'
 import {defineConfig} from 'sanity'
-import {deskTool} from 'sanity/desk'
 import {presentationTool} from 'sanity/presentation'
+import {structureTool} from 'sanity/structure'
 
 import {schemaTypes} from './schemas'
 
@@ -18,7 +19,8 @@ export default defineConfig({
   dataset,
 
   plugins: [
-    deskTool(),
+    debugSecrets(),
+    structureTool(),
     presentationTool({
       previewUrl: {
         draftMode: {
