@@ -1,7 +1,8 @@
 'use client'
 
-import {use} from 'react'
 import {LiveQueryProvider} from 'src/preview'
+
+import {client} from './sanity.client'
 
 export default function PreviewProvider({
   children,
@@ -10,7 +11,6 @@ export default function PreviewProvider({
   children: React.ReactNode
   token: string
 }) {
-  const {client} = use(import('./sanity.client'))
   if (!token) throw new TypeError('Missing token')
   return (
     <LiveQueryProvider client={client} token={token} logger={console}>
