@@ -5,6 +5,13 @@
 All notable changes to this project will be documented in this file. See
 [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [7.1.0](https://github.com/sanity-io/next-sanity/compare/v7.0.17...v7.1.0) (2024-02-06)
+
+
+### Features
+
+* add `&lt;VisualEditing /&gt;` component ([#973](https://github.com/sanity-io/next-sanity/issues/973)) ([f2f1e68](https://github.com/sanity-io/next-sanity/commit/f2f1e680473a605c6319bb6bb3c2092b9dbac9fb))
+
 ## [7.0.17](https://github.com/sanity-io/next-sanity/compare/v7.0.16...v7.0.17) (2024-01-29)
 
 
