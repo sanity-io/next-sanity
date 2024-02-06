@@ -1,10 +1,26 @@
 'use client'
 
-import {enableVisualEditing, HistoryAdapterNavigate} from '@sanity/visual-editing'
-import {usePathname, useRouter, useSearchParams} from 'next/navigation'
+import {
+  enableVisualEditing,
+  type HistoryAdapterNavigate,
+  type VisualEditingOptions,
+} from '@sanity/visual-editing'
+import {usePathname, useRouter, useSearchParams} from 'next/navigation.js'
 import {useEffect, useRef, useState} from 'react'
 
-export default function VisualEditing() {
+/**
+ * @public
+ */
+export interface VisualEditingProps extends Omit<VisualEditingOptions, 'history'> {
+  /**
+   * @deprecated The histoy adapter is already implemented
+   */
+  history?: never
+}
+
+export default function VisualEditing(props: VisualEditingProps): null {
+  const {zIndex} = props
+
   const router = useRouter()
   const routerRef = useRef(router)
   const [navigate, setNavigate] = useState<HistoryAdapterNavigate | undefined>()
@@ -14,10 +30,10 @@ export default function VisualEditing() {
   }, [router])
   useEffect(() => {
     const disable = enableVisualEditing({
+      zIndex,
       history: {
-        // eslint-disable-next-line no-shadow
-        subscribe: (navigate) => {
-          setNavigate(() => navigate)
+        subscribe: (_navigate) => {
+          setNavigate(() => _navigate)
           return () => setNavigate(undefined)
         },
         update: (update) => {
@@ -35,7 +51,7 @@ export default function VisualEditing() {
       },
     })
     return () => disable()
-  }, [])
+  }, [zIndex])
 
   const pathname = usePathname()
   const searchParams = useSearchParams()

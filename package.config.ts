@@ -1,7 +1,10 @@
 import terser from '@rollup/plugin-terser'
 import {defineConfig} from '@sanity/pkg-utils'
 
-const MODULE_PATHES_WHICH_USE_CLIENT_DIRECTIVE_SHOULD_BE_ADDED = ['NextStudioLoading.tsx']
+const MODULE_PATHS_WHICH_USE_CLIENT_DIRECTIVE_SHOULD_BE_ADDED = [
+  'NextStudioLoading.tsx',
+  'VisualEditing.tsx',
+]
 
 export default defineConfig({
   tsconfig: 'tsconfig.build.json',
@@ -32,7 +35,7 @@ export default defineConfig({
       preserveModulesRoot: 'src',
       banner: (chunkInfo) => {
         if (
-          MODULE_PATHES_WHICH_USE_CLIENT_DIRECTIVE_SHOULD_BE_ADDED.find((modulePath) =>
+          MODULE_PATHS_WHICH_USE_CLIENT_DIRECTIVE_SHOULD_BE_ADDED.find((modulePath) =>
             chunkInfo.facadeModuleId?.endsWith(modulePath),
           )
         ) {
