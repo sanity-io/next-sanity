@@ -524,7 +524,7 @@ Be aware that you can get errors if you use the `cache` and the `revalidate` c
 
 > **Note**
 >
-> [Content Source Maps][content-source-maps-intro] are available [as an API][content-source-maps] for select [Sanity enterprise customers][enterprise-cta]. [Contact our sales team for more information.][sales-cta]
+> [Vercel Visual Editing][visual-editing] is available on [Vercel's Pro and Enterprise plans][vercel-enterprise] and on all Sanity plans.
 
 The `createClient` method in `next-sanity` supports [visual editing][visual-editing-intro], it supports all the same options as [`@sanity/preview-kit/client`][preview-kit-client]. Add `studioUrl` to your client configuration and it'll automatically show up on Vercel Preview Deployments:
 
@@ -756,3 +756,4 @@ MIT-licensed. See [LICENSE][LICENSE].
 [visual-editing-intro]: https://www.sanity.io/blog/visual-editing-sanity-vercel?utm_source=github&utm_medium=readme&utm_campaign=next-sanity
 [visual-editing]: https://www.sanity.io/docs/vercel-visual-editing?utm_source=github&utm_medium=readme&utm_campaign=next-sanity
 [webhook-template]: https://www.sanity.io/manage/webhooks/share?name=Tag-based+Revalidation+Hook+for+Next.js+13%2B&description=%5B%C2%A0%5D+Replace+URL+with+the+production*+URL+for+your+revalidation+handler+in+your+Next.js+app%0A%5B+%5D%C2%A0Insert%2Freplace+the+document+types+you+want+to+be+able+to+make+tags+for+in+the+Filter+array%0A%5B+%5D%C2%A0Make+a+Secret+that+you+also+add+to+your+app%27s+environment+variables+%28SANITY_REVALIDATE_SECRET%29%0A%0A*Or+preview+URL+for+preliminary+testing%0A%0AFor+complete+instructions%2C+see+the+README+on%3A%0Ahttps%3A%2F%2Fgithub.com%2Fsanity-io%2Fnext-sanity&url=https%3A%2F%2FYOUR-PRODUCTION-URL.TLD%2Fapi%2Frevalidate&on=create&on=update&on=delete&filter=_type+in+%5B%22post%22%2C+%22home%22%2C+%22OTHER_DOCUMENT_TYPE%22%5D&projection=%7B_type%7D&httpMethod=POST&apiVersion=v2021-03-25&includeDrafts=&headers=%7B%7D
+[vercel-enterprise]: https://vercel.com/docs/accounts/plans/enterprise
