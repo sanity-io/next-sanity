@@ -7,10 +7,12 @@ export const client = createClient({
   apiVersion: '2022-11-11',
   useCdn: false,
   perspective: 'published',
-  studioUrl: '/studio',
-  logger: console,
-  encodeSourceMap: true,
   resultSourceMap: 'withKeyArraySelector',
+  stega: {
+    enabled: true,
+    studioUrl: '/studio',
+    logger: console,
+  },
 })
 
 export type {QueryOptions, QueryParams} from 'src'

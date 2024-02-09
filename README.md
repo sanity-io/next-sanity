@@ -540,8 +540,10 @@ const client = createClient({
   dataset,
   apiVersion, // https://www.sanity.io/docs/api-versioning
   useCdn: true, // if you're using ISR or only static generation at build time, then you can set this to `false` to guarantee no stale content
-  studioUrl: '/studio', // Or: 'https://my-cool-project.sanity.studio'
-  encodeSourceMap: true, // Optional. Default to: process.env.NEXT_PUBLIC_VERCEL_ENV === 'preview',
+  stega: {
+    enabled: NEXT_PUBLIC_VERCEL_ENV === 'preview', // this can also be controlled in `client.fetch(query, params, {stega: boolean})`
+    studioUrl: '/studio', // Or: 'https://my-cool-project.sanity.studio'
+  },
 })
 ```
 
@@ -706,6 +708,7 @@ function StudioPage() {
 
 ## Migration guides
 
+- [From `v7` to `v8`][migrate-v7-to-v8]
 - [From `v6` to `v7`][migrate-v6-to-v7]
 - [From `v5` to `v6`][migrate-v5-to-v6]
 - From `v4` to `v5`
@@ -735,6 +738,7 @@ MIT-licensed. See [LICENSE][LICENSE].
 [migrate-v4-to-v5-pages]: ./MIGRATE-v4-to-v5-pages-router.md
 [migrate-v5-to-v6]: ./MIGRATE-v5-to-v6.md
 [migrate-v6-to-v7]: ./MIGRATE-v6-to-v7.md
+[migrate-v7-to-v8]: ./MIGRATE-v7-to-v8.md
 [next-cache]: https://nextjs.org/docs/app/building-your-application/caching
 [next-data-fetching]: https://nextjs.org/docs/basic-features/data-fetching/overview
 [next-preview-mode]: https://nextjs.org/docs/advanced-features/preview-mode
