@@ -35,6 +35,7 @@ The official [Sanity.io][sanity] toolkit for Next.js apps.
   - [Using Perspectives](#using-perspectives)
   - [Live Preview](#live-preview)
   - [Using `draftMode()` to de/activate previews](#using-draftmode-to-deactivate-previews)
+    - [Using `cache` and `revalidation` at the same time](#using-cache-and-revalidation-at-the-same-time)
 - [Visual Editing with Content Source Maps](#visual-editing-with-content-source-maps)
 - [Embedded Sanity Studio](#embedded-sanity-studio)
   - [Configuring Sanity Studio on a route](#configuring-sanity-studio-on-a-route)
@@ -227,6 +228,7 @@ type HomePageProps = {
 
 export async function HomeLayout({children}) {
   const home = await client.fetch<HomePageProps>(`*[_id == "home"][0]{...,navItems[]->}`,
+    {},
     {next: {
       revalidate: 3600 // look for updates to revalidate cache every hour
     }}
