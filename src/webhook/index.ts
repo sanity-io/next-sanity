@@ -32,10 +32,9 @@ export type ParsedBody<T> = {
  * Handles parsing the body JSON, and validating its signature. Also waits for Content Lake eventual consistency so you can run your queries
  * without worrying about getting stale data.
  * @public
- * @deprecated using `parseBody` with `NextApiRequest` is deprecated and will be removed in the next major version. Use `parseBody` with `NextRequest` instead from a Route Handler in App Router.
  */
 export async function parseBody<Body = SanityDocument>(
-  req: NextApiRequest,
+  req: NextRequest,
   secret?: string,
   waitForContentLakeEventualConsistency?: boolean,
 ): Promise<ParsedBody<Body>>
@@ -43,15 +42,16 @@ export async function parseBody<Body = SanityDocument>(
  * Handles parsing the body JSON, and validating its signature. Also waits for Content Lake eventual consistency so you can run your queries
  * without worrying about getting stale data.
  * @public
+ * @deprecated using `parseBody` with `NextApiRequest` is deprecated and will be removed in the next major version. Use `parseBody` with `NextRequest` instead from a Route Handler in App Router.
  */
 export async function parseBody<Body = SanityDocument>(
-  req: NextRequest,
+  req: NextApiRequest,
   secret?: string,
   waitForContentLakeEventualConsistency?: boolean,
 ): Promise<ParsedBody<Body>>
 // eslint-disable-next-line require-await
 export async function parseBody<Body = SanityDocument>(
-  req: NextApiRequest | NextRequest,
+  req: NextRequest | NextApiRequest,
   secret?: string,
   waitForContentLakeEventualConsistency: boolean = true,
 ): Promise<ParsedBody<Body>> {
