@@ -1,24 +1,9 @@
 import type {Metadata} from 'next'
 
+import {metadata as _metadata} from './head'
+
 /**
- * In App Router segments (`/app/studio/[[...index]]/page.tsx`):
- * ```tsx
- * // If you don't want to change any defaults you can just re-export the metadata directly:
- * export {metadata} from 'next-sanity/studio/metadata'
- *
- * // To customize the metadata, spread it on the export:
- * import {metadata as studioMetadata} from 'next-sanity/studio/metadata'
- * import type { Metadata } from 'next'
- *
- * export const metadata: Metadata = {
- *   ...studioMetadata,
- *   // Set another title
- *   title: 'My Studio',
- * })
- * ```
  * @public
+ * @deprecated use `export {metadata} from 'next-sanity/studio'` instead
  */
-export const metadata = {
-  referrer: 'same-origin' as const,
-  robots: 'noindex' as const,
-} satisfies Metadata
+export const metadata = _metadata satisfies Metadata

@@ -1,26 +1,9 @@
 import type {Viewport} from 'next'
 
+import {viewport as _viewport} from './head'
+
 /**
- * In App Router segments (`/app/studio/[[...index]]/page.tsx`):
- * ```tsx
- * // If you don't want to change any defaults you can just re-export the viewport config directly:
- * export {viewport} from 'next-sanity/studio/viewport'
- *
- * // To customize the viewport config, spread it on the export:
- * import {viewport as studioViewport} from 'next-sanity/studio/viewport'
- * import type { Viewport } from 'next'
- *
- * export const viewport: Viewport = {
- *   ...studioViewport,
- *   // Overrides the viewport to resize behavior
- *   interactiveWidget: 'resizes-content'
- * })
- * ```
  * @public
+ * @deprecated use `export {viewport} from 'next-sanity/studio'` instead
  */
-export const viewport = {
-  width: 'device-width',
-  initialScale: 1,
-  // Studio implements display cutouts CSS (The iPhone Notch ™ ) and needs `viewport-fit=covered` for it to work correctly
-  viewportFit: 'cover',
-} satisfies Viewport
+export const viewport = _viewport satisfies Viewport
