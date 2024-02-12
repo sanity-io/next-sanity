@@ -2,7 +2,7 @@ import terser from '@rollup/plugin-terser'
 import {defineConfig} from '@sanity/pkg-utils'
 
 const MODULE_PATHS_WHICH_USE_CLIENT_DIRECTIVE_SHOULD_BE_ADDED = [
-  'NextStudioLoading.tsx',
+  'NextStudio.tsx',
   'VisualEditing.tsx',
 ]
 

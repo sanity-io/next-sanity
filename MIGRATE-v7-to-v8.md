@@ -115,3 +115,20 @@ export function usePrefersColorScheme(): ThemeColorSchemeKey {
   return usePrefersDark() ? 'dark' : 'light'
 }
 ```
+
+### `next-sanity/studio/loading` is removed
+
+If you have a route like this:
+
+```ts
+// ./src/app/studio/[[...index]]/loading.tsx
+
+export {NextStudioLoading as default} from 'next-sanity/studio/loading'
+```
+
+Then delete this route to upgrade. Make sure the `page.tsx` route has this line:
+
+```ts
+// Ensures the Studio route is statically generated
+export const dynamic = 'force-static'
+```

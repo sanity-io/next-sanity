@@ -68,17 +68,6 @@
       "import": "./dist/studio/index.js",
       "default": "./dist/studio/index.js"
     },
-    "./studio/loading": {
-      "types": "./dist/studio/loading.d.ts",
-      "source": "./src/studio/loading.ts",
-      "require": "./dist/studio/loading.cjs",
-      "node": {
-        "module": "./dist/studio/loading.js",
-        "import": "./dist/studio/loading.cjs.js"
-      },
-      "import": "./dist/studio/loading.js",
-      "default": "./dist/studio/loading.js"
-    },
     "./studio/metadata": {
       "types": "./dist/studio/metadata.d.ts",
       "source": "./src/studio/metadata.ts",
@@ -128,9 +117,6 @@
       ],
       "studio": [
         "./dist/studio/index.d.ts"
-      ],
-      "studio/loading": [
-        "./dist/studio/loading.d.ts"
       ],
       "studio/metadata": [
         "./dist/studio/metadata.d.ts"

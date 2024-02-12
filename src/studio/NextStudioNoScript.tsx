@@ -23,7 +23,7 @@ const style = {
 `,
 } as const
 
-/** @alpha */
+/** @internal */
 export const NextStudioNoScript = () => (
   <noscript>
     <div className="sanity-app-no-js__root">

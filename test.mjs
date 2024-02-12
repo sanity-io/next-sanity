@@ -15,25 +15,11 @@ assert.equal(typeof LiveQueryProvider, 'object')
 assert.equal(typeof useLiveQuery, 'function')
 
 // Testing pkg.exports[./studio]
-import {
-  NextStudio,
-  NextStudioClientOnly,
-  NextStudioLayout,
-  NextStudioNoScript,
-  usePrefersColorScheme,
-  useTheme,
-} from 'next-sanity/studio'
+import {NextStudio, NextStudioLayout, NextStudioNoScript} from 'next-sanity/studio'
 
 assert.equal(typeof NextStudio?.type, 'function')
-assert.equal(typeof NextStudioClientOnly, 'function')
 assert.equal(typeof NextStudioLayout?.type, 'function')
 assert.equal(typeof NextStudioNoScript, 'function')
-assert.equal(typeof usePrefersColorScheme, 'function')
-assert.equal(typeof useTheme, 'function')
-
-// Testing pkg.exports[./studio/loading]
-import {NextStudioLoading} from 'next-sanity/studio/loading'
-assert.equal(typeof NextStudioLoading, 'function')
 
 // Testing pkg.exports[./webhook]
 import {config, parseBody} from 'next-sanity/webhook'
