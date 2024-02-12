@@ -1,14 +1,13 @@
+'use client'
+
 import {memo} from 'react'
 import {Studio, type StudioProps} from 'sanity'
 
-import {NextStudioClientOnly} from './NextStudioClientOnly'
 import {NextStudioLayout} from './NextStudioLayout'
-import {NextStudioLoading} from './NextStudioLoading'
 import {NextStudioNoScript} from './NextStudioNoScript'
+import {StyledComponentsRegistry} from './registry'
 
-export type {NextStudioLoadingProps} from './NextStudioLoading'
-
-/** @beta */
+/** @public */
 export interface NextStudioProps extends StudioProps {
   children?: React.ReactNode
   /**
@@ -17,12 +16,6 @@ export interface NextStudioProps extends StudioProps {
    * @alpha
    */
   unstable__noScript?: boolean
-  /**
-   * Render in a faster mode that requires `styled-components` SSR to be setup.
-   * @defaultValue false
-   * @alpha
-   */
-  unstable__fastRender?: boolean
 }
 /**
  * Intended to render at the root of a page, letting the Studio own that page and render much like it would if you used `npx sanity start` to render
@@ -32,41 +25,19 @@ const NextStudioComponent = ({
   children,
   config,
   unstable__noScript = true,
-  unstable__fastRender,
   scheme,
   ...props
 }: NextStudioProps) => {
-  if (unstable__fastRender) {
-    return (
-      <>
-        {unstable__noScript && <NextStudioNoScript />}
-        <NextStudioLayout config={config} scheme={scheme}>
-          {children || (
-            <Studio config={config} scheme={scheme} unstable_globalStyles {...props} />
-          )}
-        </NextStudioLayout>
-      </>
-    )
-  }
-
   return (
     <>
       {unstable__noScript && <NextStudioNoScript />}
-      <NextStudioClientOnly
-        fallback={
-          <NextStudioLoading
-            unstable__noScript={unstable__noScript}
-            config={config}
-            scheme={scheme}
-          />
-        }
-      >
-        <NextStudioLayout config={config} scheme={scheme}>
+      <StyledComponentsRegistry>
+        <NextStudioLayout>
           {children || (
             <Studio config={config} scheme={scheme} unstable_globalStyles {...props} />
           )}
         </NextStudioLayout>
-      </NextStudioClientOnly>
+      </StyledComponentsRegistry>
     </>
   )
 }
@@ -84,6 +55,6 @@ const NextStudioComponent = ({
  *   </StudioProvider>
  * </NextStudio>
  * ```
- * @beta
+ * @public
  */
 export const NextStudio = memo(NextStudioComponent)
