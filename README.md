@@ -650,8 +650,7 @@ import {Studio} from './Studio'
 export const dynamic = 'force-static'
 
 // Set the right `viewport`, `robots` and `referer` meta tags
-export {metadata} from 'next-sanity/studio/metadata'
-export {viewport} from 'next-sanity/studio/viewport'
+export {metadata, viewport} from 'next-sanity/studio'
 
 export default function StudioPage() {
   return <Studio />
@@ -676,10 +675,8 @@ How to customize meta tags:
 
 ```tsx
 // ./src/app/studio/[[...index]]/page.tsx
-import type {Metadata} from 'next'
-import type {Viewport} from 'next'
-import {metadata as studioMetadata} from 'next-sanity/studio/metadata'
-import {viewport as studioViewport} from 'next-sanity/studio/viewport'
+import type {Metadata, Viewport} from 'next'
+import {metadata as studioMetadata, viewport as studioViewport} from 'next-sanity/studio'
 
 import {Studio} from './Studio'
 
