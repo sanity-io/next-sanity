@@ -49,3 +49,37 @@ const client = createClient({
   },
 })
 ```
+
+### `parseAppBody` is removed
+
+Use `parseBody` instead:
+
+```diff
+import {type NextRequest, NextResponse} from 'next/server'
+-import {parseAppBody} from 'next-sanity/webhook'
++import {parseBody} from 'next-sanity/webhook'
+
+
+export async function POST(req: NextRequest) {
+- const {isValidSignature, body} = await parseAppBody(
++ const {isValidSignature, body} = await parseBody(
+    req,
+    process.env.SANITY_REVALIDATE_SECRET,
+  )
+}
+```
+
+The same is true for the `ParseAppBody` and `ParseBody` types:
+
+```diff
+-import type {ParseAppBody} from 'next-sanity/webhook'
+-import type {ParseBody} from 'next-sanity/webhook'
++import type {ParsedBody} from 'next-sanity/webhook'
++import type {SanityDocument} from 'next-sanity'
+
+-export async function POST(request: Request): Promise<ParseAppBody> {
+-export async function POST(request: Request): Promise<ParseBody> {
++export async function POST(request: Request): Promise<ParsedBody<SanityDocument>> {
+
+}
+```

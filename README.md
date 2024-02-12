@@ -28,7 +28,7 @@ The official [Sanity.io][sanity] toolkit for Next.js apps.
 - [Cache revalidation](#cache-revalidation)
   - [Time-based revalidation](#time-based-revalidation)
   - [Tag-based revalidation webhook](#tag-based-revalidation-webhook)
-  - [Slug-based revalidation for the Pages Router](#slug-based-revalidation-for-the-pages-router)
+  - [Slug-based revalidation webhook](#slug-based-revalidation-webhook)
   - [Working example implementation](#working-example-implementation)
   - [Debugging caching and revalidation](#debugging-caching-and-revalidation)
 - [Preview](#preview)
@@ -341,9 +341,13 @@ import {revalidateTag} from 'next/cache'
 import {type NextRequest, NextResponse} from 'next/server'
 import {parseBody} from 'next-sanity/webhook'
 
+type WebhookPayload = {
+  _type: string
+}
+
 export async function POST(req: NextRequest) {
   try {
-    const {isValidSignature, body} = await parseBody<{_type}>(
+    const {isValidSignature, body} = await parseBody<WebhookPayload>(
       req,
       process.env.SANITY_REVALIDATE_SECRET,
     )
@@ -372,34 +376,47 @@ export async function POST(req: NextRequest) {
 
 You can choose to match tags based on any field or expression since GROQ-Powered Webhooks allow you to freely define the payload.
 
-### Slug-based revalidation for the Pages Router
+### Slug-based revalidation webhook
 
-If you are using the Pages Router and want on-demand revalidation, you'll have to do this by targeting the URLs/slugs for the pages you want to revalidate. If you have nested routes, you will need to adopt the logic to accommodate for that. For example, using `_type` to determine the first segment: `/${body?._type}/${body?.slug.current}`.
+If you want on-demand revalidation, without using tags, you'll have to do this by targeting the URLs/slugs for the pages you want to revalidate. If you have nested routes, you will need to adopt the logic to accommodate for that. For example, using `_type` to determine the first segment: `/${body?._type}/${body?.slug.current}`.
 
 ```ts
-// ./pages/api/revalidate.ts
-import type {NextApiRequest, NextApiResponse} from 'next'
+// ./src/app/api/revalidate/route.ts
+import {revalidatePath} from 'next/cache'
+import {type NextRequest, NextResponse} from 'next/server'
 import {parseBody} from 'next-sanity/webhook'
 
-// Export the config from next-sanity to enable validating the request body signature properly
-export {config} from 'next-sanity/webhook'
+type WebhookPayload = {
+  _type: string
+  slug?: {
+    current?: string
+  }
+}
 
-export default async function revalidate(req: NextApiRequest, res: NextApiResponse) {
+export async function POST(req: NextRequest) {
   try {
-    const {isValidSignature, body} = await parseBody(req, process.env.SANITY_REVALIDATE_SECRET)
+    const {isValidSignature, body} = await parseBody<WebhookPayload>(
+      req,
+      process.env.SANITY_REVALIDATE_SECRET,
+    )
 
     if (!isValidSignature) {
       const message = 'Invalid signature'
-      return res.status(401).json({message, isValidSignature, body})
+      return new Response(JSON.stringify({message, isValidSignature, body}), {status: 401})
+    }
+
+    if (!body?._type || !body?.slug?.current) {
+      const message = 'Bad Request'
+      return new Response(JSON.stringify({message, body}), {status: 400})
     }
 
     const staleRoute = `/${body.slug.current}`
-    await res.revalidate(staleRoute)
+    revalidatePath(staleRoute)
     const message = `Updated route: ${staleRoute}`
-    return res.status(200).json({message, body})
+    return NextResponse.json({body, message})
   } catch (err) {
     console.error(err)
-    return res.status(500).json({message: err.message})
+    return new Response(err.message, {status: 500})
   }
 }
 ```
