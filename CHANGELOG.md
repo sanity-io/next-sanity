@@ -5,6 +5,31 @@
 All notable changes to this project will be documented in this file. See
 [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [8.0.0](https://github.com/sanity-io/next-sanity/compare/v7.1.4...v8.0.0) (2024-02-12)
+
+
+### ⚠ BREAKING CHANGES
+
+* remove `next-sanity/studio/loading`
+* remove `usePrefersColorScheme` hook
+* remove `useTheme` hook
+* remove `parseAppBody` export
+* use `@sanity/client` instead of `@sanity/preview-kit/client` ([#996](https://github.com/sanity-io/next-sanity/issues/996))
+
+### Features
+
+* add `export {metadata, viewport} from 'next-sanity/studio'` support ([30148a9](https://github.com/sanity-io/next-sanity/commit/30148a91348bff8763ca67125fa8a5b2efc05ebf))
+* support fast render of styled components SSR ([2a21d9c](https://github.com/sanity-io/next-sanity/commit/2a21d9c1b1413696c048d9fa203c93e859076113))
+* use `@sanity/client` instead of `@sanity/preview-kit/client` ([#996](https://github.com/sanity-io/next-sanity/issues/996)) ([03e3f56](https://github.com/sanity-io/next-sanity/commit/03e3f56291b4e0888a08f78867580289bbc0e87f))
+
+
+### Code Refactoring
+
+* remove `next-sanity/studio/loading` ([45792c5](https://github.com/sanity-io/next-sanity/commit/45792c56454ab599bc93029a9455db412287373b))
+* remove `parseAppBody` export ([604678d](https://github.com/sanity-io/next-sanity/commit/604678d58e00198c84271936e4696eec1fd8e31f))
+* remove `usePrefersColorScheme` hook ([a30d11f](https://github.com/sanity-io/next-sanity/commit/a30d11f0f35868cd42ba3dcd103876cf0c79771a))
+* remove `useTheme` hook ([9ee8cb1](https://github.com/sanity-io/next-sanity/commit/9ee8cb1792217571ab41c492874b529eb67d1065))
+
 ## [7.1.4](https://github.com/sanity-io/next-sanity/compare/v7.1.3...v7.1.4) (2024-02-09)
 
 
