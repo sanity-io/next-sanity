@@ -3,7 +3,7 @@
 The official [Sanity.io][sanity] toolkit for Next.js apps.
 
 > [!IMPORTANT]  
-> You're looking at the README for v7, the README for [v6 is available here.](https://github.com/sanity-io/next-sanity/tree/v6?tab=readme-ov-file#next-sanity)
+> You're looking at the README for v8, the README for [v7 is available here](https://github.com/sanity-io/next-sanity/tree/v7?tab=readme-ov-file#next-sanity) as well as an [migration guide][migrate-v7-to-v8].
 
 **Features:**
 
