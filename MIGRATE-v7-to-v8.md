@@ -102,3 +102,16 @@ export function useTheme(
   return useMemo<StudioTheme>(() => workspace?.theme || studioTheme, [workspace])
 }
 ```
+
+### `usePrefersColorScheme` is removed
+
+If you still have a use for it you may re-implement it yourself:
+
+```ts
+import {usePrefersDark} from '@sanity/ui'
+import type {ThemeColorSchemeKey} from '@sanity/ui/theme'
+
+export function usePrefersColorScheme(): ThemeColorSchemeKey {
+  return usePrefersDark() ? 'dark' : 'light'
+}
+```
