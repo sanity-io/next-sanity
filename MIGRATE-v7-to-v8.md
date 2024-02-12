@@ -83,3 +83,22 @@ The same is true for the `ParseAppBody` and `ParseBody` types:
 
 }
 ```
+
+### `useTheme` is removed
+
+If you still have a use for it you may re-implement it yourself:
+
+```ts
+import {studioTheme} from '@sanity/ui'
+import {useMemo} from 'react'
+import type {Config, SingleWorkspace, StudioTheme} from 'sanity'
+
+export function useTheme(
+  config?: Config | Required<Pick<SingleWorkspace, 'theme'>>,
+): StudioTheme {
+  const workspace = useMemo<
+    SingleWorkspace | Required<Pick<SingleWorkspace, 'theme'>> | undefined
+  >(() => (Array.isArray(config) ? config[0] : config), [config])
+  return useMemo<StudioTheme>(() => workspace?.theme || studioTheme, [workspace])
+}
+```
