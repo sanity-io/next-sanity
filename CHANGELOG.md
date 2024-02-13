@@ -5,6 +5,13 @@
 All notable changes to this project will be documented in this file. See
 [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [8.0.1](https://github.com/sanity-io/next-sanity/compare/v8.0.0...v8.0.1) (2024-02-13)
+
+
+### Bug Fixes
+
+* re-order webhook overloads ([c116bec](https://github.com/sanity-io/next-sanity/commit/c116bec813818be9e755b38dbaeaf2895ec0eaea))
+
 ## [8.0.0](https://github.com/sanity-io/next-sanity/compare/v7.1.4...v8.0.0) (2024-02-12)
 
 
