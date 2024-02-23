@@ -138,7 +138,7 @@
   "scripts": {
     "prebuild": "npm run clean",
     "build": "pkg build --strict && pkg --strict",
-    "clean": "rimraf dist",
+    "clean": "npx rimraf dist",
     "coverage": "npm test -- --coverage",
     "dev": "next",
     "format": "eslint --fix .",
