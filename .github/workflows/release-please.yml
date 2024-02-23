@@ -14,14 +14,18 @@ on:
         type: boolean
 
 permissions:
-  contents: read
+  contents: read # for checkout
 
 jobs:
   release-please:
     permissions:
+      contents: read # for checkout
       id-token: write # to enable use of OIDC for npm provenance
       # permissions for pushing commits and opening PRs are handled by the `generate-token` step
     runs-on: ubuntu-latest
+    env:
+      TURBO_TOKEN: ${{ secrets.TURBO_TOKEN }}
+      TURBO_TEAM: ${{ vars.TURBO_TEAM }}
     steps:
       - uses: tibdex/github-app-token@3beb63f4bd073e61482598c45c71c1019b59b73a # v2
         id: generate-token
@@ -29,28 +33,35 @@ jobs:
           app_id: ${{ secrets.ECOSPARK_APP_ID }}
           private_key: ${{ secrets.ECOSPARK_APP_PRIVATE_KEY }}
       # This action will create a release PR when regular conventional commits are pushed to main, it'll also detect if a release PR is merged and npm publish should happen
-      - uses: google-github-actions/release-please-action@v3
+      - uses: google-github-actions/release-please-action@v4
         id: release
         with:
+          path: ./packages/next-sanity
           release-type: node
           token: ${{ steps.generate-token.outputs.token }}
 
       # Publish to NPM on new releases
       - uses: actions/checkout@v4
         if: ${{ steps.release.outputs.releases_created || github.event.inputs.publish == 'true' }}
+      - uses: pnpm/action-setup@v2
+        if: ${{ steps.release.outputs.releases_created || github.event.inputs.publish == 'true' }}
       - uses: actions/setup-node@v4
         if: ${{ steps.release.outputs.releases_created || github.event.inputs.publish == 'true' }}
         with:
-          cache: npm
+          cache: pnpm
           node-version: lts/*
           registry-url: 'https://registry.npmjs.org'
-      - run: npm clean-install --ignore-scripts
+      - name: install deps & build
+        run: corepack enable && pnpm --version && pnpm install --ignore-scripts && pnpm build --filter=./packages/*
         if: ${{ steps.release.outputs.releases_created || github.event.inputs.publish == 'true' }}
-      - run: npm audit signatures
-        if: ${{ steps.release.outputs.releases_created || github.event.inputs.publish == 'true' }}
-      # Release Please has already incremented versions and published tags, so we just
-      # need to publish the new version to npm here
-      - run: npm publish --provenance
+      - name: Set publishing config
+        run: pnpm config set '//registry.npmjs.org/:_authToken' "${NODE_AUTH_TOKEN}"
         if: ${{ steps.release.outputs.releases_created || github.event.inputs.publish == 'true' }}
         env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_PUBLISH_TOKEN }}
+          NODE_AUTH_TOKEN: ${{secrets.NPM_PUBLISH_TOKEN}}
+      # Release Please has already incremented versions and published tags, so we just
+      # need to publish all unpublished versions to NPM here
+      - run: pnpm -r publish
+        if: ${{ steps.release.outputs.releases_created || github.event.inputs.publish == 'true' }}
+        env:
+          NPM_CONFIG_PROVENANCE: true
