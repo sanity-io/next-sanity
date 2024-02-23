@@ -19,9 +19,8 @@ permissions:
 jobs:
   release-please:
     permissions:
-      contents: read # for checkout
-      id-token: write # to enable use of OIDC for npm provenance
-      # permissions for pushing commits and opening PRs are handled by the `generate-token` step
+        contents: read # for checkout
+        id-token: write # to enable use of OIDC for npm provenance
     runs-on: ubuntu-latest
     env:
       TURBO_TOKEN: ${{ secrets.TURBO_TOKEN }}
@@ -36,8 +35,6 @@ jobs:
       - uses: google-github-actions/release-please-action@v4
         id: release
         with:
-          path: ./packages/next-sanity
-          release-type: node
           token: ${{ steps.generate-token.outputs.token }}
 
       # Publish to NPM on new releases
@@ -50,7 +47,6 @@ jobs:
         with:
           cache: pnpm
           node-version: lts/*
-          registry-url: 'https://registry.npmjs.org'
       - name: install deps & build
         run: corepack enable && pnpm --version && pnpm install --ignore-scripts && pnpm build --filter=./packages/*
         if: ${{ steps.release.outputs.releases_created || github.event.inputs.publish == 'true' }}
