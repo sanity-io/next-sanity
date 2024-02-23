@@ -1,6 +1,6 @@
 {
   "name": "next-sanity",
-  "version": "8.0.0",
+  "version": "8.0.1",
   "description": "Sanity.io toolkit for Next.js",
   "keywords": [
     "sanity",
@@ -138,7 +138,7 @@
   "scripts": {
     "prebuild": "npm run clean",
     "build": "pkg build --strict && pkg --strict",
-    "clean": "rimraf dist",
+    "clean": "npx rimraf dist",
     "coverage": "npm test -- --coverage",
     "dev": "next",
     "format": "eslint --fix .",
@@ -150,7 +150,7 @@
   "browserslist": "extends @sanity/browserslist-config",
   "dependencies": {
     "@sanity/client": "^6.14.3",
-    "@sanity/preview-kit": "5.0.20",
+    "@sanity/preview-kit": "5.0.24",
     "@sanity/visual-editing": "1.2.2",
     "@sanity/webhook": "4.0.0",
     "groq": "^3.19"
@@ -160,7 +160,7 @@
     "@sanity/browserslist-config": "^1.0.1",
     "@sanity/eslint-config-studio": "^3.0.1",
     "@sanity/pkg-utils": "^4.2.0",
-    "@types/react": "^18.2.55",
+    "@types/react": "^18.2.58",
     "@typescript-eslint/eslint-plugin": "^6.21.0",
     "@vitest/coverage-v8": "^1.2.2",
     "eslint": "^8.56.0",
@@ -171,6 +171,7 @@
     "ls-engines": "^0.9.1",
     "next": "14.1.0",
     "react": "^18.2.0",
+    "rimraf": "^5.0.5",
     "rollup": "^4.10.0",
     "styled-components": "^6.1.8",
     "typescript": "^5.3.3",
