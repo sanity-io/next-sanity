@@ -1,0 +1,194 @@
+{
+  "name": "next-sanity",
+  "version": "8.0.0",
+  "description": "Sanity.io toolkit for Next.js",
+  "keywords": [
+    "sanity",
+    "sanity.io",
+    "next.js",
+    "studio",
+    "studio-v3",
+    "live",
+    "preview"
+  ],
+  "homepage": "https://github.com/sanity-io/next-sanity#readme",
+  "bugs": {
+    "url": "https://github.com/sanity-io/next-sanity/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/sanity-io/next-sanity.git",
+    "directory": "packages/next-sanity"
+  },
+  "license": "MIT",
+  "author": "Sanity.io <hello@sanity.io>",
+  "sideEffects": false,
+  "type": "module",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "source": "./src/index.ts",
+      "require": "./dist/index.cjs",
+      "node": {
+        "module": "./dist/index.js",
+        "import": "./dist/index.cjs.js"
+      },
+      "import": "./dist/index.js",
+      "default": "./dist/index.js"
+    },
+    "./preview": {
+      "types": "./dist/preview/index.d.ts",
+      "source": "./src/preview/index.ts",
+      "require": "./dist/preview/index.cjs",
+      "node": {
+        "module": "./dist/preview/index.js",
+        "import": "./dist/preview/index.cjs.js"
+      },
+      "import": "./dist/preview/index.js",
+      "default": "./dist/preview/index.js"
+    },
+    "./preview/live-query": {
+      "types": "./dist/preview/live-query.d.ts",
+      "source": "./src/preview/LiveQuery/index.ts",
+      "require": "./dist/preview/live-query.cjs",
+      "node": {
+        "module": "./dist/preview/live-query.js",
+        "import": "./dist/preview/live-query.cjs.js"
+      },
+      "import": "./dist/preview/live-query.js",
+      "default": "./dist/preview/live-query.js"
+    },
+    "./studio": {
+      "types": "./dist/studio/index.d.ts",
+      "source": "./src/studio/index.ts",
+      "require": "./dist/studio/index.cjs",
+      "node": {
+        "module": "./dist/studio/index.js",
+        "import": "./dist/studio/index.cjs.js"
+      },
+      "import": "./dist/studio/index.js",
+      "default": "./dist/studio/index.js"
+    },
+    "./studio/metadata": {
+      "types": "./dist/studio/metadata.d.ts",
+      "source": "./src/studio/metadata.ts",
+      "require": "./dist/studio/metadata.cjs",
+      "node": {
+        "module": "./dist/studio/metadata.js",
+        "import": "./dist/studio/metadata.cjs.js"
+      },
+      "import": "./dist/studio/metadata.js",
+      "default": "./dist/studio/metadata.js"
+    },
+    "./studio/viewport": {
+      "types": "./dist/studio/viewport.d.ts",
+      "source": "./src/studio/viewport.ts",
+      "require": "./dist/studio/viewport.cjs",
+      "node": {
+        "module": "./dist/studio/viewport.js",
+        "import": "./dist/studio/viewport.cjs.js"
+      },
+      "import": "./dist/studio/viewport.js",
+      "default": "./dist/studio/viewport.js"
+    },
+    "./webhook": {
+      "types": "./dist/webhook.d.ts",
+      "source": "./src/webhook/index.ts",
+      "require": "./dist/webhook.cjs",
+      "node": {
+        "module": "./dist/webhook.js",
+        "import": "./dist/webhook.cjs.js"
+      },
+      "import": "./dist/webhook.js",
+      "default": "./dist/webhook.js"
+    },
+    "./package.json": "./package.json"
+  },
+  "main": "./dist/index.cjs",
+  "module": "./dist/index.js",
+  "source": "./src/index.ts",
+  "types": "./dist/index.d.ts",
+  "typesVersions": {
+    "*": {
+      "preview": [
+        "./dist/preview/index.d.ts"
+      ],
+      "preview/live-query": [
+        "./dist/preview/live-query.d.ts"
+      ],
+      "studio": [
+        "./dist/studio/index.d.ts"
+      ],
+      "studio/metadata": [
+        "./dist/studio/metadata.d.ts"
+      ],
+      "studio/viewport": [
+        "./dist/studio/viewport.d.ts"
+      ],
+      "webhook": [
+        "./dist/webhook.d.ts"
+      ]
+    }
+  },
+  "typings": "dist/index.d.ts",
+  "files": [
+    "dist",
+    "src"
+  ],
+  "scripts": {
+    "prebuild": "npm run clean",
+    "build": "pkg build --strict && pkg --strict",
+    "clean": "rimraf dist",
+    "coverage": "npm test -- --coverage",
+    "dev": "next",
+    "format": "eslint --fix .",
+    "lint": "eslint --max-warnings 0 .",
+    "prepublishOnly": "npm run build",
+    "test": "vitest",
+    "type-check": "tsc --noEmit"
+  },
+  "browserslist": "extends @sanity/browserslist-config",
+  "dependencies": {
+    "@sanity/client": "^6.12.4",
+    "@sanity/preview-kit": "5.0.20",
+    "@sanity/visual-editing": "1.2.2",
+    "@sanity/webhook": "4.0.0",
+    "groq": "^3.19"
+  },
+  "devDependencies": {
+    "@rollup/plugin-terser": "^0.4.4",
+    "@sanity/browserslist-config": "^1.0.1",
+    "@sanity/eslint-config-studio": "^3.0.1",
+    "@sanity/pkg-utils": "^4.2.0",
+    "@types/react": "^18.2.55",
+    "@typescript-eslint/eslint-plugin": "^6.21.0",
+    "@vitest/coverage-v8": "^1.2.2",
+    "eslint": "^8.56.0",
+    "eslint-config-prettier": "^9.1.0",
+    "eslint-config-sanity": "^7.0.1",
+    "eslint-gitignore": "^0.1.0",
+    "eslint-plugin-simple-import-sort": "^12.0.0",
+    "ls-engines": "^0.9.1",
+    "next": "14.1.0",
+    "react": "^18.2.0",
+    "rollup": "^4.10.0",
+    "styled-components": "^6.1.8",
+    "typescript": "^5.3.3",
+    "url-loader": "^4.1.1",
+    "vitest": "^1.2.2",
+    "vitest-github-actions-reporter": "^0.11.1"
+  },
+  "peerDependencies": {
+    "@sanity/client": "^6.12.4",
+    "@sanity/icons": "^2.8",
+    "@sanity/types": "^3.25",
+    "@sanity/ui": "^1.8 || ^2.0.0-beta || ^2.0",
+    "next": "^14.1",
+    "react": "^18.2",
+    "sanity": "^3.25",
+    "styled-components": "^5.2 || ^6.0"
+  },
+  "engines": {
+    "node": ">=18.17"
+  }
+}

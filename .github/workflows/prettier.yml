@@ -7,31 +7,31 @@ on:
   workflow_dispatch:
 
 concurrency:
-  group: ${{ github.workflow }}-${{ github.ref_name }}
+  group: ${{ github.workflow }}-${{ github.head_ref || github.run_id }}
   cancel-in-progress: true
 
 permissions:
-  contents: read
+  contents: read # for checkout
 
 jobs:
   run:
     name: Can the code be prettier? 🤔
     runs-on: ubuntu-latest
-    # workflow_dispatch always lets you select the branch ref, even though in this case we only ever want to run the action on `main` this we need an if check
-    if: ${{ github.ref_name == 'main' }}
     steps:
       - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v2
       - uses: actions/setup-node@v4
         with:
-          cache: npm
+          cache: pnpm
           node-version: lts/*
-      - run: npm ci --ignore-scripts --only-dev
+
+      - run: pnpm install --dev --ignore-scripts
       - uses: actions/cache@v4
         with:
           path: node_modules/.cache/prettier/.prettier-cache
-          key: prettier-${{ hashFiles('package-lock.json') }}-${{ hashFiles('.gitignore') }}
-      - run: npx prettier --ignore-path .gitignore --cache --write .
-      - run: git restore .github/workflows CHANGELOG.md
+          key: prettier-${{ hashFiles('pnpm-lock.yaml') }}-${{ hashFiles('.prettierignore') }}-${{ hashFiles('package.json') }}
+      - run: pnpm format
+      - run: git restore .github/workflows pnpm-lock.yaml
       - uses: tibdex/github-app-token@3beb63f4bd073e61482598c45c71c1019b59b73a # v2
         id: generate-token
         with:
@@ -39,8 +39,8 @@ jobs:
           private_key: ${{ secrets.ECOSPARK_APP_PRIVATE_KEY }}
       - uses: peter-evans/create-pull-request@b1ddad2c994a25fbc81a28b3ec0e368bb2021c50 # v6
         with:
-          body: I ran `npx prettier --ignore-path .gitignore --cache --write .` 🧑‍💻
-          branch: actions/prettier-if-needed
+          body: I ran `pnpm format` 🧑‍💻
+          branch: actions/prettier
           commit-message: 'chore(prettier): 🤖 ✨'
           labels: 🤖 bot
           title: 'chore(prettier): 🤖 ✨'
