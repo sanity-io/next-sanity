@@ -1,9 +1,12 @@
+'use client'
+
 /* eslint-disable no-restricted-globals */
 /* eslint-disable no-process-env */
+import { presentationTool as experimentalPresentationTool } from '@sanity/presentation'
 import {debugSecrets} from '@sanity/preview-url-secret/sanity-plugin-debug-secrets'
 import {visionTool} from '@sanity/vision'
 import {defineConfig} from 'sanity'
-import {presentationTool} from 'sanity/presentation'
+import { presentationTool as stablePresentationTool } from 'sanity/presentation'
 import {structureTool} from 'sanity/structure'
 
 import {schemaTypes} from './schemas'
@@ -11,27 +14,35 @@ import {schemaTypes} from './schemas'
 const projectId = process.env.NEXT_PUBLIC_SANITY_PROJECT_ID!
 const dataset = process.env.NEXT_PUBLIC_SANITY_DATASET!
 
-export default defineConfig({
-  title: 'next-sanity',
-  basePath: '/studio',
-
-  projectId,
-  dataset,
-
-  plugins: [
-    debugSecrets(),
-    structureTool(),
-    presentationTool({
-      previewUrl: {
-        draftMode: {
-          enable: '/api/draft',
+function createConfig(stable: boolean) {
+  const name = stable ? 'stable' : 'experimental'
+  const presentationTool = stable
+    ? stablePresentationTool
+    : experimentalPresentationTool
+  return defineConfig({
+    name,
+    basePath: `/studio/${name}`,
+  
+    projectId,
+    dataset,
+  
+    plugins: [
+      debugSecrets(),
+      presentationTool({
+        previewUrl: {
+          draftMode: {
+            enable: '/api/draft',
+          },
         },
-      },
-    }),
-    visionTool(),
-  ],
+      }),
+      structureTool(),
+      visionTool(),
+    ],
+  
+    schema: {
+      types: schemaTypes,
+    },
+  })
+}
 
-  schema: {
-    types: schemaTypes,
-  },
-})
+export default [createConfig(true), createConfig(false)]

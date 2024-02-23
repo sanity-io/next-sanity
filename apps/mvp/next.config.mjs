@@ -1,4 +1,7 @@
 import withBundleAnalyzer from '@next/bundle-analyzer'
+import { createRequire } from 'node:module'
+
+const require = createRequire(import.meta.url)
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
@@ -12,13 +15,18 @@ const nextConfig = {
   },
   productionBrowserSourceMaps: true,
 
-  // Handle static image imports the same in `npx next dev` as in `npm run build`
-  webpack: (config) => {
-    config.module.rules.push({
-      test: /\.(ico|svg|png)$/i,
-      use: [{loader: 'url-loader', options: {}}],
-    })
-
+  webpack(config) {
+    config.resolve.alias = {
+      ...config.resolve.alias,
+      'sanity/_internal': require.resolve('sanity/_internal'),
+      'sanity/_internalBrowser': require.resolve('sanity/_internalBrowser'),
+      'sanity/cli': require.resolve('sanity/cli'),
+      'sanity/desk': require.resolve('sanity/desk'),
+      'sanity/router': require.resolve('sanity/router'),
+      'sanity/structure': require.resolve('sanity/structure'),
+      'sanity/presentation': require.resolve('sanity/presentation'),
+      sanity: require.resolve('sanity'),
+    }
     return config
   },
   images: {disableStaticImages: true},
