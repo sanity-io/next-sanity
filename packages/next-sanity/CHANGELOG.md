@@ -5,6 +5,13 @@
 All notable changes to this project will be documented in this file. See
 [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 8.0.1 (2024-02-23)
+
+
+### Bug Fixes
+
+* **deps:** update dependency @sanity/client to ^6.14.3 ([8f3ec56](https://github.com/sanity-io/next-sanity/commit/8f3ec56fffd788c2b9d986a8b88f462037ddb581))
+
 ## [8.0.0](https://github.com/sanity-io/next-sanity/compare/v7.1.4...v8.0.0) (2024-02-12)
 
 ### ⚠ BREAKING CHANGES
