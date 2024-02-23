@@ -172,6 +172,9 @@ importers:
       react:
         specifier: ^18.2.0
         version: 18.2.0
+      rimraf:
+        specifier: ^5.0.5
+        version: 5.0.5
       rollup:
         specifier: ^4.10.0
         version: 4.10.0
@@ -10054,6 +10057,14 @@ packages:
     hasBin: true
     dependencies:
       glob: 9.3.5
+    dev: true
+
+  /rimraf@5.0.5:
+    resolution: {integrity: sha512-CqDakW+hMe/Bz202FPEymy68P+G50RfMQK+Qo5YUqc9SPipvbGjCGKd0RSKEelbsfQuw3g5NZDSrlZZAJurH1A==}
+    engines: {node: '>=14'}
+    hasBin: true
+    dependencies:
+      glob: 10.3.10
     dev: true
 
   /rollup-plugin-esbuild@6.1.1(esbuild@0.20.0)(rollup@4.10.0):
