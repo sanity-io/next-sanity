@@ -7,9 +7,25 @@
   ],
   "packageRules": [
     {
+      "group": { "semanticCommitType": "chore" },
+      "matchDepTypes": [
+        "dependencies",
+        "devDependencies",
+        "engines",
+        "optionalDependencies",
+        "peerDependencies"
+      ],
+      "matchManagers": ["npm"],
+      "semanticCommitType": "chore",
+      "description": "Group all dependencies from the app directory",
+      "matchFileNames": ["apps/**/package.json"],
+      "groupName": "App dependencies"
+    },
+    {
       "matchDepTypes": ["dependencies", "peerDependencies"],
       "matchPackageNames": ["@sanity/client", "@sanity/preview-kit", "@sanity/webhook"],
       "rangeStrategy": "bump",
+      "matchFileNames": ["packages/next-sanity/package.json"],
       "semanticCommitType": "fix"
     }
   ],
