@@ -4,6 +4,7 @@ import Link from 'next/link'
 import {unstable__adapter, unstable__environment} from 'next-sanity'
 import {Suspense} from 'react'
 
+import ConditionalPreviewProvider from './ConditionalPreviewProvider'
 import Posts from './Posts'
 
 export default function IndexPage() {
@@ -43,9 +44,11 @@ export default function IndexPage() {
               </>
             )}
           </div>
-          <Suspense>
-            <Posts />
-          </Suspense>
+          <ConditionalPreviewProvider>
+            <Suspense>
+              <Posts />
+            </Suspense>
+          </ConditionalPreviewProvider>
         </div>
       </div>
       <div className="text-center">

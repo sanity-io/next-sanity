@@ -5,6 +5,8 @@ const MODULE_PATHS_WHICH_USE_CLIENT_DIRECTIVE_SHOULD_BE_ADDED = [
   'VisualEditing.tsx',
 ]
 
+const MODULE_PATHS_WHICH_USE_SERVER_DIRECTIVE_SHOULD_BE_ADDED = ['actions.ts']
+
 export default defineConfig({
   tsconfig: 'tsconfig.build.json',
   minify: true,
@@ -19,6 +21,13 @@ export default defineConfig({
           )
         ) {
           return `"use client"`
+        }
+        if (
+          MODULE_PATHS_WHICH_USE_SERVER_DIRECTIVE_SHOULD_BE_ADDED.find((modulePath) =>
+            chunkInfo.facadeModuleId?.endsWith(modulePath),
+          )
+        ) {
+          return `"use server"`
         }
         return ''
       },

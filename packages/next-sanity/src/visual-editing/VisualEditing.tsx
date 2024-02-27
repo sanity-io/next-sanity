@@ -8,6 +8,8 @@ import {
 import {usePathname, useRouter, useSearchParams} from 'next/navigation.js'
 import {useEffect, useRef, useState} from 'react'
 
+import {revalidateRootLayout} from './actions'
+
 /**
  * @public
  */
@@ -19,7 +21,7 @@ export interface VisualEditingProps extends Omit<VisualEditingOptions, 'history'
 }
 
 export default function VisualEditing(props: VisualEditingProps): null {
-  const {zIndex} = props
+  const {refresh, zIndex} = props
 
   const router = useRouter()
   const routerRef = useRef(router)
@@ -31,6 +33,20 @@ export default function VisualEditing(props: VisualEditingProps): null {
   useEffect(() => {
     const disable = enableVisualEditing({
       zIndex,
+      refresh: refresh
+        ? refresh
+        : (payload) => {
+            switch (payload.source) {
+              case 'manual':
+                return payload.livePreviewEnabled ? manualFastRefresh() : manualFallbackRefresh()
+              case 'mutation':
+                return payload.livePreviewEnabled
+                  ? mutationFastRefresh()
+                  : mutationFallbackRefresh()
+              default:
+                throw new Error('Unknown refresh source', {cause: payload})
+            }
+          },
       history: {
         subscribe: (_navigate) => {
           setNavigate(() => _navigate)
@@ -50,8 +66,39 @@ export default function VisualEditing(props: VisualEditingProps): null {
         },
       },
     })
+
+    function manualFastRefresh() {
+      // eslint-disable-next-line no-console
+      console.debug(
+        'Live preview is setup, calling router.refresh() to refresh the server components without refetching cached data',
+      )
+      routerRef.current.refresh()
+      return Promise.resolve()
+    }
+    function manualFallbackRefresh() {
+      // eslint-disable-next-line no-console
+      console.debug(
+        'No loaders in live mode detected, or preview kit setup, revalidating root layout',
+      )
+      return revalidateRootLayout()
+    }
+    function mutationFastRefresh(): false {
+      // eslint-disable-next-line no-console
+      console.debug(
+        'Live preview is setup, mutation is skipped assuming its handled by the live preview',
+      )
+      return false
+    }
+    function mutationFallbackRefresh() {
+      // eslint-disable-next-line no-console
+      console.debug(
+        'No loaders in live mode detected, or preview kit setup, revalidating root layout',
+      )
+      return revalidateRootLayout()
+    }
+
     return () => disable()
-  }, [zIndex])
+  }, [refresh, zIndex])
 
   const pathname = usePathname()
   const searchParams = useSearchParams()
