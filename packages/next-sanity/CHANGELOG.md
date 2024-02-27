@@ -5,6 +5,13 @@
 All notable changes to this project will be documented in this file. See
 [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [8.1.1](https://github.com/sanity-io/next-sanity/compare/v8.1.0...v8.1.1) (2024-02-27)
+
+
+### Bug Fixes
+
+* **deps:** update dependency @sanity/webhook to v4.0.2 ([911a84a](https://github.com/sanity-io/next-sanity/commit/911a84a95cc7147514f0b1d8587132012bc40080))
+
 ## [8.1.0](https://github.com/sanity-io/next-sanity/compare/v8.0.3...v8.1.0) (2024-02-27)
 
 
