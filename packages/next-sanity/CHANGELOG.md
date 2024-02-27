@@ -5,6 +5,13 @@
 All notable changes to this project will be documented in this file. See
 [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [8.1.2](https://github.com/sanity-io/next-sanity/compare/v8.1.1...v8.1.2) (2024-02-27)
+
+
+### Bug Fixes
+
+* **typings:** set the correct return types ([d8301e0](https://github.com/sanity-io/next-sanity/commit/d8301e03b71ca412107713af2a52cd9687df2ec2))
+
 ## [8.1.1](https://github.com/sanity-io/next-sanity/compare/v8.1.0...v8.1.1) (2024-02-27)
 
 
