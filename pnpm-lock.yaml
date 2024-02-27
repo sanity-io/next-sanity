@@ -152,8 +152,8 @@ importers:
         specifier: ^9.1.0
         version: 9.1.0(eslint@8.57.0)
       eslint-config-sanity:
-        specifier: ^7.0.2
-        version: 7.0.2(@typescript-eslint/eslint-plugin@6.21.0)(@typescript-eslint/parser@6.21.0)(eslint@8.57.0)
+        specifier: ^7.1.0
+        version: 7.1.0(@typescript-eslint/eslint-plugin@6.21.0)(@typescript-eslint/parser@6.21.0)(eslint@8.57.0)
       eslint-gitignore:
         specifier: ^0.1.0
         version: 0.1.0(eslint@8.57.0)
@@ -6235,8 +6235,8 @@ packages:
       eslint: 8.57.0
     dev: true
 
-  /eslint-config-sanity@7.0.2(@typescript-eslint/eslint-plugin@6.21.0)(@typescript-eslint/parser@6.21.0)(eslint@8.57.0):
-    resolution: {integrity: sha512-0QOqc75lJjkmPQXmc31ZKu05cE75HuEE3WWKaRV5zsXZFz3cxWqHr5XPNi24uH6ZVnxLlQsgiE9eq7eKHOHtSg==}
+  /eslint-config-sanity@7.1.0(@typescript-eslint/eslint-plugin@6.21.0)(@typescript-eslint/parser@6.21.0)(eslint@8.57.0):
+    resolution: {integrity: sha512-B/8cAYen6BHJpgRKUgPAfffPo+G3x8s8o9upqh+/BOEeoJ2ienHP65HXD1gAOxMoyocNOlfdTYsxRFwz2lyQQQ==}
     engines: {node: '>=14.0.0'}
     peerDependencies:
       '@typescript-eslint/eslint-plugin': ^6.7.5 || ^7.0.0
@@ -6244,6 +6244,7 @@ packages:
       eslint: ^8.51.0
       eslint-plugin-import: ^2.28.1
       eslint-plugin-react: ^7.33.2
+      eslint-plugin-react-hooks: '*'
     peerDependenciesMeta:
       '@typescript-eslint/eslint-plugin':
         optional: true
@@ -6253,10 +6254,13 @@ packages:
         optional: true
       eslint-plugin-react:
         optional: true
+      eslint-plugin-react-hooks:
+        optional: true
     dependencies:
       '@typescript-eslint/eslint-plugin': 6.21.0(@typescript-eslint/parser@6.21.0)(eslint@8.57.0)(typescript@5.3.3)
       '@typescript-eslint/parser': 6.21.0(eslint@8.57.0)(typescript@5.3.3)
       eslint: 8.57.0
+      eslint-plugin-simple-import-sort: 12.0.0(eslint@8.57.0)
     dev: true
 
   /eslint-gitignore@0.1.0(eslint@8.57.0):
