@@ -24,7 +24,7 @@ const style = {
 } as const
 
 /** @internal */
-export const NextStudioNoScript = (): React.ReactNode => (
+export const NextStudioNoScript = (): JSX.Element => (
   <noscript>
     <div className="sanity-app-no-js__root">
       <div className="sanity-app-no-js__content">

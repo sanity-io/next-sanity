@@ -3,11 +3,7 @@ import {useServerInsertedHTML} from 'next/navigation.js'
 import {useState} from 'react'
 import {ServerStyleSheet, StyleSheetManager} from 'styled-components'
 
-export function StyledComponentsRegistry({
-  children,
-}: {
-  children: React.ReactNode
-}): React.ReactNode {
+export function StyledComponentsRegistry({children}: {children: React.ReactNode}): JSX.Element {
   // Only create stylesheet once with lazy initial state
   // x-ref: https://reactjs.org/docs/hooks-reference.html#lazy-initial-state
   const [styledComponentsStyleSheet] = useState(() => new ServerStyleSheet())
