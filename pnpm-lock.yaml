@@ -106,8 +106,8 @@ importers:
         specifier: ^2.8
         version: 2.10.3(react@18.2.0)
       '@sanity/preview-kit':
-        specifier: 5.0.24
-        version: 5.0.24(@sanity/client@6.15.0)(react@18.2.0)
+        specifier: 5.0.26
+        version: 5.0.26(@sanity/client@6.15.0)(react@18.2.0)
       '@sanity/types':
         specifier: ^3.25
         version: 3.30.0
@@ -3588,32 +3588,32 @@ packages:
       - styled-components
     dev: false
 
-  /@sanity/preview-kit-compat@1.4.7(@sanity/client@6.15.0)(react@18.2.0):
-    resolution: {integrity: sha512-JZAocZvad4/7GYBKalwGUEM3ijmxgzE1+fIfcjLpkEU0hTy5MW0QqnIzDN9zmwxpjf4Axgw5NltlssaWOG2TBQ==}
+  /@sanity/preview-kit-compat@1.4.9(@sanity/client@6.15.0)(react@18.2.0):
+    resolution: {integrity: sha512-60vGZ1rTPfQFTzUqdoxZjQkkZeHs5tP88ms+/xbc55iRT7VfB7TUVQDACKfHrNfYXZGKAyUBn9/mZQWvV5fxlg==}
     engines: {node: '>=18'}
     peerDependencies:
-      '@sanity/client': ^6.14.2
+      '@sanity/client': ^6.14.4
       react: ^18.2.0
     dependencies:
       '@sanity/client': 6.15.0
       react: 18.2.0
     dev: false
 
-  /@sanity/preview-kit@5.0.24(@sanity/client@6.15.0)(react@18.2.0):
-    resolution: {integrity: sha512-aZh86Q+ZdsPC5Ml98ohs8Ro0jBAwbqLUWvNl/Gnla/JPkAEPYTDxd5WedwRiEnwDLDF7ww2AV8CrgqubEHu8zQ==}
+  /@sanity/preview-kit@5.0.26(@sanity/client@6.15.0)(react@18.2.0):
+    resolution: {integrity: sha512-Gb1RB5p7++swF0pmDxOumpXQo3a8w4aQ8fcYWBRFR7EQsx35md5OpS3tj8f+z+WdFRla97OEdyG7PjObOaNILw==}
     engines: {node: '>=18'}
     peerDependencies:
-      '@sanity/client': ^6.14.2
+      '@sanity/client': ^6.15.0
       react: ^18.0.0
     peerDependenciesMeta:
       react:
         optional: true
     dependencies:
       '@sanity/client': 6.15.0
-      '@sanity/preview-kit-compat': 1.4.7(@sanity/client@6.15.0)(react@18.2.0)
+      '@sanity/preview-kit-compat': 1.4.9(@sanity/client@6.15.0)(react@18.2.0)
       '@vercel/stega': 0.1.0
       lru-cache: 10.2.0
-      mendoza: 3.0.4
+      mendoza: 3.0.5
       react: 18.2.0
       react-fast-compare: 3.2.2
       use-sync-external-store: 1.2.0(react@18.2.0)
@@ -8258,6 +8258,11 @@ packages:
     engines: {node: '>=14.18'}
     dev: false
 
+  /mendoza@3.0.5:
+    resolution: {integrity: sha512-kLFy+/zIZXcVZUV0YfsB9RyI/TUuk+ZjOFT6WWVW7Di4XvAOzaYE16seRY5nFV64JTcvcJAsAQSnLcErPRQgXw==}
+    engines: {node: '>=14.18'}
+    dev: false
+
   /merge-stream@2.0.0:
     resolution: {integrity: sha512-abv/qOcuPfk3URPfDzmZU1LKmuw8kT+0nIHvKrKgFrwifol/doWcdA4ZqsWQ8ENrFKkd67Mfpo/LovbIUsbt3w==}
 
@@ -10287,7 +10292,7 @@ packages:
       json5: 2.2.3
       lodash: 4.17.21
       log-symbols: 2.2.0
-      mendoza: 3.0.4
+      mendoza: 3.0.5
       module-alias: 2.2.3
       nano-pubsub: 2.0.1
       nanoid: 3.3.7
