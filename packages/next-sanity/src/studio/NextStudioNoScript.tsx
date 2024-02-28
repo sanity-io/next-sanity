@@ -1,34 +1,27 @@
-/* eslint-disable react/no-danger */
-
-const style = {
-  __html: `
-.sanity-app-no-js__root {
-  position: absolute;
-  top: 0;
-  right: 0;
-  left: 0;
-  bottom: 0;
-  background: #fff;
-  z-index: 1;
-}
-
-.sanity-app-no-js__content {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  text-align: center;
-  font-family: helvetica, arial, sans-serif;
-}
-`,
-} as const
-
 /** @internal */
 export const NextStudioNoScript = (): JSX.Element => (
   <noscript>
-    <div className="sanity-app-no-js__root">
-      <div className="sanity-app-no-js__content">
-        <style type="text/css" dangerouslySetInnerHTML={style} />
+    <div
+      style={{
+        position: 'absolute',
+        top: 0,
+        right: 0,
+        left: 0,
+        bottom: 0,
+        background: '#fff',
+        zIndex: 1,
+      }}
+    >
+      <div
+        style={{
+          position: 'absolute',
+          top: '50%',
+          left: '50%',
+          transform: 'translate(-50%, -50%)',
+          textAlign: 'center',
+          fontFamily: 'helvetica, arial, sans-serif',
+        }}
+      >
         <h1>JavaScript disabled</h1>
         <p>
           Please <a href="https://www.enable-javascript.com/">enable JavaScript</a> in your
