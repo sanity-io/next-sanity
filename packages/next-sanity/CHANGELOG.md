@@ -5,6 +5,15 @@
 All notable changes to this project will be documented in this file. See
 [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [8.1.3](https://github.com/sanity-io/next-sanity/compare/v8.1.2...v8.1.3) (2024-02-28)
+
+
+### Bug Fixes
+
+* **deps:** update dependency @sanity/client to ^6.15.1 ([#1063](https://github.com/sanity-io/next-sanity/issues/1063)) ([d668e87](https://github.com/sanity-io/next-sanity/commit/d668e87f656ed68fd5e976d7de4a51e91ee9fa01))
+* make NextStudio streaming SSR safe ([9300eae](https://github.com/sanity-io/next-sanity/commit/9300eae38e82f596efc257f87293ae6ccc2bc5bc))
+* resolve SSR hydration mismatch for NextStudioNoScript ([d11acd1](https://github.com/sanity-io/next-sanity/commit/d11acd1dde94b2cadb0af28768d15ae50dd5e275))
+
 ## [8.1.2](https://github.com/sanity-io/next-sanity/compare/v8.1.1...v8.1.2) (2024-02-27)
 
 
