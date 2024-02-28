@@ -1,6 +1,6 @@
 // https://nextjs.org/docs/app/building-your-application/styling/css-in-js#styled-components
 import {useServerInsertedHTML} from 'next/navigation.js'
-import {useState} from 'react'
+import {useState, useSyncExternalStore} from 'react'
 import {ServerStyleSheet, StyleSheetManager} from 'styled-components'
 
 export function StyledComponentsRegistry({children}: {children: React.ReactNode}): JSX.Element {
@@ -14,9 +14,15 @@ export function StyledComponentsRegistry({children}: {children: React.ReactNode}
     return <>{styles}</>
   })
 
-  if (typeof window !== 'undefined') return <>{children}</>
+  const isMounted = useSyncExternalStore(
+    subscribe,
+    () => true,
+    () => false,
+  )
+  if (isMounted) return <>{children}</>
 
   return (
     <StyleSheetManager sheet={styledComponentsStyleSheet.instance}>{children}</StyleSheetManager>
   )
 }
+const subscribe = () => () => {}
