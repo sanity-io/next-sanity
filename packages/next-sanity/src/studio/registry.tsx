@@ -25,4 +25,5 @@ export function StyledComponentsRegistry({children}: {children: React.ReactNode}
     <StyleSheetManager sheet={styledComponentsStyleSheet.instance}>{children}</StyleSheetManager>
   )
 }
+// eslint-disable-next-line no-empty-function
 const subscribe = () => () => {}
