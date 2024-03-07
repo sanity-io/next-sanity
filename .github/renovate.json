@@ -23,7 +23,13 @@
     },
     {
       "matchDepTypes": ["dependencies", "peerDependencies"],
-      "matchPackageNames": ["@sanity/client", "@sanity/preview-kit", "@sanity/webhook", "@portabletext/react", "@portabletext/types"],
+      "matchPackageNames": [
+        "@sanity/client",
+        "@sanity/preview-kit",
+        "@sanity/webhook",
+        "@portabletext/react",
+        "@portabletext/types"
+      ],
       "rangeStrategy": "bump",
       "matchFileNames": ["packages/next-sanity/package.json"],
       "semanticCommitType": "fix"
