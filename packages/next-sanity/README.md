@@ -12,6 +12,7 @@ The official [Sanity.io][sanity] toolkit for Next.js apps.
 - [Visual Editing](#visual-editing-with-content-source-maps)
 - [GROQ syntax highlighting][groq-syntax-highlighting]
 - Embedded Sanity Studio
+- Block content with [Portable Text][portable-text]
 
 ## Table of contents
 
@@ -67,22 +68,22 @@ bun install next-sanity
 
 ### Common dependencies
 
-Building with Sanity and Next.js, you‘re likely to want libraries to handle [On-Demand Image Transformations][image-url] and block content with [Portable Text][portable-text]:
+Building with Sanity and Next.js, you‘re likely to want libraries to handle [On-Demand Image Transformations][image-url] and [Visual Editing](https://www.sanity.io/docs/loaders-and-overlays):
 
 ```bash
-npm install @portabletext/react @sanity/image-url
+npm install @sanity/image-url @sanity/react-loader
 ```
 
 ```bash
-yarn add @portabletext/react @sanity/image-url
+yarn add @sanity/image-url @sanity/react-loader
 ```
 
 ```bash
-pnpm install @portabletext/react @sanity/image-url
+pnpm install @sanity/image-url @sanity/react-loader
 ```
 
 ```bash
-bun install @portabletext/react @sanity/image-url
+bun install @sanity/image-url @sanity/react-loader
 ```
 
 ### Peer dependencies for embedded Sanity Studio
