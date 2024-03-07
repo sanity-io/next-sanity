@@ -5,6 +5,15 @@
 All notable changes to this project will be documented in this file. See
 [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [8.2.1](https://github.com/sanity-io/next-sanity/compare/v8.2.0...v8.2.1) (2024-03-07)
+
+
+### Bug Fixes
+
+* **deps:** update dependency @sanity/client to ^6.15.3 ([#1104](https://github.com/sanity-io/next-sanity/issues/1104)) ([571d11e](https://github.com/sanity-io/next-sanity/commit/571d11e053c226944a74fac131db77e80411e6b7))
+* **deps:** update dependency @sanity/preview-kit to ^5.0.31 ([5659f1d](https://github.com/sanity-io/next-sanity/commit/5659f1ded03f4b8971c1e7d173c52ae6b45e785c))
+* remove `node` export conditions ([431d1f6](https://github.com/sanity-io/next-sanity/commit/431d1f6fe5f0ec03f2f06b7a3fb9c131019bf756))
+
 ## [8.2.0](https://github.com/sanity-io/next-sanity/compare/v8.1.6...v8.2.0) (2024-03-07)
 
 
