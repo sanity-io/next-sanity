@@ -6,10 +6,19 @@ import {revalidatePath} from 'next/cache.js'
 import {draftMode} from 'next/headers.js'
 
 export async function revalidateRootLayout(): Promise<void> {
-  if (!draftMode().isEnabled) {
+  try {
+    if (!draftMode().isEnabled) {
+      // eslint-disable-next-line no-console
+      console.debug('Skipped revalidatePath request because draft mode is not enabled')
+      return
+    }
+  } catch (err) {
     // eslint-disable-next-line no-console
-    console.debug('Skipped revalidatePath request because draft mode is not enabled')
-    return
+    console.error('Error while checking if Draft Mode is enabled', err)
+    if (!(err as Error)?.message.includes('requestAsyncStorage')) {
+      console.warn('Ignoring')
+      return
+    }
   }
   await revalidatePath('/', 'layout')
 }
