@@ -5,6 +5,13 @@
 All notable changes to this project will be documented in this file. See
 [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [8.1.6](https://github.com/sanity-io/next-sanity/compare/v8.1.5...v8.1.6) (2024-03-07)
+
+
+### Bug Fixes
+
+* don't render overlays if the Vercel Toolbar is present ([112872c](https://github.com/sanity-io/next-sanity/commit/112872cafed76661428b512cfe680282915bf030))
+
 ## [8.1.5](https://github.com/sanity-io/next-sanity/compare/v8.1.4...v8.1.5) (2024-03-06)
 
 
