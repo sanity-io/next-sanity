@@ -5,6 +5,19 @@
 All notable changes to this project will be documented in this file. See
 [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [8.2.0](https://github.com/sanity-io/next-sanity/compare/v8.1.6...v8.2.0) (2024-03-07)
+
+
+### Features
+
+* add `@portabletext/react` and `@portabletext/types` exports ([43bbdb8](https://github.com/sanity-io/next-sanity/commit/43bbdb8dee6649533f17e20f1a1bd4bfd1240564))
+
+
+### Bug Fixes
+
+* **deps:** update dependency @sanity/client to ^6.15.2 ([#1097](https://github.com/sanity-io/next-sanity/issues/1097)) ([fccc398](https://github.com/sanity-io/next-sanity/commit/fccc398a410cc89a7deb78b13032c5c86a520da2))
+* **deps:** update dependency @sanity/preview-kit to v5.0.30 ([#1101](https://github.com/sanity-io/next-sanity/issues/1101)) ([d2be37e](https://github.com/sanity-io/next-sanity/commit/d2be37e78f8b957cb31c6ddd6cba8533240119b2))
+
 ## [8.1.6](https://github.com/sanity-io/next-sanity/compare/v8.1.5...v8.1.6) (2024-03-07)
 
 
