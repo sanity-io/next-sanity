@@ -1,5 +1,6 @@
 /* eslint-disable @next/next/no-img-element */
 import {q} from 'groqd'
+import {Image} from 'next-sanity/image'
 import {memo} from 'react'
 
 import {urlForImage} from '@/app/sanity.image'
@@ -49,9 +50,11 @@ const PostsLayout = memo(function Posts(props: PostsLayoutProps) {
         >
           <div className="flex-shrink-0">
             {post.mainImage ? (
-              <img
+              <Image
                 className="h-48 w-full object-cover"
-                src={urlForImage(post.mainImage).height(256).width(256).fit('crop').url()}
+                src={urlForImage(post.mainImage).height(192).width(512).url()}
+                height={192}
+                width={512}
                 alt=""
               />
             ) : null}
@@ -66,9 +69,11 @@ const PostsLayout = memo(function Posts(props: PostsLayoutProps) {
               <div className="flex-shrink-0">
                 <span className="sr-only">{post.author.name}</span>
                 {post.author?.image ? (
-                  <img
+                  <Image
                     className="h-10 w-10 rounded-full"
-                    src={urlForImage(post.author.image).url()}
+                    src={urlForImage(post.author.image).height(100).width(100).url()}
+                    height={40}
+                    width={40}
                     alt=""
                   />
                 ) : null}

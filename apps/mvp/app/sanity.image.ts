@@ -7,4 +7,4 @@ export const imageBuilder = createImageUrlBuilder({
 })
 
 export const urlForImage = (source: Parameters<(typeof imageBuilder)['image']>[0]) =>
-  imageBuilder.image(source).auto('format').fit('max')
+  imageBuilder.image(source)

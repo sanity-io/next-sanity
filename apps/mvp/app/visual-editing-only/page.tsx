@@ -9,9 +9,6 @@ import PostsLayout, {PostsLayoutProps, query} from '@/app/PostsLayout'
 import {sanityFetch} from '../sanity.fetch'
 
 export default async function IndexPage() {
-  const preview = draftMode().isEnabled
-  const posts = await sanityFetch<PostsLayoutProps['data']>({query, tags: ['post', 'author']})
-
   return (
     <>
       <div

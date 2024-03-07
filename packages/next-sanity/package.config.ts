@@ -3,6 +3,7 @@ import {defineConfig} from '@sanity/pkg-utils'
 const MODULE_PATHS_WHICH_USE_CLIENT_DIRECTIVE_SHOULD_BE_ADDED = [
   'NextStudio.tsx',
   'VisualEditing.tsx',
+  'imageLoader.ts',
 ]
 
 const MODULE_PATHS_WHICH_USE_SERVER_DIRECTIVE_SHOULD_BE_ADDED = ['actions.ts']

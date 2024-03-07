@@ -32,6 +32,13 @@
       "require": "./dist/index.cjs",
       "default": "./dist/index.js"
     },
+    "./image": {
+      "types": "./dist/image/index.d.ts",
+      "source": "./src/image/index.ts",
+      "import": "./dist/image/index.js",
+      "require": "./dist/image/index.cjs",
+      "default": "./dist/image/index.js"
+    },
     "./preview": {
       "types": "./dist/preview/index.d.ts",
       "source": "./src/preview/index.ts",
@@ -82,6 +89,9 @@
   "types": "./dist/index.d.ts",
   "typesVersions": {
     "*": {
+      "image": [
+        "./dist/image/index.d.ts"
+      ],
       "preview": [
         "./dist/preview/index.d.ts"
       ],

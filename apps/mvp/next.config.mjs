@@ -1,5 +1,6 @@
-import withBundleAnalyzer from '@next/bundle-analyzer'
 import {createRequire} from 'node:module'
+
+import withBundleAnalyzer from '@next/bundle-analyzer'
 
 const require = createRequire(import.meta.url)
 
