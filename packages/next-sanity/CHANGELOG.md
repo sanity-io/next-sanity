@@ -5,6 +5,18 @@
 All notable changes to this project will be documented in this file. See
 [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [8.3.0](https://github.com/sanity-io/next-sanity/compare/v8.2.1...v8.3.0) (2024-03-07)
+
+
+### Features
+
+* add Image component and image loader ([d98069b](https://github.com/sanity-io/next-sanity/commit/d98069b8f0a29e831ba8034b937e7230418faa33))
+
+
+### Bug Fixes
+
+* workaround turbopack issue with default revalidate server action ([33224b4](https://github.com/sanity-io/next-sanity/commit/33224b457bd9c9844f8e76efe7adf42483f397ed))
+
 ## [8.2.1](https://github.com/sanity-io/next-sanity/compare/v8.2.0...v8.2.1) (2024-03-07)
 
 
