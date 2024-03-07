@@ -33,12 +33,18 @@ export default async function IndexPage() {
           </Suspense>
         </div>
       </div>
-      <div className="text-center">
+      <div className="flex text-center">
         <Link
           href="/studio"
           className="mx-2 my-4 inline-block rounded-full border border-gray-200 px-4 py-1 text-sm font-semibold text-gray-600 hover:border-transparent hover:bg-gray-600 hover:text-white focus:outline-none focus:ring-2 focus:ring-gray-600 focus:ring-offset-2"
         >
           Open Studio
+        </Link>
+        <Link
+          href="/"
+          className="mx-2 my-4 inline-block rounded-full border border-gray-200 px-4 py-1 text-sm font-semibold text-gray-600 hover:border-transparent hover:bg-gray-600 hover:text-white focus:outline-none focus:ring-2 focus:ring-gray-600 focus:ring-offset-2"
+        >
+          Preview Kit
         </Link>
       </div>
     </>

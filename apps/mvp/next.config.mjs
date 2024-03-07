@@ -10,7 +10,7 @@ const nextConfig = {
   },
   logging: {
     fetches: {
-      fullUrl: true,
+      fullUrl: false,
     },
   },
   productionBrowserSourceMaps: true,
@@ -29,7 +29,6 @@ const nextConfig = {
     }
     return config
   },
-  images: {disableStaticImages: true},
 }
 
 export default withBundleAnalyzer({

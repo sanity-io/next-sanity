@@ -1,4 +1,3 @@
-/* eslint-disable no-process-env */
 import {createClient} from 'next-sanity'
 
 export const client = createClient({
@@ -11,7 +10,7 @@ export const client = createClient({
   stega: {
     enabled: true,
     studioUrl: '/studio',
-    logger: console,
+    // logger: console,
   },
 })
 

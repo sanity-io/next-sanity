@@ -23,26 +23,8 @@ export default function IndexPage() {
         <div className="relative mx-auto max-w-7xl">
           <div className="text-center">
             <h2 className="text-3xl font-extrabold tracking-tight text-gray-900 sm:text-4xl">
-              {preview ? 'Draft Mode' : 'Not in Draft Mode'}
+              Preview Kit
             </h2>
-            {preview && (
-              <a
-                href="/api/disable-draft"
-                className="mx-2 my-4 inline-block rounded-full border border-gray-200 px-4 py-1 text-sm font-semibold text-gray-600 hover:border-transparent hover:bg-gray-600 hover:text-white focus:outline-none focus:ring-2 focus:ring-gray-600 focus:ring-offset-2"
-              >
-                Stop previewing drafts
-              </a>
-            )}
-            {!preview && (
-              <>
-                <a
-                  href="/api/draft"
-                  className="mx-2 my-4 inline-block rounded-full border border-gray-200 px-4 py-1 text-sm font-semibold text-gray-600 hover:border-transparent hover:bg-gray-600 hover:text-white focus:outline-none focus:ring-2 focus:ring-gray-600 focus:ring-offset-2"
-                >
-                  Preview drafts
-                </a>
-              </>
-            )}
           </div>
           <ConditionalPreviewProvider>
             <Suspense>
@@ -51,12 +33,18 @@ export default function IndexPage() {
           </ConditionalPreviewProvider>
         </div>
       </div>
-      <div className="text-center">
+      <div className="flex text-center">
         <Link
           href="/studio"
           className="mx-2 my-4 inline-block rounded-full border border-gray-200 px-4 py-1 text-sm font-semibold text-gray-600 hover:border-transparent hover:bg-gray-600 hover:text-white focus:outline-none focus:ring-2 focus:ring-gray-600 focus:ring-offset-2"
         >
           Open Studio
+        </Link>
+        <Link
+          href="/visual-editing-only"
+          className="mx-2 my-4 inline-block rounded-full border border-gray-200 px-4 py-1 text-sm font-semibold text-gray-600 hover:border-transparent hover:bg-gray-600 hover:text-white focus:outline-none focus:ring-2 focus:ring-gray-600 focus:ring-offset-2"
+        >
+          Visual Editing Only
         </Link>
       </div>
     </>

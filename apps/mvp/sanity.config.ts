@@ -6,13 +6,20 @@ import {presentationTool as experimentalPresentationTool} from '@sanity/presenta
 import {debugSecrets} from '@sanity/preview-url-secret/sanity-plugin-debug-secrets'
 import {visionTool} from '@sanity/vision'
 import {defineConfig} from 'sanity'
-import {presentationTool as stablePresentationTool} from 'sanity/presentation'
+import {
+  presentationTool as stablePresentationTool,
+  type PreviewUrlResolverOptions,
+} from 'sanity/presentation'
 import {structureTool} from 'sanity/structure'
 
 import {schemaTypes} from './schemas'
 
 const projectId = process.env.NEXT_PUBLIC_SANITY_PROJECT_ID!
 const dataset = process.env.NEXT_PUBLIC_SANITY_DATASET!
+
+const previewMode = {
+  enable: '/api/draft',
+} satisfies PreviewUrlResolverOptions['previewMode']
 
 function createConfig(stable: boolean) {
   const name = stable ? 'stable' : 'experimental'
@@ -27,11 +34,7 @@ function createConfig(stable: boolean) {
     plugins: [
       debugSecrets(),
       presentationTool({
-        previewUrl: {
-          draftMode: {
-            enable: '/api/draft',
-          },
-        },
+        previewUrl: {previewMode},
       }),
       structureTool(),
       visionTool(),
