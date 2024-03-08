@@ -23,8 +23,19 @@ export default defineType({
       name: 'image',
       title: 'Image',
       type: 'image',
+      fields: [
+        {
+          name: 'alt',
+          type: 'string',
+          title: 'Alternative text',
+          description: 'Important for SEO and accessiblity.',
+        },
+      ],
       options: {
         hotspot: true,
+        aiAssist: {
+          imageDescriptionField: 'alt',
+        },
       },
     },
     {

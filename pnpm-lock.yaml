@@ -29,6 +29,9 @@ importers:
 
   apps/mvp:
     dependencies:
+      '@sanity/assist':
+        specifier: ^2.0.1
+        version: 2.0.1(react-dom@18.2.0)(react@18.2.0)(sanity@3.32.0)(styled-components@6.1.8)
       '@sanity/image-url':
         specifier: ^1.0.2
         version: 1.0.2
@@ -3269,6 +3272,30 @@ packages:
     engines: {node: '>=10'}
     dev: false
 
+  /@sanity/assist@2.0.1(react-dom@18.2.0)(react@18.2.0)(sanity@3.32.0)(styled-components@6.1.8):
+    resolution: {integrity: sha512-Gh/SyOxydVMJxZgOOwj+dOAs9kSM/1hVy+f9IguLxWf7tJmi/IprAq6XThHL7WEitGM8fmteUBJ87ucn2c5OKw==}
+    engines: {node: '>=14'}
+    peerDependencies:
+      react: ^18
+      sanity: ^3.26
+      styled-components: ^5.2 || ^6.0.0
+    dependencies:
+      '@sanity/icons': 2.10.3(react@18.2.0)
+      '@sanity/incompatible-plugin': 1.0.4(react-dom@18.2.0)(react@18.2.0)
+      '@sanity/ui': 2.0.7(react-dom@18.2.0)(react-is@18.2.0)(react@18.2.0)(styled-components@6.1.8)
+      date-fns: 2.30.0
+      lodash.get: 4.4.2
+      react: 18.2.0
+      react-fast-compare: 3.2.2
+      react-is: 18.2.0
+      rxjs: 7.8.1
+      rxjs-exhaustmap-with-trailing: 2.1.1(rxjs@7.8.1)
+      sanity: 3.32.0(@types/react@18.2.64)(react-dom@18.2.0)(react@18.2.0)(styled-components@6.1.8)
+      styled-components: 6.1.8(react-dom@18.2.0)(react@18.2.0)
+    transitivePeerDependencies:
+      - react-dom
+    dev: false
+
   /@sanity/bifur-client@0.3.1:
     resolution: {integrity: sha512-GlY9+tUmM0Vye64BHwIYLOivuRL37ucW/sj/D9MYqBmjgBnTRrjfmg8NR7qoodZuJ5nYJ5qpGMsVIBLP4Plvnw==}
     dependencies:
@@ -3388,6 +3415,14 @@ packages:
     resolution: {integrity: sha512-wtMYcV5GIDIhVyF/jjmdwq1GdlK07dRL40XMns73VbrFI7FteRltxv48bhYVZPcLkRXb0SHjpDS/icj9/yzbVA==}
     dev: false
 
+  /@sanity/icons@1.3.10(react@18.2.0):
+    resolution: {integrity: sha512-5wVG/vIiGuGrSmq+Bl3PY7XDgQrGv0fyHdJI64FSulnr2wH3NMqZ6C59UFxnrZ93sr7kOt0zQFoNv2lkPBi0Cg==}
+    peerDependencies:
+      react: ^16.9 || ^17 || ^18
+    dependencies:
+      react: 18.2.0
+    dev: false
+
   /@sanity/icons@2.10.3(react@18.2.0):
     resolution: {integrity: sha512-MH4tSSwkqkPx+L2RjG6/Hcsx80OaESQyl9gBSI4adGh6frZxW8kr4+1GymO5lWoi2IOHgjvxln3XT7BlrRqzLA==}
     engines: {node: '>=14.0.0'}
@@ -3426,6 +3461,18 @@ packages:
       tar-fs: 2.1.1
     transitivePeerDependencies:
       - supports-color
+    dev: false
+
+  /@sanity/incompatible-plugin@1.0.4(react-dom@18.2.0)(react@18.2.0):
+    resolution: {integrity: sha512-2z39G9PTM8MXOF4fJNx3TG4tH0RrTjtH6dVLW93DSjCPbIS7FgCY5yWjZfQ+HVkwhLsF7ATDAGLA/jp65pFjAg==}
+    peerDependencies:
+      react: ^16.9 || ^17 || ^18
+      react-dom: ^16.9 || ^17 || ^18
+    dependencies:
+      '@sanity/icons': 1.3.10(react@18.2.0)
+      react: 18.2.0
+      react-copy-to-clipboard: 5.1.0(react@18.2.0)
+      react-dom: 18.2.0(react@18.2.0)
     dev: false
 
   /@sanity/logos@2.1.6(@sanity/color@3.0.0)(react@18.2.0):
@@ -8033,7 +8080,6 @@ packages:
 
   /lodash.get@4.4.2:
     resolution: {integrity: sha512-z+Uw/vLuy6gQe8cfaFWD7p0wVv8fJl3mbzXh33RS+0oW2wvUqiRXiQ69gLWSLpgB5/6sU+r6BlQR0MBILadqTQ==}
-    dev: true
 
   /lodash.isequal@4.5.0:
     resolution: {integrity: sha512-pDo3lu8Jhfjqls6GkMgpahsF9kCyayhgykjyLMNFTKWrpVdAQtYyB4muAMWozBB4ig/dtWAmsMxLEI8wuz+DYQ==}

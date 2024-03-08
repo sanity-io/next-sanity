@@ -2,6 +2,7 @@
 
 /* eslint-disable no-restricted-globals */
 /* eslint-disable no-process-env */
+import {assist} from '@sanity/assist'
 import {presentationTool as experimentalPresentationTool} from '@sanity/presentation'
 import {debugSecrets} from '@sanity/preview-url-secret/sanity-plugin-debug-secrets'
 import {visionTool} from '@sanity/vision'
@@ -32,6 +33,7 @@ function createConfig(stable: boolean) {
     dataset,
 
     plugins: [
+      assist(),
       debugSecrets(),
       presentationTool({
         previewUrl: {previewMode},

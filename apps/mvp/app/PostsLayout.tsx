@@ -1,9 +1,8 @@
 /* eslint-disable @next/next/no-img-element */
-import {q} from 'groqd'
-import {Image} from 'next-sanity/image'
+import {q, sanityImage} from 'groqd'
 import {memo} from 'react'
 
-import {urlForImage} from '@/app/sanity.image'
+import {Image} from './Image'
 
 const {query, schema} = q('*')
   .filter("_type == 'post'")
@@ -11,14 +10,26 @@ const {query, schema} = q('*')
     _id: q.string(),
     title: q.string().optional(),
     slug: q('slug').grabOne('current', q.string().optional()),
-    // mainImage: q('mainImage', imageWithCropAndHotspot),
-    mainImage: q.unknown().optional(),
-    publishedAt: q.date().optional(),
-    author: q('author').deref().grab({
-      name: q.string().optional(),
-      // image: q('image', imageWithCropAndHotspot),
-      image: q.unknown().optional(),
+    mainImage: sanityImage('mainImage', {
+      withCrop: true,
+      withHotspot: true,
+      additionalFields: {
+        alt: q.string().nullish(),
+      },
     }),
+    publishedAt: q.date().optional(),
+    author: q('author')
+      .deref()
+      .grab({
+        name: q.string().optional(),
+        image: sanityImage('image', {
+          withCrop: true,
+          withHotspot: true,
+          additionalFields: {
+            alt: q.string().nullish(),
+          },
+        }),
+      }),
     status: q.select({
       '_originalId in path("drafts.**")': ['"draft"', q.literal('draft')],
       default: ['"published"', q.literal('published')],
@@ -49,15 +60,7 @@ const PostsLayout = memo(function Posts(props: PostsLayoutProps) {
           className="relative flex flex-col overflow-hidden rounded-lg shadow-lg"
         >
           <div className="flex-shrink-0">
-            {post.mainImage ? (
-              <Image
-                className="h-48 w-full object-cover"
-                src={urlForImage(post.mainImage).height(192).width(512).url()}
-                height={192}
-                width={512}
-                alt=""
-              />
-            ) : null}
+            {post.mainImage ? <Image src={post.mainImage} width={512} height={380} /> : null}
           </div>
           <div className="flex flex-1 flex-col justify-between bg-white p-6">
             <div className="flex-1">
@@ -70,11 +73,10 @@ const PostsLayout = memo(function Posts(props: PostsLayoutProps) {
                 <span className="sr-only">{post.author.name}</span>
                 {post.author?.image ? (
                   <Image
-                    className="h-10 w-10 rounded-full"
-                    src={urlForImage(post.author.image).height(100).width(100).url()}
+                    className="rounded-full"
+                    src={post.author.image}
                     height={40}
                     width={40}
-                    alt=""
                   />
                 ) : null}
               </div>

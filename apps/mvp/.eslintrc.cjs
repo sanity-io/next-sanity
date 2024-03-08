@@ -13,5 +13,6 @@ module.exports = {
   rules: {
     'simple-import-sort/imports': 'warn',
     'simple-import-sort/exports': 'warn',
+    'jsx-a11y/alt-text': 'off',
   },
 }
