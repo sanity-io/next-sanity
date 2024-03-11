@@ -60,7 +60,9 @@ const PostsLayout = memo(function Posts(props: PostsLayoutProps) {
           className="relative flex flex-col overflow-hidden rounded-lg shadow-lg"
         >
           <div className="flex-shrink-0">
-            {post.mainImage ? <Image src={post.mainImage} width={512} height={380} /> : null}
+            {post.mainImage ? (
+              <Image src={post.mainImage as any} width={512} height={380} />
+            ) : null}
           </div>
           <div className="flex flex-1 flex-col justify-between bg-white p-6">
             <div className="flex-1">
@@ -74,7 +76,7 @@ const PostsLayout = memo(function Posts(props: PostsLayoutProps) {
                 {post.author?.image ? (
                   <Image
                     className="rounded-full"
-                    src={post.author.image}
+                    src={post.author.image as any}
                     height={40}
                     width={40}
                   />
