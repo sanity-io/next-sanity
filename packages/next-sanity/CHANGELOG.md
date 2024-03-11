@@ -5,6 +5,14 @@
 All notable changes to this project will be documented in this file. See
 [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [8.3.1](https://github.com/sanity-io/next-sanity/compare/v8.3.0...v8.3.1) (2024-03-11)
+
+
+### Bug Fixes
+
+* **deps:** update dependency @sanity/preview-kit to v5.0.32 ([#1113](https://github.com/sanity-io/next-sanity/issues/1113)) ([b593cb4](https://github.com/sanity-io/next-sanity/commit/b593cb4a60276c78d609f3cbf95b4bddddfebb1f))
+* remove turbopack workaround ([bcfc59b](https://github.com/sanity-io/next-sanity/commit/bcfc59bccc8b77c0a350bb01a5559d7e22e846a8))
+
 ## [8.3.0](https://github.com/sanity-io/next-sanity/compare/v8.2.1...v8.3.0) (2024-03-07)
 
 
