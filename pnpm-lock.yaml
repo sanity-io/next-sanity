@@ -31,13 +31,13 @@ importers:
     dependencies:
       '@sanity/assist':
         specifier: ^2.0.1
-        version: 2.0.2(react-dom@18.2.0)(react@18.2.0)(sanity@3.32.0)(styled-components@6.1.8)
+        version: 2.0.3(react-dom@18.2.0)(react@18.2.0)(sanity@3.32.0)(styled-components@6.1.8)
       '@sanity/image-url':
         specifier: ^1.0.2
         version: 1.0.2
       '@sanity/presentation':
-        specifier: 1.11.4
-        version: 1.11.4(@sanity/client@6.15.4)(react-dom@18.2.0)(react-is@18.2.0)(react@18.2.0)(styled-components@6.1.8)
+        specifier: 1.11.5
+        version: 1.11.5(@sanity/client@6.15.4)(react-dom@18.2.0)(react-is@18.2.0)(react@18.2.0)(styled-components@6.1.8)
       '@sanity/preview-url-secret':
         specifier: ^1.6.4
         version: 1.6.4(@sanity/client@6.15.4)
@@ -3287,8 +3287,8 @@ packages:
     engines: {node: '>=10'}
     dev: false
 
-  /@sanity/assist@2.0.2(react-dom@18.2.0)(react@18.2.0)(sanity@3.32.0)(styled-components@6.1.8):
-    resolution: {integrity: sha512-Xgwfk8IWJAJucgexCf9pZnWcAHzAj9cRg64RKkugKTrGvLunpWPTBdyGDPjylXtp5YH9wmb4VIzNHDerHISonA==}
+  /@sanity/assist@2.0.3(react-dom@18.2.0)(react@18.2.0)(sanity@3.32.0)(styled-components@6.1.8):
+    resolution: {integrity: sha512-OXwzAmm1x/P04GDXrv7rzPFPLI9jGdGxpYN8qzdSbORqG7rL0GJd/f1+NY4bZnjmBOd5SZpJmzIpea689kMI1A==}
     engines: {node: '>=14'}
     peerDependencies:
       react: ^18
@@ -3633,11 +3633,11 @@ packages:
       - styled-components
     dev: false
 
-  /@sanity/presentation@1.11.4(@sanity/client@6.15.4)(react-dom@18.2.0)(react-is@18.2.0)(react@18.2.0)(styled-components@6.1.8):
-    resolution: {integrity: sha512-vd4gOceLB02TzMahkBL5ViGU1AwKZvl4Y4sdY5MXIeGoUW2CJ9ys6iPQXaaylrKGMyK4WreGHCy51eZU0GLYuw==}
+  /@sanity/presentation@1.11.5(@sanity/client@6.15.4)(react-dom@18.2.0)(react-is@18.2.0)(react@18.2.0)(styled-components@6.1.8):
+    resolution: {integrity: sha512-MmTwae7N6VmwlDiJ0vVEj9+WeaVHzWG1ff5TBhEWjroHZxNKwDJM/uIW6mA3FBu4lZ4RyE2LIwr0JjZwuzkh6g==}
     engines: {node: '>=16.14'}
     peerDependencies:
-      '@sanity/client': ^6.15.2
+      '@sanity/client': ^6.15.3
     dependencies:
       '@sanity/client': 6.15.4
       '@sanity/icons': 2.11.2(react@18.2.0)
@@ -3646,14 +3646,13 @@ packages:
       '@sanity/uuid': 3.0.2
       '@types/lodash.isequal': 4.5.8
       fast-deep-equal: 3.1.3
-      framer-motion: 11.0.12(react-dom@18.2.0)(react@18.2.0)
+      framer-motion: 11.0.8(react-dom@18.2.0)(react@18.2.0)
       lodash.isequal: 4.5.0
       mendoza: 3.0.5
       mnemonist: 0.39.8
       rxjs: 7.8.1
       suspend-react: 0.1.3(react@18.2.0)
     transitivePeerDependencies:
-      - '@emotion/is-prop-valid'
       - react
       - react-dom
       - react-is
