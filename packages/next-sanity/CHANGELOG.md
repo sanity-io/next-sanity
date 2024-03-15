@@ -5,6 +5,20 @@
 All notable changes to this project will be documented in this file. See
 [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [8.4.0](https://github.com/sanity-io/next-sanity/compare/v8.3.2...v8.4.0) (2024-03-15)
+
+
+### Features
+
+* **visual-editing:** add `createDataAttribute` ([a500061](https://github.com/sanity-io/next-sanity/commit/a500061ecaa191604a8341509f7709038838c3b9))
+
+
+### Bug Fixes
+
+* **deps:** update dependency @sanity/client to ^6.15.5 ([#1136](https://github.com/sanity-io/next-sanity/issues/1136)) ([af7a8b4](https://github.com/sanity-io/next-sanity/commit/af7a8b4565d029182c0970b45f1ca752857152e6))
+* **deps:** update dependency @sanity/preview-kit to v5.0.33 ([feba5cc](https://github.com/sanity-io/next-sanity/commit/feba5cc68ba93a8200093b92cca7c4ec4ebad0d8))
+* **deps:** Update dependency @sanity/visual-editing to v1.8.0 ([#1139](https://github.com/sanity-io/next-sanity/issues/1139)) ([9b417b8](https://github.com/sanity-io/next-sanity/commit/9b417b87ee3d2aec59e20d720a8c5282ac13e4cc))
+
 ## [8.3.2](https://github.com/sanity-io/next-sanity/compare/v8.3.1...v8.3.2) (2024-03-11)
 
 
