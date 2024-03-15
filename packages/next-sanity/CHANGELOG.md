@@ -5,6 +5,13 @@
 All notable changes to this project will be documented in this file. See
 [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [8.4.1](https://github.com/sanity-io/next-sanity/compare/v8.4.0...v8.4.1) (2024-03-15)
+
+
+### Bug Fixes
+
+* regression in RSC caused by `createDataAttribute` ([d27cc49](https://github.com/sanity-io/next-sanity/commit/d27cc49ef52433c71a16630987948ed04006c1d2))
+
 ## [8.4.0](https://github.com/sanity-io/next-sanity/compare/v8.3.2...v8.4.0) (2024-03-15)
 
 
