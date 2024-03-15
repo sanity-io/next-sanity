@@ -16,9 +16,8 @@ export function VisualEditing(props: VisualEditingProps): React.ReactElement {
 }
 
 export type {VisualEditingProps} from './VisualEditing'
-
 export {
-  createDataAttribute,
   type CreateDataAttribute,
+  createDataAttribute,
   type CreateDataAttributeProps,
 } from '@sanity/visual-editing'

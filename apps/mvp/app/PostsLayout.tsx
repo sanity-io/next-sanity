@@ -1,9 +1,9 @@
 /* eslint-disable @next/next/no-img-element */
 import {q, sanityImage} from 'groqd'
+import {createDataAttribute} from 'next-sanity'
 import {memo} from 'react'
 
 import {Image} from './Image'
-import {createDataAttribute} from 'next-sanity'
 
 const {query, schema} = q('*')
   .filter("_type == 'post'")
