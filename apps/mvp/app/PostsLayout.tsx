@@ -3,11 +3,13 @@ import {q, sanityImage} from 'groqd'
 import {memo} from 'react'
 
 import {Image} from './Image'
+import {createDataAttribute} from 'next-sanity'
 
 const {query, schema} = q('*')
   .filter("_type == 'post'")
   .grab({
     _id: q.string(),
+    _type: q.literal('post'),
     title: q.string().optional(),
     slug: q('slug').grabOne('current', q.string().optional()),
     mainImage: sanityImage('mainImage', {
@@ -54,54 +56,68 @@ const PostsLayout = memo(function Posts(props: PostsLayoutProps) {
         props.loading ? 'animate-pulse' : ''
       }`}
     >
-      {posts.map((post) => (
-        <div
-          key={post.title}
-          className="relative flex flex-col overflow-hidden rounded-lg shadow-lg"
-        >
-          <div className="flex-shrink-0">
-            {post.mainImage ? (
-              <Image src={post.mainImage as any} width={512} height={380} />
-            ) : null}
-          </div>
-          <div className="flex flex-1 flex-col justify-between bg-white p-6">
-            <div className="flex-1">
-              <a className="mt-2 block">
-                <p className="text-xl font-semibold text-gray-900">{post.title}</p>
-              </a>
+      {posts.map((post) => {
+        const dataAttribute = createDataAttribute({
+          baseUrl: '/studio',
+          workspace: 'stable',
+          id: post._id,
+          type: post._type,
+        })
+        return (
+          <div
+            key={post.title}
+            className="relative flex flex-col overflow-hidden rounded-lg shadow-lg"
+            data-sanity={dataAttribute('slug')}
+          >
+            <div className="flex-shrink-0">
+              {post.mainImage ? (
+                <Image
+                  data-sanity={dataAttribute('mainImage')}
+                  src={post.mainImage as any}
+                  width={512}
+                  height={380}
+                />
+              ) : null}
             </div>
-            <div className="mt-6 flex items-center">
-              <div className="flex-shrink-0">
-                <span className="sr-only">{post.author.name}</span>
-                {post.author?.image ? (
-                  <Image
-                    className="rounded-full"
-                    src={post.author.image as any}
-                    height={40}
-                    width={40}
-                  />
-                ) : null}
+            <div className="flex flex-1 flex-col justify-between bg-white p-6">
+              <div className="flex-1">
+                <a className="mt-2 block">
+                  <p className="text-xl font-semibold text-gray-900">{post.title}</p>
+                </a>
               </div>
-              <div className="ml-3">
-                <p className="text-sm font-medium text-gray-900">
-                  <a className="hover:underline">{post.author.name}</a>
-                </p>
-                <div className="flex space-x-1 text-sm text-gray-500">
-                  <time dateTime={post.publishedAt?.toJSON()}>
-                    {post.publishedAt?.toLocaleDateString()}
-                  </time>
-                  <span aria-hidden="true">&middot;</span>
+              <div className="mt-6 flex items-center">
+                <div className="flex-shrink-0">
+                  <span className="sr-only">{post.author.name}</span>
+                  {post.author?.image ? (
+                    <Image
+                      className="rounded-full"
+                      src={post.author.image as any}
+                      height={40}
+                      width={40}
+                    />
+                  ) : null}
+                </div>
+                <div className="ml-3">
+                  <p className="text-sm font-medium text-gray-900">
+                    <a className="hover:underline">{post.author.name}</a>
+                  </p>
+                  <div className="flex space-x-1 text-sm text-gray-500">
+                    <time dateTime={post.publishedAt?.toJSON()}>
+                      {post.publishedAt?.toLocaleDateString()}
+                    </time>
+                    <span aria-hidden="true">&middot;</span>
+                  </div>
                 </div>
               </div>
             </div>
+            {props.draftMode && post.status === 'draft' && (
+              <span className="absolute left-2 top-2 rounded-md bg-white/50 px-2 py-1 text-xs font-semibold uppercase backdrop-blur">
+                {post.status}
+              </span>
+            )}
           </div>
-          {props.draftMode && post.status === 'draft' && (
-            <span className="absolute left-2 top-2 rounded-md bg-white/50 px-2 py-1 text-xs font-semibold uppercase backdrop-blur">
-              {post.status}
-            </span>
-          )}
-        </div>
-      ))}
+        )
+      })}
     </div>
   )
 })

@@ -14,3 +14,11 @@ export function VisualEditing(props: VisualEditingProps): React.ReactElement {
     </Suspense>
   )
 }
+
+export type {VisualEditingProps} from './VisualEditing'
+
+export {
+  createDataAttribute,
+  type CreateDataAttribute,
+  type CreateDataAttributeProps,
+} from '@sanity/visual-editing'

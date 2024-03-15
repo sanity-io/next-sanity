@@ -1,6 +1,5 @@
 export * from './client'
-export {VisualEditing} from './visual-editing'
-export type {VisualEditingProps} from './visual-editing/VisualEditing'
+export * from './visual-editing'
 export * from '@portabletext/react'
 export type {PortableTextBlock} from '@portabletext/types'
 export {default as groq} from 'groq'
