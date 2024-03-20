@@ -26,56 +26,48 @@
   "type": "module",
   "exports": {
     ".": {
-      "types": "./dist/index.d.ts",
       "source": "./src/index.ts",
       "import": "./dist/index.js",
       "require": "./dist/index.cjs",
       "default": "./dist/index.js"
     },
     "./image": {
-      "types": "./dist/image/index.d.ts",
       "source": "./src/image/index.ts",
       "import": "./dist/image/index.js",
       "require": "./dist/image/index.cjs",
       "default": "./dist/image/index.js"
     },
     "./preview": {
-      "types": "./dist/preview/index.d.ts",
       "source": "./src/preview/index.ts",
       "import": "./dist/preview/index.js",
       "require": "./dist/preview/index.cjs",
       "default": "./dist/preview/index.js"
     },
     "./preview/live-query": {
-      "types": "./dist/preview/live-query.d.ts",
       "source": "./src/preview/LiveQuery/index.ts",
       "import": "./dist/preview/live-query.js",
       "require": "./dist/preview/live-query.cjs",
       "default": "./dist/preview/live-query.js"
     },
     "./studio": {
-      "types": "./dist/studio/index.d.ts",
       "source": "./src/studio/index.ts",
       "import": "./dist/studio/index.js",
       "require": "./dist/studio/index.cjs",
       "default": "./dist/studio/index.js"
     },
     "./studio/metadata": {
-      "types": "./dist/studio/metadata.d.ts",
       "source": "./src/studio/metadata.ts",
       "import": "./dist/studio/metadata.js",
       "require": "./dist/studio/metadata.cjs",
       "default": "./dist/studio/metadata.js"
     },
     "./studio/viewport": {
-      "types": "./dist/studio/viewport.d.ts",
       "source": "./src/studio/viewport.ts",
       "import": "./dist/studio/viewport.js",
       "require": "./dist/studio/viewport.cjs",
       "default": "./dist/studio/viewport.js"
     },
     "./webhook": {
-      "types": "./dist/webhook.d.ts",
       "source": "./src/webhook/index.ts",
       "import": "./dist/webhook.js",
       "require": "./dist/webhook.cjs",
@@ -112,7 +104,6 @@
       ]
     }
   },
-  "typings": "dist/index.d.ts",
   "files": [
     "dist",
     "src"
