@@ -5,6 +5,16 @@
 All notable changes to this project will be documented in this file. See
 [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [8.4.4](https://github.com/sanity-io/next-sanity/compare/v8.4.3...v8.4.4) (2024-03-20)
+
+
+### Bug Fixes
+
+* **deps:** update dependency @sanity/client to ^6.15.6 ([#1163](https://github.com/sanity-io/next-sanity/issues/1163)) ([3b8a159](https://github.com/sanity-io/next-sanity/commit/3b8a159af7e70b76563b34f5ebc868c00dd76171))
+* **deps:** update dependency @sanity/client to ^6.15.7 ([#1168](https://github.com/sanity-io/next-sanity/issues/1168)) ([7de1942](https://github.com/sanity-io/next-sanity/commit/7de1942d40ab27cd402930086f0d36cae8715d7e))
+* **deps:** update dependency @sanity/preview-kit to v5.0.34 ([#1160](https://github.com/sanity-io/next-sanity/issues/1160)) ([f8c96b0](https://github.com/sanity-io/next-sanity/commit/f8c96b0d3041e6d7ae579bb1d2b3bfee68dce729))
+* **deps:** update dependency @sanity/preview-kit to v5.0.35 ([#1169](https://github.com/sanity-io/next-sanity/issues/1169)) ([98810b7](https://github.com/sanity-io/next-sanity/commit/98810b78d39d30994453cb49cb084892d5651d3d))
+
 ## [8.4.3](https://github.com/sanity-io/next-sanity/compare/v8.4.2...v8.4.3) (2024-03-18)
 
 
