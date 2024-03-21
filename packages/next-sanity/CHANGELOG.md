@@ -5,6 +5,14 @@
 All notable changes to this project will be documented in this file. See
 [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [8.4.6](https://github.com/sanity-io/next-sanity/compare/v8.4.5...v8.4.6) (2024-03-20)
+
+
+### Bug Fixes
+
+* **deps:** update dependency @portabletext/react to ^3.0.15 ([#1184](https://github.com/sanity-io/next-sanity/issues/1184)) ([5627bb6](https://github.com/sanity-io/next-sanity/commit/5627bb675a4bdf0d26a09f45f866c198a54d7c11))
+* **deps:** update dependency @sanity/preview-kit to v5.0.36 ([#1181](https://github.com/sanity-io/next-sanity/issues/1181)) ([1aaf59b](https://github.com/sanity-io/next-sanity/commit/1aaf59bd1c2b1e136216bd781be381700f44ac0c))
+
 ## [8.4.5](https://github.com/sanity-io/next-sanity/compare/v8.4.4...v8.4.5) (2024-03-20)
 
 
