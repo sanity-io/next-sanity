@@ -5,6 +5,19 @@
 All notable changes to this project will be documented in this file. See
 [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [8.5.0](https://github.com/sanity-io/next-sanity/compare/v8.4.6...v8.5.0) (2024-03-22)
+
+
+### Features
+
+* **studio:** add `history="hash"` prop enabling static exports ([#1192](https://github.com/sanity-io/next-sanity/issues/1192)) ([4ebc8bd](https://github.com/sanity-io/next-sanity/commit/4ebc8bd58c8294af1375a350bddcfdb8cafe8a8b))
+
+
+### Bug Fixes
+
+* **deps:** update dependency @portabletext/react to ^3.0.15 ([#1189](https://github.com/sanity-io/next-sanity/issues/1189)) ([7d84dce](https://github.com/sanity-io/next-sanity/commit/7d84dce87bbb97290870b85aeb5b0023d7ba1bc5))
+* **deps:** Update dependency @sanity/visual-editing to v1.8.4 ([#1188](https://github.com/sanity-io/next-sanity/issues/1188)) ([6d7be65](https://github.com/sanity-io/next-sanity/commit/6d7be652295f2949c67b3e80958e74cc2a173009))
+
 ## [8.4.6](https://github.com/sanity-io/next-sanity/compare/v8.4.5...v8.4.6) (2024-03-20)
 
 
