@@ -10,7 +10,7 @@ export const client = createClient({
   stega: {
     enabled: true,
     studioUrl: '/studio',
-    // logger: console,
+    logger: console,
   },
 })
 
