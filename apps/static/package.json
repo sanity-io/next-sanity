@@ -5,7 +5,7 @@
   "type": "module",
   "scripts": {
     "build": "next build",
-    "dev": "next --turbo -p 3001",
+    "dev": "next -p 3001",
     "format": "next lint --fix .",
     "lint": "next lint --max-warnings 0 ."
   },
@@ -13,8 +13,6 @@
     "@sanity/assist": "^2.0.1",
     "@sanity/client": "^6.15.7",
     "@sanity/image-url": "^1.0.2",
-    "@sanity/presentation": "1.11.8",
-    "@sanity/preview-url-secret": "^1.6.4",
     "@sanity/vision": "3.35.0",
     "groqd": "^0.15.10",
     "next": "14.1.4",

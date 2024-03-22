@@ -7,9 +7,7 @@ const require = createRequire(import.meta.url)
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   output: 'export',
-  experimental: {
-    taint: true,
-  },
+  trailingSlash: true,
   logging: {
     fetches: {
       fullUrl: false,
