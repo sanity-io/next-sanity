@@ -22,12 +22,12 @@ const previewMode = {
   enable: '/api/draft',
 } satisfies PreviewUrlResolverOptions['previewMode']
 
-function createConfig(stable: boolean) {
+function createConfig(basePath: string, stable: boolean) {
   const name = stable ? 'stable' : 'experimental'
   const presentationTool = stable ? stablePresentationTool : experimentalPresentationTool
   return defineConfig({
     name,
-    basePath: `/studio/${name}`,
+    basePath: `${basePath}/${name}`,
 
     projectId,
     dataset,
@@ -48,4 +48,8 @@ function createConfig(stable: boolean) {
   })
 }
 
-export default [createConfig(true), createConfig(false)]
+export function createConfigWithBasePath(basePath: string) {
+  return [createConfig(basePath, true), createConfig(basePath, false)]
+}
+
+export default createConfigWithBasePath('/studio')

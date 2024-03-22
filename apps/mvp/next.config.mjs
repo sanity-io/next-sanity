@@ -30,6 +30,21 @@ const nextConfig = {
     }
     return config
   },
+
+  async headers() {
+    return [
+      {
+        // @TODO fix Presentation to never load itself recursively in an iframe
+        source: '/studio/(.*)?', // Matches all studio routes
+        headers: [
+          {
+            key: 'X-Frame-Options',
+            value: 'DENY',
+          },
+        ],
+      },
+    ]
+  },
 }
 
 export default withBundleAnalyzer({
