@@ -1,12 +1,13 @@
 /* eslint-disable @next/next/no-html-link-for-pages */
-import Link from 'next/link'
 import {unstable__adapter, unstable__environment} from '@sanity/client'
-import {Suspense} from 'react'
+import Link from 'next/link'
 
 import PostsLayout, {type PostsLayoutProps, query} from '@/app/PostsLayout'
 import {sanityFetch} from '@/app/sanity.fetch'
 
 export default async function IndexPage() {
+  const posts = await sanityFetch<PostsLayoutProps['data']>({query})
+
   return (
     <>
       <div
@@ -23,9 +24,7 @@ export default async function IndexPage() {
               Visual Editing Only
             </h2>
           </div>
-          <Suspense>
-            <Posts />
-          </Suspense>
+          <PostsLayout data={posts} />
         </div>
       </div>
       <div className="flex text-center">
@@ -38,10 +37,4 @@ export default async function IndexPage() {
       </div>
     </>
   )
-}
-
-async function Posts() {
-  const posts = await sanityFetch<PostsLayoutProps['data']>({query})
-
-  return <PostsLayout data={posts} />
 }
