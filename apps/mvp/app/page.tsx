@@ -1,5 +1,4 @@
 /* eslint-disable @next/next/no-html-link-for-pages */
-import {draftMode} from 'next/headers'
 import Link from 'next/link'
 import {unstable__adapter, unstable__environment} from 'next-sanity'
 import {Suspense} from 'react'
@@ -8,8 +7,6 @@ import ConditionalPreviewProvider from './ConditionalPreviewProvider'
 import Posts from './Posts'
 
 export default function IndexPage() {
-  const preview = draftMode().isEnabled
-
   return (
     <>
       <div

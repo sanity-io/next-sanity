@@ -5,6 +5,8 @@ import Link from 'next/link'
 import PostsLayout, {type PostsLayoutProps, query} from '@/app/PostsLayout'
 import {sanityFetch} from '@/app/sanity.fetch'
 
+export const dynamic = 'force-static'
+
 export default async function IndexPage() {
   const posts = await sanityFetch<PostsLayoutProps['data']>({query})
 
