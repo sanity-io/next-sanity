@@ -61,7 +61,7 @@ importers:
         version: 18.2.0(react@18.2.0)
       sanity:
         specifier: 3.35.2
-        version: 3.35.2(@types/react@18.2.67)(react-dom@18.2.0)(react@18.2.0)(styled-components@6.1.8)
+        version: 3.35.2(@types/react@18.2.73)(react-dom@18.2.0)(react@18.2.0)(styled-components@6.1.8)
     devDependencies:
       '@next/bundle-analyzer':
         specifier: 14.1.4
@@ -71,7 +71,7 @@ importers:
         version: 14.1.4
       '@types/react':
         specifier: ^18.2.67
-        version: 18.2.67
+        version: 18.2.73
       '@typescript-eslint/eslint-plugin':
         specifier: ^7.3.1
         version: 7.3.1(@typescript-eslint/parser@7.5.0)(eslint@8.57.0)(typescript@5.4.2)
@@ -137,7 +137,7 @@ importers:
         version: 18.2.0(react@18.2.0)
       sanity:
         specifier: 3.35.2
-        version: 3.35.2(@types/react@18.2.67)(react-dom@18.2.0)(react@18.2.0)(styled-components@6.1.8)
+        version: 3.35.2(@types/react@18.2.73)(react-dom@18.2.0)(react@18.2.0)(styled-components@6.1.8)
     devDependencies:
       '@next/bundle-analyzer':
         specifier: 14.1.4
@@ -147,7 +147,7 @@ importers:
         version: 14.1.4
       '@types/react':
         specifier: ^18.2.67
-        version: 18.2.67
+        version: 18.2.73
       '@typescript-eslint/eslint-plugin':
         specifier: ^7.3.1
         version: 7.3.1(@typescript-eslint/parser@7.5.0)(eslint@8.57.0)(typescript@5.4.2)
@@ -216,7 +216,7 @@ importers:
         version: 5.3.0
       sanity:
         specifier: ^3.25
-        version: 3.35.2(@types/react@18.2.67)(react-dom@18.2.0)(react@18.2.0)(styled-components@6.1.8)
+        version: 3.35.2(@types/react@18.2.73)(react-dom@18.2.0)(react@18.2.0)(styled-components@6.1.8)
     devDependencies:
       '@sanity/browserslist-config':
         specifier: ^1.0.3
@@ -228,8 +228,8 @@ importers:
         specifier: ^5.1.5
         version: 5.1.5(typescript@5.4.2)
       '@types/react':
-        specifier: ^18.2.67
-        version: 18.2.67
+        specifier: ^18.2.73
+        version: 18.2.73
       '@typescript-eslint/eslint-plugin':
         specifier: ^7.3.1
         version: 7.3.1(@typescript-eslint/parser@7.5.0)(eslint@8.57.0)(typescript@5.4.2)
@@ -3136,7 +3136,7 @@ packages:
       react-is: 18.2.0
       rxjs: 7.8.1
       rxjs-exhaustmap-with-trailing: 2.1.1(rxjs@7.8.1)
-      sanity: 3.35.2(@types/react@18.2.67)(react-dom@18.2.0)(react@18.2.0)(styled-components@6.1.8)
+      sanity: 3.35.2(@types/react@18.2.73)(react-dom@18.2.0)(react@18.2.0)(styled-components@6.1.8)
       styled-components: 6.1.8(react-dom@18.2.0)(react@18.2.0)
     transitivePeerDependencies:
       - react-dom
@@ -3582,7 +3582,7 @@ packages:
     resolution: {integrity: sha512-Kl5T+dwMkLJ+cmGsG5YVQEkL3UkaQ9E560g2dFmalmM/vQjL5fzPMRjKiZuqH+9jYeKP2d0MBiHbSOWi8JqNUg==}
     dependencies:
       '@sanity/client': 6.15.7
-      '@types/react': 18.2.67
+      '@types/react': 18.2.73
     transitivePeerDependencies:
       - supports-color
     dev: false
@@ -3879,28 +3879,24 @@ packages:
   /@types/react-copy-to-clipboard@5.0.7:
     resolution: {integrity: sha512-Gft19D+as4M+9Whq1oglhmK49vqPhcLzk8WfvfLvaYMIPYanyfLy0+CwFucMJfdKoSFyySPmkkWn8/E6voQXjQ==}
     dependencies:
-      '@types/react': 18.2.67
+      '@types/react': 18.2.73
     dev: false
 
   /@types/react-is@18.2.4:
     resolution: {integrity: sha512-wBc7HgmbCcrvw0fZjxbgz/xrrlZKzEqmABBMeSvpTvdm25u6KI6xdIi9pRE2G0C1Lw5ETFdcn4UbYZ4/rpqUYw==}
     dependencies:
-      '@types/react': 18.2.67
+      '@types/react': 18.2.73
     dev: false
 
-  /@types/react@18.2.67:
-    resolution: {integrity: sha512-vkIE2vTIMHQ/xL0rgmuoECBCkZFZeHr49HeWSc24AptMbNRo7pwSBvj73rlJJs9fGKj0koS+V7kQB1jHS0uCgw==}
+  /@types/react@18.2.73:
+    resolution: {integrity: sha512-XcGdod0Jjv84HOC7N5ziY3x+qL0AfmubvKOZ9hJjJ2yd5EE+KYjWhdOjt387e9HPheHkdggF9atTifMRtyAaRA==}
     dependencies:
       '@types/prop-types': 15.7.11
-      '@types/scheduler': 0.16.8
       csstype: 3.1.3
 
   /@types/resolve@1.20.2:
     resolution: {integrity: sha512-60BCwRFOZCQhDncwQdxxeOEEkbc5dIMccYLwbxsS4TUNeVECQ/pBJ0j09mrHOl/JJvpRPGwO9SvE4nR2Nb/a4Q==}
     dev: true
-
-  /@types/scheduler@0.16.8:
-    resolution: {integrity: sha512-WZLiwShhwLRmeV6zH+GkbOFT6Z6VklCItrDioxUnv+u4Ll+8vKeFySoFyK/0ctcRpOmwAicELfmys1sDc/Rw+A==}
 
   /@types/semver@7.5.8:
     resolution: {integrity: sha512-I8EUhyrgfLrcTkzV3TSsGyl1tSuPrEDzr0yd5m90UgNxQkyDXULk3b6MlQqTCpZpNtWe1K0hzclnZkTcLBe2UQ==}
@@ -9696,7 +9692,7 @@ packages:
     resolution: {integrity: sha512-nsO+KSNgo1SbJqJEYRE9ERzo7YtYbou/OqjSQKxV7jcKox7+usiUVZOAC+XnDOABXggQTno0Y1CpVnuWEc1boQ==}
     dev: false
 
-  /react-focus-lock@2.11.2(@types/react@18.2.67)(react@18.2.0):
+  /react-focus-lock@2.11.2(@types/react@18.2.73)(react@18.2.0):
     resolution: {integrity: sha512-DDTbEiov0+RthESPVSTIdAWPPKic+op3sCcP+icbMRobvQNt7LuAlJ3KoarqQv5sCgKArru3kXmlmFTa27/CdQ==}
     peerDependencies:
       '@types/react': ^16.8.0 || ^17.0.0 || ^18.0.0
@@ -9706,13 +9702,13 @@ packages:
         optional: true
     dependencies:
       '@babel/runtime': 7.24.1
-      '@types/react': 18.2.67
+      '@types/react': 18.2.73
       focus-lock: 1.3.4
       prop-types: 15.8.1
       react: 18.2.0
       react-clientside-effect: 1.2.6(react@18.2.0)
-      use-callback-ref: 1.3.2(@types/react@18.2.67)(react@18.2.0)
-      use-sidecar: 1.1.2(@types/react@18.2.67)(react@18.2.0)
+      use-callback-ref: 1.3.2(@types/react@18.2.73)(react@18.2.0)
+      use-sidecar: 1.1.2(@types/react@18.2.73)(react@18.2.0)
     dev: false
 
   /react-i18next@13.5.0(i18next@23.10.1)(react-dom@18.2.0)(react@18.2.0):
@@ -10191,7 +10187,7 @@ packages:
       '@sanity/diff-match-patch': 3.1.1
     dev: false
 
-  /sanity@3.35.2(@types/react@18.2.67)(react-dom@18.2.0)(react@18.2.0)(styled-components@6.1.8):
+  /sanity@3.35.2(@types/react@18.2.73)(react-dom@18.2.0)(react@18.2.0)(styled-components@6.1.8):
     resolution: {integrity: sha512-Yq96A/Y9aGt60O2zM17lxEHHEo2mrMJghsnxlEnTdxWiGY/xdu4wbqzLpC+wzMi9KTlC7RoQdENdSCfdsLtqmQ==}
     engines: {node: '>=18'}
     hasBin: true
@@ -10292,7 +10288,7 @@ packages:
       react-copy-to-clipboard: 5.1.0(react@18.2.0)
       react-dom: 18.2.0(react@18.2.0)
       react-fast-compare: 3.2.2
-      react-focus-lock: 2.11.2(@types/react@18.2.67)(react@18.2.0)
+      react-focus-lock: 2.11.2(@types/react@18.2.73)(react@18.2.0)
       react-i18next: 13.5.0(i18next@23.10.1)(react-dom@18.2.0)(react@18.2.0)
       react-is: 18.2.0
       react-refractor: 2.1.7(react@18.2.0)
@@ -11497,7 +11493,7 @@ packages:
       querystringify: 2.2.0
       requires-port: 1.0.0
 
-  /use-callback-ref@1.3.2(@types/react@18.2.67)(react@18.2.0):
+  /use-callback-ref@1.3.2(@types/react@18.2.73)(react@18.2.0):
     resolution: {integrity: sha512-elOQwe6Q8gqZgDA8mrh44qRTQqpIHDcZ3hXTLjBe1i4ph8XpNJnO+aQf3NaG+lriLopI4HMx9VjQLfPQ6vhnoA==}
     engines: {node: '>=10'}
     peerDependencies:
@@ -11507,7 +11503,7 @@ packages:
       '@types/react':
         optional: true
     dependencies:
-      '@types/react': 18.2.67
+      '@types/react': 18.2.73
       react: 18.2.0
       tslib: 2.6.2
     dev: false
@@ -11528,7 +11524,7 @@ packages:
       react: 18.2.0
     dev: false
 
-  /use-sidecar@1.1.2(@types/react@18.2.67)(react@18.2.0):
+  /use-sidecar@1.1.2(@types/react@18.2.73)(react@18.2.0):
     resolution: {integrity: sha512-epTbsLuzZ7lPClpz2TyryBfztm7m+28DlEv2ZCQ3MDr5ssiwyOwGH/e5F9CkfWjJ1t4clvI58yF822/GUkjjhw==}
     engines: {node: '>=10'}
     peerDependencies:
@@ -11538,7 +11534,7 @@ packages:
       '@types/react':
         optional: true
     dependencies:
-      '@types/react': 18.2.67
+      '@types/react': 18.2.73
       detect-node-es: 1.1.0
       react: 18.2.0
       tslib: 2.6.2
