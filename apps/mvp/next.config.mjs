@@ -19,13 +19,12 @@ const nextConfig = {
   webpack(config) {
     config.resolve.alias = {
       ...config.resolve.alias,
-      'sanity/_internal': require.resolve('sanity/_internal'),
+      '@sanity/vision': require.resolve('@sanity/vision'),
       'sanity/_internalBrowser': require.resolve('sanity/_internalBrowser'),
-      'sanity/cli': require.resolve('sanity/cli'),
       'sanity/desk': require.resolve('sanity/desk'),
+      'sanity/presentation': require.resolve('sanity/presentation'),
       'sanity/router': require.resolve('sanity/router'),
       'sanity/structure': require.resolve('sanity/structure'),
-      'sanity/presentation': require.resolve('sanity/presentation'),
       sanity: require.resolve('sanity'),
     }
     return config
