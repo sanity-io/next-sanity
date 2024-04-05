@@ -18,7 +18,10 @@
     "singleQuote": true
   },
   "devDependencies": {
-    "next": "^14.1.4",
+    "@next/bundle-analyzer": "14.2.0-canary.58",
+    "@next/env": "14.2.0-canary.58",
+    "eslint-config-next": "14.2.0-canary.58",
+    "next": "14.2.0-canary.58",
     "prettier": "^3.2.5",
     "prettier-plugin-packagejson": "^2.4.14",
     "prettier-plugin-tailwindcss": "^0.5.13",
@@ -27,6 +30,9 @@
   "packageManager": "pnpm@8.15.6",
   "pnpm": {
     "overrides": {
+      "@next/bundle-analyzer": "$@next/bundle-analyzer",
+      "@next/env": "$@next/env",
+      "eslint-config-next": "$eslint-config-next",
       "next": "$next"
     }
   }
