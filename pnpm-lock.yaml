@@ -237,8 +237,8 @@ importers:
         specifier: ^4.0.0
         version: 4.0.0(eslint@8.57.0)(typescript@5.4.2)
       '@sanity/pkg-utils':
-        specifier: ^5.1.12
-        version: 5.1.12(typescript@5.4.2)
+        specifier: ^6.0.1
+        version: 6.0.1(typescript@5.4.2)
       '@types/react':
         specifier: ^18.2.74
         version: 18.2.74
@@ -2758,6 +2758,25 @@ packages:
       - supports-color
     dev: true
 
+  /@optimize-lodash/rollup-plugin@4.0.4(rollup@4.14.1):
+    resolution: {integrity: sha512-zcbnqx7oQWmGA3Xaf6I8m64+Rufebz4fnSuOHf0++aGqHdwbf19t5OdIebn8Deeb1DoyHbaWVezuTZyKw0vBJw==}
+    engines: {node: '>= 12'}
+    peerDependencies:
+      rollup: '>=2.x'
+    dependencies:
+      '@optimize-lodash/transform': 3.0.3
+      '@rollup/pluginutils': 5.0.5(rollup@4.14.1)
+      rollup: 4.14.1
+    dev: true
+
+  /@optimize-lodash/transform@3.0.3:
+    resolution: {integrity: sha512-LeH2C2nYPfwKLQ1OX7jrfZOYTyRajOhhgoCdz47+5d2oBP8YKL/NknCAcDt2QkzLDLbtZ5QHhKZN56S2D/I1JA==}
+    engines: {node: '>= 12'}
+    dependencies:
+      estree-walker: 2.0.2
+      magic-string: 0.30.9
+    dev: true
+
   /@pkgjs/parseargs@0.11.0:
     resolution: {integrity: sha512-+1VkjdD0QBLPodGrJUeqarH8VAIvQODIbwh9XpP5Syisf7YoQgsJKPNFoqqLQlu+VQ/tVSshMR6loPMn8U+dPg==}
     engines: {node: '>=14'}
@@ -2949,6 +2968,21 @@ packages:
       serialize-javascript: 6.0.2
       smob: 1.5.0
       terser: 5.30.3
+    dev: true
+
+  /@rollup/pluginutils@5.0.5(rollup@4.14.1):
+    resolution: {integrity: sha512-6aEYR910NyP73oHiJglti74iRyOwgFU4x3meH/H8OJx6Ry0j6cOVZ5X/wTvub7G7Ao6qaHBEaNsV3GLJkSsF+Q==}
+    engines: {node: '>=14.0.0'}
+    peerDependencies:
+      rollup: ^1.20.0||^2.0.0||^3.0.0||^4.0.0
+    peerDependenciesMeta:
+      rollup:
+        optional: true
+    dependencies:
+      '@types/estree': 1.0.5
+      estree-walker: 2.0.2
+      picomatch: 2.3.1
+      rollup: 4.14.1
     dev: true
 
   /@rollup/pluginutils@5.1.0(rollup@4.14.1):
@@ -3541,9 +3575,9 @@ packages:
       - supports-color
     dev: false
 
-  /@sanity/pkg-utils@5.1.12(typescript@5.4.2):
-    resolution: {integrity: sha512-rrMsmgKhJfymWwcudcFIG96GCj/lFHQduew6A9yvmv1Z3/ng1FMg/AkHoiFwF36WqnPh3di+2Dmgq1se/T+k6w==}
-    engines: {node: '>=16.0.0'}
+  /@sanity/pkg-utils@6.0.1(typescript@5.4.2):
+    resolution: {integrity: sha512-0gX3bMH3Lx8fpLs38GLiVzbMyTesbrY2YoUeI3MU+AJ9pNVTazTTZayrZkE2GbAmHcgDGL5yoXKeUkl+z0Z9zw==}
+    engines: {node: '>=18.17.0'}
     hasBin: true
     peerDependencies:
       typescript: 5.4.2
@@ -3552,6 +3586,7 @@ packages:
       '@babel/types': 7.24.0
       '@microsoft/api-extractor': 7.43.0
       '@microsoft/tsdoc-config': 0.16.2
+      '@optimize-lodash/rollup-plugin': 4.0.4(rollup@4.14.1)
       '@rollup/plugin-alias': 5.1.0(rollup@4.14.1)
       '@rollup/plugin-babel': 6.0.4(@babel/core@7.24.4)(rollup@4.14.1)
       '@rollup/plugin-commonjs': 25.0.7(rollup@4.14.1)
