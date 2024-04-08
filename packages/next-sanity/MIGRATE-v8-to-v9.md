@@ -16,16 +16,19 @@ Upgrade using:
 npm install styled-components@^6.1.0
 ```
 
-or
-
-```bash
-pnpm install styled-components@^6.1.0
-```
-
 And make sure to remove `@types/styled-components` as `styled-components` now ship with its own types:
 
 ```bash
-pnpm uninstall @types/styled-components
+npm uninstall @types/styled-components
 ```
 
 You can also remove `react-is` from your dependencies, unless you're using them in your own code.
+
+### The deprecated export `next-sanity/studio/metadata` has been removed
+
+Use the `metadata` export from `next-sanity/studio` instead:
+
+```diff
+-export {metadata} from 'next-sanity/studio/metadata'
++export {metadata} from 'next-sanity/studio'
+```
