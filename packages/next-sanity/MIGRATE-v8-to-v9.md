@@ -32,3 +32,12 @@ Use the `metadata` export from `next-sanity/studio` instead:
 -export {metadata} from 'next-sanity/studio/metadata'
 +export {metadata} from 'next-sanity/studio'
 ```
+
+### The deprecated export `next-sanity/studio/viewport` has been removed
+
+Use the `viewport` export from `next-sanity/studio` instead:
+
+```diff
+-export {viewport} from 'next-sanity/studio/viewport'
++export {viewport} from 'next-sanity/studio'
+```

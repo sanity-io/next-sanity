@@ -55,12 +55,6 @@
       "require": "./dist/studio/index.cjs",
       "default": "./dist/studio/index.js"
     },
-    "./studio/viewport": {
-      "source": "./src/studio/viewport.ts",
-      "import": "./dist/studio/viewport.js",
-      "require": "./dist/studio/viewport.cjs",
-      "default": "./dist/studio/viewport.js"
-    },
     "./webhook": {
       "source": "./src/webhook/index.ts",
       "import": "./dist/webhook.js",
@@ -86,9 +80,6 @@
       ],
       "studio": [
         "./dist/studio/index.d.ts"
-      ],
-      "studio/viewport": [
-        "./dist/studio/viewport.d.ts"
       ],
       "webhook": [
         "./dist/webhook.d.ts"
