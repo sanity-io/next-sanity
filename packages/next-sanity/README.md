@@ -2,8 +2,8 @@
 
 The official [Sanity.io][sanity] toolkit for Next.js apps.
 
-> [!IMPORTANT]  
-> You're looking at the README for v8, the README for [v7 is available here](https://github.com/sanity-io/next-sanity/tree/v7?tab=readme-ov-file#next-sanity) as well as an [migration guide][migrate-v7-to-v8].
+> [!IMPORTANT]
+> You're looking at the README for v9, the README for [v8 is available here](https://github.com/sanity-io/next-sanity/tree/v8?tab=readme-ov-file#next-sanity) as well as an [migration guide][migrate-v8-to-v9].
 
 **Features:**
 
@@ -725,6 +725,7 @@ function StudioPage() {
 
 ## Migration guides
 
+- [From `v8` to `v9`][migrate-v8-to-v9]
 - [From `v7` to `v8`][migrate-v7-to-v8]
 - [From `v6` to `v7`][migrate-v6-to-v7]
 - [From `v5` to `v6`][migrate-v5-to-v6]
@@ -756,6 +757,7 @@ MIT-licensed. See [LICENSE][LICENSE].
 [migrate-v5-to-v6]: https://github.com/sanity-io/next-sanity/blob/main/packages/next-sanity/MIGRATE-v5-to-v6.md
 [migrate-v6-to-v7]: https://github.com/sanity-io/next-sanity/blob/main/packages/next-sanity/MIGRATE-v6-to-v7.md
 [migrate-v7-to-v8]: https://github.com/sanity-io/next-sanity/blob/main/packages/next-sanity/MIGRATE-v7-to-v8.md
+[migrate-v8-to-v9]: https://github.com/sanity-io/next-sanity/blob/main/packages/next-sanity/MIGRATE-v8-to-v9.md
 [next-cache]: https://nextjs.org/docs/app/building-your-application/caching
 [next-data-fetching]: https://nextjs.org/docs/basic-features/data-fetching/overview
 [next-preview-mode]: https://nextjs.org/docs/advanced-features/preview-mode
