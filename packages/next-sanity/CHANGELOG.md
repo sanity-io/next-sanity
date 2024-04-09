@@ -5,6 +5,27 @@
 All notable changes to this project will be documented in this file. See
 [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [9.0.0](https://github.com/sanity-io/next-sanity/compare/v8.5.5...v9.0.0) (2024-04-09)
+
+
+### ⚠ BREAKING CHANGES
+
+* require sanity 3.37.1 or later
+* remove Pages Router support from `next-sanity/webhook`
+* remove deprecated `next-sanity/studio/viewport` export
+* remove deprecated `next-sanity/studio/metadata` export ([#1261](https://github.com/sanity-io/next-sanity/issues/1261))
+* require `styled-components` `6.1` or later ([#1258](https://github.com/sanity-io/next-sanity/issues/1258))
+* require `@sanity/ui` `2.0.11` or later ([#1256](https://github.com/sanity-io/next-sanity/issues/1256))
+
+### Bug Fixes
+
+* remove deprecated `next-sanity/studio/metadata` export ([#1261](https://github.com/sanity-io/next-sanity/issues/1261)) ([1d43f02](https://github.com/sanity-io/next-sanity/commit/1d43f0299de197c33477e1eeb242368419311370))
+* remove deprecated `next-sanity/studio/viewport` export ([f8fd759](https://github.com/sanity-io/next-sanity/commit/f8fd759b34e41502c0629c39fb2221379226578b))
+* remove Pages Router support from `next-sanity/webhook` ([c2a7bd3](https://github.com/sanity-io/next-sanity/commit/c2a7bd345f35bb617c926912af434a30280f3db0))
+* require `@sanity/ui` `2.0.11` or later ([#1256](https://github.com/sanity-io/next-sanity/issues/1256)) ([37f9fed](https://github.com/sanity-io/next-sanity/commit/37f9fedbf81f9e0e75b17698b84b4f56cc382eb0))
+* require `styled-components` `6.1` or later ([#1258](https://github.com/sanity-io/next-sanity/issues/1258)) ([8560426](https://github.com/sanity-io/next-sanity/commit/856042655beca9a594a7a05929b9522d6f7d02a8))
+* require sanity 3.37.1 or later ([6764bd0](https://github.com/sanity-io/next-sanity/commit/6764bd00dbded0dfb205959d74bbcd5c2bc4c3cf))
+
 ## [8.5.5](https://github.com/sanity-io/next-sanity/compare/v8.5.4...v8.5.5) (2024-04-07)
 
 
