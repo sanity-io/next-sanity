@@ -1,5 +1,13 @@
 ## Migrate
 
+### Minimum required `sanity` is now `3.37.1`
+
+Upgrade to the latest v3 stable using the following command:
+
+```bash
+npm install sanity@latest --save-exact
+```
+
 ### Minimum required `@sanity/ui` is now `2.0.11`
 
 Upgrade to the latest v2 stable using the following command:
