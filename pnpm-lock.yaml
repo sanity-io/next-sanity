@@ -237,8 +237,8 @@ importers:
         specifier: ^4.0.0
         version: 4.0.0(eslint@8.57.0)(typescript@5.4.5)
       '@sanity/pkg-utils':
-        specifier: ^6.4.1
-        version: 6.4.1(typescript@5.4.5)
+        specifier: ^6.6.1
+        version: 6.6.1(typescript@5.4.5)
       '@types/react':
         specifier: ^18.2.77
         version: 18.2.77
@@ -3447,8 +3447,8 @@ packages:
       - supports-color
     dev: false
 
-  /@sanity/pkg-utils@6.4.1(typescript@5.4.5):
-    resolution: {integrity: sha512-X66IgwDLcv7gVwmxqx0ZMD9BXQeskVivRvhBqAnsbU0zVjSgvLplg5AGdzNdHX9kbeY4DYQEgjZhUyYSJASTFA==}
+  /@sanity/pkg-utils@6.6.1(typescript@5.4.5):
+    resolution: {integrity: sha512-23IPa4dr5IiVr/6SuQz3/OH4XhVUyPQHat5c3ZXpFYaPmWGNSGcQ8iOIJKDSDqxq9oM+kv/3oZg18uyYu2y8kg==}
     engines: {node: '>=18.17.0'}
     hasBin: true
     peerDependencies:
@@ -3494,6 +3494,7 @@ packages:
       typescript: 5.4.5
       uuid: 9.0.1
       zod: 3.22.4
+      zod-validation-error: 3.1.0(zod@3.22.4)
     transitivePeerDependencies:
       - '@types/babel__core'
       - '@types/node'
@@ -12039,6 +12040,15 @@ packages:
       compress-commons: 6.0.2
       readable-stream: 4.5.2
     dev: false
+
+  /zod-validation-error@3.1.0(zod@3.22.4):
+    resolution: {integrity: sha512-zujS6HqJjMZCsvjfbnRs7WI3PXN39ovTcY1n8a+KTm4kOH0ZXYsNiJkH1odZf4xZKMkBDL7M2rmQ913FCS1p9w==}
+    engines: {node: '>=18.0.0'}
+    peerDependencies:
+      zod: ^3.18.0
+    dependencies:
+      zod: 3.22.4
+    dev: true
 
   /zod@3.22.4:
     resolution: {integrity: sha512-iC+8Io04lddc+mVqQ9AZ7OQ2MrUKGN+oIQyq1vemgt46jwCwLfhq7/pwnBnNXXXZb8VTVLKwp9EDkx+ryxIWmg==}
