@@ -5,6 +5,15 @@
 All notable changes to this project will be documented in this file. See
 [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [9.0.1](https://github.com/sanity-io/next-sanity/compare/v9.0.0...v9.0.1) (2024-04-11)
+
+
+### Bug Fixes
+
+* allow canary releases of next in peer range ([6bc9cb9](https://github.com/sanity-io/next-sanity/commit/6bc9cb9006143e9a0396aacff6e1861f8f97d254))
+* **deps:** update dependency @portabletext/react to ^3.0.18 ([#1287](https://github.com/sanity-io/next-sanity/issues/1287)) ([afc5d68](https://github.com/sanity-io/next-sanity/commit/afc5d689b3d3037231c3e0de9a24bfe6ee69ce5a))
+* **deps:** update dependency @sanity/visual-editing to 1.8.8 ([582adf5](https://github.com/sanity-io/next-sanity/commit/582adf57ddd6984249441f887738e9b950967251))
+
 ## [9.0.0](https://github.com/sanity-io/next-sanity/compare/v8.5.5...v9.0.0) (2024-04-09)
 
 
