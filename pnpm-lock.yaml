@@ -206,8 +206,8 @@ importers:
         specifier: ^2.11.3
         version: 2.11.8(react@18.2.0)
       '@sanity/preview-kit':
-        specifier: 5.0.41
-        version: 5.0.41(@sanity/client@6.15.14)(react@18.2.0)
+        specifier: 5.0.42
+        version: 5.0.42(@sanity/client@6.15.14)(react@18.2.0)
       '@sanity/types':
         specifier: ^3.37.1
         version: 3.37.2
@@ -3727,11 +3727,11 @@ packages:
       react: 18.2.0
     dev: false
 
-  /@sanity/preview-kit@5.0.41(@sanity/client@6.15.14)(react@18.2.0):
-    resolution: {integrity: sha512-Q5xeSK7vmlNkyqzuTFyiaDeeHGRxhS2WLtNPV6iElPfXrP6albnxyh0DL0ciBsa5WQJYcRBvBHYr9SQiWz4mmw==}
+  /@sanity/preview-kit@5.0.42(@sanity/client@6.15.14)(react@18.2.0):
+    resolution: {integrity: sha512-Gl16LQxcNjqiiGCnGMfDs5frQjNhF/h2eVGy/BePd2UAEbph/xkSblt/RlhIwk1KMlbUmtxC8Lg26NNlNowKLQ==}
     engines: {node: '>=18'}
     peerDependencies:
-      '@sanity/client': ^6.15.11
+      '@sanity/client': ^6.15.14
       react: ^18.0.0
     peerDependenciesMeta:
       react:
@@ -3741,7 +3741,7 @@ packages:
       '@sanity/preview-kit-compat': 1.4.15(@sanity/client@6.15.14)(react@18.2.0)
       '@vercel/stega': 0.1.0
       lru-cache: 10.2.0
-      mendoza: 3.0.6
+      mendoza: 3.0.7
       react: 18.2.0
       react-fast-compare: 3.2.2
       use-sync-external-store: 1.2.0(react@18.2.0)
@@ -8497,6 +8497,11 @@ packages:
 
   /mendoza@3.0.6:
     resolution: {integrity: sha512-oTwuDUEiUjiffiWm1BHEw3E50x4tiyhm9CO0ximOKXyeLOIcEkbXltHCCOtTRcQ9eCkmjmfz4E9f9TSSQBI9Mw==}
+    engines: {node: '>=14.18'}
+    dev: false
+
+  /mendoza@3.0.7:
+    resolution: {integrity: sha512-KtLgsCl5dFjRPUVSVV9KxpUr2BfZgLv8uqxg/hCsI7JIWsesHABSbl0MQwxNHAg24KtzSQ6vrPsgeNnoq4UImg==}
     engines: {node: '>=14.18'}
     dev: false
 
