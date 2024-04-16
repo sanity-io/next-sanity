@@ -215,8 +215,8 @@ importers:
         specifier: ^2.0.11
         version: 2.1.2(react-dom@18.2.0)(react-is@18.2.0)(react@18.2.0)(styled-components@6.1.8)
       '@sanity/visual-editing':
-        specifier: 1.8.8
-        version: 1.8.8(@sanity/client@6.15.14)(next@14.3.0-canary.4)
+        specifier: 1.8.10
+        version: 1.8.10(@sanity/client@6.15.14)(next@14.3.0-canary.4)
       '@sanity/webhook':
         specifier: 4.0.2-bc
         version: 4.0.2-bc
@@ -3757,6 +3757,16 @@ packages:
       '@sanity/uuid': 3.0.2
     dev: false
 
+  /@sanity/preview-url-secret@1.6.8(@sanity/client@6.15.14):
+    resolution: {integrity: sha512-h6HyF607NDn+mQ9Db1WDWO3IWiZ+E4mPSX7nQWRcXuMvKb6J8q1/QNf+7q9+vSIvgqr709tJeIx1/EiHjIIkiw==}
+    engines: {node: '>=18'}
+    peerDependencies:
+      '@sanity/client': ^6.15.14
+    dependencies:
+      '@sanity/client': 6.15.14
+      '@sanity/uuid': 3.0.2
+    dev: false
+
   /@sanity/schema@3.37.2:
     resolution: {integrity: sha512-VXJbSf2yR63TtbTMdz7FAYgvULsDbq54zhS4SysLbFLIkM9xZo8km/3Er9vtubjZpeGglJKQro3D9DWNxV1tyw==}
     dependencies:
@@ -3928,12 +3938,12 @@ packages:
       - react-is
     dev: false
 
-  /@sanity/visual-editing@1.8.8(@sanity/client@6.15.14)(next@14.3.0-canary.4):
-    resolution: {integrity: sha512-CN7HfUHWpLUDgD+a4o3x7SWW2yn63Ni3Qj4V9ZXe8njRMJ4Tv/1IW0KBtQ9tNIXgS/D1QqaIeCbM7aZ2VrY6bA==}
+  /@sanity/visual-editing@1.8.10(@sanity/client@6.15.14)(next@14.3.0-canary.4):
+    resolution: {integrity: sha512-81jehcCInI+e3MkLz405jgcd2axxeo9ZToHlDfLdEYGCW895a1vugKgwor6+/d/U42Ao9g9ci/Ra5pbAkqTEmA==}
     engines: {node: '>=18'}
     peerDependencies:
       '@remix-run/react': '>= 2'
-      '@sanity/client': ^6.15.11
+      '@sanity/client': ^6.15.14
       '@sveltejs/kit': '>= 2'
       next: 14.3.0-canary.4
       svelte: '>= 4'
@@ -3950,7 +3960,7 @@ packages:
         optional: true
     dependencies:
       '@sanity/client': 6.15.14
-      '@sanity/preview-url-secret': 1.6.7(@sanity/client@6.15.14)
+      '@sanity/preview-url-secret': 1.6.8(@sanity/client@6.15.14)
       '@vercel/stega': 0.1.0
       next: 14.3.0-canary.4(@babel/core@7.24.4)(react-dom@18.2.0)(react@18.2.0)
       react: 18.2.0
