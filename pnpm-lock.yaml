@@ -206,8 +206,8 @@ importers:
         specifier: ^2.11.3
         version: 2.11.8(react@18.2.0)
       '@sanity/preview-kit':
-        specifier: 5.0.42
-        version: 5.0.42(@sanity/client@6.15.17)(react@18.2.0)
+        specifier: 5.0.45
+        version: 5.0.45(@sanity/client@6.15.17)(react@18.2.0)
       '@sanity/types':
         specifier: ^3.37.1
         version: 3.38.0(debug@4.3.4)
@@ -2001,18 +2001,18 @@ packages:
     peerDependencies:
       '@sanity/client': ^6.15.17
 
-  '@sanity/preview-kit-compat@1.4.15':
-    resolution: {integrity: sha512-wau2+T0Mqt9wK8QmY87aHjIvP5+HF7qme/hnbCUvC+ofLztdulr7KLSORwO28XlcBVBkmFFLgCwyYjnwBgUA8w==}
+  '@sanity/preview-kit-compat@1.4.17':
+    resolution: {integrity: sha512-zDW/IcsTyROGDKEjixHWTwhnkDZGcqcEL0eu4H/jJ0G5wxMPtxtzSCzAafCKuUgSsiybxBRpjo2h6tjm9/AUIA==}
     engines: {node: '>=18'}
     peerDependencies:
-      '@sanity/client': ^6.15.11
+      '@sanity/client': ^6.15.17
       react: ^18.2.0
 
-  '@sanity/preview-kit@5.0.42':
-    resolution: {integrity: sha512-Gl16LQxcNjqiiGCnGMfDs5frQjNhF/h2eVGy/BePd2UAEbph/xkSblt/RlhIwk1KMlbUmtxC8Lg26NNlNowKLQ==}
+  '@sanity/preview-kit@5.0.45':
+    resolution: {integrity: sha512-2tkZr4rJYaPG39iMnM55cjMUNPzFo22IIT7JB+bbKhc9k/GoP8zn+clMNW974TWv+gQ4RQcxFvqzwWUJb0qkaw==}
     engines: {node: '>=18'}
     peerDependencies:
-      '@sanity/client': ^6.15.14
+      '@sanity/client': ^6.15.17
       react: ^18.0.0
     peerDependenciesMeta:
       react:
@@ -8797,20 +8797,16 @@ snapshots:
       - react-is
       - styled-components
 
-  '@sanity/preview-kit-compat@1.4.15(@sanity/client@6.15.17)(react@18.2.0)':
+  '@sanity/preview-kit-compat@1.4.17(@sanity/client@6.15.17)(react@18.2.0)':
     dependencies:
       '@sanity/client': 6.15.17(debug@4.3.4)
       react: 18.2.0
 
-  '@sanity/preview-kit@5.0.42(@sanity/client@6.15.17)(react@18.2.0)':
+  '@sanity/preview-kit@5.0.45(@sanity/client@6.15.17)(react@18.2.0)':
     dependencies:
       '@sanity/client': 6.15.17(debug@4.3.4)
-      '@sanity/preview-kit-compat': 1.4.15(@sanity/client@6.15.17)(react@18.2.0)
-      '@vercel/stega': 0.1.0
-      lru-cache: 10.2.0
+      '@sanity/preview-kit-compat': 1.4.17(@sanity/client@6.15.17)(react@18.2.0)
       mendoza: 3.0.7
-      react-fast-compare: 3.2.2
-      use-sync-external-store: 1.2.0(react@18.2.0)
     optionalDependencies:
       react: 18.2.0
 
@@ -10440,7 +10436,7 @@ snapshots:
       eslint: 8.57.0
       eslint-import-resolver-node: 0.3.9
       eslint-import-resolver-typescript: 3.6.1(@typescript-eslint/parser@7.2.0(eslint@8.57.0)(typescript@5.4.5))(eslint-import-resolver-node@0.3.9)(eslint-plugin-import@2.29.1)(eslint@8.57.0)
-      eslint-plugin-import: 2.29.1(@typescript-eslint/parser@7.6.0(eslint@8.57.0)(typescript@5.4.5))(eslint@8.57.0)
+      eslint-plugin-import: 2.29.1(@typescript-eslint/parser@7.2.0(eslint@8.57.0)(typescript@5.4.5))(eslint-import-resolver-typescript@3.6.1)(eslint@8.57.0)
       eslint-plugin-jsx-a11y: 6.8.0(eslint@8.57.0)
       eslint-plugin-react: 7.34.1(eslint@8.57.0)
       eslint-plugin-react-hooks: 4.6.0(eslint@8.57.0)
@@ -10487,7 +10483,7 @@ snapshots:
       enhanced-resolve: 5.16.0
       eslint: 8.57.0
       eslint-module-utils: 2.8.1(@typescript-eslint/parser@7.2.0(eslint@8.57.0)(typescript@5.4.5))(eslint-import-resolver-node@0.3.9)(eslint-import-resolver-typescript@3.6.1(@typescript-eslint/parser@7.2.0(eslint@8.57.0)(typescript@5.4.5))(eslint-import-resolver-node@0.3.9)(eslint-plugin-import@2.29.1)(eslint@8.57.0))(eslint@8.57.0)
-      eslint-plugin-import: 2.29.1(@typescript-eslint/parser@7.6.0(eslint@8.57.0)(typescript@5.4.5))(eslint@8.57.0)
+      eslint-plugin-import: 2.29.1(@typescript-eslint/parser@7.2.0(eslint@8.57.0)(typescript@5.4.5))(eslint-import-resolver-typescript@3.6.1)(eslint@8.57.0)
       fast-glob: 3.3.2
       get-tsconfig: 4.7.3
       is-core-module: 2.13.1
@@ -10518,6 +10514,34 @@ snapshots:
       eslint-import-resolver-node: 0.3.9
     transitivePeerDependencies:
       - supports-color
+    optional: true
+
+  eslint-plugin-import@2.29.1(@typescript-eslint/parser@7.2.0(eslint@8.57.0)(typescript@5.4.5))(eslint-import-resolver-typescript@3.6.1)(eslint@8.57.0):
+    dependencies:
+      array-includes: 3.1.8
+      array.prototype.findlastindex: 1.2.5
+      array.prototype.flat: 1.3.2
+      array.prototype.flatmap: 1.3.2
+      debug: 3.2.7
+      doctrine: 2.1.0
+      eslint: 8.57.0
+      eslint-import-resolver-node: 0.3.9
+      eslint-module-utils: 2.8.1(@typescript-eslint/parser@7.2.0(eslint@8.57.0)(typescript@5.4.5))(eslint-import-resolver-node@0.3.9)(eslint-import-resolver-typescript@3.6.1(@typescript-eslint/parser@7.2.0(eslint@8.57.0)(typescript@5.4.5))(eslint-import-resolver-node@0.3.9)(eslint-plugin-import@2.29.1)(eslint@8.57.0))(eslint@8.57.0)
+      hasown: 2.0.2
+      is-core-module: 2.13.1
+      is-glob: 4.0.3
+      minimatch: 3.1.2
+      object.fromentries: 2.0.8
+      object.groupby: 1.0.3
+      object.values: 1.2.0
+      semver: 6.3.1
+      tsconfig-paths: 3.15.0
+    optionalDependencies:
+      '@typescript-eslint/parser': 7.2.0(eslint@8.57.0)(typescript@5.4.5)
+    transitivePeerDependencies:
+      - eslint-import-resolver-typescript
+      - eslint-import-resolver-webpack
+      - supports-color
 
   eslint-plugin-import@2.29.1(@typescript-eslint/parser@7.6.0(eslint@8.57.0)(typescript@5.4.5))(eslint@8.57.0):
     dependencies:
@@ -10545,6 +10569,7 @@ snapshots:
       - eslint-import-resolver-typescript
       - eslint-import-resolver-webpack
       - supports-color
+    optional: true
 
   eslint-plugin-jsx-a11y@6.8.0(eslint@8.57.0):
     dependencies:
