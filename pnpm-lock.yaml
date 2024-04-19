@@ -237,8 +237,8 @@ importers:
         specifier: ^4.0.0
         version: 4.0.0(eslint@8.57.0)(typescript@5.4.5)
       '@sanity/pkg-utils':
-        specifier: ^6.7.0
-        version: 6.7.0(@types/babel__core@7.20.5)(@types/node@20.12.5)(typescript@5.4.5)
+        specifier: ^6.8.1
+        version: 6.8.1(@types/babel__core@7.20.5)(@types/node@20.12.5)(typescript@5.4.5)
       '@types/react':
         specifier: ^18.2.79
         version: 18.2.79
@@ -1974,8 +1974,8 @@ packages:
   '@sanity/mutator@3.38.0':
     resolution: {integrity: sha512-o1IKkLbka6RsbXr/NL2XO7atDyBlsVHdBCKp5wQLZDaBa/MhIblqb5v0tOv6Sim8haALli11uDm1XBn8fTweCA==}
 
-  '@sanity/pkg-utils@6.7.0':
-    resolution: {integrity: sha512-E21TIPwmUyTlu8sjJWEFUzdEmDeTp2liv/Z7nawtaH/zBE6HL9bcMzEY7VTnPUZYqaxkUyZuHTaRO3fHY3JmqQ==}
+  '@sanity/pkg-utils@6.8.1':
+    resolution: {integrity: sha512-3BG2Rulks3HrG2KxgguoAdV3yCRHQ/0PmZfI3me6WBr9ElcNCNHM0kjtU6UtOVsPBfZ4lTyAFbzJWZSYZu1kbA==}
     engines: {node: '>=18.17.0'}
     hasBin: true
     peerDependencies:
@@ -6718,6 +6718,9 @@ packages:
   zod@3.22.4:
     resolution: {integrity: sha512-iC+8Io04lddc+mVqQ9AZ7OQ2MrUKGN+oIQyq1vemgt46jwCwLfhq7/pwnBnNXXXZb8VTVLKwp9EDkx+ryxIWmg==}
 
+  zod@3.22.5:
+    resolution: {integrity: sha512-HqnGsCdVZ2xc0qWPLdO25WnseXThh0kEYKIdV5F/hTHO75hNZFp8thxSeHhiPrHZKrFTo1SOgkAj9po5bexZlw==}
+
 snapshots:
 
   '@aashutoshrathi/word-wrap@1.2.6': {}
@@ -8531,7 +8534,7 @@ snapshots:
       groq-js: 1.7.0
       json5: 2.2.3
       tsconfig-paths: 4.2.0
-      zod: 3.22.4
+      zod: 3.22.5
     transitivePeerDependencies:
       - supports-color
 
@@ -8688,7 +8691,7 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  '@sanity/pkg-utils@6.7.0(@types/babel__core@7.20.5)(@types/node@20.12.5)(typescript@5.4.5)':
+  '@sanity/pkg-utils@6.8.1(@types/babel__core@7.20.5)(@types/node@20.12.5)(typescript@5.4.5)':
     dependencies:
       '@babel/core': 7.24.4
       '@babel/types': 7.24.0
@@ -8719,7 +8722,6 @@ snapshots:
       parse-git-config: 3.0.0
       pkg-up: 3.1.0
       prettier: 3.2.5
-      prettier-plugin-packagejson: 2.5.0(prettier@3.2.5)
       pretty-bytes: 5.6.0
       prompts: 2.4.2
       rimraf: 4.4.1
@@ -8729,8 +8731,8 @@ snapshots:
       treeify: 1.1.0
       typescript: 5.4.5
       uuid: 9.0.1
-      zod: 3.22.4
-      zod-validation-error: 3.1.0(zod@3.22.4)
+      zod: 3.22.5
+      zod-validation-error: 3.1.0(zod@3.22.5)
     transitivePeerDependencies:
       - '@types/babel__core'
       - '@types/node'
@@ -14292,8 +14294,10 @@ snapshots:
       compress-commons: 6.0.2
       readable-stream: 4.5.2
 
-  zod-validation-error@3.1.0(zod@3.22.4):
+  zod-validation-error@3.1.0(zod@3.22.5):
     dependencies:
-      zod: 3.22.4
+      zod: 3.22.5
 
   zod@3.22.4: {}
+
+  zod@3.22.5: {}
