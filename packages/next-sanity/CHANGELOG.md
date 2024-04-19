@@ -5,6 +5,13 @@
 All notable changes to this project will be documented in this file. See
 [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [9.0.7](https://github.com/sanity-io/next-sanity/compare/v9.0.6...v9.0.7) (2024-04-19)
+
+
+### Bug Fixes
+
+* handle bug affecting next 14.2.2 during static pregeneration ([#1338](https://github.com/sanity-io/next-sanity/issues/1338)) ([7373737](https://github.com/sanity-io/next-sanity/commit/737373726b86c53cae29dd0cb9da0dd31db38067))
+
 ## [9.0.6](https://github.com/sanity-io/next-sanity/compare/v9.0.5...v9.0.6) (2024-04-17)
 
 
