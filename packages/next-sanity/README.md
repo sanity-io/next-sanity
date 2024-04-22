@@ -599,7 +599,7 @@ Make a file called `sanity.config.ts` (or `.js` for non-TypeScript projects) in
 ```ts
 // ./sanity.config.ts
 import {defineConfig} from 'sanity'
-import {deskTool} from 'sanity/desk'
+import {structureTool} from 'sanity/structure'
 
 import {schemaTypes} from './src/schema'
 
@@ -611,7 +611,7 @@ export default defineConfig({
 
   projectId,
   dataset,
-  plugins: [deskTool()],
+  plugins: [structureTool()],
   schema: {
     types: schemaTypes,
   },
