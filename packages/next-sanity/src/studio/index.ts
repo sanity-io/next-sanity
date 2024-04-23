@@ -1,4 +1,5 @@
 export {metadata, viewport} from './head'
-export * from './NextStudio'
 export * from './NextStudioLayout'
 export * from './NextStudioNoScript'
+export type {NextStudioProps} from 'next-sanity/studio/client-component'
+export {NextStudio} from 'next-sanity/studio/client-component'

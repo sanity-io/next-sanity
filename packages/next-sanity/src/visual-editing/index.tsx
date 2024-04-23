@@ -1,8 +1,7 @@
+import type {VisualEditingProps} from 'next-sanity/visual-editing/client-component'
 import {lazy, Suspense} from 'react'
 
-import type {VisualEditingProps} from './VisualEditing'
-
-const VisualEditingComponent = lazy(() => import('./VisualEditing'))
+const VisualEditingComponent = lazy(() => import('next-sanity/visual-editing/client-component'))
 
 /**
  * @public
@@ -15,9 +14,9 @@ export function VisualEditing(props: VisualEditingProps): React.ReactElement {
   )
 }
 
-export type {VisualEditingProps} from './VisualEditing'
 export {
   type CreateDataAttribute,
   createDataAttribute,
   type CreateDataAttributeProps,
 } from '@sanity/visual-editing/create-data-attribute'
+export type {VisualEditingProps} from 'next-sanity/visual-editing/client-component'

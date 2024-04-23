@@ -1,14 +1,11 @@
-'use client'
-
 import {
   enableVisualEditing,
   type HistoryAdapterNavigate,
   type VisualEditingOptions,
 } from '@sanity/visual-editing'
 import {usePathname, useRouter, useSearchParams} from 'next/navigation.js'
+import {revalidateRootLayout} from 'next-sanity/visual-editing/server-actions'
 import {useEffect, useRef, useState} from 'react'
-
-import {revalidateRootLayout} from './actions'
 
 /**
  * @public
