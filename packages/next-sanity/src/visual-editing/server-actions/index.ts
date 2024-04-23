@@ -1,7 +1,3 @@
-'use server'
-/**
- * The code in this file will be ported to `next-sanity`
- */
 import {revalidatePath} from 'next/cache.js'
 import {draftMode} from 'next/headers.js'
 

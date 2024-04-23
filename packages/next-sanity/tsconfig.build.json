@@ -1,12 +1,5 @@
 {
   "extends": "./tsconfig.base",
-  "compilerOptions": {
-    "rootDir": "src",
-    "outDir": "dist",
-    "declaration": true,
-    "emitDeclarationOnly": true,
-    "declarationDir": "lib/dts"
-  },
   "include": ["src/**/*.ts", "src/**/*.tsx"],
-  "exclude": ["dist", "node_modules"]
+  "exclude": ["dist", "node_modules", "./src/**/*.test.ts", "./src/**/*.test.tsx"]
 }

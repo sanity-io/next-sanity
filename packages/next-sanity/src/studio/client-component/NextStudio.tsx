@@ -1,11 +1,9 @@
-'use client'
-
 import {memo, useMemo} from 'react'
 import {Studio, type StudioProps} from 'sanity'
 
+import {NextStudioLayout} from '../NextStudioLayout'
+import {NextStudioNoScript} from '../NextStudioNoScript'
 import {createHashHistoryForStudio} from './createHashHistoryForStudio'
-import {NextStudioLayout} from './NextStudioLayout'
-import {NextStudioNoScript} from './NextStudioNoScript'
 import {StyledComponentsRegistry} from './registry'
 import {useIsMounted} from './useIsMounted'
 

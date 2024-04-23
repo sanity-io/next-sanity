@@ -1,15 +1,12 @@
 {
   "extends": "./tsconfig.base",
+  "include": ["**/*.ts", "**/*.tsx"],
+  "exclude": ["dist", "node_modules"],
   "compilerOptions": {
-    "incremental": true,
-    "noEmit": true,
     "plugins": [
       {
         "name": "next"
       }
     ],
-    "strictNullChecks": true
-  },
-  "include": ["**/*.ts", "**/*.tsx", ".next/types/**/*.ts"],
-  "exclude": ["dist", "node_modules"]
+  }
 }
