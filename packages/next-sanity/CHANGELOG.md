@@ -5,6 +5,13 @@
 All notable changes to this project will be documented in this file. See
 [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [9.0.10](https://github.com/sanity-io/next-sanity/compare/v9.0.9...v9.0.10) (2024-04-23)
+
+
+### Bug Fixes
+
+* improve bundler output ([#1358](https://github.com/sanity-io/next-sanity/issues/1358)) ([b45cb04](https://github.com/sanity-io/next-sanity/commit/b45cb040c7abca60a8ccbba32d3b8d363f054ad2))
+
 ## [9.0.9](https://github.com/sanity-io/next-sanity/compare/v9.0.8...v9.0.9) (2024-04-23)
 
 
