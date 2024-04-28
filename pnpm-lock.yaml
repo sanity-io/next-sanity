@@ -223,7 +223,7 @@ importers:
         version: 1.8.16(@sanity/client@6.15.20)(next@14.3.0-canary.26(@babel/core@7.24.4)(react-dom@18.3.1(react@18.3.1))(react@18.3.1))
       groq:
         specifier: ^3.37.1
-        version: 3.39.0
+        version: 3.39.1
       history:
         specifier: ^5.3.0
         version: 5.3.0
@@ -3931,6 +3931,10 @@ packages:
 
   groq@3.39.0:
     resolution: {integrity: sha512-b3VUixTuNYF51zGPQRUU5qzQVNy98igjJsVq7jm7cHtLX7n8JviZ3OoAnP1NgXqbbu7JJOj4WxZuPxsQkvGQiA==}
+    engines: {node: '>=18'}
+
+  groq@3.39.1:
+    resolution: {integrity: sha512-3KEMe7i6WcYB5GuI1Z9OyLZdawTN4iRQa+MNK21cKPtWizKsgEYJsXya+BhHdMZk0HLB2qLvaIorPnflW56cew==}
     engines: {node: '>=18'}
 
   groqd@0.15.11:
@@ -11406,6 +11410,8 @@ snapshots:
       - supports-color
 
   groq@3.39.0: {}
+
+  groq@3.39.1: {}
 
   groqd@0.15.11:
     dependencies:
