@@ -1,6 +1,6 @@
 {
   "name": "next-sanity",
-  "version": "9.3.8",
+  "version": "9.4.0-canary.1",
   "description": "Sanity.io toolkit for Next.js",
   "keywords": [
     "sanity",
@@ -36,6 +36,18 @@
       "import": "./dist/image.js",
       "require": "./dist/image.cjs",
       "default": "./dist/image.js"
+    },
+    "./live-subscription": {
+      "source": "./src/live-subscription/index.ts",
+      "import": "./dist/live-subscription.js",
+      "require": "./dist/live-subscription.cjs",
+      "default": "./dist/live-subscription.js"
+    },
+    "./live-subscription/client-component": {
+      "source": "./src/live-subscription/client-component/index.ts",
+      "import": "./dist/live-subscription/client-component.js",
+      "require": "./dist/live-subscription/client-component.cjs",
+      "default": "./dist/live-subscription/client-component.js"
     },
     "./preview": {
       "source": "./src/preview/index.ts",
@@ -88,6 +100,12 @@
     "*": {
       "image": [
         "./dist/image.d.ts"
+      ],
+      "live-subscription": [
+        "./dist/live-subscription.d.ts"
+      ],
+      "live-subscription/client-component": [
+        "./dist/live-subscription/client-component.d.ts"
       ],
       "preview": [
         "./dist/preview.d.ts"
