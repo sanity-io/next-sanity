@@ -763,7 +763,7 @@ MIT-licensed. See [LICENSE][LICENSE].
 [next-preview-mode]: https://nextjs.org/docs/advanced-features/preview-mode
 [next-revalidate-docs]: https://nextjs.org/docs/app/api-reference/functions/fetch#optionsnextrevalidate
 [pages-router]: https://nextjs.org/docs/pages/building-your-application/routing
-[personal-website-template]: https://github.com/sanity-io/sanity-template-nextjs-app-router-personal-website
+[personal-website-template]: https://github.com/sanity-io/template-nextjs-personal-website
 [perspectives-docs]: https://www.sanity.io/docs/perspectives?utm_source=github&utm_medium=readme&utm_campaign=next-sanity
 [portable-text]: https://portabletext.org
 [preivew-app-router]: https://github.com/sanity-io/next-sanity/blob/main/packages/next-sanity/PREVIEW-app-router.md
