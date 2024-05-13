@@ -129,7 +129,7 @@ importers:
         version: 3.0.4(@sanity/mutator@3.41.1)(react-dom@18.3.1(react@18.3.1))(react-is@18.3.1)(react@18.3.1)(sanity@3.41.1(@types/node@20.12.7)(@types/react@18.3.1)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(styled-components@6.1.10(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(terser@5.30.3))(styled-components@6.1.10(react-dom@18.3.1(react@18.3.1))(react@18.3.1))
       '@sanity/client':
         specifier: ^6.15.7
-        version: 6.18.0(debug@4.3.4)
+        version: 6.18.0
       '@sanity/image-url':
         specifier: ^1.0.2
         version: 1.0.2
@@ -205,7 +205,7 @@ importers:
         version: 3.0.18(react@18.3.1)
       '@sanity/client':
         specifier: ^6.18.0
-        version: 6.18.0(debug@4.3.4)
+        version: 6.18.0
       '@sanity/icons':
         specifier: ^2.11.3
         version: 2.11.8(react@18.3.1)
@@ -214,7 +214,7 @@ importers:
         version: 5.0.54(@sanity/client@6.18.0)(react@18.3.1)
       '@sanity/types':
         specifier: ^3.37.1
-        version: 3.41.1(debug@4.3.4)
+        version: 3.41.1
       '@sanity/ui':
         specifier: ^2.0.11
         version: 2.1.6(react-dom@18.3.1(react@18.3.1))(react-is@18.3.1)(react@18.3.1)(styled-components@6.1.10(react-dom@18.3.1(react@18.3.1))(react@18.3.1))
@@ -8935,6 +8935,14 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
+  '@sanity/client@6.18.0':
+    dependencies:
+      '@sanity/eventsource': 5.0.2
+      get-it: 8.4.29
+      rxjs: 7.8.1
+    transitivePeerDependencies:
+      - debug
+
   '@sanity/client@6.18.0(debug@3.2.7)':
     dependencies:
       '@sanity/eventsource': 5.0.2
@@ -8946,7 +8954,7 @@ snapshots:
   '@sanity/client@6.18.0(debug@4.3.4)':
     dependencies:
       '@sanity/eventsource': 5.0.2
-      get-it: 8.4.29
+      get-it: 8.4.29(debug@4.3.4)
       rxjs: 7.8.1
     transitivePeerDependencies:
       - debug
@@ -9193,7 +9201,7 @@ snapshots:
 
   '@sanity/presentation@1.15.1(@sanity/client@6.18.0(debug@4.3.4))(react-dom@18.3.1(react@18.3.1))(react-is@18.3.1)(react@18.3.1)(styled-components@6.1.10(react-dom@18.3.1(react@18.3.1))(react@18.3.1))':
     dependencies:
-      '@sanity/client': 6.18.0(debug@4.3.4)
+      '@sanity/client': 6.18.0
       '@sanity/icons': 2.11.8(react@18.3.1)
       '@sanity/preview-url-secret': 1.6.12(@sanity/client@6.18.0)
       '@sanity/ui': 2.1.6(react-dom@18.3.1(react@18.3.1))(react-is@18.3.1)(react@18.3.1)(styled-components@6.1.10(react-dom@18.3.1(react@18.3.1))(react@18.3.1))
@@ -9215,12 +9223,12 @@ snapshots:
 
   '@sanity/preview-kit-compat@1.4.21(@sanity/client@6.18.0)(react@18.3.1)':
     dependencies:
-      '@sanity/client': 6.18.0(debug@4.3.4)
+      '@sanity/client': 6.18.0
       react: 18.3.1
 
   '@sanity/preview-kit@5.0.54(@sanity/client@6.18.0)(react@18.3.1)':
     dependencies:
-      '@sanity/client': 6.18.0(debug@4.3.4)
+      '@sanity/client': 6.18.0
       '@sanity/preview-kit-compat': 1.4.21(@sanity/client@6.18.0)(react@18.3.1)
       mendoza: 3.0.7
     optionalDependencies:
@@ -9228,7 +9236,7 @@ snapshots:
 
   '@sanity/preview-url-secret@1.6.12(@sanity/client@6.18.0)':
     dependencies:
-      '@sanity/client': 6.18.0(debug@4.3.4)
+      '@sanity/client': 6.18.0
       '@sanity/uuid': 3.0.2
 
   '@sanity/schema@3.41.1(debug@3.2.7)':
@@ -9270,6 +9278,13 @@ snapshots:
   '@sanity/types@3.37.2(debug@4.3.4)':
     dependencies:
       '@sanity/client': 6.18.0(debug@4.3.4)
+      '@types/react': 18.3.1
+    transitivePeerDependencies:
+      - debug
+
+  '@sanity/types@3.41.1':
+    dependencies:
+      '@sanity/client': 6.18.0
       '@types/react': 18.3.1
     transitivePeerDependencies:
       - debug
@@ -9378,7 +9393,7 @@ snapshots:
       scroll-into-view-if-needed: 3.1.0
       valibot: 0.30.0
     optionalDependencies:
-      '@sanity/client': 6.18.0(debug@4.3.4)
+      '@sanity/client': 6.18.0
       next: 14.3.0-canary.49(@babel/core@7.24.5)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
 
   '@sanity/webhook@4.0.4': {}
@@ -13593,7 +13608,7 @@ snapshots:
       '@sanity/bifur-client': 0.3.1
       '@sanity/block-tools': 3.41.1
       '@sanity/cli': 3.41.1
-      '@sanity/client': 6.18.0(debug@4.3.4)
+      '@sanity/client': 6.18.0
       '@sanity/color': 3.0.6
       '@sanity/diff': 3.41.1
       '@sanity/diff-match-patch': 3.1.1
