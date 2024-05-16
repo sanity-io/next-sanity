@@ -65,6 +65,11 @@ export function addPathPrefix(path: string, prefix?: string): string {
  * @param prefix The prefix to be removed.
  */
 export function removePathPrefix(path: string, prefix: string): string {
+  // If the path is exactly '/' then return just the prefix
+  if (path === '/' && prefix) {
+    return prefix
+  }
+
   // If the path doesn't start with the prefix we can return it as is. This
   // protects us from situations where the prefix is a substring of the path
   // prefix such as:
