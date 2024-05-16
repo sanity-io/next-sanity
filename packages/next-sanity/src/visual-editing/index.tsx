@@ -12,15 +12,17 @@ export function VisualEditing(props: VisualEditingProps): React.ReactElement {
   // or disable the auto mode by setting basePath to false
 
   let autoBasePath: string | undefined
-  try {
-    autoBasePath = process.env['__NEXT_ROUTER_BASEPATH']
-    if (autoBasePath) {
-      console.warn(
-        `Detected next basePath as ${JSON.stringify(autoBasePath)} by reading "process.env.__NEXT_ROUTER_BASEPATH". If this is incorrect then you can set it manually with the basePath prop on the <VisualEditing /> component.`,
-      )
+  if (typeof props.basePath !== 'string') {
+    try {
+      autoBasePath = process.env['__NEXT_ROUTER_BASEPATH']
+      if (autoBasePath) {
+        console.warn(
+          `Detected next basePath as ${JSON.stringify(autoBasePath)} by reading "process.env.__NEXT_ROUTER_BASEPATH". If this is incorrect then you can set it manually with the basePath prop on the <VisualEditing /> component.`,
+        )
+      }
+    } catch (err) {
+      console.error('Failed detecting basePath', err)
     }
-  } catch (err) {
-    console.error('Failed detecting basePath', err)
   }
   return (
     <Suspense fallback={null}>
