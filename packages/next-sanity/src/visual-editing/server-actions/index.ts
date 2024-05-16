@@ -1,3 +1,4 @@
+'use server'
 import {revalidatePath} from 'next/cache.js'
 import {draftMode} from 'next/headers.js'
 
