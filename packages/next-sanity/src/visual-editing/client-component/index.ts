@@ -19,13 +19,17 @@ export interface VisualEditingProps extends Omit<VisualEditingOptions, 'history'
    */
   history?: never
   /**
+   * If next.config.ts is configured with a basePath we try to configure it automatically,
+   * you can disable this by setting basePath to ''.
+   * @example basePath="/my-custom-base-path"
    * @alpha experimental and may change without notice
+   * @defaultValue process.env.__NEXT_ROUTER_BASEPATH || ''
    */
-  basePath: string
+  basePath?: string
 }
 
 export default function VisualEditing(props: VisualEditingProps): null {
-  const {refresh, zIndex, basePath} = props
+  const {refresh, zIndex, basePath = ''} = props
 
   const router = useRouter()
   const routerRef = useRef(router)

@@ -7,24 +7,18 @@ const VisualEditingComponent = lazy(() => import('next-sanity/visual-editing/cli
 /**
  * @public
  */
-export function VisualEditing(
-  props: VisualEditingProps & {
-    /**
-     * If next.config.ts is configured with a basePath we try to configure it automatically,
-     * you can disable this by setting basePath to ''.
-     * @example basePath="/my-custom-base-path"
-     * @alpha experimental and may change without notice
-     * @defaultValue process.env.__NEXT_ROUTER_BASEPATH || ''
-     */
-    basePath?: string
-  },
-): React.ReactElement {
+export function VisualEditing(props: VisualEditingProps): React.ReactElement {
   // detected basePath, its value, you can change it by setting the basePath prop on VisualEditing
   // or disable the auto mode by setting basePath to false
 
-  let autoBasePath = ''
+  let autoBasePath: string | undefined
   try {
-    autoBasePath = (process.env['__NEXT_ROUTER_BASEPATH'] as string) || ''
+    autoBasePath = process.env['__NEXT_ROUTER_BASEPATH']
+    if (autoBasePath) {
+      console.warn(
+        `Detected next basePath as ${JSON.stringify(autoBasePath)} by reading "process.env.__NEXT_ROUTER_BASEPATH". If this is incorrect then you can set it manually with the basePath prop on the <VisualEditing /> component.`,
+      )
+    }
   } catch (err) {
     console.error('Failed detecting basePath', err)
   }
