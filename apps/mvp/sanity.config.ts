@@ -27,7 +27,9 @@ function createConfig(basePath: string, stable: boolean) {
   const presentationTool = stable ? stablePresentationTool : experimentalPresentationTool
   return defineConfig({
     name,
-    basePath: `${basePath}/${name}`,
+    basePath: `${process.env.NEXT_PUBLIC_TEST_BASE_PATH || ''}${basePath}/${name}`,
+    // basePath: `${basePath}/${name}`,
+    // basePath: `${name}`,
 
     projectId,
     dataset,

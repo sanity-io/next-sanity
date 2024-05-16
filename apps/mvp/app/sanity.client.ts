@@ -9,7 +9,7 @@ export const client = createClient({
   resultSourceMap: 'withKeyArraySelector',
   stega: {
     enabled: true,
-    studioUrl: '/studio',
+    studioUrl: `${process.env.NEXT_PUBLIC_TEST_BASE_PATH || ''}/studio`,
     // logger: console,
   },
 })
