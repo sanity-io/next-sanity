@@ -10,7 +10,7 @@ const {query, schema} = q('*')
   .grab({
     _id: q.string(),
     _type: q.literal('post'),
-    title: q.string().optional(),
+    title: q.string().nullable(),
     slug: q('slug').grabOne('current', q.string().optional()),
     mainImage: sanityImage('mainImage', {
       withCrop: true,
@@ -18,8 +18,8 @@ const {query, schema} = q('*')
       additionalFields: {
         alt: q.string().nullish(),
       },
-    }),
-    publishedAt: q.date().optional(),
+    }).nullable(),
+    publishedAt: q.date().nullable(),
     author: q('author')
       .deref()
       .grab({
@@ -31,7 +31,7 @@ const {query, schema} = q('*')
             alt: q.string().nullish(),
           },
         }),
-      }),
+      }).nullable(),
     status: q.select({
       '_originalId in path("drafts.**")': ['"draft"', q.literal('draft')],
       default: ['"published"', q.literal('published')],
@@ -86,7 +86,7 @@ const PostsLayout = memo(function Posts(props: PostsLayoutProps) {
                 </a>
               </div>
               <div className="mt-6 flex items-center">
-                <div className="flex-shrink-0">
+                {post.author ? <div className="flex-shrink-0">
                   <span className="sr-only">{post.author.name}</span>
                   {post.author?.image ? (
                     <Image
@@ -96,17 +96,17 @@ const PostsLayout = memo(function Posts(props: PostsLayoutProps) {
                       width={40}
                     />
                   ) : null}
-                </div>
+                </div> : null}
                 <div className="ml-3">
-                  <p className="text-sm font-medium text-gray-900">
+                  {post.author ? <p className="text-sm font-medium text-gray-900">
                     <a className="hover:underline">{post.author.name}</a>
-                  </p>
-                  <div className="flex space-x-1 text-sm text-gray-500">
+                  </p> : null}
+                  {post.publishedAt ? <div className="flex space-x-1 text-sm text-gray-500">
                     <time dateTime={post.publishedAt?.toJSON()}>
                       {post.publishedAt?.toLocaleDateString()}
                     </time>
                     <span aria-hidden="true">&middot;</span>
-                  </div>
+                  </div> : null}
                 </div>
               </div>
             </div>
