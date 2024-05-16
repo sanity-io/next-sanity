@@ -8,15 +8,13 @@ const VisualEditingComponent = lazy(() => import('next-sanity/visual-editing/cli
  * @public
  */
 export function VisualEditing(props: VisualEditingProps): React.ReactElement {
-  // detected basePath, its value, you can change it by setting the basePath prop on VisualEditing
-  // or disable the auto mode by setting basePath to false
-
   let autoBasePath: string | undefined
   if (typeof props.basePath !== 'string') {
     try {
       autoBasePath = process.env['__NEXT_ROUTER_BASEPATH']
       if (autoBasePath) {
-        console.warn(
+        // eslint-disable-next-line no-console
+        console.log(
           `Detected next basePath as ${JSON.stringify(autoBasePath)} by reading "process.env.__NEXT_ROUTER_BASEPATH". If this is incorrect then you can set it manually with the basePath prop on the <VisualEditing /> component.`,
         )
       }
