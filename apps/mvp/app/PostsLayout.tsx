@@ -31,7 +31,8 @@ const {query, schema} = q('*')
             alt: q.string().nullish(),
           },
         }),
-      }).nullable(),
+      })
+      .nullable(),
     status: q.select({
       '_originalId in path("drafts.**")': ['"draft"', q.literal('draft')],
       default: ['"published"', q.literal('published')],
@@ -86,27 +87,33 @@ const PostsLayout = memo(function Posts(props: PostsLayoutProps) {
                 </a>
               </div>
               <div className="mt-6 flex items-center">
-                {post.author ? <div className="flex-shrink-0">
-                  <span className="sr-only">{post.author.name}</span>
-                  {post.author?.image ? (
-                    <Image
-                      className="rounded-full"
-                      src={post.author.image as any}
-                      height={40}
-                      width={40}
-                    />
-                  ) : null}
-                </div> : null}
+                {post.author ? (
+                  <div className="flex-shrink-0">
+                    <span className="sr-only">{post.author.name}</span>
+                    {post.author?.image ? (
+                      <Image
+                        className="rounded-full"
+                        src={post.author.image as any}
+                        height={40}
+                        width={40}
+                      />
+                    ) : null}
+                  </div>
+                ) : null}
                 <div className="ml-3">
-                  {post.author ? <p className="text-sm font-medium text-gray-900">
-                    <a className="hover:underline">{post.author.name}</a>
-                  </p> : null}
-                  {post.publishedAt ? <div className="flex space-x-1 text-sm text-gray-500">
-                    <time dateTime={post.publishedAt?.toJSON()}>
-                      {post.publishedAt?.toLocaleDateString()}
-                    </time>
-                    <span aria-hidden="true">&middot;</span>
-                  </div> : null}
+                  {post.author ? (
+                    <p className="text-sm font-medium text-gray-900">
+                      <a className="hover:underline">{post.author.name}</a>
+                    </p>
+                  ) : null}
+                  {post.publishedAt ? (
+                    <div className="flex space-x-1 text-sm text-gray-500">
+                      <time dateTime={post.publishedAt?.toJSON()}>
+                        {post.publishedAt?.toLocaleDateString()}
+                      </time>
+                      <span aria-hidden="true">&middot;</span>
+                    </div>
+                  ) : null}
                 </div>
               </div>
             </div>
