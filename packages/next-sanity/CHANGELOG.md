@@ -5,6 +5,13 @@
 All notable changes to this project will be documented in this file. See
 [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [9.1.0](https://github.com/sanity-io/next-sanity/compare/v9.0.20...v9.1.0) (2024-05-21)
+
+
+### Features
+
+* **visual-editing:** add `basePath` support ([#1510](https://github.com/sanity-io/next-sanity/issues/1510)) ([9378e61](https://github.com/sanity-io/next-sanity/commit/9378e6136d3e6ef14d88965b4ffdc47c6703a882))
+
 ## [9.0.20](https://github.com/sanity-io/next-sanity/compare/v9.0.19...v9.0.20) (2024-05-16)
 
 
