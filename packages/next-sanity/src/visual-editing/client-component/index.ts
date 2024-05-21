@@ -8,6 +8,8 @@ import {usePathname, useRouter, useSearchParams} from 'next/navigation.js'
 import {revalidateRootLayout} from 'next-sanity/visual-editing/server-actions'
 import {useEffect, useRef, useState} from 'react'
 
+import {addPathPrefix, removePathPrefix} from './utils'
+
 /**
  * @public
  */
@@ -16,10 +18,18 @@ export interface VisualEditingProps extends Omit<VisualEditingOptions, 'history'
    * @deprecated The histoy adapter is already implemented
    */
   history?: never
+  /**
+   * If next.config.ts is configured with a basePath we try to configure it automatically,
+   * you can disable this by setting basePath to ''.
+   * @example basePath="/my-custom-base-path"
+   * @alpha experimental and may change without notice
+   * @defaultValue process.env.__NEXT_ROUTER_BASEPATH || ''
+   */
+  basePath?: string
 }
 
 export default function VisualEditing(props: VisualEditingProps): null {
-  const {refresh, zIndex} = props
+  const {refresh, zIndex, basePath = ''} = props
 
   const router = useRouter()
   const routerRef = useRef(router)
@@ -53,11 +63,11 @@ export default function VisualEditing(props: VisualEditingProps): null {
         update: (update) => {
           switch (update.type) {
             case 'push':
-              return routerRef.current.push(update.url)
+              return routerRef.current.push(removePathPrefix(update.url, basePath))
             case 'pop':
               return routerRef.current.back()
             case 'replace':
-              return routerRef.current.replace(update.url)
+              return routerRef.current.replace(removePathPrefix(update.url, basePath))
             default:
               throw new Error(`Unknown update type: ${update.type}`)
           }
@@ -96,7 +106,7 @@ export default function VisualEditing(props: VisualEditingProps): null {
     }
 
     return () => disable()
-  }, [refresh, zIndex])
+  }, [basePath, refresh, zIndex])
 
   const pathname = usePathname()
   const searchParams = useSearchParams()
@@ -104,10 +114,13 @@ export default function VisualEditing(props: VisualEditingProps): null {
     if (navigate) {
       navigate({
         type: 'push',
-        url: `${pathname}${searchParams?.size ? `?${searchParams}` : ''}`,
+        url: addPathPrefix(
+          `${pathname}${searchParams?.size ? `?${searchParams}` : ''}`,
+          basePath,
+        ),
       })
     }
-  }, [navigate, pathname, searchParams])
+  }, [basePath, navigate, pathname, searchParams])
 
   return null
 }

@@ -19,7 +19,7 @@ const projectId = process.env.NEXT_PUBLIC_SANITY_PROJECT_ID!
 const dataset = process.env.NEXT_PUBLIC_SANITY_DATASET!
 
 const previewMode = {
-  enable: '/api/draft',
+  enable: `${process.env.NEXT_PUBLIC_TEST_BASE_PATH || ''}/api/draft`,
 } satisfies PreviewUrlResolverOptions['previewMode']
 
 function createConfig(basePath: string, stable: boolean) {
@@ -27,7 +27,9 @@ function createConfig(basePath: string, stable: boolean) {
   const presentationTool = stable ? stablePresentationTool : experimentalPresentationTool
   return defineConfig({
     name,
-    basePath: `${basePath}/${name}`,
+    basePath: `${process.env.NEXT_PUBLIC_TEST_BASE_PATH || ''}${basePath}/${name}`,
+    // basePath: `${basePath}/${name}`,
+    // basePath: `${name}`,
 
     projectId,
     dataset,
@@ -36,7 +38,7 @@ function createConfig(basePath: string, stable: boolean) {
       assist(),
       debugSecrets(),
       presentationTool({
-        previewUrl: {previewMode},
+        previewUrl: {preview: process.env.NEXT_PUBLIC_TEST_BASE_PATH || '/', previewMode},
       }),
       structureTool(),
       visionTool(),
