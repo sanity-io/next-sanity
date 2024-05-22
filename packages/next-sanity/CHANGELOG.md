@@ -5,6 +5,13 @@
 All notable changes to this project will be documented in this file. See
 [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [9.2.0](https://github.com/sanity-io/next-sanity/compare/v9.1.1...v9.2.0) (2024-05-22)
+
+
+### Features
+
+* **image:** set fit param to max when height is unspecified ([#1520](https://github.com/sanity-io/next-sanity/issues/1520)) ([fae2812](https://github.com/sanity-io/next-sanity/commit/fae2812e180f74a6f8f492dc10b58b0d2f2e034e))
+
 ## [9.1.1](https://github.com/sanity-io/next-sanity/compare/v9.1.0...v9.1.1) (2024-05-22)
 
 
