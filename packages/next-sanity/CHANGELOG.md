@@ -5,6 +5,13 @@
 All notable changes to this project will be documented in this file. See
 [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [9.1.1](https://github.com/sanity-io/next-sanity/compare/v9.1.0...v9.1.1) (2024-05-22)
+
+
+### Bug Fixes
+
+* add v19 to `react` peer dep range ([#1519](https://github.com/sanity-io/next-sanity/issues/1519)) ([db2f301](https://github.com/sanity-io/next-sanity/commit/db2f301be9043b5c76b7100d0ff541583acfa2cb))
+
 ## [9.1.0](https://github.com/sanity-io/next-sanity/compare/v9.0.20...v9.1.0) (2024-05-21)
 
 
