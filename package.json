@@ -19,9 +19,9 @@
   },
   "devDependencies": {
     "@next/bundle-analyzer": "14.2.3",
-    "@next/env": "14.3.0-canary.64",
+    "@next/env": "14.3.0-canary.73",
     "eslint-config-next": "14.3.0-canary.73",
-    "next": "14.3.0-canary.64",
+    "next": "14.3.0-canary.73",
     "prettier": "^3.2.5",
     "prettier-plugin-packagejson": "^2.5.0",
     "prettier-plugin-tailwindcss": "^0.5.14",
@@ -36,6 +36,9 @@
       "eslint-config-next": "$eslint-config-next",
       "next": "$next",
       "sanity": "$sanity"
+    },
+    "peerDependencyRules": {
+      "allowAny": ["react", "react-dom"]
     }
   }
 }
