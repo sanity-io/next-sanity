@@ -6,7 +6,7 @@ import type {ImageLoader} from 'next/image'
 export const imageLoader = (({src, width, quality}) => {
   const url = new URL(src)
   url.searchParams.set('auto', 'format')
-  url.searchParams.set('fit', url.searchParams.get('fit') || 'min')
+  url.searchParams.set('fit', url.searchParams.get('fit') || 'max')
   if (url.searchParams.has('h') && url.searchParams.has('w')) {
     const originalHeight = parseInt(url.searchParams.get('h')!, 10)
     const originalWidth = parseInt(url.searchParams.get('w')!, 10)
