@@ -30,15 +30,18 @@
   },
   "packageManager": "pnpm@9.1.2",
   "pnpm": {
+    "peerDependencyRules": {
+      "allowAny": [
+        "react",
+        "react-dom"
+      ]
+    },
     "overrides": {
       "@next/bundle-analyzer": "$@next/bundle-analyzer",
       "@next/env": "$@next/env",
       "eslint-config-next": "$eslint-config-next",
       "next": "$next",
       "sanity": "$sanity"
-    },
-    "peerDependencyRules": {
-      "allowAny": ["react", "react-dom"]
     }
   }
 }
