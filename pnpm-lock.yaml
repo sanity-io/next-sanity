@@ -7,7 +7,7 @@ settings:
 overrides:
   '@next/bundle-analyzer': 14.2.3
   '@next/env': 14.3.0-canary.73
-  eslint-config-next: 14.3.0-canary.76
+  eslint-config-next: 14.3.0-canary.78
   next: 14.3.0-canary.73
   sanity: 3.43.0
 
@@ -22,8 +22,8 @@ importers:
         specifier: 14.3.0-canary.73
         version: 14.3.0-canary.73
       eslint-config-next:
-        specifier: 14.3.0-canary.76
-        version: 14.3.0-canary.76(eslint@8.57.0)(typescript@5.4.5)
+        specifier: 14.3.0-canary.78
+        version: 14.3.0-canary.78(eslint@8.57.0)(typescript@5.4.5)
       next:
         specifier: 14.3.0-canary.73
         version: 14.3.0-canary.73(@babel/core@7.24.5)(babel-plugin-react-compiler@0.0.0-experimental-592953e-20240517)(react-dom@19.0.0-beta-04b058868c-20240508(react@19.0.0-beta-04b058868c-20240508))(react@19.0.0-beta-04b058868c-20240508)
@@ -101,8 +101,8 @@ importers:
         specifier: ^8.57.0
         version: 8.57.0
       eslint-config-next:
-        specifier: 14.3.0-canary.76
-        version: 14.3.0-canary.76(eslint@8.57.0)(typescript@5.4.5)
+        specifier: 14.3.0-canary.78
+        version: 14.3.0-canary.78(eslint@8.57.0)(typescript@5.4.5)
       eslint-config-prettier:
         specifier: ^9.1.0
         version: 9.1.0(eslint@8.57.0)
@@ -177,8 +177,8 @@ importers:
         specifier: ^8.57.0
         version: 8.57.0
       eslint-config-next:
-        specifier: 14.3.0-canary.76
-        version: 14.3.0-canary.76(eslint@8.57.0)(typescript@5.4.5)
+        specifier: 14.3.0-canary.78
+        version: 14.3.0-canary.78(eslint@8.57.0)(typescript@5.4.5)
       eslint-config-prettier:
         specifier: ^9.1.0
         version: 9.1.0(eslint@8.57.0)
@@ -1708,8 +1708,8 @@ packages:
   '@next/env@14.3.0-canary.73':
     resolution: {integrity: sha512-1wpSRn4bRedIBzKVv+0B8Gs6N0zRd2WosYm4ODnJr32nhEnnpIYHKz2liSUXj5MBfMHJmnuUBJsJOXDx8oYycw==}
 
-  '@next/eslint-plugin-next@14.3.0-canary.76':
-    resolution: {integrity: sha512-XIdusgIyn7+iROEUgcddoR6B2LTDHsYweKjfdUw9dS3GF5H+9cVriRkSl7mkckZIap4OIHTREIKBnQRzcPQqzg==}
+  '@next/eslint-plugin-next@14.3.0-canary.78':
+    resolution: {integrity: sha512-OO52VqjIrNBHraJURR950WPjD8Z4TGmbRSShBz7puf44LhFBRrfOtB8MVW9VoYnLpOgbnUzuLOxpMLFU2EJM6g==}
 
   '@next/swc-darwin-arm64@14.3.0-canary.73':
     resolution: {integrity: sha512-gNuPrkdI6CPiccKJDE/7uu4aoI5UH4A1R5GlyPtl1HFn67yJuJImWwXJmBtJ8Wy+Fh5G0g9r48n0S8L+maX0/Q==}
@@ -3593,8 +3593,8 @@ packages:
     resolution: {integrity: sha512-TtpcNJ3XAzx3Gq8sWRzJaVajRs0uVxA2YAkdb1jm2YkPz4G6egUFAyA3n5vtEIZefPk5Wa4UXbKuS5fKkJWdgA==}
     engines: {node: '>=10'}
 
-  eslint-config-next@14.3.0-canary.76:
-    resolution: {integrity: sha512-z7hm3Iuby3p67ef+QeUiHwmwbtE+DMo+Hoa5LH7CgtkgpSxtwOMRYDnOUkLY/vUzxE3VVF6et736o/FEUij07Q==}
+  eslint-config-next@14.3.0-canary.78:
+    resolution: {integrity: sha512-nsexbBaec0+hwPObhwUX32KbndIf6v2kpeXrG/8sokDfKKveT1bypdMspt4S9VRZzUKF/fN8n1SksbmaVF6tbg==}
     peerDependencies:
       eslint: ^7.23.0 || ^8.0.0
       typescript: '>=3.3.1'
@@ -4271,6 +4271,7 @@ packages:
 
   inflight@1.0.6:
     resolution: {integrity: sha512-k92I/b08q4wvFscXCLvqfsHCrjrF7yiXsQuIVvVE7N82W3+aqpzuUdBbfhWcy/FZR3/4IgflMgKLOsvPDrGCJA==}
+    deprecated: This module is not supported, and leaks memory. Do not use it. Check out lru-cache if you want a good and tested way to coalesce async requests by a key value, which is much more comprehensive and powerful.
 
   inherits@2.0.4:
     resolution: {integrity: sha512-k/vGaX4/Yla3WzyMCvTQOXYeIHvqOKtnqBduzTHpzpQZzAskKMhZ2K+EnBiSM9zGSoIFeMpXKxa4dYeZIQqewQ==}
@@ -8497,7 +8498,7 @@ snapshots:
 
   '@next/env@14.3.0-canary.73': {}
 
-  '@next/eslint-plugin-next@14.3.0-canary.76':
+  '@next/eslint-plugin-next@14.3.0-canary.78':
     dependencies:
       glob: 10.3.10
 
@@ -11043,9 +11044,9 @@ snapshots:
 
   escape-string-regexp@4.0.0: {}
 
-  eslint-config-next@14.3.0-canary.76(eslint@8.57.0)(typescript@5.4.5):
+  eslint-config-next@14.3.0-canary.78(eslint@8.57.0)(typescript@5.4.5):
     dependencies:
-      '@next/eslint-plugin-next': 14.3.0-canary.76
+      '@next/eslint-plugin-next': 14.3.0-canary.78
       '@rushstack/eslint-patch': 1.10.2
       '@typescript-eslint/parser': 7.2.0(eslint@8.57.0)(typescript@5.4.5)
       eslint: 8.57.0
