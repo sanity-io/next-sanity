@@ -7,6 +7,7 @@ function requireResolve(id) {
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   basePath: process.env.NEXT_PUBLIC_TEST_BASE_PATH,
+  trailingSlash: true,
   experimental: {
     taint: true,
     reactCompiler: true,

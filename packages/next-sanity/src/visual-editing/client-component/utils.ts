@@ -97,3 +97,32 @@ export function removePathPrefix(path: string, prefix: string): string {
   // back to the path to make sure it's a valid path.
   return `/${withoutPrefix}`
 }
+
+/**
+ * From: https://github.com/vercel/next.js/blob/dfe7fc03e2268e7cb765dce6a89e02c831c922d5/packages/next/src/client/normalize-trailing-slash.ts#L16
+ * Normalizes the trailing slash of a path according to the `trailingSlash` option
+ * in `next.config.js`.
+ */
+export const normalizePathTrailingSlash = (path: string, trailingSlash: boolean): string => {
+  const {pathname, query, hash} = parsePath(path)
+  if (trailingSlash) {
+    if (pathname.endsWith('/')) {
+      return `${pathname}${query}${hash}`
+    }
+    return `${pathname}/${query}${hash}`
+  }
+
+  return `${removeTrailingSlash(pathname)}${query}${hash}`
+}
+
+/**
+ * From: https://github.com/vercel/next.js/blob/dfe7fc03e2268e7cb765dce6a89e02c831c922d5/packages/next/src/shared/lib/router/utils/remove-trailing-slash.ts#L8
+ * Removes the trailing slash for a given route or page path. Preserves the
+ * root page. Examples:
+ *   - `/foo/bar/` -> `/foo/bar`
+ *   - `/foo/bar` -> `/foo/bar`
+ *   - `/` -> `/`
+ */
+function removeTrailingSlash(route: string) {
+  return route.replace(/\/$/, '') || '/'
+}

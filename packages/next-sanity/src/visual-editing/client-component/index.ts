@@ -8,7 +8,7 @@ import {usePathname, useRouter, useSearchParams} from 'next/navigation.js'
 import {revalidateRootLayout} from 'next-sanity/visual-editing/server-actions'
 import {useEffect, useRef, useState} from 'react'
 
-import {addPathPrefix, removePathPrefix} from './utils'
+import {addPathPrefix, normalizePathTrailingSlash, removePathPrefix} from './utils'
 
 /**
  * @public
@@ -26,10 +26,18 @@ export interface VisualEditingProps extends Omit<VisualEditingOptions, 'history'
    * @defaultValue process.env.__NEXT_ROUTER_BASEPATH || ''
    */
   basePath?: string
+  /**
+   * If next.config.ts is configured with a `trailingSlash` we try to detect it automatically,
+   * it can be controlled manually by passing a boolean.
+   * @example trailingSlash={true}
+   * @alpha experimental and may change without notice
+   * @defaultValue Boolean(process.env.__NEXT_TRAILING_SLASH)
+   */
+  trailingSlash?: boolean
 }
 
 export default function VisualEditing(props: VisualEditingProps): null {
-  const {refresh, zIndex, basePath = ''} = props
+  const {refresh, zIndex, basePath = '', trailingSlash = false} = props
 
   const router = useRouter()
   const routerRef = useRef(router)
@@ -114,13 +122,13 @@ export default function VisualEditing(props: VisualEditingProps): null {
     if (navigate) {
       navigate({
         type: 'push',
-        url: addPathPrefix(
-          `${pathname}${searchParams?.size ? `?${searchParams}` : ''}`,
-          basePath,
+        url: normalizePathTrailingSlash(
+          addPathPrefix(`${pathname}${searchParams?.size ? `?${searchParams}` : ''}`, basePath),
+          trailingSlash,
         ),
       })
     }
-  }, [basePath, navigate, pathname, searchParams])
+  }, [basePath, navigate, pathname, searchParams, trailingSlash])
 
   return null
 }
