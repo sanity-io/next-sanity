@@ -22,9 +22,27 @@ export function VisualEditing(props: VisualEditingProps): React.ReactElement {
       console.error('Failed detecting basePath', err)
     }
   }
+  let autoTrailingSlash: boolean | undefined
+  if (typeof props.trailingSlash !== 'boolean') {
+    try {
+      autoTrailingSlash = Boolean(process.env['__NEXT_TRAILING_SLASH'])
+      if (autoTrailingSlash) {
+        // eslint-disable-next-line no-console
+        console.log(
+          `Detected next trailingSlash as ${JSON.stringify(autoTrailingSlash)} by reading "process.env.__NEXT_TRAILING_SLASH". If this is incorrect then you can set it manually with the trailingSlash prop on the <VisualEditing /> component.`,
+        )
+      }
+    } catch (err) {
+      console.error('Failed detecting trailingSlash', err)
+    }
+  }
   return (
     <Suspense fallback={null}>
-      <VisualEditingComponent {...props} basePath={props.basePath ?? autoBasePath} />
+      <VisualEditingComponent
+        {...props}
+        basePath={props.basePath ?? autoBasePath}
+        trailingSlash={props.trailingSlash ?? autoTrailingSlash}
+      />
     </Suspense>
   )
 }
