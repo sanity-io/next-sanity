@@ -5,6 +5,13 @@
 All notable changes to this project will be documented in this file. See
 [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [9.3.0](https://github.com/sanity-io/next-sanity/compare/v9.2.1...v9.3.0) (2024-05-24)
+
+
+### Features
+
+* **visual-editing:** add `trailingSlash ` support ([#1540](https://github.com/sanity-io/next-sanity/issues/1540)) ([5977fb5](https://github.com/sanity-io/next-sanity/commit/5977fb5cde6aee8eedb2c811755819b679ebbb6b))
+
 ## [9.2.1](https://github.com/sanity-io/next-sanity/compare/v9.2.0...v9.2.1) (2024-05-24)
 
 
