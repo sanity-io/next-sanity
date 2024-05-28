@@ -5,6 +5,13 @@
 All notable changes to this project will be documented in this file. See
 [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [9.3.5](https://github.com/sanity-io/next-sanity/compare/v9.3.4...v9.3.5) (2024-05-28)
+
+
+### Bug Fixes
+
+* **deps:** Update dependency @sanity/visual-editing to v2.1.0 ([#1560](https://github.com/sanity-io/next-sanity/issues/1560)) ([d8c74ee](https://github.com/sanity-io/next-sanity/commit/d8c74ee89a6e314653c1aa85e826d3211f1b2f5e))
+
 ## [9.3.4](https://github.com/sanity-io/next-sanity/compare/v9.3.3...v9.3.4) (2024-05-28)
 
 
