@@ -53,7 +53,7 @@ importers:
         version: 1.0.2
       '@sanity/presentation':
         specifier: 1.15.10
-        version: 1.15.10(@sanity/client@6.19.0(debug@4.3.4))(react-dom@19.0.0-beta-04b058868c-20240508(react@19.0.0-beta-04b058868c-20240508))(react-is@18.3.1)(react@19.0.0-beta-04b058868c-20240508)(styled-components@6.1.11(react-dom@19.0.0-beta-04b058868c-20240508(react@19.0.0-beta-04b058868c-20240508))(react@19.0.0-beta-04b058868c-20240508))
+        version: 1.15.10(@sanity/client@6.19.0)(react-dom@19.0.0-beta-04b058868c-20240508(react@19.0.0-beta-04b058868c-20240508))(react-is@18.3.1)(react@19.0.0-beta-04b058868c-20240508)(styled-components@6.1.11(react-dom@19.0.0-beta-04b058868c-20240508(react@19.0.0-beta-04b058868c-20240508))(react@19.0.0-beta-04b058868c-20240508))
       '@sanity/preview-url-secret':
         specifier: ^1.6.4
         version: 1.6.15(@sanity/client@6.19.0)
@@ -132,7 +132,7 @@ importers:
         version: 3.0.4(@sanity/mutator@3.43.0)(react-dom@19.0.0-beta-04b058868c-20240508(react@19.0.0-beta-04b058868c-20240508))(react-is@18.3.1)(react@19.0.0-beta-04b058868c-20240508)(sanity@3.43.0(@types/node@20.12.7)(@types/react@18.3.3)(react-dom@19.0.0-beta-04b058868c-20240508(react@19.0.0-beta-04b058868c-20240508))(react@19.0.0-beta-04b058868c-20240508)(styled-components@6.1.11(react-dom@19.0.0-beta-04b058868c-20240508(react@19.0.0-beta-04b058868c-20240508))(react@19.0.0-beta-04b058868c-20240508))(terser@5.30.3))(styled-components@6.1.11(react-dom@19.0.0-beta-04b058868c-20240508(react@19.0.0-beta-04b058868c-20240508))(react@19.0.0-beta-04b058868c-20240508))
       '@sanity/client':
         specifier: ^6.15.7
-        version: 6.19.0
+        version: 6.19.0(debug@4.3.4)
       '@sanity/image-url':
         specifier: ^1.0.2
         version: 1.0.2
@@ -208,7 +208,7 @@ importers:
         version: 3.1.0(react@19.0.0-beta-04b058868c-20240508)
       '@sanity/client':
         specifier: ^6.19.0
-        version: 6.19.0
+        version: 6.19.0(debug@4.3.4)
       '@sanity/icons':
         specifier: ^2.11.3
         version: 2.11.8(react@19.0.0-beta-04b058868c-20240508)
@@ -217,7 +217,7 @@ importers:
         version: 5.0.59(@sanity/client@6.19.0)(react@19.0.0-beta-04b058868c-20240508)
       '@sanity/types':
         specifier: ^3.37.1
-        version: 3.43.0
+        version: 3.43.0(debug@4.3.4)
       '@sanity/ui':
         specifier: ^2.0.11
         version: 2.1.13(react-dom@19.0.0-beta-04b058868c-20240508(react@19.0.0-beta-04b058868c-20240508))(react-is@18.3.1)(react@19.0.0-beta-04b058868c-20240508)(styled-components@6.1.11(react-dom@19.0.0-beta-04b058868c-20240508(react@19.0.0-beta-04b058868c-20240508))(react@19.0.0-beta-04b058868c-20240508))
@@ -9039,14 +9039,6 @@ snapshots:
       - react
       - supports-color
 
-  '@sanity/client@6.19.0':
-    dependencies:
-      '@sanity/eventsource': 5.0.2
-      get-it: 8.5.0
-      rxjs: 7.8.1
-    transitivePeerDependencies:
-      - debug
-
   '@sanity/client@6.19.0(debug@3.2.7)':
     dependencies:
       '@sanity/eventsource': 5.0.2
@@ -9303,9 +9295,9 @@ snapshots:
       - react-dom
       - supports-color
 
-  '@sanity/presentation@1.15.10(@sanity/client@6.19.0(debug@4.3.4))(react-dom@19.0.0-beta-04b058868c-20240508(react@19.0.0-beta-04b058868c-20240508))(react-is@18.3.1)(react@19.0.0-beta-04b058868c-20240508)(styled-components@6.1.11(react-dom@19.0.0-beta-04b058868c-20240508(react@19.0.0-beta-04b058868c-20240508))(react@19.0.0-beta-04b058868c-20240508))':
+  '@sanity/presentation@1.15.10(@sanity/client@6.19.0)(react-dom@19.0.0-beta-04b058868c-20240508(react@19.0.0-beta-04b058868c-20240508))(react-is@18.3.1)(react@19.0.0-beta-04b058868c-20240508)(styled-components@6.1.11(react-dom@19.0.0-beta-04b058868c-20240508(react@19.0.0-beta-04b058868c-20240508))(react@19.0.0-beta-04b058868c-20240508))':
     dependencies:
-      '@sanity/client': 6.19.0
+      '@sanity/client': 6.19.0(debug@4.3.4)
       '@sanity/icons': 2.11.8(react@19.0.0-beta-04b058868c-20240508)
       '@sanity/preview-url-secret': 1.6.15(@sanity/client@6.19.0)
       '@sanity/ui': 2.1.13(react-dom@19.0.0-beta-04b058868c-20240508(react@19.0.0-beta-04b058868c-20240508))(react-is@18.3.1)(react@19.0.0-beta-04b058868c-20240508)(styled-components@6.1.11(react-dom@19.0.0-beta-04b058868c-20240508(react@19.0.0-beta-04b058868c-20240508))(react@19.0.0-beta-04b058868c-20240508))
@@ -9327,7 +9319,7 @@ snapshots:
 
   '@sanity/presentation@1.15.8(@sanity/client@6.19.0(debug@4.3.4))(react-dom@19.0.0-beta-04b058868c-20240508(react@19.0.0-beta-04b058868c-20240508))(react-is@18.3.1)(react@19.0.0-beta-04b058868c-20240508)(styled-components@6.1.11(react-dom@19.0.0-beta-04b058868c-20240508(react@19.0.0-beta-04b058868c-20240508))(react@19.0.0-beta-04b058868c-20240508))':
     dependencies:
-      '@sanity/client': 6.19.0
+      '@sanity/client': 6.19.0(debug@4.3.4)
       '@sanity/icons': 2.11.8(react@19.0.0-beta-04b058868c-20240508)
       '@sanity/preview-url-secret': 1.6.15(@sanity/client@6.19.0)
       '@sanity/ui': 2.1.13(react-dom@19.0.0-beta-04b058868c-20240508(react@19.0.0-beta-04b058868c-20240508))(react-is@18.3.1)(react@19.0.0-beta-04b058868c-20240508)(styled-components@6.1.11(react-dom@19.0.0-beta-04b058868c-20240508(react@19.0.0-beta-04b058868c-20240508))(react@19.0.0-beta-04b058868c-20240508))
@@ -9349,12 +9341,12 @@ snapshots:
 
   '@sanity/preview-kit-compat@1.4.23(@sanity/client@6.19.0)(react@19.0.0-beta-04b058868c-20240508)':
     dependencies:
-      '@sanity/client': 6.19.0
+      '@sanity/client': 6.19.0(debug@4.3.4)
       react: 19.0.0-beta-04b058868c-20240508
 
   '@sanity/preview-kit@5.0.59(@sanity/client@6.19.0)(react@19.0.0-beta-04b058868c-20240508)':
     dependencies:
-      '@sanity/client': 6.19.0
+      '@sanity/client': 6.19.0(debug@4.3.4)
       '@sanity/preview-kit-compat': 1.4.23(@sanity/client@6.19.0)(react@19.0.0-beta-04b058868c-20240508)
       mendoza: 3.0.7
     optionalDependencies:
@@ -9362,7 +9354,7 @@ snapshots:
 
   '@sanity/preview-url-secret@1.6.15(@sanity/client@6.19.0)':
     dependencies:
-      '@sanity/client': 6.19.0
+      '@sanity/client': 6.19.0(debug@4.3.4)
       '@sanity/uuid': 3.0.2
 
   '@sanity/schema@3.43.0(debug@3.2.7)':
@@ -9403,13 +9395,6 @@ snapshots:
   '@sanity/types@3.37.2(debug@4.3.4)':
     dependencies:
       '@sanity/client': 6.19.0(debug@4.3.4)
-      '@types/react': 18.3.3
-    transitivePeerDependencies:
-      - debug
-
-  '@sanity/types@3.43.0':
-    dependencies:
-      '@sanity/client': 6.19.0
       '@types/react': 18.3.3
     transitivePeerDependencies:
       - debug
@@ -9518,7 +9503,7 @@ snapshots:
       scroll-into-view-if-needed: 3.1.0
       valibot: 0.30.0
     optionalDependencies:
-      '@sanity/client': 6.19.0
+      '@sanity/client': 6.19.0(debug@4.3.4)
       next: 14.3.0-canary.86(@babel/core@7.24.5)(babel-plugin-react-compiler@0.0.0-experimental-592953e-20240517)(react-dom@19.0.0-beta-04b058868c-20240508(react@19.0.0-beta-04b058868c-20240508))(react@19.0.0-beta-04b058868c-20240508)
 
   '@sanity/webhook@4.0.4': {}
@@ -11439,10 +11424,6 @@ snapshots:
     optionalDependencies:
       debug: 3.2.7
 
-  follow-redirects@1.15.6(debug@4.3.4):
-    optionalDependencies:
-      debug: 4.3.4
-
   for-each@0.3.3:
     dependencies:
       is-callable: 1.2.7
@@ -11557,16 +11538,6 @@ snapshots:
       has-symbols: 1.0.3
       hasown: 2.0.2
 
-  get-it@8.5.0:
-    dependencies:
-      decompress-response: 7.0.0
-      follow-redirects: 1.15.6(debug@3.2.7)
-      is-retry-allowed: 2.2.0
-      progress-stream: 2.0.0
-      tunnel-agent: 0.6.0
-    transitivePeerDependencies:
-      - debug
-
   get-it@8.5.0(debug@3.2.7):
     dependencies:
       decompress-response: 7.0.0
@@ -11580,7 +11551,7 @@ snapshots:
   get-it@8.5.0(debug@4.3.4):
     dependencies:
       decompress-response: 7.0.0
-      follow-redirects: 1.15.6(debug@4.3.4)
+      follow-redirects: 1.15.6(debug@3.2.7)
       is-retry-allowed: 2.2.0
       progress-stream: 2.0.0
       tunnel-agent: 0.6.0
@@ -11597,7 +11568,7 @@ snapshots:
 
   get-latest-version@5.1.0:
     dependencies:
-      get-it: 8.5.0
+      get-it: 8.5.0(debug@4.3.4)
       registry-auth-token: 5.0.2
       registry-url: 5.1.0
       semver: 7.6.2
@@ -13768,7 +13739,7 @@ snapshots:
       '@sanity/bifur-client': 0.3.1
       '@sanity/block-tools': 3.43.0
       '@sanity/cli': 3.43.0(react@19.0.0-beta-04b058868c-20240508)
-      '@sanity/client': 6.19.0
+      '@sanity/client': 6.19.0(debug@4.3.4)
       '@sanity/color': 3.0.6
       '@sanity/diff': 3.43.0
       '@sanity/diff-match-patch': 3.1.1
