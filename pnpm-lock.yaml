@@ -213,8 +213,8 @@ importers:
         specifier: ^2.11.3
         version: 2.11.8(react@19.0.0-beta-04b058868c-20240508)
       '@sanity/preview-kit':
-        specifier: 5.0.59
-        version: 5.0.59(@sanity/client@6.19.0)(react@19.0.0-beta-04b058868c-20240508)
+        specifier: 5.0.60
+        version: 5.0.60(@sanity/client@6.19.0)(react@19.0.0-beta-04b058868c-20240508)
       '@sanity/types':
         specifier: ^3.37.1
         version: 3.43.0(debug@4.3.4)
@@ -2266,18 +2266,18 @@ packages:
     peerDependencies:
       '@sanity/client': ^6.18.2
 
-  '@sanity/preview-kit-compat@1.4.23':
-    resolution: {integrity: sha512-tDYZJQ8KU4byo/YW2cVkY+yGFEDKq5Lc4stv4FEZNWvoWfF7UVLQS7AFfS5dUQO6vzoQ6YkWqnCs2YUE0U+Wdg==}
-    engines: {node: '>=18'}
-    peerDependencies:
-      '@sanity/client': ^6.18.2
-      react: ^18.2.0
-
-  '@sanity/preview-kit@5.0.59':
-    resolution: {integrity: sha512-a+WTT4UYCDR3YNOUCiTFIadRpLSQEoInMEYybRPKuCvIRswyFGZoZdjD9VC1FegcCy33/tg2uH0nGaPn34iBcA==}
+  '@sanity/preview-kit-compat@1.4.24':
+    resolution: {integrity: sha512-S7Ug90Nz+O4E+vahoznEAn9kYoDKf6EXZsYEndXtzKXUZXEBGxnXnjgIdpD+WTlDEyIIKlQcwAxwgK3QI8Avkg==}
     engines: {node: '>=18'}
     peerDependencies:
       '@sanity/client': ^6.18.3
+      react: ^18.2.0
+
+  '@sanity/preview-kit@5.0.60':
+    resolution: {integrity: sha512-XpOLSWZLmV9EdwORrHXKcXNga4sheZKvrqQ2DCRVVCvTmyWakPjH+wnzsYzAqJCc0CQ4GR38uzpUxIYFgwJoeg==}
+    engines: {node: '>=18'}
+    peerDependencies:
+      '@sanity/client': ^6.19.0
       react: ^18.0.0
     peerDependenciesMeta:
       react:
@@ -9339,15 +9339,15 @@ snapshots:
       - react-is
       - styled-components
 
-  '@sanity/preview-kit-compat@1.4.23(@sanity/client@6.19.0)(react@19.0.0-beta-04b058868c-20240508)':
+  '@sanity/preview-kit-compat@1.4.24(@sanity/client@6.19.0)(react@19.0.0-beta-04b058868c-20240508)':
     dependencies:
       '@sanity/client': 6.19.0(debug@4.3.4)
       react: 19.0.0-beta-04b058868c-20240508
 
-  '@sanity/preview-kit@5.0.59(@sanity/client@6.19.0)(react@19.0.0-beta-04b058868c-20240508)':
+  '@sanity/preview-kit@5.0.60(@sanity/client@6.19.0)(react@19.0.0-beta-04b058868c-20240508)':
     dependencies:
       '@sanity/client': 6.19.0(debug@4.3.4)
-      '@sanity/preview-kit-compat': 1.4.23(@sanity/client@6.19.0)(react@19.0.0-beta-04b058868c-20240508)
+      '@sanity/preview-kit-compat': 1.4.24(@sanity/client@6.19.0)(react@19.0.0-beta-04b058868c-20240508)
       mendoza: 3.0.7
     optionalDependencies:
       react: 19.0.0-beta-04b058868c-20240508
