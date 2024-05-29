@@ -52,11 +52,11 @@ importers:
         specifier: ^1.0.2
         version: 1.0.2
       '@sanity/presentation':
-        specifier: 1.15.10
-        version: 1.15.10(@sanity/client@6.19.0)(react-dom@19.0.0-beta-04b058868c-20240508(react@19.0.0-beta-04b058868c-20240508))(react-is@18.3.1)(react@19.0.0-beta-04b058868c-20240508)(styled-components@6.1.11(react-dom@19.0.0-beta-04b058868c-20240508(react@19.0.0-beta-04b058868c-20240508))(react@19.0.0-beta-04b058868c-20240508))
+        specifier: 1.15.11
+        version: 1.15.11(@sanity/client@6.19.0)(react-dom@19.0.0-beta-04b058868c-20240508(react@19.0.0-beta-04b058868c-20240508))(react-is@18.3.1)(react@19.0.0-beta-04b058868c-20240508)(styled-components@6.1.11(react-dom@19.0.0-beta-04b058868c-20240508(react@19.0.0-beta-04b058868c-20240508))(react@19.0.0-beta-04b058868c-20240508))
       '@sanity/preview-url-secret':
         specifier: ^1.6.4
-        version: 1.6.15(@sanity/client@6.19.0)
+        version: 1.6.16(@sanity/client@6.19.0)
       '@sanity/vision':
         specifier: 3.43.0
         version: 3.43.0(@babel/runtime@7.24.4)(@codemirror/lint@6.5.0)(@codemirror/theme-one-dark@6.1.2)(@lezer/common@1.2.1)(codemirror@6.0.1(@lezer/common@1.2.1))(react-dom@19.0.0-beta-04b058868c-20240508(react@19.0.0-beta-04b058868c-20240508))(react-is@18.3.1)(react@19.0.0-beta-04b058868c-20240508)(styled-components@6.1.11(react-dom@19.0.0-beta-04b058868c-20240508(react@19.0.0-beta-04b058868c-20240508))(react@19.0.0-beta-04b058868c-20240508))
@@ -220,7 +220,7 @@ importers:
         version: 3.43.0(debug@4.3.4)
       '@sanity/ui':
         specifier: ^2.0.11
-        version: 2.1.13(react-dom@19.0.0-beta-04b058868c-20240508(react@19.0.0-beta-04b058868c-20240508))(react-is@18.3.1)(react@19.0.0-beta-04b058868c-20240508)(styled-components@6.1.11(react-dom@19.0.0-beta-04b058868c-20240508(react@19.0.0-beta-04b058868c-20240508))(react@19.0.0-beta-04b058868c-20240508))
+        version: 2.1.14(react-dom@19.0.0-beta-04b058868c-20240508(react@19.0.0-beta-04b058868c-20240508))(react-is@18.3.1)(react@19.0.0-beta-04b058868c-20240508)(styled-components@6.1.11(react-dom@19.0.0-beta-04b058868c-20240508(react@19.0.0-beta-04b058868c-20240508))(react@19.0.0-beta-04b058868c-20240508))
       '@sanity/visual-editing':
         specifier: 2.1.1
         version: 2.1.1(@sanity/client@6.19.0)(next@14.3.0-canary.87(@babel/core@7.24.5)(react-dom@19.0.0-beta-04b058868c-20240508(react@19.0.0-beta-04b058868c-20240508))(react@19.0.0-beta-04b058868c-20240508))(react-dom@19.0.0-beta-04b058868c-20240508(react@19.0.0-beta-04b058868c-20240508))(react@19.0.0-beta-04b058868c-20240508)
@@ -2203,6 +2203,12 @@ packages:
     peerDependencies:
       react: ^18
 
+  '@sanity/icons@3.0.0':
+    resolution: {integrity: sha512-tvAxP5XaqZ6lG3JpAe+ZHWF4JqjFHnvtheY64VyLLO/8lwbiy7Q/Xhh0hYw9Anm0k0HCONcahyMvO+Q18n05tw==}
+    engines: {node: '>=14.0.0'}
+    peerDependencies:
+      react: ^18.3 || >=19.0.0-rc
+
   '@sanity/image-url@1.0.2':
     resolution: {integrity: sha512-C4+jb2ny3ZbMgEkLd7Z3C75DsxcTEoE+axXQJsQ75ou0AKWGdVsP351hqK6mJUUxn5HCSlu3vznoh7Yljye4cQ==}
     engines: {node: '>=10.0.0'}
@@ -2254,8 +2260,8 @@ packages:
       rxjs: ^7
       styled-components: ^6.1
 
-  '@sanity/presentation@1.15.10':
-    resolution: {integrity: sha512-3WG86hT6Ie938giBDpbwWpTJyhsM2JWPlprcM/JBDeUFQ7GXqMfGe4EXYf4mmwNllSY23lgsk8V2CjLm8UQZlw==}
+  '@sanity/presentation@1.15.11':
+    resolution: {integrity: sha512-TIyd9f7EFLUiVxrhLl0Z7zueSD9RmtL+kItUXabRDBM48YVYfs1uyzWvWdRLjv8EajFZ2G+4U1NemnflnPrPzw==}
     engines: {node: '>=16.14'}
     peerDependencies:
       '@sanity/client': ^6.19.0
@@ -2283,8 +2289,8 @@ packages:
       react:
         optional: true
 
-  '@sanity/preview-url-secret@1.6.15':
-    resolution: {integrity: sha512-ccq6B2m1OYb3x1nFWLFQGpzMwA68M2qvWXwrXHqSoRXaDnT7gDXqi3gbaYgEdXMNuqnHCFnecK4cOZNY2QqVuQ==}
+  '@sanity/preview-url-secret@1.6.16':
+    resolution: {integrity: sha512-iZaE8LNrt9InD9R3yxhpPAluMVnZkN2NC46OaciruKrW/juot3lGBAi7JK0CrqH8iOGNWjBCDlmhDfG0CogCGg==}
     engines: {node: '>=18'}
     peerDependencies:
       '@sanity/client': ^6.19.0
@@ -2304,8 +2310,8 @@ packages:
   '@sanity/types@3.43.0':
     resolution: {integrity: sha512-xIwegRgzNnEqoqJ5QLJodHhsyyT1JuD/YZks6MrDgHpgxbT0kbnMW4fhIRLIaoWzY5+DIMAJjJXW6y/hnf2D8w==}
 
-  '@sanity/ui@2.1.13':
-    resolution: {integrity: sha512-VMQgCgj8NKKfjE49yhqN/K1Y94QdKt0HxURVPClGC7ebRXpk0caZ9zBCs/oprXAQBOSgCLkAR5m1RTQGPu3NDw==}
+  '@sanity/ui@2.1.14':
+    resolution: {integrity: sha512-aWrFbB94yeK1han9PL88wP/Ytd2RlsLKjpaX+da1yBkxY//JEr7EltiEuz6+9cMFulTmSC0FkouhemoVtB9zPw==}
     engines: {node: '>=14.0.0'}
     peerDependencies:
       react: ^18
@@ -8989,7 +8995,7 @@ snapshots:
       '@sanity/icons': 2.11.8(react@19.0.0-beta-04b058868c-20240508)
       '@sanity/incompatible-plugin': 1.0.4(react-dom@19.0.0-beta-04b058868c-20240508(react@19.0.0-beta-04b058868c-20240508))(react@19.0.0-beta-04b058868c-20240508)
       '@sanity/mutator': 3.43.0
-      '@sanity/ui': 2.1.13(react-dom@19.0.0-beta-04b058868c-20240508(react@19.0.0-beta-04b058868c-20240508))(react-is@18.3.1)(react@19.0.0-beta-04b058868c-20240508)(styled-components@6.1.11(react-dom@19.0.0-beta-04b058868c-20240508(react@19.0.0-beta-04b058868c-20240508))(react@19.0.0-beta-04b058868c-20240508))
+      '@sanity/ui': 2.1.14(react-dom@19.0.0-beta-04b058868c-20240508(react@19.0.0-beta-04b058868c-20240508))(react-is@18.3.1)(react@19.0.0-beta-04b058868c-20240508)(styled-components@6.1.11(react-dom@19.0.0-beta-04b058868c-20240508(react@19.0.0-beta-04b058868c-20240508))(react@19.0.0-beta-04b058868c-20240508))
       date-fns: 3.6.0
       lodash: 4.17.21
       lodash-es: 4.17.21
@@ -9129,6 +9135,10 @@ snapshots:
       react: 19.0.0-beta-04b058868c-20240508
 
   '@sanity/icons@2.11.8(react@19.0.0-beta-04b058868c-20240508)':
+    dependencies:
+      react: 19.0.0-beta-04b058868c-20240508
+
+  '@sanity/icons@3.0.0(react@19.0.0-beta-04b058868c-20240508)':
     dependencies:
       react: 19.0.0-beta-04b058868c-20240508
 
@@ -9295,12 +9305,12 @@ snapshots:
       - react-dom
       - supports-color
 
-  '@sanity/presentation@1.15.10(@sanity/client@6.19.0)(react-dom@19.0.0-beta-04b058868c-20240508(react@19.0.0-beta-04b058868c-20240508))(react-is@18.3.1)(react@19.0.0-beta-04b058868c-20240508)(styled-components@6.1.11(react-dom@19.0.0-beta-04b058868c-20240508(react@19.0.0-beta-04b058868c-20240508))(react@19.0.0-beta-04b058868c-20240508))':
+  '@sanity/presentation@1.15.11(@sanity/client@6.19.0)(react-dom@19.0.0-beta-04b058868c-20240508(react@19.0.0-beta-04b058868c-20240508))(react-is@18.3.1)(react@19.0.0-beta-04b058868c-20240508)(styled-components@6.1.11(react-dom@19.0.0-beta-04b058868c-20240508(react@19.0.0-beta-04b058868c-20240508))(react@19.0.0-beta-04b058868c-20240508))':
     dependencies:
       '@sanity/client': 6.19.0(debug@4.3.4)
-      '@sanity/icons': 2.11.8(react@19.0.0-beta-04b058868c-20240508)
-      '@sanity/preview-url-secret': 1.6.15(@sanity/client@6.19.0)
-      '@sanity/ui': 2.1.13(react-dom@19.0.0-beta-04b058868c-20240508(react@19.0.0-beta-04b058868c-20240508))(react-is@18.3.1)(react@19.0.0-beta-04b058868c-20240508)(styled-components@6.1.11(react-dom@19.0.0-beta-04b058868c-20240508(react@19.0.0-beta-04b058868c-20240508))(react@19.0.0-beta-04b058868c-20240508))
+      '@sanity/icons': 3.0.0(react@19.0.0-beta-04b058868c-20240508)
+      '@sanity/preview-url-secret': 1.6.16(@sanity/client@6.19.0)
+      '@sanity/ui': 2.1.14(react-dom@19.0.0-beta-04b058868c-20240508(react@19.0.0-beta-04b058868c-20240508))(react-is@18.3.1)(react@19.0.0-beta-04b058868c-20240508)(styled-components@6.1.11(react-dom@19.0.0-beta-04b058868c-20240508(react@19.0.0-beta-04b058868c-20240508))(react@19.0.0-beta-04b058868c-20240508))
       '@sanity/uuid': 3.0.2
       '@types/lodash.isequal': 4.5.8
       fast-deep-equal: 3.1.3
@@ -9321,8 +9331,8 @@ snapshots:
     dependencies:
       '@sanity/client': 6.19.0(debug@4.3.4)
       '@sanity/icons': 2.11.8(react@19.0.0-beta-04b058868c-20240508)
-      '@sanity/preview-url-secret': 1.6.15(@sanity/client@6.19.0)
-      '@sanity/ui': 2.1.13(react-dom@19.0.0-beta-04b058868c-20240508(react@19.0.0-beta-04b058868c-20240508))(react-is@18.3.1)(react@19.0.0-beta-04b058868c-20240508)(styled-components@6.1.11(react-dom@19.0.0-beta-04b058868c-20240508(react@19.0.0-beta-04b058868c-20240508))(react@19.0.0-beta-04b058868c-20240508))
+      '@sanity/preview-url-secret': 1.6.16(@sanity/client@6.19.0)
+      '@sanity/ui': 2.1.14(react-dom@19.0.0-beta-04b058868c-20240508(react@19.0.0-beta-04b058868c-20240508))(react-is@18.3.1)(react@19.0.0-beta-04b058868c-20240508)(styled-components@6.1.11(react-dom@19.0.0-beta-04b058868c-20240508(react@19.0.0-beta-04b058868c-20240508))(react@19.0.0-beta-04b058868c-20240508))
       '@sanity/uuid': 3.0.2
       '@types/lodash.isequal': 4.5.8
       fast-deep-equal: 3.1.3
@@ -9352,7 +9362,7 @@ snapshots:
     optionalDependencies:
       react: 19.0.0-beta-04b058868c-20240508
 
-  '@sanity/preview-url-secret@1.6.15(@sanity/client@6.19.0)':
+  '@sanity/preview-url-secret@1.6.16(@sanity/client@6.19.0)':
     dependencies:
       '@sanity/client': 6.19.0(debug@4.3.4)
       '@sanity/uuid': 3.0.2
@@ -9413,11 +9423,11 @@ snapshots:
     transitivePeerDependencies:
       - debug
 
-  '@sanity/ui@2.1.13(react-dom@19.0.0-beta-04b058868c-20240508(react@19.0.0-beta-04b058868c-20240508))(react-is@18.3.1)(react@19.0.0-beta-04b058868c-20240508)(styled-components@6.1.11(react-dom@19.0.0-beta-04b058868c-20240508(react@19.0.0-beta-04b058868c-20240508))(react@19.0.0-beta-04b058868c-20240508))':
+  '@sanity/ui@2.1.14(react-dom@19.0.0-beta-04b058868c-20240508(react@19.0.0-beta-04b058868c-20240508))(react-is@18.3.1)(react@19.0.0-beta-04b058868c-20240508)(styled-components@6.1.11(react-dom@19.0.0-beta-04b058868c-20240508(react@19.0.0-beta-04b058868c-20240508))(react@19.0.0-beta-04b058868c-20240508))':
     dependencies:
       '@floating-ui/react-dom': 2.1.0(react-dom@19.0.0-beta-04b058868c-20240508(react@19.0.0-beta-04b058868c-20240508))(react@19.0.0-beta-04b058868c-20240508)
       '@sanity/color': 3.0.6
-      '@sanity/icons': 2.11.8(react@19.0.0-beta-04b058868c-20240508)
+      '@sanity/icons': 3.0.0(react@19.0.0-beta-04b058868c-20240508)
       csstype: 3.1.3
       framer-motion: 11.0.8(react-dom@19.0.0-beta-04b058868c-20240508(react@19.0.0-beta-04b058868c-20240508))(react@19.0.0-beta-04b058868c-20240508)
       react: 19.0.0-beta-04b058868c-20240508
@@ -9476,7 +9486,7 @@ snapshots:
       '@rexxars/react-split-pane': 0.1.93(react-dom@19.0.0-beta-04b058868c-20240508(react@19.0.0-beta-04b058868c-20240508))(react@19.0.0-beta-04b058868c-20240508)
       '@sanity/color': 3.0.6
       '@sanity/icons': 2.11.8(react@19.0.0-beta-04b058868c-20240508)
-      '@sanity/ui': 2.1.13(react-dom@19.0.0-beta-04b058868c-20240508(react@19.0.0-beta-04b058868c-20240508))(react-is@18.3.1)(react@19.0.0-beta-04b058868c-20240508)(styled-components@6.1.11(react-dom@19.0.0-beta-04b058868c-20240508(react@19.0.0-beta-04b058868c-20240508))(react@19.0.0-beta-04b058868c-20240508))
+      '@sanity/ui': 2.1.14(react-dom@19.0.0-beta-04b058868c-20240508(react@19.0.0-beta-04b058868c-20240508))(react-is@18.3.1)(react@19.0.0-beta-04b058868c-20240508)(styled-components@6.1.11(react-dom@19.0.0-beta-04b058868c-20240508(react@19.0.0-beta-04b058868c-20240508))(react@19.0.0-beta-04b058868c-20240508))
       '@uiw/react-codemirror': 4.21.25(@babel/runtime@7.24.4)(@codemirror/autocomplete@6.16.0(@codemirror/language@6.10.1)(@codemirror/state@6.4.1)(@codemirror/view@6.26.3)(@lezer/common@1.2.1))(@codemirror/language@6.10.1)(@codemirror/lint@6.5.0)(@codemirror/search@6.5.6)(@codemirror/state@6.4.1)(@codemirror/theme-one-dark@6.1.2)(@codemirror/view@6.26.3)(codemirror@6.0.1(@lezer/common@1.2.1))(react-dom@19.0.0-beta-04b058868c-20240508(react@19.0.0-beta-04b058868c-20240508))(react@19.0.0-beta-04b058868c-20240508)
       is-hotkey-esm: 1.0.0
       json-2-csv: 5.5.1
@@ -9496,7 +9506,7 @@ snapshots:
 
   '@sanity/visual-editing@2.1.1(@sanity/client@6.19.0)(next@14.3.0-canary.87(@babel/core@7.24.5)(react-dom@19.0.0-beta-04b058868c-20240508(react@19.0.0-beta-04b058868c-20240508))(react@19.0.0-beta-04b058868c-20240508))(react-dom@19.0.0-beta-04b058868c-20240508(react@19.0.0-beta-04b058868c-20240508))(react@19.0.0-beta-04b058868c-20240508)':
     dependencies:
-      '@sanity/preview-url-secret': 1.6.15(@sanity/client@6.19.0)
+      '@sanity/preview-url-secret': 1.6.16(@sanity/client@6.19.0)
       '@vercel/stega': 0.1.2
       react: 19.0.0-beta-04b058868c-20240508
       react-dom: 19.0.0-beta-04b058868c-20240508(react@19.0.0-beta-04b058868c-20240508)
@@ -13756,7 +13766,7 @@ snapshots:
       '@sanity/schema': 3.43.0(debug@4.3.4)
       '@sanity/telemetry': 0.7.8(react@19.0.0-beta-04b058868c-20240508)
       '@sanity/types': 3.43.0(debug@4.3.4)
-      '@sanity/ui': 2.1.13(react-dom@19.0.0-beta-04b058868c-20240508(react@19.0.0-beta-04b058868c-20240508))(react-is@18.3.1)(react@19.0.0-beta-04b058868c-20240508)(styled-components@6.1.11(react-dom@19.0.0-beta-04b058868c-20240508(react@19.0.0-beta-04b058868c-20240508))(react@19.0.0-beta-04b058868c-20240508))
+      '@sanity/ui': 2.1.14(react-dom@19.0.0-beta-04b058868c-20240508(react@19.0.0-beta-04b058868c-20240508))(react-is@18.3.1)(react@19.0.0-beta-04b058868c-20240508)(styled-components@6.1.11(react-dom@19.0.0-beta-04b058868c-20240508(react@19.0.0-beta-04b058868c-20240508))(react@19.0.0-beta-04b058868c-20240508))
       '@sanity/util': 3.43.0(debug@4.3.4)
       '@sanity/uuid': 3.0.2
       '@tanstack/react-table': 8.17.3(react-dom@19.0.0-beta-04b058868c-20240508(react@19.0.0-beta-04b058868c-20240508))(react@19.0.0-beta-04b058868c-20240508)
