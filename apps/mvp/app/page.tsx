@@ -1,12 +1,24 @@
 /* eslint-disable @next/next/no-html-link-for-pages */
+import {draftMode} from 'next/headers'
 import Link from 'next/link'
 import {unstable__adapter, unstable__environment} from 'next-sanity'
-import {Suspense} from 'react'
+import {LiveQuery as LegacyLivePreviewQuery} from 'next-sanity/preview/live-query'
+
+import PostsLayout, {PostsLayoutProps, query} from '@/app/PostsLayout'
+import {PreviewPostsLayout} from '@/app/previews'
+import {sanityFetch} from '@/app/sanity.fetch'
 
 import ConditionalPreviewProvider from './ConditionalPreviewProvider'
-import Posts from './Posts'
 
-export default function IndexPage() {
+export default async function IndexPage({
+  searchParams: {lastLiveEventId},
+}: {
+  searchParams: {[key: string]: string | string[] | undefined}
+}) {
+  const [posts, LiveSubscription] = await sanityFetch<PostsLayoutProps['data']>({
+    query,
+    lastLiveEventId,
+  })
   return (
     <>
       <div
@@ -24,10 +36,16 @@ export default function IndexPage() {
             </h2>
           </div>
           <ConditionalPreviewProvider>
-            <Suspense>
-              <Posts />
-            </Suspense>
+            <LegacyLivePreviewQuery
+              enabled={draftMode().isEnabled}
+              initialData={posts}
+              query={query}
+              as={PreviewPostsLayout}
+            >
+              <PostsLayout data={posts} draftMode={draftMode().isEnabled} />
+            </LegacyLivePreviewQuery>
           </ConditionalPreviewProvider>
+          <LiveSubscription />
         </div>
       </div>
       <div className="flex text-center">

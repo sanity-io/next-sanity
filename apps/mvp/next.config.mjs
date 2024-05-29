@@ -25,7 +25,7 @@ const nextConfig = {
   },
   logging: {
     fetches: {
-      fullUrl: false,
+      fullUrl: true,
     },
   },
   productionBrowserSourceMaps: true,
