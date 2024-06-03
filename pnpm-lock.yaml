@@ -26,7 +26,7 @@ importers:
         version: 14.3.0-canary.87(eslint@8.57.0)(typescript@5.4.5)
       next:
         specifier: 14.3.0-canary.87
-        version: 14.3.0-canary.87(@babel/core@7.24.6)(babel-plugin-react-compiler@0.0.0-experimental-938cd9a-20240601)(react-dom@19.0.0-beta-04b058868c-20240508(react@19.0.0-beta-04b058868c-20240508))(react@19.0.0-beta-04b058868c-20240508)
+        version: 14.3.0-canary.87(react-dom@19.0.0-beta-04b058868c-20240508(react@19.0.0-beta-04b058868c-20240508))(react@19.0.0-beta-04b058868c-20240508)
       prettier:
         specifier: ^3.3.0
         version: 3.3.0
@@ -144,7 +144,7 @@ importers:
         version: 0.15.11
       next:
         specifier: 14.3.0-canary.87
-        version: 14.3.0-canary.87(@babel/core@7.24.6)(babel-plugin-react-compiler@0.0.0-experimental-938cd9a-20240601)(react-dom@19.0.0-beta-04b058868c-20240508(react@19.0.0-beta-04b058868c-20240508))(react@19.0.0-beta-04b058868c-20240508)
+        version: 14.3.0-canary.87(react-dom@19.0.0-beta-04b058868c-20240508(react@19.0.0-beta-04b058868c-20240508))(react@19.0.0-beta-04b058868c-20240508)
       next-sanity:
         specifier: workspace:*
         version: link:../../packages/next-sanity
@@ -12693,6 +12693,32 @@ snapshots:
       '@next/swc-win32-ia32-msvc': 14.3.0-canary.87
       '@next/swc-win32-x64-msvc': 14.3.0-canary.87
       babel-plugin-react-compiler: 0.0.0-experimental-938cd9a-20240601
+      sharp: 0.33.4
+    transitivePeerDependencies:
+      - '@babel/core'
+      - babel-plugin-macros
+
+  next@14.3.0-canary.87(react-dom@19.0.0-beta-04b058868c-20240508(react@19.0.0-beta-04b058868c-20240508))(react@19.0.0-beta-04b058868c-20240508):
+    dependencies:
+      '@next/env': 14.3.0-canary.87
+      '@swc/helpers': 0.5.11
+      busboy: 1.6.0
+      caniuse-lite: 1.0.30001621
+      graceful-fs: 4.2.11
+      postcss: 8.4.31
+      react: 19.0.0-beta-04b058868c-20240508
+      react-dom: 19.0.0-beta-04b058868c-20240508(react@19.0.0-beta-04b058868c-20240508)
+      styled-jsx: 5.1.6(@babel/core@7.24.6)(react@19.0.0-beta-04b058868c-20240508)
+    optionalDependencies:
+      '@next/swc-darwin-arm64': 14.3.0-canary.87
+      '@next/swc-darwin-x64': 14.3.0-canary.87
+      '@next/swc-linux-arm64-gnu': 14.3.0-canary.87
+      '@next/swc-linux-arm64-musl': 14.3.0-canary.87
+      '@next/swc-linux-x64-gnu': 14.3.0-canary.87
+      '@next/swc-linux-x64-musl': 14.3.0-canary.87
+      '@next/swc-win32-arm64-msvc': 14.3.0-canary.87
+      '@next/swc-win32-ia32-msvc': 14.3.0-canary.87
+      '@next/swc-win32-x64-msvc': 14.3.0-canary.87
       sharp: 0.33.4
     transitivePeerDependencies:
       - '@babel/core'
