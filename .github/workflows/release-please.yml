@@ -42,7 +42,7 @@ jobs:
       # Publish to NPM on new releases
       - uses: actions/checkout@v4
         if: ${{ steps.release.outputs.releases_created || github.event.inputs.publish == 'true' }}
-      - uses: pnpm/action-setup@v2
+      - uses: pnpm/action-setup@v4
         if: ${{ steps.release.outputs.releases_created || github.event.inputs.publish == 'true' }}
       - uses: actions/setup-node@v4
         if: ${{ steps.release.outputs.releases_created || github.event.inputs.publish == 'true' }}
@@ -50,7 +50,7 @@ jobs:
           cache: pnpm
           node-version: lts/*
       - name: install deps & build
-        run: corepack enable && pnpm --version && pnpm install --ignore-scripts && pnpm build --filter=./packages/*
+        run: pnpm install --ignore-scripts && pnpm build --filter=./packages/*
         if: ${{ steps.release.outputs.releases_created || github.event.inputs.publish == 'true' }}
       - name: Set publishing config
         run: pnpm config set '//registry.npmjs.org/:_authToken' "${NODE_AUTH_TOKEN}"

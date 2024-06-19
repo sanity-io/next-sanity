@@ -35,7 +35,7 @@ const {query, schema} = q('*')
       .nullable(),
     status: q.select({
       '_originalId in path("drafts.**")': ['"draft"', q.literal('draft')],
-      default: ['"published"', q.literal('published')],
+      'default': ['"published"', q.literal('published')],
     }),
   })
   .order('publishedAt desc', '_updatedAt desc')

@@ -1,47 +1,39 @@
 {
+  "name": "next-sanity-monorepo",
+  "version": "0.0.0",
   "private": true,
   "scripts": {
-    "build": "turbo run build --filter=./packages/*",
-    "dev": "turbo run dev --filter=./apps/*",
-    "format": "prettier --cache --ignore-path .gitignore --write .",
-    "lint": "turbo run lint",
-    "test": "turbo run test"
-  },
-  "prettier": {
-    "bracketSpacing": false,
-    "plugins": [
-      "prettier-plugin-packagejson",
-      "prettier-plugin-tailwindcss"
-    ],
-    "printWidth": 98,
-    "semi": false,
-    "singleQuote": true
+    "build": "turbo build --filter=./packages/*",
+    "dev": "turbo dev",
+    "format": "prettier --cache --write .",
+    "lint": "turbo lint",
+    "prestart": "turbo build",
+    "start": "turbo watch build start",
+    "test": "turbo test",
+    "type-check": "turbo type-check"
   },
   "devDependencies": {
-    "@next/bundle-analyzer": "14.2.3",
-    "@next/env": "14.3.0-canary.87",
-    "eslint-config-next": "14.3.0-canary.87",
-    "next": "14.3.0-canary.87",
-    "prettier": "^3.3.2",
-    "prettier-plugin-packagejson": "^2.5.0",
-    "prettier-plugin-tailwindcss": "^0.6.1",
-    "sanity": "3.45.0",
-    "turbo": "1.13.4"
+    "@sanity/prettier-config": "1.0.2",
+    "prettier": "3.3.2",
+    "prettier-plugin-packagejson": "2.5.0",
+    "prettier-plugin-tailwindcss": "0.6.5",
+    "turbo": "2.0.4"
   },
   "packageManager": "pnpm@9.4.0",
   "pnpm": {
     "peerDependencyRules": {
       "allowAny": [
         "react",
-        "react-dom"
+        "react-dom",
+        "react-is"
       ]
     },
     "overrides": {
-      "@next/bundle-analyzer": "$@next/bundle-analyzer",
-      "@next/env": "$@next/env",
-      "eslint-config-next": "$eslint-config-next",
-      "next": "$next",
-      "sanity": "$sanity"
+      "@next/bundle-analyzer": "15.0.0-canary.37",
+      "@next/env": "15.0.0-canary.37",
+      "eslint-config-next": "15.0.0-canary.37",
+      "next": "15.0.0-canary.37",
+      "sanity": "3.47.1"
     }
   }
 }

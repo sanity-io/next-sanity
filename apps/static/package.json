@@ -5,36 +5,39 @@
   "type": "module",
   "scripts": {
     "build": "next build",
-    "dev": "next -p 3001",
+    "dev": "next -p 3001 --turbo",
     "format": "next lint --fix .",
-    "lint": "next lint --max-warnings 0 ."
+    "lint": "next lint --max-warnings 0 .",
+    "start": "pnpx serve@latest out -p 3001",
+    "type-check": "tsc --noEmit"
   },
   "dependencies": {
-    "@sanity/assist": "3.0.4",
-    "@sanity/client": "^6.15.7",
+    "@repo/sanity-config": "workspace:*",
+    "@sanity/client": "^6.20.1",
     "@sanity/image-url": "^1.0.2",
-    "@sanity/vision": "3.45.0",
-    "groqd": "^0.15.10",
-    "next": "14.3.0-canary.86",
+    "@sanity/vision": "3.47.1",
+    "groqd": "^0.15.11",
+    "next": "15.0.0-canary.37",
     "next-sanity": "workspace:*",
-    "react": "19.0.0-beta-04b058868c-20240508",
-    "react-dom": "19.0.0-beta-04b058868c-20240508",
-    "sanity": "3.45.0"
+    "react": "19.0.0-rc.0",
+    "react-dom": "19.0.0-rc.0",
+    "sanity": "3.47.1"
   },
   "devDependencies": {
-    "@next/bundle-analyzer": "14.2.3",
-    "@next/env": "14.2.3",
+    "@next/bundle-analyzer": "15.0.0-canary.37",
+    "@next/env": "15.0.0-canary.37",
+    "@repo/typescript-config": "workspace:*",
     "@types/react": "^18.3.3",
-    "@typescript-eslint/eslint-plugin": "^7.12.0",
+    "@typescript-eslint/eslint-plugin": "^7.13.1",
     "autoprefixer": "^10.4.19",
     "eslint": "^8.57.0",
-    "eslint-config-next": "14.2.3",
+    "eslint-config-next": "15.0.0-canary.37",
     "eslint-config-prettier": "^9.1.0",
     "eslint-gitignore": "^0.1.0",
     "eslint-plugin-simple-import-sort": "^12.1.0",
     "postcss": "^8.4.38",
     "server-only": "^0.0.1",
-    "tailwindcss": "^3.4.3",
+    "tailwindcss": "^3.4.4",
     "typescript": "5.4.5"
   }
 }

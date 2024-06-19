@@ -19,12 +19,11 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - uses: pnpm/action-setup@v2
+      - uses: pnpm/action-setup@v4
       - uses: actions/setup-node@v4
         with:
           cache: pnpm
           node-version: lts/*
-
       - run: pnpm install --dev --ignore-scripts
       - uses: actions/cache@v4
         with:
@@ -42,7 +41,7 @@ jobs:
           author: github-actions <41898282+github-actions[bot]@users.noreply.github.com>
           body: I ran `pnpm format` 🧑‍💻
           branch: actions/prettier
-          commit-message: 'chore(prettier): 🤖 ✨'
+          commit-message: "chore(prettier): 🤖 ✨"
           labels: 🤖 bot
-          title: 'chore(prettier): 🤖 ✨'
+          title: "chore(prettier): 🤖 ✨"
           token: ${{ steps.generate-token.outputs.token }}

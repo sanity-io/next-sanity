@@ -1,21 +1,23 @@
 {
   "$schema": "https://turbo.build/schema.json",
-  "globalDependencies": ["**/.env.*local"],
-  "globalEnv": ["RUNNER_OS"],
-  "pipeline": {
+  "globalDependencies": [".env", ".env.local"],
+  "tasks": {
     "build": {
-      "dotEnv": [".env", ".env.local"],
-      "env": ["NEXT_PUBLIC_SANITY_*", "NEXT_PUBLIC_VERCEL_ENV", "NEXT_PUBLIC_TEST_BASE_PATH"],
-      "outputs": [".next/**", "!.next/cache/**", "out/**"],
       "dependsOn": ["^build"]
     },
     "test": {
       "dependsOn": ["^build"],
-      "cache": false
+      "cache": false,
+      "persistent": true
     },
     "lint": {},
+    "type-check": {},
     "dev": {
-      "dependsOn": ["^build"],
+      "cache": false,
+      "persistent": true
+    },
+    "start": {
+      "dependsOn": ["build"],
       "cache": false,
       "persistent": true
     }

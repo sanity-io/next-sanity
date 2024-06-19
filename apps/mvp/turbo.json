@@ -1,0 +1,16 @@
+{
+  "$schema": "https://turbo.build/schema.json",
+  "extends": ["//"],
+  "tasks": {
+    "build": {
+      "env": [
+        "ANALYZE",
+        "NEXT_PUBLIC_SANITY_PROJECT_ID",
+        "NEXT_PUBLIC_SANITY_DATASET",
+        "NEXT_PUBLIC_TEST_BASE_PATH",
+        "SANITY_API_READ_TOKEN"
+      ],
+      "outputs": [".next/**", "!.next/cache/**"]
+    }
+  }
+}

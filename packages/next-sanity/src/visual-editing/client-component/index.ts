@@ -83,7 +83,7 @@ export default function VisualEditing(props: VisualEditingProps): null {
       },
     })
 
-    function manualFastRefresh() {
+    const manualFastRefresh = () => {
       // eslint-disable-next-line no-console
       console.debug(
         'Live preview is setup, calling router.refresh() to refresh the server components without refetching cached data',
@@ -91,21 +91,21 @@ export default function VisualEditing(props: VisualEditingProps): null {
       routerRef.current.refresh()
       return Promise.resolve()
     }
-    function manualFallbackRefresh() {
+    const manualFallbackRefresh = () => {
       // eslint-disable-next-line no-console
       console.debug(
         'No loaders in live mode detected, or preview kit setup, revalidating root layout',
       )
       return revalidateRootLayout()
     }
-    function mutationFastRefresh(): false {
+    const mutationFastRefresh = (): false => {
       // eslint-disable-next-line no-console
       console.debug(
         'Live preview is setup, mutation is skipped assuming its handled by the live preview',
       )
       return false
     }
-    function mutationFallbackRefresh() {
+    const mutationFallbackRefresh = () => {
       // eslint-disable-next-line no-console
       console.debug(
         'No loaders in live mode detected, or preview kit setup, revalidating root layout',

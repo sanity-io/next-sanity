@@ -1,2 +1,2 @@
 'use client'
-export * from './NextStudio'
+export {NextStudio as default, type NextStudioProps} from './NextStudio'

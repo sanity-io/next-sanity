@@ -24,8 +24,8 @@ export const NextStudioNoScript = (): JSX.Element => (
       >
         <h1>JavaScript disabled</h1>
         <p>
-          Please <a href="https://www.enable-javascript.com/">enable JavaScript</a> in your
-          browser and reload the page to proceed.
+          Please <a href="https://www.enable-javascript.com/">enable JavaScript</a> in your browser
+          and reload the page to proceed.
         </p>
       </div>
     </div>

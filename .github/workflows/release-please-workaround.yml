@@ -4,9 +4,9 @@ name: Workaround release-please not updating pnpm-lock.yml
 on:
   pull_request:
     types: [opened, reopened, synchronize]
-    branches: ['main']
+    branches: ["main"]
     paths-ignore:
-      - 'pnpm-lock.yml'
+      - "pnpm-lock.yml"
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.head_ref || github.run_id }}
@@ -30,7 +30,7 @@ jobs:
           ref: ${{ github.event.pull_request.head.ref }}
           repository: ${{ github.event.pull_request.head.repo.full_name }}
           token: ${{ steps.generate-token.outputs.token }}
-      - uses: pnpm/action-setup@v2
+      - uses: pnpm/action-setup@v4
       - uses: actions/setup-node@v4
         with:
           cache: pnpm
@@ -39,4 +39,4 @@ jobs:
       - uses: EndBug/add-and-commit@a94899bca583c204427a224a7af87c02f9b325d5 # v9
         with:
           default_author: github_actions
-          message: 'chore(pnpm): update lockfile'
+          message: "chore(pnpm): update lockfile"
