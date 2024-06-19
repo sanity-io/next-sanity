@@ -271,8 +271,8 @@ importers:
         specifier: ^12.1.0
         version: 12.1.0(eslint@8.57.0)
       ls-engines:
-        specifier: ^0.9.1
-        version: 0.9.1
+        specifier: ^0.9.2
+        version: 0.9.2
       next:
         specifier: 14.3.0-canary.87
         version: 14.3.0-canary.87(@babel/core@7.24.6)(babel-plugin-react-compiler@0.0.0-experimental-938cd9a-20240601)(react-dom@19.0.0-beta-04b058868c-20240508(react@19.0.0-beta-04b058868c-20240508))(react@19.0.0-beta-04b058868c-20240508)
@@ -1513,6 +1513,7 @@ packages:
   '@humanwhocodes/config-array@0.11.14':
     resolution: {integrity: sha512-3T8LkOmg45BV5FICb15QQMsyUSWrQ8AygVfC7ZG32zOalnqrilm018ZVCw0eapXux8FtA33q8PSRSstjee3jSg==}
     engines: {node: '>=10.10.0'}
+    deprecated: Use @eslint/config-array instead
 
   '@humanwhocodes/module-importer@1.0.1':
     resolution: {integrity: sha512-bxveV4V8v5Yb4ncFTT3rPSgZBOpCkjfK0y4oVVVJwIuDVBRMDXrPyXRL988i5ap9m9bnyEEjWfm5WkBmtffLfA==}
@@ -1520,6 +1521,7 @@ packages:
 
   '@humanwhocodes/object-schema@2.0.3':
     resolution: {integrity: sha512-93zYdMES/c1D69yZiKDBj0V24vqNzB/koF26KPaagAfd3P/4gUlh3Dys5ogAK+Exi9QyzlD8x/08Zt7wIKcDcA==}
+    deprecated: Use @eslint/object-schema instead
 
   '@img/sharp-darwin-arm64@0.33.4':
     resolution: {integrity: sha512-p0suNqXufJs9t3RqLBO6vvrgr5OhgbWp76s5gTRvdmxmuv9E1rcaqGUsl3l4mKVmXPkTkTErXediAui4x+8PSA==}
@@ -2841,11 +2843,6 @@ packages:
     resolution: {integrity: sha512-Ewyx0c9PmpcsByhSW4r+9zDU7sGjFc86qf/kKtuSCRdhfbk0SNLLkaT5qvcHnRGgc5NP/ly/y+qkXkqONX54CQ==}
     engines: {node: '>= 0.4'}
 
-  array.prototype.group@1.1.3:
-    resolution: {integrity: sha512-KTxUkHfgy7MCrt49X/L725+60MQjB8bEJUeY3WCYNolurk870IKDxjSf5BkUKP1Y3iG8gA/SadfXJCfJR8x0yw==}
-    engines: {node: '>= 0.4'}
-    deprecated: This proposal has been altered; please use https://npmjs.com/object.groupby instead!
-
   array.prototype.map@1.0.7:
     resolution: {integrity: sha512-XpcFfLoBEAhezrrNw1V+yLXkE7M6uR7xJEsxbG6c/V9v043qurwVJB9r9UTnoSioFDoz1i1VOydpWGmJpfVZbg==}
     engines: {node: '>= 0.4'}
@@ -2857,8 +2854,9 @@ packages:
   array.prototype.toreversed@1.1.2:
     resolution: {integrity: sha512-wwDCoT4Ck4Cz7sLtgUmzR5UV3YF5mFHUlbChCzZBQZ+0m2cl/DH3tKgvphv1nKgFsJ48oCSg6p91q2Vm0I/ZMA==}
 
-  array.prototype.tosorted@1.1.3:
-    resolution: {integrity: sha512-/DdH4TiTmOKzyQbp/eadcCVexiCb36xJg7HshYOYJnNZFDj33GEv0P7GxsynpShhq4OLYJzbGcBDkLsDt7MnNg==}
+  array.prototype.tosorted@1.1.4:
+    resolution: {integrity: sha512-p6Fx8B7b7ZhL/gmUsAy0D15WhvDccw3mnGNbZpi3pmeJdxtWsj2jEaI4Y6oo3XiHfzuSgPwKc04MYt6KgvC/wA==}
+    engines: {node: '>= 0.4'}
 
   arraybuffer.prototype.slice@1.0.3:
     resolution: {integrity: sha512-bMxMKAjg13EBSVscxTaYA4mRc5t1UAXa2kXiGTNfZ079HIWXEkKmkgFrh/nJqamaLSrXO5H4WFFkPEaLJWbs3A==}
@@ -4004,8 +4002,9 @@ packages:
     resolution: {integrity: sha512-OHrFT+2Nxk7PbzSnRHUMFjF83zqCvfc/t5l+ysSEK1MhvN26BtRt/AcZeA7uDs8TGtVPDKdGqLeqENKsM6GTDg==}
     engines: {node: '>=14.0.0'}
 
-  get-json@1.0.1:
-    resolution: {integrity: sha512-buUOE2bLaxIsF6zGIrwvsTVlvgU85qwAWf0Hgq/EJBBoSssUqOauXWKpsh4wgPdTlZHEVllLtphiuIzFM4UEHQ==}
+  get-json@1.1.0:
+    resolution: {integrity: sha512-IjoEwpXyyEsRtwBSZ0SYA6By6oVBnakpftFHAAkSSlLYRZ1NPGFS/r+6fSgbk7t6njfEuYVMbD1pe4ex6vgLcw==}
+    engines: {node: '>= 0.4'}
 
   get-latest-version@5.1.0:
     resolution: {integrity: sha512-Q6IBWr/zzw57zIkJmNhI23eRTw3nZ4BWWK034meLwOYU9L3J3IpXiyM73u2pYUwN6U7ahkerCwg2T0jlxiLwsw==}
@@ -4433,9 +4432,6 @@ packages:
     resolution: {integrity: sha512-5KoIu2Ngpyek75jXodFvnafB6DJgr3u8uuK0LEZJjrU19DrMD3EVERaR8sjz8CCGgpZvxPl9SuE1GMVPFHx1mw==}
     engines: {node: '>= 0.4'}
 
-  is-node@0.0.0:
-    resolution: {integrity: sha512-KUwX8L3QU5YheJw8FiFwBFf+gIZ3OX2wifID5sHjn1pWrFMfIaBZLSszs7vHtiJR9y7plGM+Y4jtfwrsCI1D8Q==}
-
   is-number-object@1.0.7:
     resolution: {integrity: sha512-k1U0IRzLMo7ZlYIfzRu23Oh6MiIFasgpb9X76eqfFZAqwH44UI4KTBvBYIZ1dSL9ZzChTB9ShHfLkR4pdW5krQ==}
     engines: {node: '>= 0.4'}
@@ -4685,8 +4681,8 @@ packages:
   jsonfile@4.0.0:
     resolution: {integrity: sha512-m6F1R3z8jjlf2imQHS2Qez5sjKWQzbuuhuJ/FKYFRZvPE3PuHcSMVZzfsLhGVOkfd20obL5SWEBew5ShlquNxg==}
 
-  jsonp@0.0.4:
-    resolution: {integrity: sha512-Pyo6SxnTXngwXJbpZkv+936u4Pq3BGZ5tuA77rLLppWQC09KjBsopGsD7uQZmCCaXjLx5C/XqksUh0yGyr4wog==}
+  jsonp@0.2.1:
+    resolution: {integrity: sha512-pfog5gdDxPdV4eP7Kg87M8/bHgshlZ5pybl+yKxAnCZ5O7lCIn7Ixydj03wOlnDQesky2BPyA91SQ+5Y/mNwzw==}
 
   jsonparse@1.3.1:
     resolution: {integrity: sha512-POQXvpdL69+CluYsillJ7SUhKvytYjW9vG/GKpnf+xP8UWgYEM/RaMzHHofbALDiKbbP1W8UEYmgGl39WkPZsg==}
@@ -4814,8 +4810,8 @@ packages:
     resolution: {integrity: sha512-jumlc0BIUrS3qJGgIkWZsyfAM7NCWiBcCDhnd+3NNM5KbBmLTgHVfWBcg6W+rLUsIpzpERPsvwUP7CckAQSOoA==}
     engines: {node: '>=12'}
 
-  ls-engines@0.9.1:
-    resolution: {integrity: sha512-w1BzDJP2qm9gIESA0SFuUQmNdCgyoUetRmE2xHMOx8EWF2QUaFV5moJ3yc3WceJMYNeygSuKm0AQYvXpzow/TQ==}
+  ls-engines@0.9.2:
+    resolution: {integrity: sha512-2Pq4KVA3lWMAYBhnfYUjxqbE95Jl1KOTzXPtORUhzun+MA7oCK+ojApTARUCf76F95r5O5UuMro+CWcfUEI9aQ==}
     engines: {node: '>= 19 || ^18 || ^16.13 || ^14.17', npm: '>=8'}
     hasBin: true
 
@@ -5439,10 +5435,6 @@ packages:
 
   performance-now@2.1.0:
     resolution: {integrity: sha512-7EAHlyLHI56VEIdK57uwHdHKIaAGbnXPiw0yWbarQZOKaKpvUIgW0jWRVLiatnM+XXlSwsanIBH/hzGMJulMow==}
-
-  phin@2.9.3:
-    resolution: {integrity: sha512-CzFr90qM24ju5f88quFC/6qohjC144rehe5n6DH900lgXmUe86+xCKc10ev56gRKC4/BkHUoG4uSiQgBiIXwDA==}
-    deprecated: Package no longer supported. Contact Support at https://www.npmjs.com/support for more info.
 
   picocolors@1.0.1:
     resolution: {integrity: sha512-anP1Z8qwhkbmu7MFP5iTt+wQKXgwzf7zTyGlcdzabySa9vd0Xt392U0rVmz9poOaBj0uHJKyyo9/upk0HrEQew==}
@@ -10066,15 +10058,6 @@ snapshots:
       es-abstract: 1.23.3
       es-shim-unscopables: 1.0.2
 
-  array.prototype.group@1.1.3:
-    dependencies:
-      call-bind: 1.0.7
-      define-properties: 1.2.1
-      es-abstract: 1.23.3
-      es-errors: 1.3.0
-      es-object-atoms: 1.0.0
-      es-shim-unscopables: 1.0.2
-
   array.prototype.map@1.0.7:
     dependencies:
       call-bind: 1.0.7
@@ -10099,7 +10082,7 @@ snapshots:
       es-abstract: 1.23.3
       es-shim-unscopables: 1.0.2
 
-  array.prototype.tosorted@1.1.3:
+  array.prototype.tosorted@1.1.4:
     dependencies:
       call-bind: 1.0.7
       define-properties: 1.2.1
@@ -11180,7 +11163,7 @@ snapshots:
       array.prototype.findlast: 1.2.5
       array.prototype.flatmap: 1.3.2
       array.prototype.toreversed: 1.1.2
-      array.prototype.tosorted: 1.1.3
+      array.prototype.tosorted: 1.1.4
       doctrine: 2.1.0
       es-iterator-helpers: 1.0.18
       eslint: 8.57.0
@@ -11546,11 +11529,11 @@ snapshots:
     transitivePeerDependencies:
       - debug
 
-  get-json@1.0.1:
+  get-json@1.1.0:
     dependencies:
-      is-node: 0.0.0
-      jsonp: 0.0.4
-      phin: 2.9.3
+      jsonp: 0.2.1
+      safe-buffer: 5.2.1
+      safe-regex-test: 1.0.3
     transitivePeerDependencies:
       - supports-color
 
@@ -12007,8 +11990,6 @@ snapshots:
 
   is-negative-zero@2.0.3: {}
 
-  is-node@0.0.0: {}
-
   is-number-object@1.0.7:
     dependencies:
       has-tostringtag: 1.0.2
@@ -12238,9 +12219,9 @@ snapshots:
     optionalDependencies:
       graceful-fs: 4.2.11
 
-  jsonp@0.0.4:
+  jsonp@0.2.1:
     dependencies:
-      debug: 4.3.4
+      debug: 2.6.9
     transitivePeerDependencies:
       - supports-color
 
@@ -12353,19 +12334,19 @@ snapshots:
 
   lru-cache@7.18.3: {}
 
-  ls-engines@0.9.1:
+  ls-engines@0.9.2:
     dependencies:
       '@npmcli/arborist': 6.5.1
-      array.prototype.group: 1.1.3
       array.prototype.some: 1.1.6
-      array.prototype.tosorted: 1.1.3
+      array.prototype.tosorted: 1.1.4
       colors: 1.4.0
       fast_array_intersect: 1.1.0
       get-dep-tree: 1.0.4
-      get-json: 1.0.1
+      get-json: 1.1.0
       json-file-plus: 3.3.1
       lockfile-info: 1.0.0
       object.fromentries: 2.0.8
+      object.groupby: 1.0.3
       object.values: 1.2.0
       pacote: 15.2.0
       promise.allsettled: 1.0.7
@@ -13157,8 +13138,6 @@ snapshots:
   pend@1.2.0: {}
 
   performance-now@2.1.0: {}
-
-  phin@2.9.3: {}
 
   picocolors@1.0.1: {}
 
