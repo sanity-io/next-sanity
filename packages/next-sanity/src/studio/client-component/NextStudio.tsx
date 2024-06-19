@@ -1,5 +1,5 @@
-import {memo, useMemo} from 'react'
-import {Studio, type StudioProps} from 'sanity'
+import {memo, use, useMemo} from 'react'
+import {type Config, Studio, type StudioProps} from 'sanity'
 
 import {NextStudioLayout} from '../NextStudioLayout'
 import {NextStudioNoScript} from '../NextStudioNoScript'
@@ -8,7 +8,7 @@ import {StyledComponentsRegistry} from './registry'
 import {useIsMounted} from './useIsMounted'
 
 /** @public */
-export interface NextStudioProps extends StudioProps {
+export interface NextStudioProps extends Omit<StudioProps, 'config'> {
   children?: React.ReactNode
   /**
    * Render the <noscript> tag
@@ -23,6 +23,11 @@ export interface NextStudioProps extends StudioProps {
    * @defaultValue 'browser'
    */
   history?: 'browser' | 'hash'
+  /**
+   * Experimentally allow a promise that resolves to a Config
+   * @alpha
+   */
+  config?: Config | Promise<{default: Config}>
 }
 /**
  * Intended to render at the root of a page, letting the Studio own that page and render much like it would if you used `npx sanity start` to render
@@ -30,7 +35,7 @@ export interface NextStudioProps extends StudioProps {
  */
 const NextStudioComponent = ({
   children,
-  config,
+  config: _config,
   unstable__noScript = true,
   scheme,
   history,
@@ -47,6 +52,7 @@ const NextStudioComponent = ({
     }
     return props.unstable_history
   }, [history, isMounted, props.unstable_history])
+  const config = isPromise<{default: Config}>(_config) ? use(_config)?.default : _config!
 
   return (
     <>
@@ -86,3 +92,12 @@ const NextStudioComponent = ({
  * @public
  */
 export const NextStudio = memo(NextStudioComponent)
+
+function isPromise<T>(obj: unknown): obj is Promise<T> {
+  return (
+    !!obj &&
+    (typeof obj === 'object' || typeof obj === 'function') &&
+    'then' in obj &&
+    typeof obj.then === 'function'
+  )
+}

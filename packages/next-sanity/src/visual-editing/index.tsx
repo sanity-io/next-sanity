@@ -1,8 +1,11 @@
 /* eslint-disable dot-notation */
+import dynamic from 'next/dynamic'
 import type {VisualEditingProps} from 'next-sanity/visual-editing/client-component'
-import {lazy, Suspense} from 'react'
 
-const VisualEditingComponent = lazy(() => import('next-sanity/visual-editing/client-component'))
+const VisualEditingComponent = dynamic(
+  () => import('next-sanity/visual-editing/client-component'),
+  {ssr: false},
+)
 
 /**
  * @public
@@ -37,13 +40,11 @@ export function VisualEditing(props: VisualEditingProps): React.ReactElement {
     }
   }
   return (
-    <Suspense fallback={null}>
-      <VisualEditingComponent
-        {...props}
-        basePath={props.basePath ?? autoBasePath}
-        trailingSlash={props.trailingSlash ?? autoTrailingSlash}
-      />
-    </Suspense>
+    <VisualEditingComponent
+      {...props}
+      basePath={props.basePath ?? autoBasePath}
+      trailingSlash={props.trailingSlash ?? autoTrailingSlash}
+    />
   )
 }
 

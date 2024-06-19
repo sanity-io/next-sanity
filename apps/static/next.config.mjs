@@ -10,7 +10,7 @@ const nextConfig = {
   trailingSlash: true,
   logging: {
     fetches: {
-      fullUrl: false,
+      fullUrl: true,
     },
   },
   productionBrowserSourceMaps: true,

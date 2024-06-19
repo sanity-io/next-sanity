@@ -10,7 +10,6 @@ const nextConfig = {
   trailingSlash: true,
   experimental: {
     taint: true,
-    reactCompiler: true,
     turbo: {
       resolveAlias: {
         '@sanity/vision': '@sanity/vision/lib/index.mjs',
@@ -25,7 +24,7 @@ const nextConfig = {
   },
   logging: {
     fetches: {
-      fullUrl: false,
+      fullUrl: true,
     },
   },
   productionBrowserSourceMaps: true,
