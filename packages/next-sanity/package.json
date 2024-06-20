@@ -33,10 +33,6 @@
     },
     "./image": {
       "source": "./src/image/index.ts",
-      "react-compiler": {
-        "source": "./src/image/index.ts",
-        "default": "./dist/image.compiled.js"
-      },
       "import": "./dist/image.js",
       "require": "./dist/image.cjs",
       "default": "./dist/image.js"
@@ -61,20 +57,12 @@
     },
     "./studio/client-component": {
       "source": "./src/studio/client-component/index.ts",
-      "react-compiler": {
-        "source": "./src/studio/client-component/index.ts",
-        "default": "./dist/studio/client-component.compiled.js"
-      },
       "import": "./dist/studio/client-component.js",
       "require": "./dist/studio/client-component.cjs",
       "default": "./dist/studio/client-component.js"
     },
     "./visual-editing/client-component": {
       "source": "./src/visual-editing/client-component/index.ts",
-      "react-compiler": {
-        "source": "./src/visual-editing/client-component/index.ts",
-        "default": "./dist/visual-editing/client-component.compiled.js"
-      },
       "import": "./dist/visual-editing/client-component.js",
       "require": "./dist/visual-editing/client-component.cjs",
       "default": "./dist/visual-editing/client-component.js"
