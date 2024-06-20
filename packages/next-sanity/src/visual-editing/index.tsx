@@ -1,5 +1,5 @@
 /* eslint-disable dot-notation */
-import dynamic from 'next/dynamic'
+import dynamic from 'next/dynamic.js'
 import type {VisualEditingProps} from 'next-sanity/visual-editing/client-component'
 
 const VisualEditingComponent = dynamic(
