@@ -5,6 +5,14 @@
 All notable changes to this project will be documented in this file. See
 [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [9.4.1](https://github.com/sanity-io/next-sanity/compare/v9.4.0...v9.4.1) (2024-06-20)
+
+
+### Bug Fixes
+
+* use dynamic path that works in CJS ([#1610](https://github.com/sanity-io/next-sanity/issues/1610)) ([49b907e](https://github.com/sanity-io/next-sanity/commit/49b907e48ae8788fb407c7521f64f83875b9374d))
+* use dynamic path that works in CJS ([#1611](https://github.com/sanity-io/next-sanity/issues/1611)) ([33309ac](https://github.com/sanity-io/next-sanity/commit/33309acfbd71196030a082acb6bdb5fbc3066ef1))
+
 ## [9.4.0](https://github.com/sanity-io/next-sanity/compare/v9.3.10...v9.4.0) (2024-06-20)
 
 
