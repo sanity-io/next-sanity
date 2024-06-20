@@ -5,6 +5,18 @@
 All notable changes to this project will be documented in this file. See
 [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [9.4.0](https://github.com/sanity-io/next-sanity/compare/v9.3.10...v9.4.0) (2024-06-20)
+
+
+### Features
+
+* add `react-compiler` condition and improve lazy load perf ([#1609](https://github.com/sanity-io/next-sanity/issues/1609)) ([bd0756f](https://github.com/sanity-io/next-sanity/commit/bd0756f732f19e449bf548478fbdfcad38566944))
+
+
+### Bug Fixes
+
+* **deps:** update dependency @sanity/client to ^6.20.1 ([#1607](https://github.com/sanity-io/next-sanity/issues/1607)) ([c651ffa](https://github.com/sanity-io/next-sanity/commit/c651ffa75743b8ca3946c9507edbfaf3d9a714b7))
+
 ## [9.3.10](https://github.com/sanity-io/next-sanity/compare/v9.3.9...v9.3.10) (2024-05-30)
 
 
