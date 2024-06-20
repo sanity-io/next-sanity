@@ -36,10 +36,9 @@ export function Image(props: ImageProps): JSX.Element {
       srcUrl.searchParams.set('w', `${props.width}`)
     }
   } catch (err) {
-    throw new TypeError(
-      'The `src` prop must be a valid URL to an image on the Sanity Image CDN.',
-      {cause: err},
-    )
+    throw new TypeError('The `src` prop must be a valid URL to an image on the Sanity Image CDN.', {
+      cause: err,
+    })
   }
   return <NextImage {...rest} src={srcUrl.toString()} loader={imageLoader} />
 }

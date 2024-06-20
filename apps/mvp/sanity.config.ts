@@ -1,57 +1,26 @@
-'use client'
-
 /* eslint-disable no-restricted-globals */
 /* eslint-disable no-process-env */
-import {assist} from '@sanity/assist'
-import {presentationTool as experimentalPresentationTool} from '@sanity/presentation'
+import sharedConfig from '@repo/sanity-config'
 import {debugSecrets} from '@sanity/preview-url-secret/sanity-plugin-debug-secrets'
-import {visionTool} from '@sanity/vision'
 import {defineConfig} from 'sanity'
-import {
-  presentationTool as stablePresentationTool,
-  type PreviewUrlResolverOptions,
-} from 'sanity/presentation'
-import {structureTool} from 'sanity/structure'
-
-import {schemaTypes} from './schemas'
+import {presentationTool, type PreviewUrlResolverOptions} from 'sanity/presentation'
 
 const projectId = process.env.NEXT_PUBLIC_SANITY_PROJECT_ID!
 const dataset = process.env.NEXT_PUBLIC_SANITY_DATASET!
 
 const previewMode = {
-  enable: `${process.env.NEXT_PUBLIC_TEST_BASE_PATH || ''}/api/draft/`,
+  enable: `${process.env.NEXT_PUBLIC_TEST_BASE_PATH || ''}/api/draft`,
 } satisfies PreviewUrlResolverOptions['previewMode']
 
-function createConfig(basePath: string, stable: boolean) {
-  const name = stable ? 'stable' : 'experimental'
-  const presentationTool = stable ? stablePresentationTool : experimentalPresentationTool
-  return defineConfig({
-    name,
-    basePath: `${process.env.NEXT_PUBLIC_TEST_BASE_PATH || ''}${basePath}/${name}`,
-    // basePath: `${basePath}/${name}`,
-    // basePath: `${name}`,
+export default defineConfig({
+  projectId,
+  dataset,
 
-    projectId,
-    dataset,
-
-    plugins: [
-      assist(),
-      debugSecrets(),
-      presentationTool({
-        previewUrl: {preview: `${process.env.NEXT_PUBLIC_TEST_BASE_PATH}/` || '/', previewMode},
-      }),
-      structureTool(),
-      visionTool(),
-    ],
-
-    schema: {
-      types: schemaTypes,
-    },
-  })
-}
-
-export function createConfigWithBasePath(basePath: string) {
-  return [createConfig(basePath, true), createConfig(basePath, false)]
-}
-
-export default createConfigWithBasePath('/studio')
+  plugins: [
+    presentationTool({
+      previewUrl: {preview: `${process.env.NEXT_PUBLIC_TEST_BASE_PATH}/` || '/', previewMode},
+    }),
+    sharedConfig(),
+    debugSecrets(),
+  ],
+})

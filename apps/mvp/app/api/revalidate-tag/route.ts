@@ -21,9 +21,7 @@ export async function POST(req: NextRequest): Promise<any> {
     }
 
     await Promise.all(
-      [body.slug, body._type, body._id].map(
-        (tag) => typeof tag === 'string' && revalidateTag(tag),
-      ),
+      [body.slug, body._type, body._id].map((tag) => typeof tag === 'string' && revalidateTag(tag)),
     )
     return NextResponse.json({...body, router: 'app'})
   } catch (err: any) {
