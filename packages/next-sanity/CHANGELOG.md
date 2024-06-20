@@ -5,6 +5,13 @@
 All notable changes to this project will be documented in this file. See
 [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [9.4.2](https://github.com/sanity-io/next-sanity/compare/v9.4.1...v9.4.2) (2024-06-20)
+
+
+### Bug Fixes
+
+* remove react-compiler export condition ([#1613](https://github.com/sanity-io/next-sanity/issues/1613)) ([096090b](https://github.com/sanity-io/next-sanity/commit/096090b94dbc134051ab64bd74926f171f663507))
+
 ## [9.4.1](https://github.com/sanity-io/next-sanity/compare/v9.4.0...v9.4.1) (2024-06-20)
 
 
