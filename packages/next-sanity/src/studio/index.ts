@@ -1,4 +1,4 @@
-import dynamic from 'next/dynamic'
+import dynamic from 'next/dynamic.js'
 
 export {metadata, viewport} from './head'
 export * from './NextStudioLayout'
