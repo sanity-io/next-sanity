@@ -37,7 +37,7 @@ export interface VisualEditingProps extends Omit<VisualEditingOptions, 'history'
 }
 
 export default function VisualEditing(props: VisualEditingProps): null {
-  const {refresh, zIndex, basePath = '', trailingSlash = false} = props
+  const {refresh, zIndex, basePath = '', trailingSlash = false, ...rest} = props
 
   const router = useRouter()
   const routerRef = useRef(router)
@@ -48,6 +48,7 @@ export default function VisualEditing(props: VisualEditingProps): null {
   }, [router])
   useEffect(() => {
     const disable = enableVisualEditing({
+      ...rest,
       zIndex,
       refresh: refresh
         ? refresh
