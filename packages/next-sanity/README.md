@@ -36,8 +36,10 @@ The all-in-one [Sanity.io][sanity] toolkit for production-grade content-editable
   - [Configuring Sanity Client and `sanityFetch()` for Visual Editing](#configuring-sanity-client-and-sanityfetch-for-visual-editing)
   - [Using `draftMode()` to toggle Visual Editing](#using-draftmode-to-toggle-visual-editing)
   - [Using Presentation for secure Visual Editing](#using-presentation-for-secure-visual-editing)
+- [Enhanced Visual Editing with React Loader](#enhanced-visual-editing-with-react-loader)
 - [Embedded Sanity Studio](#embedded-sanity-studio)
-  - [Configuring Sanity Studio on a route](#configuring-sanity-studio-on-a-route)
+  - [Creating a Studio route](#creating-a-studio-route)
+  - [Automatic installation](#automatic-installation)
   - [Manual installation](#manual-installation)
   - [Studio route with App Router](#studio-route-with-app-router)
   - [Lower level control with `StudioProvider` and `StudioLayout`](#lower-level-control-with-studioprovider-and-studiolayout)
@@ -720,22 +722,30 @@ export async function GET(request: NextRequest) {
 
 Now open your Sanity Studio and navigate to the Presentation plugin. It should seamlessly open the home page with Visual Editing enabled, allowing you to click-to-edit any content from Sanity and see changes in real time.
 
+## Enhanced Visual Editing with React Loader
+
+In the previous section, Visual Editing works by the client-side `<VisualEditing />` component intermittently rehydrating content with server-side updates. This is typically enough for most projects. However, for sub-millisecond updates when using Visual Editing inside Presentation, consider switching your data fetching to React Loader.
+
+[React Loader][react-loader] provides both a server-side method of fetching data along with client side hooks for updating them. With these configured, draft content is transmitted between Presentation and your Next.js application _without_ a network round-trip. It also allows you to toggle the current Perspective when using Presentation.
+
+<<<NOTES ON REACT LOADER>>>
+
 ## Embedded Sanity Studio
 
-Sanity Studio allows you to embed a near-infinitely configurable content editing interface into any React application. For Next.js, you can embed the Studio on a route (like `/studio`). The Studio will still require authentication and be available only for members of your Sanity project.
+As a React component, Sanity Studio is a near-infinitely configurable content editing interface that can be embedded into any React application. For Next.js, you can embed the Studio on a route (like `/studio`). The Studio will still require authentication and be available only for members of your Sanity project.
 
-This opens up many possibilities:
+This opens up many possibilities including dynamic configuration of your Sanity Studio based on a network request or user input.
 
-- Any service that hosts Next.js apps can now host your Studio.
-- Building previews for your content is easier as your Studio lives in the same environment.
-- Use [Data Fetching][next-data-fetching] to configure your Studio.
-- Easy setup of [Preview Mode][next-preview-mode].
+> [!WARNING]
+> The convenience of co-locating the Studio with your Next.js application is appealing, but it can also influence your content model to be too website-centric, and potentially make collaboration with other developers more difficult. Consider a standalone Studio, or monorepo setup for larger projects and teams.
 
-### Configuring Sanity Studio on a route
+### Creating a Studio route
 
-The `NextStudio` component loads up the `import {Studio} from 'sanity'` component for you and wraps it in a Next-friendly layout. `metadata` specifies the necessary `<meta>` tags for making the Studio adapt to mobile devices, and prevents the route from being indexed by search engines.
+`next-sanity` exports a `<NextStudio />` component to load Sanity's `<Studio />` component wrapped in a Next.js friendly layout. `metadata` specifies the necessary `<meta>` tags for making the Studio adapt to mobile devices, and prevents the route from being indexed by search engines.
 
-To quickly scaffold the embedded studio and a Sanity project, you can run the following command in your project folder:
+### Automatic installation
+
+To quickly connect an existing - or create a new - Sanity project to your Next.js application, run the following command in your terminal. You will be prompted to create a route for the Studio during setup.
 
 ```bash
 npx sanity@latest init
@@ -743,44 +753,35 @@ npx sanity@latest init
 
 ### Manual installation
 
-Make a file called `sanity.config.ts` (or `.js` for non-TypeScript projects) in the project's root (same place as `next.config.ts`) and copy the example below:
+**Create** a file `sanity.config.ts` in the project's root and copy the example below:
 
 ```ts
 // ./sanity.config.ts
+
 import {defineConfig} from 'sanity'
 import {structureTool} from 'sanity/structure'
-
-import {schemaTypes} from './src/schema'
 
 const projectId = process.env.NEXT_PUBLIC_SANITY_PROJECT_ID!
 const dataset = process.env.NEXT_PUBLIC_SANITY_DATASET!
 
 export default defineConfig({
-  basePath: '/studio', // <-- important that `basePath` matches the route you're mounting your studio from
+  basePath: '/studio', // `basePath` must match the route of your Studio
   projectId,
   dataset,
   plugins: [structureTool()],
-  schema: {
-    types: schemaTypes,
-  },
+  schema: {types: []},
 })
 ```
 
-This example assumes that there is a `src/schema/index.ts` file that exports the schema definitions for Sanity Studio. However, you are free to structure Studio files as you see fit.
-
-To run Sanity CLI commands, add a `sanity.cli.ts` with the same `projectId` and `dataset` as your `sanity.config.ts` to the project root:
+Optionally, **create** a `sanity.cli.ts` with the same `projectId` and `dataset` as your `sanity.config.ts` to the project root so that you can run `npx sanity <command>` from the terminal inside your Next.js application:
 
 ```ts
 // ./sanity.cli.ts
-/* eslint-disable no-process-env */
-import {loadEnvConfig} from '@next/env'
+
 import {defineCliConfig} from 'sanity/cli'
 
-const dev = process.env.NODE_ENV !== 'production'
-loadEnvConfig(__dirname, dev, {info: () => null, error: console.error})
-
-const projectId = process.env.NEXT_PUBLIC_SANITY_PROJECT_ID
-const dataset = process.env.NEXT_PUBLIC_SANITY_DATASET
+const projectId = process.env.NEXT_PUBLIC_SANITY_PROJECT_ID!
+const dataset = process.env.NEXT_PUBLIC_SANITY_DATASET!
 
 export default defineCliConfig({api: {projectId, dataset}})
 ```
@@ -789,51 +790,38 @@ Now you can run commands like `npx sanity cors add`. Run `npx sanity help` for a
 
 ### Studio route with App Router
 
-Even if the rest of your app is using Pages Router, you should still mount the Studio on an App Router route. [Next supports both routers in the same app.](https://nextjs.org/docs/app/building-your-application/upgrading/app-router-migration#migrating-from-pages-to-app)
+Even if the rest of your app is using Pages Router, you can and should mount the Studio on an App Router route. [Next.js supports both routers in the same app.](https://nextjs.org/docs/app/building-your-application/upgrading/app-router-migration#migrating-from-pages-to-app)
+
+**Create** a new route to render the Studio, with the default metadata and viewport configuration:
 
 ```tsx
-// ./src/app/studio/[[...index]]/page.tsx
-import {Studio} from './Studio'
+// ./src/app/studio/[[...tool]]/page.tsx
 
-// Ensures the Studio route is statically generated
+import {NextStudio} from 'next-sanity/studio'
+import config from '../../../../sanity.config'
+
 export const dynamic = 'force-static'
 
-// Set the right `viewport`, `robots` and `referer` meta tags
 export {metadata, viewport} from 'next-sanity/studio'
 
 export default function StudioPage() {
-  return <Studio />
-}
-```
-
-```tsx
-// ./src/app/studio/[[...index]]/Studio.tsx
-'use client'
-
-import {NextStudio} from 'next-sanity/studio'
-
-import config from '../../../sanity.config'
-
-export function Studio() {
-  //  Supports the same props as `import {Studio} from 'sanity'`, `config` is required
   return <NextStudio config={config} />
 }
 ```
 
-How to customize meta tags:
+The default meta tags exported by `next-sanity` can be customized if necessary:
 
 ```tsx
-// ./src/app/studio/[[...index]]/page.tsx
+// ./src/app/studio/[[...tool]]/page.tsx
+
 import type {Metadata, Viewport} from 'next'
 import {metadata as studioMetadata, viewport as studioViewport} from 'next-sanity/studio'
 
-import {Studio} from './Studio'
-
-// Set the right `viewport`, `robots` and `referer` meta tags
+// Set the correct `viewport`, `robots` and `referrer` meta tags
 export const metadata: Metadata = {
   ...studioMetadata,
   // Overrides the title until the Studio is loaded
-  title: 'Loading Studio…',
+  title: 'Loading Studio...',
 }
 
 export const viewport: Viewport = {
@@ -843,15 +831,17 @@ export const viewport: Viewport = {
 }
 
 export default function StudioPage() {
-  return <Studio />
+  return <NextStudio config={config} />
 }
 ```
 
 ### Lower level control with `StudioProvider` and `StudioLayout`
 
-If you want to go to a lower level and have more control over the Studio, you can pass `StudioProvider` and `StudioLayout` from `sanity` as `children`:
+If you need even more control over the Studio, you can pass `StudioProvider` and `StudioLayout` from `sanity` as `children`:
 
 ```tsx
+// ./src/app/studio/[[...tool]]/page.tsx
+
 'use client'
 
 import {NextStudio} from 'next-sanity/studio'
@@ -942,3 +932,4 @@ MIT-licensed. See [LICENSE][LICENSE].
 [vercel-content-link]: https://vercel.com/docs/workflow-collaboration/edit-mode#content-link?utm_source=github&utm_medium=readme&utm_campaign=next-sanity
 [stega-encoding]: https://www.sanity.io/docs/stega#fad3406bd530?utm_source=github&utm_medium=readme&utm_campaign=next-sanity
 [presentation]: https://www.sanity.io/docs/configuring-the-presentation-tool?utm_source=github&utm_medium=readme&utm_campaign=next-sanity
+[react-loader]: https://www.sanity.io/docs/react-loader?utm_source=github&utm_medium=readme&utm_campaign=next-sanity
