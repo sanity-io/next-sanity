@@ -13,27 +13,26 @@ The all-in-one [Sanity.io][sanity] toolkit for production-grade content-editable
 ## Table of contents<!-- omit in toc -->
 
 - [Installation](#installation)
-  - [Peer dependencies for embedded Sanity Studio](#peer-dependencies-for-embedded-sanity-studio)
+  - [Install `next-sanity`](#install-next-sanity)
+  - [Optional: peer dependencies for embedded Sanity Studio](#optional-peer-dependencies-for-embedded-sanity-studio)
 - [Quick Start](#quick-start)
-  - [Generating TypeScript Types](#generating-typescript-types)
+  - [Manual configuration](#manual-configuration)
+  - [Write GROQ queries](#write-groq-queries)
+  - [Generate TypeScript Types](#generate-typescript-types)
 - [Query Sanity content](#query-sanity-content)
-  - [Writing GROQ queries](#writing-groq-queries)
   - [Configuring Sanity Client](#configuring-sanity-client)
   - [Fetching in App Router Components](#fetching-in-app-router-components)
   - [Fetching in Page Router Components](#fetching-in-page-router-components)
   - [Should `useCdn` be `true` or `false`?](#should-usecdn-be-true-or-false)
   - [How does `apiVersion` work?](#how-does-apiversionwork)
-- [Cache revalidation](#cache-revalidation)
+- [Caching and revalidation](#caching-and-revalidation)
   - [`sanityFetch()` helper function](#sanityfetch-helper-function)
   - [Time-based revalidation](#time-based-revalidation)
   - [Path-based revalidation](#path-based-revalidation)
   - [Tag-based revalidation](#tag-based-revalidation)
-  - [Example implementation](#example-implementation)
   - [Debugging caching and revalidation](#debugging-caching-and-revalidation)
+  - [Example implementation](#example-implementation)
 - [Visual Editing](#visual-editing)
-  - [Configuring Sanity Client and `sanityFetch()` for Visual Editing](#configuring-sanity-client-and-sanityfetch-for-visual-editing)
-  - [Using `draftMode()` to toggle Visual Editing](#using-draftmode-to-toggle-visual-editing)
-  - [Using Presentation for integrated Visual Editing](#using-presentation-for-integrated-visual-editing)
 - [Enhanced Visual Editing with React Loader](#enhanced-visual-editing-with-react-loader)
   - [Install React Loader](#install-react-loader)
 - [Embedded Sanity Studio](#embedded-sanity-studio)
@@ -47,7 +46,17 @@ The all-in-one [Sanity.io][sanity] toolkit for production-grade content-editable
 
 ## Installation
 
-For basic functionality, run the following command in the package manager of your choice:
+If you do not yet have a Next.js application, you can create one with the following command:
+
+```bash
+npx create-next-app@latest sanity-nextjs
+```
+
+This README assumes you have chosen all of the default options.
+
+### Install `next-sanity`
+
+Inside your Next.js application, run the following command in the package manager of your choice to install the next-sanity toolkit:
 
 ```bash
 npm install next-sanity @sanity/image-url
@@ -67,7 +76,7 @@ bun install next-sanity @sanity/image-url
 
 This also installs `@sanity/image-url` for [On-Demand Image Transformations][image-url] to render images from Sanity's CDN.
 
-### Peer dependencies for embedded Sanity Studio
+### Optional: peer dependencies for embedded Sanity Studio
 
 When using `npm` newer than `v7`, or `pnpm` newer than `v8`, you should end up with needed dependencies like `sanity` and `styled-components` when you installed `next-sanity`. In `yarn` `v1` you can use `install-peerdeps`:
 
@@ -85,9 +94,57 @@ npx sanity@latest init
 
 If you do not yet have a Sanity account you will be prompted to create one. This command will create basic utilities required to query content from Sanity. And optionally embed Sanity Studio - a configurable content management system - at a route in your Next.js application.
 
-### Generating TypeScript Types
+### Manual configuration
 
-If you have an embedded Studio with schema types in the same project as your Next.js app, use [Sanity TypeGen to generate TypeScript types][sanity-typegen] for your schema types and GROQ queries.
+The above command offers to write some configuration files for your Next.js application. Most importantly is one that writes your Sanity Project ID and Dataset to your local environment variables. Note these are **not** considered sensitive information.
+
+**Create** this file at the root of your Next.js application if it does not already exist.
+
+```bash
+# .env.local
+
+NEXT_PUBLIC_SANITY_PROJECT_ID=<your-project-id>
+NEXT_PUBLIC_SANITY_DATASET=<your-dataset-name>
+```
+
+**Create** a file to access and export these values
+
+```ts
+// ./src/sanity/env.ts
+
+export const dataset = process.env.NEXT_PUBLIC_SANITY_DATASET!
+export const projectId = process.env.NEXT_PUBLIC_SANITY_PROJECT_ID!
+
+// Values you may additionally want to configure globally
+export const apiVersion = process.env.NEXT_PUBLIC_SANITY_API_VERSION || '2024-07-11'
+```
+
+### Write GROQ queries
+
+`next-sanity` exports the `groq` template literal which will give you syntax highlighting in [VS Code with the Sanity extension installed][vs-code-extension].
+
+```ts
+// ./src/sanity/lib/queries.ts
+
+import {groq} from 'next-sanity'
+
+export const POSTS_QUERY = groq`*[_type == "post" && defined(slug.current)][0...12]{
+  _id, title, slug
+}`
+
+export const POST_QUERY = groq`*[_type == "post" && slug.current == $slug][0]{
+  title, body, mainImage
+}`
+```
+
+### Generate TypeScript Types
+
+You can use [Sanity TypeGen to generate TypeScript types][sanity-typegen] for your schema types and GROQ queries from inside your Next.js application if you have used `sanity init` and chosen an embedded Studio.
+
+> [!TIP]
+> Sanity TypeGen will [create Types for queries][sanity-typegen-queries] that are assigned to a variable and use the `groq` template literal.
+
+If your Sanity Studio schema types are in a different project or repository, you can [configure Sanity TypeGen to write types to your Next.js project][sanity-typegen-monorepo].
 
 **Run** the following command in your terminal to create a `schema.json` file at the root of your project.
 
@@ -103,30 +160,9 @@ npx sanity@latest schema extract
 npx sanity@latest typegen generate
 ```
 
-If your Sanity Studio schema types are in a different project or repository, you can [configure Sanity TypeGen to write types to your Next.js project][sanity-typegen-monorepo].
-
 ## Query Sanity content
 
 Sanity content is typically queried with GROQ queries from a configured Sanity Client. [Sanity also supports GraphQL][sanity-graphql].
-
-### Writing GROQ queries
-
-`next-sanity` exports the `groq` template literal which will give you syntax highlighting in [VS Code with the Sanity extension installed][vs-code-extension].
-
-```ts
-// ./src/sanity/lib/queries.ts
-
-export const POSTS_QUERY = groq`*[_type == "post" && defined(slug.current)][0...12]{
-  _id, title, slug
-}`
-
-export const POST_QUERY = groq`*[_type == "post" && slug.current == $slug][0]{
-  title, body
-}`
-```
-
-> [!TIP]
-> Sanity TypeGen will [create Types for queries][sanity-typegen-queries] that are assigned to a variable and use the `groq` template literal.
 
 ### Configuring Sanity Client
 
@@ -136,9 +172,7 @@ To interact with Sanity content in a Next.js application, we recommend creating 
 // ./src/sanity/lib/client.ts
 import {createClient} from 'next-sanity'
 
-const projectId = process.env.NEXT_PUBLIC_SANITY_PROJECT_ID // "pv8y60vp"
-const dataset = process.env.NEXT_PUBLIC_SANITY_DATASET // "production"
-const apiVersion = process.env.NEXT_PUBLIC_SANITY_API_VERSION || '2024-06-01'
+import {apiVersion, dataset, projectId} from '../env'
 
 export const client = createClient({
   projectId,
@@ -148,25 +182,16 @@ export const client = createClient({
 })
 ```
 
-The above reads project details from your environment variables. Your Sanity Project ID and Dataset name are **not** considered sensitive information, but are convenient to store in your `.env.local` file.
-
-```bash
-# .env.local
-
-NEXT_PUBLIC_SANITY_PROJECT_ID=<your-project-id>
-NEXT_PUBLIC_SANITY_DATASET=<your-dataset-name>
-```
-
 ### Fetching in App Router Components
 
-To fetch data in a React Server Component using the [App Router][app-router] you can await results from Sanity Client inside a server component:
+To fetch data in a React Server Component using the [App Router][app-router] you can await results from the Sanity Client inside a server component:
 
 ```tsx
 // ./src/app/page.tsx
 
-import {client} from '@/sanity/client'
+import {client} from '@/sanity/lib/client'
 import {POSTS_QUERY} from '@/sanity/lib/queries'
-import {POSTS_QUERYResult} from '../../../sanity.types'
+import {POSTS_QUERYResult} from '../../sanity.types'
 
 export default async function PostIndex() {
   const posts = await client.fetch<POSTS_QUERYResult>(POSTS_QUERY)
@@ -192,7 +217,7 @@ If you're using the [Pages Router][pages-router] you can await results from Sani
 
 import {client} from '@/sanity/lib/client'
 import {POSTS_QUERY} from '@/sanity/lib/queries'
-import {POSTS_QUERYResult} from '../../../sanity.types'
+import {POSTS_QUERYResult} from '../../sanity.types'
 
 export async function getStaticProps() {
   const posts = await client.fetch<POSTS_QUERYResult>(POSTS_QUERY)
@@ -215,14 +240,14 @@ export default async function PostIndex({posts}) {
 
 ### Should `useCdn` be `true` or `false`?
 
-You might notice that you have to set the `useCdn` to `true` or `false` in the client configuration. Sanity offers [caching on a CDN for content queries][cdn]. Since Next.js often comes with caching, it might not be necessary, but there are some exceptions.
+You might notice that you have to set the `useCdn` to `true` or `false` in the client configuration. Sanity offers [caching on a CDN for queries][cdn]. Since Next.js has its own caching, using the Sanity CDN might not be necessary, but there are some exceptions.
 
-The general rule is that `useCdn` should be `true` when:
+In general, set `useCdn` to `true` when:
 
 - Data fetching happens client-side, for example, in a `useEffect` hook or in response to a user interaction where the `client.fetch` call is made in the browser.
 - Server-side rendered (SSR) data fetching is dynamic and has a high number of unique requests per visitor, for example, a "For You" feed.
 
-And it makes sense to set `useCdn` to `false` when:
+Set `useCdn` to `false` when:
 
 - Used in a static site generation context, for example, `getStaticProps` or `getStaticPaths`.
 - Used in an ISR on-demand webhook responder.
@@ -233,21 +258,25 @@ And it makes sense to set `useCdn` to `false` when:
 
 Sanity uses [date-based API versioning][api-versioning]. You can configure the date in a `YYYY-MM-DD` format, and it will automatically fall back on the latest API version of that time. Then, if a breaking change is introduced later, it won't break your application and give you time to test before upgrading.
 
-## Cache revalidation
+## Caching and revalidation
 
-This toolkit includes the [`@sanity/client`][sanity-client] which fully supports Next.js `fetch` based features for caching and revalidation. It‘s _not necessary_ to use the `React.cache` method like with many other third-party SDKs. This gives you tools to ensure great performance while preventing stale content in a way that's native to Next.js.
+This toolkit includes the [`@sanity/client`][sanity-client] which fully supports Next.js `fetch` based features for caching and revalidation. This ensures great performance while preventing stale content in a way that's native to Next.js.
 
 > [!NOTE]
-> Some hosts (like Vercel) will keep the content cache in a dedicated data layer and not part of the static app bundle, which means that it might not be revalidated by re-deploying the app. We recommend reading up on [caching behavior in the Next.js docs][next-cache].
+> Some hosts (like Vercel) will keep the content cache in a dedicated data layer and not part of the static app bundle, which means re-deploying the app will not purge the cache. We recommend reading up on [caching behavior in the Next.js docs][next-cache].
 
 ### `sanityFetch()` helper function
 
 It can be beneficial to set revalidation defaults for all queries. In all of the following examples, a `sanityFetch()` helper function is used for this purpose.
 
-While this function is written to support _both_ Next.js caching options `revalidate` and `tags`, your application should only rely on one.
+While this function is written to accept _both_ Next.js caching options `revalidate` and `tags`, your application should only rely on one. For this reason, if `tags` are supplied, the `revalidate` setting will be set to `false` (cache indefinitely) and you will need to bust the cache for these pages using [`revalidateTag()`](#tag-based-revalidation).
+
+In short:
 
 - Time-based `revalidate` is good enough for most applications.
+  - Any page can be automatically purged from the cache using [`revalidatePath()`](#path-based-revalidation).
 - Content-based `tags` will give you more fine-grained control for complex applications.
+  - Pages cached by tags must be purged using [`revalidateTag()`](#tag-based-revalidation).
 
 ```ts
 // ./src/sanity/lib/client.ts
@@ -256,9 +285,7 @@ import 'server-only'
 
 import {createClient, type QueryParams} from 'next-sanity'
 
-const projectId = process.env.NEXT_PUBLIC_SANITY_PROJECT_ID // "pv8y60vp"
-const dataset = process.env.NEXT_PUBLIC_SANITY_DATASET // "production"
-const apiVersion = process.env.NEXT_PUBLIC_SANITY_API_VERSION || '2024-06-01'
+import {apiVersion, dataset, projectId} from '../env'
 
 export const client = createClient({
   projectId,
@@ -275,7 +302,7 @@ export async function sanityFetch<QueryResponse>({
 }: {
   query: string
   params?: QueryParams
-  revalidate?: number | boolean
+  revalidate?: number | false
   tags?: string[]
 }) {
   return client.fetch<QueryResponse>(query, params, {
@@ -287,7 +314,7 @@ export async function sanityFetch<QueryResponse>({
 }
 ```
 
-Be aware that you can get errors if you use the `cache` and the `revalidate` configurations for Next.js cache at the same time. Go to [the Next.js docs][next-revalidate-docs] to learn more.
+Be aware that you can get errors if you use `cache` and `revalidate` configurations for Next.js together. See the [Next.js documentation on revalidation][next-revalidate-docs].
 
 ### Time-based revalidation
 
@@ -298,9 +325,9 @@ Increase the `revalidate` setting for longer-lived and less frequently modified 
 ```tsx
 // ./src/app/pages/index.tsx
 
-import {client} from '@/sanity/client'
+import {sanityFetch} from '@/sanity/lib/client'
 import {POSTS_QUERY} from '@/sanity/lib/queries'
-import {POSTS_QUERYResult} from '../../../sanity.types'
+import {POSTS_QUERYResult} from '../../sanity.types'
 
 export default async function PostIndex() {
   const posts = await sanityFetch<POSTS_QUERYResult>({
@@ -401,9 +428,9 @@ For on-demand revalidation of many pages, Next.js has a `revalidateTag()` functi
 ```tsx
 // ./src/app/pages/index.tsx
 
-import {client} from '@/sanity/client'
+import {sanityFetch} from '@/sanity/lib/client'
 import {POSTS_QUERY} from '@/sanity/lib/queries'
-import {POSTS_QUERYResult} from '../../../sanity.types'
+import {POSTS_QUERYResult} from '../../sanity.types'
 
 export default async function PostIndex() {
   const posts = await sanityFetch<POSTS_QUERYResult>({
@@ -436,7 +463,7 @@ SANITY_REVALIDATE_SECRET=<some-random-string>
 The code example below uses the built-in `parseBody` function to validate that the request comes from your Sanity project (using a shared secret and looking at the request headers). Then it looks at the document type information in the webhook payload and matches that against the revalidation tags in your application
 
 ```ts
-// ./src/app/api/revalidate/route.ts
+// ./src/app/api/revalidate-tag/route.ts
 
 import {revalidateTag} from 'next/cache'
 import {type NextRequest, NextResponse} from 'next/server'
@@ -481,10 +508,6 @@ export async function POST(req: NextRequest) {
 
 You can [copy this template][webhook-template-revalidate-tag] to quickly add the webhook to your Sanity project.
 
-### Example implementation
-
-Check out the [Personal website template][personal-website-template] to see a feature-complete example of how `revalidateTag` is used together with Visual Editing.
-
 ### Debugging caching and revalidation
 
 To aid in debugging and understanding what's in the cache, revalidated, skipped, and more, add the following to your Next.js configuration file:
@@ -500,6 +523,10 @@ module.exports = {
 }
 ```
 
+### Example implementation
+
+Check out the [Personal website template][personal-website-template] to see a feature-complete example of how `revalidateTag` is used together with Visual Editing.
+
 ## Visual Editing
 
 Interactive live previews of draft content are the best way for authors to find and edit content with the least amount of effort and the most confidence to press publish.
@@ -510,226 +537,15 @@ Interactive live previews of draft content are the best way for authors to find 
 > [!NOTE]
 > Vercel ["Content Link"][vercel-content-link] adds an "edit" button to the Vercel toolbar on preview builds and is available on Vercel Pro and Enterprise plans.
 
-### Configuring Sanity Client and `sanityFetch()` for Visual Editing
-
-Explaining the updated `createClient` configuration below:
-
-- `stega.enabled` enables [Stega-encoding][stega-encoding] add [Content Source Maps][content-source-maps] to the response. These invisible characters are what power click-to-edit overlays when Visual Editing is enabled. It should **always be disabled in production**, outside of when Visual Editing is enabled.
-- `stega.studioUrl` can be either your [embedded Studio route](#embedded-sanity-studio) or the full URL to a separately deployed Sanity Studio.
-- `perspective` set in the `client.fetch()` modifies the [Content Lake Perspective][perspectives-docs] to return draft versions of documents as if they were published.
-
-**Create** a token with Viewer permissions in [sanity.io/manage](https://www.sanity.io/manage) and add it to your environment variables. This is considered sensitive and should not be committed to your repository.
-
-```bash
-# .env.local
-
-SANITY_API_READ_TOKEN=<your-viewer-token>
-```
-
-**Update** your Sanity Client and `sanityFetch()` configuration
-
-```ts
-// ./src/sanity/client.ts
-import 'server-only'
-
-import {draftMode} from 'next/headers'
-import {createClient, type QueryOptions, type QueryParams} from 'next-sanity'
-
-const projectId = process.env.NEXT_PUBLIC_SANITY_PROJECT_ID // "pv8y60vp"
-const dataset = process.env.NEXT_PUBLIC_SANITY_DATASET // "production"
-const apiVersion = process.env.NEXT_PUBLIC_SANITY_API_VERSION || '2024-06-01'
-
-export const client = createClient({
-  projectId,
-  dataset,
-  apiVersion, // https://www.sanity.io/docs/api-versioning
-  useCdn: true, // Set to false if statically generating pages, using ISR or tag-based revalidation
-  stega: {
-    enabled: process.env.NEXT_PUBLIC_VERCEL_ENV === 'preview',
-    studioUrl: '/studio', // Or: 'https://my-cool-project.sanity.studio'
-  },
-})
-
-const token = process.env.SANITY_API_READ_TOKEN
-
-export async function sanityFetch<QueryResponse>({
-  query,
-  params = {},
-  revalidate = 60,
-  tags = [],
-}: {
-  query: string
-  params?: QueryParams
-  revalidate?: number | boolean
-  tags?: string[]
-}) {
-  const isDraftMode = draftMode().isEnabled
-  if (isDraftMode && !token) {
-    throw new Error('Missing environment variable SANITY_API_READ_TOKEN')
-  }
-
-  let dynamicRevalidate = revalidate
-  if (isDraftMode) {
-    // Skip the cache
-    dynamicRevalidate = 0
-  } else if (tags.length) {
-    // Cache indefinitely, purged by tags
-    dynamicRevalidate = false
-  }
-
-  return client.fetch<QueryResponse>(query, params, {
-    ...(isDraftMode &&
-      ({
-        token: token,
-        perspective: 'previewDrafts',
-        stega: true,
-      } satisfies QueryOptions)),
-    next: {
-      revalidate: dynamicRevalidate,
-      tags,
-    },
-  })
-}
-```
-
-**Update** your root layout to include the `<VisualEditing />` component.
-
-This component handles hydrating the page with draft documents as edits are made. The code example below also adds a button to disable draft mode.
-
-```tsx
-// ./src/app/layout.tsx
-
-import {VisualEditing} from 'next-sanity'
-import {draftMode} from 'next/headers'
-
-import './globals.css'
-
-export default function RootLayout({children}) {
-  return (
-    <html lang="en">
-      <body>
-        {draftMode().isEnabled && (
-          <a className="block bg-blue-300 p-4" href="/api/draft-mode-disable">
-            Disable preview mode
-          </a>
-        )}
-        {children}
-        {draftMode().isEnabled && <VisualEditing />}
-      </body>
-    </html>
-  )
-}
-```
-
-With these changes made your application is now ready to Visual Editing, you just need a way to enable it.
-
-### Using `draftMode()` to toggle Visual Editing
-
-The code above relies on Next.js ["Draft Mode"][draft-mode] to toggle Visual Editing. This can be used to conditionally toggle draft previews and Visual Editing.
-
-**Create** an API route in your Next.js application to toggle Draft Mode
-
-```ts
-// ./src/app/api/draft-mode-enable/route.ts
-
-import {draftMode} from 'next/headers'
-
-// This is an unsecure example of enabling draft mode,
-// it will allow anyone to see draft content, do not ship to production!
-// See the section below on Presentation for a secure route
-export async function GET(request: Request) {
-  draftMode().enable()
-  return new Response('Draft mode is enabled')
-}
-```
-
-**Create** an API route in your Next.js application to disable Draft Mode
-
-```ts
-// ./src/app/api/draft-mode-disable/route.ts
-
-import {draftMode} from 'next/headers'
-import {NextRequest, NextResponse} from 'next/server'
-
-export function GET(request: NextRequest) {
-  draftMode().disable()
-  return new Response('Draft mode is disabled')
-}
-```
-
-If you visit `/api/draft-mode-enable` in your browser, you will see a message that Draft Mode is enabled. You should also now see draft content being rendered in your Next.js application, as well as the ability to hover over any content and see a blue box to open any piece of content in Sanity Studio.
-
-### Using Presentation for integrated Visual Editing
-
-For the closest relationship between your Next.js application and your Sanity Studio, install and configure the [Presentation][presentation] plugin. It will handle creating a secure URL to toggle draft mode, as well as the ability to navigate and edit the website from an interactive preview rather than a separate tab or window.
-
-The following assumes you are using an [embedded Sanity Studio](#embedded-sanity-studio).
-
-**Update** your `sanity.config.ts` file to include the Presentation plugin:
-
-```ts
-// sanity.config.ts
-
-import {defineConfig} from 'sanity'
-import {presentationTool} from 'sanity/presentation'
-// ...other imports
-
-export default defineConfig({
-  // ... other project config
-
-  plugins: [
-    // Add 'presentationTool' to the 'plugins' array
-    presentationTool({
-      previewUrl: {draftMode: {enable: '/api/draft-mode-enable'}},
-    }),
-    // ...other plugins
-  ],
-})
-```
-
-**Update** your API route for enabling draft mode.
-
-Presentation will first visit a the URL with a secret parameter which is stored in the dataset. The Sanity Client in the API route contains a token to verify the secret. If confirmed, it will enable draft mode.
-
-```ts
-// ./app/api/draft/route.ts
-
-import {validatePreviewUrl} from '@sanity/preview-url-secret'
-import {draftMode} from 'next/headers'
-import {NextRequest, NextResponse} from 'next/server'
-
-import {client} from '@/sanity/lib/client'
-
-export async function GET(request: NextRequest) {
-  if (!process.env.SANITY_API_READ_TOKEN) {
-    return new Response('Missing environment variable SANITY_API_READ_TOKEN', {status: 500})
-  }
-
-  const clientWithToken = client.withConfig({
-    token: process.env.SANITY_API_READ_TOKEN,
-    stega: false,
-  })
-  const {isValid, redirectTo = '/'} = await validatePreviewUrl(clientWithToken, request.url)
-
-  if (!isValid) {
-    return new Response('Invalid secret', {status: 401})
-  }
-
-  draftMode().enable()
-
-  return NextResponse.redirect(redirectTo)
-}
-```
-
-Now open your Sanity Studio and navigate to the Presentation plugin. It should seamlessly open the home page with Visual Editing enabled, allowing you to click-to-edit any content from Sanity and see changes in real time.
+An end-to-end tutorial of [how to configure Sanity and Next.js for Visual Editing](https://www.sanity.io/guides/nextjs-app-router-live-preview) using the same patterns demonstrated in this README is available on the Sanity Exchange.
 
 ## Enhanced Visual Editing with React Loader
 
-In the previous section, Visual Editing works because the client-side `<VisualEditing />` component intermittently rehydrates content with server-side updates. This is typically fast enough for most projects. However, even faster, fine-grained updates when using Visual Editing inside Presentation, consider switching your data fetching to React Loader.
+In the above tutorial, Visual Editing works because the client-side `<VisualEditing />` component intermittently rehydrates content with server-side updates. This is typically fast enough for most projects. However, for even faster, fine-grained updates when using Visual Editing inside Presentation, consider switching your data fetching to React Loader.
 
-[React Loader][react-loader] provides both a server-side method of fetching data along with client side hooks for updating them. With these configured, draft content is transmitted between Presentation and your Next.js application _without_ a network round-trip. It also allows you to toggle the current Perspective when using Presentation.
+[React Loader][react-loader] provides both a server-side method of fetching data along with client-side hooks for updating them. With these configured, draft content is transmitted between Presentation and your Next.js application _without_ a network round-trip. It also allows you to toggle the current Perspective when using Presentation.
 
-This requires changes to how you fetch for content, as well as calling the `useLiveMode()` hook client-side.
+This requires changes to how you fetch content, as well as calling the `useLiveMode()` hook client-side.
 
 ### Install React Loader
 
@@ -742,7 +558,7 @@ pnpm install @sanity/react-loader
 bun install @sanity/react-loader
 ```
 
-**Create** a file for your server-side loader configuration. These options are very similar to those configured in `sanityFetch()` in previous examples, however `loadQuery` will return the queried response and content source maps, in a shape that the client-side `useQuery` hook expects.
+**Create** a file for your server-side loader configuration. These options are very similar to those configured in `sanityFetch()` in previous examples, however, `loadQuery` will return the queried response and content source maps, in a shape that the client-side `useQuery` hook expects.
 
 ```ts
 // ./src/sanity/lib/loader.ts
@@ -1098,7 +914,7 @@ MIT-licensed. See [LICENSE][LICENSE].
 [sanity]: https://www.sanity.io?utm_source=github&utm_medium=readme&utm_campaign=next-sanity
 [visual-editing-intro]: https://www.sanity.io/blog/visual-editing-sanity-vercel?utm_source=github&utm_medium=readme&utm_campaign=next-sanity
 [visual-editing]: https://www.sanity.io/docs/visual-editing?utm_source=github&utm_medium=readme&utm_campaign=next-sanity
-[webhook-template-revalidate-tag]: https://www.sanity.io/manage/webhooks/share?name=Tag-based+Revalidation+Hook+for+Next.js+13+&description=1.+Replace+URL+with+the+preview+or+production+URL+for+your+revalidation+handler+in+your+Next.js+app%0A2.%C2%A0Insert%2Freplace+the+document+types+you+want+to+be+able+to+make+tags+for+in+the+Filter+array%0A3.%C2%A0Make+a+Secret+that+you+also+add+to+your+app%27s+environment+variables+%28SANITY_REVALIDATE_SECRET%29%0A%0AFor+complete+instructions%2C+see+the+README+on%3A%0Ahttps%3A%2F%2Fgithub.com%2Fsanity-io%2Fnext-sanity&url=https%3A%2F%2FYOUR-PRODUCTION-URL.TLD%2Fapi%2Frevalidate&on=create&on=update&on=delete&filter=_type+in+%5B%22post%22%2C+%22home%22%2C+%22OTHER_DOCUMENT_TYPE%22%5D&projection=%7B_type%7D&httpMethod=POST&apiVersion=v2021-03-25&includeDrafts=&headers=%7B%7D
+[webhook-template-revalidate-tag]: https://www.sanity.io/manage/webhooks/share?name=Tag-based+Revalidation+Hook+for+Next.js+13+&description=1.+Replace+URL+with+the+preview+or+production+URL+for+your+revalidation+handler+in+your+Next.js+app%0A2.%C2%A0Insert%2Freplace+the+document+types+you+want+to+be+able+to+make+tags+for+in+the+Filter+array%0A3.%C2%A0Make+a+Secret+that+you+also+add+to+your+app%27s+environment+variables+%28SANITY_REVALIDATE_SECRET%29%0A%0AFor+complete+instructions%2C+see+the+README+on%3A%0Ahttps%3A%2F%2Fgithub.com%2Fsanity-io%2Fnext-sanity&url=https%3A%2F%2FYOUR-PRODUCTION-URL.TLD%2Fapi%2Frevalidate-tag&on=create&on=update&on=delete&filter=_type+in+%5B%22post%22%2C+%22home%22%2C+%22OTHER_DOCUMENT_TYPE%22%5D&projection=%7B_type%7D&httpMethod=POST&apiVersion=v2021-03-25&includeDrafts=&headers=%7B%7D
 [webhook-template-revalidate-path]: https://www.sanity.io/manage/webhooks/share?name=Path-based+Revalidation+Hook+for+Next.js&description=1.+Replace+URL+with+the+preview+or+production+URL+for+your+revalidation+handler+in+your+Next.js+app%0A2.%C2%A0Insert%2Freplace+the+document+types+you+want+to+be+able+to+make+tags+for+in+the+Filter+array%0A3.%C2%A0Make+a+Secret+that+you+also+add+to+your+app%27s+environment+variables+%28SANITY_REVALIDATE_SECRET%29%0A%0AFor+complete+instructions%2C+see+the+README+on%3A%0Ahttps%3A%2F%2Fgithub.com%2Fsanity-io%2Fnext-sanity&url=https%3A%2F%2FYOUR-PRODUCTION-URL.TLD%2Fapi%2Frevalidate-path&on=create&on=update&on=delete&filter=_type+in+%5B%22post%22%2C+%22home%22%2C+%22OTHER_DOCUMENT_TYPES%22%5D&projection=%7B%0A++%22path%22%3A+select%28%0A++++_type+%3D%3D+%22post%22+%3D%3E+%22%2Fposts%2F%22+%2B+slug.current%2C%0A++++slug.current%0A++%29%0A%7D&httpMethod=POST&apiVersion=v2021-03-25&includeDrafts=&headers=%7B%7D
 [vercel-enterprise]: https://vercel.com/docs/accounts/plans/enterprise?utm_source=github&utm_medium=readme&utm_campaign=next-sanity
 [sanity-typegen]: https://www.sanity.io/docs/sanity-typegen?utm_source=github&utm_medium=readme&utm_campaign=next-sanity
