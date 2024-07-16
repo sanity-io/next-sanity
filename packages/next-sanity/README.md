@@ -1,25 +1,28 @@
 # next-sanity<!-- omit in toc -->
 
-The all-in-one [Sanity.io][sanity] toolkit for production-grade content-editable Next.js applications.
+The all-in-one [Sanity][sanity] toolkit for production-grade content-editable Next.js applications.
 
 **Features:**
 
 - [Sanity Client][sanity-client] for queries and mutations, fully compatible with the [Next.js cache][next-cache]
 - [Visual Editing][visual-editing] for interactive live preview of draft content
-- [Embedded Sanity Studio][sanity-studio], a deeply-configurable, open-source content management system
-- [GROQ query syntax highlighting][groq-syntax-highlighting]
+- [Embedded Sanity Studio][sanity-studio], a deeply-configurable content editing dashboard
+- [GROQ][groq-syntax-highlighting] for powerful content querying with type generation and syntax highlighting
 - [Portable Text][portable-text] for rendering rich text and block content
+
+**Quicklinks**: [Sanity docs][sanity-docs] | [Next.js docs][next-docs] | [Clean starter template][sanity-next-clean-starter] | [Fully-featured starter template][sanity-next-featured-starter]
 
 ## Table of contents<!-- omit in toc -->
 
 - [Installation](#installation)
+- [Quick Start](#quick-start)
+- [Manual installation](#manual-installation)
   - [Install `next-sanity`](#install-next-sanity)
   - [Optional: peer dependencies for embedded Sanity Studio](#optional-peer-dependencies-for-embedded-sanity-studio)
-- [Quick Start](#quick-start)
   - [Manual configuration](#manual-configuration)
   - [Write GROQ queries](#write-groq-queries)
   - [Generate TypeScript Types](#generate-typescript-types)
-- [Query Sanity content](#query-sanity-content)
+- [Query content from Sanity Content Lake](#query-content-from-sanity-content-lake)
   - [Configuring Sanity Client](#configuring-sanity-client)
   - [Fetching in App Router Components](#fetching-in-app-router-components)
   - [Fetching in Page Router Components](#fetching-in-page-router-components)
@@ -35,22 +38,34 @@ The all-in-one [Sanity.io][sanity] toolkit for production-grade content-editable
 - [Visual Editing](#visual-editing)
 - [Embedded Sanity Studio](#embedded-sanity-studio)
   - [Creating a Studio route](#creating-a-studio-route)
-  - [Automatic installation](#automatic-installation)
-  - [Manual installation](#manual-installation)
+  - [Automatic installation of embedded Studio](#automatic-installation-of-embedded-studio)
+  - [Manual installation of embedded Studio](#manual-installation-of-embedded-studio)
   - [Studio route with App Router](#studio-route-with-app-router)
-  - [Lower level control with `StudioProvider` and `StudioLayout`](#lower-level-control-with-studioprovider-and-studiolayout)
+  - [Lower-level control with `StudioProvider` and `StudioLayout`](#lower-level-control-with-studioprovider-and-studiolayout)
 - [Migration guides](#migration-guides)
 - [License](#license)
 
 ## Installation
 
+## Quick Start
+
+Instantly create a new free Sanity project – or link to an existing one – from the command line and connect it to your Next.js application by the following terminal command *in your Next.js project folder*:
+
+```bash
+npx sanity@latest init
+```
+
+If you do not yet have a Sanity account you will be prompted to create one. This command will create basic utilities required to query content from Sanity. And optionally embed Sanity Studio - a configurable content management system - at a route in your Next.js application. See the [Embedded Sanity Studio](#embedded-sanity-studio) section.
+
+## Manual installation
+
 If you do not yet have a Next.js application, you can create one with the following command:
 
 ```bash
-npx create-next-app@latest sanity-nextjs
+npx create-next-app@latest
 ```
 
-This README assumes you have chosen all of the default options.
+This README assumes you have chosen all of the default options, but should be fairly similar for most bootstrapped Next.js projects.
 
 ### Install `next-sanity`
 
@@ -82,19 +97,9 @@ When using `npm` newer than `v7`, or `pnpm` newer than `v8`, you should end up w
 npx install-peerdeps --yarn next-sanity
 ```
 
-## Quick Start
-
-Instantly create a new free Sanity project - or link to an existing one - from the command line and connect it to your Next.js application with the following terminal command:
-
-```bash
-npx sanity@latest init
-```
-
-If you do not yet have a Sanity account you will be prompted to create one. This command will create basic utilities required to query content from Sanity. And optionally embed Sanity Studio - a configurable content management system - at a route in your Next.js application. See the [Embedded Sanity Studio](#embedded-sanity-studio) section.
-
 ### Manual configuration
 
-The above command offers to write some configuration files for your Next.js application. Most importantly is one that writes your Sanity Project ID and Dataset to your local environment variables. Note these are **not** considered sensitive information.
+The `npx sanity@latest init` command offers to write some configuration files for your Next.js application. Most importantly is one that writes your chosen Sanity project ID and dataset name to your local environment variables. Note that unlike access tokens, the project ID and dataset name are **not** considered sensitive information.
 
 **Create** this file at the root of your Next.js application if it does not already exist.
 
@@ -117,9 +122,11 @@ export const projectId = process.env.NEXT_PUBLIC_SANITY_PROJECT_ID!
 export const apiVersion = process.env.NEXT_PUBLIC_SANITY_API_VERSION || '2024-07-11'
 ```
 
+Remember to add these environment variables to your hosting provider's environment as well.
+
 ### Write GROQ queries
 
-`next-sanity` exports the `groq` template literal which will give you syntax highlighting in [VS Code with the Sanity extension installed][vs-code-extension].
+`next-sanity` exports the `groq` template literal which will give you syntax highlighting in [VS Code with the Sanity extension installed][vs-code-extension]. It’s also required for GROQ query result type generation with [Sanity TypeGen][sanity-typegen].
 
 ```ts
 // ./src/sanity/lib/queries.ts
@@ -137,7 +144,7 @@ export const POST_QUERY = groq`*[_type == "post" && slug.current == $slug][0]{
 
 ### Generate TypeScript Types
 
-You can use [Sanity TypeGen to generate TypeScript types][sanity-typegen] for your schema types and GROQ queries from inside your Next.js application if you have used `sanity init` and chosen an embedded Studio.
+You can use [Sanity TypeGen to generate TypeScript types][sanity-typegen] for your schema types and GROQ query results in your Next.js application. It should be readily available if you have used `sanity init` and chosen the embedded Studio.
 
 > [!TIP]
 > Sanity TypeGen will [create Types for queries][sanity-typegen-queries] that are assigned to a variable and use the `groq` template literal.
@@ -158,7 +165,21 @@ npx sanity@latest schema extract
 npx sanity@latest typegen generate
 ```
 
-## Query Sanity content
+You can also allocate these commands to an npm script in your Next.js project's `package.json`:
+
+```json
+  "scripts": {
+    "predev": "npm run typegen",
+    "dev": "next",
+    "prebuild": "npm run typegen",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint",
+    "typegen": "sanity schema extract && sanity typegen generate"
+  },
+```
+
+## Query content from Sanity Content Lake
 
 Sanity content is typically queried with GROQ queries from a configured Sanity Client. [Sanity also supports GraphQL][sanity-graphql].
 
@@ -548,9 +569,9 @@ This opens up many possibilities including dynamic configuration of your Sanity 
 
 ### Creating a Studio route
 
-`next-sanity` exports a `<NextStudio />` component to load Sanity's `<Studio />` component wrapped in a Next.js friendly layout. `metadata` specifies the necessary `<meta>` tags for making the Studio adapt to mobile devices, and prevents the route from being indexed by search engines.
+`next-sanity` exports a `<NextStudio />` component to load Sanity's `<Studio />` component wrapped in a Next.js friendly layout. `metadata` specifies the necessary `<meta>` tags for making the Studio adapt to mobile devices and prevents the route from being indexed by search engines.
 
-### Automatic installation
+### Automatic installation of embedded Studio
 
 To quickly connect an existing - or create a new - Sanity project to your Next.js application, run the following command in your terminal. You will be prompted to create a route for the Studio during setup.
 
@@ -558,7 +579,7 @@ To quickly connect an existing - or create a new - Sanity project to your Next.j
 npx sanity@latest init
 ```
 
-### Manual installation
+### Manual installation of embedded Studio
 
 **Create** a file `sanity.config.ts` in the project's root and copy the example below:
 
@@ -642,7 +663,7 @@ export default function StudioPage() {
 }
 ```
 
-### Lower level control with `StudioProvider` and `StudioLayout`
+### Lower-level control with `StudioProvider` and `StudioLayout`
 
 If you need even more control over the Studio, you can pass `StudioProvider` and `StudioLayout` from `sanity` as `children`:
 
@@ -689,12 +710,6 @@ MIT-licensed. See [LICENSE][LICENSE].
 [api-versioning]: https://www.sanity.io/docs/api-versioning?utm_source=github&utm_medium=readme&utm_campaign=next-sanity
 [app-router]: https://nextjs.org/docs/app/building-your-application/routing
 [cdn]: https://www.sanity.io/docs/asset-cdn?utm_source=github&utm_medium=readme&utm_campaign=next-sanity
-[ci-workflow]: https://github.com/sanity-io/next-sanity/actions/workflows/ci.yml
-[content-source-maps-intro]: https://www.sanity.io/blog/content-source-maps-announce?utm_source=github&utm_medium=readme&utm_campaign=next-sanity
-[content-source-maps]: https://www.sanity.io/docs/content-source-maps?utm_source=github&utm_medium=readme&utm_campaign=next-sanity
-[draft-mode]: https://nextjs.org/docs/app/building-your-application/configuring/draft-mode
-[embedded-studio-demo]: https://next.sanity.build/studio
-[enterprise-cta]: https://www.sanity.io/enterprise?utm_source=github&utm_medium=readme&utm_campaign=next-sanity
 [groq-syntax-highlighting]: https://marketplace.visualstudio.com/items?itemName=sanity-io.vscode-sanity
 [groq-webhook]: https://www.sanity.io/docs/webhooks?utm_source=github&utm_medium=readme&utm_campaign=next-sanity
 [image-url]: https://www.sanity.io/docs/presenting-images?utm_source=github&utm_medium=readme&utm_campaign=next-sanity
@@ -707,36 +722,24 @@ MIT-licensed. See [LICENSE][LICENSE].
 [migrate-v7-to-v8]: https://github.com/sanity-io/next-sanity/blob/main/packages/next-sanity/MIGRATE-v7-to-v8.md
 [migrate-v8-to-v9]: https://github.com/sanity-io/next-sanity/blob/main/packages/next-sanity/MIGRATE-v8-to-v9.md
 [next-cache]: https://nextjs.org/docs/app/building-your-application/caching
-[next-data-fetching]: https://nextjs.org/docs/basic-features/data-fetching/overview
-[next-preview-mode]: https://nextjs.org/docs/advanced-features/preview-mode
+[next-docs]: https://nextjs.org/docs
 [next-revalidate-docs]: https://nextjs.org/docs/app/api-reference/functions/fetch#optionsnextrevalidate
 [pages-router]: https://nextjs.org/docs/pages/building-your-application/routing
 [personal-website-template]: https://github.com/sanity-io/template-nextjs-personal-website
-[perspectives-docs]: https://www.sanity.io/docs/perspectives?utm_source=github&utm_medium=readme&utm_campaign=next-sanity
 [portable-text]: https://portabletext.org
-[preivew-app-router]: https://github.com/sanity-io/next-sanity/blob/main/packages/next-sanity/PREVIEW-app-router.md
-[preview-kit-client]: https://github.com/sanity-io/preview-kit#sanitypreview-kitclient
-[preview-kit-documentation]: https://github.com/sanity-io/preview-kit#sanitypreview-kit-1
-[preview-kit-livequery]: https://github.com/sanity-io/preview-kit#using-the-livequery-wrapper-component-instead-of-the-uselivequery-hook
-[preview-kit]: https://github.com/sanity-io/preview-kit
-[preview-pages-router]: https://github.com/sanity-io/next-sanity/blob/main/packages/next-sanity/PREVIEW-pages-router.md
-[revalidate-tag]: https://nextjs.org/docs/app/api-reference/functions/revalidateTag
-[sales-cta]: https://www.sanity.io/contact/sales?utm_source=github&utm_medium=readme&utm_campaign=next-sanity
 [sanity-client]: https://www.sanity.io/docs/js-client?utm_source=github&utm_medium=readme&utm_campaign=next-sanity
 [sanity]: https://www.sanity.io?utm_source=github&utm_medium=readme&utm_campaign=next-sanity
-[visual-editing-intro]: https://www.sanity.io/blog/visual-editing-sanity-vercel?utm_source=github&utm_medium=readme&utm_campaign=next-sanity
 [visual-editing]: https://www.sanity.io/docs/visual-editing?utm_source=github&utm_medium=readme&utm_campaign=next-sanity
 [webhook-template-revalidate-tag]: https://www.sanity.io/manage/webhooks/share?name=Tag-based+Revalidation+Hook+for+Next.js+13+&description=1.+Replace+URL+with+the+preview+or+production+URL+for+your+revalidation+handler+in+your+Next.js+app%0A2.%C2%A0Insert%2Freplace+the+document+types+you+want+to+be+able+to+make+tags+for+in+the+Filter+array%0A3.%C2%A0Make+a+Secret+that+you+also+add+to+your+app%27s+environment+variables+%28SANITY_REVALIDATE_SECRET%29%0A%0AFor+complete+instructions%2C+see+the+README+on%3A%0Ahttps%3A%2F%2Fgithub.com%2Fsanity-io%2Fnext-sanity&url=https%3A%2F%2FYOUR-PRODUCTION-URL.TLD%2Fapi%2Frevalidate-tag&on=create&on=update&on=delete&filter=_type+in+%5B%22post%22%2C+%22home%22%2C+%22OTHER_DOCUMENT_TYPE%22%5D&projection=%7B_type%7D&httpMethod=POST&apiVersion=v2021-03-25&includeDrafts=&headers=%7B%7D
 [webhook-template-revalidate-path]: https://www.sanity.io/manage/webhooks/share?name=Path-based+Revalidation+Hook+for+Next.js&description=1.+Replace+URL+with+the+preview+or+production+URL+for+your+revalidation+handler+in+your+Next.js+app%0A2.%C2%A0Insert%2Freplace+the+document+types+you+want+to+be+able+to+make+tags+for+in+the+Filter+array%0A3.%C2%A0Make+a+Secret+that+you+also+add+to+your+app%27s+environment+variables+%28SANITY_REVALIDATE_SECRET%29%0A%0AFor+complete+instructions%2C+see+the+README+on%3A%0Ahttps%3A%2F%2Fgithub.com%2Fsanity-io%2Fnext-sanity&url=https%3A%2F%2FYOUR-PRODUCTION-URL.TLD%2Fapi%2Frevalidate-path&on=create&on=update&on=delete&filter=_type+in+%5B%22post%22%2C+%22home%22%2C+%22OTHER_DOCUMENT_TYPES%22%5D&projection=%7B%0A++%22path%22%3A+select%28%0A++++_type+%3D%3D+%22post%22+%3D%3E+%22%2Fposts%2F%22+%2B+slug.current%2C%0A++++slug.current%0A++%29%0A%7D&httpMethod=POST&apiVersion=v2021-03-25&includeDrafts=&headers=%7B%7D
-[vercel-enterprise]: https://vercel.com/docs/accounts/plans/enterprise?utm_source=github&utm_medium=readme&utm_campaign=next-sanity
 [sanity-typegen]: https://www.sanity.io/docs/sanity-typegen?utm_source=github&utm_medium=readme&utm_campaign=next-sanity
 [sanity-typegen-monorepo]: https://www.sanity.io/docs/sanity-typegen#1a6a147d6737?utm_source=github&utm_medium=readme&utm_campaign=next-sanity
 [sanity-typegen-queries]: https://www.sanity.io/docs/sanity-typegen#c3ef15d8ad39?utm_source=github&utm_medium=readme&utm_campaign=next-sanity
+[sanity-docs]: https://www.sanity.io/docs
 [sanity-graphql]: https://www.sanity.io/docs/graphql?utm_source=github&utm_medium=readme&utm_campaign=next-sanity
 [vs-code-extension]: https://marketplace.visualstudio.com/items?itemName=sanity-io.vscode-sanity
 [sanity-studio]: https://www.sanity.io/docs/sanity-studio?utm_source=github&utm_medium=readme&utm_campaign=next-sanity
 [groq-functions]: https://www.sanity.io/docs/groq-functions?utm_source=github&utm_medium=readme&utm_campaign=next-sanity
 [vercel-content-link]: https://vercel.com/docs/workflow-collaboration/edit-mode#content-link?utm_source=github&utm_medium=readme&utm_campaign=next-sanity
-[stega-encoding]: https://www.sanity.io/docs/stega#fad3406bd530?utm_source=github&utm_medium=readme&utm_campaign=next-sanity
-[presentation]: https://www.sanity.io/docs/configuring-the-presentation-tool?utm_source=github&utm_medium=readme&utm_campaign=next-sanity
-[react-loader]: https://www.sanity.io/docs/react-loader?utm_source=github&utm_medium=readme&utm_campaign=next-sanity
+[sanity-next-clean-starter]: https://www.sanity.io/templates/nextjs-sanity-clean
+[sanity-next-featured-starter]: https://www.sanity.io/templates/personal-website-with-built-in-content-editing
