@@ -49,7 +49,7 @@ The all-in-one [Sanity][sanity] toolkit for production-grade content-editable Ne
 
 ## Quick Start
 
-Instantly create a new free Sanity project – or link to an existing one – from the command line and connect it to your Next.js application by the following terminal command *in your Next.js project folder*:
+Instantly create a new free Sanity project – or link to an existing one – from the command line and connect it to your Next.js application by the following terminal command _in your Next.js project folder_:
 
 ```bash
 npx sanity@latest init
@@ -300,8 +300,6 @@ In short:
 ```ts
 // ./src/sanity/lib/client.ts
 
-import 'server-only'
-
 import {createClient, type QueryParams} from 'next-sanity'
 
 import {apiVersion, dataset, projectId} from '../env'
@@ -410,7 +408,7 @@ export async function POST(req: NextRequest) {
       return new Response(JSON.stringify({message, body}), {status: 400})
     }
 
-    revalidatePath(body.path, 'page')
+    revalidatePath(body.path)
     const message = `Updated route: ${body.path}`
     return NextResponse.json({body, message})
   } catch (err) {
