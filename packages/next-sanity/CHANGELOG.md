@@ -5,6 +5,13 @@
 All notable changes to this project will be documented in this file. See
 [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [9.4.3](https://github.com/sanity-io/next-sanity/compare/v9.4.2...v9.4.3) (2024-07-31)
+
+
+### Bug Fixes
+
+* revalidatePath function ([#1622](https://github.com/sanity-io/next-sanity/issues/1622)) ([0fca21f](https://github.com/sanity-io/next-sanity/commit/0fca21fc208338cfe8734d40efe76bc69d919672))
+
 ## [9.4.2](https://github.com/sanity-io/next-sanity/compare/v9.4.1...v9.4.2) (2024-06-20)
 
 
