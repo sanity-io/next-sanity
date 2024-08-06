@@ -5,6 +5,15 @@
 All notable changes to this project will be documented in this file. See
 [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [9.4.4](https://github.com/sanity-io/next-sanity/compare/v9.4.3...v9.4.4) (2024-08-06)
+
+
+### Bug Fixes
+
+* **deps:** update dependency @sanity/client to ^6.21.1 ([#1632](https://github.com/sanity-io/next-sanity/issues/1632)) ([7273308](https://github.com/sanity-io/next-sanity/commit/727330821db5e9b53e4f3b51fe1a1f10d4e30fab))
+* **deps:** Update dependency @sanity/visual-editing to v2.1.8 ([#1630](https://github.com/sanity-io/next-sanity/issues/1630)) ([87efc27](https://github.com/sanity-io/next-sanity/commit/87efc273a6263e0da04442c8dd14255071a1000f))
+* **deps:** Update dependency typescript to v5.5.3 ([#1631](https://github.com/sanity-io/next-sanity/issues/1631)) ([5b6a37e](https://github.com/sanity-io/next-sanity/commit/5b6a37ea7f57b3442357dc754d09fdfc425125d0))
+
 ## [9.4.3](https://github.com/sanity-io/next-sanity/compare/v9.4.2...v9.4.3) (2024-07-31)
 
 
