@@ -159,10 +159,11 @@ If your Sanity Studio schema types are in a different project or repository, you
 {
   "path": "./src/**/*.{ts,tsx,js,jsx}",
   "schema": "./src/sanity/extract.json",
-  "generates": "./src/sanity/types.ts",
-  "overloadClientMethods": true
+  "generates": "./src/sanity/types.ts"
 }
 ```
+
+Note: This configuration is strongly opinionated that the generated Types and the schema extraction are both within the `/src/sanity` directory, not the root which is the default. This configuration is complimented by setting the path of the schema extraction in the updated package.json scripts below.
 
 **Run** the following command in your terminal to extract your Sanity Studio schema to a JSON file
 
@@ -178,23 +179,23 @@ npx sanity@latest schema extract
 npx sanity@latest typegen generate
 ```
 
-You can also allocate these commands to an npm script in your Next.js project's `package.json`:
+**Update** your Next.js project's `package.json` to perform both of these commands by running `npm run typegen`
 
 ```json
-  "scripts": {
-    "predev": "npm run typegen",
-    "dev": "next",
-    "prebuild": "npm run typegen",
-    "build": "next build",
-    "start": "next start",
-    "lint": "next lint",
-    "typegen": "sanity schema extract --path=src/sanity/extract.json && sanity typegen generate"
-  },
+"scripts": {
+  "predev": "npm run typegen",
+  "dev": "next",
+  "prebuild": "npm run typegen",
+  "build": "next build",
+  "start": "next start",
+  "lint": "next lint",
+  "typegen": "sanity schema extract --path=src/sanity/extract.json && sanity typegen generate"
+},
 ```
 
 ### Using query result types
 
-Sanity TypeGen creates TypeScript types for the results of your GROQ queries, which can be used as generics like this:
+Sanity TypeGen creates TypeScript types for the results of your GROQ queries, which _can_ be used as generics like this:
 
 ```ts
 import {client} from '@/sanity/lib/client'
@@ -205,7 +206,7 @@ const posts = await client.fetch<POSTS_QUERYResult>(POSTS_QUERY)
 //    ^? const post: POST_QUERYResult
 ```
 
-However, it is much simpler to use automatic type inference. So long as you have `overloadClientMethods` in `sanity-typegen.json` and your GROQ queries are wrapped in `defineQuery`, the results should be inferred automatically:
+However, it is much simpler to use automatic type inference. So long as your GROQ queries are wrapped in `defineQuery`, the results should be inferred automatically:
 
 ```ts
 import {client} from '@/sanity/lib/client'
@@ -345,18 +346,18 @@ export const client = createClient({
   useCdn: true, // Set to false if statically generating pages, using ISR or tag-based revalidation
 })
 
-export async function sanityFetch<QueryResponse>({
+export async function sanityFetch<const QueryString extends string>({
   query,
   params = {},
   revalidate = 60, // default revalidation time in seconds
   tags = [],
 }: {
-  query: string
+  query: QueryString
   params?: QueryParams
   revalidate?: number | false
   tags?: string[]
 }) {
-  return client.fetch<QueryResponse>(query, params, {
+  return client.fetch(query, params, {
     next: {
       revalidate: tags.length ? false : revalidate, // for simple, time-based revalidation
       tags, // for tag-based revalidation
