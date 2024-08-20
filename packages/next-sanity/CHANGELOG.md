@@ -5,6 +5,13 @@
 All notable changes to this project will be documented in this file. See
 [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [9.4.7](https://github.com/sanity-io/next-sanity/compare/v9.4.6...v9.4.7) (2024-08-20)
+
+
+### Bug Fixes
+
+* update readme to preach automatic type inference ([#1652](https://github.com/sanity-io/next-sanity/issues/1652)) ([e35c285](https://github.com/sanity-io/next-sanity/commit/e35c2856830bc3636a86e61a66199f55c99b74b3))
+
 ## [9.4.6](https://github.com/sanity-io/next-sanity/compare/v9.4.5...v9.4.6) (2024-08-20)
 
 
