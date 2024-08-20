@@ -188,7 +188,7 @@ You can also allocate these commands to an npm script in your Next.js project's 
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "typegen": "sanity schema extract && sanity typegen generate"
+    "typegen": "sanity schema extract --path=src/sanity/extract.json && sanity typegen generate"
   },
 ```
 
