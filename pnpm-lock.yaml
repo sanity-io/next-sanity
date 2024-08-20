@@ -132,7 +132,7 @@ importers:
         version: 0.15.12
       next:
         specifier: 15.0.0-canary.37
-        version: 15.0.0-canary.37(react-dom@19.0.0-rc.0(react@19.0.0-rc.0))(react@19.0.0-rc.0)
+        version: 15.0.0-canary.37(@babel/core@7.25.2)(babel-plugin-react-compiler@0.0.0-experimental-938cd9a-20240601)(react-dom@19.0.0-rc.0(react@19.0.0-rc.0))(react@19.0.0-rc.0)
       next-sanity:
         specifier: workspace:*
         version: link:../../packages/next-sanity
@@ -216,8 +216,8 @@ importers:
         specifier: 2.1.8
         version: 2.1.8(@sanity/client@6.21.2)(next@15.0.0-canary.37(@babel/core@7.25.2)(react-dom@19.0.0-rc.0(react@19.0.0-rc.0))(react@19.0.0-rc.0))(react-dom@19.0.0-rc.0(react@19.0.0-rc.0))(react@19.0.0-rc.0)
       groq:
-        specifier: ^3.37.1
-        version: 3.53.0
+        specifier: ^3.54.0
+        version: 3.54.0
       history:
         specifier: ^5.3.0
         version: 5.3.0
@@ -4179,6 +4179,10 @@ packages:
 
   groq@3.53.0:
     resolution: {integrity: sha512-0kVDwMWK4liM8xPQx9o31IwXr7jiLnMNnSNVbzeP4Zfk/lTxsYahe+7XojSRfewxEVWKDEfH5yQIJxZPsIq2UQ==}
+    engines: {node: '>=18'}
+
+  groq@3.54.0:
+    resolution: {integrity: sha512-leqfyLx7somDC5HTchv4iboWPIZU7LYEOTDZgd0/u91BCMgXB4EnYqmvYllYejTgEV2/Hq7lHl6bm7HWfzDrmQ==}
     engines: {node: '>=18'}
 
   groqd@0.15.12:
@@ -11752,6 +11756,8 @@ snapshots:
 
   groq@3.53.0: {}
 
+  groq@3.54.0: {}
+
   groqd@0.15.12:
     dependencies:
       zod: 3.22.4
@@ -12687,32 +12693,6 @@ snapshots:
       '@next/swc-win32-ia32-msvc': 15.0.0-canary.37
       '@next/swc-win32-x64-msvc': 15.0.0-canary.37
       babel-plugin-react-compiler: 0.0.0-experimental-938cd9a-20240601
-      sharp: 0.33.4
-    transitivePeerDependencies:
-      - '@babel/core'
-      - babel-plugin-macros
-
-  next@15.0.0-canary.37(react-dom@19.0.0-rc.0(react@19.0.0-rc.0))(react@19.0.0-rc.0):
-    dependencies:
-      '@next/env': 15.0.0-canary.37
-      '@swc/helpers': 0.5.11
-      busboy: 1.6.0
-      caniuse-lite: 1.0.30001649
-      graceful-fs: 4.2.11
-      postcss: 8.4.31
-      react: 19.0.0-rc.0
-      react-dom: 19.0.0-rc.0(react@19.0.0-rc.0)
-      styled-jsx: 5.1.6(@babel/core@7.25.2)(react@19.0.0-rc.0)
-    optionalDependencies:
-      '@next/swc-darwin-arm64': 15.0.0-canary.37
-      '@next/swc-darwin-x64': 15.0.0-canary.37
-      '@next/swc-linux-arm64-gnu': 15.0.0-canary.37
-      '@next/swc-linux-arm64-musl': 15.0.0-canary.37
-      '@next/swc-linux-x64-gnu': 15.0.0-canary.37
-      '@next/swc-linux-x64-musl': 15.0.0-canary.37
-      '@next/swc-win32-arm64-msvc': 15.0.0-canary.37
-      '@next/swc-win32-ia32-msvc': 15.0.0-canary.37
-      '@next/swc-win32-x64-msvc': 15.0.0-canary.37
       sharp: 0.33.4
     transitivePeerDependencies:
       - '@babel/core'
