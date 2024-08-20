@@ -5,6 +5,13 @@
 All notable changes to this project will be documented in this file. See
 [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [9.4.6](https://github.com/sanity-io/next-sanity/compare/v9.4.5...v9.4.6) (2024-08-20)
+
+
+### Bug Fixes
+
+* update groq dep and export defineQuery ([#1650](https://github.com/sanity-io/next-sanity/issues/1650)) ([2e91587](https://github.com/sanity-io/next-sanity/commit/2e915879ec2895b0a0b5cef126af23064c3de816))
+
 ## [9.4.5](https://github.com/sanity-io/next-sanity/compare/v9.4.4...v9.4.5) (2024-08-09)
 
 
