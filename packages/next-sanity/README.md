@@ -22,6 +22,7 @@ The all-in-one [Sanity][sanity] toolkit for production-grade content-editable Ne
   - [Manual configuration](#manual-configuration)
   - [Write GROQ queries](#write-groq-queries)
   - [Generate TypeScript Types](#generate-typescript-types)
+  - [Using query result types](#using-query-result-types)
 - [Query content from Sanity Content Lake](#query-content-from-sanity-content-lake)
   - [Configuring Sanity Client](#configuring-sanity-client)
   - [Fetching in App Router Components](#fetching-in-app-router-components)
@@ -126,20 +127,20 @@ Remember to add these environment variables to your hosting provider's environme
 
 ### Write GROQ queries
 
-`next-sanity` exports the `groq` template literal which will give you syntax highlighting in [VS Code with the Sanity extension installed][vs-code-extension]. It’s also required for GROQ query result type generation with [Sanity TypeGen][sanity-typegen].
+`next-sanity` exports the `defineQuery` function which will give you syntax highlighting in [VS Code with the Sanity extension installed][vs-code-extension]. It’s also used for GROQ query result type generation with [Sanity TypeGen][sanity-typegen].
 
 ```ts
 // ./src/sanity/lib/queries.ts
 
-import {groq} from 'next-sanity'
+import {defineQuery} from 'next-sanity'
 
-export const POSTS_QUERY = groq`*[_type == "post" && defined(slug.current)][0...12]{
+export const POSTS_QUERY = defineQuery(`*[_type == "post" && defined(slug.current)][0...12]{
   _id, title, slug
-}`
+}`)
 
-export const POST_QUERY = groq`*[_type == "post" && slug.current == $slug][0]{
+export const POST_QUERY = defineQuery(`*[_type == "post" && slug.current == $slug][0]{
   title, body, mainImage
-}`
+}`)
 ```
 
 ### Generate TypeScript Types
@@ -147,18 +148,30 @@ export const POST_QUERY = groq`*[_type == "post" && slug.current == $slug][0]{
 You can use [Sanity TypeGen to generate TypeScript types][sanity-typegen] for your schema types and GROQ query results in your Next.js application. It should be readily available if you have used `sanity init` and chosen the embedded Studio.
 
 > [!TIP]
-> Sanity TypeGen will [create Types for queries][sanity-typegen-queries] that are assigned to a variable and use the `groq` template literal.
+> Sanity TypeGen will [create Types for queries][sanity-typegen-queries] that are assigned to a variable and use the `groq` template literal or `defineQuery` function.
 
 If your Sanity Studio schema types are in a different project or repository, you can [configure Sanity TypeGen to write types to your Next.js project][sanity-typegen-monorepo].
 
-**Run** the following command in your terminal to create a `schema.json` file at the root of your project.
+**Create** a `sanity-typegen.json` file at the root of your project to configure Sanity TypeGen:
+
+```json
+// sanity-typegen.json
+{
+  "path": "./src/**/*.{ts,tsx,js,jsx}",
+  "schema": "./src/sanity/extract.json",
+  "generates": "./src/sanity/types.ts",
+  "overloadClientMethods": true
+}
+```
+
+**Run** the following command in your terminal to extract your Sanity Studio schema to a JSON file
 
 ```bash
 # Run this each time your schema types change
 npx sanity@latest schema extract
 ```
 
-**Run** the following command in your terminal to generate TypeScript types and create a `sanity.types.ts` file at the root of your project.
+**Run** the following command in your terminal to generate TypeScript types for both your Sanity Studio schema and GROQ queries
 
 ```bash
 # Run this each time your schema types or GROQ queries change
@@ -177,6 +190,29 @@ You can also allocate these commands to an npm script in your Next.js project's 
     "lint": "next lint",
     "typegen": "sanity schema extract && sanity typegen generate"
   },
+```
+
+### Using query result types
+
+Sanity TypeGen creates TypeScript types for the results of your GROQ queries, which can be used as generics like this:
+
+```ts
+import {client} from '@/sanity/lib/client'
+import {POSTS_QUERY} from '@/sanity/lib/queries'
+import {POSTS_QUERYResult} from '@/sanity/types'
+
+const posts = await client.fetch<POSTS_QUERYResult>(POSTS_QUERY)
+//    ^? const post: POST_QUERYResult
+```
+
+However, it is much simpler to use automatic type inference. So long as you have `overloadClientMethods` in `sanity-typegen.json` and your GROQ queries are wrapped in `defineQuery`, the results should be inferred automatically:
+
+```ts
+import {client} from '@/sanity/lib/client'
+import {POSTS_QUERY} from '@/sanity/lib/queries'
+
+const posts = await client.fetch(POSTS_QUERY)
+//    ^? const post: POST_QUERYResult
 ```
 
 ## Query content from Sanity Content Lake
@@ -210,10 +246,9 @@ To fetch data in a React Server Component using the [App Router][app-router] you
 
 import {client} from '@/sanity/lib/client'
 import {POSTS_QUERY} from '@/sanity/lib/queries'
-import {POSTS_QUERYResult} from '../../sanity.types'
 
 export default async function PostIndex() {
-  const posts = await client.fetch<POSTS_QUERYResult>(POSTS_QUERY)
+  const posts = await client.fetch(POSTS_QUERY)
 
   return (
     <ul>
@@ -236,10 +271,9 @@ If you're using the [Pages Router][pages-router] you can await results from Sani
 
 import {client} from '@/sanity/lib/client'
 import {POSTS_QUERY} from '@/sanity/lib/queries'
-import {POSTS_QUERYResult} from '../../sanity.types'
 
 export async function getStaticProps() {
-  const posts = await client.fetch<POSTS_QUERYResult>(POSTS_QUERY)
+  const posts = await client.fetch(POSTS_QUERY)
 
   return {posts}
 }
@@ -344,10 +378,9 @@ Increase the `revalidate` setting for longer-lived and less frequently modified 
 
 import {sanityFetch} from '@/sanity/lib/client'
 import {POSTS_QUERY} from '@/sanity/lib/queries'
-import {POSTS_QUERYResult} from '../../sanity.types'
 
 export default async function PostIndex() {
-  const posts = await sanityFetch<POSTS_QUERYResult>({
+  const posts = await sanityFetch({
     query: POSTS_QUERY,
     revalidate: 3600, // update cache at most once every hour
   })
@@ -447,10 +480,9 @@ For on-demand revalidation of many pages, Next.js has a `revalidateTag()` functi
 
 import {sanityFetch} from '@/sanity/lib/client'
 import {POSTS_QUERY} from '@/sanity/lib/queries'
-import {POSTS_QUERYResult} from '../../sanity.types'
 
 export default async function PostIndex() {
-  const posts = await sanityFetch<POSTS_QUERYResult>({
+  const posts = await sanityFetch({
     query: POSTS_QUERY,
     tags: ['post', 'author'], // revalidate all pages with the tags 'post' and 'author'
   })
