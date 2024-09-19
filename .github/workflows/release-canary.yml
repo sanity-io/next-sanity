@@ -1,0 +1,50 @@
+name: Release Canary
+
+on: workflow_dispatch
+
+concurrency:
+  group: ${{ github.workflow }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read # for checkout
+
+jobs:
+  release-canary:
+    permissions:
+        contents: read # for checkout
+        id-token: write # to enable use of OIDC for npm provenance
+    runs-on: ubuntu-latest
+    env:
+      TURBO_TOKEN: ${{ secrets.TURBO_TOKEN }}
+      TURBO_TEAM: ${{ vars.TURBO_TEAM }}
+    steps:
+      - uses: actions/create-github-app-token@v1
+        id: generate-token
+        with:
+          app-id: ${{ secrets.ECOSPARK_APP_ID }}
+          private-key: ${{ secrets.ECOSPARK_APP_PRIVATE_KEY }}
+      - uses: actions/checkout@v4
+        with:
+          ref: canary
+          token: ${{ steps.generate-token.outputs.token }}
+      - uses: pnpm/action-setup@v4
+      - uses: actions/setup-node@v4
+        with:
+          cache: pnpm
+          node-version: lts/*
+      - run: pnpm install --ignore-scripts
+      - run: pnpm config set '//registry.npmjs.org/:_authToken' "${NODE_AUTH_TOKEN}"
+        env:
+          NODE_AUTH_TOKEN: ${{secrets.NPM_PUBLISH_TOKEN}}
+      - name: release canary & commit + push the changed versions
+        env:
+          NPM_CONFIG_PROVENANCE: true
+        run: |
+          pnpm --filter="next-sanity" exec pnpm version --no-commit-hooks --no-git-tag-version --preid canary prerelease
+          pnpm --filter="next-sanity" publish --tag canary --no-git-checks
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add .
+          git commit -m "chore(release): publish canary [skip ci]"
+          git push
