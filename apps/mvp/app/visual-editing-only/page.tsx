@@ -4,9 +4,9 @@ import Link from 'next/link'
 import {unstable__adapter, unstable__environment} from 'next-sanity'
 import {Suspense} from 'react'
 
-import PostsLayout, {PostsLayoutProps, query} from '@/app/PostsLayout'
+import PostsLayout, {query} from '@/app/PostsLayout'
 
-import {sanityFetch} from '../sanity.fetch'
+import {sanityFetch} from '../live'
 
 export default async function IndexPage() {
   return (
@@ -49,7 +49,7 @@ export default async function IndexPage() {
 }
 
 async function Posts() {
-  const posts = await sanityFetch<PostsLayoutProps['data']>({query, tags: ['post', 'author']})
+  const {data} = await sanityFetch({query})
 
-  return <PostsLayout data={posts} draftMode={draftMode().isEnabled} />
+  return <PostsLayout data={data} draftMode={draftMode().isEnabled} />
 }
