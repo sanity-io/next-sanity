@@ -27,6 +27,7 @@
       "matchPackageNames": [
         "@sanity/client",
         "@sanity/preview-kit",
+        "@sanity/preview-url-secret",
         "@sanity/webhook",
         "@portabletext/react",
         "@portabletext/types",
@@ -48,7 +49,7 @@
     },
     {
       "matchDepNames": ["babel-plugin-react-compiler", "eslint-plugin-react-compiler"],
-      "followTag": "experimental"
+      "followTag": "beta"
     }
   ],
   "ignorePresets": [":ignoreModulesAndTests", "github>sanity-io/renovate-config:group-non-major"]
