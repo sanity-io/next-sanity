@@ -5,6 +5,7 @@
     "github>sanity-io/renovate-config:studio-v3",
     ":reviewer(team:ecosystem)"
   ],
+  "baseBranches": ["$default", "canary"],
   "packageRules": [
     {
       "group": {"semanticCommitType": "chore"},
