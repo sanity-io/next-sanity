@@ -7,4 +7,4 @@
 
 import dynamic from 'next/dynamic'
 
-export const PreviewPostsLayout = dynamic(() => import('@/app/PostsLayout'))
+export const PreviewPostsLayout = dynamic(() => import('@/app/(website)/PostsLayout'))

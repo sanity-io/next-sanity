@@ -1,8 +1,8 @@
 import {draftMode} from 'next/headers'
 import {LiveQuery} from 'next-sanity/preview/live-query'
 
-import PostsLayout, {query} from '@/app/PostsLayout'
-import {PreviewPostsLayout} from '@/app/previews'
+import PostsLayout, {query} from '@/app/(website)/PostsLayout'
+import {PreviewPostsLayout} from '@/app/(website)/previews'
 
 import {sanityFetch} from './live'
 

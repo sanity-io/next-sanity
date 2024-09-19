@@ -4,7 +4,7 @@ import Link from 'next/link'
 import {unstable__adapter, unstable__environment} from 'next-sanity'
 import {Suspense} from 'react'
 
-import PostsLayout, {query} from '@/app/PostsLayout'
+import PostsLayout, {query} from '@/app/(website)/PostsLayout'
 
 import {sanityFetch} from '../live'
 
