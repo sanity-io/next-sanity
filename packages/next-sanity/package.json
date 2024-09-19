@@ -1,6 +1,6 @@
 {
   "name": "next-sanity",
-  "version": "9.5.0",
+  "version": "9.5.1-canary.27",
   "description": "Sanity.io toolkit for Next.js",
   "keywords": [
     "sanity",
@@ -30,6 +30,12 @@
       "import": "./dist/index.js",
       "require": "./dist/index.cjs",
       "default": "./dist/index.js"
+    },
+    "./hooks": {
+      "source": "./src/hooks/index.ts",
+      "import": "./dist/hooks.js",
+      "require": "./dist/hooks.cjs",
+      "default": "./dist/hooks.js"
     },
     "./image": {
       "source": "./src/image/index.ts",
@@ -86,6 +92,9 @@
   "types": "./dist/index.d.ts",
   "typesVersions": {
     "*": {
+      "hooks": [
+        "./dist/hooks.d.ts"
+      ],
       "image": [
         "./dist/image.d.ts"
       ],
@@ -129,8 +138,9 @@
   "dependencies": {
     "@portabletext/react": "^3.1.0",
     "@sanity/client": "^6.22.1",
-    "@sanity/preview-kit": "5.1.1",
-    "@sanity/visual-editing": "2.1.10",
+    "@sanity/next-loader": "0.0.1-canary.34",
+    "@sanity/preview-kit": "5.1.2",
+    "@sanity/visual-editing": "2.1.11-canary.37",
     "groq": "^3.57.4",
     "history": "^5.3.0"
   },
