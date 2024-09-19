@@ -20,7 +20,7 @@ jobs:
         with:
           cache: pnpm
           node-version: lts/*
-      - run: pnpm install --ignore-scripts --fix-lockfile
+      - run: pnpm install --ignore-scripts --fix-lockfile --no-frozen-lockfile
       - run: pnpm dedupe
       - uses: actions/create-github-app-token@v1
         id: generate-token
