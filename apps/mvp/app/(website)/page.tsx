@@ -2,13 +2,14 @@
 import {draftMode} from 'next/headers'
 import Link from 'next/link'
 import {unstable__adapter, unstable__environment} from 'next-sanity'
-import {Suspense} from 'react'
 
 import PostsLayout, {query} from '@/app/(website)/PostsLayout'
 
 import {sanityFetch} from './live'
 
 export default async function IndexPage() {
+  const {data} = await sanityFetch({query})
+
   return (
     <>
       <div
@@ -25,9 +26,7 @@ export default async function IndexPage() {
               Posts {draftMode().isEnabled && '(Draft Mode)'}
             </h2>
           </div>
-          <Suspense>
-            <Posts />
-          </Suspense>
+          <PostsLayout data={data} draftMode={draftMode().isEnabled} />
         </div>
       </div>
       <div className="flex text-center">
@@ -40,10 +39,4 @@ export default async function IndexPage() {
       </div>
     </>
   )
-}
-
-async function Posts() {
-  const {data} = await sanityFetch({query})
-
-  return <PostsLayout data={data} draftMode={draftMode().isEnabled} />
 }

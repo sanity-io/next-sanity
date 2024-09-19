@@ -66,7 +66,7 @@ const PostsLayout = memo(function Posts(props: PostsLayoutProps) {
         })
         return (
           <div
-            key={post.title}
+            key={post._id}
             className="relative flex flex-col overflow-hidden rounded-lg shadow-lg"
             data-sanity={dataAttribute('slug')}
           >
