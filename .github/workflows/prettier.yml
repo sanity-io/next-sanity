@@ -24,7 +24,8 @@ jobs:
         with:
           cache: pnpm
           node-version: lts/*
-      - run: pnpm install --dev --ignore-scripts --no-frozen-lockfile
+      # - run: pnpm install --dev --ignore-scripts
+      - run: pnpm install --ignore-scripts --no-frozen-lockfile
       - uses: actions/cache@v4
         with:
           path: node_modules/.cache/prettier/.prettier-cache
