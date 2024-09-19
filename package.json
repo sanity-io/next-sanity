@@ -7,6 +7,7 @@
     "predev": "pnpm build",
     "dev": "turbo dev",
     "format": "prettier --cache --write .",
+    "bump:canaries": "pnpm -r up @sanity/next-loader@canary @sanity/preview-url-secret@canary @sanity/presentation@canary @sanity/visual-editing@canary && pnpm dedupe",
     "lint": "turbo lint",
     "prestart": "turbo build",
     "start": "turbo watch build start",
@@ -14,11 +15,12 @@
     "type-check": "turbo type-check"
   },
   "devDependencies": {
-    "@next/bundle-analyzer": "15.0.0-canary.191",
-    "@next/env": "15.0.0-canary.191",
+    "@next/bundle-analyzer": "15.0.0-canary.193",
+    "@next/env": "15.0.0-canary.193",
+    "@sanity/presentation": "1.16.6-canary.42",
     "@sanity/prettier-config": "1.0.3",
-    "eslint-config-next": "15.0.0-canary.191",
-    "next": "15.0.0-canary.191",
+    "eslint-config-next": "15.0.0-canary.194",
+    "next": "15.0.0-canary.193",
     "prettier": "3.3.3",
     "prettier-plugin-packagejson": "2.5.3",
     "prettier-plugin-tailwindcss": "0.6.8",
@@ -36,6 +38,7 @@
     "overrides": {
       "@next/bundle-analyzer": "$@next/bundle-analyzer",
       "@next/env": "$@next/env",
+      "@sanity/presentation": "$@sanity/presentation",
       "eslint-config-next": "$eslint-config-next",
       "next": "$next"
     }
