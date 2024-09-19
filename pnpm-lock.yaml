@@ -221,9 +221,6 @@ importers:
       '@sanity/next-loader':
         specifier: 0.0.1-canary.11
         version: 0.0.1-canary.11(@sanity/client@6.21.3)(next@15.0.0-canary.159(@babel/core@7.25.2)(react-dom@19.0.0-rc.0(react@19.0.0-rc.0))(react@19.0.0-rc.0))(react@19.0.0-rc.0)
-      '@sanity/preview-kit':
-        specifier: 5.1.1
-        version: 5.1.1(@sanity/client@6.21.3)(react@19.0.0-rc.0)
       '@sanity/types':
         specifier: ^3.57.4
         version: 3.57.4(debug@4.3.7)
@@ -2295,23 +2292,6 @@ packages:
     resolution: {integrity: sha512-daeoWaW67I2t3yIV1s3PI2o8+A7jZnucFQzaIphpFDhHYM/mqjNvEROka300TcZ1Csm4VyPBSvx1IQQ/FkqA5Q==}
     peerDependencies:
       prettier: ^3.2.5
-
-  '@sanity/preview-kit-compat@1.5.7':
-    resolution: {integrity: sha512-hOyt66yLD6RHcZfzFlqOdeU779OLXqWD31qQSeouwWLit0IhQhLKI7OMlnFKC238c/cG8GsWHI/sHbnGiaR5DQ==}
-    engines: {node: '>=18'}
-    peerDependencies:
-      '@sanity/client': ^6.21.3
-      react: ^18.3 || >=19.0.0-rc
-
-  '@sanity/preview-kit@5.1.1':
-    resolution: {integrity: sha512-q5VdFlSzCpJT9lUCIAnjQ3/npBqebqn0vZvk2nbxQ4r97NcdkvEQ9/LmH194RNwBrtnDOVSv9nYfvn3eZCD7oQ==}
-    engines: {node: '>=18'}
-    peerDependencies:
-      '@sanity/client': ^6.19.1
-      react: ^18.0.0 || >=19.0.0-rc
-    peerDependenciesMeta:
-      react:
-        optional: true
 
   '@sanity/preview-url-secret@1.6.21':
     resolution: {integrity: sha512-ZAIT4I5Nrsax+RBQVhSBY4PnnHgaI+eybSd5aHhjZi97+ziMTtTLnL1Hsg+ViLtPqJWwX0GiB0l8nSfGAt7+QA==}
@@ -9285,19 +9265,6 @@ snapshots:
     dependencies:
       prettier: 3.3.3
       prettier-plugin-packagejson: 2.5.2(prettier@3.3.3)
-
-  '@sanity/preview-kit-compat@1.5.7(@sanity/client@6.21.3)(react@19.0.0-rc.0)':
-    dependencies:
-      '@sanity/client': 6.21.3(debug@4.3.7)
-      react: 19.0.0-rc.0
-
-  '@sanity/preview-kit@5.1.1(@sanity/client@6.21.3)(react@19.0.0-rc.0)':
-    dependencies:
-      '@sanity/client': 6.21.3(debug@4.3.7)
-      '@sanity/preview-kit-compat': 1.5.7(@sanity/client@6.21.3)(react@19.0.0-rc.0)
-      mendoza: 3.0.7
-    optionalDependencies:
-      react: 19.0.0-rc.0
 
   '@sanity/preview-url-secret@1.6.21(@sanity/client@6.21.3)':
     dependencies:
