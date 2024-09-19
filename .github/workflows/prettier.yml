@@ -36,12 +36,12 @@ jobs:
         with:
           app-id: ${{ secrets.ECOSPARK_APP_ID }}
           private-key: ${{ secrets.ECOSPARK_APP_PRIVATE_KEY }}
-      - uses: peter-evans/create-pull-request@c5a7806660adbe173f04e3e038b0ccdcd758773c # v6
+      - uses: peter-evans/create-pull-request@5e914681df9dc83aa4e4905692ca88beb2f9e91f # v7
         with:
-          author: github-actions <41898282+github-actions[bot]@users.noreply.github.com>
           body: I ran `pnpm format` 🧑‍💻
           branch: actions/prettier
           commit-message: "chore(prettier): 🤖 ✨"
           labels: 🤖 bot
+          sign-commits: true
           title: "chore(prettier): 🤖 ✨"
           token: ${{ steps.generate-token.outputs.token }}
