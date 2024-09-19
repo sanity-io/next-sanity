@@ -37,6 +37,12 @@
       "require": "./dist/draft-mode.cjs",
       "default": "./dist/draft-mode.js"
     },
+    "./hooks": {
+      "source": "./src/hooks/index.ts",
+      "import": "./dist/hooks.js",
+      "require": "./dist/hooks.cjs",
+      "default": "./dist/hooks.js"
+    },
     "./image": {
       "source": "./src/image/index.ts",
       "import": "./dist/image.js",
@@ -95,6 +101,9 @@
       "draft-mode": [
         "./dist/draft-mode.d.ts"
       ],
+      "hooks": [
+        "./dist/hooks.d.ts"
+      ],
       "image": [
         "./dist/image.d.ts"
       ],
@@ -138,6 +147,7 @@
   "dependencies": {
     "@portabletext/react": "^3.1.0",
     "@sanity/client": "^6.22.2",
+    "@sanity/next-loader": "1.0.5",
     "@sanity/preview-kit": "5.1.7",
     "@sanity/preview-url-secret": "2.0.0",
     "@sanity/visual-editing": "2.3.0",
@@ -174,12 +184,12 @@
   "peerDependencies": {
     "@sanity/client": "^6.22.2",
     "@sanity/icons": "^3.4.0",
-    "@sanity/types": "^3.61.0",
-    "@sanity/ui": "^2.8.9",
+    "@sanity/types": "^3.62.0",
+    "@sanity/ui": "^2.8.10",
     "next": "^14.2 || ^15.0.0-0",
     "react": "^18.3 || ^19.0.0-0",
     "react-dom": "^18.3 || ^19.0.0-0",
-    "sanity": "^3.61.0",
+    "sanity": "^3.62.0",
     "styled-components": "^6.1"
   },
   "engines": {
