@@ -5,6 +5,23 @@
 All notable changes to this project will be documented in this file. See
 [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [9.5.0](https://github.com/sanity-io/next-sanity/compare/next-sanity-v9.4.7...next-sanity-v9.5.0) (2024-09-19)
+
+
+### Features
+
+* **client:** export `stegaClean` utility ([235259f](https://github.com/sanity-io/next-sanity/commit/235259fbb461df6047a801665f0c193c8a066afb))
+
+
+### Bug Fixes
+
+* **deps:** update dependency @sanity/client to ^6.21.3 (main) ([#1664](https://github.com/sanity-io/next-sanity/issues/1664)) ([697f411](https://github.com/sanity-io/next-sanity/commit/697f411e1e1505b563835f0a65507abb59564e2d))
+* **deps:** Update dependency @sanity/preview-kit to v5.1.1 ([e75e41f](https://github.com/sanity-io/next-sanity/commit/e75e41f8d76f664f3917184c9c4104af0a69fc6d))
+* **deps:** Update dependency @sanity/visual-editing to v2.1.10 ([2b32360](https://github.com/sanity-io/next-sanity/commit/2b32360b40b5ee79120ce5f0bdeaea40d3cb6779))
+* **deps:** Update dependency groq to v3.57.4 ([1ac314c](https://github.com/sanity-io/next-sanity/commit/1ac314cedd90fe2a95de80394f0115d5891d18c7))
+* **deps:** update dependency sanity to v3.57.4 ([5077f60](https://github.com/sanity-io/next-sanity/commit/5077f606b6ba6d3e45c4d0748932aa81df7bd78b))
+* **deps:** Update dependency typescript to v5.6.2 (main) ([#1660](https://github.com/sanity-io/next-sanity/issues/1660)) ([e94b13e](https://github.com/sanity-io/next-sanity/commit/e94b13ea9001d029cd0a8b7dc40dfe7e3e56e481))
+
 ## [9.4.7](https://github.com/sanity-io/next-sanity/compare/v9.4.6...v9.4.7) (2024-08-20)
 
 
