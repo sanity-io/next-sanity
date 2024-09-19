@@ -17,9 +17,14 @@
     "prettier": "3.3.2",
     "prettier-plugin-packagejson": "2.5.1",
     "prettier-plugin-tailwindcss": "0.6.6",
-    "turbo": "2.0.12"
+    "turbo": "2.0.12",
+    "sanity": "3.57.4",
+    "@next/bundle-analyzer": "15.0.0-canary.37",
+      "@next/env": "15.0.0-canary.37",
+      "eslint-config-next": "15.0.0-canary.37",
+      "next": "15.0.0-canary.37"
   },
-  "packageManager": "pnpm@9.7.0",
+  "packageManager": "pnpm@9.10.0",
   "pnpm": {
     "peerDependencyRules": {
       "allowAny": [
@@ -29,11 +34,11 @@
       ]
     },
     "overrides": {
-      "@next/bundle-analyzer": "15.0.0-canary.37",
-      "@next/env": "15.0.0-canary.37",
-      "eslint-config-next": "15.0.0-canary.37",
-      "next": "15.0.0-canary.37",
-      "sanity": "3.53.0"
+      "@next/bundle-analyzer": "$@next/bundle-analyzer",
+      "@next/env": "$@next/env",
+      "eslint-config-next": "$eslint-config-next",
+      "next": "$next",
+      "sanity": "$sanity"
     }
   }
 }

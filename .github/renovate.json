@@ -34,6 +34,20 @@
       "rangeStrategy": "bump",
       "matchFileNames": ["packages/next-sanity/package.json"],
       "semanticCommitType": "fix"
+    },
+    {
+      "matchDepNames": ["next", "@next/bundle-analyzer", "@next/env", "eslint-config-next"],
+      "matchFileNames": ["package.json"],
+      "followTag": "canary"
+    },
+    {
+      "matchDepNames": ["react", "react-dom", "react-is"],
+      "matchFileNames": ["apps/mvp/package.json", "apps/static/package.json"],
+      "followTag": "rc"
+    },
+    {
+      "matchDepNames": ["babel-plugin-react-compiler", "eslint-plugin-react-compiler"],
+      "followTag": "experimental"
     }
   ],
   "ignorePresets": [":ignoreModulesAndTests", "github>sanity-io/renovate-config:group-non-major"]
