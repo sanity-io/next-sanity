@@ -1,8 +1,6 @@
-name: Prettier
+name: Fix Lockfile
 
 on:
-  push:
-    branches: [main]
   workflow_dispatch:
 
 concurrency:
@@ -14,7 +12,6 @@ permissions:
 
 jobs:
   run:
-    name: Can the code be prettier? 🤔
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -23,13 +20,8 @@ jobs:
         with:
           cache: pnpm
           node-version: lts/*
-      - run: pnpm install --dev --ignore-scripts
-      - uses: actions/cache@v4
-        with:
-          path: node_modules/.cache/prettier/.prettier-cache
-          key: prettier-${{ hashFiles('pnpm-lock.yaml') }}-${{ hashFiles('.prettierignore') }}-${{ hashFiles('package.json') }}
-      - run: pnpm format
-      - run: git restore .github/workflows pnpm-lock.yaml packages/next-sanity/CHANGELOG.md
+      - run: pnpm install --ignore-scripts --fix-lockfile
+      - run: pnpm dedupe
       - uses: actions/create-github-app-token@v1
         id: generate-token
         with:
@@ -37,10 +29,10 @@ jobs:
           private-key: ${{ secrets.ECOSPARK_APP_PRIVATE_KEY }}
       - uses: peter-evans/create-pull-request@5e914681df9dc83aa4e4905692ca88beb2f9e91f # v7
         with:
-          body: I ran `pnpm format` 🧑‍💻
-          branch: actions/prettier
-          commit-message: "chore(prettier): 🤖 ✨"
+          body: I ran `pnpm install --fix-lockfile` 🧑‍💻
+          branch: "actions/fix-lockfile-${{ github.ref_name }}"
+          commit-message: "chore(lockfile): 🤖 ✨"
           labels: 🤖 bot
           sign-commits: true
-          title: "chore(prettier): 🤖 ✨"
+          title: "chore(lockfile): 🤖 ✨"
           token: ${{ steps.generate-token.outputs.token }}
