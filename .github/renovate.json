@@ -27,6 +27,7 @@
       "matchPackageNames": [
         "@sanity/client",
         "@sanity/preview-kit",
+        "@sanity/preview-url-secret",
         "@sanity/webhook",
         "@portabletext/react",
         "@portabletext/types",
@@ -49,6 +50,18 @@
     {
       "matchDepNames": ["babel-plugin-react-compiler", "eslint-plugin-react-compiler"],
       "followTag": "experimental"
+    },
+    {
+      "matchDepNames": [
+        "@sanity/client",
+        "@sanity/presentation",
+        "@sanity/preview-kit",
+        "@sanity/preview-url-secret",
+        "@sanity/next-loader",
+        "@sanity/visual-editing"
+      ],
+      "matchFileNames": ["package.json", "packages/next-sanity/package.json"],
+      "followTag": "canary"
     }
   ],
   "ignorePresets": [":ignoreModulesAndTests", "github>sanity-io/renovate-config:group-non-major"]
