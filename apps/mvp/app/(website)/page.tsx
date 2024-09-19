@@ -2,13 +2,14 @@
 import {draftMode} from 'next/headers'
 import Link from 'next/link'
 import {unstable__adapter, unstable__environment} from 'next-sanity'
-import {Suspense} from 'react'
 
-import PostsLayout, {PostsLayoutProps, query} from '@/app/PostsLayout'
+import PostsLayout, {query} from '@/app/(website)/PostsLayout'
 
-import {sanityFetch} from '../sanity.fetch'
+import {sanityFetch} from './live'
 
 export default async function IndexPage() {
+  const {data} = await sanityFetch({query})
+
   return (
     <>
       <div
@@ -22,12 +23,10 @@ export default async function IndexPage() {
         <div className="relative mx-auto max-w-7xl">
           <div className="text-center">
             <h2 className="text-3xl font-extrabold tracking-tight text-gray-900 sm:text-4xl">
-              Visual Editing Only
+              Posts {(await draftMode()).isEnabled && '(Draft Mode)'}
             </h2>
           </div>
-          <Suspense>
-            <Posts />
-          </Suspense>
+          <PostsLayout data={data} draftMode={(await draftMode()).isEnabled} />
         </div>
       </div>
       <div className="flex text-center">
@@ -37,19 +36,7 @@ export default async function IndexPage() {
         >
           Open Studio
         </Link>
-        <Link
-          href="/"
-          className="mx-2 my-4 inline-block rounded-full border border-gray-200 px-4 py-1 text-sm font-semibold text-gray-600 hover:border-transparent hover:bg-gray-600 hover:text-white focus:outline-none focus:ring-2 focus:ring-gray-600 focus:ring-offset-2"
-        >
-          Preview Kit
-        </Link>
       </div>
     </>
   )
-}
-
-async function Posts() {
-  const posts = await sanityFetch<PostsLayoutProps['data']>({query, tags: ['post', 'author']})
-
-  return <PostsLayout data={posts} draftMode={draftMode().isEnabled} />
 }

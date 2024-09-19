@@ -12,8 +12,8 @@ permissions:
 jobs:
   release-canary:
     permissions:
-        contents: read # for checkout
-        id-token: write # to enable use of OIDC for npm provenance
+      contents: read # for checkout
+      id-token: write # to enable use of OIDC for npm provenance
     runs-on: ubuntu-latest
     env:
       TURBO_TOKEN: ${{ secrets.TURBO_TOKEN }}
