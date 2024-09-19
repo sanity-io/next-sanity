@@ -4,7 +4,7 @@
   "tasks": {
     "build": {
       "env": ["ANALYZE", "NEXT_PUBLIC_SANITY_PROJECT_ID", "NEXT_PUBLIC_SANITY_DATASET"],
-      "outputs": ["out/**"]
+      "outputs": [".next/**", "!.next/cache/**", "out/**"]
     }
   }
 }
