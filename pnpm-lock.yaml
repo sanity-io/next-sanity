@@ -7,7 +7,7 @@ settings:
 overrides:
   '@next/bundle-analyzer': 15.0.0-canary.162
   '@next/env': 15.0.0-canary.162
-  '@sanity/presentation': 1.16.6-canary.22
+  '@sanity/presentation': 1.16.6-canary.23
   eslint-config-next: 15.0.0-canary.162
   next: 15.0.0-canary.162
 
@@ -23,7 +23,7 @@ importers:
         version: 15.0.0-canary.162
       '@sanity/presentation':
         specifier: 1.16.6-canary.23
-        version: 1.16.6-canary.23(@sanity/client@6.22.0)(react-dom@19.0.0-rc.0(react@19.0.0-rc.0))(react-is@18.3.1)(react@19.0.0-rc.0)(styled-components@6.1.13(react-dom@19.0.0-rc.0(react@19.0.0-rc.0))(react@19.0.0-rc.0))
+        version: 1.16.6-canary.23(@sanity/client@6.22.0(debug@4.3.7))(react-dom@19.0.0-rc.0(react@19.0.0-rc.0))(react-is@18.3.1)(react@19.0.0-rc.0)(styled-components@6.1.13(react-dom@19.0.0-rc.0(react@19.0.0-rc.0))(react@19.0.0-rc.0))
       '@sanity/prettier-config':
         specifier: 1.0.3
         version: 1.0.3(prettier@3.3.3)
@@ -56,7 +56,7 @@ importers:
         version: 1.0.2
       '@sanity/preview-url-secret':
         specifier: ^1.6.21
-        version: 1.6.21(@sanity/client@6.21.3)
+        version: 1.6.21(@sanity/client@6.22.0)
       '@sanity/vision':
         specifier: 3.57.4
         version: 3.57.4(@babel/runtime@7.25.6)(@codemirror/lint@6.8.1)(@codemirror/theme-one-dark@6.1.2)(@lezer/common@1.2.1)(codemirror@6.0.1(@lezer/common@1.2.1))(react-dom@19.0.0-rc.0(react@19.0.0-rc.0))(react-is@18.3.1)(react@19.0.0-rc.0)(styled-components@6.1.13(react-dom@19.0.0-rc.0(react@19.0.0-rc.0))(react@19.0.0-rc.0))
@@ -135,7 +135,7 @@ importers:
         version: link:../../packages/sanity-config
       '@sanity/client':
         specifier: ^6.22.0
-        version: 6.22.0
+        version: 6.22.0(debug@4.3.7)
       '@sanity/image-url':
         specifier: ^1.0.2
         version: 1.0.2
@@ -147,7 +147,7 @@ importers:
         version: 0.15.12
       next:
         specifier: 15.0.0-canary.162
-        version: 15.0.0-canary.162(@babel/core@7.25.2)(babel-plugin-react-compiler@0.0.0-experimental-6067d4e-20240919)(react-dom@19.0.0-rc.0(react@19.0.0-rc.0))(react@19.0.0-rc.0)
+        version: 15.0.0-canary.162(react-dom@19.0.0-rc.0(react@19.0.0-rc.0))(react@19.0.0-rc.0)
       next-sanity:
         specifier: workspace:*
         version: link:../../packages/next-sanity
@@ -214,7 +214,7 @@ importers:
         version: 3.1.0(react@19.0.0-rc.0)
       '@sanity/client':
         specifier: ^6.22.0
-        version: 6.22.0
+        version: 6.22.0(debug@4.3.7)
       '@sanity/icons':
         specifier: ^3.4.0
         version: 3.4.0(react@19.0.0-rc.0)
@@ -2162,10 +2162,6 @@ packages:
     engines: {node: '>=18'}
     hasBin: true
 
-  '@sanity/client@6.21.3':
-    resolution: {integrity: sha512-oE2+4kKRTZhFCc4IIsojkzKF0jIhsSYSRxkPZjScZ1k/EQ3Y2tEcQYiKwvvotzaXoaWsIL3RTpulE+R4iBYiBw==}
-    engines: {node: '>=14.18'}
-
   '@sanity/client@6.22.0':
     resolution: {integrity: sha512-GlPwg8iG74WkzRb5Im2dpFg0xq5vgvsDfQA5NQCUWmmnELdo3iMa5hicLyuW+TBK+x1SmVe7InuAjIGKq5XcYg==}
     engines: {node: '>=14.18'}
@@ -2177,10 +2173,6 @@ packages:
   '@sanity/color@3.0.6':
     resolution: {integrity: sha512-2TjYEvOftD0v7ukx3Csdh9QIu44P2z7NDJtlC3qITJRYV36J7R6Vfd3trVhFnN77/7CZrGjqngrtohv8VqO5nw==}
     engines: {node: '>=18.0.0'}
-
-  '@sanity/comlink@0.0.2-canary.20':
-    resolution: {integrity: sha512-lKji3THu4tMrg+XTE6KpPENjaok5x3q7IAavylxYB0eYNQ83wv+6zgOLAVeH9JY667RPN2rbXz2mVUrSVshq1Q==}
-    engines: {node: '>=18'}
 
   '@sanity/comlink@0.0.2-canary.21':
     resolution: {integrity: sha512-eUHqsxm30JuSuBTrt+s4es1yoy4I/ntSHMQUZv5ii+cGQV0Zo8tUld2BsCf4Lv2YERMcL95CzzjaI7sJohEqHQ==}
@@ -2293,12 +2285,6 @@ packages:
     peerDependencies:
       typescript: 5.4.x || 5.5.x || 5.6.x
 
-  '@sanity/presentation@1.16.6-canary.22':
-    resolution: {integrity: sha512-0+NlSPrM07A3UKQIzO2gIRADTH9XHyJSC0mNjvnR0CMtNpmiu39jKp/M3buX4nMYK11ImoI9CjnIMF5kSFsIww==}
-    engines: {node: '>=16.14'}
-    peerDependencies:
-      '@sanity/client': ^6.21.3
-
   '@sanity/presentation@1.16.6-canary.23':
     resolution: {integrity: sha512-X5ZTX8WpKPSo/suFjtPt32Tcv3C+Li5/gJnvKtJAX+pUJa5Tq9X2We9DMdUizM+aJC8dip9Jf0H2t6nYo0iUhw==}
     engines: {node: '>=16.14'}
@@ -2312,12 +2298,6 @@ packages:
 
   '@sanity/preview-url-secret@1.6.21':
     resolution: {integrity: sha512-ZAIT4I5Nrsax+RBQVhSBY4PnnHgaI+eybSd5aHhjZi97+ziMTtTLnL1Hsg+ViLtPqJWwX0GiB0l8nSfGAt7+QA==}
-    engines: {node: '>=18'}
-    peerDependencies:
-      '@sanity/client': ^6.21.3
-
-  '@sanity/preview-url-secret@1.6.22-canary.22':
-    resolution: {integrity: sha512-o66pMwvYuT/10y0sKtIZ6DHYAWHcPvrTWJVxJZ51vyu46Jc9cF5lulIVxdXOkdSVpHEf86AqgBW9Ax81HTRzIg==}
     engines: {node: '>=18'}
     peerDependencies:
       '@sanity/client': ^6.21.3
@@ -8759,7 +8739,7 @@ snapshots:
 
   '@polka/url@1.0.0-next.28': {}
 
-  '@portabletext/editor@1.1.1(@sanity/block-tools@3.57.4(debug@4.3.7))(@sanity/schema@3.57.4(debug@4.3.7))(@sanity/types@3.57.4(debug@4.3.7))(@sanity/util@3.57.4(debug@4.3.7))(react-dom@19.0.0-rc.0(react@19.0.0-rc.0))(react@19.0.0-rc.0)(rxjs@7.8.1)(styled-components@6.1.13(react-dom@19.0.0-rc.0(react@19.0.0-rc.0))(react@19.0.0-rc.0))':
+  '@portabletext/editor@1.1.1(@sanity/block-tools@3.57.4(debug@4.3.7))(@sanity/schema@3.57.4(debug@4.3.7))(@sanity/types@3.57.4)(@sanity/util@3.57.4(debug@4.3.7))(react-dom@19.0.0-rc.0(react@19.0.0-rc.0))(react@19.0.0-rc.0)(rxjs@7.8.1)(styled-components@6.1.13(react-dom@19.0.0-rc.0(react@19.0.0-rc.0))(react@19.0.0-rc.0))':
     dependencies:
       '@portabletext/patches': 1.1.0
       '@sanity/block-tools': 3.57.4(debug@4.3.7)
@@ -9001,7 +8981,7 @@ snapshots:
   '@sanity/cli@3.57.4(react@19.0.0-rc.0)':
     dependencies:
       '@babel/traverse': 7.25.6
-      '@sanity/client': 6.21.3(debug@4.3.7)
+      '@sanity/client': 6.22.0(debug@4.3.7)
       '@sanity/codegen': 3.57.4
       '@sanity/telemetry': 0.7.9(react@19.0.0-rc.0)
       '@sanity/util': 3.57.4(debug@4.3.7)
@@ -9022,15 +9002,7 @@ snapshots:
       - react
       - supports-color
 
-  '@sanity/client@6.21.3(debug@4.3.7)':
-    dependencies:
-      '@sanity/eventsource': 5.0.2
-      get-it: 8.6.5(debug@4.3.7)
-      rxjs: 7.8.1
-    transitivePeerDependencies:
-      - debug
-
-  '@sanity/client@6.22.0':
+  '@sanity/client@6.22.0(debug@4.3.7)':
     dependencies:
       '@sanity/eventsource': 5.0.2
       get-it: 8.6.5(debug@4.3.7)
@@ -9059,12 +9031,6 @@ snapshots:
       - supports-color
 
   '@sanity/color@3.0.6': {}
-
-  '@sanity/comlink@0.0.2-canary.20':
-    dependencies:
-      rxjs: 7.8.1
-      uuid: 10.0.0
-      xstate: 5.18.2
 
   '@sanity/comlink@0.0.2-canary.21':
     dependencies:
@@ -9105,7 +9071,7 @@ snapshots:
 
   '@sanity/export@3.41.0':
     dependencies:
-      '@sanity/client': 6.21.3(debug@4.3.7)
+      '@sanity/client': 6.22.0(debug@4.3.7)
       '@sanity/util': 3.37.2(debug@4.3.7)
       archiver: 7.0.1
       debug: 4.3.7
@@ -9169,7 +9135,7 @@ snapshots:
       react-copy-to-clipboard: 5.1.0(react@19.0.0-rc.0)
       react-dom: 19.0.0-rc.0(react@19.0.0-rc.0)
 
-  '@sanity/insert-menu@1.0.9(@sanity/types@3.57.4(debug@4.3.7))(react-dom@19.0.0-rc.0(react@19.0.0-rc.0))(react-is@18.3.1)(react@19.0.0-rc.0)(styled-components@6.1.13(react-dom@19.0.0-rc.0(react@19.0.0-rc.0))(react@19.0.0-rc.0))':
+  '@sanity/insert-menu@1.0.9(@sanity/types@3.57.4)(react-dom@19.0.0-rc.0(react@19.0.0-rc.0))(react-is@18.3.1)(react@19.0.0-rc.0)(styled-components@6.1.13(react-dom@19.0.0-rc.0(react@19.0.0-rc.0))(react@19.0.0-rc.0))':
     dependencies:
       '@sanity/icons': 3.4.0(react@19.0.0-rc.0)
       '@sanity/types': 3.57.4(debug@4.3.7)
@@ -9188,7 +9154,7 @@ snapshots:
 
   '@sanity/migrate@3.57.4':
     dependencies:
-      '@sanity/client': 6.21.3(debug@4.3.7)
+      '@sanity/client': 6.22.0(debug@4.3.7)
       '@sanity/mutate': 0.10.0(debug@4.3.7)
       '@sanity/types': 3.57.4(debug@4.3.7)
       '@sanity/util': 3.57.4(debug@4.3.7)
@@ -9202,7 +9168,7 @@ snapshots:
 
   '@sanity/mutate@0.10.0(debug@4.3.7)':
     dependencies:
-      '@sanity/client': 6.21.3(debug@4.3.7)
+      '@sanity/client': 6.22.0(debug@4.3.7)
       '@sanity/diff-match-patch': 3.1.1
       hotscript: 1.0.13
       mendoza: 3.0.7
@@ -9213,7 +9179,7 @@ snapshots:
 
   '@sanity/mutate@0.10.1-canary.3(xstate@5.18.2)':
     dependencies:
-      '@sanity/client': 6.22.0
+      '@sanity/client': 6.22.0(debug@4.3.7)
       '@sanity/diff-match-patch': 3.1.1
       hotscript: 1.0.13
       mendoza: 3.0.7
@@ -9245,9 +9211,9 @@ snapshots:
 
   '@sanity/next-loader@0.0.1-canary.20(@sanity/client@6.22.0)(next@15.0.0-canary.162(@babel/core@7.25.2)(react-dom@19.0.0-rc.0(react@19.0.0-rc.0))(react@19.0.0-rc.0))(react@19.0.0-rc.0)':
     dependencies:
-      '@sanity/client': 6.22.0
+      '@sanity/client': 6.22.0(debug@4.3.7)
       '@sanity/comlink': 0.0.2-canary.21
-      '@sanity/preview-url-secret': 1.6.22-canary.23(@sanity/client@6.22.0)
+      '@sanity/preview-url-secret': 1.6.22-canary.23(@sanity/client@6.22.0(debug@4.3.7))
       next: 15.0.0-canary.162(@babel/core@7.25.2)(babel-plugin-react-compiler@0.0.0-experimental-6067d4e-20240919)(react-dom@19.0.0-rc.0(react@19.0.0-rc.0))(react@19.0.0-rc.0)
       react: 19.0.0-rc.0
       use-effect-event: 1.0.2(react@19.0.0-rc.0)
@@ -9303,37 +9269,12 @@ snapshots:
       - debug
       - supports-color
 
-  '@sanity/presentation@1.16.6-canary.22(@sanity/client@6.21.3(debug@4.3.7))(react-dom@19.0.0-rc.0(react@19.0.0-rc.0))(react-is@18.3.1)(react@19.0.0-rc.0)(styled-components@6.1.13(react-dom@19.0.0-rc.0(react@19.0.0-rc.0))(react@19.0.0-rc.0))':
+  '@sanity/presentation@1.16.6-canary.23(@sanity/client@6.22.0(debug@4.3.7))(react-dom@19.0.0-rc.0(react@19.0.0-rc.0))(react-is@18.3.1)(react@19.0.0-rc.0)(styled-components@6.1.13(react-dom@19.0.0-rc.0(react@19.0.0-rc.0))(react@19.0.0-rc.0))':
     dependencies:
-      '@sanity/client': 6.21.3(debug@4.3.7)
-      '@sanity/comlink': 0.0.2-canary.20
-      '@sanity/icons': 3.4.0(react@19.0.0-rc.0)
-      '@sanity/preview-url-secret': 1.6.22-canary.22(@sanity/client@6.21.3(debug@4.3.7))
-      '@sanity/ui': 2.8.9(react-dom@19.0.0-rc.0(react@19.0.0-rc.0))(react-is@18.3.1)(react@19.0.0-rc.0)(styled-components@6.1.13(react-dom@19.0.0-rc.0(react@19.0.0-rc.0))(react@19.0.0-rc.0))
-      '@sanity/uuid': 3.0.2
-      '@types/lodash.isequal': 4.5.8
-      fast-deep-equal: 3.1.3
-      framer-motion: 11.0.8(react-dom@19.0.0-rc.0(react@19.0.0-rc.0))(react@19.0.0-rc.0)
-      lodash.get: 4.4.2
-      lodash.isequal: 4.5.0
-      mendoza: 3.0.7
-      mnemonist: 0.39.8
-      path-to-regexp: 6.3.0
-      rxjs: 7.8.1
-      suspend-react: 0.1.3(react@19.0.0-rc.0)
-      use-effect-event: 1.0.2(react@19.0.0-rc.0)
-    transitivePeerDependencies:
-      - react
-      - react-dom
-      - react-is
-      - styled-components
-
-  '@sanity/presentation@1.16.6-canary.23(@sanity/client@6.22.0)(react-dom@19.0.0-rc.0(react@19.0.0-rc.0))(react-is@18.3.1)(react@19.0.0-rc.0)(styled-components@6.1.13(react-dom@19.0.0-rc.0(react@19.0.0-rc.0))(react@19.0.0-rc.0))':
-    dependencies:
-      '@sanity/client': 6.22.0
+      '@sanity/client': 6.22.0(debug@4.3.7)
       '@sanity/comlink': 0.0.2-canary.21
       '@sanity/icons': 3.4.0(react@19.0.0-rc.0)
-      '@sanity/preview-url-secret': 1.6.22-canary.23(@sanity/client@6.22.0)
+      '@sanity/preview-url-secret': 1.6.22-canary.23(@sanity/client@6.22.0(debug@4.3.7))
       '@sanity/ui': 2.8.9(react-dom@19.0.0-rc.0(react@19.0.0-rc.0))(react-is@18.3.1)(react@19.0.0-rc.0)(styled-components@6.1.13(react-dom@19.0.0-rc.0(react@19.0.0-rc.0))(react@19.0.0-rc.0))
       '@sanity/uuid': 3.0.2
       '@types/lodash.isequal': 4.5.8
@@ -9358,19 +9299,14 @@ snapshots:
       prettier: 3.3.3
       prettier-plugin-packagejson: 2.5.2(prettier@3.3.3)
 
-  '@sanity/preview-url-secret@1.6.21(@sanity/client@6.21.3)':
+  '@sanity/preview-url-secret@1.6.21(@sanity/client@6.22.0)':
     dependencies:
-      '@sanity/client': 6.21.3(debug@4.3.7)
+      '@sanity/client': 6.22.0(debug@4.3.7)
       '@sanity/uuid': 3.0.2
 
-  '@sanity/preview-url-secret@1.6.22-canary.22(@sanity/client@6.21.3(debug@4.3.7))':
+  '@sanity/preview-url-secret@1.6.22-canary.23(@sanity/client@6.22.0(debug@4.3.7))':
     dependencies:
-      '@sanity/client': 6.21.3(debug@4.3.7)
-      '@sanity/uuid': 3.0.2
-
-  '@sanity/preview-url-secret@1.6.22-canary.23(@sanity/client@6.22.0)':
-    dependencies:
-      '@sanity/client': 6.22.0
+      '@sanity/client': 6.22.0(debug@4.3.7)
       '@sanity/uuid': 3.0.2
 
   '@sanity/schema@3.57.4(debug@4.3.7)':
@@ -9396,14 +9332,14 @@ snapshots:
 
   '@sanity/types@3.37.2(debug@4.3.7)':
     dependencies:
-      '@sanity/client': 6.21.3(debug@4.3.7)
+      '@sanity/client': 6.22.0(debug@4.3.7)
       '@types/react': 18.3.8
     transitivePeerDependencies:
       - debug
 
   '@sanity/types@3.57.4(debug@4.3.7)':
     dependencies:
-      '@sanity/client': 6.21.3(debug@4.3.7)
+      '@sanity/client': 6.22.0(debug@4.3.7)
       '@types/react': 18.3.8
     transitivePeerDependencies:
       - debug
@@ -9424,7 +9360,7 @@ snapshots:
 
   '@sanity/util@3.37.2(debug@4.3.7)':
     dependencies:
-      '@sanity/client': 6.21.3(debug@4.3.7)
+      '@sanity/client': 6.22.0(debug@4.3.7)
       '@sanity/types': 3.37.2(debug@4.3.7)
       get-random-values-esm: 1.0.2
       moment: 2.30.1
@@ -9434,7 +9370,7 @@ snapshots:
 
   '@sanity/util@3.57.4(debug@4.3.7)':
     dependencies:
-      '@sanity/client': 6.21.3(debug@4.3.7)
+      '@sanity/client': 6.22.0(debug@4.3.7)
       '@sanity/types': 3.57.4(debug@4.3.7)
       get-random-values-esm: 1.0.2
       moment: 2.30.1
@@ -9483,7 +9419,7 @@ snapshots:
   '@sanity/visual-editing@2.1.11-canary.23(@sanity/client@6.22.0)(next@15.0.0-canary.162(@babel/core@7.25.2)(react-dom@19.0.0-rc.0(react@19.0.0-rc.0))(react@19.0.0-rc.0))(react-dom@19.0.0-rc.0(react@19.0.0-rc.0))(react@19.0.0-rc.0)':
     dependencies:
       '@sanity/mutate': 0.10.1-canary.3(xstate@5.18.2)
-      '@sanity/preview-url-secret': 1.6.22-canary.23(@sanity/client@6.22.0)
+      '@sanity/preview-url-secret': 1.6.22-canary.23(@sanity/client@6.22.0(debug@4.3.7))
       '@vercel/stega': 0.1.2
       react: 19.0.0-rc.0
       react-dom: 19.0.0-rc.0(react@19.0.0-rc.0)
@@ -9491,7 +9427,7 @@ snapshots:
       valibot: 0.31.1
       xstate: 5.18.2
     optionalDependencies:
-      '@sanity/client': 6.22.0
+      '@sanity/client': 6.22.0(debug@4.3.7)
       next: 15.0.0-canary.162(@babel/core@7.25.2)(babel-plugin-react-compiler@0.0.0-experimental-6067d4e-20240919)(react-dom@19.0.0-rc.0(react@19.0.0-rc.0))(react@19.0.0-rc.0)
     transitivePeerDependencies:
       - debug
@@ -13726,14 +13662,14 @@ snapshots:
       '@dnd-kit/sortable': 7.0.2(@dnd-kit/core@6.1.0(react-dom@19.0.0-rc.0(react@19.0.0-rc.0))(react@19.0.0-rc.0))(react@19.0.0-rc.0)
       '@dnd-kit/utilities': 3.2.2(react@19.0.0-rc.0)
       '@juggle/resize-observer': 3.4.0
-      '@portabletext/editor': 1.1.1(@sanity/block-tools@3.57.4(debug@4.3.7))(@sanity/schema@3.57.4(debug@4.3.7))(@sanity/types@3.57.4(debug@4.3.7))(@sanity/util@3.57.4(debug@4.3.7))(react-dom@19.0.0-rc.0(react@19.0.0-rc.0))(react@19.0.0-rc.0)(rxjs@7.8.1)(styled-components@6.1.13(react-dom@19.0.0-rc.0(react@19.0.0-rc.0))(react@19.0.0-rc.0))
+      '@portabletext/editor': 1.1.1(@sanity/block-tools@3.57.4(debug@4.3.7))(@sanity/schema@3.57.4(debug@4.3.7))(@sanity/types@3.57.4)(@sanity/util@3.57.4(debug@4.3.7))(react-dom@19.0.0-rc.0(react@19.0.0-rc.0))(react@19.0.0-rc.0)(rxjs@7.8.1)(styled-components@6.1.13(react-dom@19.0.0-rc.0(react@19.0.0-rc.0))(react@19.0.0-rc.0))
       '@portabletext/react': 3.1.0(react@19.0.0-rc.0)
       '@rexxars/react-json-inspector': 8.0.1(react@19.0.0-rc.0)
       '@sanity/asset-utils': 1.3.0
       '@sanity/bifur-client': 0.4.1
       '@sanity/block-tools': 3.57.4(debug@4.3.7)
       '@sanity/cli': 3.57.4(react@19.0.0-rc.0)
-      '@sanity/client': 6.21.3(debug@4.3.7)
+      '@sanity/client': 6.22.0(debug@4.3.7)
       '@sanity/color': 3.0.6
       '@sanity/diff': 3.57.4
       '@sanity/diff-match-patch': 3.1.1
@@ -13742,11 +13678,11 @@ snapshots:
       '@sanity/icons': 3.4.0(react@19.0.0-rc.0)
       '@sanity/image-url': 1.0.2
       '@sanity/import': 3.37.5
-      '@sanity/insert-menu': 1.0.9(@sanity/types@3.57.4(debug@4.3.7))(react-dom@19.0.0-rc.0(react@19.0.0-rc.0))(react-is@18.3.1)(react@19.0.0-rc.0)(styled-components@6.1.13(react-dom@19.0.0-rc.0(react@19.0.0-rc.0))(react@19.0.0-rc.0))
+      '@sanity/insert-menu': 1.0.9(@sanity/types@3.57.4)(react-dom@19.0.0-rc.0(react@19.0.0-rc.0))(react-is@18.3.1)(react@19.0.0-rc.0)(styled-components@6.1.13(react-dom@19.0.0-rc.0(react@19.0.0-rc.0))(react@19.0.0-rc.0))
       '@sanity/logos': 2.1.13(@sanity/color@3.0.6)(react@19.0.0-rc.0)
       '@sanity/migrate': 3.57.4
       '@sanity/mutator': 3.57.4
-      '@sanity/presentation': 1.16.6-canary.22(@sanity/client@6.21.3(debug@4.3.7))(react-dom@19.0.0-rc.0(react@19.0.0-rc.0))(react-is@18.3.1)(react@19.0.0-rc.0)(styled-components@6.1.13(react-dom@19.0.0-rc.0(react@19.0.0-rc.0))(react@19.0.0-rc.0))
+      '@sanity/presentation': 1.16.6-canary.23(@sanity/client@6.22.0(debug@4.3.7))(react-dom@19.0.0-rc.0(react@19.0.0-rc.0))(react-is@18.3.1)(react@19.0.0-rc.0)(styled-components@6.1.13(react-dom@19.0.0-rc.0(react@19.0.0-rc.0))(react@19.0.0-rc.0))
       '@sanity/schema': 3.57.4(debug@4.3.7)
       '@sanity/telemetry': 0.7.9(react@19.0.0-rc.0)
       '@sanity/types': 3.57.4(debug@4.3.7)
