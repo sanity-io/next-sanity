@@ -8,6 +8,7 @@ import {
 import {usePathname, useRouter, useSearchParams} from 'next/navigation.js'
 import {revalidateRootLayout} from 'next-sanity/visual-editing/server-actions'
 import {useCallback, useEffect, useMemo, useRef, useState} from 'react'
+import {createPortal} from 'react-dom'
 
 import {addPathPrefix, normalizePathTrailingSlash, removePathPrefix} from './utils'
 
@@ -37,7 +38,7 @@ export interface VisualEditingProps extends Omit<VisualEditingOptions, 'history'
   trailingSlash?: boolean
 }
 
-export function VisualEditing(props: VisualEditingProps): React.JSX.Element {
+export function VisualEditing(props: VisualEditingProps): React.JSX.Element | null {
   const {basePath = '', refresh, trailingSlash = false, zIndex} = props
 
   const router = useRouter()
@@ -130,5 +131,27 @@ export function VisualEditing(props: VisualEditingProps): React.JSX.Element {
     [refresh],
   )
 
-  return <VisualEditingComponent history={history} refresh={handleRefresh} zIndex={zIndex} />
+  const [node, setNode] = useState<HTMLDivElement | null>(null)
+  useEffect(() => {
+    // eslint-disable-next-line no-warning-comments
+    // @TODO use 'sanity-visual-editing' instead of 'div'
+    // eslint-disable-next-line no-shadow
+    const node = document.createElement('div')
+    // eslint-disable-next-line no-warning-comments
+    // @TODO after the element is `sanity-visual-editing` instead of `div`, stop setting this ID
+    node.id = 'sanity-visual-editing'
+    document.documentElement.appendChild(node)
+    setNode(node)
+    return () => {
+      setNode(null)
+      document.documentElement.removeChild(node)
+    }
+  }, [])
+
+  if (!node) return null
+
+  return createPortal(
+    <VisualEditingComponent history={history} refresh={handleRefresh} zIndex={zIndex} />,
+    node,
+  )
 }
