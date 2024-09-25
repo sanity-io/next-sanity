@@ -144,7 +144,9 @@ export function VisualEditing(props: VisualEditingProps): React.JSX.Element | nu
     setNode(node)
     return () => {
       setNode(null)
-      document.documentElement.removeChild(node)
+      if (document.documentElement.contains(node)) {
+        document.documentElement.removeChild(node)
+      }
     }
   }, [])
 
