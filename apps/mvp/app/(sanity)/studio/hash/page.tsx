@@ -1,9 +1,12 @@
-import dynamic from 'next/dynamic'
+import {NextStudio} from 'next-sanity/studio'
 
-const Studio = dynamic(() => import('./Studio'), {ssr: false})
-
-export {metadata, viewport} from 'next-sanity/studio'
+import config from '@/sanity.config'
 
 export default function StudioPage() {
-  return <Studio />
+  return (
+    <NextStudio
+      config={config}
+      basePath={`${process.env.NEXT_PUBLIC_TEST_BASE_PATH || ''}/studio/hash`}
+    />
+  )
 }
