@@ -5,6 +5,6 @@ import {token} from './sanity.fetch'
 
 export const {sanityFetch, SanityLive, verifyPreviewSecret} = defineLive({
   client,
-  previewDraftsToken: token,
-  liveDraftsToken: token,
+  serverToken: token,
+  clientToken: token,
 })
