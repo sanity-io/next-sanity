@@ -6,5 +6,5 @@ import {token} from './sanity.fetch'
 export const {sanityFetch, SanityLive, verifyPreviewSecret} = defineLive({
   client,
   serverToken: token,
-  clientToken: token,
+  browserToken: token,
 })
