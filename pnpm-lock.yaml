@@ -7,7 +7,7 @@ settings:
 overrides:
   '@next/bundle-analyzer': 15.0.0-canary.167
   '@next/env': 15.0.0-canary.167
-  '@sanity/presentation': 1.16.6-canary.29
+  '@sanity/presentation': 1.16.6-canary.30
   eslint-config-next: 15.0.0-canary.167
   next: 15.0.0-canary.167
 
@@ -22,8 +22,8 @@ importers:
         specifier: 15.0.0-canary.167
         version: 15.0.0-canary.167
       '@sanity/presentation':
-        specifier: 1.16.6-canary.29
-        version: 1.16.6-canary.29(@sanity/client@6.22.0)(react-dom@19.0.0-rc.0(react@19.0.0-rc.0))(react-is@18.3.1)(react@19.0.0-rc.0)(styled-components@6.1.13(react-dom@19.0.0-rc.0(react@19.0.0-rc.0))(react@19.0.0-rc.0))
+        specifier: 1.16.6-canary.30
+        version: 1.16.6-canary.30(@sanity/client@6.22.0)(react-dom@19.0.0-rc.0(react@19.0.0-rc.0))(react-is@18.3.1)(react@19.0.0-rc.0)(styled-components@6.1.13(react-dom@19.0.0-rc.0(react@19.0.0-rc.0))(react@19.0.0-rc.0))
       '@sanity/prettier-config':
         specifier: 1.0.3
         version: 1.0.3(prettier@3.3.3)
@@ -2181,6 +2181,10 @@ packages:
     resolution: {integrity: sha512-NsJfTSclpnvsBhLnP6D9PdBktEcPwauo8U1lj0bnQCgbid8OJykuxkKMXWVl1FEtosRo0EXM80rnI0kscc5dTw==}
     engines: {node: '>=18'}
 
+  '@sanity/comlink@0.0.2-canary.28':
+    resolution: {integrity: sha512-CDFSHRfM+9KiLtTPUToBeWL4Iz1iFYI8i+t5x147WKnqaLaAJRemTMyhsn6Nuf4LE4uoBADSj+7Wf/73G/SBWQ==}
+    engines: {node: '>=18'}
+
   '@sanity/diff-match-patch@3.1.1':
     resolution: {integrity: sha512-dSZqGeYjHKGIkqAzGqLcG92LZyJGX+nYbs/FWawhBbTBDWi21kvQ0hsL3DJThuFVWtZMWTQijN3z6Cnd44Pf2g==}
     engines: {node: '>=14.18'}
@@ -2288,8 +2292,8 @@ packages:
     peerDependencies:
       typescript: 5.4.x || 5.5.x || 5.6.x
 
-  '@sanity/presentation@1.16.6-canary.29':
-    resolution: {integrity: sha512-0twKP5AOyoNXz9pvQvJRYjg7+WtXl47tzj8Zj4/LSv99KCnBxFSZyvXxaxAnxJq0/ASlMRUWvT6nf76gkA95EA==}
+  '@sanity/presentation@1.16.6-canary.30':
+    resolution: {integrity: sha512-VyX36HNuUwfiixkUE5IOqZuBH8q14dGU4E7MrnRNSmzq5c1RMdusvUWQwoct+T8BfsrvXBfiH8J2Wl/irGBlXA==}
     engines: {node: '>=16.14'}
     peerDependencies:
       '@sanity/client': ^6.22.0
@@ -2307,6 +2311,12 @@ packages:
 
   '@sanity/preview-url-secret@1.6.22-canary.29':
     resolution: {integrity: sha512-AVJgzwxb/cRN/1TLldIt3RNog3LMWXNan6IQDl0aiQNHAl9kaBdHIu/0OiLvGaSPaOF1jzA/5hpwdSM3AhbWZw==}
+    engines: {node: '>=18'}
+    peerDependencies:
+      '@sanity/client': ^6.22.0
+
+  '@sanity/preview-url-secret@1.6.22-canary.30':
+    resolution: {integrity: sha512-djc/9O5bY25FZZU1t4yS1XWGX78NzflGA2kS4auf1wbCDVF03zyz5QbENRiLHlavu2OQARK1VS4jp7xeKHRyWw==}
     engines: {node: '>=18'}
     peerDependencies:
       '@sanity/client': ^6.22.0
@@ -5098,6 +5108,7 @@ packages:
   next@15.0.0-canary.167:
     resolution: {integrity: sha512-IifSWU8gNQ8kTXRf2QnEGvUUpnkZk8WKLKWX6rypnEDDmn38sXaWpemjMUIM98UrT/y9sXBIiBA84X2MvignIA==}
     engines: {node: '>=18.18.0'}
+    deprecated: Faulty release. Use 15.0.0-canary.168 instead.
     hasBin: true
     peerDependencies:
       '@opentelemetry/api': ^1.1.0
@@ -9044,6 +9055,12 @@ snapshots:
       uuid: 10.0.0
       xstate: 5.18.2
 
+  '@sanity/comlink@0.0.2-canary.28':
+    dependencies:
+      rxjs: 7.8.1
+      uuid: 10.0.0
+      xstate: 5.18.2
+
   '@sanity/diff-match-patch@3.1.1': {}
 
   '@sanity/diff@3.58.0':
@@ -9275,12 +9292,12 @@ snapshots:
       - debug
       - supports-color
 
-  '@sanity/presentation@1.16.6-canary.29(@sanity/client@6.22.0)(react-dom@19.0.0-rc.0(react@19.0.0-rc.0))(react-is@18.3.1)(react@19.0.0-rc.0)(styled-components@6.1.13(react-dom@19.0.0-rc.0(react@19.0.0-rc.0))(react@19.0.0-rc.0))':
+  '@sanity/presentation@1.16.6-canary.30(@sanity/client@6.22.0)(react-dom@19.0.0-rc.0(react@19.0.0-rc.0))(react-is@18.3.1)(react@19.0.0-rc.0)(styled-components@6.1.13(react-dom@19.0.0-rc.0(react@19.0.0-rc.0))(react@19.0.0-rc.0))':
     dependencies:
       '@sanity/client': 6.22.0(debug@4.3.7)
-      '@sanity/comlink': 0.0.2-canary.27
+      '@sanity/comlink': 0.0.2-canary.28
       '@sanity/icons': 3.4.0(react@19.0.0-rc.0)
-      '@sanity/preview-url-secret': 1.6.22-canary.29(@sanity/client@6.22.0)
+      '@sanity/preview-url-secret': 1.6.22-canary.30(@sanity/client@6.22.0)
       '@sanity/ui': 2.8.9(react-dom@19.0.0-rc.0(react@19.0.0-rc.0))(react-is@18.3.1)(react@19.0.0-rc.0)(styled-components@6.1.13(react-dom@19.0.0-rc.0(react@19.0.0-rc.0))(react@19.0.0-rc.0))
       '@sanity/uuid': 3.0.2
       '@types/lodash.isequal': 4.5.8
@@ -9311,6 +9328,11 @@ snapshots:
       '@sanity/uuid': 3.0.2
 
   '@sanity/preview-url-secret@1.6.22-canary.29(@sanity/client@6.22.0)':
+    dependencies:
+      '@sanity/client': 6.22.0(debug@4.3.7)
+      '@sanity/uuid': 3.0.2
+
+  '@sanity/preview-url-secret@1.6.22-canary.30(@sanity/client@6.22.0)':
     dependencies:
       '@sanity/client': 6.22.0(debug@4.3.7)
       '@sanity/uuid': 3.0.2
@@ -13693,7 +13715,7 @@ snapshots:
       '@sanity/logos': 2.1.13(@sanity/color@3.0.6)(react@19.0.0-rc.0)
       '@sanity/migrate': 3.58.0
       '@sanity/mutator': 3.58.0
-      '@sanity/presentation': 1.16.6-canary.29(@sanity/client@6.22.0)(react-dom@19.0.0-rc.0(react@19.0.0-rc.0))(react-is@18.3.1)(react@19.0.0-rc.0)(styled-components@6.1.13(react-dom@19.0.0-rc.0(react@19.0.0-rc.0))(react@19.0.0-rc.0))
+      '@sanity/presentation': 1.16.6-canary.30(@sanity/client@6.22.0)(react-dom@19.0.0-rc.0(react@19.0.0-rc.0))(react-is@18.3.1)(react@19.0.0-rc.0)(styled-components@6.1.13(react-dom@19.0.0-rc.0(react@19.0.0-rc.0))(react@19.0.0-rc.0))
       '@sanity/schema': 3.58.0(debug@4.3.7)
       '@sanity/telemetry': 0.7.9(react@19.0.0-rc.0)
       '@sanity/types': 3.58.0(debug@4.3.7)
