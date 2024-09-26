@@ -228,8 +228,8 @@ importers:
         specifier: ^2.8.9
         version: 2.8.9(react-dom@19.0.0-rc.0(react@19.0.0-rc.0))(react-is@18.3.1)(react@19.0.0-rc.0)(styled-components@6.1.13(react-dom@19.0.0-rc.0(react@19.0.0-rc.0))(react@19.0.0-rc.0))
       '@sanity/visual-editing':
-        specifier: 2.1.11-canary.29
-        version: 2.1.11-canary.29(@sanity/client@6.22.0)(next@15.0.0-canary.167(@babel/core@7.25.2)(react-dom@19.0.0-rc.0(react@19.0.0-rc.0))(react@19.0.0-rc.0))(react-dom@19.0.0-rc.0(react@19.0.0-rc.0))(react@19.0.0-rc.0)
+        specifier: 2.1.11-canary.30
+        version: 2.1.11-canary.30(@sanity/client@6.22.0)(next@15.0.0-canary.167(@babel/core@7.25.2)(react-dom@19.0.0-rc.0(react@19.0.0-rc.0))(react@19.0.0-rc.0))(react-dom@19.0.0-rc.0(react@19.0.0-rc.0))(react@19.0.0-rc.0)
       groq:
         specifier: ^3.57.4
         version: 3.58.0
@@ -2311,6 +2311,12 @@ packages:
     peerDependencies:
       '@sanity/client': ^6.22.0
 
+  '@sanity/preview-url-secret@1.6.22-canary.30':
+    resolution: {integrity: sha512-djc/9O5bY25FZZU1t4yS1XWGX78NzflGA2kS4auf1wbCDVF03zyz5QbENRiLHlavu2OQARK1VS4jp7xeKHRyWw==}
+    engines: {node: '>=18'}
+    peerDependencies:
+      '@sanity/client': ^6.22.0
+
   '@sanity/schema@3.58.0':
     resolution: {integrity: sha512-bn966DmeJ6mNoAqtp/YOAc4ZKp65vtkN2se5xaRyvy+7SjtCTbAASeZbVWLkPAlbIiEsrhHChCdVhzzNRxtqJA==}
 
@@ -2352,8 +2358,8 @@ packages:
       react: ^18
       styled-components: ^6.1
 
-  '@sanity/visual-editing@2.1.11-canary.29':
-    resolution: {integrity: sha512-hzPAAFeZYtvyGx8vxjlzBi/0moMbEeYVzinbrwfWqwnNm8low8dngw3N/TD/xyKT7aMZll+a1zz8zLCO3tmOjg==}
+  '@sanity/visual-editing@2.1.11-canary.30':
+    resolution: {integrity: sha512-BT/80mQ7tYhWDcCJjy9olQCox1I/7eDK/NnKT/UNKmSwUhrxSKnKY/qttFHFpNLD7INvE+ybnxQXLyff14oT3Q==}
     engines: {node: '>=18'}
     peerDependencies:
       '@remix-run/react': '>= 2'
@@ -5098,6 +5104,7 @@ packages:
   next@15.0.0-canary.167:
     resolution: {integrity: sha512-IifSWU8gNQ8kTXRf2QnEGvUUpnkZk8WKLKWX6rypnEDDmn38sXaWpemjMUIM98UrT/y9sXBIiBA84X2MvignIA==}
     engines: {node: '>=18.18.0'}
+    deprecated: Faulty release. Use 15.0.0-canary.168 instead.
     hasBin: true
     peerDependencies:
       '@opentelemetry/api': ^1.1.0
@@ -9315,6 +9322,11 @@ snapshots:
       '@sanity/client': 6.22.0(debug@4.3.7)
       '@sanity/uuid': 3.0.2
 
+  '@sanity/preview-url-secret@1.6.22-canary.30(@sanity/client@6.22.0)':
+    dependencies:
+      '@sanity/client': 6.22.0(debug@4.3.7)
+      '@sanity/uuid': 3.0.2
+
   '@sanity/schema@3.58.0(debug@4.3.7)':
     dependencies:
       '@sanity/generate-help-url': 3.0.0
@@ -9422,10 +9434,10 @@ snapshots:
       - react-dom
       - react-is
 
-  '@sanity/visual-editing@2.1.11-canary.29(@sanity/client@6.22.0)(next@15.0.0-canary.167(@babel/core@7.25.2)(react-dom@19.0.0-rc.0(react@19.0.0-rc.0))(react@19.0.0-rc.0))(react-dom@19.0.0-rc.0(react@19.0.0-rc.0))(react@19.0.0-rc.0)':
+  '@sanity/visual-editing@2.1.11-canary.30(@sanity/client@6.22.0)(next@15.0.0-canary.167(@babel/core@7.25.2)(react-dom@19.0.0-rc.0(react@19.0.0-rc.0))(react@19.0.0-rc.0))(react-dom@19.0.0-rc.0(react@19.0.0-rc.0))(react@19.0.0-rc.0)':
     dependencies:
       '@sanity/mutate': 0.10.1-canary.4(xstate@5.18.2)
-      '@sanity/preview-url-secret': 1.6.22-canary.29(@sanity/client@6.22.0)
+      '@sanity/preview-url-secret': 1.6.22-canary.30(@sanity/client@6.22.0)
       '@vercel/stega': 0.1.2
       react: 19.0.0-rc.0
       react-dom: 19.0.0-rc.0(react@19.0.0-rc.0)
