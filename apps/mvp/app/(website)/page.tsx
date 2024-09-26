@@ -23,10 +23,10 @@ export default async function IndexPage() {
         <div className="relative mx-auto max-w-7xl">
           <div className="text-center">
             <h2 className="text-3xl font-extrabold tracking-tight text-gray-900 sm:text-4xl">
-              Posts {draftMode().isEnabled && '(Draft Mode)'}
+              Posts {(await draftMode()).isEnabled && '(Draft Mode)'}
             </h2>
           </div>
-          <PostsLayout data={data} draftMode={draftMode().isEnabled} />
+          <PostsLayout data={data} draftMode={(await draftMode()).isEnabled} />
         </div>
       </div>
       <div className="flex text-center">

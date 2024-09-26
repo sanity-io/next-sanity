@@ -7,7 +7,7 @@ import {verifyPreviewSecret} from './live'
 export async function handleDraftModeAction(secret: string): Promise<void | string> {
   console.log('Server Action wants to enable Draft Mode', {secret})
 
-  if (draftMode().isEnabled) {
+  if ((await draftMode()).isEnabled) {
     // eslint-disable-next-line no-console
     console.log('Draft Mode is already enabled')
     return
@@ -21,7 +21,7 @@ export async function handleDraftModeAction(secret: string): Promise<void | stri
     }
 
     console.log('Enabling Draft Mode')
-    draftMode().enable()
+    ;(await draftMode()).enable()
   } catch (err) {
     console.error('Failed to verify preview secret', {secret}, err)
     return 'Unexpected error'
@@ -31,7 +31,7 @@ export async function handleDraftModeAction(secret: string): Promise<void | stri
 export async function disableDraftMode() {
   'use server'
   await Promise.allSettled([
-    draftMode().disable(),
+    (await draftMode()).disable(),
     // Simulate a delay to show the loading state
     new Promise((resolve) => setTimeout(resolve, 1000)),
   ])

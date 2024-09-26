@@ -6,13 +6,13 @@ import {VisualEditing} from 'next-sanity'
 import {handleDraftModeAction} from './actions'
 import {SanityLive} from './live'
 
-export default function RootLayout({children}: {children: React.ReactNode}) {
+export default async function RootLayout({children}: {children: React.ReactNode}) {
   return (
     <html lang="en">
       <head />
       <body>
         {children}
-        {draftMode().isEnabled && <VisualEditing />}
+        {(await draftMode()).isEnabled && <VisualEditing />}
         <SanityLive handleDraftModeAction={handleDraftModeAction} ignoreBrowserTokenWarning />
       </body>
     </html>
