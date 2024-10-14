@@ -66,7 +66,7 @@ const PostsLayout = memo(function Posts(props: PostsLayoutProps) {
         })
         return (
           <div
-            key={post.title}
+            key={post._id}
             className="relative flex flex-col overflow-hidden rounded-lg shadow-lg"
             data-sanity={dataAttribute('slug')}
           >
@@ -109,7 +109,7 @@ const PostsLayout = memo(function Posts(props: PostsLayoutProps) {
                   {post.publishedAt ? (
                     <div className="flex space-x-1 text-sm text-gray-500">
                       <time dateTime={post.publishedAt?.toJSON()}>
-                        {post.publishedAt?.toLocaleDateString()}
+                        {post.publishedAt?.toDateString()}
                       </time>
                       <span aria-hidden="true">&middot;</span>
                     </div>

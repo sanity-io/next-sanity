@@ -4,7 +4,7 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "build": "next build",
+    "build": "next build --profile",
     "dev": "next --turbo",
     "format": "next lint --fix .",
     "lint": "next lint --max-warnings 0 .",
@@ -15,31 +15,31 @@
     "@repo/sanity-config": "workspace:*",
     "@sanity/image-url": "^1.0.2",
     "@sanity/preview-url-secret": "^1.6.21",
-    "@sanity/vision": "3.57.4",
-    "babel-plugin-react-compiler": "0.0.0-experimental-24ec0eb-20240918",
+    "@sanity/vision": "3.60.0",
+    "babel-plugin-react-compiler": "0.0.0-experimental-fa06e2c-20241014",
     "groqd": "^0.15.12",
     "next": "15.0.0-rc.0",
     "next-sanity": "workspace:*",
     "react": "19.0.0-rc.0",
     "react-dom": "19.0.0-rc.0",
-    "sanity": "3.57.4"
+    "sanity": "3.60.0"
   },
   "devDependencies": {
     "@next/bundle-analyzer": "15.0.0-rc.0",
     "@next/env": "15.0.0-rc.0",
     "@repo/typescript-config": "workspace:*",
-    "@types/react": "^18.3.3",
+    "@types/react": "^18.3.11",
     "@typescript-eslint/eslint-plugin": "^7.18.0",
     "autoprefixer": "^10.4.20",
-    "eslint": "^8.57.0",
+    "eslint": "^8.57.1",
     "eslint-config-next": "15.0.0-rc.0",
     "eslint-config-prettier": "^9.1.0",
     "eslint-gitignore": "^0.1.0",
     "eslint-plugin-simple-import-sort": "^12.1.1",
-    "postcss": "^8.4.41",
+    "postcss": "^8.4.47",
     "server-only": "^0.0.1",
-    "tailwindcss": "^3.4.7",
-    "typescript": "5.6.2"
+    "tailwindcss": "^3.4.13",
+    "typescript": "5.6.3"
   },
   "engines": {
     "node": "20"
