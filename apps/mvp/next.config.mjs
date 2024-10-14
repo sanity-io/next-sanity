@@ -37,38 +37,20 @@ const nextConfig = {
   },
   productionBrowserSourceMaps: true,
 
-  webpack(config) {
-    // config.resolve.alias = {
-    //   ...config.resolve.alias,
-    //   '@sanity/vision': requireResolve('@sanity/vision'),
-    //   'sanity/_singletons': requireResolve('sanity/_singletons'),
-    //   'sanity/desk': requireResolve('sanity/desk'),
-    //   'sanity/presentation': requireResolve('sanity/presentation'),
-    //   'sanity/router': requireResolve('sanity/router'),
-    //   'sanity/structure': requireResolve('sanity/structure'),
-    //   sanity: requireResolve('sanity'),
-    // }
+  // webpack(config) {
+  // config.resolve.alias = {
+  //   ...config.resolve.alias,
+  //   '@sanity/vision': requireResolve('@sanity/vision'),
+  //   'sanity/_singletons': requireResolve('sanity/_singletons'),
+  //   'sanity/desk': requireResolve('sanity/desk'),
+  //   'sanity/presentation': requireResolve('sanity/presentation'),
+  //   'sanity/router': requireResolve('sanity/router'),
+  //   'sanity/structure': requireResolve('sanity/structure'),
+  //   sanity: requireResolve('sanity'),
+  // }
 
-    class NextEntryPlugin {
-      apply(compiler) {
-        compiler.hooks.afterEnvironment.tap('NextEntryPlugin', () => {
-          if (compiler.options.resolve.conditionNames.includes('browser')) {
-            compiler.options.resolve.conditionNames = [
-              ...compiler.options.resolve.conditionNames.filter(
-                (condition) => condition !== 'browser',
-              ),
-              'react-compiler',
-              'browser',
-            ]
-          }
-        })
-      }
-    }
-
-    config.plugins.push(new NextEntryPlugin())
-
-    return config
-  },
+  // return config
+  // },
 
   async headers() {
     return [

@@ -38,7 +38,7 @@ export interface VisualEditingProps extends Omit<VisualEditingOptions, 'history'
   trailingSlash?: boolean
 }
 
-export function VisualEditing(props: VisualEditingProps): React.JSX.Element | null {
+export default function VisualEditing(props: VisualEditingProps): React.JSX.Element | null {
   const {basePath = '', refresh, trailingSlash = false, zIndex} = props
 
   const router = useRouter()

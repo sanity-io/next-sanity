@@ -1,3 +1,4 @@
 'use client'
 
-export {VisualEditing as default, type VisualEditingProps} from './VisualEditing'
+export type {VisualEditingProps} from './VisualEditing'
+export {VisualEditingLazyClientComponent as default} from './VisualEditingLazy'
