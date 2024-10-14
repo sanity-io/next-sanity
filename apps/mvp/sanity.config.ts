@@ -1,5 +1,7 @@
-/* eslint-disable no-restricted-globals */
-/* eslint-disable no-process-env */
+'use client'
+
+/* eslint-disable no-restricted-globals,no-process-env */
+
 import sharedConfig from '@repo/sanity-config'
 import {debugSecrets} from '@sanity/preview-url-secret/sanity-plugin-debug-secrets'
 import {defineConfig} from 'sanity'

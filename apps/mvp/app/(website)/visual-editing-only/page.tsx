@@ -4,11 +4,12 @@ import Link from 'next/link'
 import {unstable__adapter, unstable__environment} from 'next-sanity'
 import {Suspense} from 'react'
 
-import PostsLayout, {PostsLayoutProps, query} from '@/app/PostsLayout'
-
+import PostsLayout, {PostsLayoutProps, query} from '../PostsLayout'
 import {sanityFetch} from '../sanity.fetch'
 
 export default async function IndexPage() {
+  const posts = await sanityFetch<PostsLayoutProps['data']>({query, tags: ['post', 'author']})
+
   return (
     <>
       <div
@@ -25,9 +26,7 @@ export default async function IndexPage() {
               Visual Editing Only
             </h2>
           </div>
-          <Suspense>
-            <Posts />
-          </Suspense>
+          <PostsLayout data={posts} draftMode={(await draftMode()).isEnabled} />
         </div>
       </div>
       <div className="flex text-center">
@@ -46,10 +45,4 @@ export default async function IndexPage() {
       </div>
     </>
   )
-}
-
-async function Posts() {
-  const posts = await sanityFetch<PostsLayoutProps['data']>({query, tags: ['post', 'author']})
-
-  return <PostsLayout data={posts} draftMode={draftMode().isEnabled} />
 }
