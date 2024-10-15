@@ -10,7 +10,7 @@ export async function POST(req: NextRequest): Promise<any> {
       _type: string
       _id: string
       slug?: string | undefined
-    }>(req, process.env.SANITY_REVALIDATE_SECRET)
+    }>(req as any, process.env.SANITY_REVALIDATE_SECRET)
     if (!isValidSignature) {
       const message = 'Invalid signature'
       return new Response(message, {status: 401})
