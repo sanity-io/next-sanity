@@ -1,15 +1,21 @@
 /**
- * This file works around a new restriction in Next v15 where server components are not allowed
- * to use dynamic(() => import('...), {ssr: false})
- * only Client Components can set ssr: false.
+ *
+ * If pages router supported `next/dynamic` imports (it wants `next/dynamic.js`),
+ * or if turbopack in app router allowed `next/dynamic.js` (it doesn't yet)
+ * we could use `dynamic(() => import('...), {ssr: false})` here.
+ * Since we can't, we need to use a lazy import and Suspense ourself.
  */
 
-import dynamic from 'next/dynamic'
+import {lazy, Suspense} from 'react'
 
 import type {VisualEditingProps} from './VisualEditing'
 
-const VisualEditingClientComponent = dynamic(() => import('./VisualEditing'), {ssr: false})
+const VisualEditingClientComponent = lazy(() => import('./VisualEditing'))
 
 export function VisualEditingLazyClientComponent(props: VisualEditingProps): React.ReactNode {
-  return <VisualEditingClientComponent {...props} />
+  return (
+    <Suspense fallback={null}>
+      <VisualEditingClientComponent {...props} />
+    </Suspense>
+  )
 }
