@@ -4,6 +4,7 @@
   "private": true,
   "scripts": {
     "build": "turbo build --filter=./packages/*",
+    "predev": "pnpm build",
     "dev": "turbo dev",
     "format": "prettier --cache --write .",
     "lint": "turbo lint",
