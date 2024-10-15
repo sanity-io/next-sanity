@@ -1,2 +1,4 @@
 'use client'
-export {NextStudio as default, type NextStudioProps} from './NextStudio'
+
+export type {NextStudioProps} from './NextStudio'
+export {NextStudioLazyClientComponent as NextStudio} from './NextStudioLazy'

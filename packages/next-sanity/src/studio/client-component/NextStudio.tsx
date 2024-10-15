@@ -1,4 +1,4 @@
-import {memo, useMemo} from 'react'
+import {useMemo} from 'react'
 import {Studio, type StudioProps} from 'sanity'
 
 import {NextStudioLayout} from '../NextStudioLayout'
@@ -25,17 +25,28 @@ export interface NextStudioProps extends StudioProps {
   history?: 'browser' | 'hash'
 }
 /**
- * Intended to render at the root of a page, letting the Studio own that page and render much like it would if you used `npx sanity start` to render
- * It's a drop-in replacement for `import {Studio} from 'sanity'`
+ * Override how the Studio renders by passing children.
+ * This is useful for advanced use cases where you're using StudioProvider and StudioLayout instead of Studio:
+ * ```
+ * import {StudioProvider, StudioLayout} from 'sanity'
+ * import {NextStudio} from 'next-sanity/studio'
+ * <NextStudio config={config}>
+ *   <StudioProvider config={config}>
+ *     <CustomComponentThatUsesContextFromStudioProvider />
+ *     <StudioLayout />
+ *   </StudioProvider>
+ * </NextStudio>
+ * ```
+ * @public
  */
-const NextStudioComponent = ({
+export default function NextStudioComponent({
   children,
   config,
   unstable__noScript = true,
   scheme,
   history,
   ...props
-}: NextStudioProps) => {
+}: NextStudioProps): React.JSX.Element {
   const isMounted = useIsMounted()
   const unstableHistory = useMemo<typeof props.unstable_history>(() => {
     if (props.unstable_history && history) {
@@ -69,20 +80,3 @@ const NextStudioComponent = ({
     </>
   )
 }
-
-/**
- * Override how the Studio renders by passing children.
- * This is useful for advanced use cases where you're using StudioProvider and StudioLayout instead of Studio:
- * ```
- * import {StudioProvider, StudioLayout} from 'sanity'
- * import {NextStudio} from 'next-sanity/studio'
- * <NextStudio config={config}>
- *   <StudioProvider config={config}>
- *     <CustomComponentThatUsesContextFromStudioProvider />
- *     <StudioLayout />
- *   </StudioProvider>
- * </NextStudio>
- * ```
- * @public
- */
-export const NextStudio = memo(NextStudioComponent)
