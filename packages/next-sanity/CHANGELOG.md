@@ -5,6 +5,15 @@
 All notable changes to this project will be documented in this file. See
 [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [9.5.3](https://github.com/sanity-io/next-sanity/compare/next-sanity-v9.5.2...next-sanity-v9.5.3) (2024-10-15)
+
+
+### Bug Fixes
+
+* **deps:** update dependency @sanity/preview-kit to v5.1.4 ([c2d32d6](https://github.com/sanity-io/next-sanity/commit/c2d32d66f9e054bb715fc0ed995c7d33acc57feb))
+* **NextStudio:** support turbopack ([72a8f37](https://github.com/sanity-io/next-sanity/commit/72a8f37ab253c91f68afaa6fd8f459071db66438))
+* **VisualEditing:** support turbopack ([53e4b5a](https://github.com/sanity-io/next-sanity/commit/53e4b5ae3750e03243a28d8bfe893432796579f5))
+
 ## [9.5.2](https://github.com/sanity-io/next-sanity/compare/next-sanity-v9.5.1...next-sanity-v9.5.2) (2024-10-14)
 
 
