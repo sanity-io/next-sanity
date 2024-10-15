@@ -5,6 +5,14 @@
 All notable changes to this project will be documented in this file. See
 [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [9.5.4](https://github.com/sanity-io/next-sanity/compare/next-sanity-v9.5.3...next-sanity-v9.5.4) (2024-10-15)
+
+
+### Bug Fixes
+
+* **deps:** update dependency groq to ^3.60.0 ([865979c](https://github.com/sanity-io/next-sanity/commit/865979c936de2102fa829b67b65d9e88a6cfd4f0))
+* regression in pages router on `next/dynamic` imports ([01701b2](https://github.com/sanity-io/next-sanity/commit/01701b2ecb7cd36e453dd643d952b9f91ff1116a))
+
 ## [9.5.3](https://github.com/sanity-io/next-sanity/compare/next-sanity-v9.5.2...next-sanity-v9.5.3) (2024-10-15)
 
 
