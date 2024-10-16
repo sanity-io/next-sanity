@@ -1,5 +1,5 @@
 import {validatePreviewUrl} from '@sanity/preview-url-secret'
-import {draftMode} from 'next/headers'
+import {cookies, draftMode} from 'next/headers'
 import {redirect} from 'next/navigation'
 
 import type {SanityClient} from '../client'
@@ -43,29 +43,32 @@ export function defineEnableDraftMode(options: DefineEnableDraftModeOptions): En
       // const {redirect} = await import('next/navigation.js')
 
       // eslint-disable-next-line no-warning-comments
-      // @TODO check if already in draft mode and skip validation
-      // const {enable} = await draftMode()
+      // @TODO check if already in draft mode at a much earlier stage, and skip validation
 
       const {isValid, redirectTo = '/'} = await validatePreviewUrl(client, request.url)
       if (!isValid) {
         return new Response('Invalid secret', {status: 401})
       }
 
-      ;(await draftMode()).enable()
+      const {isEnabled, enable} = await draftMode()
 
-      // eslint-disable-next-line no-warning-comments
-      // @TODO test if this is still necessary
+      // Let's enable draft mode if it's not already enabled
+      if (!isEnabled) {
+        enable()
+      }
+
       // Override cookie header for draft mode for usage in live-preview
       // https://github.com/vercel/next.js/issues/49927
-      // const cookie = (await cookies()).get('__prerender_bypass')!
-      // ;(await cookies()).set({
-      //   name: '__prerender_bypass',
-      //   value: cookie?.value,
-      //   httpOnly: true,
-      //   path: '/',
-      //   secure: true,
-      //   sameSite: 'none',
-      // })
+      const {get, set} = await cookies()
+      const cookie = get('__prerender_bypass')!
+      set({
+        name: '__prerender_bypass',
+        value: cookie?.value,
+        httpOnly: true,
+        path: '/',
+        secure: true,
+        sameSite: 'none',
+      })
 
       // the `redirect` function throws, and eventually returns a Promise<Response>. TSC doesn't "see" that so we have to tell it
       return redirect(redirectTo) as Promise<Response>
