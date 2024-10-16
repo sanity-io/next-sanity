@@ -50,18 +50,18 @@ export function defineEnableDraftMode(options: DefineEnableDraftModeOptions): En
         return new Response('Invalid secret', {status: 401})
       }
 
-      const {isEnabled, enable} = await draftMode()
+      const draftModeStore = await draftMode()
 
       // Let's enable draft mode if it's not already enabled
-      if (!isEnabled) {
-        enable()
+      if (!draftModeStore.isEnabled) {
+        draftModeStore.enable()
       }
 
       // Override cookie header for draft mode for usage in live-preview
       // https://github.com/vercel/next.js/issues/49927
-      const {get, set} = await cookies()
-      const cookie = get('__prerender_bypass')!
-      set({
+      const cookieStore = await cookies()
+      const cookie = cookieStore.get('__prerender_bypass')!
+      cookieStore.set({
         name: '__prerender_bypass',
         value: cookie?.value,
         httpOnly: true,
