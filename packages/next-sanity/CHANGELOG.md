@@ -5,6 +5,14 @@
 All notable changes to this project will be documented in this file. See
 [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [9.5.5](https://github.com/sanity-io/next-sanity/compare/next-sanity-v9.5.4...next-sanity-v9.5.5) (2024-10-17)
+
+
+### Bug Fixes
+
+* **deps:** update dependency @sanity/client to ^6.22.2 (main) ([#1776](https://github.com/sanity-io/next-sanity/issues/1776)) ([099b063](https://github.com/sanity-io/next-sanity/commit/099b063497cffc0e4e746687b1462e583aabbfa4))
+* **deps:** update dependency @sanity/preview-kit to v5.1.5 (main) ([#1779](https://github.com/sanity-io/next-sanity/issues/1779)) ([5cb8fce](https://github.com/sanity-io/next-sanity/commit/5cb8fce5c0e79cb5a89573030f4a3aaf14402690))
+
 ## [9.5.4](https://github.com/sanity-io/next-sanity/compare/next-sanity-v9.5.3...next-sanity-v9.5.4) (2024-10-15)
 
 
