@@ -11,7 +11,7 @@ const projectId = process.env.NEXT_PUBLIC_SANITY_PROJECT_ID!
 const dataset = process.env.NEXT_PUBLIC_SANITY_DATASET!
 
 const previewMode = {
-  enable: `${process.env.NEXT_PUBLIC_TEST_BASE_PATH || ''}/api/draft`,
+  enable: `${process.env.NEXT_PUBLIC_TEST_BASE_PATH || ''}/api/draft-mode/enable`,
 } satisfies PreviewUrlResolverOptions['previewMode']
 
 export default defineConfig({
