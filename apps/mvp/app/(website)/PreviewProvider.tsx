@@ -2,7 +2,7 @@
 
 import {LiveQueryProvider} from 'next-sanity/preview'
 
-import {client} from './sanity.client'
+import {client} from '../sanity.client'
 
 export default function PreviewProvider({
   children,
