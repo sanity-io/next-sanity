@@ -5,6 +5,13 @@
 All notable changes to this project will be documented in this file. See
 [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [9.7.0](https://github.com/sanity-io/next-sanity/compare/next-sanity-v9.6.0...next-sanity-v9.7.0) (2024-10-22)
+
+
+### Features
+
+* pass components prop to visual editing component ([#1805](https://github.com/sanity-io/next-sanity/issues/1805)) ([ad8896f](https://github.com/sanity-io/next-sanity/commit/ad8896febc4678a02d3afedc3b6612f53c165924))
+
 ## [9.6.0](https://github.com/sanity-io/next-sanity/compare/next-sanity-v9.5.6...next-sanity-v9.6.0) (2024-10-22)
 
 
