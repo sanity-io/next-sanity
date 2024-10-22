@@ -39,7 +39,7 @@ export interface VisualEditingProps extends Omit<VisualEditingOptions, 'history'
 }
 
 export default function VisualEditing(props: VisualEditingProps): React.JSX.Element | null {
-  const {basePath = '', refresh, trailingSlash = false, zIndex} = props
+  const {basePath = '', components, refresh, trailingSlash = false, zIndex} = props
 
   const router = useRouter()
   const routerRef = useRef(router)
@@ -153,7 +153,12 @@ export default function VisualEditing(props: VisualEditingProps): React.JSX.Elem
   if (!node) return null
 
   return createPortal(
-    <VisualEditingComponent history={history} refresh={handleRefresh} zIndex={zIndex} />,
+    <VisualEditingComponent
+      components={components}
+      history={history}
+      refresh={handleRefresh}
+      zIndex={zIndex}
+    />,
     node,
   )
 }
