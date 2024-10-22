@@ -7,7 +7,7 @@ settings:
 overrides:
   '@next/bundle-analyzer': 15.0.0-canary.196
   '@next/env': 15.0.0-canary.196
-  eslint-config-next: 15.0.0-canary.202
+  eslint-config-next: 15.0.1-canary.0
   next: 15.0.0-canary.196
 
 importers:
@@ -24,8 +24,8 @@ importers:
         specifier: 1.0.3
         version: 1.0.3(prettier@3.3.3)
       eslint-config-next:
-        specifier: 15.0.0-canary.202
-        version: 15.0.0-canary.202(eslint@8.57.1)(typescript@5.6.3)
+        specifier: 15.0.1-canary.0
+        version: 15.0.1-canary.0(eslint@8.57.1)(typescript@5.6.3)
       next:
         specifier: 15.0.0-canary.196
         version: 15.0.0-canary.196(react-dom@19.0.0-rc.0(react@19.0.0-rc.0))(react@19.0.0-rc.0)
@@ -100,8 +100,8 @@ importers:
         specifier: ^8.57.1
         version: 8.57.1
       eslint-config-next:
-        specifier: 15.0.0-canary.202
-        version: 15.0.0-canary.202(eslint@8.57.1)(typescript@5.6.3)
+        specifier: 15.0.1-canary.0
+        version: 15.0.1-canary.0(eslint@8.57.1)(typescript@5.6.3)
       eslint-config-prettier:
         specifier: ^9.1.0
         version: 9.1.0(eslint@8.57.1)
@@ -179,8 +179,8 @@ importers:
         specifier: ^8.57.1
         version: 8.57.1
       eslint-config-next:
-        specifier: 15.0.0-canary.202
-        version: 15.0.0-canary.202(eslint@8.57.1)(typescript@5.6.3)
+        specifier: 15.0.1-canary.0
+        version: 15.0.1-canary.0(eslint@8.57.1)(typescript@5.6.3)
       eslint-config-prettier:
         specifier: ^9.1.0
         version: 9.1.0(eslint@8.57.1)
@@ -1749,8 +1749,8 @@ packages:
   '@next/env@15.0.0-canary.196':
     resolution: {integrity: sha512-H0CDHGNk0zlwt8rtWtHLA1qtbIOYqX3QLn2Ega88alNlWvTQwCfpJDP9UFnFY2k6uOkbT+XcA3bHYu2lY6jQyA==}
 
-  '@next/eslint-plugin-next@15.0.0-canary.202':
-    resolution: {integrity: sha512-6hYNANvsG6bBVjfAR6vtG16lqbzWoINapOfgzLJBIR4JxRcp4dc5Rcmg7HCG4par/l7DB/3FMle5z/PLOgYsBQ==}
+  '@next/eslint-plugin-next@15.0.1-canary.0':
+    resolution: {integrity: sha512-25QBDvMU11Vdr6PXemCFFYhkdOvkjzGr9Q7GZ1gP8PH1Tz0M0Krzz4Zu2qAUSuqOsKoGNUCIPr9OTwsbQKegAA==}
 
   '@next/swc-darwin-arm64@15.0.0-canary.196':
     resolution: {integrity: sha512-0MdsFooNheQ5DY/f5+83/LhTSzDGUk9tKHTozsMUOj+xnjhIgV2pFNaGYJCrIhnCeGYTM+1NOCTkPPqfZzpWjQ==}
@@ -3669,8 +3669,8 @@ packages:
     resolution: {integrity: sha512-TtpcNJ3XAzx3Gq8sWRzJaVajRs0uVxA2YAkdb1jm2YkPz4G6egUFAyA3n5vtEIZefPk5Wa4UXbKuS5fKkJWdgA==}
     engines: {node: '>=10'}
 
-  eslint-config-next@15.0.0-canary.202:
-    resolution: {integrity: sha512-qWG0o6qn811c5Z9yNNXMj7dOe2hpUqNeH+S5ieJ7DTP1JYFIJd8AjyfzGmxNGCgm8wH3FKvL+dJfkztLohpAFw==}
+  eslint-config-next@15.0.1-canary.0:
+    resolution: {integrity: sha512-+h8RqFq61utqeGOCvqCqFVLjsNNATflDK1P4T+LwndvW4/qIpd8FRTSb34FQA8MOt0wEM1ci116Xz6KL7hYfzw==}
     peerDependencies:
       eslint: ^7.23.0 || ^8.0.0 || ^9.0.0
       typescript: '>=3.3.1'
@@ -8562,7 +8562,7 @@ snapshots:
 
   '@next/env@15.0.0-canary.196': {}
 
-  '@next/eslint-plugin-next@15.0.0-canary.202':
+  '@next/eslint-plugin-next@15.0.1-canary.0':
     dependencies:
       fast-glob: 3.3.1
 
@@ -11061,16 +11061,16 @@ snapshots:
 
   escape-string-regexp@4.0.0: {}
 
-  eslint-config-next@15.0.0-canary.202(eslint@8.57.1)(typescript@5.6.3):
+  eslint-config-next@15.0.1-canary.0(eslint@8.57.1)(typescript@5.6.3):
     dependencies:
-      '@next/eslint-plugin-next': 15.0.0-canary.202
+      '@next/eslint-plugin-next': 15.0.1-canary.0
       '@rushstack/eslint-patch': 1.10.3
       '@typescript-eslint/eslint-plugin': 7.18.0(@typescript-eslint/parser@7.13.1(eslint@8.57.1)(typescript@5.6.3))(eslint@8.57.1)(typescript@5.6.3)
       '@typescript-eslint/parser': 7.13.1(eslint@8.57.1)(typescript@5.6.3)
       eslint: 8.57.1
       eslint-import-resolver-node: 0.3.9
       eslint-import-resolver-typescript: 3.6.1(@typescript-eslint/parser@7.13.1(eslint@8.57.1)(typescript@5.6.3))(eslint-import-resolver-node@0.3.9)(eslint-plugin-import@2.31.0(@typescript-eslint/parser@7.13.1(eslint@8.57.1)(typescript@5.6.3))(eslint@8.57.1))(eslint@8.57.1)
-      eslint-plugin-import: 2.31.0(@typescript-eslint/parser@7.13.1(eslint@8.57.1)(typescript@5.6.3))(eslint-import-resolver-typescript@3.6.1)(eslint@8.57.1)
+      eslint-plugin-import: 2.31.0(@typescript-eslint/parser@7.13.1(eslint@8.57.1)(typescript@5.6.3))(eslint-import-resolver-typescript@3.6.1(@typescript-eslint/parser@7.13.1(eslint@8.57.1)(typescript@5.6.3))(eslint-import-resolver-node@0.3.9)(eslint-plugin-import@2.31.0(@typescript-eslint/parser@7.13.1(eslint@8.57.1)(typescript@5.6.3))(eslint@8.57.1))(eslint@8.57.1))(eslint@8.57.1)
       eslint-plugin-jsx-a11y: 6.10.0(eslint@8.57.1)
       eslint-plugin-react: 7.37.1(eslint@8.57.1)
       eslint-plugin-react-hooks: 5.0.0(eslint@8.57.1)
@@ -11091,7 +11091,7 @@ snapshots:
     optionalDependencies:
       '@typescript-eslint/eslint-plugin': 7.18.0(@typescript-eslint/parser@7.13.1(eslint@8.57.1)(typescript@5.6.3))(eslint@8.57.1)(typescript@5.6.3)
       '@typescript-eslint/parser': 7.13.1(eslint@8.57.1)(typescript@5.6.3)
-      eslint-plugin-import: 2.31.0(@typescript-eslint/parser@7.13.1(eslint@8.57.1)(typescript@5.6.3))(eslint-import-resolver-typescript@3.6.1)(eslint@8.57.1)
+      eslint-plugin-import: 2.31.0(@typescript-eslint/parser@7.13.1(eslint@8.57.1)(typescript@5.6.3))(eslint-import-resolver-typescript@3.6.1(@typescript-eslint/parser@7.13.1(eslint@8.57.1)(typescript@5.6.3))(eslint-import-resolver-node@0.3.9)(eslint-plugin-import@2.31.0(@typescript-eslint/parser@7.13.1(eslint@8.57.1)(typescript@5.6.3))(eslint@8.57.1))(eslint@8.57.1))(eslint@8.57.1)
       eslint-plugin-react: 7.37.1(eslint@8.57.1)
       eslint-plugin-react-hooks: 5.0.0(eslint@8.57.1)
 
@@ -11118,7 +11118,7 @@ snapshots:
       enhanced-resolve: 5.17.0
       eslint: 8.57.1
       eslint-module-utils: 2.12.0(@typescript-eslint/parser@7.13.1(eslint@8.57.1)(typescript@5.6.3))(eslint-import-resolver-node@0.3.9)(eslint-import-resolver-typescript@3.6.1(@typescript-eslint/parser@7.13.1(eslint@8.57.1)(typescript@5.6.3))(eslint-import-resolver-node@0.3.9)(eslint-plugin-import@2.31.0(@typescript-eslint/parser@7.13.1(eslint@8.57.1)(typescript@5.6.3))(eslint@8.57.1))(eslint@8.57.1))(eslint@8.57.1)
-      eslint-plugin-import: 2.31.0(@typescript-eslint/parser@7.13.1(eslint@8.57.1)(typescript@5.6.3))(eslint-import-resolver-typescript@3.6.1)(eslint@8.57.1)
+      eslint-plugin-import: 2.31.0(@typescript-eslint/parser@7.13.1(eslint@8.57.1)(typescript@5.6.3))(eslint-import-resolver-typescript@3.6.1(@typescript-eslint/parser@7.13.1(eslint@8.57.1)(typescript@5.6.3))(eslint-import-resolver-node@0.3.9)(eslint-plugin-import@2.31.0(@typescript-eslint/parser@7.13.1(eslint@8.57.1)(typescript@5.6.3))(eslint@8.57.1))(eslint@8.57.1))(eslint@8.57.1)
       fast-glob: 3.3.2
       get-tsconfig: 4.7.5
       is-core-module: 2.15.1
@@ -11140,7 +11140,7 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  eslint-plugin-import@2.31.0(@typescript-eslint/parser@7.13.1(eslint@8.57.1)(typescript@5.6.3))(eslint-import-resolver-typescript@3.6.1)(eslint@8.57.1):
+  eslint-plugin-import@2.31.0(@typescript-eslint/parser@7.13.1(eslint@8.57.1)(typescript@5.6.3))(eslint-import-resolver-typescript@3.6.1(@typescript-eslint/parser@7.13.1(eslint@8.57.1)(typescript@5.6.3))(eslint-import-resolver-node@0.3.9)(eslint-plugin-import@2.31.0(@typescript-eslint/parser@7.13.1(eslint@8.57.1)(typescript@5.6.3))(eslint@8.57.1))(eslint@8.57.1))(eslint@8.57.1):
     dependencies:
       '@rtsao/scc': 1.1.0
       array-includes: 3.1.8
