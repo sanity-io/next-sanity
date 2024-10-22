@@ -215,8 +215,8 @@ importers:
         specifier: ^3.4.0
         version: 3.4.0(react@19.0.0-rc.0)
       '@sanity/preview-kit':
-        specifier: 5.1.6
-        version: 5.1.6(@sanity/client@6.22.2)(react@19.0.0-rc.0)
+        specifier: 5.1.7
+        version: 5.1.7(@sanity/client@6.22.2)(react@19.0.0-rc.0)
       '@sanity/types':
         specifier: ^3.57.4
         version: 3.61.0(debug@4.3.7)
@@ -2174,6 +2174,10 @@ packages:
     resolution: {integrity: sha512-2TjYEvOftD0v7ukx3Csdh9QIu44P2z7NDJtlC3qITJRYV36J7R6Vfd3trVhFnN77/7CZrGjqngrtohv8VqO5nw==}
     engines: {node: '>=18.0.0'}
 
+  '@sanity/comlink@1.0.0':
+    resolution: {integrity: sha512-OwbT5C1j8wEVEvU78cYrC7l2l+cUH4UWHE4LF+FjniiQqeO+Udt6qK8akDRzsULmt3V2ebPOg+CYgRZh8Fkhdg==}
+    engines: {node: '>=18'}
+
   '@sanity/diff-match-patch@3.1.1':
     resolution: {integrity: sha512-dSZqGeYjHKGIkqAzGqLcG92LZyJGX+nYbs/FWawhBbTBDWi21kvQ0hsL3DJThuFVWtZMWTQijN3z6Cnd44Pf2g==}
     engines: {node: '>=14.18'}
@@ -2284,15 +2288,15 @@ packages:
     peerDependencies:
       prettier: ^3.2.5
 
-  '@sanity/preview-kit-compat@1.5.9':
-    resolution: {integrity: sha512-LM9YmqHgSXfpHYB6cl2XiNhylGGGhsLj+TcRA+v4mLbbbi2dQa1oXBf2yPJFdDIn+lfVNZmDK9ZeEZt4eJ1MNQ==}
+  '@sanity/preview-kit-compat@1.5.10':
+    resolution: {integrity: sha512-kTiGvjsccRehK9fh0T4Zpjne0l1Z6nF/6hUeiEMkAQo3qiBMhvji/Q6XPO6GIRzlFOcuiG+lyFrVVMAKSXPWbA==}
     engines: {node: '>=18'}
     peerDependencies:
       '@sanity/client': ^6.22.2
       react: ^18.3 || >=19.0.0-rc
 
-  '@sanity/preview-kit@5.1.6':
-    resolution: {integrity: sha512-55VNqthxYa0V+9qDiErMtPvhbujkvxmBA59iy4OkR4N3ZHe5jrEGeALjtrV5BPs9hFS5wSnUK8TRiVYjtIkJYg==}
+  '@sanity/preview-kit@5.1.7':
+    resolution: {integrity: sha512-03PoEr5/mwOtzNmCwt7qM/imKgS4BtftJITk/QtT1EPsFKtcx8mIMAxvR+MJfKLQdBl92ZXdM6ZaLdm2XGNfhg==}
     engines: {node: '>=18'}
     peerDependencies:
       '@sanity/client': ^6.22.2
@@ -9055,6 +9059,12 @@ snapshots:
 
   '@sanity/color@3.0.6': {}
 
+  '@sanity/comlink@1.0.0':
+    dependencies:
+      rxjs: 7.8.1
+      uuid: 10.0.0
+      xstate: 5.18.2
+
   '@sanity/diff-match-patch@3.1.1': {}
 
   '@sanity/diff@3.61.0':
@@ -9305,15 +9315,16 @@ snapshots:
       prettier: 3.3.3
       prettier-plugin-packagejson: 2.5.3(prettier@3.3.3)
 
-  '@sanity/preview-kit-compat@1.5.9(@sanity/client@6.22.2)(react@19.0.0-rc.0)':
+  '@sanity/preview-kit-compat@1.5.10(@sanity/client@6.22.2)(react@19.0.0-rc.0)':
     dependencies:
       '@sanity/client': 6.22.2(debug@4.3.7)
+      '@sanity/comlink': 1.0.0
       react: 19.0.0-rc.0
 
-  '@sanity/preview-kit@5.1.6(@sanity/client@6.22.2)(react@19.0.0-rc.0)':
+  '@sanity/preview-kit@5.1.7(@sanity/client@6.22.2)(react@19.0.0-rc.0)':
     dependencies:
       '@sanity/client': 6.22.2(debug@4.3.7)
-      '@sanity/preview-kit-compat': 1.5.9(@sanity/client@6.22.2)(react@19.0.0-rc.0)
+      '@sanity/preview-kit-compat': 1.5.10(@sanity/client@6.22.2)(react@19.0.0-rc.0)
       mendoza: 3.0.7
     optionalDependencies:
       react: 19.0.0-rc.0
