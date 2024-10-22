@@ -5,6 +5,13 @@
 All notable changes to this project will be documented in this file. See
 [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [9.6.0](https://github.com/sanity-io/next-sanity/compare/next-sanity-v9.5.6...next-sanity-v9.6.0) (2024-10-22)
+
+
+### Features
+
+* add `defineEnableDraftMode` ([#1803](https://github.com/sanity-io/next-sanity/issues/1803)) ([8069787](https://github.com/sanity-io/next-sanity/commit/80697872d7c1056bf0e747bdb9e20b6b33adf102))
+
 ## [9.5.6](https://github.com/sanity-io/next-sanity/compare/next-sanity-v9.5.5...next-sanity-v9.5.6) (2024-10-22)
 
 
