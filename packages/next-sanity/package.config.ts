@@ -15,6 +15,12 @@ const MODULE_PATHS_WHICH_USE_SERVER_DIRECTIVE_SHOULD_BE_ADDED = [
 
 export default defineConfig({
   tsconfig: 'tsconfig.build.json',
+  bundles: [
+    {
+      source: './src/index.edge-light.ts',
+      import: './dist/index.edge-light.js',
+    },
+  ],
   rollup: {
     output: {
       banner: (chunkInfo) => {
