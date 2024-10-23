@@ -7,7 +7,7 @@ settings:
 overrides:
   '@next/bundle-analyzer': 15.0.2-canary.1
   '@next/env': 15.0.2-canary.1
-  eslint-config-next: 15.0.2-canary.1
+  eslint-config-next: 15.0.2-canary.2
   next: 15.0.2-canary.1
 
 importers:
@@ -24,8 +24,8 @@ importers:
         specifier: 1.0.3
         version: 1.0.3(prettier@3.3.3)
       eslint-config-next:
-        specifier: 15.0.2-canary.1
-        version: 15.0.2-canary.1(eslint@8.57.1)(typescript@5.6.3)
+        specifier: 15.0.2-canary.2
+        version: 15.0.2-canary.2(eslint@8.57.1)(typescript@5.6.3)
       next:
         specifier: 15.0.2-canary.1
         version: 15.0.2-canary.1(react-dom@19.0.0-rc.0(react@19.0.0-rc.0))(react@19.0.0-rc.0)
@@ -100,8 +100,8 @@ importers:
         specifier: ^8.57.1
         version: 8.57.1
       eslint-config-next:
-        specifier: 15.0.2-canary.1
-        version: 15.0.2-canary.1(eslint@8.57.1)(typescript@5.6.3)
+        specifier: 15.0.2-canary.2
+        version: 15.0.2-canary.2(eslint@8.57.1)(typescript@5.6.3)
       eslint-config-prettier:
         specifier: ^9.1.0
         version: 9.1.0(eslint@8.57.1)
@@ -176,8 +176,8 @@ importers:
         specifier: ^8.57.1
         version: 8.57.1
       eslint-config-next:
-        specifier: 15.0.2-canary.1
-        version: 15.0.2-canary.1(eslint@8.57.1)(typescript@5.6.3)
+        specifier: 15.0.2-canary.2
+        version: 15.0.2-canary.2(eslint@8.57.1)(typescript@5.6.3)
       eslint-config-prettier:
         specifier: ^9.1.0
         version: 9.1.0(eslint@8.57.1)
@@ -1670,8 +1670,8 @@ packages:
   '@next/env@15.0.2-canary.1':
     resolution: {integrity: sha512-qlona/iVHrpAQ32FAz4GAM3iLCgDN+qt+nQH3BznHCZWdrrZmaqILEMhE6D3wWWMuQw8vHW0cGwCN2MAddsATg==}
 
-  '@next/eslint-plugin-next@15.0.2-canary.1':
-    resolution: {integrity: sha512-tqRbDA5lGd6ZedsFjr9oI5z6UED08hQJ2MRerKyQWBOQN1AecTOxFe7IvMNPzTJ3UUftYlovsmn3M71xKczWgw==}
+  '@next/eslint-plugin-next@15.0.2-canary.2':
+    resolution: {integrity: sha512-XaoQDYYBvvydWueiNhRXB87DW4txGpNaz0+Xsr+uTlXvv/tCL2G5Z/gmFVQgZI0QvZd40wXQl+TAKoL6QmYixw==}
 
   '@next/swc-darwin-arm64@15.0.2-canary.1':
     resolution: {integrity: sha512-Cbrk4BRFHUOo1hTu1wmP/oIh6POAgEaNTbWXjfw5N14QP8+wAcSV4G3j94I7lCW23yuAKKy9dXEbaRbiTvsANw==}
@@ -3603,8 +3603,8 @@ packages:
     resolution: {integrity: sha512-TtpcNJ3XAzx3Gq8sWRzJaVajRs0uVxA2YAkdb1jm2YkPz4G6egUFAyA3n5vtEIZefPk5Wa4UXbKuS5fKkJWdgA==}
     engines: {node: '>=10'}
 
-  eslint-config-next@15.0.2-canary.1:
-    resolution: {integrity: sha512-bIKjz5qt4m4dAmqwjJgc/GgQB//n5pSWXNxfG8m3I9Xx4h5S67mYTMqEBNrFy5ohsZe1AvoWIqbmNd+JZwsz1Q==}
+  eslint-config-next@15.0.2-canary.2:
+    resolution: {integrity: sha512-RrZV7j1OB+g+0n5wvxWTMbYUsYSsY5fen+HnswAei/ED7ISP7ZZ5s+63D3JebTfx1q+qmyz/aLxRyV+iSJNoDQ==}
     peerDependencies:
       eslint: ^7.23.0 || ^8.0.0 || ^9.0.0
       typescript: '>=3.3.1'
@@ -8411,7 +8411,7 @@ snapshots:
 
   '@next/env@15.0.2-canary.1': {}
 
-  '@next/eslint-plugin-next@15.0.2-canary.1':
+  '@next/eslint-plugin-next@15.0.2-canary.2':
     dependencies:
       fast-glob: 3.3.1
 
@@ -10949,16 +10949,16 @@ snapshots:
 
   escape-string-regexp@4.0.0: {}
 
-  eslint-config-next@15.0.2-canary.1(eslint@8.57.1)(typescript@5.6.3):
+  eslint-config-next@15.0.2-canary.2(eslint@8.57.1)(typescript@5.6.3):
     dependencies:
-      '@next/eslint-plugin-next': 15.0.2-canary.1
+      '@next/eslint-plugin-next': 15.0.2-canary.2
       '@rushstack/eslint-patch': 1.10.4
       '@typescript-eslint/eslint-plugin': 7.18.0(@typescript-eslint/parser@8.9.0(eslint@8.57.1)(typescript@5.6.3))(eslint@8.57.1)(typescript@5.6.3)
       '@typescript-eslint/parser': 8.9.0(eslint@8.57.1)(typescript@5.6.3)
       eslint: 8.57.1
       eslint-import-resolver-node: 0.3.9
       eslint-import-resolver-typescript: 3.6.3(@typescript-eslint/parser@8.9.0(eslint@8.57.1)(typescript@5.6.3))(eslint-import-resolver-node@0.3.9)(eslint-plugin-import@2.31.0(@typescript-eslint/parser@8.9.0(eslint@8.57.1)(typescript@5.6.3))(eslint@8.57.1))(eslint@8.57.1)
-      eslint-plugin-import: 2.31.0(@typescript-eslint/parser@8.9.0(eslint@8.57.1)(typescript@5.6.3))(eslint-import-resolver-typescript@3.6.3)(eslint@8.57.1)
+      eslint-plugin-import: 2.31.0(@typescript-eslint/parser@8.9.0(eslint@8.57.1)(typescript@5.6.3))(eslint-import-resolver-typescript@3.6.3(@typescript-eslint/parser@8.9.0(eslint@8.57.1)(typescript@5.6.3))(eslint-import-resolver-node@0.3.9)(eslint-plugin-import@2.31.0(@typescript-eslint/parser@8.9.0(eslint@8.57.1)(typescript@5.6.3))(eslint@8.57.1))(eslint@8.57.1))(eslint@8.57.1)
       eslint-plugin-jsx-a11y: 6.10.0(eslint@8.57.1)
       eslint-plugin-react: 7.37.2(eslint@8.57.1)
       eslint-plugin-react-hooks: 5.0.0(eslint@8.57.1)
@@ -11013,7 +11013,7 @@ snapshots:
       is-bun-module: 1.2.1
       is-glob: 4.0.3
     optionalDependencies:
-      eslint-plugin-import: 2.31.0(@typescript-eslint/parser@8.9.0(eslint@8.57.1)(typescript@5.6.3))(eslint-import-resolver-typescript@3.6.3)(eslint@8.57.1)
+      eslint-plugin-import: 2.31.0(@typescript-eslint/parser@8.9.0(eslint@8.57.1)(typescript@5.6.3))(eslint-import-resolver-typescript@3.6.3(@typescript-eslint/parser@8.9.0(eslint@8.57.1)(typescript@5.6.3))(eslint-import-resolver-node@0.3.9)(eslint-plugin-import@2.31.0(@typescript-eslint/parser@8.9.0(eslint@8.57.1)(typescript@5.6.3))(eslint@8.57.1))(eslint@8.57.1))(eslint@8.57.1)
     transitivePeerDependencies:
       - '@typescript-eslint/parser'
       - eslint-import-resolver-node
@@ -11072,7 +11072,7 @@ snapshots:
       - supports-color
     optional: true
 
-  eslint-plugin-import@2.31.0(@typescript-eslint/parser@8.9.0(eslint@8.57.1)(typescript@5.6.3))(eslint-import-resolver-typescript@3.6.3)(eslint@8.57.1):
+  eslint-plugin-import@2.31.0(@typescript-eslint/parser@8.9.0(eslint@8.57.1)(typescript@5.6.3))(eslint-import-resolver-typescript@3.6.3(@typescript-eslint/parser@8.9.0(eslint@8.57.1)(typescript@5.6.3))(eslint-import-resolver-node@0.3.9)(eslint-plugin-import@2.31.0(@typescript-eslint/parser@8.9.0(eslint@8.57.1)(typescript@5.6.3))(eslint@8.57.1))(eslint@8.57.1))(eslint@8.57.1):
     dependencies:
       '@rtsao/scc': 1.1.0
       array-includes: 3.1.8
