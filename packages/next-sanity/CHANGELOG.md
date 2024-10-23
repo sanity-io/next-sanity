@@ -5,6 +5,13 @@
 All notable changes to this project will be documented in this file. See
 [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [9.8.3](https://github.com/sanity-io/next-sanity/compare/next-sanity-v9.8.2...next-sanity-v9.8.3) (2024-10-23)
+
+
+### Bug Fixes
+
+* edge runtime dynamic code eval ([#1831](https://github.com/sanity-io/next-sanity/issues/1831)) ([320aa2f](https://github.com/sanity-io/next-sanity/commit/320aa2fbac6c858f4dd0ee7cdcea9c31f47fb4bf))
+
 ## [9.8.2](https://github.com/sanity-io/next-sanity/compare/next-sanity-v9.8.1...next-sanity-v9.8.2) (2024-10-23)
 
 
