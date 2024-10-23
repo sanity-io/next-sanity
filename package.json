@@ -7,6 +7,8 @@
     "predev": "pnpm build",
     "dev": "turbo dev",
     "format": "prettier --cache --write .",
+    "bump:canaries": "pnpm -r up @sanity/next-loader@canary @sanity/preview-url-secret@canary @sanity/visual-editing@canary && pnpm dedupe",
+    "bump:latest": "pnpm -r up @sanity/next-loader@latest @sanity/preview-url-secret@latest @sanity/visual-editing@latest && pnpm dedupe",
     "lint": "turbo lint",
     "prestart": "turbo build",
     "start": "turbo watch build start",

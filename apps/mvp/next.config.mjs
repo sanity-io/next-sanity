@@ -9,7 +9,6 @@ const nextConfig = {
   // basePath: process.env.NEXT_PUBLIC_TEST_BASE_PATH,
   // trailingSlash: true,
   experimental: {
-    taint: true,
     reactCompiler: true,
     // turbo: {
     //   resolveAlias: {
