@@ -5,6 +5,13 @@
 All notable changes to this project will be documented in this file. See
 [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [9.8.0](https://github.com/sanity-io/next-sanity/compare/next-sanity-v9.7.1...next-sanity-v9.8.0) (2024-10-23)
+
+
+### Features
+
+* add `defineLive` & `next-sanity/hooks` ([#1786](https://github.com/sanity-io/next-sanity/issues/1786)) ([a7f1df4](https://github.com/sanity-io/next-sanity/commit/a7f1df44f41d3459cb95ecef060164a56608a562))
+
 ## [9.7.1](https://github.com/sanity-io/next-sanity/compare/next-sanity-v9.7.0...next-sanity-v9.7.1) (2024-10-23)
 
 
