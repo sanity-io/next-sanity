@@ -1,5 +1,7 @@
+import dynamic from 'next/dynamic'
 import type {VisualEditingProps} from 'next-sanity/visual-editing/client-component'
-import VisualEditingComponent from 'next-sanity/visual-editing/client-component'
+
+const VisualEditingComponent = dynamic(() => import('next-sanity/visual-editing/client-component'))
 
 /**
  * @public
