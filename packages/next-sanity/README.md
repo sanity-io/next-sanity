@@ -49,7 +49,6 @@ The all-in-one [Sanity][sanity] toolkit for production-grade content-editable Ne
 - [Migration guides](#migration-guides)
 - [License](#license)
 
-
 ## Installation
 
 ## Quick Start
@@ -597,8 +596,8 @@ An end-to-end tutorial of [how to configure Sanity and Next.js for Visual Editin
 
 The Live Content API can be used to receive real time updates in your application when viewing both draft content in contexts like Presentation tool, and published content in your user-facing production application.
 
-
 ### Setup
+
 #### 1. Configure `defineLive`
 
 Use `defineLive` to enable automatic revalidation and refreshing of your fetched content.
@@ -613,12 +612,12 @@ const client = createClient({
   dataset: process.env.NEXT_PUBLIC_SANITY_DATASET,
   useCdn: false,
   apiVersion: '2024-10-24',
-  stega: {studioUrl: '/studio'}
+  stega: {studioUrl: '/studio'},
 })
 
-const token = process.env.SANITY_API_READ_TOKEN;
+const token = process.env.SANITY_API_READ_TOKEN
 if (!token) {
-  throw new Error("Missing SANITY_API_READ_TOKEN");
+  throw new Error('Missing SANITY_API_READ_TOKEN')
 }
 
 export const {sanityFetch, SanityLive} = defineLive({
@@ -632,8 +631,8 @@ The `token` passed to `defineLive` needs [Viewer rights](https://www.sanity.io/d
 
 The same token can be used as both `browserToken` and `serverToken`, as the `browserToken` is only shared with the browser when Draft Mode is enabled. Draft Mode can only be initiated by either the Vercel Toolbar, or by Sanity's Presentation Tool~~if you've setup `previewUrl.previewMode.enable`~~.
 
->Good to know:
->Enterprise plans allow the creation of custom roles with more resticted access rights than the `Viewer` role, enabling the use of a `browserToken` specifically for authenticating the Live Content API. We're working to extend this capability to all Sanity price plans.
+> Good to know:
+> Enterprise plans allow the creation of custom roles with more resticted access rights than the `Viewer` role, enabling the use of a `browserToken` specifically for authenticating the Live Content API. We're working to extend this capability to all Sanity price plans.
 
 #### 2. Render `<SanityLive />` in the root `layout.tsx`
 
@@ -641,13 +640,9 @@ The same token can be used as both `browserToken` and `serverToken`, as the `bro
 // src/app/layout.tsx
 
 import {VisualEditing} from 'next-sanity'
-import {SanityLive} from "@/sanity/lib/live";
+import {SanityLive} from '@/sanity/lib/live'
 
-export default function RootLayout({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
+export default function RootLayout({children}: {children: React.ReactNode}) {
   return (
     <html lang="en">
       <body>
@@ -656,13 +651,11 @@ export default function RootLayout({
         {(await draftMode()).isEnabled && <VisualEditing />}
       </body>
     </html>
-  );
+  )
 }
 ```
 
 The `<SanityLive>` component is responsible for making all `sanityFetch` calls in your application _live_, so should always be rendered. This differs from the `<VisualEditing />` component, which should only be rendered when Draft Mode is enabled.
-
-
 
 #### 3. Fetching data with `sanityFetch`
 
@@ -672,16 +665,16 @@ Use `sanityFetch` to fetch data in any server component.
 // src/app/products.tsx
 
 import {defineQuery} from 'next-sanity'
-import {sanityFetch} from "@/sanity/lib/live";
+import {sanityFetch} from '@/sanity/lib/live'
 
 const PRODUCTS_QUERY = defineQuery(`*[_type == "product" && defined(slug.current)][0...$limit]`)
 
 export default async function Page() {
   const {data: products} = await sanityFetch({
     query: PRODUCTS_QUERY,
-    params: {limit: 10}
-  });
- 
+    params: {limit: 10},
+  })
+
   return (
     <section>
       {products.map((product) => (
@@ -690,118 +683,107 @@ export default async function Page() {
         </article>
       ))}
     </section>
-  );
+  )
 }
 ```
 
 #### Handling Layout Shift
 
-Live components will re-render automatically as content changes. This can cause jarring layout shifts in production when items appear or disappear from a list. 
+Live components will re-render automatically as content changes. This can cause jarring layout shifts in production when items appear or disappear from a list.
 
 ~~To~~At the very least we should animate these layout changes. We can do this using `framer-motion@12.0.0-alpha.1`, which supports React Server Components:
+
 ```tsx
 // src/app/products.tsx
 
-import {AnimatePresence} from "framer-motion";
-import * as motion from "framer-motion/client";
+import {AnimatePresence} from 'framer-motion'
+import * as motion from 'framer-motion/client'
 import {defineQuery} from 'next-sanity'
-import {sanityFetch} from "@/sanity/lib/live";
+import {sanityFetch} from '@/sanity/lib/live'
 
 const PRODUCTS_QUERY = defineQuery(`*[_type == "product" && defined(slug.current)][0...$limit]`)
 
 export default async function Page() {
   const {data: products} = await sanityFetch({
     query: PRODUCTS_QUERY,
-    params: {limit: 10}
-  });
+    params: {limit: 10},
+  })
 
   return (
     <section>
       <AnimatePresence mode="popLayout">
         {products.map((product) => (
-          <motion.article 
-            key={product._id} 
-            layout="position" 
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
+          <motion.article
+            key={product._id}
+            layout="position"
+            animate={{opacity: 1}}
+            exit={{opacity: 0}}
           >
             <a href={`/product/${product.slug}`}>{product.title}</a>
           </motion.article>
         ))}
       </AnimatePresence>
     </section>
-  );
+  )
 }
 ```
 
-That's better than before, but still not *great* as your users still might experience trying to click on a product, only to have it move and causing them to click on the wrong product. _Frustrating!_
+That's better than before, but still not _great_ as your users still might experience trying to click on a product, only to have it move and causing them to click on the wrong product. _Frustrating!_
 Let's fix that by requiring them to opt-in to the change, before we update the layout.
 
 We want to preserve the ability to render everything on the server, so let's make use of a Client Component wrapper, that can defer showing changes to the user until they've clicked "Refresh" in a toast (using `sonner`):
+
 ```tsx
 // src/app/products/products-layout-shift.tsx
 
-"use client";
+'use client'
 
-import {useCallback, useState, useEffect} from "react";
-import isEqual from "react-fast-compare";
-import {toast} from "sonner";
+import {useCallback, useState, useEffect} from 'react'
+import isEqual from 'react-fast-compare'
+import {toast} from 'sonner'
 
-export function ProductsLayoutShift(props: {
-  children: React.ReactNode;
-  ids: string[];
-}) {
-  const [children, pending, startViewTransition] = useDeferredLayoutShift(
-    props.children,
-    props.ids,
-  );
+export function ProductsLayoutShift(props: {children: React.ReactNode; ids: string[]}) {
+  const [children, pending, startViewTransition] = useDeferredLayoutShift(props.children, props.ids)
 
   /**
    * We need to suspend layout shift for user opt-in.
    */
   useEffect(() => {
-    if (!pending) return;
+    if (!pending) return
 
-    toast("Products have been updated", {
+    toast('Products have been updated', {
       action: {
-        label: "Refresh",
+        label: 'Refresh',
         onClick: () => startViewTransition(),
       },
-    });
-  }, [pending, startViewTransition]);
+    })
+  }, [pending, startViewTransition])
 
-  return children;
+  return children
 }
 
-function useDeferredLayoutShift(
-  children: React.ReactNode,
-  dependencies: unknown[],
-) {
-  const [pending, setPending] = useState(false);
-  const [currentChildren, setCurrentChildren] = useState(children);
-  const [currentDependencies, setCurrentDependencies] = useState(dependencies);
+function useDeferredLayoutShift(children: React.ReactNode, dependencies: unknown[]) {
+  const [pending, setPending] = useState(false)
+  const [currentChildren, setCurrentChildren] = useState(children)
+  const [currentDependencies, setCurrentDependencies] = useState(dependencies)
 
   if (!pending) {
     if (isEqual(currentDependencies, dependencies)) {
       if (currentChildren !== children) {
-        setCurrentChildren(children);
+        setCurrentChildren(children)
       }
     } else {
-      setCurrentDependencies(dependencies);
-      setPending(true);
+      setCurrentDependencies(dependencies)
+      setPending(true)
     }
   }
 
   const startViewTransition = useCallback(() => {
-    setCurrentDependencies(dependencies);
-    setPending(false);
-  }, [dependencies]);
+    setCurrentDependencies(dependencies)
+    setPending(false)
+  }, [dependencies])
 
-  return [
-    pending ? currentChildren : children,
-    pending,
-    startViewTransition,
-  ] as const;
+  return [pending ? currentChildren : children, pending, startViewTransition] as const
 }
 ```
 
@@ -828,9 +810,9 @@ export default async function Page() {
 +     <ProductsLayoutShift ids={ids}>
         <AnimatePresence mode="popLayout">
           {products.map((product) => (
-            <motion.article 
-              key={product._id} 
-              layout="position" 
+            <motion.article
+              key={product._id}
+              layout="position"
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
             >
@@ -838,7 +820,7 @@ export default async function Page() {
             </motion.article>
           ))}
         </AnimatePresence>
-+     </ProductsLayoutShift>    
++     </ProductsLayoutShift>
     </section>
   );
 }
@@ -851,50 +833,49 @@ With this approach we've limited the use of client components to just a single c
 `sanityFetch` can also be used in functions like `generateMetadata` in order to make updating the page title, or even its favicon, _live_.
 
 ```ts
-import { sanityFetch } from "@/sanity/lib/live";
-import type { Metadata } from "next";
+import {sanityFetch} from '@/sanity/lib/live'
+import type {Metadata} from 'next'
 
 export async function generateMetadata(): Promise<Metadata> {
-  const { data } = await sanityFetch({
+  const {data} = await sanityFetch({
     query: SETTINGS_QUERY,
     // Metadata should never contain stega
     stega: false,
-  });
+  })
   return {
     title: {
       template: `%s | ${data.title}`,
       default: data.title,
     },
-  };
+  }
 }
 ```
 
 > Good to know:
 > Always set `stega: false` when calling `sanityFetch` within these:
+>
 > - `generateMetadata`
 > - `generateViewport`
 > - `generateSitemaps`
 > - `generateImageMetadata`
 
-
 ```ts
-import { sanityFetch } from "@/sanity/lib/live";
+import {sanityFetch} from '@/sanity/lib/live'
 
 export async function generateStaticParams() {
-  const { data } = await sanityFetch({
+  const {data} = await sanityFetch({
     query: POST_SLUGS_QUERY,
     // Use the published perspective in generateStaticParams
-    perspective: "published",
+    perspective: 'published',
     stega: false,
-  });
-  return data;
+  })
+  return data
 }
 ```
 
 ### 4. Integrating with Next.js Draft Mode and Vercel Toolbar's Edit Mode
 
 To support previewing draft content when Draft Mode is enabled, the `serverToken` passed to `defineLive` should be assigned the Viewer role, which has the ability to fetch content using the `previewDrafts` perspective.
-
 
 Click the Draft Mode button in the Vercel toolbar to enable draft content:
 
@@ -914,14 +895,15 @@ Setup an API route that uses `defineEnableDraftMode` in your app:
 ```ts
 // src/app/api/draft-mode/enable/route.ts
 
-import { client } from "@/sanity/lib/client";
-import { token } from "@/sanity/lib/token";
-import { defineEnableDraftMode } from "next-sanity/draft-mode";
+import {client} from '@/sanity/lib/client'
+import {token} from '@/sanity/lib/token'
+import {defineEnableDraftMode} from 'next-sanity/draft-mode'
 
-export const { GET } = defineEnableDraftMode({
-  client: client.withConfig({ token }),
-});
+export const {GET} = defineEnableDraftMode({
+  client: client.withConfig({token}),
+})
 ```
+
 The main benefit of `defineEnableDraftMode` is that it fully implements all of Sanity Presentation Tool's features, including the perspective switcher:
 <img width="530" alt="image" src="https://github.com/user-attachments/assets/774d8f92-527f-4478-8089-2fb7e6a5c618">
 
@@ -929,6 +911,7 @@ And the Preview URL Sharing feature:
 <img width="450" alt="image" src="https://github.com/user-attachments/assets/d11b38eb-389b-448f-862c-b39b3adbb7e3">
 
 In your `sanity.config.ts`, set the `previewMode.enable` option for `presentationTool`:
+
 ```ts
 // sanity.config.ts
 
@@ -943,10 +926,10 @@ export default defineConfig({
       previewUrl: {
         // ...
         previewMode: {
-          enable: '/api/draft-mode/enable'
-        }
-      }
-    })
+          enable: '/api/draft-mode/enable',
+        },
+      },
+    }),
   ],
 })
 ```
@@ -958,6 +941,7 @@ The `defineLive.browserToken` option isn't required, but is recommended as it en
 ### 6. Enabling standalone Live Preview of draft content
 
 Standalone live preview has the following requirements:
+
 - `defineLive.serverToken` must be defined, otherwise only published content is fetched.
 - At least one integration (Vercel Toolbar, or Sanity Presentation) must be setup, so Draft Mode can be enabled in your application on demand.
 - `defineLive.browserToken` must be defined with a valid token.
@@ -972,7 +956,7 @@ import {useIsLivePreview} from 'next-sanity/hooks'
 export function DebugLivePreview() {
   const isLivePreview = useIsLivePreview()
   if (isLivePreview === null) return 'Checking Live Preview...'
-  return isLivePreview ? "Live Preview Enabled" : "Live Preview Disabled"
+  return isLivePreview ? 'Live Preview Enabled' : 'Live Preview Disabled'
 }
 ```
 
@@ -980,15 +964,16 @@ The following hooks can be used to provide information about the application's c
 
 ```ts
 import {
-  useIsPresentationTool, 
-  useDraftModeEnvironment, 
-  useDraftModePerspective
+  useIsPresentationTool,
+  useDraftModeEnvironment,
+  useDraftModePerspective,
 } from 'next-sanity/hooks'
 ```
 
 ## How does it revalidate and refresh in real-time?
 
 The architecture for `defineLive` works as follows:
+
 1. `sanityFetch` automatically sets `fetch.next.tags` for you using opaque tags generated by our backend, prefixed with `sanity:`.
 2. `<SanityLive />` listens to change events using the Sanity Live Content API (LCAPI).
 3. When the LCAPI emits an event, `<SanityLive />` invokes a Server Function that calls `revalidateTag(`sanity:${tag}`)`.
@@ -1016,7 +1001,7 @@ import {revalidateTag} from 'next/cache'
 
 export const POST = async (request) => {
   const {tags, isValid} = await validateRequest(request)
-  if(!isValid) return new Response('No no no', {status: 400})
+  if (!isValid) return new Response('No no no', {status: 400})
   for (const _tag of tags) {
     const tag = `sanity:${_tag}`
     revalidateTag(tag)
