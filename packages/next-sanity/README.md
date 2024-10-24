@@ -774,3 +774,135 @@ MIT-licensed. See [LICENSE][LICENSE].
 [vercel-content-link]: https://vercel.com/docs/workflow-collaboration/edit-mode#content-link?utm_source=github&utm_medium=readme&utm_campaign=next-sanity
 [sanity-next-clean-starter]: https://www.sanity.io/templates/nextjs-sanity-clean
 [sanity-next-featured-starter]: https://www.sanity.io/templates/personal-website-with-built-in-content-editing
+
+## New APIs
+> These should be moved to wherever it makes sense
+
+### `import {defineEnableDraftMode} from 'next-sanity/draft-mode'`
+
+Used to setup Draft Mode for usage with Sanity Presentation Tool.
+
+Usage:
+
+```ts
+// src/app/api/draft-mode/enable/route.ts
+
+import { client } from "@/sanity/lib/client";
+import { token } from "@/sanity/lib/token";
+import { defineEnableDraftMode } from "next-sanity/draft-mode";
+
+export const { GET } = defineEnableDraftMode({
+  client: client.withConfig({ token }),
+});
+```
+
+In Presentation Tool you'd set:
+```ts
+import {presentationTool} from 'sanity/presentation'
+
+presentationTool({
+  previewUrl: {
+    previewMode: {
+      enable: '/api/draft-mode/enable'
+    }
+  }
+})
+```
+
+Even though it lives in App Router, it enables Draft Mode globally, even for Pages Router. There's no need to have a separate handler for Pages Router.
+
+### `import {defineLive} from 'next-sanity'`
+
+It requires `client`:
+
+```ts
+import { defineLive } from "next-sanity";
+import { client } from "./client";
+import { token } from "./token";
+
+export const { sanityFetch, SanityLive } = defineLive({
+  client,
+  // Required for showing draft content when the Sanity Presentation Tool is used, or to enable the Vercel Toolbar Edit Mode
+  serverToken: token,
+  // Required for stand-alone live previews, the token is only shared to the brwoser if it's a valid Next.js Draft Mode session
+  browserToken: token,
+});
+```
+
+`client`  takes a Sanity Client.
+Enterprise plans should give `browserToken` and `serverToken` different values, while everyone else can use the same viewer token for both.
+Setting `browserToken` enables a much faster live preview experience than if you only set `serverToken`.
+
+### `sanityFetch`
+
+Used to fetch data, requires `query`, optionally `params`.
+
+When used within a `generateMetadata` function it should set `stega` to `false`.
+And within a `generateStaticParams` it should set `stega: false`, and `perspective: "published"`. 
+
+### `SanityLive`
+
+Has the props `refreshOnMount`, `refreshOnFocus` and `refreshOnReconnect`. `refreshOnFocus` and `refreshOnReconnect` are enabled by default. When a refresh happens, it'll call `useRouter().refresh()`, this is not the same as revalidation, it's a soft refresh in case anything happened while being disconnected or in a tab that's been asleep.
+Setting `refreshOnMount` is only really necessary in certain advanced edge cases.
+
+### `useDraftModeEnvironment`
+
+This hook is used to customize wether to show messages like `Draft Mode Enabled`, and wether to automatically refresh on all content changes, or to show a toast and allow the user to opt-in.
+In production you mostly want opt-in to avoid layout shift that would harm the user experience and make it worse than it was before everything became live by default.
+At the same time it's really annoying to constantly press a `Refresh` toast as you're live previewing your app inside Presentation Tool, isntead of having it just rerender in place without manually hitting refresh.
+
+```tsx
+// src/app/(blog)/draft-mode-toast.tsx
+
+"use client";
+
+import { useDraftModeEnvironment } from "next-sanity/hooks";
+import { useRouter } from "next/navigation";
+import { useEffect, useTransition } from "react";
+import { toast } from "sonner";
+import { disableDraftMode } from "./actions";
+
+export default function AlertBanner() {
+  const env = useDraftModeEnvironment();
+  const router = useRouter();
+  const [pending, startTransition] = useTransition();
+
+  useEffect(() => {
+    if (
+      env === "checking" ||
+      env === "presentation-iframe" ||
+      env === "presentation-window"
+    ) {
+      return;
+    }
+
+    toast("Draft Mode Enabled", {
+      description:
+        env === "live"
+          ? "Content is live, refreshing automatically"
+          : "Refresh manually to see changes",
+      duration: Infinity,
+      action: {
+        label: "Disable",
+        onClick: () =>
+          startTransition(async () => {
+            await disableDraftMode();
+            startTransition(() => router.refresh());
+          }),
+      },
+    });
+  }, [env, router]);
+
+  useEffect(() => {
+    if (pending) {
+      const toastId = toast.loading("Disabling draft mode...");
+      return () => {
+        toast.dismiss(toastId);
+      };
+    }
+  }, [pending]);
+
+  return null;
+}
+
+```
