@@ -50,7 +50,6 @@ The all-in-one [Sanity][sanity] toolkit for production-grade content-editable Ne
 
 The Live Content API can be used to receive real time updates in your application when viewing both draft content in contexts like Presentation tool, and published content in your user-facing production application.
 
-~~With the `defineLive` function you can fetch content, and have it automatically revalidated and refreshed.~~
 
 ## Setup
 ### 1. Configure `defineLive`
@@ -116,7 +115,7 @@ export default function RootLayout({
 
 The `<SanityLive>` component is responsible for making all `sanityFetch` calls in your application _live_, so should always be rendered. This differs from the `<VisualEditing />` component, which should only be rendered when Draft Mode is enabled.
 
-~~Unlike `<VisualEditing />`, it should always render. This component is what makes the `sanityFetch` calls _live_.~~
+
 
 ### 3. Fetching data with `sanityFetch`
 
@@ -149,9 +148,6 @@ export default async function Page() {
 ```
 
 #### Handling Layout Shift
-> [name=Rupert Dunk] Should we move this section to troubleshooting, feels like a lot to get through before step 4, and it's not *strictly* necessary?
-
-~~This component is now _live_ and will rerender automatically in production as new products are published. This might cause layout shift as products pop in and out of the list, which can be a jarring user experience.~~
 
 Live components will re-render automatically as content changes. This can cause jarring layout shifts in production when items appear or disappear from a list. 
 
@@ -306,7 +302,7 @@ With this approach we've limited the use of client components to just a single c
 ### Using `generateMetadata`, `generateStaticParams` and more
 
 `sanityFetch` can also be used in functions like `generateMetadata` in order to make updating the page title, or even its favicon, _live_.
-~~We recommend setting `stega: false` when used in `generateMetadata`:~~
+
 ```ts
 import { sanityFetch } from "@/sanity/lib/live";
 import type { Metadata } from "next";
@@ -333,7 +329,7 @@ export async function generateMetadata(): Promise<Metadata> {
 > - `generateSitemaps`
 > - `generateImageMetadata`
 
-~~When using `generateStaticParams` you should also set `perspective: 'published'`:~~
+
 ```ts
 import { sanityFetch } from "@/sanity/lib/live";
 
@@ -352,7 +348,7 @@ export async function generateStaticParams() {
 
 To support previewing draft content when Draft Mode is enabled, the `serverToken` passed to `defineLive` should be assigned the Viewer role, which has the ability to fetch content using the `previewDrafts` perspective.
 
-~~In the Vercel toolbar click on the Draft mode button to start seeing draf:~~
+
 Click the Draft Mode button in the Vercel toolbar to enable draft content:
 
 ![image](https://github.com/user-attachments/assets/5aa3ed30-929e-48f1-a16c-8246309ec099)
