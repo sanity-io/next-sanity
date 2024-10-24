@@ -629,7 +629,7 @@ export const {sanityFetch, SanityLive} = defineLive({
 
 The `token` passed to `defineLive` needs [Viewer rights](https://www.sanity.io/docs/roles#e2daad192df9) in order to fetch draft content.
 
-The same token can be used as both `browserToken` and `serverToken`, as the `browserToken` is only shared with the browser when Draft Mode is enabled. Draft Mode can only be initiated by either the Vercel Toolbar, or by Sanity's Presentation Tool~~if you've setup `previewUrl.previewMode.enable`~~.
+The same token can be used as both `browserToken` and `serverToken`, as the `browserToken` is only shared with the browser when Draft Mode is enabled. Draft Mode can only be initiated by either Sanity's Presentation Tool or the Vercel Toolbar.
 
 > Good to know:
 > Enterprise plans allow the creation of custom roles with more resticted access rights than the `Viewer` role, enabling the use of a `browserToken` specifically for authenticating the Live Content API. We're working to extend this capability to all Sanity price plans.
@@ -687,11 +687,154 @@ export default async function Page() {
 }
 ```
 
-#### Handling Layout Shift
+### Using `generateMetadata`, `generateStaticParams` and more
+
+`sanityFetch` can also be used in functions like `generateMetadata` in order to make updating the page title, or even its favicon, _live_.
+
+```ts
+import {sanityFetch} from '@/sanity/lib/live'
+import type {Metadata} from 'next'
+
+export async function generateMetadata(): Promise<Metadata> {
+  const {data} = await sanityFetch({
+    query: SETTINGS_QUERY,
+    // Metadata should never contain stega
+    stega: false,
+  })
+  return {
+    title: {
+      template: `%s | ${data.title}`,
+      default: data.title,
+    },
+  }
+}
+```
+
+> Good to know:
+> Always set `stega: false` when calling `sanityFetch` within these:
+>
+> - `generateMetadata`
+> - `generateViewport`
+> - `generateSitemaps`
+> - `generateImageMetadata`
+
+```ts
+import {sanityFetch} from '@/sanity/lib/live'
+
+export async function generateStaticParams() {
+  const {data} = await sanityFetch({
+    query: POST_SLUGS_QUERY,
+    // Use the published perspective in generateStaticParams
+    perspective: 'published',
+    stega: false,
+  })
+  return data
+}
+```
+
+### 4. Integrating with Next.js Draft Mode and Vercel Toolbar's Edit Mode
+
+To support previewing draft content when Draft Mode is enabled, the `serverToken` passed to `defineLive` should be assigned the Viewer role, which has the ability to fetch content using the `previewDrafts` perspective.
+
+Click the Draft Mode button in the Vercel toolbar to enable draft content:
+
+![image](https://github.com/user-attachments/assets/5aa3ed30-929e-48f1-a16c-8246309ec099)
+
+With drafts enabled, you'll see the Edit Mode button show up if your Vercel plan is eligible:
+
+![img](https://github.com/user-attachments/assets/6ca7a9f5-e2d1-4915-83d0-8928a0a563de)
+
+Ensure that `browserToken` is setup if you want draft content that isn't yet published to also update live.
+
+### 5. Integrating with Sanity Presentation Tool & Visual Editing
+
+The `defineLive` API also supports Presentation Tool and Sanity Visual Editing.
+
+Setup an API route that uses `defineEnableDraftMode` in your app:
+
+```ts
+// src/app/api/draft-mode/enable/route.ts
+
+import {client} from '@/sanity/lib/client'
+import {token} from '@/sanity/lib/token'
+import {defineEnableDraftMode} from 'next-sanity/draft-mode'
+
+export const {GET} = defineEnableDraftMode({
+  client: client.withConfig({token}),
+})
+```
+
+The main benefit of `defineEnableDraftMode` is that it fully implements all of Sanity Presentation Tool's features, including the perspective switcher:
+<img width="530" alt="image" src="https://github.com/user-attachments/assets/774d8f92-527f-4478-8089-2fb7e6a5c618">
+
+And the Preview URL Sharing feature:
+<img width="450" alt="image" src="https://github.com/user-attachments/assets/d11b38eb-389b-448f-862c-b39b3adbb7e3">
+
+In your `sanity.config.ts`, set the `previewMode.enable` option for `presentationTool`:
+
+```ts
+// sanity.config.ts
+
+import {defineConfig} from 'sanity'
+import {presentationTool} from 'next-sanity'
+
+export default defineConfig({
+  // ...
+  plugins: [
+    // ...
+    presentationTool({
+      previewUrl: {
+        // ...
+        previewMode: {
+          enable: '/api/draft-mode/enable',
+        },
+      },
+    }),
+  ],
+})
+```
+
+Ensuring you have a valid viewer token setup for `defineLive.serverToken` and `defineEnableDraftMode` allows Presentation Tool to auto enable Draft Mode, and your application to pull in draft content that refreshes in real time.
+
+The `defineLive.browserToken` option isn't required, but is recommended as it enables a faster live preview experience, both standalone and when using Presentation Tool.
+
+### 6. Enabling standalone live preview of draft content
+
+Standalone live preview has the following requirements:
+
+- `defineLive.serverToken` must be defined, otherwise only published content is fetched.
+- At least one integration (Sanity Presentation Tool or Vercel Toolbar) must be setup, so Draft Mode can be enabled in your application on demand.
+- `defineLive.browserToken` must be defined with a valid token.
+
+You can verify if live preview is enabled with the `useIsLivePreview` hook:
+
+```tsx
+'use client'
+
+import {useIsLivePreview} from 'next-sanity/hooks'
+
+export function DebugLivePreview() {
+  const isLivePreview = useIsLivePreview()
+  if (isLivePreview === null) return 'Checking Live Preview...'
+  return isLivePreview ? 'Live Preview Enabled' : 'Live Preview Disabled'
+}
+```
+
+The following hooks can also be used to provide information about the application's current environment:
+
+```ts
+import {
+  useIsPresentationTool,
+  useDraftModeEnvironment,
+  useDraftModePerspective,
+} from 'next-sanity/hooks'
+```
+
+### Handling Layout Shift
 
 Live components will re-render automatically as content changes. This can cause jarring layout shifts in production when items appear or disappear from a list.
 
-~~To~~At the very least we should animate these layout changes. We can do this using `framer-motion@12.0.0-alpha.1`, which supports React Server Components:
+To provide a better user experience, we can animate these layout changes. The following example uses `framer-motion@12.0.0-alpha.1`, which supports React Server Components:
 
 ```tsx
 // src/app/products.tsx
@@ -728,10 +871,9 @@ export default async function Page() {
 }
 ```
 
-That's better than before, but still not _great_ as your users still might experience trying to click on a product, only to have it move and causing them to click on the wrong product. _Frustrating!_
-Let's fix that by requiring them to opt-in to the change, before we update the layout.
+Whilst this is an improvement, it may still lead to users attempting to click on an item as it shifts position, potentially resulting in the selection of an unintended item. We can instead require users to opt-in to changes before a layout update is triggered.
 
-We want to preserve the ability to render everything on the server, so let's make use of a Client Component wrapper, that can defer showing changes to the user until they've clicked "Refresh" in a toast (using `sonner`):
+To preserve the ability to render everything on the server, we can make use of a Client Component wrapper. This can defer showing changes to the user until they've explicitly clicked to "Refresh". The example below uses `sonner` to provide toast functionality:
 
 ```tsx
 // src/app/products/products-layout-shift.tsx
@@ -787,7 +929,7 @@ function useDeferredLayoutShift(children: React.ReactNode, dependencies: unknown
 }
 ```
 
-We put the new wrapper around the layout we want to defer updating until the user has clicked "refresh":
+This Client Component is used to wrap the layout that should only be updated after the user has clicked the refresh button:
 
 ```diff
 // src/app/products/page.tsx
@@ -826,151 +968,9 @@ export default async function Page() {
 }
 ```
 
-With this approach we've limited the use of client components to just a single component. All the server components within `<ProductsLayoutShift>` remain server components, with all their benefits.
+With this approach we've limited the use of client components to just a single component. All the server components within `<ProductsLayoutShift>` remain as server components, with all their benefits.
 
-### Using `generateMetadata`, `generateStaticParams` and more
-
-`sanityFetch` can also be used in functions like `generateMetadata` in order to make updating the page title, or even its favicon, _live_.
-
-```ts
-import {sanityFetch} from '@/sanity/lib/live'
-import type {Metadata} from 'next'
-
-export async function generateMetadata(): Promise<Metadata> {
-  const {data} = await sanityFetch({
-    query: SETTINGS_QUERY,
-    // Metadata should never contain stega
-    stega: false,
-  })
-  return {
-    title: {
-      template: `%s | ${data.title}`,
-      default: data.title,
-    },
-  }
-}
-```
-
-> Good to know:
-> Always set `stega: false` when calling `sanityFetch` within these:
->
-> - `generateMetadata`
-> - `generateViewport`
-> - `generateSitemaps`
-> - `generateImageMetadata`
-
-```ts
-import {sanityFetch} from '@/sanity/lib/live'
-
-export async function generateStaticParams() {
-  const {data} = await sanityFetch({
-    query: POST_SLUGS_QUERY,
-    // Use the published perspective in generateStaticParams
-    perspective: 'published',
-    stega: false,
-  })
-  return data
-}
-```
-
-### 4. Integrating with Next.js Draft Mode and Vercel Toolbar's Edit Mode
-
-To support previewing draft content when Draft Mode is enabled, the `serverToken` passed to `defineLive` should be assigned the Viewer role, which has the ability to fetch content using the `previewDrafts` perspective.
-
-Click the Draft Mode button in the Vercel toolbar to enable draft content:
-
-![image](https://github.com/user-attachments/assets/5aa3ed30-929e-48f1-a16c-8246309ec099)
-
-With drafts enabled, you'll see the Edit Mode button show up if your Vercel plan is eligible:
-![img](https://github.com/user-attachments/assets/6ca7a9f5-e2d1-4915-83d0-8928a0a563de)
-
-Setup `browserToken` if you want draft content that isn't published yet to also update live.
-
-### 5. Integrating with Sanity Presentation Tool & Visual Editing
-
-The `defineLive` suite of tools also supports Presentation Tool and Sanity Visual Editing.
-
-Setup an API route that uses `defineEnableDraftMode` in your app:
-
-```ts
-// src/app/api/draft-mode/enable/route.ts
-
-import {client} from '@/sanity/lib/client'
-import {token} from '@/sanity/lib/token'
-import {defineEnableDraftMode} from 'next-sanity/draft-mode'
-
-export const {GET} = defineEnableDraftMode({
-  client: client.withConfig({token}),
-})
-```
-
-The main benefit of `defineEnableDraftMode` is that it fully implements all of Sanity Presentation Tool's features, including the perspective switcher:
-<img width="530" alt="image" src="https://github.com/user-attachments/assets/774d8f92-527f-4478-8089-2fb7e6a5c618">
-
-And the Preview URL Sharing feature:
-<img width="450" alt="image" src="https://github.com/user-attachments/assets/d11b38eb-389b-448f-862c-b39b3adbb7e3">
-
-In your `sanity.config.ts`, set the `previewMode.enable` option for `presentationTool`:
-
-```ts
-// sanity.config.ts
-
-import {defineConfig} from 'sanity'
-import {presentationTool} from 'next-sanity'
-
-export default defineConfig({
-  // ...
-  plugins: [
-    // ...
-    presentationTool({
-      previewUrl: {
-        // ...
-        previewMode: {
-          enable: '/api/draft-mode/enable',
-        },
-      },
-    }),
-  ],
-})
-```
-
-Finally, ensuring you have a valid viewer token setup for `defineLive.serverToken` and `defineEnableDraftMode` allows Presentation Tool to auto enable Draft Mode, and your app to pull in draft content that refreshes in real time.
-
-The `defineLive.browserToken` option isn't required, but is recommended as it enables a faster live preview experience, both standalone and when using Presentation Tool.
-
-### 6. Enabling standalone Live Preview of draft content
-
-Standalone live preview has the following requirements:
-
-- `defineLive.serverToken` must be defined, otherwise only published content is fetched.
-- At least one integration (Vercel Toolbar, or Sanity Presentation) must be setup, so Draft Mode can be enabled in your application on demand.
-- `defineLive.browserToken` must be defined with a valid token.
-
-You can verify if live preview is enabled with the `useIsLivePreview` hook
-
-```tsx
-'use client'
-
-import {useIsLivePreview} from 'next-sanity/hooks'
-
-export function DebugLivePreview() {
-  const isLivePreview = useIsLivePreview()
-  if (isLivePreview === null) return 'Checking Live Preview...'
-  return isLivePreview ? 'Live Preview Enabled' : 'Live Preview Disabled'
-}
-```
-
-The following hooks can be used to provide information about the application's current environment:
-
-```ts
-import {
-  useIsPresentationTool,
-  useDraftModeEnvironment,
-  useDraftModePerspective,
-} from 'next-sanity/hooks'
-```
-
-## How does it revalidate and refresh in real-time?
+## How does the Live Content API revalidate and refresh in real-time?
 
 The architecture for `defineLive` works as follows:
 
