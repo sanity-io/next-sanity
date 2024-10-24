@@ -209,8 +209,8 @@ importers:
         specifier: ^3.4.0
         version: 3.4.0(react@19.0.0-rc.0)
       '@sanity/next-loader':
-        specifier: 1.0.7
-        version: 1.0.7(@sanity/client@6.22.2)(next@15.0.2-canary.3(@babel/core@7.25.8)(react-dom@19.0.0-rc.0(react@19.0.0-rc.0))(react@19.0.0-rc.0))(react@19.0.0-rc.0)
+        specifier: 1.1.0
+        version: 1.1.0(@sanity/client@6.22.2)(next@15.0.2-canary.3(@babel/core@7.25.8)(react-dom@19.0.0-rc.0(react@19.0.0-rc.0))(react@19.0.0-rc.0))(react@19.0.0-rc.0)
       '@sanity/preview-kit':
         specifier: 5.1.9
         version: 5.1.9(@sanity/client@6.22.2)(react@19.0.0-rc.0)
@@ -2115,6 +2115,10 @@ packages:
     resolution: {integrity: sha512-gPls+ARS+ZfEy7E1dgtEipr73TasSP+yAGZLcuxoV2VTg5sJ5LCq/SA53feiDRBd4O5/htYhObNnSM5IaVNhrA==}
     engines: {node: '>=18'}
 
+  '@sanity/comlink@1.1.1':
+    resolution: {integrity: sha512-hmjL8X9/muInbO4Fko6rn9WOZhZWMPKz5n3FHttb/KurKaHbkhcon/jIkZ8DowxW75wkUDp8m/nkBZznJ58HIA==}
+    engines: {node: '>=18'}
+
   '@sanity/diff-match-patch@3.1.1':
     resolution: {integrity: sha512-dSZqGeYjHKGIkqAzGqLcG92LZyJGX+nYbs/FWawhBbTBDWi21kvQ0hsL3DJThuFVWtZMWTQijN3z6Cnd44Pf2g==}
     engines: {node: '>=14.18'}
@@ -2215,8 +2219,8 @@ packages:
   '@sanity/mutator@3.62.2':
     resolution: {integrity: sha512-K3sSmIWt06qe3EjexJLus2AxXaJD+RXEoTGEHQM+4u72+AD20kZvuMybFKFpHMUI0B+HLeppTUb/Z21Sniv4xQ==}
 
-  '@sanity/next-loader@1.0.7':
-    resolution: {integrity: sha512-FoBBzz6MtdtXjNDi/BAZDG7kV5pXEFx0Q3uHdzir+2JvpcoPKI+QR9Q9Q5ajGHscPgl7M+IF1mhyeguLydLWOg==}
+  '@sanity/next-loader@1.1.0':
+    resolution: {integrity: sha512-3Mx0shumgM+oS0o4xmEk7JEv72rskefkhDHQtwhpvsklWVDPy95fNKMo5PC/ndSGQ5SctlZGpPPvnDOm511P0A==}
     engines: {node: '>=18.18'}
     peerDependencies:
       '@sanity/client': ^6.22.2
@@ -9050,6 +9054,12 @@ snapshots:
       uuid: 10.0.0
       xstate: 5.18.2
 
+  '@sanity/comlink@1.1.1':
+    dependencies:
+      rxjs: 7.8.1
+      uuid: 10.0.0
+      xstate: 5.18.2
+
   '@sanity/diff-match-patch@3.1.1': {}
 
   '@sanity/diff@3.62.1':
@@ -9253,10 +9263,10 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  '@sanity/next-loader@1.0.7(@sanity/client@6.22.2)(next@15.0.2-canary.3(@babel/core@7.25.8)(react-dom@19.0.0-rc.0(react@19.0.0-rc.0))(react@19.0.0-rc.0))(react@19.0.0-rc.0)':
+  '@sanity/next-loader@1.1.0(@sanity/client@6.22.2)(next@15.0.2-canary.3(@babel/core@7.25.8)(react-dom@19.0.0-rc.0(react@19.0.0-rc.0))(react@19.0.0-rc.0))(react@19.0.0-rc.0)':
     dependencies:
       '@sanity/client': 6.22.2(debug@4.3.7)
-      '@sanity/comlink': 1.0.0
+      '@sanity/comlink': 1.1.1
       next: 15.0.2-canary.3(@babel/core@7.25.8)(babel-plugin-react-compiler@0.0.0-experimental-fa06e2c-20241016)(react-dom@19.0.0-rc.0(react@19.0.0-rc.0))(react@19.0.0-rc.0)
       react: 19.0.0-rc.0
       use-effect-event: 1.0.2(react@19.0.0-rc.0)
