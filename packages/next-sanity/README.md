@@ -614,7 +614,7 @@ import {createClient, defineLive} from 'next-sanity'
 const client = createClient({
   projectId: process.env.NEXT_PUBLIC_SANITY_PROJECT_ID,
   dataset: process.env.NEXT_PUBLIC_SANITY_DATASET,
-  useCdn: false,
+  useCdn: true,
   apiVersion: 'vX', // Target the experimental API version
   stega: {studioUrl: '/studio'},
 })
