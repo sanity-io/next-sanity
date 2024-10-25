@@ -599,7 +599,6 @@ An end-to-end tutorial of [how to configure Sanity and Next.js for Visual Editin
 > [!NOTE]
 > The Live Content API is currently considered experimental and may change in the future.
 
-
 ### Setup
 
 #### 1. Configure `defineLive`
