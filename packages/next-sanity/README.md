@@ -594,7 +594,11 @@ An end-to-end tutorial of [how to configure Sanity and Next.js for Visual Editin
 
 ## Live Content API
 
-The Live Content API can be used to receive real time updates in your application when viewing both draft content in contexts like Presentation tool, and published content in your user-facing production application.
+[The Live Content API][live-content-api] can be used to receive real time updates in your application when viewing both draft content in contexts like Presentation tool, and published content in your user-facing production application.
+
+> [!NOTE]
+> The Live Content API is currently considered experimental and may change in the future.
+
 
 ### Setup
 
@@ -611,7 +615,7 @@ const client = createClient({
   projectId: process.env.NEXT_PUBLIC_SANITY_PROJECT_ID,
   dataset: process.env.NEXT_PUBLIC_SANITY_DATASET,
   useCdn: false,
-  apiVersion: '2024-10-24',
+  apiVersion: 'vX', // Target the experimental API version
   stega: {studioUrl: '/studio'},
 })
 
@@ -1198,3 +1202,4 @@ MIT-licensed. See [LICENSE][LICENSE].
 [vercel-content-link]: https://vercel.com/docs/workflow-collaboration/edit-mode#content-link?utm_source=github&utm_medium=readme&utm_campaign=next-sanity
 [sanity-next-clean-starter]: https://www.sanity.io/templates/nextjs-sanity-clean
 [sanity-next-featured-starter]: https://www.sanity.io/templates/personal-website-with-built-in-content-editing
+[live-content-api]: https://www.sanity.io/docs/live-content-api?utm_source=github&utm_medium=readme&utm_campaign=next-sanity
