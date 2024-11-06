@@ -52,7 +52,7 @@ importers:
         version: 1.1.0
       '@sanity/preview-url-secret':
         specifier: ^2.0.0
-        version: 2.0.0(@sanity/client@6.22.3(debug@4.3.7))
+        version: 2.0.1(@sanity/client@6.22.3)
       '@sanity/vision':
         specifier: 3.63.0
         version: 3.63.0(@babel/runtime@7.25.7)(@codemirror/lint@6.8.2)(@codemirror/theme-one-dark@6.1.2)(@lezer/common@1.2.2)(codemirror@6.0.1(@lezer/common@1.2.2))(react-dom@19.0.0-rc.0(react@19.0.0-rc.0))(react-is@18.3.1)(react@19.0.0-rc.0)(styled-components@6.1.13(react-dom@19.0.0-rc.0(react@19.0.0-rc.0))(react@19.0.0-rc.0))
@@ -215,8 +215,8 @@ importers:
         specifier: 5.1.13
         version: 5.1.13(@sanity/client@6.22.3)(react@19.0.0-rc.0)
       '@sanity/preview-url-secret':
-        specifier: 2.0.0
-        version: 2.0.0(@sanity/client@6.22.3(debug@4.3.7))
+        specifier: 2.0.1
+        version: 2.0.1(@sanity/client@6.22.3)
       '@sanity/types':
         specifier: ^3.62.0
         version: 3.63.0(debug@4.3.7)
@@ -2246,6 +2246,12 @@ packages:
     engines: {node: '>=18'}
     peerDependencies:
       '@sanity/client': ^6.22.2
+
+  '@sanity/preview-url-secret@2.0.1':
+    resolution: {integrity: sha512-faUejxyNhGJ1R+qCfVb2CL8gQA1ztmpo5rwf23rYfVhdTAi2BxdL12OKhu/oCSh0WHC9ttEFtCp7s18Mj+0+lA==}
+    engines: {node: '>=18'}
+    peerDependencies:
+      '@sanity/client': ^6.22.3
 
   '@sanity/schema@3.63.0':
     resolution: {integrity: sha512-Hvnk3NQWuEoms3xBUXQkiL5GSRWtCetZO7t0pKyoPMyKNkAhEfR8KuwISxEM1sLwlwR24ogYVPh4xJymBn7aaw==}
@@ -9218,6 +9224,11 @@ snapshots:
       react: 19.0.0-rc.0
 
   '@sanity/preview-url-secret@2.0.0(@sanity/client@6.22.3(debug@4.3.7))':
+    dependencies:
+      '@sanity/client': 6.22.3(debug@4.3.7)
+      '@sanity/uuid': 3.0.2
+
+  '@sanity/preview-url-secret@2.0.1(@sanity/client@6.22.3)':
     dependencies:
       '@sanity/client': 6.22.3(debug@4.3.7)
       '@sanity/uuid': 3.0.2
