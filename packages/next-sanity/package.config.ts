@@ -51,6 +51,7 @@ export default defineConfig({
     },
   },
 
+  /*
   reactCompilerOptions: {
     logger: {
       logEvent(filename, event) {
@@ -67,4 +68,5 @@ export default defineConfig({
       },
     },
   },
+  // */
 })
