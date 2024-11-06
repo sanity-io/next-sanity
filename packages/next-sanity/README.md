@@ -768,9 +768,11 @@ export const {GET} = defineEnableDraftMode({
 ```
 
 The main benefit of `defineEnableDraftMode` is that it fully implements all of Sanity Presentation Tool's features, including the perspective switcher:
+
 <img width="530" alt="image" src="https://github.com/user-attachments/assets/774d8f92-527f-4478-8089-2fb7e6a5c618">
 
 And the Preview URL Sharing feature:
+
 <img width="450" alt="image" src="https://github.com/user-attachments/assets/d11b38eb-389b-448f-862c-b39b3adbb7e3">
 
 In your `sanity.config.ts`, set the `previewMode.enable` option for `presentationTool`:
