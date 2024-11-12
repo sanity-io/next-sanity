@@ -5,6 +5,19 @@
 All notable changes to this project will be documented in this file. See
 [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [9.8.11](https://github.com/sanity-io/next-sanity/compare/next-sanity-v9.8.10...next-sanity-v9.8.11) (2024-11-12)
+
+
+### Bug Fixes
+
+* **deps:** update dependency @sanity/client to ^6.22.4 (main) ([#1906](https://github.com/sanity-io/next-sanity/issues/1906)) ([7dced0f](https://github.com/sanity-io/next-sanity/commit/7dced0f9fc7f8169a145d9eff57f2530026358f7))
+* **deps:** Update dependency @sanity/next-loader to v1.1.4 (main) ([#1895](https://github.com/sanity-io/next-sanity/issues/1895)) ([606f2ec](https://github.com/sanity-io/next-sanity/commit/606f2ec7274ae053972309527b816137dc6c9fb0))
+* **deps:** Update dependency @sanity/next-loader to v1.1.5 (main) ([#1905](https://github.com/sanity-io/next-sanity/issues/1905)) ([5594a40](https://github.com/sanity-io/next-sanity/commit/5594a40ab727985c72b3e5a8abb604890ec83b2a))
+* **deps:** update dependency @sanity/preview-kit to v5.1.15 (main) ([#1907](https://github.com/sanity-io/next-sanity/issues/1907)) ([bbf94d2](https://github.com/sanity-io/next-sanity/commit/bbf94d290ad932bd64f09c29f52899b141e368fe))
+* **deps:** update dependency @sanity/preview-url-secret to v2.0.3 (main) ([#1897](https://github.com/sanity-io/next-sanity/issues/1897)) ([dce5b5e](https://github.com/sanity-io/next-sanity/commit/dce5b5eb4a7986e63249523d4fa80bfc24c00d17))
+* **deps:** Update dependency @sanity/visual-editing to v2.5.2 (main) ([#1896](https://github.com/sanity-io/next-sanity/issues/1896)) ([ce7fbfc](https://github.com/sanity-io/next-sanity/commit/ce7fbfc0238a70a06c38233cc17c14aa3dd21ab4))
+* **deps:** Update dependency @sanity/visual-editing to v2.6.0 (main) ([#1908](https://github.com/sanity-io/next-sanity/issues/1908)) ([dd5a50d](https://github.com/sanity-io/next-sanity/commit/dd5a50d7d4ed44459bd8efd0d809d795602b0cee))
+
 ## [9.8.10](https://github.com/sanity-io/next-sanity/compare/next-sanity-v9.8.9...next-sanity-v9.8.10) (2024-11-06)
 
 
