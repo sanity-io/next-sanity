@@ -5,6 +5,14 @@
 All notable changes to this project will be documented in this file. See
 [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [9.8.14](https://github.com/sanity-io/next-sanity/compare/next-sanity-v9.8.13...next-sanity-v9.8.14) (2024-11-15)
+
+
+### Bug Fixes
+
+* **deps:** Update dependency @sanity/next-loader to v1.1.7 (main) ([#1929](https://github.com/sanity-io/next-sanity/issues/1929)) ([272f758](https://github.com/sanity-io/next-sanity/commit/272f758ef54646629feb88923861482e190c6a95))
+* **deps:** Update dependency @sanity/visual-editing to v2.7.1 (main) ([#1930](https://github.com/sanity-io/next-sanity/issues/1930)) ([d482073](https://github.com/sanity-io/next-sanity/commit/d4820738607f5b00812005178c37b1c562ac3a73))
+
 ## [9.8.13](https://github.com/sanity-io/next-sanity/compare/next-sanity-v9.8.12...next-sanity-v9.8.13) (2024-11-13)
 
 
