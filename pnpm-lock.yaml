@@ -224,8 +224,8 @@ importers:
         specifier: ^2.8.10
         version: 2.8.25(react-dom@19.0.0-rc.0(react@19.0.0-rc.0))(react-is@18.3.1)(react@19.0.0-rc.0)(styled-components@6.1.13(react-dom@19.0.0-rc.0(react@19.0.0-rc.0))(react@19.0.0-rc.0))
       '@sanity/visual-editing':
-        specifier: 2.10.2
-        version: 2.10.2(@sanity/client@6.23.0)(next@15.0.4-canary.34(@babel/core@7.26.0)(react-dom@19.0.0-rc.0(react@19.0.0-rc.0))(react@19.0.0-rc.0))(react-dom@19.0.0-rc.0(react@19.0.0-rc.0))(react@19.0.0-rc.0)
+        specifier: 2.10.3
+        version: 2.10.3(@sanity/client@6.23.0)(next@15.0.4-canary.34(@babel/core@7.26.0)(react-dom@19.0.0-rc.0(react@19.0.0-rc.0))(react@19.0.0-rc.0))(react-dom@19.0.0-rc.0(react@19.0.0-rc.0))(react@19.0.0-rc.0)
       groq:
         specifier: ^3.65.1
         version: 3.65.1
@@ -2256,6 +2256,12 @@ packages:
     peerDependencies:
       '@sanity/client': ^6.22.5
 
+  '@sanity/preview-url-secret@2.0.5':
+    resolution: {integrity: sha512-YWExuJ/Z0CW37vYdiouE9A/NAN3QEewZL6qu6IohXqVY6wDDT0b9ubetTR4Op1kzmK6WbPGj79aiHrPubrM70A==}
+    engines: {node: '>=18'}
+    peerDependencies:
+      '@sanity/client': ^6.23.0
+
   '@sanity/schema@3.65.1':
     resolution: {integrity: sha512-nDGEZru8IpKyy+gcSlxYq1VsUWLpMJ8YRmdDJ22f9m6BJi0EPdpKkblQ4xZu4V86iKxIP1xt6RM0k4yU36FRIA==}
 
@@ -2297,12 +2303,12 @@ packages:
       react: ^18
       styled-components: ^6.1
 
-  '@sanity/visual-editing@2.10.2':
-    resolution: {integrity: sha512-ADibQLNnkH0ZA97hv8j7VltuL60mLaRv+QgGtYpJcbAvI6VUCQ/wS5oJ0CWFx3FUEj64HqlomAYGxOgI4IFyvw==}
+  '@sanity/visual-editing@2.10.3':
+    resolution: {integrity: sha512-g3wRlMo31eBM1X8YLLFP/vwq1krsXwqyOCPQTLucfkRb1FqpPjIGh9i1MYz4W20phziBB/gU2gnpfApsYRAJ1Q==}
     engines: {node: '>=18'}
     peerDependencies:
       '@remix-run/react': '>= 2'
-      '@sanity/client': ^6.22.5
+      '@sanity/client': ^6.23.0
       '@sveltejs/kit': '>= 2'
       next: 15.0.4-canary.34
       react: ^18.3 || >=19.0.0-rc
@@ -9241,6 +9247,11 @@ snapshots:
       '@sanity/client': 6.23.0(debug@4.3.7)
       '@sanity/uuid': 3.0.2
 
+  '@sanity/preview-url-secret@2.0.5(@sanity/client@6.23.0)':
+    dependencies:
+      '@sanity/client': 6.23.0(debug@4.3.7)
+      '@sanity/uuid': 3.0.2
+
   '@sanity/schema@3.65.1(debug@4.3.7)':
     dependencies:
       '@sanity/generate-help-url': 3.0.0
@@ -9350,11 +9361,11 @@ snapshots:
       - react-dom
       - react-is
 
-  '@sanity/visual-editing@2.10.2(@sanity/client@6.23.0)(next@15.0.4-canary.34(@babel/core@7.26.0)(react-dom@19.0.0-rc.0(react@19.0.0-rc.0))(react@19.0.0-rc.0))(react-dom@19.0.0-rc.0(react@19.0.0-rc.0))(react@19.0.0-rc.0)':
+  '@sanity/visual-editing@2.10.3(@sanity/client@6.23.0)(next@15.0.4-canary.34(@babel/core@7.26.0)(react-dom@19.0.0-rc.0(react@19.0.0-rc.0))(react@19.0.0-rc.0))(react-dom@19.0.0-rc.0(react@19.0.0-rc.0))(react@19.0.0-rc.0)':
     dependencies:
       '@sanity/comlink': 2.0.0
       '@sanity/mutate': 0.11.0-canary.3(xstate@5.19.0)
-      '@sanity/preview-url-secret': 2.0.4(@sanity/client@6.23.0(debug@4.3.7))
+      '@sanity/preview-url-secret': 2.0.5(@sanity/client@6.23.0)
       '@vercel/stega': 0.1.2
       get-random-values-esm: 1.0.2
       react: 19.0.0-rc.0
