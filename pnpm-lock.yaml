@@ -209,8 +209,8 @@ importers:
         specifier: ^3.4.0
         version: 3.4.0(react@19.0.0-rc.0)
       '@sanity/next-loader':
-        specifier: 1.2.0
-        version: 1.2.0(@sanity/client@6.24.1)(next@15.0.4-canary.41(@babel/core@7.26.0)(react-dom@19.0.0-rc.0(react@19.0.0-rc.0))(react@19.0.0-rc.0))(react@19.0.0-rc.0)
+        specifier: 1.2.2
+        version: 1.2.2(next@15.0.4-canary.41(@babel/core@7.26.0)(react-dom@19.0.0-rc.0(react@19.0.0-rc.0))(react@19.0.0-rc.0))(react@19.0.0-rc.0)
       '@sanity/preview-kit':
         specifier: 5.1.20
         version: 5.1.20(@sanity/client@6.24.1)(react@19.0.0-rc.0)
@@ -2203,11 +2203,10 @@ packages:
   '@sanity/mutator@3.65.1':
     resolution: {integrity: sha512-ZrOCiNDLmOJM6T4vd8hMIAYE5oQCMz2n9ZDQqo1JOOn7gK1FDa8sRuBcMxUc8XiUDpIwC3OIOGTz5RU2ma3NJw==}
 
-  '@sanity/next-loader@1.2.0':
-    resolution: {integrity: sha512-prZx1vnsvTHjD1td48oG2QKaUZmXwvp65JWUNmAX4903xB2rJq5Qg083ydccbI1oZ+1HLxd5CIwl6NmN6AIlig==}
+  '@sanity/next-loader@1.2.2':
+    resolution: {integrity: sha512-RM+IZ6IAP3YviUsvjMWjkP5KBPLvAf4rXDUSmCEtgSzfjZcTeqLWVK2hMZgfUMQtoWkAKoQ5pY79bG8aF9MnOg==}
     engines: {node: '>=18.18'}
     peerDependencies:
-      '@sanity/client': ^6.23.0
       next: 15.0.4-canary.41
       react: ^18.3 || ^19.0.0-0
 
@@ -9133,13 +9132,15 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  '@sanity/next-loader@1.2.0(@sanity/client@6.24.1)(next@15.0.4-canary.41(@babel/core@7.26.0)(react-dom@19.0.0-rc.0(react@19.0.0-rc.0))(react@19.0.0-rc.0))(react@19.0.0-rc.0)':
+  '@sanity/next-loader@1.2.2(next@15.0.4-canary.41(@babel/core@7.26.0)(react-dom@19.0.0-rc.0(react@19.0.0-rc.0))(react@19.0.0-rc.0))(react@19.0.0-rc.0)':
     dependencies:
       '@sanity/client': 6.24.1(debug@4.3.7)
       '@sanity/comlink': 2.0.0
       next: 15.0.4-canary.41(@babel/core@7.26.0)(babel-plugin-react-compiler@0.0.0-experimental-fa06e2c-20241016)(react-dom@19.0.0-rc.0(react@19.0.0-rc.0))(react@19.0.0-rc.0)
       react: 19.0.0-rc.0
       use-effect-event: 1.0.2(react@19.0.0-rc.0)
+    transitivePeerDependencies:
+      - debug
 
   '@sanity/pkg-utils@6.11.14(@types/babel__core@7.20.5)(@types/node@22.9.0)(typescript@5.7.2)':
     dependencies:
