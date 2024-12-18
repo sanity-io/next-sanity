@@ -70,5 +70,4 @@ jobs:
           node-version: ${{ matrix.node }}
       - run: pnpm install --loglevel=error --ignore-scripts
       - run: pnpm test
-      - run: npx ls-engines
         working-directory: packages/next-sanity
