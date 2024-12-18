@@ -209,8 +209,8 @@ importers:
         specifier: ^3.4.0
         version: 3.5.0(react@19.0.0)
       '@sanity/next-loader':
-        specifier: 1.2.5
-        version: 1.2.5(next@15.0.4-canary.48(@babel/core@7.26.0)(react-dom@19.0.0(react@19.0.0))(react@19.0.0))(react@19.0.0)
+        specifier: 1.2.7
+        version: 1.2.7(next@15.0.4-canary.48(@babel/core@7.26.0)(react-dom@19.0.0(react@19.0.0))(react@19.0.0))(react@19.0.0)
       '@sanity/preview-kit':
         specifier: 5.1.23
         version: 5.1.23(@sanity/client@6.24.1)(react@19.0.0)
@@ -2118,6 +2118,10 @@ packages:
     resolution: {integrity: sha512-Sdl0qCHwtKxEZ7Xa2xjKYslosmPteWB3p81u84X8PdTocVqp036S6r3vgQJPHlcEiEaJgMjpEJkjUaR8Jx5BcA==}
     engines: {node: '>=18'}
 
+  '@sanity/comlink@2.0.2':
+    resolution: {integrity: sha512-8FUwaBrfjsQYWuoS8t+krllLQH0/khd6PT9bQ5Ac7xgHQEnZCzOXSxx+ENL0daCIdpqCpIu7nYUA2qLUUpQqEg==}
+    engines: {node: '>=18'}
+
   '@sanity/diff-match-patch@3.1.1':
     resolution: {integrity: sha512-dSZqGeYjHKGIkqAzGqLcG92LZyJGX+nYbs/FWawhBbTBDWi21kvQ0hsL3DJThuFVWtZMWTQijN3z6Cnd44Pf2g==}
     engines: {node: '>=14.18'}
@@ -2207,8 +2211,8 @@ packages:
   '@sanity/mutator@3.66.1':
     resolution: {integrity: sha512-k4Xy2GaewxJ8AOmKSVOb83ZRf0jnvhuZSEDMjln1UK1k5HHo+ruYENk+uU/8dlioj1KWOvhXFddDw7URFP95Kg==}
 
-  '@sanity/next-loader@1.2.5':
-    resolution: {integrity: sha512-9Ldq+iRfRINSGgL0SvqAEpG1EQKQ/4MqJGiixLSL/tsRr0uv278jsU8aNkDK3EJfa2bfF3m+l+nPnV+vza8hGA==}
+  '@sanity/next-loader@1.2.7':
+    resolution: {integrity: sha512-v8stpWPR4c9WbH8GWewBBTXJ5F0fZBsH4ifNGMy4LDr3k3rGxH2NYiQmtJ8UxgDHcJdtoN/raBGC8kdmTlDnxg==}
     engines: {node: '>=18.18'}
     peerDependencies:
       next: 15.0.4-canary.48
@@ -9085,6 +9089,12 @@ snapshots:
       uuid: 10.0.0
       xstate: 5.19.0
 
+  '@sanity/comlink@2.0.2':
+    dependencies:
+      rxjs: 7.8.1
+      uuid: 10.0.0
+      xstate: 5.19.0
+
   '@sanity/diff-match-patch@3.1.1': {}
 
   '@sanity/diff@3.66.1':
@@ -9269,10 +9279,10 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  '@sanity/next-loader@1.2.5(next@15.0.4-canary.48(@babel/core@7.26.0)(react-dom@19.0.0(react@19.0.0))(react@19.0.0))(react@19.0.0)':
+  '@sanity/next-loader@1.2.7(next@15.0.4-canary.48(@babel/core@7.26.0)(react-dom@19.0.0(react@19.0.0))(react@19.0.0))(react@19.0.0)':
     dependencies:
       '@sanity/client': 6.24.1(debug@4.3.7)
-      '@sanity/comlink': 2.0.1
+      '@sanity/comlink': 2.0.2
       next: 15.0.4-canary.48(@babel/core@7.26.0)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
       react: 19.0.0
       use-effect-event: 1.0.2(react@19.0.0)
