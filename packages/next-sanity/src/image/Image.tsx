@@ -19,7 +19,7 @@ export interface ImageProps extends Omit<NextImageProps, 'loader' | 'src'> {
 /**
  * @alpha
  */
-export function Image(props: ImageProps): JSX.Element {
+export function Image(props: ImageProps): React.JSX.Element {
   const {loader, src, ...rest} = props
   if (loader) {
     throw new TypeError(

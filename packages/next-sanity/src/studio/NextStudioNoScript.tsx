@@ -1,5 +1,5 @@
 /** @internal */
-export const NextStudioNoScript = (): JSX.Element => (
+export const NextStudioNoScript = (): React.JSX.Element => (
   <noscript>
     <div
       style={{
