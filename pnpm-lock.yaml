@@ -224,8 +224,8 @@ importers:
         specifier: ^2.10.11
         version: 2.10.11(@emotion/is-prop-valid@1.2.2)(react-dom@19.0.0(react@19.0.0))(react-is@18.3.1)(react@19.0.0)(styled-components@6.1.13(react-dom@19.0.0(react@19.0.0))(react@19.0.0))
       '@sanity/visual-editing':
-        specifier: 2.10.6
-        version: 2.10.6(@sanity/client@6.24.1)(next@15.1.1-canary.12(@babel/core@7.26.0)(react-dom@19.0.0(react@19.0.0))(react@19.0.0))(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
+        specifier: 2.10.10
+        version: 2.10.10(@sanity/client@6.24.1)(next@15.1.1-canary.12(@babel/core@7.26.0)(react-dom@19.0.0(react@19.0.0))(react@19.0.0))(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
       groq:
         specifier: ^3.68.1
         version: 3.68.1
@@ -1947,10 +1947,6 @@ packages:
     resolution: {integrity: sha512-2TjYEvOftD0v7ukx3Csdh9QIu44P2z7NDJtlC3qITJRYV36J7R6Vfd3trVhFnN77/7CZrGjqngrtohv8VqO5nw==}
     engines: {node: '>=18.0.0'}
 
-  '@sanity/comlink@2.0.1':
-    resolution: {integrity: sha512-Sdl0qCHwtKxEZ7Xa2xjKYslosmPteWB3p81u84X8PdTocVqp036S6r3vgQJPHlcEiEaJgMjpEJkjUaR8Jx5BcA==}
-    engines: {node: '>=18'}
-
   '@sanity/comlink@2.0.2':
     resolution: {integrity: sha512-8FUwaBrfjsQYWuoS8t+krllLQH0/khd6PT9bQ5Ac7xgHQEnZCzOXSxx+ENL0daCIdpqCpIu7nYUA2qLUUpQqEg==}
     engines: {node: '>=18'}
@@ -2025,8 +2021,8 @@ packages:
     resolution: {integrity: sha512-mB8guWRkLThkfNUggV7O5lGVux7FcyMWScat2pbxoR/u68V6IAkYrzuewdqCv23Uxjwa3A20droBxhnkNc9esw==}
     engines: {node: '>=18'}
 
-  '@sanity/mutate@0.11.0-canary.3':
-    resolution: {integrity: sha512-zZQo3rsjsTZBlRi+D3S90MebvzWNtdRzb6A0s07gEO2PtCtc5LEUSyPCLvIZiv6e2YMjBmMmuref4IB8VixKnw==}
+  '@sanity/mutate@0.11.0-canary.4':
+    resolution: {integrity: sha512-82jU3PvxQepY+jVJU1WaXQOf2Q9Q/fOCE2ksJZ4cnH3/WFOsg7RceYoOWb1XKthchTCD9zSBS9DRmb7FQ0Jlsg==}
     engines: {node: '>=18'}
     peerDependencies:
       xstate: ^5.19.0
@@ -2136,8 +2132,8 @@ packages:
       react: ^18 || ^19.0.0
       styled-components: ^6.1
 
-  '@sanity/visual-editing@2.10.6':
-    resolution: {integrity: sha512-+edG4S6o4s7VOJJMSLDHea1X7tds566bfgG5aHEdLqkV9RFd8Bkri5IoWtffKXfPQa9GfoozqsYQzVNPhaEPGw==}
+  '@sanity/visual-editing@2.10.10':
+    resolution: {integrity: sha512-kR+TIb290n5mMii+NemBqg+atjw2lf23pN5ULO8V6f+0uQKZMwIaJLhH875BMCVWLdCkb4eDq4e3QGynUzJgbQ==}
     engines: {node: '>=18'}
     peerDependencies:
       '@remix-run/react': '>= 2'
@@ -5094,11 +5090,6 @@ packages:
 
   react-compiler-runtime@19.0.0-beta-201e55d-20241215:
     resolution: {integrity: sha512-jBEo/UqVgiz6veJjhQMoNaGQLKUQwzMQpiYrA4XsGVOC2sElDF0oMjic5107LitP988yHrqDDZwZirS4OAEqyA==}
-    peerDependencies:
-      react: ^17.0.0 || ^18.0.0 || ^19.0.0
-
-  react-compiler-runtime@19.0.0-beta-37ed2a7-20241206:
-    resolution: {integrity: sha512-9e6rCpVylr9EnVocgYAjft7+2v01BDpajeHKRoO+oc9pKcAMTpstHtHvE/TSVbyf4FvzCGjfKcfHM9XGTXI6Tw==}
     peerDependencies:
       react: ^17.0.0 || ^18.0.0 || ^19.0.0
 
@@ -8129,12 +8120,6 @@ snapshots:
 
   '@sanity/color@3.0.6': {}
 
-  '@sanity/comlink@2.0.1':
-    dependencies:
-      rxjs: 7.8.1
-      uuid: 10.0.0
-      xstate: 5.19.0
-
   '@sanity/comlink@2.0.2':
     dependencies:
       rxjs: 7.8.1
@@ -8264,12 +8249,13 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  '@sanity/mutate@0.11.0-canary.3(xstate@5.19.0)':
+  '@sanity/mutate@0.11.0-canary.4(xstate@5.19.0)':
     dependencies:
       '@sanity/client': 6.24.1(debug@4.3.7)
       '@sanity/diff-match-patch': 3.1.2
       hotscript: 1.0.13
       lodash: 4.17.21
+      lodash-es: 4.17.21
       mendoza: 3.0.8
       rxjs: 7.8.1
     optionalDependencies:
@@ -8602,15 +8588,15 @@ snapshots:
       - react-dom
       - react-is
 
-  '@sanity/visual-editing@2.10.6(@sanity/client@6.24.1)(next@15.1.1-canary.12(@babel/core@7.26.0)(react-dom@19.0.0(react@19.0.0))(react@19.0.0))(react-dom@19.0.0(react@19.0.0))(react@19.0.0)':
+  '@sanity/visual-editing@2.10.10(@sanity/client@6.24.1)(next@15.1.1-canary.12(@babel/core@7.26.0)(react-dom@19.0.0(react@19.0.0))(react@19.0.0))(react-dom@19.0.0(react@19.0.0))(react@19.0.0)':
     dependencies:
-      '@sanity/comlink': 2.0.1
-      '@sanity/mutate': 0.11.0-canary.3(xstate@5.19.0)
+      '@sanity/comlink': 2.0.2
+      '@sanity/mutate': 0.11.0-canary.4(xstate@5.19.0)
       '@sanity/preview-url-secret': 2.0.5(@sanity/client@6.24.1(debug@4.3.7))
       '@vercel/stega': 0.1.2
       get-random-values-esm: 1.0.2
       react: 19.0.0
-      react-compiler-runtime: 19.0.0-beta-37ed2a7-20241206(react@19.0.0)
+      react-compiler-runtime: 19.0.0-beta-201e55d-20241215(react@19.0.0)
       react-dom: 19.0.0(react@19.0.0)
       rxjs: 7.8.1
       scroll-into-view-if-needed: 3.1.0
@@ -11854,10 +11840,6 @@ snapshots:
       react: 19.0.0
 
   react-compiler-runtime@19.0.0-beta-201e55d-20241215(react@19.0.0):
-    dependencies:
-      react: 19.0.0
-
-  react-compiler-runtime@19.0.0-beta-37ed2a7-20241206(react@19.0.0):
     dependencies:
       react: 19.0.0
 
