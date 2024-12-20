@@ -5,6 +5,13 @@
 All notable changes to this project will be documented in this file. See
 [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [9.8.29](https://github.com/sanity-io/next-sanity/compare/next-sanity-v9.8.28...next-sanity-v9.8.29) (2024-12-20)
+
+
+### Bug Fixes
+
+* createDataAttribute missing on edge-light ([5aa90df](https://github.com/sanity-io/next-sanity/commit/5aa90df441f4b6f8070ea36645ffe5c19a2925b3))
+
 ## [9.8.28](https://github.com/sanity-io/next-sanity/compare/next-sanity-v9.8.27...next-sanity-v9.8.28) (2024-12-18)
 
 
