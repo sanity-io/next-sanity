@@ -5,6 +5,7 @@
 import type {VisualEditingProps} from './visual-editing'
 
 export * from './client'
+export * from './create-data-attribute'
 export * from '@portabletext/react'
 export * from '@sanity/next-loader'
 export {defineQuery, default as groq} from 'groq'

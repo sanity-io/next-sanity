@@ -1,4 +1,5 @@
 export * from './client'
+export * from './create-data-attribute'
 export * from './visual-editing'
 export * from '@portabletext/react'
 export * from '@sanity/next-loader'

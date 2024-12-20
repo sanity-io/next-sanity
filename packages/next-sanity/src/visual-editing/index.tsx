@@ -42,9 +42,4 @@ export function VisualEditing(props: VisualEditingProps): React.ReactElement {
   )
 }
 
-export {
-  type CreateDataAttribute,
-  createDataAttribute,
-  type CreateDataAttributeProps,
-} from '@sanity/visual-editing/create-data-attribute'
 export type {VisualEditingProps} from 'next-sanity/visual-editing/client-component'
