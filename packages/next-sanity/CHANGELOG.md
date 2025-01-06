@@ -5,6 +5,13 @@
 All notable changes to this project will be documented in this file. See
 [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [9.8.32](https://github.com/sanity-io/next-sanity/compare/next-sanity-v9.8.31...next-sanity-v9.8.32) (2025-01-06)
+
+
+### Bug Fixes
+
+* ensure draft mode cookies are set on safari ([#2074](https://github.com/sanity-io/next-sanity/issues/2074)) ([33d5955](https://github.com/sanity-io/next-sanity/commit/33d59558f8e16b1c1aeb3bf472bcf1f6d66ae630))
+
 ## [9.8.31](https://github.com/sanity-io/next-sanity/compare/next-sanity-v9.8.30...next-sanity-v9.8.31) (2025-01-02)
 
 
