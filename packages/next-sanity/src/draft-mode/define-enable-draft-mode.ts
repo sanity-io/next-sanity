@@ -59,6 +59,8 @@ export function defineEnableDraftMode(options: DefineEnableDraftModeOptions): En
         draftModeStore.enable()
       }
 
+      const dev = process.env.NODE_ENV !== 'production'
+
       // Override cookie header for draft mode for usage in live-preview
       // https://github.com/vercel/next.js/issues/49927
       const cookieStore = await cookies()
@@ -68,8 +70,8 @@ export function defineEnableDraftMode(options: DefineEnableDraftModeOptions): En
         value: cookie?.value,
         httpOnly: true,
         path: '/',
-        secure: true,
-        sameSite: 'none',
+        secure: !dev,
+        sameSite: dev ? 'lax' : 'none',
       })
 
       if (studioPreviewPerspective) {
@@ -78,8 +80,8 @@ export function defineEnableDraftMode(options: DefineEnableDraftModeOptions): En
           value: studioPreviewPerspective,
           httpOnly: true,
           path: '/',
-          secure: true,
-          sameSite: 'none',
+          secure: !dev,
+          sameSite: dev ? 'lax' : 'none',
         })
       }
 
