@@ -58,7 +58,7 @@ importers:
         version: 1.1.0
       '@sanity/presentation':
         specifier: ^1.19.16
-        version: 1.20.2(@emotion/is-prop-valid@1.2.2)(@sanity/color@3.0.6)(react-dom@19.0.0(react@19.0.0))(react-is@19.0.0)(react@19.0.0)(styled-components@6.1.14(react-dom@19.0.0(react@19.0.0))(react@19.0.0))
+        version: 1.20.3(@emotion/is-prop-valid@1.2.2)(@sanity/color@3.0.6)(react-dom@19.0.0(react@19.0.0))(react-is@19.0.0)(react@19.0.0)(styled-components@6.1.14(react-dom@19.0.0(react@19.0.0))(react@19.0.0))
       '@sanity/preview-url-secret':
         specifier: ^2.0.5
         version: 2.0.6(@sanity/client@6.24.3)
@@ -1963,6 +1963,10 @@ packages:
     resolution: {integrity: sha512-ODjmZZJ4a4hiSK4TaQk2ysppIweIj6UNZ7o+fAkh7hotwcLxh+qTo8Rpb5yW2UfqGSAWTQDMcta9/4HAMWGfUA==}
     engines: {node: '>=18'}
 
+  '@sanity/comlink@2.0.5':
+    resolution: {integrity: sha512-6Rbg71hkeoGInk/9hBsCUBCZ33IHSs2fZynAR85ANkXDM+WYiwRDlker7OngBkfbK8TF9+G797VjNMQQgJINiQ==}
+    engines: {node: '>=18'}
+
   '@sanity/diff-match-patch@3.1.2':
     resolution: {integrity: sha512-jW2zqnnV3cLXy7exOKbqaWJPb15rFSQGseAhlPljzbg5CP0hrujk0TwYpsNMz2xwTELOk1JkBUINQYbPE4TmaA==}
     engines: {node: '>=18.18'}
@@ -2077,8 +2081,8 @@ packages:
     resolution: {integrity: sha512-w45QJs8HrVIodSVpIKPwb3wizWSwUeFPMDkqwi90LZ6JXYaji9NjIBDEWxdwAli1RPU01UTEWyzRBfSpqP+nwA==}
     engines: {node: '>=16.14'}
 
-  '@sanity/presentation@1.20.2':
-    resolution: {integrity: sha512-zmqQXoBafuXK8vrD4Q8Zo0J/hfKnObP5r9uOkKlvIVS/SAuryoiajl8YZ7d9nZhzE+HHYiRMXL9LdKrzqgv85w==}
+  '@sanity/presentation@1.20.3':
+    resolution: {integrity: sha512-EQ/BnyEA+Zcsx8mCjRolsZb2IXo96si+LCBuFU4aqFua7NXkXkd9BawS9wc2zWuEj5Nf6VItcLBkf5QXl3XArA==}
     engines: {node: '>=16.14'}
 
   '@sanity/prettier-config@1.0.3':
@@ -2111,6 +2115,12 @@ packages:
 
   '@sanity/preview-url-secret@2.0.6':
     resolution: {integrity: sha512-6HHO0+grjJ9atqXMxHSZSwPgZGLMVN+om2DZLdghKmM5/PCAT3osmV++Buutxj+qOZF97awzJDAghpNZ3O8iDg==}
+    engines: {node: '>=18'}
+    peerDependencies:
+      '@sanity/client': ^6.24.1
+
+  '@sanity/preview-url-secret@2.0.7':
+    resolution: {integrity: sha512-Lcz2lf/wNNIGhK4NYOxkVqp6I/ug+MCaPoAJOyW/ye/YyJ7PpL7tdGWNvRiOnBX3S+qv3utK6vlWAoHcXWDLNQ==}
     engines: {node: '>=18'}
     peerDependencies:
       '@sanity/client': ^6.24.1
@@ -3654,8 +3664,8 @@ packages:
   fraction.js@4.3.7:
     resolution: {integrity: sha512-ZsDfxO51wGAXREY55a7la9LScWpwv9RxIrYABrlvOFBlH/ShPnrtsXeuUIfXKKOVicNxQ+o8JTbJvjS4M89yew==}
 
-  framer-motion@11.16.1:
-    resolution: {integrity: sha512-xsjhEUSWHn39g334PpBTH+QissgEJVJkpRGS/4QUyMSmoJSNxA+7FTuq61s+OXPMS4muu5k9Y6r7GpcNKhd1xA==}
+  framer-motion@11.16.2:
+    resolution: {integrity: sha512-M946d8UhmI4lVZ4Wy2bLxw7D7LWw+OZTK5eCFCpGJNpUKt17oCP7+bBM3iKp6PfJF30ngBxsdxssFjLdD85ThA==}
     peerDependencies:
       '@emotion/is-prop-valid': '*'
       react: ^19
@@ -8127,6 +8137,12 @@ snapshots:
       uuid: 11.0.4
       xstate: 5.19.1
 
+  '@sanity/comlink@2.0.5':
+    dependencies:
+      rxjs: 7.8.1
+      uuid: 11.0.4
+      xstate: 5.19.1
+
   '@sanity/diff-match-patch@3.1.2': {}
 
   '@sanity/diff@3.69.0':
@@ -8406,7 +8422,7 @@ snapshots:
       '@sanity/ui': 2.11.1(@emotion/is-prop-valid@1.2.2)(react-dom@19.0.0(react@19.0.0))(react-is@19.0.0)(react@19.0.0)(styled-components@6.1.14(react-dom@19.0.0(react@19.0.0))(react@19.0.0))
       '@sanity/uuid': 3.0.2
       fast-deep-equal: 3.1.3
-      framer-motion: 11.16.1(@emotion/is-prop-valid@1.2.2)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
+      framer-motion: 11.16.2(@emotion/is-prop-valid@1.2.2)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
       lodash: 4.17.21
       mendoza: 3.0.8
       mnemonist: 0.39.8
@@ -8424,17 +8440,17 @@ snapshots:
       - react-is
       - styled-components
 
-  '@sanity/presentation@1.20.2(@emotion/is-prop-valid@1.2.2)(@sanity/color@3.0.6)(react-dom@19.0.0(react@19.0.0))(react-is@19.0.0)(react@19.0.0)(styled-components@6.1.14(react-dom@19.0.0(react@19.0.0))(react@19.0.0))':
+  '@sanity/presentation@1.20.3(@emotion/is-prop-valid@1.2.2)(@sanity/color@3.0.6)(react-dom@19.0.0(react@19.0.0))(react-is@19.0.0)(react@19.0.0)(styled-components@6.1.14(react-dom@19.0.0(react@19.0.0))(react@19.0.0))':
     dependencies:
       '@sanity/client': 6.24.3(debug@4.4.0)
-      '@sanity/comlink': 2.0.4
+      '@sanity/comlink': 2.0.5
       '@sanity/icons': 3.5.7(react@19.0.0)
       '@sanity/logos': 2.1.13(@sanity/color@3.0.6)(react@19.0.0)
-      '@sanity/preview-url-secret': 2.0.6(@sanity/client@6.24.3)
+      '@sanity/preview-url-secret': 2.0.7(@sanity/client@6.24.3)
       '@sanity/ui': 2.11.1(@emotion/is-prop-valid@1.2.2)(react-dom@19.0.0(react@19.0.0))(react-is@19.0.0)(react@19.0.0)(styled-components@6.1.14(react-dom@19.0.0(react@19.0.0))(react@19.0.0))
       '@sanity/uuid': 3.0.2
       fast-deep-equal: 3.1.3
-      framer-motion: 11.16.1(@emotion/is-prop-valid@1.2.2)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
+      framer-motion: 11.16.2(@emotion/is-prop-valid@1.2.2)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
       lodash: 4.17.21
       mendoza: 3.0.8
       mnemonist: 0.39.8
@@ -8477,6 +8493,11 @@ snapshots:
       '@sanity/uuid': 3.0.2
 
   '@sanity/preview-url-secret@2.0.6(@sanity/client@6.24.3)':
+    dependencies:
+      '@sanity/client': 6.24.3(debug@4.4.0)
+      '@sanity/uuid': 3.0.2
+
+  '@sanity/preview-url-secret@2.0.7(@sanity/client@6.24.3)':
     dependencies:
       '@sanity/client': 6.24.3(debug@4.4.0)
       '@sanity/uuid': 3.0.2
@@ -8537,7 +8558,7 @@ snapshots:
       '@sanity/color': 3.0.6
       '@sanity/icons': 3.5.7(react@19.0.0)
       csstype: 3.1.3
-      framer-motion: 11.16.1(@emotion/is-prop-valid@1.2.2)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
+      framer-motion: 11.16.2(@emotion/is-prop-valid@1.2.2)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
       react: 19.0.0
       react-compiler-runtime: 19.0.0-beta-55955c9-20241229(react@19.0.0)
       react-dom: 19.0.0(react@19.0.0)
@@ -10395,7 +10416,7 @@ snapshots:
 
   fraction.js@4.3.7: {}
 
-  framer-motion@11.16.1(@emotion/is-prop-valid@1.2.2)(react-dom@19.0.0(react@19.0.0))(react@19.0.0):
+  framer-motion@11.16.2(@emotion/is-prop-valid@1.2.2)(react-dom@19.0.0(react@19.0.0))(react@19.0.0):
     dependencies:
       motion-dom: 11.16.1
       motion-utils: 11.16.0
@@ -12222,7 +12243,7 @@ snapshots:
       execa: 2.1.0
       exif-component: 1.0.1
       form-data: 4.0.1
-      framer-motion: 11.16.1(@emotion/is-prop-valid@1.2.2)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
+      framer-motion: 11.16.2(@emotion/is-prop-valid@1.2.2)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
       get-it: 8.6.5(debug@4.4.0)
       get-random-values-esm: 1.0.2
       groq-js: 1.14.2
