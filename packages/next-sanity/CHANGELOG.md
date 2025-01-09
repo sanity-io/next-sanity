@@ -5,6 +5,16 @@
 All notable changes to this project will be documented in this file. See
 [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [9.8.33](https://github.com/sanity-io/next-sanity/compare/next-sanity-v9.8.32...next-sanity-v9.8.33) (2025-01-09)
+
+
+### Bug Fixes
+
+* **deps:** Update dependency @sanity/next-loader to v1.2.9 (main) ([#2085](https://github.com/sanity-io/next-sanity/issues/2085)) ([3e98900](https://github.com/sanity-io/next-sanity/commit/3e989004a936bb1339c0bd991a8dfe104d695ce0))
+* **deps:** update dependency @sanity/preview-kit to v5.1.27 (main) ([#2089](https://github.com/sanity-io/next-sanity/issues/2089)) ([9244388](https://github.com/sanity-io/next-sanity/commit/92443882569714086957ad497ca0a8af2c3eed9b))
+* **deps:** Update dependency @sanity/visual-editing to v2.11.5 (main) ([#2086](https://github.com/sanity-io/next-sanity/issues/2086)) ([8dffc30](https://github.com/sanity-io/next-sanity/commit/8dffc309a5b7ec0a4cae38e770c833a7fefc3161))
+* forward vercel protection bypass params ([ee219a7](https://github.com/sanity-io/next-sanity/commit/ee219a74234cfd67fa2620309bb0a4acf8a1b371))
+
 ## [9.8.32](https://github.com/sanity-io/next-sanity/compare/next-sanity-v9.8.31...next-sanity-v9.8.32) (2025-01-06)
 
 
