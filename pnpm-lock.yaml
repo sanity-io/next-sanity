@@ -218,8 +218,8 @@ importers:
         specifier: ^3.5.6
         version: 3.5.7(react@19.0.0)
       '@sanity/next-loader':
-        specifier: 1.2.11
-        version: 1.2.11(next@15.2.0-canary.3(@babel/core@7.26.0)(react-dom@19.0.0(react@19.0.0))(react@19.0.0))(react@19.0.0)
+        specifier: 1.2.12
+        version: 1.2.12(next@15.2.0-canary.3(@babel/core@7.26.0)(react-dom@19.0.0(react@19.0.0))(react@19.0.0))(react@19.0.0)
       '@sanity/preview-kit':
         specifier: 5.1.27
         version: 5.1.27(@sanity/client@6.24.3)(react@19.0.0)
@@ -2074,8 +2074,8 @@ packages:
   '@sanity/mutator@3.69.0':
     resolution: {integrity: sha512-ZeYghYVvS4rreFvPh2VD5029GPsyVhD0WXKua+iuDeot7tRoyZ/RdvUamw1k/sNatmxVkYLYP3vEltuU8cPxtw==}
 
-  '@sanity/next-loader@1.2.11':
-    resolution: {integrity: sha512-la2j4+LoiNFwCOb4COi+Fca3EDMgmtux/uY33a6VqlGyeib3ioVEBOcloO3Nr4ShZofEl3Y3mWAHaQvCSV2rxw==}
+  '@sanity/next-loader@1.2.12':
+    resolution: {integrity: sha512-bcOAfuUwOi6OAd39kSArXpS/JC/kH0IosEQ6xlbsDGFPIsrqlneiTVy7GdiM2u5pAsvES63eSCLFS8KAvfFJzw==}
     engines: {node: '>=18.18'}
     peerDependencies:
       next: canary
@@ -8206,6 +8206,12 @@ snapshots:
       uuid: 11.0.5
       xstate: 5.19.1
 
+  '@sanity/comlink@3.0.0':
+    dependencies:
+      rxjs: 7.8.1
+      uuid: 11.0.4
+      xstate: 5.19.1
+
   '@sanity/diff-match-patch@3.1.2': {}
 
   '@sanity/diff@3.69.0':
@@ -8363,10 +8369,10 @@ snapshots:
       - '@types/react'
       - supports-color
 
-  '@sanity/next-loader@1.2.11(next@15.2.0-canary.3(@babel/core@7.26.0)(react-dom@19.0.0(react@19.0.0))(react@19.0.0))(react@19.0.0)':
+  '@sanity/next-loader@1.2.12(next@15.2.0-canary.3(@babel/core@7.26.0)(react-dom@19.0.0(react@19.0.0))(react@19.0.0))(react@19.0.0)':
     dependencies:
       '@sanity/client': 6.24.3(debug@4.4.0)
-      '@sanity/comlink': 2.0.5
+      '@sanity/comlink': 3.0.0
       next: 15.2.0-canary.3(@babel/core@7.26.0)(babel-plugin-react-compiler@19.0.0-beta-63e3235-20250105)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
       react: 19.0.0
       use-effect-event: 1.0.2(react@19.0.0)
