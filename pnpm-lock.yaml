@@ -146,7 +146,7 @@ importers:
         version: 0.15.12
       next:
         specifier: canary
-        version: 15.2.0-canary.9(@babel/core@7.26.0)(babel-plugin-react-compiler@19.0.0-beta-e552027-20250112)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
+        version: 15.2.0-canary.9(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
       next-sanity:
         specifier: workspace:*
         version: link:../../packages/next-sanity
@@ -215,8 +215,8 @@ importers:
         specifier: ^3.5.6
         version: 3.5.7(react@19.0.0)
       '@sanity/next-loader':
-        specifier: 1.2.13
-        version: 1.2.13(next@15.2.0-canary.9(@babel/core@7.26.0)(react-dom@19.0.0(react@19.0.0))(react@19.0.0))(react@19.0.0)
+        specifier: 1.2.14
+        version: 1.2.14(next@15.2.0-canary.9(@babel/core@7.26.0)(react-dom@19.0.0(react@19.0.0))(react@19.0.0))(react@19.0.0)
       '@sanity/preview-kit':
         specifier: 5.1.28
         version: 5.1.28(@sanity/client@6.24.3)(react@19.0.0)
@@ -2069,8 +2069,8 @@ packages:
   '@sanity/mutator@3.70.0':
     resolution: {integrity: sha512-4Cc+9zFJsD3ywJRcnxr4SxURtM88zYaWJXHufGVDzDCnMMa/wd0VSHtuOEfuW09NirExiw1YsbFhHOTeuIl8lg==}
 
-  '@sanity/next-loader@1.2.13':
-    resolution: {integrity: sha512-iYAd/JiPG2hFV27KtZjDThSsttNOY06NpSRHCooFeHLQWq/sP8QR7nS5nwvP6/AHaIZQ+EdYElH3rp7TtfetNg==}
+  '@sanity/next-loader@1.2.14':
+    resolution: {integrity: sha512-OKSmMgy/iTajsNKNxGOToIkhGM4m+ee7pbXrDmR65Gyb5CeeEMmjPST984Gl1J772XvBzbqCsqK6D5XJOUcrAg==}
     engines: {node: '>=18.18'}
     peerDependencies:
       next: canary
@@ -8349,7 +8349,7 @@ snapshots:
       - '@types/react'
       - supports-color
 
-  '@sanity/next-loader@1.2.13(next@15.2.0-canary.9(@babel/core@7.26.0)(react-dom@19.0.0(react@19.0.0))(react@19.0.0))(react@19.0.0)':
+  '@sanity/next-loader@1.2.14(next@15.2.0-canary.9(@babel/core@7.26.0)(react-dom@19.0.0(react@19.0.0))(react@19.0.0))(react@19.0.0)':
     dependencies:
       '@sanity/client': 6.24.3(debug@4.4.0)
       '@sanity/comlink': 3.0.0
