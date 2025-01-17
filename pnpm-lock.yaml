@@ -215,8 +215,8 @@ importers:
         specifier: ^3.5.6
         version: 3.5.7(react@19.0.0)
       '@sanity/next-loader':
-        specifier: 1.2.14
-        version: 1.2.14(next@15.2.0-canary.14(@babel/core@7.26.0)(react-dom@19.0.0(react@19.0.0))(react@19.0.0))(react@19.0.0)
+        specifier: 1.2.15
+        version: 1.2.15(@sanity/types@3.70.0(@types/react@19.0.2))(next@15.2.0-canary.14(@babel/core@7.26.0)(react-dom@19.0.0(react@19.0.0))(react@19.0.0))(react@19.0.0)
       '@sanity/preview-kit':
         specifier: 5.1.29
         version: 5.1.29(@sanity/client@6.25.0)(react@19.0.0)
@@ -2074,8 +2074,8 @@ packages:
   '@sanity/mutator@3.70.0':
     resolution: {integrity: sha512-4Cc+9zFJsD3ywJRcnxr4SxURtM88zYaWJXHufGVDzDCnMMa/wd0VSHtuOEfuW09NirExiw1YsbFhHOTeuIl8lg==}
 
-  '@sanity/next-loader@1.2.14':
-    resolution: {integrity: sha512-OKSmMgy/iTajsNKNxGOToIkhGM4m+ee7pbXrDmR65Gyb5CeeEMmjPST984Gl1J772XvBzbqCsqK6D5XJOUcrAg==}
+  '@sanity/next-loader@1.2.15':
+    resolution: {integrity: sha512-mgyFjGIzXMpnwr2hQH5rtwZt9XAR65aH2q8Pd0GnKNbviKdFGjwgx/NVbsbYmK09LlR5itYh86XyYYWZMDzuWQ==}
     engines: {node: '>=18.18'}
     peerDependencies:
       next: canary
@@ -8376,14 +8376,16 @@ snapshots:
       - '@types/react'
       - supports-color
 
-  '@sanity/next-loader@1.2.14(next@15.2.0-canary.14(@babel/core@7.26.0)(react-dom@19.0.0(react@19.0.0))(react@19.0.0))(react@19.0.0)':
+  '@sanity/next-loader@1.2.15(@sanity/types@3.70.0(@types/react@19.0.2))(next@15.2.0-canary.14(@babel/core@7.26.0)(react-dom@19.0.0(react@19.0.0))(react@19.0.0))(react@19.0.0)':
     dependencies:
       '@sanity/client': 6.25.0(debug@4.4.0)
-      '@sanity/comlink': 3.0.0
+      '@sanity/comlink': 3.0.1
+      '@sanity/presentation-comlink': 1.0.0(@sanity/client@6.25.0)(@sanity/types@3.70.0(@types/react@19.0.2))
       next: 15.2.0-canary.14(@babel/core@7.26.0)(babel-plugin-react-compiler@19.0.0-beta-e552027-20250112)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
       react: 19.0.0
       use-effect-event: 1.0.2(react@19.0.0)
     transitivePeerDependencies:
+      - '@sanity/types'
       - debug
 
   '@sanity/pkg-utils@6.13.1(@types/babel__core@7.20.5)(@types/node@22.10.2)(babel-plugin-react-compiler@19.0.0-beta-e552027-20250112)(debug@4.4.0)(typescript@5.7.3)':
