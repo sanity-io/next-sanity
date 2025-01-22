@@ -212,7 +212,7 @@ importers:
         specifier: ^6.27.0
         version: 6.27.0(debug@4.4.0)
       '@sanity/icons':
-        specifier: ^3.5.6
+        specifier: ^3.5.7
         version: 3.5.7(react@19.0.0)
       '@sanity/next-loader':
         specifier: 1.2.17
@@ -224,10 +224,10 @@ importers:
         specifier: 2.1.2
         version: 2.1.2(@sanity/client@6.27.0(debug@4.4.0))
       '@sanity/types':
-        specifier: ^3.69.0
+        specifier: ^3.71.1
         version: 3.71.1(@types/react@19.0.2)(debug@4.4.0)
       '@sanity/ui':
-        specifier: ^2.11.1
+        specifier: ^2.11.4
         version: 2.11.4(@emotion/is-prop-valid@1.2.2)(react-dom@19.0.0(react@19.0.0))(react-is@19.0.0)(react@19.0.0)(styled-components@6.1.14(react-dom@19.0.0(react@19.0.0))(react@19.0.0))
       '@sanity/visual-editing':
         specifier: 2.12.6
@@ -239,7 +239,7 @@ importers:
         specifier: ^5.3.0
         version: 5.3.0
       sanity:
-        specifier: ^3.69.0
+        specifier: ^3.71.1
         version: 3.71.1(@emotion/is-prop-valid@1.2.2)(@types/babel__core@7.20.5)(@types/node@22.10.7)(@types/react@19.0.2)(babel-plugin-react-compiler@19.0.0-beta-decd7b8-20250118)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)(styled-components@6.1.14(react-dom@19.0.0(react@19.0.0))(react@19.0.0))(terser@5.37.0)(typescript@5.7.3)
     devDependencies:
       '@sanity/browserslist-config':
@@ -311,9 +311,6 @@ importers:
       vitest:
         specifier: ^3.0.3
         version: 3.0.3(@types/node@22.10.7)(jiti@1.21.7)(jsdom@26.0.0)(terser@5.37.0)(yaml@2.7.0)
-      vitest-github-actions-reporter:
-        specifier: ^0.11.1
-        version: 0.11.1(vitest@3.0.3(@types/node@22.10.7)(jiti@1.21.7)(jsdom@26.0.0)(terser@5.37.0)(yaml@2.7.0))
 
   packages/sanity-config:
     dependencies:
@@ -6361,12 +6358,6 @@ packages:
         optional: true
       yaml:
         optional: true
-
-  vitest-github-actions-reporter@0.11.1:
-    resolution: {integrity: sha512-ZHHB0wBgOPhMYCB17WKVlJZa+5SdudBZFoVoebwfq3ioIUTeLQGYHwh85vpdJAxRghLP8d0qI/6eCTueGyDVXA==}
-    engines: {node: '>=14.16.0'}
-    peerDependencies:
-      vitest: '>=0.28.5'
 
   vitest@3.0.3:
     resolution: {integrity: sha512-dWdwTFUW9rcnL0LyF2F+IfvNQWB0w9DERySCk8VMG75F8k25C7LsZoh6XfCjPvcR8Nb+Lqi9JKr6vnzH7HSrpQ==}
@@ -13677,11 +13668,6 @@ snapshots:
       jiti: 1.21.7
       terser: 5.37.0
       yaml: 2.7.0
-
-  vitest-github-actions-reporter@0.11.1(vitest@3.0.3(@types/node@22.10.7)(jiti@1.21.7)(jsdom@26.0.0)(terser@5.37.0)(yaml@2.7.0)):
-    dependencies:
-      '@actions/core': 1.11.1
-      vitest: 3.0.3(@types/node@22.10.7)(jiti@1.21.7)(jsdom@26.0.0)(terser@5.37.0)(yaml@2.7.0)
 
   vitest@3.0.3(@types/node@22.10.7)(jiti@1.21.7)(jsdom@26.0.0)(terser@5.37.0)(yaml@2.7.0):
     dependencies:
