@@ -5,6 +5,20 @@
 All notable changes to this project will be documented in this file. See
 [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [9.8.40](https://github.com/sanity-io/next-sanity/compare/next-sanity-v9.8.39...next-sanity-v9.8.40) (2025-01-22)
+
+
+### Bug Fixes
+
+* **deps:** update dependency @sanity/client to ^6.27.0 (main) ([#2161](https://github.com/sanity-io/next-sanity/issues/2161)) ([cb9258d](https://github.com/sanity-io/next-sanity/commit/cb9258d8e83142f9715f0c28f593d10ee3e4c4c2))
+* **deps:** update dependency @sanity/client to ^6.27.1 (main) ([#2166](https://github.com/sanity-io/next-sanity/issues/2166)) ([bb5f610](https://github.com/sanity-io/next-sanity/commit/bb5f6104c5b1365d04e456bf34947e5b1faca738))
+* **deps:** Update dependency @sanity/next-loader to v1.2.17 (main) ([#2157](https://github.com/sanity-io/next-sanity/issues/2157)) ([4611371](https://github.com/sanity-io/next-sanity/commit/4611371a2a88c867c321e083586d6b2161205480))
+* **deps:** Update dependency @sanity/next-loader to v1.2.18 (main) ([#2164](https://github.com/sanity-io/next-sanity/issues/2164)) ([7b82994](https://github.com/sanity-io/next-sanity/commit/7b82994b8b1ee1c9ed74b369f9374656b2417a17))
+* **deps:** update dependency @sanity/preview-kit to v5.1.32 (main) ([#2167](https://github.com/sanity-io/next-sanity/issues/2167)) ([0effc2e](https://github.com/sanity-io/next-sanity/commit/0effc2e60ca45edf2663c2e4c6cd3dc4b62f8fd9))
+* **deps:** update dependency @sanity/preview-url-secret to v2.1.2 (main) ([#2160](https://github.com/sanity-io/next-sanity/issues/2160)) ([4b4b366](https://github.com/sanity-io/next-sanity/commit/4b4b3667d03cf307831e7b5103e0ca0429a5bc2a))
+* **deps:** Update dependency @sanity/visual-editing to v2.12.6 (main) ([#2151](https://github.com/sanity-io/next-sanity/issues/2151)) ([e63f144](https://github.com/sanity-io/next-sanity/commit/e63f1447f8374abf62e3f469ded4ee69fbad1d59))
+* **deps:** Update dependency @sanity/visual-editing to v2.12.7 (main) ([#2165](https://github.com/sanity-io/next-sanity/issues/2165)) ([993ad54](https://github.com/sanity-io/next-sanity/commit/993ad543a444290e86ebd162b62aa7b44b092638))
+
 ## [9.8.39](https://github.com/sanity-io/next-sanity/compare/next-sanity-v9.8.38...next-sanity-v9.8.39) (2025-01-20)
 
 
