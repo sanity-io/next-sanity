@@ -5,6 +5,13 @@
 All notable changes to this project will be documented in this file. See
 [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [9.8.41](https://github.com/sanity-io/next-sanity/compare/next-sanity-v9.8.40...next-sanity-v9.8.41) (2025-01-23)
+
+
+### Bug Fixes
+
+* **deps:** bump non-major ([c2f5a34](https://github.com/sanity-io/next-sanity/commit/c2f5a3426f3b78199c7c40461db4ce30d0ab0409))
+
 ## [9.8.40](https://github.com/sanity-io/next-sanity/compare/next-sanity-v9.8.39...next-sanity-v9.8.40) (2025-01-22)
 
 
