@@ -5,6 +5,13 @@
 All notable changes to this project will be documented in this file. See
 [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [9.8.46](https://github.com/sanity-io/next-sanity/compare/next-sanity-v9.8.45...next-sanity-v9.8.46) (2025-01-28)
+
+
+### Bug Fixes
+
+* **docs:** add `use client` directives to `sanity.config.ts` snippets ([#2202](https://github.com/sanity-io/next-sanity/issues/2202)) ([cbdc0bb](https://github.com/sanity-io/next-sanity/commit/cbdc0bb71a78bd4cdf993dac2d8cf45c8b6be5e2))
+
 ## [9.8.45](https://github.com/sanity-io/next-sanity/compare/next-sanity-v9.8.44...next-sanity-v9.8.45) (2025-01-28)
 
 
