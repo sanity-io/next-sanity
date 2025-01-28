@@ -779,6 +779,7 @@ In your `sanity.config.ts`, set the `previewMode.enable` option for `presentatio
 
 ```ts
 // sanity.config.ts
+'use client'
 
 import {defineConfig} from 'sanity'
 import {presentationTool} from 'next-sanity'
@@ -1045,6 +1046,7 @@ npx sanity@latest init
 
 ```ts
 // ./sanity.config.ts
+'use client'
 
 import {defineConfig} from 'sanity'
 import {structureTool} from 'sanity/structure'
