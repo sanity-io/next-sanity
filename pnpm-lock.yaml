@@ -146,7 +146,7 @@ importers:
         version: 0.15.12
       next:
         specifier: canary
-        version: 15.2.0-canary.40(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
+        version: 15.2.0-canary.40(@babel/core@7.26.7)(babel-plugin-react-compiler@19.0.0-beta-714736e-20250131)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
       next-sanity:
         specifier: workspace:*
         version: link:../../packages/next-sanity
@@ -230,8 +230,8 @@ importers:
         specifier: ^2.11.8
         version: 2.11.8(@emotion/is-prop-valid@1.2.2)(react-dom@19.0.0(react@19.0.0))(react-is@19.0.0)(react@19.0.0)(styled-components@6.1.14(react-dom@19.0.0(react@19.0.0))(react@19.0.0))
       '@sanity/visual-editing':
-        specifier: 2.12.13
-        version: 2.12.13(@sanity/client@6.27.2)(@sanity/types@3.74.0(@types/react@19.0.8))(next@15.2.0-canary.40(@babel/core@7.26.7)(react-dom@19.0.0(react@19.0.0))(react@19.0.0))(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
+        specifier: 2.12.14
+        version: 2.12.14(@sanity/client@6.27.2)(@sanity/types@3.74.0(@types/react@19.0.8))(next@15.2.0-canary.40(@babel/core@7.26.7)(react-dom@19.0.0(react@19.0.0))(react@19.0.0))(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
       groq:
         specifier: ^3.74.0
         version: 3.74.0
@@ -2268,8 +2268,8 @@ packages:
       '@sanity/types':
         optional: true
 
-  '@sanity/visual-editing@2.12.13':
-    resolution: {integrity: sha512-yuB3SZd7KeDtQcG20X+t5TOjOaHj6gohVUIY1zVrNtq8DZuFXDqMe9Wg327r+P7OojQjG5Ckc/JiMLEl2gD1Cg==}
+  '@sanity/visual-editing@2.12.14':
+    resolution: {integrity: sha512-4vXd9huhhD1o0TZbTy3vM4z0/owR5x25gU65OLZc065cBzV1OFm7PXZrBVUtfa8ryEVRE++XmBMbeO2NQCG9Mg==}
     engines: {node: '>=18'}
     peerDependencies:
       '@remix-run/react': '>= 2'
@@ -8822,7 +8822,7 @@ snapshots:
     optionalDependencies:
       '@sanity/types': 3.74.0(@types/react@19.0.8)(debug@4.4.0)
 
-  '@sanity/visual-editing@2.12.13(@sanity/client@6.27.2)(@sanity/types@3.74.0(@types/react@19.0.8))(next@15.2.0-canary.40(@babel/core@7.26.7)(react-dom@19.0.0(react@19.0.0))(react@19.0.0))(react-dom@19.0.0(react@19.0.0))(react@19.0.0)':
+  '@sanity/visual-editing@2.12.14(@sanity/client@6.27.2)(@sanity/types@3.74.0(@types/react@19.0.8))(next@15.2.0-canary.40(@babel/core@7.26.7)(react-dom@19.0.0(react@19.0.0))(react@19.0.0))(react-dom@19.0.0(react@19.0.0))(react@19.0.0)':
     dependencies:
       '@sanity/comlink': 3.0.1
       '@sanity/mutate': 0.11.0-canary.4(xstate@5.19.2)
