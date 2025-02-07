@@ -1,11 +1,12 @@
+import type {NextConfig} from 'next'
+
 import withBundleAnalyzer from '@next/bundle-analyzer'
 
 // function requireResolve(id) {
 //   return import.meta.resolve(id).replace('file://', '')
 // }
 
-/** @type {import('next').NextConfig} */
-const nextConfig = {
+const nextConfig: NextConfig = {
   // basePath: process.env.NEXT_PUBLIC_TEST_BASE_PATH,
   // trailingSlash: true,
   experimental: {
