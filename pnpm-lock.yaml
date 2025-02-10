@@ -231,8 +231,8 @@ importers:
         specifier: 2.12.2
         version: 2.12.2(@emotion/is-prop-valid@1.2.2)(react-dom@19.0.0(react@19.0.0))(react-is@19.0.0)(react@19.0.0)(styled-components@6.1.15(react-dom@19.0.0(react@19.0.0))(react@19.0.0))
       '@sanity/visual-editing':
-        specifier: 2.13.0
-        version: 2.13.0(@emotion/is-prop-valid@1.2.2)(@sanity/client@6.27.2)(@sanity/types@3.74.1(@types/react@19.0.8))(next@15.2.0-canary.48(@babel/core@7.26.7)(react-dom@19.0.0(react@19.0.0))(react@19.0.0))(react-dom@19.0.0(react@19.0.0))(react-is@19.0.0)(react@19.0.0)
+        specifier: 2.13.1
+        version: 2.13.1(@emotion/is-prop-valid@1.2.2)(@sanity/client@6.27.2)(@sanity/types@3.74.1(@types/react@19.0.8))(next@15.2.0-canary.48(@babel/core@7.26.7)(react-dom@19.0.0(react@19.0.0))(react@19.0.0))(react-dom@19.0.0(react@19.0.0))(react-is@19.0.0)(react@19.0.0)
       groq:
         specifier: ^3.74.1
         version: 3.74.1
@@ -2124,8 +2124,8 @@ packages:
       react-dom: ^19
       react-is: ^19
 
-  '@sanity/insert-menu@1.1.0':
-    resolution: {integrity: sha512-RMzR7Gy2dbR6GAa24iddioJbpaZpiOjMY1HZ/TzgUTI+zrBtt2Pt1bjgx9lP+n72nypW67KLxKT1/wzXyIBbtA==}
+  '@sanity/insert-menu@1.1.1':
+    resolution: {integrity: sha512-R3khc0MM/3ajBIte6x+lQBgcFijakgTcdsUEWF6i1lXL7f3MsVMtja9ZFLISwz78qNXcvdMByG5V0kIfw2S3+A==}
     engines: {node: '>=18.0.0'}
     peerDependencies:
       '@sanity/types': '*'
@@ -2266,8 +2266,8 @@ packages:
       react: ^19
       styled-components: ^6.1
 
-  '@sanity/visual-editing-csm@2.0.3':
-    resolution: {integrity: sha512-tfR6CCBoR6r4FoVBg01nyNXY5pTeOk8kaKEG2BrkaEVdYfIHI6ugf9rRxduS9jEVpLwRX5Ojik2Gfn+JGsSjQA==}
+  '@sanity/visual-editing-csm@2.0.4':
+    resolution: {integrity: sha512-ycynCE+ycNqoAx2rB15xZbw7yZ8SUnYwOFXf61OaFrBTAjq4mghXh56s2KZe70ZUdxYBNi7brmUyrqRX8GqgHg==}
     engines: {node: '>=18'}
     peerDependencies:
       '@sanity/client': ^6.27.2
@@ -2282,8 +2282,8 @@ packages:
       '@sanity/types':
         optional: true
 
-  '@sanity/visual-editing@2.13.0':
-    resolution: {integrity: sha512-hEWBH93A9k1il0+cTryGFrvIRUPpypXQZ4P0kn7cn7wxS/QJg9xkzrOPuhnJPsdatDN8mrLifTfW0cFwwuUQ1g==}
+  '@sanity/visual-editing@2.13.1':
+    resolution: {integrity: sha512-Pd2mHgqNIXMdInESRj2DFbL0Jex4yn5Yqn00mkqDzzVQZF3UV2iqQxcQS962/E9dd1Qd3mQmlhKx6rlcvvr1kQ==}
     engines: {node: '>=18'}
     peerDependencies:
       '@remix-run/react': '>= 2'
@@ -5240,6 +5240,11 @@ packages:
 
   react-clientside-effect@1.2.7:
     resolution: {integrity: sha512-gce9m0Pk/xYYMEojRI9bgvqQAkl6hm7ozQvqWPyQx+kULiatdHgkNM1QG4DQRx5N9BAzWSCJmt9mMV8/KsdgVg==}
+    peerDependencies:
+      react: ^19
+
+  react-compiler-runtime@19.0.0-beta-30d8a17-20250209:
+    resolution: {integrity: sha512-lm42SAfsebXiA69sDBIWTFHDFuXWg0m75Fyvl+bzLyBbGKErnTbYfVsSrta811fdbK0A3j+RGjcHOEoRwWICOQ==}
     peerDependencies:
       react: ^19
 
@@ -8501,14 +8506,14 @@ snapshots:
       - '@emotion/is-prop-valid'
       - styled-components
 
-  '@sanity/insert-menu@1.1.0(@emotion/is-prop-valid@1.2.2)(@sanity/types@3.74.1(@types/react@19.0.8))(react-dom@19.0.0(react@19.0.0))(react-is@19.0.0)(react@19.0.0)(styled-components@6.1.15(react-dom@19.0.0(react@19.0.0))(react@19.0.0))':
+  '@sanity/insert-menu@1.1.1(@emotion/is-prop-valid@1.2.2)(@sanity/types@3.74.1(@types/react@19.0.8))(react-dom@19.0.0(react@19.0.0))(react-is@19.0.0)(react@19.0.0)(styled-components@6.1.15(react-dom@19.0.0(react@19.0.0))(react@19.0.0))':
     dependencies:
       '@sanity/icons': 3.5.7(react@19.0.0)
       '@sanity/types': 3.74.1(@types/react@19.0.8)(debug@4.4.0)
       '@sanity/ui': 2.12.2(@emotion/is-prop-valid@1.2.2)(react-dom@19.0.0(react@19.0.0))(react-is@19.0.0)(react@19.0.0)(styled-components@6.1.15(react-dom@19.0.0(react@19.0.0))(react@19.0.0))
       lodash: 4.17.21
       react: 19.0.0
-      react-compiler-runtime: 19.0.0-beta-714736e-20250131(react@19.0.0)
+      react-compiler-runtime: 19.0.0-beta-30d8a17-20250209(react@19.0.0)
       react-dom: 19.0.0(react@19.0.0)
       react-is: 19.0.0
     transitivePeerDependencies:
@@ -8846,7 +8851,7 @@ snapshots:
       - react-dom
       - react-is
 
-  '@sanity/visual-editing-csm@2.0.3(@sanity/client@6.27.2)(@sanity/types@3.74.1(@types/react@19.0.8))':
+  '@sanity/visual-editing-csm@2.0.4(@sanity/client@6.27.2)(@sanity/types@3.74.1(@types/react@19.0.8))':
     dependencies:
       '@sanity/client': 6.27.2(debug@4.4.0)
       '@sanity/visual-editing-types': 1.0.6(@sanity/client@6.27.2)(@sanity/types@3.74.1(@types/react@19.0.8)(debug@4.4.0))
@@ -8860,16 +8865,16 @@ snapshots:
     optionalDependencies:
       '@sanity/types': 3.74.1(@types/react@19.0.8)(debug@4.4.0)
 
-  '@sanity/visual-editing@2.13.0(@emotion/is-prop-valid@1.2.2)(@sanity/client@6.27.2)(@sanity/types@3.74.1(@types/react@19.0.8))(next@15.2.0-canary.48(@babel/core@7.26.7)(react-dom@19.0.0(react@19.0.0))(react@19.0.0))(react-dom@19.0.0(react@19.0.0))(react-is@19.0.0)(react@19.0.0)':
+  '@sanity/visual-editing@2.13.1(@emotion/is-prop-valid@1.2.2)(@sanity/client@6.27.2)(@sanity/types@3.74.1(@types/react@19.0.8))(next@15.2.0-canary.48(@babel/core@7.26.7)(react-dom@19.0.0(react@19.0.0))(react@19.0.0))(react-dom@19.0.0(react@19.0.0))(react-is@19.0.0)(react@19.0.0)':
     dependencies:
       '@sanity/comlink': 3.0.1
       '@sanity/icons': 3.5.7(react@19.0.0)
-      '@sanity/insert-menu': 1.1.0(@emotion/is-prop-valid@1.2.2)(@sanity/types@3.74.1(@types/react@19.0.8))(react-dom@19.0.0(react@19.0.0))(react-is@19.0.0)(react@19.0.0)(styled-components@6.1.15(react-dom@19.0.0(react@19.0.0))(react@19.0.0))
+      '@sanity/insert-menu': 1.1.1(@emotion/is-prop-valid@1.2.2)(@sanity/types@3.74.1(@types/react@19.0.8))(react-dom@19.0.0(react@19.0.0))(react-is@19.0.0)(react@19.0.0)(styled-components@6.1.15(react-dom@19.0.0(react@19.0.0))(react@19.0.0))
       '@sanity/mutate': 0.11.0-canary.4(xstate@5.19.2)
       '@sanity/presentation-comlink': 1.0.6(@sanity/client@6.27.2)(@sanity/types@3.74.1(@types/react@19.0.8)(debug@4.4.0))
       '@sanity/preview-url-secret': 2.1.4(@sanity/client@6.27.2(debug@4.4.0))
       '@sanity/ui': 2.12.2(@emotion/is-prop-valid@1.2.2)(react-dom@19.0.0(react@19.0.0))(react-is@19.0.0)(react@19.0.0)(styled-components@6.1.15(react-dom@19.0.0(react@19.0.0))(react@19.0.0))
-      '@sanity/visual-editing-csm': 2.0.3(@sanity/client@6.27.2)(@sanity/types@3.74.1(@types/react@19.0.8))
+      '@sanity/visual-editing-csm': 2.0.4(@sanity/client@6.27.2)(@sanity/types@3.74.1(@types/react@19.0.8))
       '@vercel/stega': 0.1.2
       get-random-values-esm: 1.0.2
       react: 19.0.0
@@ -12290,6 +12295,10 @@ snapshots:
   react-clientside-effect@1.2.7(react@19.0.0):
     dependencies:
       '@babel/runtime': 7.26.7
+      react: 19.0.0
+
+  react-compiler-runtime@19.0.0-beta-30d8a17-20250209(react@19.0.0):
+    dependencies:
       react: 19.0.0
 
   react-compiler-runtime@19.0.0-beta-714736e-20250131(react@19.0.0):
