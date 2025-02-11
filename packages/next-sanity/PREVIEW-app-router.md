@@ -48,7 +48,7 @@ export async function sanityFetch<QueryResponse>({
     ...(isDraftMode &&
       ({
         token: token,
-        perspective: 'previewDrafts',
+        perspective: 'drafts',
       } satisfies QueryOptions)),
     next: {
       revalidate: isDraftMode ? 0 : false,
