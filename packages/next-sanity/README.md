@@ -737,7 +737,7 @@ export async function generateStaticParams() {
 
 ### 4. Integrating with Next.js Draft Mode and Vercel Toolbar's Edit Mode
 
-To support previewing draft content when Draft Mode is enabled, the `serverToken` passed to `defineLive` should be assigned the Viewer role, which has the ability to fetch content using the `previewDrafts` perspective.
+To support previewing draft content when Draft Mode is enabled, the `serverToken` passed to `defineLive` should be assigned the Viewer role, which has the ability to fetch content using the `drafts` perspective.
 
 Click the Draft Mode button in the Vercel toolbar to enable draft content:
 

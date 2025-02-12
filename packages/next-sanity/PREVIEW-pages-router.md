@@ -42,7 +42,7 @@ export async function sanityFetch<QueryResponse>({
 
   return client.fetch<QueryResponse>(query, params, {
     token,
-    perspective: draftMode ? 'previewDrafts' : 'published',
+    perspective: draftMode ? 'drafts' : 'published',
   })
 }
 ```
