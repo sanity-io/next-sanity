@@ -67,8 +67,8 @@ importers:
         specifier: beta
         version: 19.0.0-beta-30d8a17-20250209
       groqd:
-        specifier: ^0.15.12
-        version: 0.15.12
+        specifier: ^1.0.0
+        version: 1.0.9
       next:
         specifier: canary
         version: 15.2.0-canary.53(@babel/core@7.26.7)(babel-plugin-react-compiler@19.0.0-beta-30d8a17-20250209)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
@@ -143,8 +143,8 @@ importers:
         specifier: ^3.69.0
         version: 3.75.0(@babel/runtime@7.26.7)(@codemirror/lint@6.8.4)(@codemirror/theme-one-dark@6.1.2)(@emotion/is-prop-valid@1.2.2)(codemirror@6.0.1)(react-dom@19.0.0(react@19.0.0))(react-is@19.0.0)(react@19.0.0)(styled-components@6.1.15(react-dom@19.0.0(react@19.0.0))(react@19.0.0))
       groqd:
-        specifier: ^0.15.12
-        version: 0.15.12
+        specifier: ^1.0.0
+        version: 1.0.9
       next:
         specifier: canary
         version: 15.2.0-canary.53(@babel/core@7.26.7)(babel-plugin-react-compiler@19.0.0-beta-30d8a17-20250209)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
@@ -3981,8 +3981,8 @@ packages:
     resolution: {integrity: sha512-ouCfZyR7hXN+mG6Sb8SBKle4GhHMa++tVMuZ4UXM9roqMkhJQ/EaAjMvlmGWsEHFrnPCkexWjMM8FGCK+OqCIA==}
     engines: {node: '>=18'}
 
-  groqd@0.15.12:
-    resolution: {integrity: sha512-IVxefzYb9dnGelt1+ggxvUFheGEWHcKTDelDxEBq7b5lqPHEbKXsetRos5EEakTnj0KfmYUMZI9u/HBQLHJIgQ==}
+  groqd@1.0.9:
+    resolution: {integrity: sha512-vca/VXR+1se/T2VBvz7ixlA6RITvs+ZfQkV/QRbwVhKTbmF4taIy8eiE6GZBuHphLl33JUZHOdLYZskvLMdzNQ==}
     engines: {node: '>= 14'}
 
   gunzip-maybe@1.4.2:
@@ -6103,6 +6103,10 @@ packages:
     resolution: {integrity: sha512-4dbzIzqvjtgiM5rw1k5rEHtBANKmdudhGyBEajN01fEyhaAIhsoKNy6y7+IN93IfpFtwY9iqi7kD+xwKhQsNJA==}
     engines: {node: '>=8'}
 
+  type-fest@4.34.1:
+    resolution: {integrity: sha512-6kSc32kT0rbwxD6QL1CYe8IqdzN/J/ILMrNK+HMQCKH3insCDRY/3ITb0vcBss0a3t72fzh2YSzj8ko1HgwT3g==}
+    engines: {node: '>=16'}
+
   typed-array-buffer@1.0.3:
     resolution: {integrity: sha512-nAYYwfY3qnzX30IkA6AQZjVbtK6duGontcQm1WSG1MD94YLqK0515GNApXkoxKOWMusVssAHWLh9SeaoefYFGw==}
     engines: {node: '>= 0.4'}
@@ -6553,9 +6557,6 @@ packages:
     engines: {node: '>=18.0.0'}
     peerDependencies:
       zod: ^3.18.0
-
-  zod@3.22.4:
-    resolution: {integrity: sha512-iC+8Io04lddc+mVqQ9AZ7OQ2MrUKGN+oIQyq1vemgt46jwCwLfhq7/pwnBnNXXXZb8VTVLKwp9EDkx+ryxIWmg==}
 
   zod@3.24.1:
     resolution: {integrity: sha512-muH7gBL9sI1nciMZV67X5fTKKBLtwpZ5VBp1vsOQzj1MhrBZ4wlVCm3gedKZWLp0Oyel8sIGfeiz54Su+OVT+A==}
@@ -11133,9 +11134,10 @@ snapshots:
 
   groq@3.75.0: {}
 
-  groqd@0.15.12:
+  groqd@1.0.9:
     dependencies:
-      zod: 3.22.4
+      type-fest: 4.34.1
+      zod: 3.24.1
 
   gunzip-maybe@1.4.2:
     dependencies:
@@ -13483,6 +13485,8 @@ snapshots:
 
   type-fest@0.8.1: {}
 
+  type-fest@4.34.1: {}
+
   typed-array-buffer@1.0.3:
     dependencies:
       call-bound: 1.0.3
@@ -13929,7 +13933,5 @@ snapshots:
   zod-validation-error@3.4.0(zod@3.24.1):
     dependencies:
       zod: 3.24.1
-
-  zod@3.22.4: {}
 
   zod@3.24.1: {}
