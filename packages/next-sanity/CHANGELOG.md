@@ -5,6 +5,13 @@
 All notable changes to this project will be documented in this file. See
 [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [9.8.57](https://github.com/sanity-io/next-sanity/compare/next-sanity-v9.8.56...next-sanity-v9.8.57) (2025-02-13)
+
+
+### Bug Fixes
+
+* **defineLive:** regression in `9.8.56` ([8209602](https://github.com/sanity-io/next-sanity/commit/82096026f3426729357a9c46d6b7f33df6a29c29)), closes [#2282](https://github.com/sanity-io/next-sanity/issues/2282)
+
 ## [9.8.56](https://github.com/sanity-io/next-sanity/compare/next-sanity-v9.8.55...next-sanity-v9.8.56) (2025-02-12)
 
 
