@@ -231,8 +231,8 @@ importers:
         specifier: 2.14.5
         version: 2.14.5(@emotion/is-prop-valid@1.2.2)(react-dom@19.0.0(react@19.0.0))(react-is@19.0.0)(react@19.0.0)(styled-components@6.1.15(react-dom@19.0.0(react@19.0.0))(react@19.0.0))
       '@sanity/visual-editing':
-        specifier: 2.13.6
-        version: 2.13.6(@emotion/is-prop-valid@1.2.2)(@sanity/client@6.28.2)(@sanity/types@3.77.2(@types/react@19.0.10))(next@15.2.1-canary.5(@babel/core@7.26.9)(react-dom@19.0.0(react@19.0.0))(react@19.0.0))(react-dom@19.0.0(react@19.0.0))(react-is@19.0.0)(react@19.0.0)(styled-components@6.1.15(react-dom@19.0.0(react@19.0.0))(react@19.0.0))
+        specifier: 2.13.7
+        version: 2.13.7(@emotion/is-prop-valid@1.2.2)(@sanity/client@6.28.2)(@sanity/types@3.77.2(@types/react@19.0.10))(next@15.2.1-canary.5(@babel/core@7.26.9)(react-dom@19.0.0(react@19.0.0))(react@19.0.0))(react-dom@19.0.0(react@19.0.0))(react-is@19.0.0)(react@19.0.0)(styled-components@6.1.15(react-dom@19.0.0(react@19.0.0))(react@19.0.0))
       groq:
         specifier: ^3.77.2
         version: 3.77.2
@@ -2357,6 +2357,12 @@ packages:
     peerDependencies:
       '@sanity/client': ^6.27.2
 
+  '@sanity/preview-url-secret@2.1.5':
+    resolution: {integrity: sha512-G/jq1O4o/fyQtSL+ThW227zfsGu6BAE/qbEZ5MFiarLVJedM0P8eRFfwZpH3NLL2NA9vqRRK+nc/qjcttuT2dg==}
+    engines: {node: '>=18'}
+    peerDependencies:
+      '@sanity/client': ^6.28.1
+
   '@sanity/schema@3.77.2':
     resolution: {integrity: sha512-DaR91g+N5TsuhK2rGgDQV3Sf7Q5wk9psEkiY2FjF/Z5mv2szIY6eQ2zUYOPy826G3WFsDa3EcBAJiRnhgUVv0g==}
 
@@ -2423,12 +2429,12 @@ packages:
       '@sanity/types':
         optional: true
 
-  '@sanity/visual-editing@2.13.6':
-    resolution: {integrity: sha512-oK2lNHZzmXxgWC+zXc8HEsvNArSfYCdpQLtmmci60BZRz2rV7dYmRBkVgaoLrwhoqBQ+70tawv3EyNxy+lx7mw==}
+  '@sanity/visual-editing@2.13.7':
+    resolution: {integrity: sha512-nfgtm9aVjAlSeyNgvvLKRfqVOlw9f81luF65S6BnSbWtnPm5bqlAIzhA4hU9zxWQbLZnqWgv2em1Tj4XqaFzSA==}
     engines: {node: '>=18'}
     peerDependencies:
       '@remix-run/react': '>= 2'
-      '@sanity/client': ^6.28.0
+      '@sanity/client': ^6.28.1
       '@sveltejs/kit': '>= 2'
       next: canary
       react: ^19
@@ -8930,6 +8936,11 @@ snapshots:
       '@sanity/client': 6.28.2(debug@4.4.0)
       '@sanity/uuid': 3.0.2
 
+  '@sanity/preview-url-secret@2.1.5(@sanity/client@6.28.2)':
+    dependencies:
+      '@sanity/client': 6.28.2(debug@4.4.0)
+      '@sanity/uuid': 3.0.2
+
   '@sanity/schema@3.77.2(@types/react@19.0.10)(debug@4.4.0)':
     dependencies:
       '@sanity/generate-help-url': 3.0.0
@@ -9074,20 +9085,20 @@ snapshots:
     optionalDependencies:
       '@sanity/types': 3.77.2(@types/react@19.0.10)(debug@4.4.0)
 
-  '@sanity/visual-editing@2.13.6(@emotion/is-prop-valid@1.2.2)(@sanity/client@6.28.2)(@sanity/types@3.77.2(@types/react@19.0.10))(next@15.2.1-canary.5(@babel/core@7.26.9)(react-dom@19.0.0(react@19.0.0))(react@19.0.0))(react-dom@19.0.0(react@19.0.0))(react-is@19.0.0)(react@19.0.0)(styled-components@6.1.15(react-dom@19.0.0(react@19.0.0))(react@19.0.0))':
+  '@sanity/visual-editing@2.13.7(@emotion/is-prop-valid@1.2.2)(@sanity/client@6.28.2)(@sanity/types@3.77.2(@types/react@19.0.10))(next@15.2.1-canary.5(@babel/core@7.26.9)(react-dom@19.0.0(react@19.0.0))(react@19.0.0))(react-dom@19.0.0(react@19.0.0))(react-is@19.0.0)(react@19.0.0)(styled-components@6.1.15(react-dom@19.0.0(react@19.0.0))(react@19.0.0))':
     dependencies:
       '@sanity/comlink': 3.0.1
       '@sanity/icons': 3.7.0(react@19.0.0)
       '@sanity/insert-menu': 1.1.4(@emotion/is-prop-valid@1.2.2)(@sanity/types@3.77.2(@types/react@19.0.10))(react-dom@19.0.0(react@19.0.0))(react-is@19.0.0)(react@19.0.0)(styled-components@6.1.15(react-dom@19.0.0(react@19.0.0))(react@19.0.0))
       '@sanity/mutate': 0.11.0-canary.4(xstate@5.19.2)
       '@sanity/presentation-comlink': 1.0.9(@sanity/client@6.28.2)(@sanity/types@3.77.2(@types/react@19.0.10)(debug@4.4.0))
-      '@sanity/preview-url-secret': 2.1.4(@sanity/client@6.28.2(debug@4.4.0))
+      '@sanity/preview-url-secret': 2.1.5(@sanity/client@6.28.2)
       '@sanity/ui': 2.14.5(@emotion/is-prop-valid@1.2.2)(react-dom@19.0.0(react@19.0.0))(react-is@19.0.0)(react@19.0.0)(styled-components@6.1.15(react-dom@19.0.0(react@19.0.0))(react@19.0.0))
       '@sanity/visual-editing-csm': 2.0.7(@sanity/client@6.28.2)(@sanity/types@3.77.2(@types/react@19.0.10))
       '@vercel/stega': 0.1.2
       get-random-values-esm: 1.0.2
       react: 19.0.0
-      react-compiler-runtime: 19.0.0-beta-e1e972c-20250221(react@19.0.0)
+      react-compiler-runtime: 19.0.0-beta-40c6c23-20250301(react@19.0.0)
       react-dom: 19.0.0(react@19.0.0)
       react-is: 19.0.0
       rxjs: 7.8.2
