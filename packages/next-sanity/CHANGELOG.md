@@ -5,6 +5,19 @@
 All notable changes to this project will be documented in this file. See
 [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [9.8.61](https://github.com/sanity-io/next-sanity/compare/next-sanity-v9.8.60...next-sanity-v9.8.61) (2025-03-03)
+
+
+### Bug Fixes
+
+* **deps:** update dependency @sanity/client to ^6.28.2 (main) ([#2336](https://github.com/sanity-io/next-sanity/issues/2336)) ([bebcf6a](https://github.com/sanity-io/next-sanity/commit/bebcf6ab9e953f90ebcf8dc1b1d6ef75f68204f5))
+* **deps:** update dependency @sanity/icons to ^3.7.0 (main) ([#2339](https://github.com/sanity-io/next-sanity/issues/2339)) ([c1745a3](https://github.com/sanity-io/next-sanity/commit/c1745a3e622ecfeb6619aaafc16a2c70ae9262b0))
+* **deps:** Update dependency @sanity/next-loader to v1.3.4 (main) ([#2341](https://github.com/sanity-io/next-sanity/issues/2341)) ([7e2474c](https://github.com/sanity-io/next-sanity/commit/7e2474c47aad217314776d4c05ecbc90c486b05d))
+* **deps:** update dependency @sanity/preview-kit to v5.2.9 (main) ([#2346](https://github.com/sanity-io/next-sanity/issues/2346)) ([dfe953a](https://github.com/sanity-io/next-sanity/commit/dfe953a50636303cdc37a7221b5574ab7811aed4))
+* **deps:** update dependency @sanity/preview-url-secret to v2.1.5 (main) ([#2343](https://github.com/sanity-io/next-sanity/issues/2343)) ([0d3b71a](https://github.com/sanity-io/next-sanity/commit/0d3b71aca4e5fe1ae513d38ae682491560577af0))
+* **deps:** update dependency @sanity/ui to v2.14.5 (main) ([#2337](https://github.com/sanity-io/next-sanity/issues/2337)) ([9321ad7](https://github.com/sanity-io/next-sanity/commit/9321ad792b20769a00fe6106e37acd74141750e2))
+* **deps:** Update dependency @sanity/visual-editing to v2.13.7 (main) ([#2342](https://github.com/sanity-io/next-sanity/issues/2342)) ([86aefb3](https://github.com/sanity-io/next-sanity/commit/86aefb3f03a6d6943a40a2498fbbe979e32d777c))
+
 ## [9.8.60](https://github.com/sanity-io/next-sanity/compare/next-sanity-v9.8.59...next-sanity-v9.8.60) (2025-02-25)
 
 
