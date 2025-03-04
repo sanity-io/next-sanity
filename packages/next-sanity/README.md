@@ -614,7 +614,7 @@ const client = createClient({
   projectId: process.env.NEXT_PUBLIC_SANITY_PROJECT_ID,
   dataset: process.env.NEXT_PUBLIC_SANITY_DATASET,
   useCdn: true,
-  apiVersion: 'vX', // Target the experimental API version
+  apiVersion: 'v2025-03-04',
   stega: {studioUrl: '/studio'},
 })
 
