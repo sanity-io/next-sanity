@@ -147,7 +147,7 @@ importers:
         version: 0.15.12
       next:
         specifier: canary
-        version: 15.3.0-canary.6(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
+        version: 15.3.0-canary.6(@babel/core@7.26.10)(babel-plugin-react-compiler@19.0.0-beta-bafa41b-20250307)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
       next-sanity:
         specifier: workspace:*
         version: link:../../packages/next-sanity
@@ -216,13 +216,13 @@ importers:
         specifier: ^3.7.0
         version: 3.7.0(react@19.0.0)
       '@sanity/next-loader':
-        specifier: 1.3.6
+        specifier: ^1.3.6
         version: 1.3.6(@sanity/types@3.79.0(@types/react@19.0.10))(next@15.3.0-canary.6(@babel/core@7.26.10)(react-dom@19.0.0(react@19.0.0))(react@19.0.0))(react@19.0.0)
       '@sanity/preview-kit':
-        specifier: 6.0.1
-        version: 6.0.1(@sanity/client@6.28.3)(@sanity/types@3.79.0(@types/react@19.0.10))(react@19.0.0)
+        specifier: ^6.0.2
+        version: 6.0.2(@sanity/client@6.28.3)(@sanity/types@3.79.0(@types/react@19.0.10))(react@19.0.0)
       '@sanity/preview-url-secret':
-        specifier: 2.1.6
+        specifier: ^2.1.6
         version: 2.1.6(@sanity/client@6.28.3(debug@4.4.0))
       '@sanity/types':
         specifier: ^3.79.0
@@ -231,7 +231,7 @@ importers:
         specifier: 2.15.6
         version: 2.15.6(@emotion/is-prop-valid@1.2.2)(react-dom@19.0.0(react@19.0.0))(react-is@19.0.0)(react@19.0.0)(styled-components@6.1.15(react-dom@19.0.0(react@19.0.0))(react@19.0.0))
       '@sanity/visual-editing':
-        specifier: 2.13.11
+        specifier: ^2.13.11
         version: 2.13.11(@emotion/is-prop-valid@1.2.2)(@sanity/client@6.28.3)(@sanity/types@3.79.0(@types/react@19.0.10))(next@15.3.0-canary.6(@babel/core@7.26.10)(react-dom@19.0.0(react@19.0.0))(react@19.0.0))(react-dom@19.0.0(react@19.0.0))(react-is@19.0.0)(react@19.0.0)(styled-components@6.1.15(react-dom@19.0.0(react@19.0.0))(react@19.0.0))
       groq:
         specifier: ^3.79.0
@@ -2347,8 +2347,8 @@ packages:
     peerDependencies:
       prettier: ^3.2.5
 
-  '@sanity/preview-kit@6.0.1':
-    resolution: {integrity: sha512-YarvvRO6adx/M329vMnEFZWyeAtE1vLOLY8lp4cJWXCCi7Ic9gCwohonfs70mWx0NlcmC5+jAgOoyhvuy4Izpg==}
+  '@sanity/preview-kit@6.0.2':
+    resolution: {integrity: sha512-K531pAUZVlejzfdRCVLlp9BLORk39b38UrF2H06PIZla4UZ/ft/IOOjo0IDpXmV0ylKVlBBIcVR7emXzuCqfVA==}
     engines: {node: '>=18'}
     peerDependencies:
       '@sanity/client': ^6.28.3
@@ -9126,7 +9126,7 @@ snapshots:
       prettier: 3.5.3
       prettier-plugin-packagejson: 2.5.10(prettier@3.5.3)
 
-  '@sanity/preview-kit@6.0.1(@sanity/client@6.28.3)(@sanity/types@3.79.0(@types/react@19.0.10))(react@19.0.0)':
+  '@sanity/preview-kit@6.0.2(@sanity/client@6.28.3)(@sanity/types@3.79.0(@types/react@19.0.10))(react@19.0.0)':
     dependencies:
       '@sanity/client': 6.28.3(debug@4.4.0)
       '@sanity/comlink': 3.0.1
