@@ -219,8 +219,8 @@ importers:
         specifier: ^1.3.8
         version: 1.3.8(@sanity/types@3.82.0(@types/react@19.0.12))(next@15.3.0-canary.28(@babel/core@7.26.10)(react-dom@19.0.0(react@19.0.0))(react@19.0.0))(react@19.0.0)
       '@sanity/preview-kit':
-        specifier: ^6.0.4
-        version: 6.0.4(@sanity/client@6.28.4)(@sanity/types@3.82.0(@types/react@19.0.12))(react@19.0.0)
+        specifier: ^6.0.5
+        version: 6.0.5(@sanity/client@6.28.4)(@sanity/types@3.82.0(@types/react@19.0.12))(react@19.0.0)
       '@sanity/preview-url-secret':
         specifier: ^2.1.6
         version: 2.1.6(@sanity/client@6.28.4(debug@4.4.0))
@@ -2285,11 +2285,11 @@ packages:
     peerDependencies:
       prettier: ^3.2.5
 
-  '@sanity/preview-kit@6.0.4':
-    resolution: {integrity: sha512-atDOGYmeKzb0Kq/2j4G6Kc6M66XMEshSAFRpJnwxblJxUcnAz7Q1whL1x4XvH33Dp8tA5kp/AfJg/ihzWNB6lA==}
+  '@sanity/preview-kit@6.0.5':
+    resolution: {integrity: sha512-ymRAGFef4OFufUjTkbz7/LSVMXX8T7RCvoOJpZOrzQnQze2AHVnq/Cn1Sn6GzbrhJXahFIa5B7VfikGDpvwX8Q==}
     engines: {node: '>=18'}
     peerDependencies:
-      '@sanity/client': ^6.28.3
+      '@sanity/client': ^6.28.4
       react: ^19
     peerDependenciesMeta:
       react:
@@ -6619,8 +6619,8 @@ packages:
       '@types/react':
         optional: true
 
-  use-sync-external-store@1.4.0:
-    resolution: {integrity: sha512-9WXSPC5fMv61vaupRkCKCxsPxBocVnwakBEkMIHHpkTTg6icbJtg6jzgtLDm4bl3cSHAca52rYWih0k4K3PfHw==}
+  use-sync-external-store@1.5.0:
+    resolution: {integrity: sha512-Rb46I4cGGVBmjamjphe8L/UnvJD+uPPtTkNvX5mZgqdbavhI4EbgIWJiIHXJ8bc/i9EQGPRh4DwEURJ552Do0A==}
     peerDependencies:
       react: ^19
 
@@ -9145,11 +9145,12 @@ snapshots:
       prettier: 3.5.3
       prettier-plugin-packagejson: 2.5.10(prettier@3.5.3)
 
-  '@sanity/preview-kit@6.0.4(@sanity/client@6.28.4)(@sanity/types@3.82.0(@types/react@19.0.12))(react@19.0.0)':
+  '@sanity/preview-kit@6.0.5(@sanity/client@6.28.4)(@sanity/types@3.82.0(@types/react@19.0.12))(react@19.0.0)':
     dependencies:
       '@sanity/client': 6.28.4(debug@4.4.0)
       '@sanity/comlink': 3.0.1
       '@sanity/presentation-comlink': 1.0.13(@sanity/client@6.28.4)(@sanity/types@3.82.0(@types/react@19.0.12)(debug@4.4.0))
+      use-sync-external-store: 1.5.0(react@19.0.0)
     optionalDependencies:
       react: 19.0.0
     transitivePeerDependencies:
@@ -9840,7 +9841,7 @@ snapshots:
     dependencies:
       react: 19.0.0
       use-isomorphic-layout-effect: 1.2.0(@types/react@19.0.12)(react@19.0.0)
-      use-sync-external-store: 1.4.0(react@19.0.0)
+      use-sync-external-store: 1.5.0(react@19.0.0)
     optionalDependencies:
       xstate: 5.19.2
     transitivePeerDependencies:
@@ -13412,7 +13413,7 @@ snapshots:
       use-device-pixel-ratio: 1.1.2(react@19.0.0)
       use-effect-event: 1.0.2(react@19.0.0)
       use-hot-module-reload: 2.0.0(react@19.0.0)
-      use-sync-external-store: 1.4.0(react@19.0.0)
+      use-sync-external-store: 1.5.0(react@19.0.0)
       uuid: 11.1.0
       valibot: 0.31.1
       vite: 6.2.3(@types/node@22.13.13)(jiti@1.21.7)(terser@5.39.0)(yaml@2.7.0)
@@ -14244,7 +14245,7 @@ snapshots:
     optionalDependencies:
       '@types/react': 19.0.12
 
-  use-sync-external-store@1.4.0(react@19.0.0):
+  use-sync-external-store@1.5.0(react@19.0.0):
     dependencies:
       react: 19.0.0
 
