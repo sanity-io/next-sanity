@@ -22,7 +22,7 @@ jobs:
           node-version: lts/*
       - run: pnpm install --ignore-scripts --fix-lockfile --no-frozen-lockfile
       - run: pnpm dedupe
-      - uses: actions/create-github-app-token@v1
+      - uses: actions/create-github-app-token@v2
         id: generate-token
         with:
           app-id: ${{ secrets.ECOSPARK_APP_ID }}
