@@ -30,7 +30,7 @@ jobs:
           key: prettier-${{ hashFiles('pnpm-lock.yaml') }}-${{ hashFiles('.prettierignore') }}-${{ hashFiles('package.json') }}
       - run: pnpm format
       - run: git restore .github/workflows pnpm-lock.yaml packages/next-sanity/CHANGELOG.md
-      - uses: actions/create-github-app-token@v1
+      - uses: actions/create-github-app-token@v2
         id: generate-token
         with:
           app-id: ${{ secrets.ECOSPARK_APP_ID }}
