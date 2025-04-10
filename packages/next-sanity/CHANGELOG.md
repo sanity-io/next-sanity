@@ -5,6 +5,13 @@
 All notable changes to this project will be documented in this file. See
 [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [9.10.1](https://github.com/sanity-io/next-sanity/compare/next-sanity-v9.10.0...next-sanity-v9.10.1) (2025-04-10)
+
+
+### Bug Fixes
+
+* **deps:** update dependency @sanity/next-loader to ^1.4.1 (main) ([#2454](https://github.com/sanity-io/next-sanity/issues/2454)) ([d2dd8a2](https://github.com/sanity-io/next-sanity/commit/d2dd8a24b643bd1df8b584b6265ef377a06df52e))
+
 ## [9.10.0](https://github.com/sanity-io/next-sanity/compare/next-sanity-v9.9.9...next-sanity-v9.10.0) (2025-04-10)
 
 
