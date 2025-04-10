@@ -5,6 +5,20 @@
 All notable changes to this project will be documented in this file. See
 [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [9.10.0](https://github.com/sanity-io/next-sanity/compare/next-sanity-v9.9.9...next-sanity-v9.10.0) (2025-04-10)
+
+
+### Features
+
+* **next-loader:** add experimental query hook ([5fa9623](https://github.com/sanity-io/next-sanity/commit/5fa96236b9cf26113aadaa6ba652ea70055da19f))
+
+
+### Bug Fixes
+
+* **deps:** update dependency @sanity/preview-kit to ^6.0.7 ([e405ef8](https://github.com/sanity-io/next-sanity/commit/e405ef83073684abb118ad66d1af1ec57c32a0d1))
+* **deps:** update dependency @sanity/ui to v2.15.13 (main) ([#2445](https://github.com/sanity-io/next-sanity/issues/2445)) ([6b00a25](https://github.com/sanity-io/next-sanity/commit/6b00a25b30de65f2ae10efb1710dadaaafcb1acc))
+* **deps:** update dependency @sanity/visual-editing to ^2.13.16 ([d2fc2e6](https://github.com/sanity-io/next-sanity/commit/d2fc2e6d2ce177bc95c406b25dc0719a5281000c))
+
 ## [9.9.9](https://github.com/sanity-io/next-sanity/compare/next-sanity-v9.9.8...next-sanity-v9.9.9) (2025-04-02)
 
 
