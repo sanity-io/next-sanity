@@ -222,8 +222,8 @@ importers:
         specifier: ^6.0.7
         version: 6.0.7(@sanity/client@6.29.0)(@sanity/types@3.84.0(@types/react@19.1.0))(react@19.1.0)
       '@sanity/preview-url-secret':
-        specifier: ^2.1.7
-        version: 2.1.7(@sanity/client@6.29.0(debug@4.4.0))
+        specifier: ^2.1.8
+        version: 2.1.8(@sanity/client@6.29.0)
       '@sanity/types':
         specifier: ^3.84.0
         version: 3.84.0(@types/react@19.1.0)(debug@4.4.0)
@@ -2311,6 +2311,12 @@ packages:
     engines: {node: '>=18'}
     peerDependencies:
       '@sanity/client': ^6.28.4
+
+  '@sanity/preview-url-secret@2.1.8':
+    resolution: {integrity: sha512-i5moO9BYvct7SRdh+636WH5dMEUp0CDTWZW00S7aouQDpeC3FnYGch5EhQfAnWjClVSzBVEFv8rJlKjK106AOg==}
+    engines: {node: '>=18'}
+    peerDependencies:
+      '@sanity/client': ^6.29.0
 
   '@sanity/runtime-cli@1.8.2':
     resolution: {integrity: sha512-tPyIhl9SbGcTj05b66XlhSTohYDS8JysqQAItxeWkmr+EkgNzSmXbyBPE7Rx8Zz+X8deweje5q6H3NxVAfEXYw==}
@@ -9042,6 +9048,11 @@ snapshots:
       '@sanity/client': 6.29.0(debug@4.4.0)
       '@sanity/uuid': 3.0.2
 
+  '@sanity/preview-url-secret@2.1.8(@sanity/client@6.29.0)':
+    dependencies:
+      '@sanity/client': 6.29.0(debug@4.4.0)
+      '@sanity/uuid': 3.0.2
+
   '@sanity/runtime-cli@1.8.2(@types/node@22.14.0)':
     dependencies:
       '@oclif/core': 4.2.10
@@ -9207,7 +9218,7 @@ snapshots:
       '@sanity/insert-menu': 1.1.9(@emotion/is-prop-valid@1.2.2)(@sanity/types@3.84.0(@types/react@19.1.0))(react-dom@19.1.0(react@19.1.0))(react-is@19.1.0)(react@19.1.0)(styled-components@6.1.17(react-dom@19.1.0(react@19.1.0))(react@19.1.0))
       '@sanity/mutate': 0.11.0-canary.4(xstate@5.19.2)
       '@sanity/presentation-comlink': 1.0.15(@sanity/client@6.29.0)(@sanity/types@3.84.0(@types/react@19.1.0)(debug@4.4.0))
-      '@sanity/preview-url-secret': 2.1.7(@sanity/client@6.29.0(debug@4.4.0))
+      '@sanity/preview-url-secret': 2.1.8(@sanity/client@6.29.0)
       '@sanity/ui': 2.15.13(@emotion/is-prop-valid@1.2.2)(react-dom@19.1.0(react@19.1.0))(react-is@19.1.0)(react@19.1.0)(styled-components@6.1.17(react-dom@19.1.0(react@19.1.0))(react@19.1.0))
       '@sanity/visual-editing-csm': 2.0.12(@sanity/client@6.29.0)(@sanity/types@3.84.0(@types/react@19.1.0))
       '@vercel/stega': 0.1.2
