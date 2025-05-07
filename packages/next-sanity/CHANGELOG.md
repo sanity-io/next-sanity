@@ -5,6 +5,13 @@
 All notable changes to this project will be documented in this file. See
 [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [9.11.0](https://github.com/sanity-io/next-sanity/compare/next-sanity-v9.10.6...next-sanity-v9.11.0) (2025-05-07)
+
+
+### Features
+
+* add bridge script to `next-sanity/studio` ([#2502](https://github.com/sanity-io/next-sanity/issues/2502)) ([0a7c3be](https://github.com/sanity-io/next-sanity/commit/0a7c3beb704aeb1c809bbdc1f3b2e8ab85459d08))
+
 ## [9.10.6](https://github.com/sanity-io/next-sanity/compare/next-sanity-v9.10.5...next-sanity-v9.10.6) (2025-04-30)
 
 
