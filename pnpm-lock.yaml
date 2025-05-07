@@ -35,7 +35,7 @@ importers:
         version: 15.4.0-canary.24(eslint@9.26.0(jiti@1.21.7))(typescript@5.8.3)
       next:
         specifier: canary
-        version: 15.4.0-canary.24(babel-plugin-react-compiler@19.0.0-beta-af1b7da-20250417)(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
+        version: 15.4.0-canary.24(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
       prettier:
         specifier: 3.5.3
         version: 3.5.3
@@ -71,7 +71,7 @@ importers:
         version: 0.15.13
       next:
         specifier: canary
-        version: 15.4.0-canary.24(babel-plugin-react-compiler@19.0.0-beta-af1b7da-20250417)(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
+        version: 15.4.0-canary.24(@babel/core@7.27.1)(babel-plugin-react-compiler@19.0.0-beta-af1b7da-20250417)(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
       next-sanity:
         specifier: workspace:*
         version: link:../../packages/next-sanity
@@ -147,7 +147,7 @@ importers:
         version: 0.15.13
       next:
         specifier: canary
-        version: 15.4.0-canary.24(@babel/core@7.27.1)(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
+        version: 15.4.0-canary.24(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
       next-sanity:
         specifier: workspace:*
         version: link:../../packages/next-sanity
@@ -219,8 +219,8 @@ importers:
         specifier: ^1.5.2
         version: 1.5.2(@sanity/types@3.88.0(@types/react@19.1.2))(next@15.4.0-canary.24(@babel/core@7.27.1)(react-dom@19.1.0(react@19.1.0))(react@19.1.0))(react@19.1.0)
       '@sanity/preview-kit':
-        specifier: ^6.0.12
-        version: 6.0.12(@sanity/client@7.1.0)(@sanity/types@3.88.0(@types/react@19.1.2))(react@19.1.0)
+        specifier: ^6.1.0
+        version: 6.1.0(@sanity/types@3.88.0(@types/react@19.1.2))(react@19.1.0)
       '@sanity/preview-url-secret':
         specifier: ^2.1.10
         version: 2.1.10(@sanity/client@7.1.0(debug@4.4.0))
@@ -293,7 +293,7 @@ importers:
         version: 12.1.1(eslint@8.57.1)
       next:
         specifier: canary
-        version: 15.4.0-canary.24(@babel/core@7.27.1)(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
+        version: 15.4.0-canary.24(@babel/core@7.27.1)(babel-plugin-react-compiler@19.0.0-beta-af1b7da-20250417)(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
       react:
         specifier: ^19
         version: 19.1.0
@@ -2306,11 +2306,10 @@ packages:
     peerDependencies:
       prettier: ^3.2.5
 
-  '@sanity/preview-kit@6.0.12':
-    resolution: {integrity: sha512-rK/wp8V6vXhMmFLjqZVt909QY2U366+kypDCGiRQQX6ahhwvA7UyRd6w2IvVip0kxxGUX2AJkQktuw5TKaeLfA==}
+  '@sanity/preview-kit@6.1.0':
+    resolution: {integrity: sha512-TUIim6kQSOXi386FQvnY1b+W2PigKVib0lLVWW4hq2FzwomE1nypHtxL8hB/sIR9jXf2+kQKJgQOJ77eBug1bA==}
     engines: {node: '>=18'}
     peerDependencies:
-      '@sanity/client': ^7.0.0
       react: ^19
     peerDependenciesMeta:
       react:
@@ -9260,9 +9259,9 @@ snapshots:
     dependencies:
       '@sanity/client': 7.1.0(debug@4.4.0)
       '@sanity/comlink': 3.0.2
-      '@sanity/presentation-comlink': 1.0.18(@sanity/client@7.1.0(debug@4.4.0))(@sanity/types@3.88.0(@types/react@19.1.2)(debug@4.4.0))
+      '@sanity/presentation-comlink': 1.0.18(@sanity/client@7.1.0)(@sanity/types@3.88.0(@types/react@19.1.2)(debug@4.4.0))
       dequal: 2.0.3
-      next: 15.4.0-canary.24(@babel/core@7.27.1)(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
+      next: 15.4.0-canary.24(@babel/core@7.27.1)(babel-plugin-react-compiler@19.0.0-beta-af1b7da-20250417)(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
       react: 19.1.0
       use-effect-event: 1.0.2(react@19.1.0)
     transitivePeerDependencies:
@@ -9318,11 +9317,11 @@ snapshots:
       - debug
       - supports-color
 
-  '@sanity/presentation-comlink@1.0.18(@sanity/client@7.1.0(debug@4.4.0))(@sanity/types@3.88.0(@types/react@19.1.2)(debug@4.4.0))':
+  '@sanity/presentation-comlink@1.0.18(@sanity/client@7.1.0)(@sanity/types@3.88.0(@types/react@19.1.2)(debug@4.4.0))':
     dependencies:
       '@sanity/client': 7.1.0(debug@4.4.0)
       '@sanity/comlink': 3.0.2
-      '@sanity/visual-editing-types': 1.0.17(@sanity/client@7.1.0(debug@4.4.0))(@sanity/types@3.88.0(@types/react@19.1.2)(debug@4.4.0))
+      '@sanity/visual-editing-types': 1.0.17(@sanity/client@7.1.0)(@sanity/types@3.88.0(@types/react@19.1.2)(debug@4.4.0))
     transitivePeerDependencies:
       - '@sanity/types'
 
@@ -9331,16 +9330,17 @@ snapshots:
       prettier: 3.5.3
       prettier-plugin-packagejson: 2.5.10(prettier@3.5.3)
 
-  '@sanity/preview-kit@6.0.12(@sanity/client@7.1.0)(@sanity/types@3.88.0(@types/react@19.1.2))(react@19.1.0)':
+  '@sanity/preview-kit@6.1.0(@sanity/types@3.88.0(@types/react@19.1.2))(react@19.1.0)':
     dependencies:
       '@sanity/client': 7.1.0(debug@4.4.0)
       '@sanity/comlink': 3.0.2
-      '@sanity/presentation-comlink': 1.0.18(@sanity/client@7.1.0(debug@4.4.0))(@sanity/types@3.88.0(@types/react@19.1.2)(debug@4.4.0))
+      '@sanity/presentation-comlink': 1.0.18(@sanity/client@7.1.0)(@sanity/types@3.88.0(@types/react@19.1.2)(debug@4.4.0))
       use-sync-external-store: 1.5.0(react@19.1.0)
     optionalDependencies:
       react: 19.1.0
     transitivePeerDependencies:
       - '@sanity/types'
+      - debug
 
   '@sanity/preview-url-secret@2.1.10(@sanity/client@7.1.0(debug@4.4.0))':
     dependencies:
@@ -9508,13 +9508,13 @@ snapshots:
   '@sanity/visual-editing-csm@2.0.16(@sanity/client@7.1.0)(@sanity/types@3.88.0(@types/react@19.1.2))(typescript@5.8.3)':
     dependencies:
       '@sanity/client': 7.1.0(debug@4.4.0)
-      '@sanity/visual-editing-types': 1.0.17(@sanity/client@7.1.0(debug@4.4.0))(@sanity/types@3.88.0(@types/react@19.1.2)(debug@4.4.0))
+      '@sanity/visual-editing-types': 1.0.17(@sanity/client@7.1.0)(@sanity/types@3.88.0(@types/react@19.1.2)(debug@4.4.0))
       valibot: 1.0.0(typescript@5.8.3)
     transitivePeerDependencies:
       - '@sanity/types'
       - typescript
 
-  '@sanity/visual-editing-types@1.0.17(@sanity/client@7.1.0(debug@4.4.0))(@sanity/types@3.88.0(@types/react@19.1.2)(debug@4.4.0))':
+  '@sanity/visual-editing-types@1.0.17(@sanity/client@7.1.0)(@sanity/types@3.88.0(@types/react@19.1.2)(debug@4.4.0))':
     dependencies:
       '@sanity/client': 7.1.0(debug@4.4.0)
     optionalDependencies:
@@ -9526,7 +9526,7 @@ snapshots:
       '@sanity/icons': 3.7.0(react@19.1.0)
       '@sanity/insert-menu': 1.1.11(@emotion/is-prop-valid@1.2.2)(@sanity/types@3.88.0(@types/react@19.1.2))(react-dom@19.1.0(react@19.1.0))(react-is@19.1.0)(react@19.1.0)(styled-components@6.1.17(react-dom@19.1.0(react@19.1.0))(react@19.1.0))
       '@sanity/mutate': 0.11.0-canary.4(xstate@5.19.2)
-      '@sanity/presentation-comlink': 1.0.18(@sanity/client@7.1.0(debug@4.4.0))(@sanity/types@3.88.0(@types/react@19.1.2)(debug@4.4.0))
+      '@sanity/presentation-comlink': 1.0.18(@sanity/client@7.1.0)(@sanity/types@3.88.0(@types/react@19.1.2)(debug@4.4.0))
       '@sanity/preview-url-secret': 2.1.10(@sanity/client@7.1.0(debug@4.4.0))
       '@sanity/ui': 2.15.14(@emotion/is-prop-valid@1.2.2)(react-dom@19.1.0(react@19.1.0))(react-is@19.1.0)(react@19.1.0)(styled-components@6.1.17(react-dom@19.1.0(react@19.1.0))(react@19.1.0))
       '@sanity/visual-editing-csm': 2.0.16(@sanity/client@7.1.0)(@sanity/types@3.88.0(@types/react@19.1.2))(typescript@5.8.3)
@@ -9543,7 +9543,7 @@ snapshots:
       xstate: 5.19.2
     optionalDependencies:
       '@sanity/client': 7.1.0(debug@4.4.0)
-      next: 15.4.0-canary.24(@babel/core@7.27.1)(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
+      next: 15.4.0-canary.24(@babel/core@7.27.1)(babel-plugin-react-compiler@19.0.0-beta-af1b7da-20250417)(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
     transitivePeerDependencies:
       - '@emotion/is-prop-valid'
       - '@sanity/types'
@@ -12783,30 +12783,7 @@ snapshots:
 
   negotiator@1.0.0: {}
 
-  next@15.4.0-canary.24(@babel/core@7.27.1)(react-dom@19.1.0(react@19.1.0))(react@19.1.0):
-    dependencies:
-      '@next/env': 15.4.0-canary.24
-      '@swc/helpers': 0.5.15
-      caniuse-lite: 1.0.30001716
-      postcss: 8.4.31
-      react: 19.1.0
-      react-dom: 19.1.0(react@19.1.0)
-      styled-jsx: 5.1.6(@babel/core@7.27.1)(react@19.1.0)
-    optionalDependencies:
-      '@next/swc-darwin-arm64': 15.4.0-canary.24
-      '@next/swc-darwin-x64': 15.4.0-canary.24
-      '@next/swc-linux-arm64-gnu': 15.4.0-canary.24
-      '@next/swc-linux-arm64-musl': 15.4.0-canary.24
-      '@next/swc-linux-x64-gnu': 15.4.0-canary.24
-      '@next/swc-linux-x64-musl': 15.4.0-canary.24
-      '@next/swc-win32-arm64-msvc': 15.4.0-canary.24
-      '@next/swc-win32-x64-msvc': 15.4.0-canary.24
-      sharp: 0.34.1
-    transitivePeerDependencies:
-      - '@babel/core'
-      - babel-plugin-macros
-
-  next@15.4.0-canary.24(babel-plugin-react-compiler@19.0.0-beta-af1b7da-20250417)(react-dom@19.1.0(react@19.1.0))(react@19.1.0):
+  next@15.4.0-canary.24(@babel/core@7.27.1)(babel-plugin-react-compiler@19.0.0-beta-af1b7da-20250417)(react-dom@19.1.0(react@19.1.0))(react@19.1.0):
     dependencies:
       '@next/env': 15.4.0-canary.24
       '@swc/helpers': 0.5.15
@@ -12825,6 +12802,29 @@ snapshots:
       '@next/swc-win32-arm64-msvc': 15.4.0-canary.24
       '@next/swc-win32-x64-msvc': 15.4.0-canary.24
       babel-plugin-react-compiler: 19.0.0-beta-af1b7da-20250417
+      sharp: 0.34.1
+    transitivePeerDependencies:
+      - '@babel/core'
+      - babel-plugin-macros
+
+  next@15.4.0-canary.24(react-dom@19.1.0(react@19.1.0))(react@19.1.0):
+    dependencies:
+      '@next/env': 15.4.0-canary.24
+      '@swc/helpers': 0.5.15
+      caniuse-lite: 1.0.30001716
+      postcss: 8.4.31
+      react: 19.1.0
+      react-dom: 19.1.0(react@19.1.0)
+      styled-jsx: 5.1.6(@babel/core@7.27.1)(react@19.1.0)
+    optionalDependencies:
+      '@next/swc-darwin-arm64': 15.4.0-canary.24
+      '@next/swc-darwin-x64': 15.4.0-canary.24
+      '@next/swc-linux-arm64-gnu': 15.4.0-canary.24
+      '@next/swc-linux-arm64-musl': 15.4.0-canary.24
+      '@next/swc-linux-x64-gnu': 15.4.0-canary.24
+      '@next/swc-linux-x64-musl': 15.4.0-canary.24
+      '@next/swc-win32-arm64-msvc': 15.4.0-canary.24
+      '@next/swc-win32-x64-msvc': 15.4.0-canary.24
       sharp: 0.34.1
     transitivePeerDependencies:
       - '@babel/core'
@@ -13666,7 +13666,7 @@ snapshots:
       '@sanity/message-protocol': 0.9.0
       '@sanity/migrate': 3.88.0(@types/react@19.1.2)
       '@sanity/mutator': 3.88.0(@types/react@19.1.2)
-      '@sanity/presentation-comlink': 1.0.18(@sanity/client@7.1.0(debug@4.4.0))(@sanity/types@3.88.0(@types/react@19.1.2)(debug@4.4.0))
+      '@sanity/presentation-comlink': 1.0.18(@sanity/client@7.1.0)(@sanity/types@3.88.0(@types/react@19.1.2)(debug@4.4.0))
       '@sanity/preview-url-secret': 2.1.10(@sanity/client@7.1.0(debug@4.4.0))
       '@sanity/schema': 3.88.0(@types/react@19.1.2)(debug@4.4.0)
       '@sanity/sdk': 0.0.0-alpha.25(@types/react@19.1.2)(debug@4.4.0)(immer@10.1.1)(react@19.1.0)(use-sync-external-store@1.5.0(react@19.1.0))
