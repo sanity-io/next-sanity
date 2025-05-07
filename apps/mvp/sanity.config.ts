@@ -15,6 +15,7 @@ const previewMode = {
 } satisfies PreviewUrlResolverOptions['previewMode']
 
 export default defineConfig({
+  title: 'next-sanity',
   projectId,
   dataset,
 
