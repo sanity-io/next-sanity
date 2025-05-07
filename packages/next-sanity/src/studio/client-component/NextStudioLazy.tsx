@@ -14,16 +14,8 @@ const NextStudioClientComponent = lazy(() => import('./NextStudio'))
 
 export function NextStudioLazyClientComponent(props: NextStudioProps): React.ReactNode {
   return (
-    <>
-      {/* <Script
-        src="https://core.sanity-cdn.com/bridge.js"
-        strategy="afterInteractive"
-        type="module"
-        data-sanity-core
-      /> */}
-      <Suspense fallback={null}>
-        <NextStudioClientComponent {...props} />
-      </Suspense>
-    </>
+    <Suspense fallback={null}>
+      <NextStudioClientComponent {...props} />
+    </Suspense>
   )
 }
