@@ -2,16 +2,13 @@ import {revalidateTag} from 'next/cache'
 
 export default function TestCachePage() {
   return (
-    <div>
+    <button
+      onClick={async () => {
+        'use server'
+        await revalidateTag('sanity:s1:57Y4Uw')
+      }}
+    >
       Test Cache
-      <button
-        onClick={async () => {
-          'use server'
-          await revalidateTag('foobar')
-        }}
-      >
-        CLick me
-      </button>
-    </div>
+    </button>
   )
 }
