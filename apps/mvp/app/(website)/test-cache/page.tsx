@@ -6,6 +6,7 @@ export default function TestCachePage() {
       Test Cache
       <button
         onClick={async () => {
+          'use server'
           await revalidateTag('foobar')
         }}
       >
