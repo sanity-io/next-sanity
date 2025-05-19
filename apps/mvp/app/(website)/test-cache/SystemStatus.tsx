@@ -30,9 +30,9 @@ export function SystemStatus() {
   const isPending = !!data?.status?.indicator
 
   return (
-    <button color="gray" href={data?.page?.url}>
+    <a href={data?.page?.url}>
       {isPending ? data?.status?.description : 'Loading system status...'}
-    </button>
+    </a>
   )
 }
 
