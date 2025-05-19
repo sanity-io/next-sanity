@@ -1,7 +1,10 @@
 import {revalidateTag} from 'next/cache'
 import {SystemStatus} from './SystemStatus'
+import {sanityFetch} from '../live'
 
-export default function TestCachePage() {
+export default async function TestCachePage() {
+  const {data} = await sanityFetch({query: `*[_type == 'post' && slug.current == "foobar"]`})
+
   return (
     <>
       <button
