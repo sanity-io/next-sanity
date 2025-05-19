@@ -8,6 +8,16 @@ interface Props {
   }>
 }
 
+export async function generateStaticParams() {
+  const {data: posts} = await sanityFetch({
+    query: `*[_type == 'post'] {
+    "slug": slug.current
+  }`,
+  })
+
+  return posts.map((post) => ({slug: post.slug}))
+}
+
 export default async function TestCachePage(props: Props) {
   const {data} = await sanityFetch({
     query: `*[_type == 'post' && slug.current == $slug]`,
