@@ -13,6 +13,8 @@ export async function generateStaticParams() {
     query: `*[_type == 'post'] {
     "slug": slug.current
   }`,
+    perspective: 'published',
+    stega: false,
   })
 
   return posts.map((post) => ({slug: post.slug}))
