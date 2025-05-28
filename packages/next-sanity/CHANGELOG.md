@@ -5,6 +5,13 @@
 All notable changes to this project will be documented in this file. See
 [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [9.12.1](https://github.com/sanity-io/next-sanity/compare/next-sanity-v9.12.0...next-sanity-v9.12.1) (2025-05-28)
+
+
+### Bug Fixes
+
+* **deps:** update dependency @sanity/preview-url-secret to ^2.1.11 (main) ([#2507](https://github.com/sanity-io/next-sanity/issues/2507)) ([007ece3](https://github.com/sanity-io/next-sanity/commit/007ece3601469fdf79dd8c98b2618d6d91eedfdd))
+
 ## [9.12.0](https://github.com/sanity-io/next-sanity/compare/next-sanity-v9.11.1...next-sanity-v9.12.0) (2025-05-27)
 
 
