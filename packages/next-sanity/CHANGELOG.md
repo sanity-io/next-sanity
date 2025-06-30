@@ -5,6 +5,22 @@
 All notable changes to this project will be documented in this file. See
 [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [9.12.1](https://github.com/sanity-io/next-sanity/compare/next-sanity-v9.12.0...next-sanity-v9.12.1) (2025-06-30)
+
+
+### Bug Fixes
+
+* **deps:** update @sanity/client to ^7.6.0 ([a76b360](https://github.com/sanity-io/next-sanity/commit/a76b360caa50587abcba7539cde90ce4ca15da0c))
+* **deps:** update @sanity/client to ^7.6.0 ([dd138b1](https://github.com/sanity-io/next-sanity/commit/dd138b1d3a2ae7ef2ae1da781bf800de9992002f))
+* **deps:** update @sanity/types and sanity to ^3.95.0 ([178d8bb](https://github.com/sanity-io/next-sanity/commit/178d8bbe205f07840554339ece164304aab7bc85))
+* **deps:** update @sanity/visual-editing to ^2.15.0 ([032c99a](https://github.com/sanity-io/next-sanity/commit/032c99ac6232aab42106ca8030e02b5a11c2b2e6))
+* **deps:** update dependency @sanity/icons to ^3.7.4 (main) ([#2531](https://github.com/sanity-io/next-sanity/issues/2531)) ([19199a7](https://github.com/sanity-io/next-sanity/commit/19199a7ef747c2fa7283ffa5427d26bbc8038f67))
+* **deps:** update dependency @sanity/next-loader to ^1.6.2 (main) ([#2516](https://github.com/sanity-io/next-sanity/issues/2516)) ([4363049](https://github.com/sanity-io/next-sanity/commit/4363049e128f4171c411af6448ad117b98a96283))
+* **deps:** update dependency @sanity/preview-kit to ^6.1.1 (main) ([#2517](https://github.com/sanity-io/next-sanity/issues/2517)) ([7b4706b](https://github.com/sanity-io/next-sanity/commit/7b4706b6b6b1e63659ad79ff30cabea3f1c77605))
+* **deps:** update dependency @sanity/preview-url-secret to ^2.1.11 (main) ([#2507](https://github.com/sanity-io/next-sanity/issues/2507)) ([007ece3](https://github.com/sanity-io/next-sanity/commit/007ece3601469fdf79dd8c98b2618d6d91eedfdd))
+* **deps:** update dependency @sanity/ui to v2.16.2 (main) ([#2518](https://github.com/sanity-io/next-sanity/issues/2518)) ([ce8d6e5](https://github.com/sanity-io/next-sanity/commit/ce8d6e505172a1b0b9bdc0eebf6487572e7d5bc3))
+* **deps:** update groq to ^3.95.0 ([897f215](https://github.com/sanity-io/next-sanity/commit/897f215503f6f85b044a298b2c1eca3fbf3dcde7))
+
 ## [9.12.0](https://github.com/sanity-io/next-sanity/compare/next-sanity-v9.11.1...next-sanity-v9.12.0) (2025-05-27)
 
 
