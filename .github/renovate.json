@@ -2,8 +2,7 @@
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
   "extends": [
     "github>sanity-io/renovate-config",
-    "github>sanity-io/renovate-config:studio-v3",
-    ":reviewer(team:ecosystem)"
+    "github>sanity-io/renovate-config:studio-v3"
   ],
   "baseBranches": ["$default", "canary"],
   "packageRules": [
@@ -55,7 +54,7 @@
     },
     {
       "matchDepNames": ["babel-plugin-react-compiler", "eslint-plugin-react-compiler"],
-      "followTag": "beta"
+      "followTag": "rc"
     }
   ],
   "ignorePresets": [":ignoreModulesAndTests", "github>sanity-io/renovate-config:group-non-major"]
