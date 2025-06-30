@@ -6,6 +6,15 @@ settings:
 
 catalogs:
   default:
+    '@sanity/client':
+      specifier: ^7.6.0
+      version: 7.6.0
+    '@sanity/preview-url-secret':
+      specifier: ^2.1.11
+      version: 2.1.11
+    '@sanity/types':
+      specifier: ^3.95.0
+      version: 3.95.0
     '@sanity/vision':
       specifier: ^3.95.0
       version: 3.95.0
@@ -79,7 +88,7 @@ importers:
         specifier: ^1.1.0
         version: 1.1.0
       '@sanity/preview-url-secret':
-        specifier: ^2.1.11
+        specifier: 'catalog:'
         version: 2.1.11(@sanity/client@7.6.0(debug@4.4.1))
       '@sanity/vision':
         specifier: 'catalog:'
@@ -155,7 +164,7 @@ importers:
         specifier: workspace:*
         version: link:../../packages/sanity-config
       '@sanity/client':
-        specifier: ^7.6.0
+        specifier: 'catalog:'
         version: 7.6.0(debug@4.4.1)
       '@sanity/image-url':
         specifier: ^1.1.0
@@ -168,7 +177,7 @@ importers:
         version: 0.15.13
       next:
         specifier: canary
-        version: 15.4.0-canary.103(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
+        version: 15.4.0-canary.103(@babel/core@7.27.7)(babel-plugin-react-compiler@19.1.0-rc.2)(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
       next-sanity:
         specifier: workspace:*
         version: link:../../packages/next-sanity
@@ -231,11 +240,8 @@ importers:
         specifier: ^3.2.1
         version: 3.2.1(react@19.1.0)
       '@sanity/client':
-        specifier: ^7.6.0
+        specifier: 'catalog:'
         version: 7.6.0(debug@4.4.1)
-      '@sanity/icons':
-        specifier: ^3.7.4
-        version: 3.7.4(react@19.1.0)
       '@sanity/next-loader':
         specifier: ^1.6.2
         version: 1.6.2(@sanity/types@3.95.0(@types/react@19.1.8))(next@15.4.0-canary.103(@babel/core@7.27.7)(react-dom@19.1.0(react@19.1.0))(react@19.1.0))(react@19.1.0)
@@ -243,11 +249,8 @@ importers:
         specifier: ^6.1.1
         version: 6.1.1(@sanity/types@3.95.0(@types/react@19.1.8))(react@19.1.0)
       '@sanity/preview-url-secret':
-        specifier: ^2.1.11
+        specifier: 'catalog:'
         version: 2.1.11(@sanity/client@7.6.0(debug@4.4.1))
-      '@sanity/types':
-        specifier: ^3.95.0
-        version: 3.95.0(@types/react@19.1.8)(debug@4.4.1)
       '@sanity/ui':
         specifier: 2.16.2
         version: 2.16.2(@emotion/is-prop-valid@1.2.2)(react-dom@19.1.0(react@19.1.0))(react-is@19.1.0)(react@19.1.0)(styled-components@6.1.19(react-dom@19.1.0(react@19.1.0))(react@19.1.0))
@@ -264,7 +267,7 @@ importers:
         specifier: canary
         version: 15.4.0-canary.103(@babel/core@7.27.7)(babel-plugin-react-compiler@19.1.0-rc.2)(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
       sanity:
-        specifier: ^3.95.0
+        specifier: 'catalog:'
         version: 3.95.0(@emotion/is-prop-valid@1.2.2)(@types/node@24.0.8)(@types/react@19.1.8)(immer@10.1.1)(jiti@2.4.2)(react-dom@19.1.0(react@19.1.0))(react@19.1.0)(styled-components@6.1.19(react-dom@19.1.0(react@19.1.0))(react@19.1.0))(terser@5.43.1)(typescript@5.8.3)(yaml@2.8.0)
     devDependencies:
       '@sanity/browserslist-config':
@@ -276,6 +279,9 @@ importers:
       '@sanity/pkg-utils':
         specifier: ^7.2.2
         version: 7.9.0(@types/babel__core@7.20.5)(@types/node@24.0.8)(typescript@5.8.3)
+      '@sanity/types':
+        specifier: 'catalog:'
+        version: 3.95.0(@types/react@19.1.8)(debug@4.4.1)
       '@sanity/webhook':
         specifier: 4.0.4
         version: 4.0.4

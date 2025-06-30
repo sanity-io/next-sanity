@@ -147,10 +147,11 @@
   "browserslist": "extends @sanity/browserslist-config",
   "dependencies": {
     "@portabletext/react": "^3.2.1",
-    "@sanity/client": "^7.6.0",
+    "@sanity/client": "catalog:",
+    "@sanity/ui": "catalog:",
     "@sanity/next-loader": "^1.6.2",
     "@sanity/preview-kit": "^6.1.1",
-    "@sanity/preview-url-secret": "^2.1.11",
+    "@sanity/preview-url-secret": "catalog:",
     "@sanity/visual-editing": "^2.15.0",
     "groq": "^3.95.0",
     "history": "^5.3.0"
@@ -175,20 +176,19 @@
     "next": "15.3.4",
     "react": "catalog:",
     "react-dom": "catalog:",
+    "@sanity/types": "catalog:",
     "styled-components": "catalog:",
     "typescript": "catalog:",
     "vite-tsconfig-paths": "^5.1.4",
     "vitest": "^3.2.4"
   },
   "peerDependencies": {
-    "@sanity/client": "^7.6.0",
-    "@sanity/icons": "^3.7.4",
-    "@sanity/types": "^3.95.0",
-    "@sanity/ui": "^2.16.2",
+    "@sanity/client": "catalog:",
+    "@sanity/types": "catalog:",
     "next": "^14.2 || ^15.0.0-0",
     "react": "^18.3 || ^19.0.0-0",
     "react-dom": "^18.3 || ^19.0.0-0",
-    "sanity": "^3.95.0",
+    "sanity": "catalog:",
     "styled-components": "^6.1"
   },
   "engines": {
