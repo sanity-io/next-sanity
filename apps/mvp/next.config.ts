@@ -2,9 +2,9 @@ import type {NextConfig} from 'next'
 
 import withBundleAnalyzer from '@next/bundle-analyzer'
 
-// function requireResolve(id) {
-//   return import.meta.resolve(id).replace('file://', '')
-// }
+function requireResolve(id) {
+  return import.meta.resolve(id).replace('file://', '')
+}
 
 const nextConfig: NextConfig = {
   // basePath: process.env.NEXT_PUBLIC_TEST_BASE_PATH,
@@ -25,6 +25,17 @@ const nextConfig: NextConfig = {
     //     },
     //   },
     // },
+  },
+
+  webpack(config) {
+    config.resolve.alias = {
+      ...config.resolve.alias,
+      '@sanity/ui/theme': requireResolve('@sanity/ui/theme'),
+      '@sanity/ui/css': requireResolve('@sanity/ui/css'),
+      '@sanity/ui/css/index.css': requireResolve('@sanity/ui/css/index.css'),
+      '@sanity/ui': requireResolve('@sanity/ui'),
+    }
+    return config
   },
   logging: {
     fetches: {
