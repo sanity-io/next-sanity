@@ -1,0 +1,23 @@
+{
+  "$schema": "./node_modules/oxlint/configuration_schema.json",
+  "plugins": [
+    "react",
+    "react-perf",
+    "nextjs",
+    "unicorn",
+    "typescript",
+    "oxc",
+    "import",
+    "node",
+    "import"
+  ],
+  "categories": {
+    "correctness": "error",
+    "suspicious": "warn",
+    "perf": "error"
+  },
+  "rules": {
+    "react-in-jsx-scope": "off",
+    "react/rules-of-hooks": "error"
+  }
+}

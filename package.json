@@ -8,21 +8,17 @@
     "bump:latest": "pnpm -r up @sanity/next-loader@latest @sanity/preview-url-secret@latest @sanity/visual-editing@latest && pnpm dedupe",
     "predev": "pnpm build",
     "dev": "turbo dev",
-    "format": "prettier --cache --write .",
-    "lint": "turbo lint",
+    "format": "prettier --cache --write . && oxlint --fix",
+    "lint": "oxlint",
     "prestart": "turbo build",
     "start": "turbo watch build start",
     "test": "turbo test",
     "type-check": "turbo type-check"
   },
-  "devDependencies": {
-    "@next/bundle-analyzer": "canary",
-    "@next/env": "canary",
+  "dependencies": {
     "@sanity/prettier-config": "2.0.0",
-    "eslint-config-next": "canary",
-    "next": "canary",
+    "oxlint": "^1.6.0",
     "prettier": "3.6.2",
-    "prettier-plugin-packagejson": "2.5.17",
     "prettier-plugin-tailwindcss": "0.6.13",
     "turbo": "2.5.4"
   },
@@ -36,14 +32,13 @@
       ]
     },
     "overrides": {
-      "@next/bundle-analyzer": "$@next/bundle-analyzer",
-      "@next/env": "$@next/env",
+      "@next/bundle-analyzer": "canary",
+      "@next/env": "canary",
       "@sanity/ui": "catalog:",
       "@types/react": "catalog:",
       "@types/react-dom": "catalog:",
       "@types/react-is": "catalog:",
-      "eslint-config-next": "$eslint-config-next",
-      "next": "$next",
+      "next": "canary",
       "react": "catalog:",
       "react-dom": "catalog:",
       "react-is": "catalog:"

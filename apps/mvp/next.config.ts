@@ -10,7 +10,6 @@ const nextConfig: NextConfig = {
   // basePath: process.env.NEXT_PUBLIC_TEST_BASE_PATH,
   // trailingSlash: true,
   experimental: {
-    // reactCompiler: true,
     // turbo: {
     //   resolveAlias: {
     //     // '@sanity/vision': '@sanity/vision/lib/index.mjs',
