@@ -1,3 +1,4 @@
+// oxlint-disable-next-line no-unassigned-import
 import '../globals.css'
 
 import {draftMode} from 'next/headers'

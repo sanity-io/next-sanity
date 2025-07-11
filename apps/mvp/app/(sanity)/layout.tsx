@@ -1,3 +1,4 @@
+// oxlint-disable-next-line no-unassigned-import
 import '../globals.css'
 
 export {metadata, viewport} from 'next-sanity/studio'

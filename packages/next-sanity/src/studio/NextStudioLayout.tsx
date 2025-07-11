@@ -5,19 +5,17 @@ export interface NextStudioLayoutProps {
   children: React.ReactNode
 }
 
+const style = {
+  height: '100vh',
+  maxHeight: '100dvh',
+  overscrollBehavior: 'none',
+  WebkitFontSmoothing: 'antialiased',
+  overflow: 'auto',
+} satisfies React.CSSProperties
+
 const NextStudioLayoutComponent = ({children}: NextStudioLayoutProps) => {
   return (
-    <div
-      id="sanity"
-      data-ui="NextStudioLayout"
-      style={{
-        height: '100vh',
-        maxHeight: '100dvh',
-        overscrollBehavior: 'none',
-        WebkitFontSmoothing: 'antialiased',
-        overflow: 'auto',
-      }}
-    >
+    <div id="sanity" data-ui="NextStudioLayout" style={style}>
       {children}
     </div>
   )

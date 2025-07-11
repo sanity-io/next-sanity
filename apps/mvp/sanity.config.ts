@@ -21,7 +21,7 @@ export default defineConfig({
 
   plugins: [
     presentationTool({
-      previewUrl: {preview: `${process.env.NEXT_PUBLIC_TEST_BASE_PATH || ''}/` || '/', previewMode},
+      previewUrl: {preview: `${process.env.NEXT_PUBLIC_TEST_BASE_PATH || ''}/`, previewMode},
     }),
     sharedConfig(),
     debugSecrets(),

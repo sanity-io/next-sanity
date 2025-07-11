@@ -103,13 +103,7 @@ export default function VisualEditing(props: VisualEditingProps): React.JSX.Elem
         )
         return revalidateRootLayout()
       }
-      const mutationFastRefresh = (): false => {
-        // eslint-disable-next-line no-console
-        console.debug(
-          'Live preview is setup, mutation is skipped assuming its handled by the live preview',
-        )
-        return false
-      }
+
       const mutationFallbackRefresh = () => {
         // eslint-disable-next-line no-console
         console.debug(
@@ -140,4 +134,12 @@ export default function VisualEditing(props: VisualEditingProps): React.JSX.Elem
       zIndex={zIndex}
     />
   )
+}
+
+function mutationFastRefresh(): false {
+  // eslint-disable-next-line no-console
+  console.debug(
+    'Live preview is setup, mutation is skipped assuming its handled by the live preview',
+  )
+  return false
 }
