@@ -49,23 +49,4 @@ export default defineConfig({
       'ae-missing-release-tag': 'warn',
     },
   },
-
-  /*
-  reactCompilerOptions: {
-    logger: {
-      logEvent(filename, event) {
-        if (event.kind === 'CompileError') {
-          console.group(`[${filename}] ${event.kind}`)
-          // eslint-disable-next-line @typescript-eslint/no-explicit-any
-          const {reason, description, severity, loc, suggestions} = event.detail as any
-          console.error(`[${severity}] ${reason}`)
-          console.log(`${filename}:${loc.start?.line}:${loc.start?.column} ${description}`)
-          console.log(suggestions)
-
-          console.groupEnd()
-        }
-      },
-    },
-  },
-  // */
 })

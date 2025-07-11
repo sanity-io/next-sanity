@@ -50,18 +50,6 @@
       "require": "./dist/image.cjs",
       "default": "./dist/image.js"
     },
-    "./preview": {
-      "source": "./src/preview/index.ts",
-      "import": "./dist/preview.js",
-      "require": "./dist/preview.cjs",
-      "default": "./dist/preview.js"
-    },
-    "./preview/live-query": {
-      "source": "./src/preview/LiveQuery/index.ts",
-      "import": "./dist/preview/live-query.js",
-      "require": "./dist/preview/live-query.cjs",
-      "default": "./dist/preview/live-query.js"
-    },
     "./studio": {
       "source": "./src/studio/index.ts",
       "import": "./dist/studio.js",
@@ -108,12 +96,6 @@
       "image": [
         "./dist/image.d.ts"
       ],
-      "preview": [
-        "./dist/preview.d.ts"
-      ],
-      "preview/live-query": [
-        "./dist/preview/live-query.d.ts"
-      ],
       "studio": [
         "./dist/studio.d.ts"
       ],
@@ -147,7 +129,6 @@
     "@portabletext/react": "^3.2.1",
     "@sanity/client": "catalog:",
     "@sanity/next-loader": "^1.7.0",
-    "@sanity/preview-kit": "^6.1.2",
     "@sanity/preview-url-secret": "catalog:",
     "@sanity/visual-editing": "^2.15.2",
     "groq": "^3.99.0",
