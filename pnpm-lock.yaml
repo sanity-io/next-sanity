@@ -190,9 +190,6 @@ importers:
       '@sanity/next-loader':
         specifier: ^1.7.0
         version: 1.7.0(@sanity/types@3.99.0(@types/react@19.1.8))(next@15.4.0-canary.126(@babel/core@7.28.0)(react-dom@19.1.0(react@19.1.0))(react@19.1.0))(react@19.1.0)
-      '@sanity/preview-kit':
-        specifier: ^6.1.1
-        version: 6.1.1(@sanity/types@3.99.0(@types/react@19.1.8))(react@19.1.0)
       '@sanity/preview-url-secret':
         specifier: 'catalog:'
         version: 2.1.12(@sanity/client@7.6.0(debug@4.4.1))
@@ -2308,15 +2305,6 @@ packages:
     resolution: {integrity: sha512-iTGLenR4T1DU0QJhMIMVw61C4DeZyKhpYNmkTOToO1dX8fBuew8JqKWe9S4Ojk8rB9Y5MCNgl5haVjOzFcWPtw==}
     peerDependencies:
       prettier: ^3.6.0
-
-  '@sanity/preview-kit@6.1.1':
-    resolution: {integrity: sha512-NyyHVtcbcMohr6UM3Ji3QU//qZeh/mDRDSGUCenVB0zAkYEWnzapPtyJzRW7xlPNjwZhyOnLr7e5t7YpS9eMmw==}
-    engines: {node: '>=18'}
-    peerDependencies:
-      react: ^19.1.0
-    peerDependenciesMeta:
-      react:
-        optional: true
 
   '@sanity/preview-url-secret@2.1.12':
     resolution: {integrity: sha512-RJj9hueVE4lEYdvOokFvoCCdgkIcH1pkjsugXi2sp/y4MFLT+tX7o02E/cLGSfeTF6tTbJmaNdbE8WqvBwyh9w==}
@@ -8616,18 +8604,6 @@ snapshots:
       '@prettier/plugin-oxc': 0.0.4
       prettier: 3.6.2
       prettier-plugin-packagejson: 2.5.17(prettier@3.6.2)
-
-  '@sanity/preview-kit@6.1.1(@sanity/types@3.99.0(@types/react@19.1.8))(react@19.1.0)':
-    dependencies:
-      '@sanity/client': 7.6.0(debug@4.4.1)
-      '@sanity/comlink': 3.0.7
-      '@sanity/presentation-comlink': 1.0.23(@sanity/client@7.6.0)(@sanity/types@3.99.0(@types/react@19.1.8))
-      use-sync-external-store: 1.5.0(react@19.1.0)
-    optionalDependencies:
-      react: 19.1.0
-    transitivePeerDependencies:
-      - '@sanity/types'
-      - debug
 
   '@sanity/preview-url-secret@2.1.12(@sanity/client@7.6.0(debug@4.4.1))':
     dependencies:
