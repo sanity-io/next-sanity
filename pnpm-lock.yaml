@@ -337,8 +337,8 @@ importers:
   packages/sanity-config:
     dependencies:
       '@sanity/assist':
-        specifier: 4.4.0
-        version: 4.4.0(@emotion/is-prop-valid@1.2.2)(@sanity/mutator@3.95.0(@types/react@19.1.8))(react-dom@19.1.0(react@19.1.0))(react-is@19.1.0)(react@19.1.0)(sanity@3.95.0(@emotion/is-prop-valid@1.2.2)(@types/node@24.0.8)(@types/react@19.1.8)(immer@10.1.1)(jiti@2.4.2)(react-dom@19.1.0(react@19.1.0))(react@19.1.0)(styled-components@6.1.19(react-dom@19.1.0(react@19.1.0))(react@19.1.0))(terser@5.43.1)(typescript@5.8.3)(yaml@2.8.0))(styled-components@6.1.19(react-dom@19.1.0(react@19.1.0))(react@19.1.0))
+        specifier: 4.4.2
+        version: 4.4.2(@emotion/is-prop-valid@1.2.2)(@sanity/mutator@3.95.0(@types/react@19.1.8))(react-dom@19.1.0(react@19.1.0))(react-is@19.1.0)(react@19.1.0)(sanity@3.95.0(@emotion/is-prop-valid@1.2.2)(@types/node@24.0.8)(@types/react@19.1.8)(immer@10.1.1)(jiti@2.4.2)(react-dom@19.1.0(react@19.1.0))(react@19.1.0)(styled-components@6.1.19(react-dom@19.1.0(react@19.1.0))(react@19.1.0))(terser@5.43.1)(typescript@5.8.3)(yaml@2.8.0))(styled-components@6.1.19(react-dom@19.1.0(react@19.1.0))(react@19.1.0))
     devDependencies:
       '@repo/typescript-config':
         specifier: workspace:*
@@ -2367,13 +2367,13 @@ packages:
     resolution: {integrity: sha512-dBsZWH5X6ANcvclFRnQT9Y+NNvoWTJZIMKR5HT6hzoRpRb48p7+vWn+wi1V1wPvqgZg2ScsOQQcGXWXskbPbQQ==}
     engines: {node: '>=18'}
 
-  '@sanity/assist@4.4.0':
-    resolution: {integrity: sha512-+X47JspgjdJ6IGTW6H/ykb1AiJJ59Yscs6CFH04YGldM97OAlXYM6WnJyo8Lf9Vo/jZIZdNcX2mUlLTq2phScQ==}
+  '@sanity/assist@4.4.2':
+    resolution: {integrity: sha512-NOyuTUTETUmWRCw/ZeIJq4buYXh/Kd4Fyr3EpFFMpjZBG5/yp2pqv6GznFf+eklTVTTYiucxF+jUUu7bxp0A1A==}
     engines: {node: '>=20'}
     peerDependencies:
-      '@sanity/mutator': ^3.36.4
+      '@sanity/mutator': ^3.36.4 || ^4.0.0-0
       react: 19.1.0
-      sanity: ^3.36.4
+      sanity: ^3.36.4 || ^4.0.0-0
       styled-components: ^6.1
 
   '@sanity/bifur-client@0.4.1':
@@ -9389,7 +9389,7 @@ snapshots:
 
   '@sanity/asset-utils@2.2.1': {}
 
-  '@sanity/assist@4.4.0(@emotion/is-prop-valid@1.2.2)(@sanity/mutator@3.95.0(@types/react@19.1.8))(react-dom@19.1.0(react@19.1.0))(react-is@19.1.0)(react@19.1.0)(sanity@3.95.0(@emotion/is-prop-valid@1.2.2)(@types/node@24.0.8)(@types/react@19.1.8)(immer@10.1.1)(jiti@2.4.2)(react-dom@19.1.0(react@19.1.0))(react@19.1.0)(styled-components@6.1.19(react-dom@19.1.0(react@19.1.0))(react@19.1.0))(terser@5.43.1)(typescript@5.8.3)(yaml@2.8.0))(styled-components@6.1.19(react-dom@19.1.0(react@19.1.0))(react@19.1.0))':
+  '@sanity/assist@4.4.2(@emotion/is-prop-valid@1.2.2)(@sanity/mutator@3.95.0(@types/react@19.1.8))(react-dom@19.1.0(react@19.1.0))(react-is@19.1.0)(react@19.1.0)(sanity@3.95.0(@emotion/is-prop-valid@1.2.2)(@types/node@24.0.8)(@types/react@19.1.8)(immer@10.1.1)(jiti@2.4.2)(react-dom@19.1.0(react@19.1.0))(react@19.1.0)(styled-components@6.1.19(react-dom@19.1.0(react@19.1.0))(react@19.1.0))(terser@5.43.1)(typescript@5.8.3)(yaml@2.8.0))(styled-components@6.1.19(react-dom@19.1.0(react@19.1.0))(react@19.1.0))':
     dependencies:
       '@sanity/icons': 3.7.4(react@19.1.0)
       '@sanity/incompatible-plugin': 1.0.5(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
