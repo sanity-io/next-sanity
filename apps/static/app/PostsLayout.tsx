@@ -55,7 +55,7 @@ const PostsLayout = memo(function Posts(props: PostsLayoutProps) {
             key={post.title}
             className="relative flex flex-col overflow-hidden rounded-lg shadow-lg"
           >
-            <div className="flex-shrink-0">
+            <div className="shrink-0">
               {post.mainImage ? (
                 <Image src={post.mainImage as any} width={512} height={380} />
               ) : null}
@@ -67,7 +67,7 @@ const PostsLayout = memo(function Posts(props: PostsLayoutProps) {
                 </a>
               </div>
               <div className="mt-6 flex items-center">
-                <div className="flex-shrink-0">
+                <div className="shrink-0">
                   <span className="sr-only">{post.author.name}</span>
                   {post.author?.image ? (
                     <Image
