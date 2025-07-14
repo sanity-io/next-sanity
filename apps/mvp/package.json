@@ -3,15 +3,15 @@
   "version": "1.0.0",
   "private": true,
   "type": "module",
+  "imports": {
+    "#groqd": "./groqd-client.ts"
+  },
   "scripts": {
     "build": "next build --profile && sanity manifest extract --path public/studio/static",
     "dev": "next dev --turbo",
     "start": "next start",
-    "typegen": "sanity schema extract && sanity typegen generate",
-    "type-check": "tsc --noEmit"
-  },
-  "imports": {
-    "#groqd": "./groqd-client.ts"
+    "type-check": "tsc --noEmit",
+    "typegen": "sanity schema extract && sanity typegen generate"
   },
   "dependencies": {
     "@repo/sanity-config": "workspace:*",
