@@ -70,7 +70,7 @@ const PostsLayout = memo(function Posts(props: PostsLayoutProps) {
             className="relative flex flex-col overflow-hidden rounded-lg shadow-lg"
             data-sanity={dataAttribute('slug')}
           >
-            <div className="flex-shrink-0">
+            <div className="shrink-0">
               {post.mainImage ? (
                 <Image
                   data-sanity={dataAttribute('mainImage')}
@@ -88,7 +88,7 @@ const PostsLayout = memo(function Posts(props: PostsLayoutProps) {
               </div>
               <div className="mt-6 flex items-center">
                 {post.author ? (
-                  <div className="flex-shrink-0">
+                  <div className="shrink-0">
                     <span className="sr-only">{post.author.name}</span>
                     {post.author?.image ? (
                       <Image
@@ -118,7 +118,7 @@ const PostsLayout = memo(function Posts(props: PostsLayoutProps) {
               </div>
             </div>
             {props.draftMode && post.status === 'draft' && (
-              <span className="absolute left-2 top-2 rounded-md bg-white/50 px-2 py-1 text-xs font-semibold uppercase backdrop-blur">
+              <span className="absolute left-2 top-2 rounded-md bg-white/50 px-2 py-1 text-xs font-semibold uppercase backdrop-blur-sm">
                 {post.status}
               </span>
             )}
