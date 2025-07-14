@@ -7,7 +7,11 @@
     "build": "next build",
     "dev": "next -p 3001 --turbo",
     "start": "pnpx serve@latest out -p 3001",
+    "typegen": "sanity schema extract && sanity typegen generate",
     "type-check": "tsc --noEmit"
+  },
+  "imports": {
+    "#groqd": "./groqd-client.ts"
   },
   "dependencies": {
     "@repo/sanity-config": "workspace:*",

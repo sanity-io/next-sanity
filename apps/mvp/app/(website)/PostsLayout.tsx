@@ -1,46 +1,34 @@
 /* eslint-disable @next/next/no-img-element */
-import {q, sanityImage} from 'groqd'
+import {q} from '#groqd'
 import {createDataAttribute} from 'next-sanity'
 import {memo} from 'react'
 
 import {Image} from './Image'
 
-const {query, schema} = q('*')
-  .filter("_type == 'post'")
-  .grab({
-    _id: q.string(),
-    _type: q.literal('post'),
-    title: q.string().nullable(),
-    slug: q('slug').grabOne('current', q.string().optional()),
-    mainImage: sanityImage('mainImage', {
-      withCrop: true,
-      withHotspot: true,
-      additionalFields: {
-        alt: q.string().nullish(),
-      },
-    }).nullable(),
-    publishedAt: q.date().nullable(),
-    author: q('author')
-      .deref()
-      .grab({
-        name: q.string().optional(),
-        image: sanityImage('image', {
-          withCrop: true,
-          withHotspot: true,
-          additionalFields: {
-            alt: q.string().nullish(),
-          },
-        }),
-      })
-      .nullable(),
-    status: q.select({
-      '_originalId in path("drafts.**")': ['"draft"', q.literal('draft')],
-      'default': ['"published"', q.literal('published')],
-    }),
-  })
+const postsQuery = q.star
+  .filterByType('post')
   .order('publishedAt desc', '_updatedAt desc')
+  .project((sub) => ({
+    _id: sub.field('_id'),
+    _type: sub.field('_type'),
+    title: sub.field('title'),
+    slug: sub.field('slug.current'),
+    mainImage: sub.field('mainImage').project({asset: true, crop: true, hotspot: true, alt: true}),
+    publishedAt: sub.field('publishedAt'),
+    author: sub
+      .field('author')
+      .deref()
+      .project((sub) => ({
+        name: true,
+        image: sub.field('image').project({asset: true, crop: true, hotspot: true, alt: true}),
+      })),
+    status: sub.select({
+      '_originalId in path("drafts.**")': q.value('draft'),
+      'default': q.value('published'),
+    }),
+  }))
 
-export {query}
+export const {query} = postsQuery
 
 export type PostsLayoutProps = {
   data: unknown[]
@@ -49,7 +37,7 @@ export type PostsLayoutProps = {
 }
 
 const PostsLayout = memo(function Posts(props: PostsLayoutProps) {
-  const posts = schema.parse(props.data)
+  const posts = postsQuery.parse(props.data)
 
   return (
     <div
@@ -108,9 +96,11 @@ const PostsLayout = memo(function Posts(props: PostsLayoutProps) {
                   ) : null}
                   {post.publishedAt ? (
                     <div className="flex space-x-1 text-sm text-gray-500">
-                      <time dateTime={post.publishedAt?.toJSON()}>
-                        {post.publishedAt?.toDateString()}
-                      </time>
+                      {post.publishedAt && (
+                        <time dateTime={post.publishedAt}>
+                          {new Date(post.publishedAt).toDateString()}
+                        </time>
+                      )}
                       <span aria-hidden="true">&middot;</span>
                     </div>
                   ) : null}
