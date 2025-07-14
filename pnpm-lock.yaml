@@ -186,7 +186,7 @@ importers:
         version: 1.7.0(@sanity/types@3.99.0(@types/react@19.1.8))(next@15.4.0-canary.129(@babel/core@7.28.0)(react-dom@19.1.0(react@19.1.0))(react@19.1.0))(react@19.1.0)
       '@sanity/preview-kit':
         specifier: ^6.1.1
-        version: 6.1.1(@sanity/types@3.99.0(@types/react@19.1.8))(react@19.1.0)
+        version: 6.1.2(@sanity/types@3.99.0(@types/react@19.1.8))(react@19.1.0)
       '@sanity/preview-url-secret':
         specifier: 'catalog:'
         version: 2.1.12(@sanity/client@7.6.0(debug@4.4.1))
@@ -1596,8 +1596,8 @@ packages:
     resolution: {integrity: sha512-oGB+UxlgWcgQkgwo8GcEGwemoTFt3FIO9ababBmaGwXIoBKZ+GTy0pP185beGg7Llih/NSHSV2XAs1lnznocSg==}
     engines: {node: '>= 8'}
 
-  '@oclif/core@4.5.0':
-    resolution: {integrity: sha512-UYWyDFNKFyzgXVXO0DHfOvJ/8qpw4yPYe7fOHausDEVU44qjDr90ZnfYTljZPK8dhgMggxiZs9n+TFajnXRp7g==}
+  '@oclif/core@4.5.1':
+    resolution: {integrity: sha512-JAuARvXOzf75L7rqLL3TIP3OmuTf7N/cjRejkGASfRJH+09180+EGbSkPWSMCns+AaYpDMI+fdaJ6QCoa3f15A==}
     engines: {node: '>=18.0.0'}
 
   '@oclif/plugin-help@6.2.31':
@@ -2319,8 +2319,8 @@ packages:
     peerDependencies:
       prettier: ^3.6.0
 
-  '@sanity/preview-kit@6.1.1':
-    resolution: {integrity: sha512-NyyHVtcbcMohr6UM3Ji3QU//qZeh/mDRDSGUCenVB0zAkYEWnzapPtyJzRW7xlPNjwZhyOnLr7e5t7YpS9eMmw==}
+  '@sanity/preview-kit@6.1.2':
+    resolution: {integrity: sha512-d5P/1yviEjqMd9at9MZYFaeSD2bOxELlshSK+dfgSLaCzEqjR2gktdlkJ85hrb0A8EFXT+zA8Y2DddJJG6CMqA==}
     engines: {node: '>=18'}
     peerDependencies:
       react: ^19.1.0
@@ -7872,7 +7872,7 @@ snapshots:
       '@nodelib/fs.scandir': 2.1.5
       fastq: 1.19.1
 
-  '@oclif/core@4.5.0':
+  '@oclif/core@4.5.1':
     dependencies:
       ansi-escapes: 4.3.2
       ansis: 3.17.0
@@ -7895,7 +7895,7 @@ snapshots:
 
   '@oclif/plugin-help@6.2.31':
     dependencies:
-      '@oclif/core': 4.5.0
+      '@oclif/core': 4.5.1
 
   '@octokit/auth-token@4.0.0': {}
 
@@ -8756,7 +8756,7 @@ snapshots:
       prettier: 3.6.2
       prettier-plugin-packagejson: 2.5.18(prettier@3.6.2)
 
-  '@sanity/preview-kit@6.1.1(@sanity/types@3.99.0(@types/react@19.1.8))(react@19.1.0)':
+  '@sanity/preview-kit@6.1.2(@sanity/types@3.99.0(@types/react@19.1.8))(react@19.1.0)':
     dependencies:
       '@sanity/client': 7.6.0(debug@4.4.1)
       '@sanity/comlink': 3.0.7
@@ -8782,7 +8782,7 @@ snapshots:
     dependencies:
       '@architect/hydrate': 4.0.8
       '@architect/inventory': 4.0.9
-      '@oclif/core': 4.5.0
+      '@oclif/core': 4.5.1
       '@oclif/plugin-help': 6.2.31
       '@sanity/client': 7.6.0(debug@4.4.1)
       adm-zip: 0.5.16
