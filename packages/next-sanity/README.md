@@ -1155,8 +1155,9 @@ function StudioPage() {
 ## Migration guides
 
 > [!IMPORTANT]
-> You're looking at the README for v9, the README for [v8 is available here](https://github.com/sanity-io/next-sanity/tree/v8?tab=readme-ov-file#next-sanity) as well as an [migration guide][migrate-v8-to-v9].
+> You're looking at the README for v0, the README for [v9 is available here](https://github.com/sanity-io/next-sanity/tree/v9?tab=readme-ov-file#next-sanity) as well as an [migration guide][migrate-v9-to-v10].
 
+- [From `v9` to `v10`][migrate-v9-to-v10]
 - [From `v8` to `v9`][migrate-v8-to-v9]
 - [From `v7` to `v8`][migrate-v7-to-v8]
 - [From `v6` to `v7`][migrate-v6-to-v7]
@@ -1184,6 +1185,7 @@ MIT-licensed. See [LICENSE][LICENSE].
 [migrate-v6-to-v7]: https://github.com/sanity-io/next-sanity/blob/main/packages/next-sanity/MIGRATE-v6-to-v7.md
 [migrate-v7-to-v8]: https://github.com/sanity-io/next-sanity/blob/main/packages/next-sanity/MIGRATE-v7-to-v8.md
 [migrate-v8-to-v9]: https://github.com/sanity-io/next-sanity/blob/main/packages/next-sanity/MIGRATE-v8-to-v9.md
+[migrate-v9-to-v10]: https://github.com/sanity-io/next-sanity/blob/main/packages/next-sanity/MIGRATE-v9-to-v10.md
 [next-cache]: https://nextjs.org/docs/app/building-your-application/caching
 [next-docs]: https://nextjs.org/docs
 [next-revalidate-docs]: https://nextjs.org/docs/app/api-reference/functions/fetch#optionsnextrevalidate
