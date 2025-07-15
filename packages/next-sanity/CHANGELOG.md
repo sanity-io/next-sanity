@@ -5,6 +5,23 @@
 All notable changes to this project will be documented in this file. See
 [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [10.0.0](https://github.com/sanity-io/next-sanity/compare/next-sanity-v9.12.3...next-sanity-v10.0.0) (2025-07-15)
+
+
+### ⚠ BREAKING CHANGES
+
+* require sanity v4 ([#2573](https://github.com/sanity-io/next-sanity/issues/2573))
+* remove node 18, make base 20 ([#2572](https://github.com/sanity-io/next-sanity/issues/2572))
+* drop next v14 and react 18 ([#2571](https://github.com/sanity-io/next-sanity/issues/2571))
+* See the migration guide: https://github.com/sanity-io/next-sanity/blob/main/packages/next-sanity/MIGRATE-v9-to-v10.md#the-next-sanitypreview-and-next-sanitypreviewlive-query-exports-has-been-removed
+
+### Bug Fixes
+
+* drop next v14 and react 18 ([#2571](https://github.com/sanity-io/next-sanity/issues/2571)) ([6497b47](https://github.com/sanity-io/next-sanity/commit/6497b47380ce7405488eac63b735c0028cdd85d1))
+* remove `@sanity/preview-kit` ([#2568](https://github.com/sanity-io/next-sanity/issues/2568)) ([40eea67](https://github.com/sanity-io/next-sanity/commit/40eea67f58ef044d8e9a54509ad50514ab7b78ca))
+* remove node 18, make base 20 ([#2572](https://github.com/sanity-io/next-sanity/issues/2572)) ([3fa759d](https://github.com/sanity-io/next-sanity/commit/3fa759db1fe2dcccdf7654575569f11c7a4c56bb))
+* require sanity v4 ([#2573](https://github.com/sanity-io/next-sanity/issues/2573)) ([e4d3b82](https://github.com/sanity-io/next-sanity/commit/e4d3b820cfae2525ce09238b137ca84798f14087))
+
 ## [9.12.3](https://github.com/sanity-io/next-sanity/compare/next-sanity-v9.12.2...next-sanity-v9.12.3) (2025-07-14)
 
 
