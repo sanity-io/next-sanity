@@ -1155,7 +1155,7 @@ function StudioPage() {
 ## Migration guides
 
 > [!IMPORTANT]
-> You're looking at the README for v0, the README for [v9 is available here](https://github.com/sanity-io/next-sanity/tree/v9?tab=readme-ov-file#next-sanity) as well as an [migration guide][migrate-v9-to-v10].
+> You're looking at the README for v10, the README for [v9 is available here](https://github.com/sanity-io/next-sanity/tree/v9?tab=readme-ov-file#next-sanity) as well as an [migration guide][migrate-v9-to-v10].
 
 - [From `v9` to `v10`][migrate-v9-to-v10]
 - [From `v8` to `v9`][migrate-v8-to-v9]
