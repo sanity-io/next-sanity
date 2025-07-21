@@ -1,9 +1,6 @@
 {
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
-  "extends": [
-    "github>sanity-io/renovate-config",
-    "github>sanity-io/renovate-config:studio-v3"
-  ],
+  "extends": ["github>sanity-io/renovate-config", "github>sanity-io/renovate-config:studio-v3"],
   "baseBranchPatterns": ["$default", "canary"],
   "packageRules": [
     {
@@ -41,8 +38,5 @@
       "semanticCommitType": "fix"
     }
   ],
-  "ignorePresets": [
-    ":ignoreModulesAndTests",
-    "github>sanity-io/renovate-config:group-non-major"
-  ]
+  "ignorePresets": [":ignoreModulesAndTests", "github>sanity-io/renovate-config:group-non-major"]
 }
