@@ -1,10 +1,15 @@
 {
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
-  "extends": ["github>sanity-io/renovate-config", "github>sanity-io/renovate-config:studio-v3"],
-  "baseBranches": ["$default", "canary"],
+  "extends": [
+    "github>sanity-io/renovate-config",
+    "github>sanity-io/renovate-config:studio-v3"
+  ],
+  "baseBranchPatterns": ["$default", "canary"],
   "packageRules": [
     {
-      "group": {"semanticCommitType": "chore"},
+      "group": {
+        "semanticCommitType": "chore"
+      },
       "matchDepTypes": [
         "dependencies",
         "devDependencies",
@@ -36,5 +41,8 @@
       "semanticCommitType": "fix"
     }
   ],
-  "ignorePresets": [":ignoreModulesAndTests", "github>sanity-io/renovate-config:group-non-major"]
+  "ignorePresets": [
+    ":ignoreModulesAndTests",
+    "github>sanity-io/renovate-config:group-non-major"
+  ]
 }
