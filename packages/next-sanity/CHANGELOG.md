@@ -5,6 +5,14 @@
 All notable changes to this project will be documented in this file. See
 [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [10.0.3](https://github.com/sanity-io/next-sanity/compare/next-sanity-v10.0.2...next-sanity-v10.0.3) (2025-07-22)
+
+
+### Bug Fixes
+
+* **deps:** update sanity monorepo to ^4.1.1 (main) ([#2595](https://github.com/sanity-io/next-sanity/issues/2595)) ([ec3b68c](https://github.com/sanity-io/next-sanity/commit/ec3b68ccc51287a481a9e4c7f9317bcb90462ed3))
+* support presentation mode with Next.js --experimental-https flag ([#2594](https://github.com/sanity-io/next-sanity/issues/2594)) ([e9a635c](https://github.com/sanity-io/next-sanity/commit/e9a635c879e7dafd1906279f74d9f5d0eb52d8c0))
+
 ## [10.0.2](https://github.com/sanity-io/next-sanity/compare/next-sanity-v10.0.1...next-sanity-v10.0.2) (2025-07-21)
 
 
