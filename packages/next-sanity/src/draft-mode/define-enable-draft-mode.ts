@@ -10,6 +10,13 @@ import type {SanityClient} from '../client'
  */
 export interface DefineEnableDraftModeOptions {
   client: SanityClient
+  /**
+   * Force secure cookies in development mode.
+   * Enable this when using Next.js --experimental-https flag.
+   * This option has no effect in production (cookies are always secure).
+   * @defaultValue false
+   */
+  secureDevMode?: boolean
 }
 
 /**
@@ -59,7 +66,11 @@ export function defineEnableDraftMode(options: DefineEnableDraftModeOptions): En
         draftModeStore.enable()
       }
 
-      const dev = process.env.NODE_ENV !== 'production'
+      const isProduction = process.env.NODE_ENV === 'production'
+
+      // We can't auto-detect HTTPS in dev due to Next.js limitations,
+      // so we need an explicit option
+      const isSecure = isProduction || (options.secureDevMode ?? false)
 
       // Override cookie header for draft mode for usage in live-preview
       // https://github.com/vercel/next.js/issues/49927
@@ -70,8 +81,8 @@ export function defineEnableDraftMode(options: DefineEnableDraftModeOptions): En
         value: cookie?.value,
         httpOnly: true,
         path: '/',
-        secure: !dev,
-        sameSite: dev ? 'lax' : 'none',
+        secure: isSecure,
+        sameSite: isSecure ? 'none' : 'lax',
       })
 
       if (studioPreviewPerspective) {
@@ -80,8 +91,8 @@ export function defineEnableDraftMode(options: DefineEnableDraftModeOptions): En
           value: studioPreviewPerspective,
           httpOnly: true,
           path: '/',
-          secure: !dev,
-          sameSite: dev ? 'lax' : 'none',
+          secure: isSecure,
+          sameSite: isSecure ? 'none' : 'lax',
         })
       }
 
