@@ -5,6 +5,13 @@
 All notable changes to this project will be documented in this file. See
 [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [10.0.4](https://github.com/sanity-io/next-sanity/compare/next-sanity-v10.0.3...next-sanity-v10.0.4) (2025-07-24)
+
+
+### Bug Fixes
+
+* `@sanity/ui` doesn't need to be a peer dependency ([25b29d8](https://github.com/sanity-io/next-sanity/commit/25b29d8c3e173bc26b678fd429c4641bc6a23c91))
+
 ## [10.0.3](https://github.com/sanity-io/next-sanity/compare/next-sanity-v10.0.2...next-sanity-v10.0.3) (2025-07-22)
 
 
