@@ -5,6 +5,14 @@
 All notable changes to this project will be documented in this file. See
 [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [10.0.10](https://github.com/sanity-io/next-sanity/compare/next-sanity-v10.0.9...next-sanity-v10.0.10) (2025-08-05)
+
+
+### Bug Fixes
+
+* **deps:** update dependency @sanity/next-loader to v2 (main) ([#2661](https://github.com/sanity-io/next-sanity/issues/2661)) ([1ce3aa2](https://github.com/sanity-io/next-sanity/commit/1ce3aa2f23249770bdaec62f111ccf02c149ab9c))
+* stop generating CJS ([b01526f](https://github.com/sanity-io/next-sanity/commit/b01526fdd47f5428a2461e30ec34a4f0a5b31c45))
+
 ## [10.0.9](https://github.com/sanity-io/next-sanity/compare/next-sanity-v10.0.8...next-sanity-v10.0.9) (2025-08-05)
 
 
