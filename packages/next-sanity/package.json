@@ -28,62 +28,43 @@
     ".": {
       "source": "./src/index.ts",
       "edge-light": "./dist/index.edge-light.js",
-      "import": "./dist/index.js",
-      "require": "./dist/index.cjs",
       "default": "./dist/index.js"
     },
     "./draft-mode": {
       "source": "./src/draft-mode/index.ts",
-      "import": "./dist/draft-mode.js",
-      "require": "./dist/draft-mode.cjs",
       "default": "./dist/draft-mode.js"
     },
     "./hooks": {
       "source": "./src/hooks/index.ts",
-      "import": "./dist/hooks.js",
-      "require": "./dist/hooks.cjs",
       "default": "./dist/hooks.js"
     },
     "./image": {
       "source": "./src/image/index.ts",
-      "import": "./dist/image.js",
-      "require": "./dist/image.cjs",
       "default": "./dist/image.js"
     },
     "./studio": {
       "source": "./src/studio/index.ts",
-      "import": "./dist/studio.js",
-      "require": "./dist/studio.cjs",
       "default": "./dist/studio.js"
     },
     "./studio/client-component": {
       "source": "./src/studio/client-component/index.ts",
-      "import": "./dist/studio/client-component.js",
-      "require": "./dist/studio/client-component.cjs",
       "default": "./dist/studio/client-component.js"
     },
     "./visual-editing/client-component": {
       "source": "./src/visual-editing/client-component/index.ts",
-      "import": "./dist/visual-editing/client-component.js",
-      "require": "./dist/visual-editing/client-component.cjs",
       "default": "./dist/visual-editing/client-component.js"
     },
     "./visual-editing/server-actions": {
       "source": "./src/visual-editing/server-actions/index.ts",
-      "import": "./dist/visual-editing/server-actions.js",
-      "require": "./dist/visual-editing/server-actions.cjs",
       "default": "./dist/visual-editing/server-actions.js"
     },
     "./webhook": {
       "source": "./src/webhook/index.ts",
-      "import": "./dist/webhook.js",
-      "require": "./dist/webhook.cjs",
       "default": "./dist/webhook.js"
     },
     "./package.json": "./package.json"
   },
-  "main": "./dist/index.cjs",
-  "module": "./dist/index.js",
+  "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
   "typesVersions": {
     "*": {
