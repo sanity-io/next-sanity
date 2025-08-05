@@ -212,8 +212,8 @@ importers:
         specifier: ^1.0.5
         version: 1.0.5
       '@sanity/pkg-utils':
-        specifier: ^7.10.0
-        version: 7.10.0(@types/babel__core@7.20.5)(@types/node@24.1.0)(typescript@5.9.2)
+        specifier: ^7.11.0
+        version: 7.11.0(@types/babel__core@7.20.5)(@types/node@24.1.0)(typescript@5.9.2)
       '@sanity/types':
         specifier: ^4.2.0
         version: 4.2.0(@types/react@19.1.9)(debug@4.4.1)
@@ -2421,8 +2421,8 @@ packages:
       next: ^14.1 || ^15.0.0-0
       react: ^19.1.0
 
-  '@sanity/pkg-utils@7.10.0':
-    resolution: {integrity: sha512-jRUcX+hD8vUE3UVe4IMgMvrGIjYa32Cyk7ihF1QdVFv+A95Um4kZaDqHFRzp3aYW5H7K8ce2kSu90dqE6mvCwA==}
+  '@sanity/pkg-utils@7.11.0':
+    resolution: {integrity: sha512-H2AXi6B7Rk3o/zlW2J+ouOQbP21FgIQqEKYwgdFLOFz26i4LCKXsuaGdPVPZZlsoEmbS0RkkQugXTmS8y8Y4Tg==}
     engines: {node: '>=18.17.0'}
     hasBin: true
     peerDependencies:
@@ -2847,8 +2847,8 @@ packages:
   '@vanilla-extract/private@1.0.9':
     resolution: {integrity: sha512-gT2jbfZuaaCLrAxwXbRgIhGhcXbRZCG3v4TTUnjw0EJ7ArdBRxkq4msNJkbuRkCgfIK5ATmprB5t9ljvLeFDEA==}
 
-  '@vanilla-extract/rollup-plugin@1.4.0':
-    resolution: {integrity: sha512-VpA925CuJYtqhanQr0LRT/wRiHrWV4ActxSA442z3x6gHO4xnk/wwSu3wQUpXQrDryjJ0dgLUoVxeW2D8JNOlw==}
+  '@vanilla-extract/rollup-plugin@1.4.1':
+    resolution: {integrity: sha512-FwPM7SfQNUy3J+nuQr9zu//Gk0dIfh4b0Xomz9uTwdrGqOU8nuOUaLiS8lQUczORegJpBwuCMz/EKTNu/JSdvw==}
     peerDependencies:
       rollup: ^2.0.0 || ^3.0.0 || ^4.0.0
 
@@ -8981,7 +8981,7 @@ snapshots:
       - '@sanity/types'
       - debug
 
-  '@sanity/pkg-utils@7.10.0(@types/babel__core@7.20.5)(@types/node@24.1.0)(typescript@5.9.2)':
+  '@sanity/pkg-utils@7.11.0(@types/babel__core@7.20.5)(@types/node@24.1.0)(typescript@5.9.2)':
     dependencies:
       '@babel/core': 7.28.0
       '@babel/preset-typescript': 7.27.1(@babel/core@7.28.0)
@@ -8997,7 +8997,7 @@ snapshots:
       '@rollup/plugin-replace': 6.0.2(rollup@4.46.2)
       '@rollup/plugin-terser': 0.4.4(rollup@4.46.2)
       '@sanity/browserslist-config': 1.0.5
-      '@vanilla-extract/rollup-plugin': 1.4.0(rollup@4.46.2)
+      '@vanilla-extract/rollup-plugin': 1.4.1(rollup@4.46.2)
       browserslist: 4.25.1
       cac: 6.7.14
       chalk: 4.1.2
@@ -9009,6 +9009,7 @@ snapshots:
       git-url-parse: 16.1.0
       globby: 11.1.0
       jsonc-parser: 3.3.1
+      lightningcss: 1.30.1
       mkdirp: 3.0.1
       outdent: 0.8.0
       pkg-up: 3.1.0
@@ -9621,7 +9622,7 @@ snapshots:
 
   '@vanilla-extract/private@1.0.9': {}
 
-  '@vanilla-extract/rollup-plugin@1.4.0(rollup@4.46.2)':
+  '@vanilla-extract/rollup-plugin@1.4.1(rollup@4.46.2)':
     dependencies:
       '@vanilla-extract/integration': 8.0.4
       magic-string: 0.30.17
