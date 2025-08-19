@@ -597,9 +597,6 @@ An end-to-end tutorial of [how to configure Sanity and Next.js for Visual Editin
 
 [The Live Content API][live-content-api] can be used to receive real time updates in your application when viewing both draft content in contexts like Presentation tool, and published content in your user-facing production application.
 
-> [!NOTE]
-> The Live Content API is currently considered experimental and may change in the future.
-
 ### Setup
 
 #### 1. Configure `defineLive`
