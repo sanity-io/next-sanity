@@ -187,8 +187,8 @@ importers:
         specifier: 'catalog:'
         version: 7.8.2(debug@4.4.1)
       '@sanity/next-loader':
-        specifier: ^2.0.0
-        version: 2.0.0(@sanity/types@4.5.0(@types/react@19.1.10))(next@15.4.2-canary.54(@babel/core@7.28.3)(react-dom@19.1.1(react@19.1.1))(react@19.1.1))(react@19.1.1)
+        specifier: ^2.1.0
+        version: 2.1.0(@sanity/types@4.5.0(@types/react@19.1.10))(next@15.4.2-canary.54(@babel/core@7.28.3)(react-dom@19.1.1(react@19.1.1))(react@19.1.1))(react@19.1.1)
       '@sanity/preview-url-secret':
         specifier: 'catalog:'
         version: 2.1.14(@sanity/client@7.8.2(debug@4.4.1))
@@ -212,8 +212,8 @@ importers:
         specifier: ^1.0.5
         version: 1.0.5
       '@sanity/pkg-utils':
-        specifier: ^8.0.1
-        version: 8.0.1(@types/babel__core@7.20.5)(@types/node@24.3.0)(typescript@5.9.2)
+        specifier: ^8.0.3
+        version: 8.0.3(@types/babel__core@7.20.5)(@types/node@24.3.0)(typescript@5.9.2)
       '@sanity/types':
         specifier: ^4.5.0
         version: 4.5.0(@types/react@19.1.10)(debug@4.4.1)
@@ -2366,15 +2366,15 @@ packages:
   '@sanity/mutator@4.5.0':
     resolution: {integrity: sha512-Dqc9jtydhlQeInzuobl9G9FRwizXi4nQrf2MNadfNzJg1SELe8FJv+k+9INEDuLXnulhCtGfpzKr+voa8NPHHw==}
 
-  '@sanity/next-loader@2.0.0':
-    resolution: {integrity: sha512-fTWYPr298Xga9AtdgG2lK7X89YK+lQdW+tmPbszrSyecjmdr47Ldl5fbqNcTf8ybahPheueEpmvHaAReCE4sIA==}
+  '@sanity/next-loader@2.1.0':
+    resolution: {integrity: sha512-ta9HPqGpVQNv5NYTV5X9HNa2m7AJi1ixUVHVbOwGLfdm2D5FWALuCYlQ8GvtaCIxCakOtLLmUSVt9d8wFM83xQ==}
     engines: {node: '>=18.18'}
     peerDependencies:
       next: ^14.1 || ^15.0.0-0
       react: ^19.1.0
 
-  '@sanity/pkg-utils@8.0.1':
-    resolution: {integrity: sha512-dbxTcXJDHjVM6C08ndD/WEM4Nw5HQN+ZUcumIff++2+f/S2ZgVV2ABJW7IX+aE0PQ9qQztdBrzkO1Bfifwus8g==}
+  '@sanity/pkg-utils@8.0.3':
+    resolution: {integrity: sha512-zpiDbq0kFocYaVIV1Ieuf+a3xbdAfWF9MX29gG3OyN6o41ADjdaNSvRuxljHxoLXFhdxXqHTQ8Tb6ge2Sl6i/w==}
     engines: {node: '>=20.19 <22 || >=22.12'}
     hasBin: true
     peerDependencies:
@@ -8752,7 +8752,7 @@ snapshots:
       - '@types/react'
       - supports-color
 
-  '@sanity/next-loader@2.0.0(@sanity/types@4.5.0(@types/react@19.1.10))(next@15.4.2-canary.54(@babel/core@7.28.3)(react-dom@19.1.1(react@19.1.1))(react@19.1.1))(react@19.1.1)':
+  '@sanity/next-loader@2.1.0(@sanity/types@4.5.0(@types/react@19.1.10))(next@15.4.2-canary.54(@babel/core@7.28.3)(react-dom@19.1.1(react@19.1.1))(react@19.1.1))(react@19.1.1)':
     dependencies:
       '@sanity/client': 7.8.2(debug@4.4.1)
       '@sanity/comlink': 3.0.9
@@ -8765,9 +8765,10 @@ snapshots:
       - '@sanity/types'
       - debug
 
-  '@sanity/pkg-utils@8.0.1(@types/babel__core@7.20.5)(@types/node@24.3.0)(typescript@5.9.2)':
+  '@sanity/pkg-utils@8.0.3(@types/babel__core@7.20.5)(@types/node@24.3.0)(typescript@5.9.2)':
     dependencies:
       '@babel/core': 7.28.3
+      '@babel/parser': 7.28.3
       '@babel/preset-typescript': 7.27.1(@babel/core@7.28.3)
       '@babel/types': 7.28.2
       '@microsoft/api-extractor': 7.52.10(@types/node@24.3.0)
