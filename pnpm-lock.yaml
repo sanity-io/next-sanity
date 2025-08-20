@@ -212,8 +212,8 @@ importers:
         specifier: ^1.0.5
         version: 1.0.5
       '@sanity/pkg-utils':
-        specifier: ^8.0.1
-        version: 8.0.1(@types/babel__core@7.20.5)(@types/node@24.3.0)(typescript@5.9.2)
+        specifier: ^8.0.3
+        version: 8.0.3(@types/babel__core@7.20.5)(@types/node@24.3.0)(typescript@5.9.2)
       '@sanity/types':
         specifier: ^4.5.0
         version: 4.5.0(@types/react@19.1.10)(debug@4.4.1)
@@ -2398,8 +2398,8 @@ packages:
       next: ^14.1 || ^15.0.0-0
       react: ^19.1.0
 
-  '@sanity/pkg-utils@8.0.1':
-    resolution: {integrity: sha512-dbxTcXJDHjVM6C08ndD/WEM4Nw5HQN+ZUcumIff++2+f/S2ZgVV2ABJW7IX+aE0PQ9qQztdBrzkO1Bfifwus8g==}
+  '@sanity/pkg-utils@8.0.3':
+    resolution: {integrity: sha512-zpiDbq0kFocYaVIV1Ieuf+a3xbdAfWF9MX29gG3OyN6o41ADjdaNSvRuxljHxoLXFhdxXqHTQ8Tb6ge2Sl6i/w==}
     engines: {node: '>=20.19 <22 || >=22.12'}
     hasBin: true
     peerDependencies:
@@ -8841,9 +8841,10 @@ snapshots:
       - '@sanity/types'
       - debug
 
-  '@sanity/pkg-utils@8.0.1(@types/babel__core@7.20.5)(@types/node@24.3.0)(typescript@5.9.2)':
+  '@sanity/pkg-utils@8.0.3(@types/babel__core@7.20.5)(@types/node@24.3.0)(typescript@5.9.2)':
     dependencies:
       '@babel/core': 7.28.3
+      '@babel/parser': 7.28.3
       '@babel/preset-typescript': 7.27.1(@babel/core@7.28.3)
       '@babel/types': 7.28.2
       '@microsoft/api-extractor': 7.52.10(@types/node@24.3.0)
