@@ -5,6 +5,13 @@
 All notable changes to this project will be documented in this file. See
 [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [10.0.14](https://github.com/sanity-io/next-sanity/compare/next-sanity-v10.0.13...next-sanity-v10.0.14) (2025-08-22)
+
+
+### Bug Fixes
+
+* **deps:** update dependency @portabletext/react to ^3.2.4 (main) ([#2711](https://github.com/sanity-io/next-sanity/issues/2711)) ([69a7903](https://github.com/sanity-io/next-sanity/commit/69a790384c36ecb9681b73c4694b79ea9964d247))
+
 ## [10.0.13](https://github.com/sanity-io/next-sanity/compare/next-sanity-v10.0.12...next-sanity-v10.0.13) (2025-08-19)
 
 
