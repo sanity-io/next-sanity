@@ -181,8 +181,8 @@ importers:
   packages/next-sanity:
     dependencies:
       '@portabletext/react':
-        specifier: ^3.2.4
-        version: 3.2.4(react@19.1.1)
+        specifier: ^4.0.1
+        version: 4.0.1(react@19.1.1)
       '@sanity/client':
         specifier: 'catalog:'
         version: 7.9.0(debug@4.4.1)
@@ -1908,6 +1908,12 @@ packages:
     peerDependencies:
       react: ^19.1.0
 
+  '@portabletext/react@4.0.1':
+    resolution: {integrity: sha512-S1MNyGQERpdU5bVUYGDWyyHkTiedwnuOHSMPgLr96yJmLKGcyHTcwPktqcgPuaCxsRUrqPVR89IYFsGW2JKn3w==}
+    engines: {node: ^14.13.1 || >=16.0.0}
+    peerDependencies:
+      react: ^19.1.0
+
   '@portabletext/sanity-bridge@1.1.2':
     resolution: {integrity: sha512-+BhOaCXr1CHKCrxdI1mZAYtgdFUjszdRIj5vjAxOPnvnugQZnszBm2VFiEe6FcYQ5L46732gUhBwQuSn+/nvTQ==}
     engines: {node: '>=20.19 <22 || >=22.12'}
@@ -1924,6 +1930,10 @@ packages:
 
   '@portabletext/toolkit@2.0.18':
     resolution: {integrity: sha512-m3v2WwKQTNNk5BFZlUuPuCW0Zi6iDSpwrium4Ej5L2FHDXhFuwAyEMPXDrvwPvqjES/oJzcwmdKLMhYa44T9BQ==}
+    engines: {node: ^14.13.1 || >=16.0.0}
+
+  '@portabletext/toolkit@3.0.0':
+    resolution: {integrity: sha512-50otiRkac8unAAU+U9VdhpkZ4FqTG64kzz/6ckeBigKG/cGSU8YZLfmvDhdMH8tw+/uTI7d9Skwqm8RnTHZwDw==}
     engines: {node: ^14.13.1 || >=16.0.0}
 
   '@portabletext/types@2.0.15':
@@ -8256,6 +8266,12 @@ snapshots:
       '@portabletext/types': 2.0.15
       react: 19.1.1
 
+  '@portabletext/react@4.0.1(react@19.1.1)':
+    dependencies:
+      '@portabletext/toolkit': 3.0.0
+      '@portabletext/types': 2.0.15
+      react: 19.1.1
+
   '@portabletext/sanity-bridge@1.1.2(@sanity/schema@4.5.0(@types/react@19.1.10))(@sanity/types@4.5.0(@types/react@19.1.10))':
     dependencies:
       '@portabletext/schema': 1.0.0
@@ -8272,6 +8288,10 @@ snapshots:
       '@portabletext/types': 2.0.15
 
   '@portabletext/toolkit@2.0.18':
+    dependencies:
+      '@portabletext/types': 2.0.15
+
+  '@portabletext/toolkit@3.0.0':
     dependencies:
       '@portabletext/types': 2.0.15
 
