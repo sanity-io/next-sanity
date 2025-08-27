@@ -212,8 +212,8 @@ importers:
         specifier: ^1.0.5
         version: 1.0.5
       '@sanity/pkg-utils':
-        specifier: ^8.1.0
-        version: 8.1.0(@types/babel__core@7.20.5)(@types/node@24.3.0)(typescript@5.9.2)
+        specifier: ^8.1.1
+        version: 8.1.1(@types/babel__core@7.20.5)(@types/node@24.3.0)(typescript@5.9.2)
       '@sanity/types':
         specifier: ^4.6.0
         version: 4.6.0(@types/react@19.1.10)(debug@4.4.1)
@@ -2373,8 +2373,8 @@ packages:
       next: ^14.1 || ^15.0.0-0
       react: ^19.1.0
 
-  '@sanity/pkg-utils@8.1.0':
-    resolution: {integrity: sha512-TwX0ZMIjmRy7iQbVRknrKvCMAflt32t4Dj+RpRoHVzKhyi4lhefpw4DVhBCQ11tTFHfM69Yg1b5SRgECqxJYzw==}
+  '@sanity/pkg-utils@8.1.1':
+    resolution: {integrity: sha512-rcAyw/nze1GfEKDKzgN62hHMcSmtyeyyRx+5Jkh0DlgwwBteSjHTDzCH4jK76VABI1MqGW844b6ZTaMtPMOSSg==}
     engines: {node: '>=20.19 <22 || >=22.12'}
     hasBin: true
     peerDependencies:
@@ -5409,8 +5409,8 @@ packages:
     engines: {node: 20 || >=22}
     hasBin: true
 
-  rolldown-plugin-dts@0.15.9:
-    resolution: {integrity: sha512-S2pPcC8h0C8a0ZLDdUTqqtTR9jlryThF3SmH8eZw97FQwgY+hd0x07Zm5algBkmj25S4nvvOusliR1YpImK3LA==}
+  rolldown-plugin-dts@0.15.10:
+    resolution: {integrity: sha512-8cPVAVQUo9tYAoEpc3jFV9RxSil13hrRRg8cHC9gLXxRMNtWPc1LNMSDXzjyD+5Vny49sDZH77JlXp/vlc4I3g==}
     engines: {node: '>=20.18.0'}
     peerDependencies:
       '@typescript/native-preview': '>=7.0.0-dev.20250601.1'
@@ -8786,7 +8786,7 @@ snapshots:
       - '@sanity/types'
       - debug
 
-  '@sanity/pkg-utils@8.1.0(@types/babel__core@7.20.5)(@types/node@24.3.0)(typescript@5.9.2)':
+  '@sanity/pkg-utils@8.1.1(@types/babel__core@7.20.5)(@types/node@24.3.0)(typescript@5.9.2)':
     dependencies:
       '@babel/core': 7.28.3
       '@babel/parser': 7.28.3
@@ -8824,7 +8824,7 @@ snapshots:
       recast: 0.23.11
       rimraf: 6.0.1
       rolldown: 1.0.0-beta.34
-      rolldown-plugin-dts: 0.15.9(rolldown@1.0.0-beta.34)(typescript@5.9.2)
+      rolldown-plugin-dts: 0.15.10(rolldown@1.0.0-beta.34)(typescript@5.9.2)
       rollup: 4.48.1
       rollup-plugin-esbuild: 6.2.1(esbuild@0.25.9)(rollup@4.48.1)
       rxjs: 7.8.2
@@ -11992,7 +11992,7 @@ snapshots:
       glob: 11.0.3
       package-json-from-dist: 1.0.1
 
-  rolldown-plugin-dts@0.15.9(rolldown@1.0.0-beta.34)(typescript@5.9.2):
+  rolldown-plugin-dts@0.15.10(rolldown@1.0.0-beta.34)(typescript@5.9.2):
     dependencies:
       '@babel/generator': 7.28.3
       '@babel/parser': 7.28.3
