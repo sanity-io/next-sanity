@@ -18,7 +18,6 @@ jobs:
       - uses: pnpm/action-setup@v4
       - uses: actions/setup-node@v5
         with:
-          cache: pnpm
           node-version: lts/*
       - run: pnpm install --ignore-scripts --fix-lockfile --no-frozen-lockfile
       - run: pnpm dedupe
