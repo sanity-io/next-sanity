@@ -44,7 +44,6 @@ jobs:
       - uses: actions/setup-node@v5
         if: ${{ steps.release.outputs.releases_created == 'true' || github.event.inputs.publish == 'true' }}
         with:
-          cache: pnpm
           node-version: lts/*
       - name: install deps & build
         run: pnpm install --ignore-scripts && pnpm build --filter=!./apps/*
