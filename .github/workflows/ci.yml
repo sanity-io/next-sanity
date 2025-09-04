@@ -23,9 +23,8 @@ jobs:
     steps:
       - uses: actions/checkout@v5
       - uses: pnpm/action-setup@v4
-      - uses: actions/setup-node@v4
+      - uses: actions/setup-node@v5
         with:
-          cache: pnpm
           node-version: lts/*
       - run: pnpm install --ignore-scripts
       - run: pnpm build --filter=./packages/*
@@ -63,9 +62,8 @@ jobs:
           git config --global core.eol lf
       - uses: actions/checkout@v5
       - uses: pnpm/action-setup@v4
-      - uses: actions/setup-node@v4
+      - uses: actions/setup-node@v5
         with:
-          cache: pnpm
           node-version: ${{ matrix.node }}
       - run: pnpm install --loglevel=error --ignore-scripts
       - run: pnpm test
