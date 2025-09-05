@@ -5,6 +5,19 @@
 All notable changes to this project will be documented in this file. See
 [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [10.1.0](https://github.com/sanity-io/next-sanity/compare/next-sanity-v10.0.16...next-sanity-v10.1.0) (2025-09-05)
+
+
+### Features
+
+* add `/visual-editing` and `/live` exports, root exports deprecated ([#2766](https://github.com/sanity-io/next-sanity/issues/2766)) ([1ff0dab](https://github.com/sanity-io/next-sanity/commit/1ff0dab16e0b6e82485d52232abffc19e4def7b6))
+
+
+### Bug Fixes
+
+* **deps:** update dependency @sanity/next-loader to ^2.1.1 (main) ([#2759](https://github.com/sanity-io/next-sanity/issues/2759)) ([9d5ff05](https://github.com/sanity-io/next-sanity/commit/9d5ff05876b3810bbf974fbb0b98f9d5490fb112))
+* **deps:** update dependency @sanity/visual-editing to ^3.0.4 (main) ([#2760](https://github.com/sanity-io/next-sanity/issues/2760)) ([4e7df1f](https://github.com/sanity-io/next-sanity/commit/4e7df1f68f011a719fe60adb72f178655c9fd622))
+
 ## [10.0.16](https://github.com/sanity-io/next-sanity/compare/next-sanity-v10.0.15...next-sanity-v10.0.16) (2025-09-04)
 
 
