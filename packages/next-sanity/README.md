@@ -606,7 +606,8 @@ Use `defineLive` to enable automatic revalidation and refreshing of your fetched
 ```tsx
 // src/sanity/lib/live.ts
 
-import {createClient, defineLive} from 'next-sanity'
+import {createClient} from 'next-sanity'
+import {defineLive} from 'next-sanity/live'
 
 const client = createClient({
   projectId: process.env.NEXT_PUBLIC_SANITY_PROJECT_ID,
@@ -640,7 +641,7 @@ The same token can be used as both `browserToken` and `serverToken`, as the `bro
 ```tsx
 // src/app/layout.tsx
 
-import {VisualEditing} from 'next-sanity'
+import {VisualEditing} from 'next-sanity/visual-editing'
 import {SanityLive} from '@/sanity/lib/live'
 
 export default function RootLayout({children}: {children: React.ReactNode}) {

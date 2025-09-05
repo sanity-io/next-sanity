@@ -1,6 +1,6 @@
 {
   "name": "next-sanity",
-  "version": "10.0.16",
+  "version": "10.0.17-canary.1",
   "description": "Sanity.io toolkit for Next.js",
   "keywords": [
     "sanity",
@@ -42,6 +42,10 @@
       "source": "./src/image/index.ts",
       "default": "./dist/image.js"
     },
+    "./live": {
+      "source": "./src/live.ts",
+      "default": "./dist/live.js"
+    },
     "./studio": {
       "source": "./src/studio/index.ts",
       "default": "./dist/studio.js"
@@ -49,6 +53,10 @@
     "./studio/client-component": {
       "source": "./src/studio/client-component/index.ts",
       "default": "./dist/studio/client-component.js"
+    },
+    "./visual-editing": {
+      "source": "./src/visual-editing/index.ts",
+      "default": "./dist/visual-editing.js"
     },
     "./visual-editing/client-component": {
       "source": "./src/visual-editing/client-component/index.ts",
@@ -74,6 +82,9 @@
       "hooks": [
         "./dist/hooks.d.ts"
       ],
+      "live": [
+        "./dist/live.d.ts"
+      ],
       "image": [
         "./dist/image.d.ts"
       ],
@@ -82,6 +93,9 @@
       ],
       "studio/client-component": [
         "./dist/studio/client-component.d.ts"
+      ],
+      "visual-editing": [
+        "./dist/visual-editing.d.ts"
       ],
       "visual-editing/client-component": [
         "./dist/visual-editing/client-component.d.ts"

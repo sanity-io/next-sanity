@@ -19,7 +19,7 @@ Here's an example migration, [based on the setup guide for live preview in v9](h
 Create a `lib/sanity.client.ts` file with the following content:
 
 ```ts
-import {defineLive} from 'next-sanity'
+import {defineLive} from 'next-sanity/live'
 
 import {client} from './sanity.client'
 
@@ -106,7 +106,7 @@ Here's an example migration, [based on the setup guide for live preview in v9](h
 Create a `lib/sanity.client.ts` file with the following content:
 
 ```ts
-import {defineLive} from 'next-sanity'
+import {defineLive} from 'next-sanity/live'
 
 import {client} from './sanity.client'
 
