@@ -5,6 +5,13 @@
 All notable changes to this project will be documented in this file. See
 [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [10.1.1](https://github.com/sanity-io/next-sanity/compare/next-sanity-v10.1.0...next-sanity-v10.1.1) (2025-09-08)
+
+
+### Bug Fixes
+
+* allow react 18 in peer deps for pages router ([af5a015](https://github.com/sanity-io/next-sanity/commit/af5a01558904255c4b779a4c02813014a0393f0e))
+
 ## [10.1.0](https://github.com/sanity-io/next-sanity/compare/next-sanity-v10.0.16...next-sanity-v10.1.0) (2025-09-05)
 
 
