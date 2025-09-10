@@ -5,6 +5,13 @@
 All notable changes to this project will be documented in this file. See
 [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [11.1.0](https://github.com/sanity-io/next-sanity/compare/next-sanity-v11.0.1...next-sanity-v11.1.0) (2025-09-10)
+
+
+### Features
+
+* **live:** use preconnect on live content api origin ([#2799](https://github.com/sanity-io/next-sanity/issues/2799)) ([d233866](https://github.com/sanity-io/next-sanity/commit/d233866661d358a2c97f7792fd895d8d1ec8cde3))
+
 ## [11.0.1](https://github.com/sanity-io/next-sanity/compare/next-sanity-v11.0.0...next-sanity-v11.0.1) (2025-09-10)
 
 
