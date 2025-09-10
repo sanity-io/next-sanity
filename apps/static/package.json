@@ -7,7 +7,8 @@
     "#groqd": "./groqd-client.ts"
   },
   "scripts": {
-    "build": "next build",
+    "build": "next build && pnpm copy-analyze",
+    "copy-analyze": "cp -r .next/analyze public/ || true",
     "dev": "next -p 3001 --turbo",
     "start": "pnpx serve@latest out -p 3001",
     "type-check": "tsc --noEmit",

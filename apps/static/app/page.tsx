@@ -1,5 +1,5 @@
 /* eslint-disable @next/next/no-html-link-for-pages */
-import {unstable__adapter, unstable__environment} from '@sanity/client'
+import {unstable__adapter, unstable__environment} from 'next-sanity'
 import Link from 'next/link'
 
 import PostsLayout, {type PostsLayoutProps, query} from '@/app/PostsLayout'
