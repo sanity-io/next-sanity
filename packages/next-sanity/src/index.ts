@@ -1,6 +1,4 @@
 export * from './client'
 export * from './create-data-attribute'
-export * from './deprecated-visual-editing'
-export * from './deprecated-live'
 export * from '@portabletext/react'
 export {defineQuery, default as groq} from 'groq'

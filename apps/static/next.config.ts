@@ -1,7 +1,8 @@
+import type {NextConfig} from 'next'
+
 import withBundleAnalyzer from '@next/bundle-analyzer'
 
-/** @type {import('next').NextConfig} */
-const nextConfig = {
+const nextConfig: NextConfig = {
   output: 'export',
   logging: {
     fetches: {

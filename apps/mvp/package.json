@@ -7,7 +7,8 @@
     "#groqd": "./groqd-client.ts"
   },
   "scripts": {
-    "build": "next build --profile && sanity manifest extract --path public/studio/static",
+    "build": "next build --profile && sanity manifest extract --path public/studio/static && pnpm copy-analyze",
+    "copy-analyze": "cp -r .next/analyze public/ || true",
     "dev": "next dev --turbo",
     "start": "next start",
     "type-check": "tsc --noEmit",
