@@ -1,4 +1,4 @@
-import {createClient} from '@sanity/client'
+import {createClient} from 'next-sanity'
 
 export const client = createClient({
   projectId: process.env.NEXT_PUBLIC_SANITY_PROJECT_ID!,
@@ -14,4 +14,4 @@ export const client = createClient({
   },
 })
 
-export type {QueryOptions, QueryParams} from '@sanity/client'
+export type {QueryOptions, QueryParams} from 'next-sanity'

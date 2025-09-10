@@ -15,12 +15,6 @@ const MODULE_PATHS_WHICH_USE_SERVER_DIRECTIVE_SHOULD_BE_ADDED = [
 
 export default defineConfig({
   tsconfig: 'tsconfig.build.json',
-  bundles: [
-    {
-      source: './src/index.edge-light.ts',
-      import: './dist/index.edge-light.js',
-    },
-  ],
   rollup: {
     output: {
       banner: (chunkInfo) => {
@@ -40,6 +34,10 @@ export default defineConfig({
         }
         return ''
       },
+    },
+    treeshake: {
+      // @TODO this is necessary for now https://github.com/sanity-io/pkg-utils/pull/1922
+      moduleSideEffects: true,
     },
   },
   extract: {

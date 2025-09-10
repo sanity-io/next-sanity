@@ -27,7 +27,6 @@
   "exports": {
     ".": {
       "source": "./src/index.ts",
-      "edge-light": "./dist/index.edge-light.js",
       "default": "./dist/index.js"
     },
     "./draft-mode": {
@@ -131,7 +130,7 @@
   },
   "devDependencies": {
     "@sanity/browserslist-config": "^1.0.5",
-    "@sanity/pkg-utils": "^8.1.7",
+    "@sanity/pkg-utils": "^8.1.8",
     "@sanity/types": "^4.7.0",
     "@sanity/webhook": "4.0.4",
     "@types/react": "catalog:",
@@ -146,14 +145,14 @@
     "vitest": "^3.2.4"
   },
   "peerDependencies": {
-    "@sanity/client": "catalog:",
+    "@sanity/client": "^7.11.1",
     "next": "^15.1",
     "react": "^18.3 || ^19",
     "react-dom": "^18.3 || ^19",
-    "sanity": "catalog:",
+    "sanity": "^4.7.0",
     "styled-components": "^6.1"
   },
   "engines": {
-    "node": ">=20.19"
+    "node": ">=20.19 <22 || >=22.12"
   }
 }

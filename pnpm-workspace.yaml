@@ -20,3 +20,10 @@ catalog:
   sanity: ^4.7.0
   styled-components: ^6.1.19
   typescript: 5.9.2
+
+preferWorkspacePackages: true
+linkWorkspacePackages: deep
+
+publicHoistPattern:
+  # This is needed for prettier to be able to use the plugin specified by the `@sanity/prettier-config` preset
+  - '*prettier*'
