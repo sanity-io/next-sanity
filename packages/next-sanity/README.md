@@ -1207,3 +1207,4 @@ MIT-licensed. See [LICENSE][LICENSE].
 [sanity-next-clean-starter]: https://www.sanity.io/templates/nextjs-sanity-clean
 [sanity-next-featured-starter]: https://www.sanity.io/templates/personal-website-with-built-in-content-editing
 [live-content-api]: https://www.sanity.io/docs/live-content-api?utm_source=github&utm_medium=readme&utm_campaign=next-sanity
+
