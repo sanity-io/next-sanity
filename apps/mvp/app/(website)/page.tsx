@@ -1,7 +1,4 @@
-'use cache'
-
 /* eslint-disable @next/next/no-html-link-for-pages */
-import {unstable_cacheLife as cacheLife} from 'next/cache'
 import {draftMode} from 'next/headers'
 import Link from 'next/link'
 import {unstable__adapter, unstable__environment} from 'next-sanity'
@@ -9,11 +6,14 @@ import {unstable__adapter, unstable__environment} from 'next-sanity'
 import PostsLayout, {postsQuery} from '@/app/(website)/PostsLayout'
 
 import {sanityFetch} from './live'
+import {resolveCookiePerspective} from 'next-sanity/live/use-cache'
 
 export default async function IndexPage() {
-  cacheLife('max')
-  console.log('IndexPage')
-  const {data: _data} = await sanityFetch({query: postsQuery.query})
+  const perspective = await resolveCookiePerspective()
+  const {data: _data, perspective: _perspective} = await sanityFetch({
+    query: postsQuery.query,
+    perspective,
+  })
   const data = postsQuery.parse(_data)
 
   return (
@@ -22,6 +22,7 @@ export default async function IndexPage() {
         className="relative bg-gray-50 px-4 pb-20 pt-16 sm:px-6 lg:px-8 lg:pb-28 lg:pt-24"
         data-adapter={unstable__adapter}
         data-environment={unstable__environment}
+        data-perspective={_perspective}
       >
         <div className="absolute inset-0">
           <div className="h-1/3 bg-white sm:h-2/3" />

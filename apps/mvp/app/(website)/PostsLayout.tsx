@@ -1,7 +1,7 @@
 /* eslint-disable @next/next/no-img-element */
 import {q} from '#groqd'
 import {createDataAttribute} from 'next-sanity'
-import {memo} from 'react'
+import {unstable_cacheLife as cacheLife} from 'next/cache'
 
 import {Image} from './Image'
 
@@ -36,8 +36,13 @@ export type PostsLayoutProps = {
   draftMode: boolean
 }
 
-const PostsLayout = memo(function Posts(props: PostsLayoutProps) {
+export default async function Posts(props: PostsLayoutProps) {
+  'use cache'
+
+  cacheLife('max')
+
   const posts = postsQuery.parse(props.data)
+  console.log('PostsLayout', {posts})
 
   return (
     <div
@@ -117,6 +122,4 @@ const PostsLayout = memo(function Posts(props: PostsLayoutProps) {
       })}
     </div>
   )
-})
-
-export default PostsLayout
+}

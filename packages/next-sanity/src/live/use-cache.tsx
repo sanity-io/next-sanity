@@ -9,6 +9,7 @@ import {
   type SanityClient,
   type SyncTag,
 } from '@sanity/client'
+import {stegaEncodeSourceMap} from '@sanity/client/stega'
 import SanityLiveClientComponent, {
   type SanityLiveProps,
 } from '@sanity/next-loader/client-components/live'
@@ -18,7 +19,6 @@ import {
   unstable_expireTag as expireTag,
 } from 'next/cache'
 import {draftMode} from 'next/headers'
-// import {Suspense} from 'react'
 import {preconnect} from 'react-dom'
 
 export {sanitizePerspective, resolveCookiePerspective} from './resolveCookiePerspective'
@@ -111,6 +111,7 @@ export type DefinedSanityFetchType = <const QueryString extends string>(options:
 }) => Promise<{
   data: ClientReturn<QueryString, unknown>
   sourceMap: ContentSourceMap | null
+  perspective: Exclude<ClientPerspective, 'raw'>
   tags: string[]
 }>
 
@@ -171,6 +172,8 @@ export interface DefinedSanityLiveProps {
    * You can also pass a `use client` function here, and have `router.refresh()` be called if the promise resolves to `'refresh'`.
    */
   revalidateSyncTags?: (tags: SyncTag[]) => Promise<void | 'refresh'>
+
+  draftModePerspective?: Exclude<ClientPerspective, 'raw'>
 }
 
 /**
@@ -234,7 +237,7 @@ export function defineLive(config: DefineSanityLiveOptions): {
   }
 
   const client = _client.withConfig({allowReconfigure: false, useCdn: false})
-  const {token: originalToken} = client.config()
+  const {token: originalToken, stega: stegaConfig} = client.config()
   const studioUrlDefined = typeof client.config().stega.studioUrl !== 'undefined'
 
   const sanityFetch: DefinedSanityFetchType = async function sanityFetch<
@@ -244,7 +247,7 @@ export function defineLive(config: DefineSanityLiveOptions): {
     params = {},
     stega: _stega,
     // tags = [],
-    perspective,
+    perspective: _perspective,
     requestTag = 'next-loader.fetch',
   }: {
     query: QueryString
@@ -255,13 +258,18 @@ export function defineLive(config: DefineSanityLiveOptions): {
     requestTag?: string
   }) {
     console.log('sanityFetch')
-    const stega = _stega ?? (stegaEnabled && studioUrlDefined && (await draftMode()).isEnabled)
+    const {isEnabled: isDraftModeEnabled} = await draftMode()
+    const stega = _stega ?? (stegaEnabled && studioUrlDefined && isDraftModeEnabled)
     // const perspective = _perspective ?? (await resolveCookiePerspective())
-    // const perspective = (_perspective ?? (await draftMode()).isEnabled) ? 'drafts' : 'published'
+    const perspective = _perspective ?? (isDraftModeEnabled ? 'drafts' : 'published')
 
     const {apiHost, apiVersion, useProjectHostname, dataset, projectId, requestTagPrefix} =
       client.config()
-    const {data, sourceMap, tags} = await sanityCachedFetch(
+    const {
+      data: _data,
+      sourceMap,
+      tags,
+    } = await sanityCachedFetch(
       {
         apiHost,
         apiVersion,
@@ -273,14 +281,18 @@ export function defineLive(config: DefineSanityLiveOptions): {
       },
       {query, params: await params, perspective, stega, requestTag, draftToken: serverToken},
     )
+
+    const data = stega && sourceMap ? stegaEncodeSourceMap(_data, sourceMap, stegaConfig) : _data
+
     console.log('after sanityCachedFetch')
-    // @TODO handle stega here
-    return {data, sourceMap, tags}
+
+    return {data, sourceMap, tags, perspective}
   }
 
   const SanityLive: React.ComponentType<DefinedSanityLiveProps> = function SanityLive(props) {
     const {
       // handleDraftModeAction = handleDraftModeActionMissing
+      draftModePerspective = 'drafts',
       refreshOnMount,
       refreshOnFocus,
       refreshOnReconnect,
@@ -302,6 +314,7 @@ export function defineLive(config: DefineSanityLiveOptions): {
     return (
       <SanityLiveServerComponent
         // draftModePerspective={await resolveCookiePerspective()}
+        draftModePerspective={draftModePerspective}
         projectId={projectId}
         dataset={dataset}
         apiHost={apiHost}
@@ -326,7 +339,7 @@ export function defineLive(config: DefineSanityLiveOptions): {
 }
 
 interface SanityLiveServerComponentProps
-  extends Omit<SanityLiveProps, 'draftModeEnabled' | 'draftModePerspective' | 'token'> {
+  extends Omit<SanityLiveProps, 'draftModeEnabled' | 'token'> {
   browserToken: string | false | undefined
   origin: string
 }
@@ -358,7 +371,7 @@ const SanityLiveServerComponent: React.ComponentType<SanityLiveServerComponentPr
       revalidateSyncTags,
       browserToken,
       origin,
-      // draftModePerspective,
+      draftModePerspective,
     } = props
 
     // @TODO allow passing isDraftModeEnabled as a prop so we don't need to call draftMode() in here and thus have cacheComponents throw complaints
@@ -381,8 +394,8 @@ const SanityLiveServerComponent: React.ComponentType<SanityLiveServerComponentPr
         // handleDraftModeAction={handleDraftModeAction}
         // @TODO do this from a server action instead? to work around cacheComponents
         // draftModePerspective={await resolveCookiePerspective()}
-        draftModePerspective="drafts"
-        // draftModePerspective={draftModePerspective}
+        // draftModePerspective="drafts"
+        draftModePerspective={draftModePerspective}
         refreshOnMount={refreshOnMount}
         refreshOnFocus={refreshOnFocus}
         refreshOnReconnect={refreshOnReconnect}
