@@ -278,7 +278,10 @@ export function defineLive(config: DefineSanityLiveOptions): {
       {query, params: await params, perspective, stega, requestTag, draftToken: serverToken},
     )
 
-    const data = stega && sourceMap ? stegaEncodeSourceMap(_data, sourceMap, stegaConfig) : _data
+    const data =
+      stega && sourceMap
+        ? stegaEncodeSourceMap(_data, sourceMap, {...stegaConfig, enabled: true})
+        : _data
 
     console.log('after sanityCachedFetch')
 
