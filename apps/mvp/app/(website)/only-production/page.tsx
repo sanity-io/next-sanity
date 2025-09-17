@@ -1,16 +1,19 @@
+'use cache'
+
 /* eslint-disable @next/next/no-html-link-for-pages */
-import {cookies, draftMode} from 'next/headers'
 import Link from 'next/link'
 import {unstable__adapter, unstable__environment} from 'next-sanity'
 
 import PostsLayout, {postsQuery} from '@/app/(website)/PostsLayout'
 
-import {sanityFetch} from './live'
-import {resolvePerspectiveFromCookie} from 'next-sanity/experimental/live'
-import {Suspense} from 'react'
+import {sanityFetch} from '../live'
 
 export default async function IndexPage() {
-  const isDraftMode = (await draftMode()).isEnabled
+  const {data} = await sanityFetch({
+    query: postsQuery.query,
+    perspective: 'published',
+    stega: false,
+  })
 
   return (
     <>
@@ -20,15 +23,17 @@ export default async function IndexPage() {
         data-environment={unstable__environment}
       >
         <div className="relative mx-auto max-w-7xl">
-          <Suspense fallback="Loading... (TODO do a better fallback)">
-            {isDraftMode ? <DraftContent /> : <ProductionContent />}
-          </Suspense>
+          <PostsLayout data={data} draftMode={false} />
         </div>
       </div>
       <div className="flex text-center gap-2">
-        <span className="mx-2 my-4 inline-block rounded-full border  px-4 py-1 text-sm font-semibold border-transparent bg-gray-600 text-white">
+        <Link
+          prefetch={false}
+          href="/"
+          className="mx-2 my-4 inline-block rounded-full border border-gray-200 px-4 py-1 text-sm font-semibold text-gray-600 hover:border-transparent hover:bg-gray-600 hover:text-white focus:outline-hidden focus:ring-2 focus:ring-gray-600 focus:ring-offset-2"
+        >
           Resolve perspective
-        </span>
+        </Link>
         <Link
           prefetch={false}
           href="/no-resolve-perspective"
@@ -36,13 +41,9 @@ export default async function IndexPage() {
         >
           No resolve perspective
         </Link>
-        <Link
-          prefetch={false}
-          href="/only-production"
-          className="mx-2 my-4 inline-block rounded-full border border-gray-200 px-4 py-1 text-sm font-semibold text-gray-600 hover:border-transparent hover:bg-gray-600 hover:text-white focus:outline-hidden focus:ring-2 focus:ring-gray-600 focus:ring-offset-2"
-        >
+        <span className="mx-2 my-4 inline-block rounded-full border  px-4 py-1 text-sm font-semibold border-transparent bg-gray-600 text-white">
           Only production
-        </Link>
+        </span>
         <Link
           prefetch={false}
           href="/studio"
@@ -51,37 +52,6 @@ export default async function IndexPage() {
           Open Studio
         </Link>
       </div>
-    </>
-  )
-}
-
-async function ProductionContent() {
-  'use cache'
-
-  const {data, perspective, tags} = await sanityFetch({
-    query: postsQuery.query,
-    perspective: 'published',
-  })
-
-  return (
-    <>
-      <PostsLayout data={data} draftMode={false} />
-      <p>{JSON.stringify({perspective, tags})}</p>
-    </>
-  )
-}
-
-async function DraftContent() {
-  const perspective = await resolvePerspectiveFromCookie({cookies: await cookies()})
-  const {data, tags} = await sanityFetch({
-    query: postsQuery.query,
-    perspective,
-  })
-
-  return (
-    <>
-      <PostsLayout data={data} draftMode />
-      <p>{JSON.stringify({perspective, tags})}</p>
     </>
   )
 }

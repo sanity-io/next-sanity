@@ -9,7 +9,6 @@ const nextConfig: NextConfig = {
       fullUrl: false,
     },
   },
-  transpilePackages: ['@repo/sanity-config'],
   productionBrowserSourceMaps: true,
 }
 

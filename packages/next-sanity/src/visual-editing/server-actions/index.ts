@@ -1,6 +1,6 @@
 'use server'
-import {revalidatePath} from 'next/cache.js'
-import {draftMode} from 'next/headers.js'
+import {revalidatePath} from 'next/cache'
+import {draftMode} from 'next/headers'
 
 export async function revalidateRootLayout(): Promise<void> {
   if (!(await draftMode()).isEnabled) {

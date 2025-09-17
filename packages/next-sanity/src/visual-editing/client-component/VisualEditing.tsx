@@ -5,7 +5,7 @@ import {
   VisualEditing as VisualEditingComponent,
   type VisualEditingOptions,
 } from '@sanity/visual-editing/react'
-import {usePathname, useRouter, useSearchParams} from 'next/navigation.js'
+import {usePathname, useRouter, useSearchParams} from 'next/navigation'
 import {revalidateRootLayout} from 'next-sanity/visual-editing/server-actions'
 import {useCallback, useEffect, useMemo, useRef, useState} from 'react'
 

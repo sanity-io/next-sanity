@@ -10,7 +10,7 @@ import {
 } from '@sanity/client'
 import SanityLiveClientComponent from 'next-sanity/live/client-components/live'
 import SanityLiveStreamClientComponent from 'next-sanity/live/client-components/live-stream'
-import {draftMode} from 'next/headers.js'
+import {draftMode} from 'next/headers'
 import {resolveCookiePerspective} from './resolveCookiePerspective'
 
 /**

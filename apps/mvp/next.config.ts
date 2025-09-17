@@ -2,23 +2,30 @@ import type {NextConfig} from 'next'
 
 import withBundleAnalyzer from '@next/bundle-analyzer'
 
-// function requireResolve(id) {
-//   return import.meta.resolve(id).replace('file://', '')
-// }
-
 const nextConfig: NextConfig = {
   // basePath: process.env.NEXT_PUBLIC_TEST_BASE_PATH,
   // trailingSlash: true,
+  experimental: {
+    cacheComponents: true,
+    cacheLife: {
+      default: {
+        // Sanity Live handles on-demand revalidation, so the default 15min time based revalidation is too short
+        stale: 60 * 5,
+        revalidate: 60 * 60 * 24 * 90, // 90 days
+        expire: 60 * 60 * 24 * 365, // 1 year
+      },
+    },
+    clientSegmentCache: true,
+    validateRSCRequestHeaders: true,
+  },
   logging: {
     fetches: {
       fullUrl: false,
     },
   },
-  transpilePackages: ['@repo/sanity-config'],
   productionBrowserSourceMaps: true,
 }
 
 export default withBundleAnalyzer({
-  // eslint-disable-next-line no-process-env
   enabled: process.env.ANALYZE === 'true',
 })(nextConfig)
