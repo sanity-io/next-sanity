@@ -5,7 +5,7 @@ import {memo} from 'react'
 
 import {Image} from './Image'
 
-const postsQuery = q.star
+export const postsQuery = q.star
   .filterByType('post')
   .order('publishedAt desc', '_updatedAt desc')
   .project((sub) => ({

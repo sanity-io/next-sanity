@@ -1,14 +1,20 @@
+'use cache'
+
 /* eslint-disable @next/next/no-html-link-for-pages */
+import {unstable_cacheLife as cacheLife} from 'next/cache'
 import {draftMode} from 'next/headers'
 import Link from 'next/link'
 import {unstable__adapter, unstable__environment} from 'next-sanity'
 
-import PostsLayout, {query} from '@/app/(website)/PostsLayout'
+import PostsLayout, {postsQuery} from '@/app/(website)/PostsLayout'
 
 import {sanityFetch} from './live'
 
 export default async function IndexPage() {
-  const {data} = await sanityFetch({query})
+  cacheLife('max')
+  console.log('IndexPage')
+  const {data: _data} = await sanityFetch({query: postsQuery.query})
+  const data = postsQuery.parse(_data)
 
   return (
     <>

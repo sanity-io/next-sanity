@@ -1,14 +1,19 @@
+'use cache'
+
 // oxlint-disable-next-line no-unassigned-import
 import '../globals.css'
 
-export {metadata, viewport} from 'next-sanity/studio'
+import {unstable_cacheLife as cacheLife} from 'next/cache'
 
-export const dynamic = 'error'
-
-export default function RootLayout({children}: {children: React.ReactNode}) {
+export default async function RootLayout({children}: {children: React.ReactNode}) {
+  cacheLife('max')
   return (
     <html lang="en">
-      <head />
+      <head>
+        <meta name="referrer" content="same-origin" />
+        <meta name="robots" content="noindex" />
+        <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+      </head>
       <body>{children}</body>
     </html>
   )
