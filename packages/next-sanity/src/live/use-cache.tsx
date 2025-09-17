@@ -20,9 +20,9 @@ import {
 import {draftMode} from 'next/headers'
 // import {Suspense} from 'react'
 import {preconnect} from 'react-dom'
-import {resolveCookiePerspective} from './resolveCookiePerspective'
 
 export {sanitizePerspective, resolveCookiePerspective} from './resolveCookiePerspective'
+export {isCorsOriginError} from './isCorsOriginError'
 
 interface SanityClientConfig
   extends Pick<
@@ -271,7 +271,7 @@ export function defineLive(config: DefineSanityLiveOptions): {
         requestTagPrefix,
         token: originalToken,
       },
-      {query, params, perspective, stega, requestTag, draftToken: serverToken},
+      {query, params: await params, perspective, stega, requestTag, draftToken: serverToken},
     )
     console.log('after sanityCachedFetch')
     // @TODO handle stega here
