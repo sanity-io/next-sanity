@@ -82,7 +82,9 @@ async function sanityCachedFetch<const QueryString extends string>(
     tag: requestTag,
     token: perspective === 'published' ? config.token : draftToken || config.token, // @TODO can pass undefined instead of config.token here?
   })
-  const tags = (syncTags || []).map((tag) => `sanity:${tag}`)
+  const tags = (syncTags || []).map(
+    (tag) => `${perspective === 'published' ? 'sanity' : 'drafts'}:${tag}`,
+  )
   /**
    * The tags used here, are expired later on in the `expireTags` Server Action with the `expireTag` function from `next/cache`
    */
