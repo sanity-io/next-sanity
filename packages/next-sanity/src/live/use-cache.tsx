@@ -41,14 +41,14 @@ async function sanityCachedFetch<const QueryString extends string>(
   {
     query,
     params = {},
-    perspective: _perspective,
+    perspective,
     stega,
     requestTag,
     draftToken,
   }: {
     query: QueryString
     params?: QueryParams
-    perspective?: Exclude<ClientPerspective, 'raw'>
+    perspective: Exclude<ClientPerspective, 'raw'>
     stega: boolean
     requestTag: string
     draftToken?: string | false | undefined
@@ -60,10 +60,7 @@ async function sanityCachedFetch<const QueryString extends string>(
 }> {
   'use cache'
 
-  const {isEnabled} = await draftMode()
   const client = createClient({...config, useCdn: true})
-  const perspective = _perspective ?? (isEnabled ? 'drafts' : 'published')
-  console.log('sanityCachedFetch', {isEnabled, perspective, _perspective})
   const useCdn = perspective === 'published'
   /**
    * The default cache profile isn't ideal for live content, as it has unnecessary time based background validation, as well as a too lazy client stale value
@@ -258,10 +255,9 @@ export function defineLive(config: DefineSanityLiveOptions): {
     requestTag?: string
   }) {
     console.log('sanityFetch')
-    const {isEnabled: isDraftModeEnabled} = await draftMode()
-    const stega = _stega ?? (stegaEnabled && studioUrlDefined && isDraftModeEnabled)
+    const stega = _stega ?? (stegaEnabled && studioUrlDefined && (await draftMode()).isEnabled)
     // const perspective = _perspective ?? (await resolveCookiePerspective())
-    const perspective = _perspective ?? (isDraftModeEnabled ? 'drafts' : 'published')
+    const perspective = _perspective ?? ((await draftMode()).isEnabled ? 'drafts' : 'published')
 
     const {apiHost, apiVersion, useProjectHostname, dataset, projectId, requestTagPrefix} =
       client.config()
