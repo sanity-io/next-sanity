@@ -31,15 +31,15 @@
     },
     "./draft-mode": {
       "source": "./src/draft-mode/index.ts",
-      "default": "./dist/draft-mode.js"
+      "default": "./dist/draft-mode/index.js"
     },
     "./hooks": {
       "source": "./src/hooks/index.ts",
-      "default": "./dist/hooks.js"
+      "default": "./dist/hooks/index.js"
     },
     "./image": {
       "source": "./src/image/index.ts",
-      "default": "./dist/image.js"
+      "default": "./dist/image/index.js"
     },
     "./live": {
       "source": "./src/live.ts",
@@ -47,27 +47,27 @@
     },
     "./studio": {
       "source": "./src/studio/index.ts",
-      "default": "./dist/studio.js"
+      "default": "./dist/studio/index.js"
     },
     "./studio/client-component": {
       "source": "./src/studio/client-component/index.ts",
-      "default": "./dist/studio/client-component.js"
+      "default": "./dist/studio/client-component/index.js"
     },
     "./visual-editing": {
       "source": "./src/visual-editing/index.ts",
-      "default": "./dist/visual-editing.js"
+      "default": "./dist/visual-editing/index.js"
     },
     "./visual-editing/client-component": {
       "source": "./src/visual-editing/client-component/index.ts",
-      "default": "./dist/visual-editing/client-component.js"
+      "default": "./dist/visual-editing/client-component/index.js"
     },
     "./visual-editing/server-actions": {
       "source": "./src/visual-editing/server-actions/index.ts",
-      "default": "./dist/visual-editing/server-actions.js"
+      "default": "./dist/visual-editing/server-actions/index.js"
     },
     "./webhook": {
       "source": "./src/webhook/index.ts",
-      "default": "./dist/webhook.js"
+      "default": "./dist/webhook/index.js"
     },
     "./package.json": "./package.json"
   },
@@ -76,10 +76,10 @@
   "typesVersions": {
     "*": {
       "draft-mode": [
-        "./dist/draft-mode.d.ts"
+        "./dist/draft-mode/index.d.ts"
       ],
       "hooks": [
-        "./dist/hooks.d.ts"
+        "./dist/hooks/index.d.ts"
       ],
       "live": [
         "./dist/live.d.ts"
@@ -88,22 +88,22 @@
         "./dist/image.d.ts"
       ],
       "studio": [
-        "./dist/studio.d.ts"
+        "./dist/studio/index.d.ts"
       ],
       "studio/client-component": [
-        "./dist/studio/client-component.d.ts"
+        "./dist/studio/client-component/index.d.ts"
       ],
       "visual-editing": [
-        "./dist/visual-editing.d.ts"
+        "./dist/visual-editing/index.d.ts"
       ],
       "visual-editing/client-component": [
-        "./dist/visual-editing/client-component.d.ts"
+        "./dist/visual-editing/client-component/index.d.ts"
       ],
       "visual-editing/server-actions": [
-        "./dist/visual-editing/server-actions.d.ts"
+        "./dist/visual-editing/server-actions/index.d.ts"
       ],
       "webhook": [
-        "./dist/webhook.d.ts"
+        "./dist/webhook/index.d.ts"
       ]
     }
   },
