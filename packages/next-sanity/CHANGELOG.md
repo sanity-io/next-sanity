@@ -5,6 +5,13 @@
 All notable changes to this project will be documented in this file. See
 [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [11.1.2](https://github.com/sanity-io/next-sanity/compare/next-sanity-v11.1.1...next-sanity-v11.1.2) (2025-09-22)
+
+
+### Bug Fixes
+
+* **deps:** update dependency @sanity/client to ^7.11.2 (main) ([#2808](https://github.com/sanity-io/next-sanity/issues/2808)) ([146e6d6](https://github.com/sanity-io/next-sanity/commit/146e6d6602610cf9f8d6ae5b970055ff751c9bfd))
+
 ## [11.1.1](https://github.com/sanity-io/next-sanity/compare/next-sanity-v11.1.0...next-sanity-v11.1.1) (2025-09-16)
 
 
