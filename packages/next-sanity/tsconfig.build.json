@@ -1,8 +1,5 @@
 {
-  "extends": "./tsconfig.base",
+  "extends": ["./tsconfig.base","@sanity/pkg-utils/tsconfig/isolated-declarations.json"],
   "include": ["src/**/*.ts", "src/**/*.tsx"],
-  "exclude": ["dist", "node_modules", "./src/**/*.test.ts", "./src/**/*.test.tsx"],
-  "compilerOptions": {
-    "noCheck": true
-  }
+  "exclude": ["dist", "node_modules", "./src/**/*.test.ts", "./src/**/*.test.tsx"]
 }
