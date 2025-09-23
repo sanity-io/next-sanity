@@ -1,5 +1,3 @@
-import {memo} from 'react'
-
 /** @public */
 export interface NextStudioLayoutProps {
   children: React.ReactNode
@@ -13,13 +11,11 @@ const style = {
   overflow: 'auto',
 } satisfies React.CSSProperties
 
-const NextStudioLayoutComponent = ({children}: NextStudioLayoutProps) => {
+/** @public */
+export const NextStudioLayout = ({children}: NextStudioLayoutProps): React.JSX.Element => {
   return (
     <div id="sanity" data-ui="NextStudioLayout" style={style}>
       {children}
     </div>
   )
 }
-
-/** @public */
-export const NextStudioLayout = memo(NextStudioLayoutComponent)

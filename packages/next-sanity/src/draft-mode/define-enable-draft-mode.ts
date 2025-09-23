@@ -1,9 +1,8 @@
+import type {SanityClient} from '@sanity/client'
 import {validatePreviewUrl} from '@sanity/preview-url-secret'
 import {perspectiveCookieName} from '@sanity/preview-url-secret/constants'
 import {cookies, draftMode} from 'next/headers'
 import {redirect} from 'next/navigation'
-
-import type {SanityClient} from '../client'
 
 /**
  * @public

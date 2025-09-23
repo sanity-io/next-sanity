@@ -3,7 +3,7 @@ import type {ImageLoader} from 'next/image'
 /**
  * @alpha
  */
-export const imageLoader = (({src, width, quality}) => {
+export const imageLoader: ImageLoader = ({src, width, quality}) => {
   const url = new URL(src)
   url.searchParams.set('auto', 'format')
   if (!url.searchParams.has('fit')) {
@@ -19,4 +19,4 @@ export const imageLoader = (({src, width, quality}) => {
     url.searchParams.set('q', quality.toString())
   }
   return url.href
-}) satisfies ImageLoader
+}
