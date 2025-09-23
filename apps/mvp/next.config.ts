@@ -35,21 +35,6 @@ const nextConfig: NextConfig = {
     // Matches the behavior of `sanity dev` which sets styled-components to use the fastest way of inserting CSS rules in both dev and production. It's default behavior is to disable it in dev mode.
     SC_DISABLE_SPEEDY: 'false',
   },
-
-  async headers() {
-    return [
-      {
-        // Speedup page load and support prefetch techniques
-        source: '/studio/(.*)?', // Matches all studio routes
-        headers: [
-          {
-            key: 'Cache-Control',
-            value: 'public, max-age=5',
-          },
-        ],
-      },
-    ]
-  },
 }
 
 export default withBundleAnalyzer({
