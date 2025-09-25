@@ -4,5 +4,5 @@ export {
   type DefinedSanityLiveProps,
   type DefinedSanityLiveStreamType,
   defineLive,
-} from '@sanity/next-loader'
+} from './live/defineLive'
 export {isCorsOriginError} from './isCorsOriginError'

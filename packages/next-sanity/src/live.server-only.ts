@@ -3,7 +3,7 @@ import type {
   DefinedSanityFetchType,
   DefinedSanityLiveProps,
   DefinedSanityLiveStreamType,
-} from '@sanity/next-loader'
+} from './live/defineLive'
 
 /**
  * @public
