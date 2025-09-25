@@ -16,7 +16,7 @@ export const perspectiveListeners: Set<() => void> = new Set()
 export let perspective: DraftPerspective = 'checking'
 /** @internal */
 export function setPerspective(nextPerspective: DraftPerspective): void {
-  if (perspective === nextPerspective) return
+  if (perspective.toString() === nextPerspective.toString()) return
   perspective = nextPerspective
   for (const onPerspectiveChange of perspectiveListeners) {
     onPerspectiveChange()

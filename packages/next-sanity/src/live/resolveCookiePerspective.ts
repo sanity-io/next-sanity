@@ -13,5 +13,3 @@ export async function resolveCookiePerspective(): Promise<Exclude<ClientPerspect
       : 'drafts'
     : 'published'
 }
-
-// resolveDraftPerspective({cookies})

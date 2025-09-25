@@ -10,7 +10,7 @@ import {
   type LoaderControllerMsg,
   type LoaderNodeMsg,
 } from '@sanity/presentation-comlink'
-import {useRouter} from 'next/navigation.js'
+import {useRouter} from 'next/navigation'
 import {
   useEffect,
   // useState

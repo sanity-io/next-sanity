@@ -1,4 +1,4 @@
-import {useRouter} from 'next/navigation.js'
+import {useRouter} from 'next/navigation'
 import {useEffect} from 'react'
 
 export default function RefreshOnReconnect(): null {

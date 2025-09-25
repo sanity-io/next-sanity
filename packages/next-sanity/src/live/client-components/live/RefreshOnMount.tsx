@@ -5,7 +5,7 @@
  * up the EventSource connection, content might have changed.
  */
 
-import {useRouter} from 'next/navigation.js'
+import {useRouter} from 'next/navigation'
 import {useEffect, useReducer} from 'react'
 
 export default function RefreshOnMount(): null {

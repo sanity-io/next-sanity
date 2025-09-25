@@ -1,7 +1,8 @@
+'use client'
+
 import {
   createClient,
   type ClientPerspective,
-  type InitializedClientConfig,
   type LiveEvent,
   type LiveEventGoAway,
   type SyncTag,
@@ -12,31 +13,29 @@ import dynamic from 'next/dynamic'
 import {useRouter} from 'next/navigation'
 import {useEffect, useMemo, useRef, useState} from 'react'
 import {useEffectEvent} from 'use-effect-event'
-import {setEnvironment, setPerspective} from '../../hooks/context'
-import {isCorsOriginError} from '../../../isCorsOriginError'
+import {setEnvironment, setPerspective} from '../../live/hooks/context'
+import {isCorsOriginError} from '../../isCorsOriginError'
+import type {SanityClientConfig} from '../types'
+import {sanitizePerspective} from '../../live/utils'
 
 const PresentationComlink = dynamic(() => import('./PresentationComlink'), {ssr: false})
-const RefreshOnMount = dynamic(() => import('./RefreshOnMount'), {ssr: false})
-const RefreshOnFocus = dynamic(() => import('./RefreshOnFocus'), {ssr: false})
-const RefreshOnReconnect = dynamic(() => import('./RefreshOnReconnect'), {ssr: false})
+const RefreshOnMount = dynamic(() => import('../../live/client-components/live/RefreshOnMount'), {
+  ssr: false,
+})
+const RefreshOnFocus = dynamic(() => import('../../live/client-components/live/RefreshOnFocus'), {
+  ssr: false,
+})
+const RefreshOnReconnect = dynamic(
+  () => import('../../live/client-components/live/RefreshOnReconnect'),
+  {ssr: false},
+)
 
 /**
- * @public
+ * @alpha CAUTION: This API does not follow semver and could have breaking changes in future minor releases.
  */
-export interface SanityLiveProps
-  extends Pick<
-    InitializedClientConfig,
-    | 'projectId'
-    | 'dataset'
-    | 'apiHost'
-    | 'apiVersion'
-    | 'useProjectHostname'
-    | 'token'
-    | 'requestTagPrefix'
-  > {
-  // handleDraftModeAction: (secret: string) => Promise<void | string>
+export interface SanityLiveProps {
+  config: SanityClientConfig
   draftModeEnabled: boolean
-  draftModePerspective?: ClientPerspective
   refreshOnMount?: boolean
   refreshOnFocus?: boolean
   refreshOnReconnect?: boolean
@@ -49,6 +48,7 @@ export interface SanityLiveProps
   intervalOnGoAway?: number | false
   onGoAway?: (event: LiveEventGoAway, intervalOnGoAway: number | false) => void
   revalidateSyncTags?: (tags: SyncTag[]) => Promise<void | 'refresh'>
+  resolveDraftModePerspective: () => Promise<ClientPerspective>
 }
 
 function handleError(error: unknown) {
@@ -84,20 +84,12 @@ function handleOnGoAway(event: LiveEventGoAway, intervalOnGoAway: number | false
 }
 
 /**
- * @public
+ * @alpha CAUTION: This API does not follow semver and could have breaking changes in future minor releases.
  */
-export function SanityLive(props: SanityLiveProps): React.JSX.Element | null {
+export default function SanityLive(props: SanityLiveProps): React.JSX.Element | null {
   const {
-    projectId,
-    dataset,
-    apiHost,
-    apiVersion,
-    useProjectHostname,
-    token,
-    requestTagPrefix,
-    // handleDraftModeAction,
+    config,
     draftModeEnabled,
-    draftModePerspective,
     refreshOnMount = false,
     refreshOnFocus = draftModeEnabled
       ? false
@@ -110,7 +102,10 @@ export function SanityLive(props: SanityLiveProps): React.JSX.Element | null {
     onError = handleError,
     onGoAway = handleOnGoAway,
     revalidateSyncTags = defaultRevalidateSyncTags,
+    resolveDraftModePerspective,
   } = props
+  const {projectId, dataset, apiHost, apiVersion, useProjectHostname, token, requestTagPrefix} =
+    config
 
   const client = useMemo(
     () =>
@@ -128,6 +123,7 @@ export function SanityLive(props: SanityLiveProps): React.JSX.Element | null {
     [apiHost, apiVersion, dataset, projectId, requestTagPrefix, token, useProjectHostname],
   )
   const [longPollingInterval, setLongPollingInterval] = useState<number | false>(false)
+  const [resolvedInitialPerspective, setResolvedInitialPerspective] = useState(false)
 
   /**
    * 1. Handle Live Events and call revalidateTag or router.refresh when needed
@@ -161,7 +157,6 @@ export function SanityLive(props: SanityLiveProps): React.JSX.Element | null {
     const subscription = client.live.events({includeDrafts: !!token, tag: requestTag}).subscribe({
       next: handleLiveEvent,
       error: (err: unknown) => {
-        // console.error('What?', err)
         onError(err)
       },
     })
@@ -172,12 +167,29 @@ export function SanityLive(props: SanityLiveProps): React.JSX.Element | null {
    * 2. Notify what perspective we're in, when in Draft Mode
    */
   useEffect(() => {
-    if (draftModeEnabled && draftModePerspective) {
-      setPerspective(draftModePerspective)
-    } else {
+    if (resolvedInitialPerspective) return undefined
+
+    if (!draftModeEnabled) {
+      setResolvedInitialPerspective(true)
       setPerspective('unknown')
+      return undefined
     }
-  }, [draftModeEnabled, draftModePerspective])
+
+    const controller = new AbortController()
+    resolveDraftModePerspective()
+      .then((perspective) => {
+        if (controller.signal.aborted) return
+        setResolvedInitialPerspective(true)
+        setPerspective(sanitizePerspective(perspective, 'drafts'))
+      })
+      .catch((err) => {
+        if (controller.signal.aborted) return
+        console.error('Failed to resolve draft mode perspective', err)
+        setResolvedInitialPerspective(true)
+        setPerspective('unknown')
+      })
+    return () => controller.abort()
+  }, [draftModeEnabled, resolveDraftModePerspective, resolvedInitialPerspective])
 
   const [loadComlink, setLoadComlink] = useState(false)
   /**
@@ -265,13 +277,11 @@ export function SanityLive(props: SanityLiveProps): React.JSX.Element | null {
 
   return (
     <>
-      {draftModeEnabled && loadComlink && (
+      {draftModeEnabled && loadComlink && resolvedInitialPerspective && (
         <PresentationComlink
           projectId={projectId!}
           dataset={dataset!}
-          // handleDraftModeAction={handleDraftModeAction}
           draftModeEnabled={draftModeEnabled}
-          draftModePerspective={draftModePerspective!}
         />
       )}
       {!draftModeEnabled && refreshOnMount && <RefreshOnMount />}

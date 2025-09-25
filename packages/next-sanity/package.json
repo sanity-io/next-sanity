@@ -1,6 +1,6 @@
 {
   "name": "next-sanity",
-  "version": "11.3.0",
+  "version": "11.4.0-canary.4",
   "description": "Sanity.io toolkit for Next.js",
   "keywords": [
     "sanity",
@@ -27,6 +27,8 @@
   "exports": {
     ".": "./dist/index.js",
     "./draft-mode": "./dist/draft-mode/index.js",
+    "./experimental/client-components/live": "./dist/experimental/client-components/live.js",
+    "./experimental/live": "./dist/experimental/live.js",
     "./hooks": "./dist/hooks/index.js",
     "./image": "./dist/image/index.js",
     "./live": {
@@ -57,6 +59,12 @@
       ],
       "live": [
         "./dist/live.d.ts"
+      ],
+      "experimental/live": [
+        "./dist/experimental/live.d.ts"
+      ],
+      "experimental/client-components/live": [
+        "./dist/experimental/client-components/live.d.ts"
       ],
       "image": [
         "./dist/image/index.d.ts"
@@ -104,6 +112,7 @@
     "dequal": "^2.0.3",
     "groq": "^4.10.0",
     "history": "^5.3.0",
+    "server-only": "^0.0.1",
     "use-effect-event": "^2.0.3"
   },
   "devDependencies": {
@@ -126,7 +135,7 @@
   },
   "peerDependencies": {
     "@sanity/client": "^7.11.2",
-    "next": "^15.1",
+    "next": "^15.1.0-0",
     "react": "^18.3 || ^19",
     "react-dom": "^18.3 || ^19",
     "sanity": "^4.10.0",
