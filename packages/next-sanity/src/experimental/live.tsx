@@ -20,6 +20,7 @@ import {preconnect} from 'react-dom'
 import {perspectiveCookieName} from '@sanity/preview-url-secret/constants'
 import {sanitizePerspective} from '../live/utils'
 import type {SanityClientConfig} from './types'
+import {DRAFT_SYNC_TAG_PREFIX, PUBLISHED_SYNC_TAG_PREFIX} from './constants'
 
 /**
  * @alpha CAUTION: This API does not follow semver and could have breaking changes in future minor releases.
@@ -84,7 +85,10 @@ async function sanityCachedFetch<const QueryString extends string>(
   })
   const tags = [
     ...customCacheTags,
-    ...(syncTags || []).map((tag) => `${perspective === 'published' ? 'sanity' : 'drafts'}:${tag}`),
+    ...(syncTags || []).map(
+      (tag) =>
+        `${perspective === 'published' ? PUBLISHED_SYNC_TAG_PREFIX : DRAFT_SYNC_TAG_PREFIX}${tag}`,
+    ),
   ]
   /**
    * The tags used here, are expired later on in the `expireTags` Server Action with the `expireTag` function from `next/cache`
@@ -188,7 +192,9 @@ export interface DefinedSanityLiveProps {
    * You can also pass a `use client` function here, and have `router.refresh()` be called if the promise resolves to `'refresh'`.
    */
   // @TODO remove, replace with onLiveEvent
-  revalidateSyncTags?: (tags: SyncTag[]) => Promise<void | 'refresh'>
+  revalidateSyncTags?: (
+    tags: `${typeof PUBLISHED_SYNC_TAG_PREFIX | typeof DRAFT_SYNC_TAG_PREFIX}${SyncTag}`[],
+  ) => Promise<void | 'refresh'>
 
   // @TODO add
   // decide how to handle a live event coming in
@@ -421,10 +427,22 @@ const SanityLiveServerComponent: React.ComponentType<SanityLiveServerComponentPr
 // @TODO expose parseTags function that returns the correct array of tags
 // we already have s1: prefixes, but they could change
 // use sp: for prod, sd: for draft, keep em short
-async function expireTags(_tags: SyncTag[]): Promise<void> {
+async function expireTags(_tags: unknown): Promise<void> {
   'use server'
-  const isDraftMode = (await draftMode()).isEnabled
-  const tags = _tags.map((tag) => `${isDraftMode ? 'drafts' : 'sanity'}:${tag}`)
+  // @TODO Draft Mode bypasses cache anyway so we don't bother with expiring tags for draft content
+  // const isDraftMode = (await draftMode()).isEnabled
+  // const tags = _tags.map((tag) => `${isDraftMode ? 'drafts' : 'sanity'}:${tag}`)
+  if (!Array.isArray(_tags)) {
+    console.warn('<SanityLive /> `expireTags` called with non-array tags', _tags)
+    return undefined
+  }
+  const tags = _tags.filter(
+    (tag) => typeof tag === 'string' && tag.startsWith(PUBLISHED_SYNC_TAG_PREFIX),
+  )
+  if (!tags.length) {
+    console.warn('<SanityLive /> `expireTags` called with no valid tags', _tags)
+    return undefined
+  }
   expireTag(...tags)
   console.log(`<SanityLive /> expired tags: ${tags.join(', ')}`)
 }

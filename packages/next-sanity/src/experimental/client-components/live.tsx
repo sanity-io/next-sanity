@@ -7,7 +7,6 @@ import {
   type LiveEventGoAway,
   type SyncTag,
 } from '@sanity/client'
-import {revalidateSyncTags as defaultRevalidateSyncTags} from 'next-sanity/live/server-actions'
 import {isMaybePresentation, isMaybePreviewWindow} from '@sanity/presentation-comlink'
 import dynamic from 'next/dynamic'
 import {useRouter} from 'next/navigation'
@@ -17,6 +16,7 @@ import {setEnvironment, setPerspective} from '../../live/hooks/context'
 import {isCorsOriginError} from '../../isCorsOriginError'
 import type {SanityClientConfig} from '../types'
 import {sanitizePerspective} from '../../live/utils'
+import {PUBLISHED_SYNC_TAG_PREFIX, type DRAFT_SYNC_TAG_PREFIX} from '../constants'
 
 const PresentationComlink = dynamic(() => import('./PresentationComlink'), {ssr: false})
 const RefreshOnMount = dynamic(() => import('../../live/client-components/live/RefreshOnMount'), {
@@ -47,7 +47,9 @@ export interface SanityLiveProps {
   onError?: (error: unknown) => void
   intervalOnGoAway?: number | false
   onGoAway?: (event: LiveEventGoAway, intervalOnGoAway: number | false) => void
-  revalidateSyncTags?: (tags: SyncTag[]) => Promise<void | 'refresh'>
+  revalidateSyncTags: (
+    tags: `${typeof PUBLISHED_SYNC_TAG_PREFIX | typeof DRAFT_SYNC_TAG_PREFIX}${SyncTag}`[],
+  ) => Promise<void | 'refresh'>
   resolveDraftModePerspective: () => Promise<ClientPerspective>
 }
 
@@ -101,7 +103,7 @@ export default function SanityLive(props: SanityLiveProps): React.JSX.Element | 
     requestTag = 'next-loader.live',
     onError = handleError,
     onGoAway = handleOnGoAway,
-    revalidateSyncTags = defaultRevalidateSyncTags,
+    revalidateSyncTags,
     resolveDraftModePerspective,
   } = props
   const {projectId, dataset, apiHost, apiVersion, useProjectHostname, token, requestTagPrefix} =
@@ -143,7 +145,9 @@ export default function SanityLive(props: SanityLiveProps): React.JSX.Element | 
       // Disable long polling when welcome event is received, this is a no-op if long polling is already disabled
       setLongPollingInterval(false)
     } else if (event.type === 'message') {
-      revalidateSyncTags(event.tags).then((result) => {
+      revalidateSyncTags(
+        event.tags.map((tag: SyncTag) => `${PUBLISHED_SYNC_TAG_PREFIX}${tag}` as const),
+      ).then((result) => {
         if (result === 'refresh') router.refresh()
       })
     } else if (event.type === 'restart' || event.type === 'reconnect') {
@@ -153,9 +157,40 @@ export default function SanityLive(props: SanityLiveProps): React.JSX.Element | 
       setLongPollingInterval(intervalOnGoAway)
     }
   })
+  // @TODO previous version that handle both published and draft events
+  // useEffect(() => {
+  //   const subscription = client.live.events({includeDrafts: !!token, tag: requestTag}).subscribe({
+  //     next: handleLiveEvent,
+  //     error: (err: unknown) => {
+  //       onError(err)
+  //     },
+  //   })
+  //   return () => subscription.unsubscribe()
+  // }, [client.live, onError, requestTag, token])
   useEffect(() => {
-    const subscription = client.live.events({includeDrafts: !!token, tag: requestTag}).subscribe({
+    const subscription = client.live.events({tag: requestTag}).subscribe({
       next: handleLiveEvent,
+      error: (err: unknown) => {
+        onError(err)
+      },
+    })
+    return () => subscription.unsubscribe()
+  }, [client.live, onError, requestTag, token])
+
+  /**
+   * Handle live events for drafts differently, only use it to trigger refreshes, don't expire the cache
+   */
+  const handleLiveDraftEvent = useEffectEvent((event: LiveEvent) => {
+    if (event.type === 'message') {
+      // Just refresh, due to cache bypass in draft mode it'll fetch fresh content (though we wish cache worked as in production)
+      // @TODO if draft content is published, then this extra refresh is unnecessary, it's tricky to check since `event.id` are different on the two EventSource connections
+      router.refresh()
+    }
+  })
+  useEffect(() => {
+    if (!token) return
+    const subscription = client.live.events({includeDrafts: !!token, tag: requestTag}).subscribe({
+      next: handleLiveDraftEvent,
       error: (err: unknown) => {
         onError(err)
       },

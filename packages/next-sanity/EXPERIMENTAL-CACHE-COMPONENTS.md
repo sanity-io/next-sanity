@@ -10,6 +10,26 @@ See the personal website template for a working example:
 - [Code](https://github.com/sanity-io/template-nextjs-personal-website/tree/test-cache-components)
 - [Demo](https://template-nextjs-personal-website-git-test-cache-components.sanity.dev/)
 
+```diff
+// ./src/lib/sanity/live.ts
+-import {defineLive} from 'next-sanity/experimental/live'
++import {defineLive} from 'next-sanity/live'
+```
+
+```diff
+// ./next.config.ts
+
++ experimental: {
++   cacheComponents: true,
++    cacheLife: {
++      default: {
++       // Sanity Live handles on-demand revalidation, so the default 15min time based revalidation is too short
++       revalidate: 60 * 60 * 24 * 90, // 90 days
++      },
++   },
++ },
+```
+
 ## API Differences from `next-sanity/live`
 
 `defineLive({stega})` is no longer `true` by default.
