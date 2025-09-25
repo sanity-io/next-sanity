@@ -5,6 +5,13 @@
 All notable changes to this project will be documented in this file. See
 [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [11.4.0](https://github.com/sanity-io/next-sanity/compare/next-sanity-v11.3.0...next-sanity-v11.4.0) (2025-09-25)
+
+
+### Features
+
+* **live:** support experimental `cacheComponents` ([#2825](https://github.com/sanity-io/next-sanity/issues/2825)) ([2d6c104](https://github.com/sanity-io/next-sanity/commit/2d6c104cfb6e14ed3697ffa7da22b1e550aaddfc))
+
 ## [11.3.0](https://github.com/sanity-io/next-sanity/compare/next-sanity-v11.2.0...next-sanity-v11.3.0) (2025-09-25)
 
 
