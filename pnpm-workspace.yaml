@@ -1,17 +1,17 @@
 packages:
-  - 'apps/*'
-  - 'packages/*'
+  - apps/*
+  - packages/*
 
 catalog:
   '@next/bundle-analyzer': ^15.3.5
   '@next/env': ^15.3.5
-  '@types/react': ^19.1.8
-  '@types/react-dom': ^19.1.6
-  '@types/react-is': ^19.0.0
   '@sanity/client': ^7.11.2
   '@sanity/image-url': ^1.2.0
   '@sanity/preview-url-secret': ^2.1.15
   '@sanity/vision': ^4.6.1
+  '@types/react': ^19.1.8
+  '@types/react-dom': ^19.1.6
+  '@types/react-is': ^19.0.0
   groqd: ^1.7.1
   next: ^15.3.5
   react: ^19.1.0
@@ -21,9 +21,28 @@ catalog:
   styled-components: ^6.1.19
   typescript: 5.9.2
 
-preferWorkspacePackages: true
 linkWorkspacePackages: deep
 
+overrides:
+  '@next/bundle-analyzer': canary
+  '@next/env': canary
+  '@types/react': 'catalog:'
+  '@types/react-dom': 'catalog:'
+  '@types/react-is': 'catalog:'
+  next: canary
+  react: 'catalog:'
+  react-dom: 'catalog:'
+  react-is: 'catalog:'
+  sanity: 'catalog:'
+  styled-components: npm:@sanity/styled-components@6.1.23
+
+peerDependencyRules:
+  allowAny:
+    - react
+    - react-dom
+    - react-is
+
+preferWorkspacePackages: true
+
 publicHoistPattern:
-  # This is needed for prettier to be able to use the plugin specified by the `@sanity/prettier-config` preset
   - '*prettier*'
