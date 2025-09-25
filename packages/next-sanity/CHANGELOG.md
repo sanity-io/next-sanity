@@ -5,6 +5,13 @@
 All notable changes to this project will be documented in this file. See
 [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [11.4.1](https://github.com/sanity-io/next-sanity/compare/next-sanity-v11.4.0...next-sanity-v11.4.1) (2025-09-25)
+
+
+### Bug Fixes
+
+* **experimental:** just refresh in draft mode ([#2842](https://github.com/sanity-io/next-sanity/issues/2842)) ([ae3a614](https://github.com/sanity-io/next-sanity/commit/ae3a614e11216fe8379f5d72be1c923b0dfe3763))
+
 ## [11.4.0](https://github.com/sanity-io/next-sanity/compare/next-sanity-v11.3.0...next-sanity-v11.4.0) (2025-09-25)
 
 
