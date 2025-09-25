@@ -85,10 +85,10 @@
   "scripts": {
     "build": "tsdown --publint",
     "coverage": "npm test -- --coverage",
+    "dev": "tsdown --watch",
     "prepublishOnly": "tsdown",
     "test": "vitest",
-    "type-check": "tsc --noEmit",
-    "dev": "tsdown --watch"
+    "type-check": "tsc --noEmit"
   },
   "browserslist": "extends @sanity/browserslist-config",
   "dependencies": {
