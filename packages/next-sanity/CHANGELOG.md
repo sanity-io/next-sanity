@@ -5,6 +5,13 @@
 All notable changes to this project will be documented in this file. See
 [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [11.3.0](https://github.com/sanity-io/next-sanity/compare/next-sanity-v11.2.0...next-sanity-v11.3.0) (2025-09-25)
+
+
+### Features
+
+* inline `@sanity/next-loader` ([#2835](https://github.com/sanity-io/next-sanity/issues/2835)) ([27dadc9](https://github.com/sanity-io/next-sanity/commit/27dadc97c3f51d30b6072f8a52ee7cea3974feb9))
+
 ## [11.2.0](https://github.com/sanity-io/next-sanity/compare/next-sanity-v11.1.3...next-sanity-v11.2.0) (2025-09-25)
 
 
