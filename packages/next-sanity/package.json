@@ -29,7 +29,10 @@
     "./draft-mode": "./dist/draft-mode/index.js",
     "./hooks": "./dist/hooks/index.js",
     "./image": "./dist/image/index.js",
-    "./live": "./dist/live.js",
+    "./live": {
+      "react-server": "./dist/live.js",
+      "default": "./dist/live.server-only.js"
+    },
     "./studio": "./dist/studio/index.js",
     "./studio/client-component": "./dist/studio/client-component/index.js",
     "./visual-editing": "./dist/visual-editing/index.js",

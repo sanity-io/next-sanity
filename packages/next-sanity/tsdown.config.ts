@@ -12,6 +12,7 @@ export default defineConfig({
     './src/image/index.ts',
     './src/index.ts',
     './src/live.ts',
+    './src/live.server-only.ts',
     './src/studio/client-component/index.ts',
     './src/studio/index.ts',
     './src/visual-editing/client-component/index.ts',
@@ -26,7 +27,16 @@ export default defineConfig({
   ],
   sourcemap: true,
   hash: false,
-  exports: true,
+  exports: {
+    customExports(pkg) {
+      pkg['./live'] = {
+        'react-server': pkg['./live'],
+        'default': pkg['./live.server-only'],
+      }
+      delete pkg['./live.server-only']
+      return pkg
+    },
+  },
   platform: 'neutral',
   minify: 'dce-only',
   ignoreWatch: ['.turbo'],
