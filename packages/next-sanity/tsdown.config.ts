@@ -29,6 +29,5 @@ export default defineConfig({
   exports: true,
   platform: 'neutral',
   minify: 'dce-only',
-  publint: true,
-  attw: {profile: 'esmOnly'},
+  ignoreWatch: ['.turbo'],
 })
