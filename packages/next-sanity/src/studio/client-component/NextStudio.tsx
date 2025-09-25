@@ -4,7 +4,6 @@ import {Studio, type StudioProps} from 'sanity'
 import {NextStudioLayout} from '../NextStudioLayout'
 import {NextStudioNoScript} from '../NextStudioNoScript'
 import {createHashHistoryForStudio} from './createHashHistoryForStudio'
-import {StyledComponentsRegistry} from './registry'
 import {useIsMounted} from './useIsMounted'
 
 /** @public */
@@ -62,21 +61,19 @@ export default function NextStudioComponent({
   return (
     <>
       {unstable__noScript && <NextStudioNoScript />}
-      <StyledComponentsRegistry isMounted={isMounted}>
-        <NextStudioLayout>
-          {history === 'hash' && !isMounted
-            ? null
-            : children || (
-                <Studio
-                  config={config}
-                  scheme={scheme}
-                  unstable_globalStyles
-                  {...props}
-                  unstable_history={unstableHistory}
-                />
-              )}
-        </NextStudioLayout>
-      </StyledComponentsRegistry>
+      <NextStudioLayout>
+        {history === 'hash' && !isMounted
+          ? null
+          : children || (
+              <Studio
+                config={config}
+                scheme={scheme}
+                unstable_globalStyles
+                {...props}
+                unstable_history={unstableHistory}
+              />
+            )}
+      </NextStudioLayout>
     </>
   )
 }
