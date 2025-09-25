@@ -191,15 +191,21 @@ importers:
       '@sanity/client':
         specifier: 'catalog:'
         version: 7.11.2(debug@4.4.3)
-      '@sanity/next-loader':
-        specifier: ^3.0.0
-        version: 3.0.0(@sanity/types@4.10.0(@types/react@19.1.13))(next@15.6.0-canary.29(@babel/core@7.28.4)(react-dom@19.1.1(react@19.1.1))(react@19.1.1))(react-dom@19.1.1(react@19.1.1))(react@19.1.1)
+      '@sanity/comlink':
+        specifier: ^3.0.9
+        version: 3.0.9
+      '@sanity/presentation-comlink':
+        specifier: ^1.0.29
+        version: 1.0.29(@sanity/client@7.11.2)(@sanity/types@4.10.0(@types/react@19.1.13))
       '@sanity/preview-url-secret':
         specifier: 'catalog:'
         version: 2.1.15(@sanity/client@7.11.2)(@sanity/icons@3.7.4(react@19.1.1))(sanity@4.10.0(@emotion/is-prop-valid@1.4.0)(@portabletext/sanity-bridge@1.1.11(@sanity/schema@4.10.0(@types/react@19.1.13))(@sanity/types@4.10.0(@types/react@19.1.13)))(@sanity/styled-components@6.1.23(react-dom@19.1.1(react@19.1.1))(react@19.1.1))(@types/node@24.5.2)(@types/react-dom@19.1.9(@types/react@19.1.13))(@types/react@19.1.13)(immer@10.1.3)(jiti@2.6.0)(lightningcss@1.30.1)(postcss@8.5.6)(react-dom@19.1.1(react@19.1.1))(react@19.1.1)(terser@5.44.0)(tsx@4.20.5)(typescript@5.9.2)(yaml@2.8.1))
       '@sanity/visual-editing':
         specifier: ^3.0.5
         version: 3.0.5(@emotion/is-prop-valid@1.4.0)(@sanity/client@7.11.2)(@sanity/styled-components@6.1.23(react-dom@19.1.1(react@19.1.1))(react@19.1.1))(@sanity/types@4.10.0(@types/react@19.1.13))(next@15.6.0-canary.29(@babel/core@7.28.4)(react-dom@19.1.1(react@19.1.1))(react@19.1.1))(react-dom@19.1.1(react@19.1.1))(react-is@19.1.1)(react@19.1.1)(sanity@4.10.0(@emotion/is-prop-valid@1.4.0)(@portabletext/sanity-bridge@1.1.11(@sanity/schema@4.10.0(@types/react@19.1.13))(@sanity/types@4.10.0(@types/react@19.1.13)))(@sanity/styled-components@6.1.23(react-dom@19.1.1(react@19.1.1))(react@19.1.1))(@types/node@24.5.2)(@types/react-dom@19.1.9(@types/react@19.1.13))(@types/react@19.1.13)(immer@10.1.3)(jiti@2.6.0)(lightningcss@1.30.1)(postcss@8.5.6)(react-dom@19.1.1(react@19.1.1))(react@19.1.1)(terser@5.44.0)(tsx@4.20.5)(typescript@5.9.2)(yaml@2.8.1))(typescript@5.9.2)
+      dequal:
+        specifier: ^2.0.3
+        version: 2.0.3
       groq:
         specifier: ^4.10.0
         version: 4.10.0
@@ -215,6 +221,9 @@ importers:
       styled-components:
         specifier: npm:@sanity/styled-components@6.1.23
         version: '@sanity/styled-components@6.1.23(react-dom@19.1.1(react@19.1.1))(react@19.1.1)'
+      use-effect-event:
+        specifier: ^2.0.3
+        version: 2.0.3(react@19.1.1)
     devDependencies:
       '@sanity/browserslist-config':
         specifier: ^1.0.5
@@ -2425,14 +2434,6 @@ packages:
 
   '@sanity/mutator@4.10.0':
     resolution: {integrity: sha512-+PY8f0oGiBe7kCNwXcMiuiL/aYsmlV8MGNp4U0wuKsol1MYxRYyu1PjVhd8PW4kYxdg3G/tOB5450RaRrc5ZRQ==}
-
-  '@sanity/next-loader@3.0.0':
-    resolution: {integrity: sha512-QvuaI49nORqCkqDBNJ7Ox+aUfmLgb3pvn/1KtIZFUVgZMLxLBecawak21Yf+0vqMCfhd7Y7RMGztP+zHciuZng==}
-    engines: {node: '>=18.18'}
-    peerDependencies:
-      next: ^15.1
-      react: ^19.1.0
-      react-dom: ^19.1.0
 
   '@sanity/pkg-utils@8.1.17':
     resolution: {integrity: sha512-N0N9Sy+0Q6w91TqR9bTZu7MNCJfScLeMWWlETLIDaeY9bIXril6/QEPeceYzZbpD6J78KC45O/G3EM8bPMBspQ==}
@@ -8825,20 +8826,6 @@ snapshots:
     transitivePeerDependencies:
       - '@types/react'
       - supports-color
-
-  '@sanity/next-loader@3.0.0(@sanity/types@4.10.0(@types/react@19.1.13))(next@15.6.0-canary.29(@babel/core@7.28.4)(react-dom@19.1.1(react@19.1.1))(react@19.1.1))(react-dom@19.1.1(react@19.1.1))(react@19.1.1)':
-    dependencies:
-      '@sanity/client': 7.11.2(debug@4.4.3)
-      '@sanity/comlink': 3.0.9
-      '@sanity/presentation-comlink': 1.0.29(@sanity/client@7.11.2)(@sanity/types@4.10.0(@types/react@19.1.13))
-      dequal: 2.0.3
-      next: 15.6.0-canary.29(@babel/core@7.28.4)(react-dom@19.1.1(react@19.1.1))(react@19.1.1)
-      react: 19.1.1
-      react-dom: 19.1.1(react@19.1.1)
-      use-effect-event: 2.0.3(react@19.1.1)
-    transitivePeerDependencies:
-      - '@sanity/types'
-      - debug
 
   '@sanity/pkg-utils@8.1.17(@types/babel__core@7.20.5)(@types/node@24.5.2)(typescript@5.9.2)':
     dependencies:
