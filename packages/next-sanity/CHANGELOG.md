@@ -5,6 +5,14 @@
 All notable changes to this project will be documented in this file. See
 [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [11.2.0](https://github.com/sanity-io/next-sanity/compare/next-sanity-v11.1.3...next-sanity-v11.2.0) (2025-09-25)
+
+
+### Features
+
+* **live:** add back `isCorsOriginError` to root entrypoint ([#2828](https://github.com/sanity-io/next-sanity/issues/2828)) ([ab1d8ee](https://github.com/sanity-io/next-sanity/commit/ab1d8ee3db8168167705a44cf462df415467bf85))
+* support `@sanity/css-in-js` override ([#2831](https://github.com/sanity-io/next-sanity/issues/2831)) ([7ac78e3](https://github.com/sanity-io/next-sanity/commit/7ac78e3c27aa7976772c89997c29a1532f312f34))
+
 ## [11.1.3](https://github.com/sanity-io/next-sanity/compare/next-sanity-v11.1.2...next-sanity-v11.1.3) (2025-09-23)
 
 
