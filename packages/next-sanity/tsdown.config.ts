@@ -1,4 +1,4 @@
-import {defineConfig} from 'tsdown'
+import {defineConfig, type Format} from 'tsdown'
 
 /**
  * Testing out tsdown, if it works well we'll move it to `@sanity/pkg-utils`
@@ -45,6 +45,17 @@ export default defineConfig({
       }
       delete pkg['./live.server-only']
       return pkg
+    },
+  },
+  inputOptions: {preserveEntrySignatures: 'strict'},
+  outputOptions: {
+    hoistTransitiveImports: false,
+    banner(ctx) {
+      if (ctx.isEntry || ctx.name === 'experimental/live') {
+        return 'import "server-only";'
+      }
+
+      return ''
     },
   },
   platform: 'neutral',
