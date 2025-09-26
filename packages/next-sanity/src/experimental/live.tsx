@@ -1,3 +1,5 @@
+// oxlint-disable-next-line no-unassigned-import
+import 'server-only'
 import {
   createClient,
   type ClientPerspective,

@@ -48,16 +48,7 @@ export default defineConfig({
     },
   },
   inputOptions: {preserveEntrySignatures: 'strict'},
-  outputOptions: {
-    hoistTransitiveImports: false,
-    banner(ctx) {
-      if (ctx.isEntry || ctx.name === 'experimental/live') {
-        return 'import "server-only";'
-      }
-
-      return ''
-    },
-  },
+  outputOptions: {hoistTransitiveImports: false},
   platform: 'neutral',
   minify: 'dce-only',
   ignoreWatch: ['.turbo'],
