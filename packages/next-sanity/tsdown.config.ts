@@ -1,4 +1,4 @@
-import {defineConfig, type Format} from 'tsdown'
+import {defineConfig} from 'tsdown'
 
 /**
  * Testing out tsdown, if it works well we'll move it to `@sanity/pkg-utils`
