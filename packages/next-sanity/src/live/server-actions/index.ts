@@ -7,10 +7,12 @@ import {cookies, draftMode} from 'next/headers'
 import {sanitizePerspective} from '../utils'
 
 export async function revalidateSyncTags(tags: SyncTag[]): Promise<void> {
+  // @ts-expect-error - intentionally not passing the second argument as we need to support Next.js 15, which does not have `updateTag`: https://nextjs.org/docs/beta/app/getting-started/caching-and-revalidating#revalidatetag
   await revalidateTag('sanity:fetch-sync-tags')
 
   for (const _tag of tags) {
     const tag = `sanity:${_tag}`
+    // @ts-expect-error - intentionally not passing the second argument as we need to support Next.js 15, which does not have `updateTag`: https://nextjs.org/docs/beta/app/getting-started/caching-and-revalidating#revalidatetag
     revalidateTag(tag)
     console.log(`<SanityLive /> revalidated tag: ${tag}`)
   }

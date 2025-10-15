@@ -14,7 +14,7 @@ import {stegaEncodeSourceMap} from '@sanity/client/stega'
 import SanityLiveClientComponent, {
   type SanityLiveProps,
 } from 'next-sanity/experimental/client-components/live'
-import {unstable_cacheTag as cacheTag, unstable_expireTag as expireTag} from 'next/cache'
+import {unstable_cacheTag as cacheTag, updateTag} from 'next/cache'
 import {draftMode, cookies} from 'next/headers'
 import {preconnect} from 'react-dom'
 import {perspectiveCookieName} from '@sanity/preview-url-secret/constants'
@@ -443,8 +443,10 @@ async function expireTags(_tags: unknown): Promise<void> {
     console.warn('<SanityLive /> `expireTags` called with no valid tags', _tags)
     return undefined
   }
-  expireTag(...tags)
-  console.log(`<SanityLive /> expired tags: ${tags.join(', ')}`)
+  for (const tag of tags) {
+    updateTag(tag)
+  }
+  console.log(`<SanityLive /> updated tags: ${tags.join(', ')}`)
 }
 
 async function resolveDraftModePerspective(): Promise<ClientPerspective> {

@@ -10,13 +10,9 @@ const nextConfig: NextConfig = {
     cacheLife: {
       default: {
         // Sanity Live handles on-demand revalidation, so the default 15min time based revalidation is too short
-        stale: 60 * 5,
         revalidate: 60 * 60 * 24 * 90, // 90 days
-        expire: 60 * 60 * 24 * 365, // 1 year
       },
     },
-    clientSegmentCache: true,
-    validateRSCRequestHeaders: true,
   },
   logging: {
     fetches: {
