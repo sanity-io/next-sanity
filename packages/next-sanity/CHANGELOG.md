@@ -5,6 +5,13 @@
 All notable changes to this project will be documented in this file. See
 [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [11.5.0](https://github.com/sanity-io/next-sanity/compare/next-sanity-v11.4.2...next-sanity-v11.5.0) (2025-10-15)
+
+
+### Features
+
+* support next v16 beta ([#2877](https://github.com/sanity-io/next-sanity/issues/2877)) ([7d974e3](https://github.com/sanity-io/next-sanity/commit/7d974e364928f4a0fdde55b2053da4641d152ae1))
+
 ## [11.4.2](https://github.com/sanity-io/next-sanity/compare/next-sanity-v11.4.1...next-sanity-v11.4.2) (2025-09-26)
 
 
