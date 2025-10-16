@@ -14,7 +14,7 @@ import {stegaEncodeSourceMap} from '@sanity/client/stega'
 import SanityLiveClientComponent, {
   type SanityLiveProps,
 } from 'next-sanity/experimental/client-components/live'
-import {unstable_cacheTag as cacheTag, updateTag} from 'next/cache'
+import {cacheTag, updateTag} from 'next/cache'
 import {draftMode, cookies} from 'next/headers'
 import {preconnect} from 'react-dom'
 import {perspectiveCookieName} from '@sanity/preview-url-secret/constants'
