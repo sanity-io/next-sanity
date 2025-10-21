@@ -229,8 +229,8 @@ importers:
         specifier: ^1.0.5
         version: 1.0.5
       '@sanity/pkg-utils':
-        specifier: ^8.1.23
-        version: 8.1.23(@types/babel__core@7.20.5)(@types/node@24.8.1)(typescript@5.9.3)
+        specifier: ^8.1.24
+        version: 8.1.24(@types/babel__core@7.20.5)(@types/node@24.8.1)(typescript@5.9.3)
       '@sanity/types':
         specifier: ^4.11.0
         version: 4.11.0(@types/react@19.2.2)(debug@4.4.3)
@@ -2518,8 +2518,8 @@ packages:
   '@sanity/mutator@4.11.0':
     resolution: {integrity: sha512-HSEajszBDZ73P1ecixdsCEtoCLOTI0ud1uX2H4O5czXTiShfKzEverZL92m5M1huzmUjX0VT4F78Ttm2xh5bfA==}
 
-  '@sanity/pkg-utils@8.1.23':
-    resolution: {integrity: sha512-Q6s/MiGv9Eyv0S/iqeXMxDHestQZyg6JcLnzSi0MrVShEcaWb1kLFZOJY5roITnw2teQfznEsHTunCGn2C4lzg==}
+  '@sanity/pkg-utils@8.1.24':
+    resolution: {integrity: sha512-lKqwbgshMCAVLG1ki1TIuQ/KZuz2svuREBMFtzanuhupCONw0B0npXHkqFAtW3dxHRfbqmMLVx/KGUbh+7pOMQ==}
     engines: {node: '>=20.19 <22 || >=22.12'}
     hasBin: true
     peerDependencies:
@@ -5540,25 +5540,6 @@ packages:
     resolution: {integrity: sha512-9dkvaxAsk/xNXSJzMgFqqMCuFgt2+KsOFek3TMLfo8NCPfWpBmqwyNn5Y+NX56QUYfCtsyhF3ayiboEoUmJk/A==}
     engines: {node: 20 || >=22}
     hasBin: true
-
-  rolldown-plugin-dts@0.16.11:
-    resolution: {integrity: sha512-9IQDaPvPqTx3RjG2eQCK5GYZITo203BxKunGI80AGYicu1ySFTUyugicAaTZWRzFWh9DSnzkgNeMNbDWBbSs0w==}
-    engines: {node: '>=20.18.0'}
-    peerDependencies:
-      '@ts-macro/tsc': ^0.3.6
-      '@typescript/native-preview': '>=7.0.0-dev.20250601.1'
-      rolldown: ^1.0.0-beta.9
-      typescript: ^5.0.0
-      vue-tsc: ~3.1.0
-    peerDependenciesMeta:
-      '@ts-macro/tsc':
-        optional: true
-      '@typescript/native-preview':
-        optional: true
-      typescript:
-        optional: true
-      vue-tsc:
-        optional: true
 
   rolldown-plugin-dts@0.16.12:
     resolution: {integrity: sha512-9dGjm5oqtKcbZNhpzyBgb8KrYiU616A7IqcFWG7Msp1RKAXQ/hapjivRg+g5IYWSiFhnk3OKYV5T4Ft1t8Cczg==}
@@ -9024,7 +9005,7 @@ snapshots:
       - '@types/react'
       - supports-color
 
-  '@sanity/pkg-utils@8.1.23(@types/babel__core@7.20.5)(@types/node@24.8.1)(typescript@5.9.3)':
+  '@sanity/pkg-utils@8.1.24(@types/babel__core@7.20.5)(@types/node@24.8.1)(typescript@5.9.3)':
     dependencies:
       '@babel/core': 7.28.4
       '@babel/parser': 7.28.4
@@ -9062,7 +9043,7 @@ snapshots:
       recast: 0.23.11
       rimraf: 6.0.1
       rolldown: 1.0.0-beta.43
-      rolldown-plugin-dts: 0.16.11(rolldown@1.0.0-beta.43)(typescript@5.9.3)
+      rolldown-plugin-dts: 0.16.12(rolldown@1.0.0-beta.43)(typescript@5.9.3)
       rollup: 4.52.5
       rollup-plugin-esbuild: 6.2.1(esbuild@0.25.11)(rollup@4.52.5)
       rxjs: 7.8.2
@@ -12214,7 +12195,7 @@ snapshots:
       glob: 11.0.3
       package-json-from-dist: 1.0.1
 
-  rolldown-plugin-dts@0.16.11(rolldown@1.0.0-beta.43)(typescript@5.9.3):
+  rolldown-plugin-dts@0.16.12(rolldown@1.0.0-beta.43)(typescript@5.9.3):
     dependencies:
       '@babel/generator': 7.28.3
       '@babel/parser': 7.28.4
