@@ -1,7 +1,6 @@
 > [!CAUTION]
 > The experimental `next-sanity/experimental/live` API is not yet stable and could have breaking changes in future minor releases.
-> It currently requires `experimental.cacheComponents` to be enabled in your `next.confict.ts`, which is currently ( as of Sept 2025) only available on `next@canary`.
-> There's no guarantee that it will work with `next@16` or in future prereleases of `next@canary`.
+> It requires `cacheComponents` to be enabled in your `next.confict.ts`, which was introduced in [`next@16.0.0`](https://nextjs.org/blog/next-16#cache-components).
 
 # Setup
 
@@ -12,28 +11,35 @@ See the personal website template for a working example:
 
 ```diff
 // ./src/lib/sanity/live.ts
--import {defineLive} from 'next-sanity/experimental/live'
-+import {defineLive} from 'next-sanity/live'
+-import {defineLive} from 'next-sanity/live'
++import {defineLive} from 'next-sanity/experimental/live'
 ```
 
 ```diff
 // ./next.config.ts
 
-+ experimental: {
-+   cacheComponents: true,
-+    cacheLife: {
-+      default: {
-+       // Sanity Live handles on-demand revalidation, so the default 15min time based revalidation is too short
-+       revalidate: 60 * 60 * 24 * 90, // 90 days
-+      },
-+   },
-+ },
+export default {
++  cacheComponents: true,
+}
 ```
 
 ## API Differences from `next-sanity/live`
 
-`defineLive({stega})` is no longer `true` by default.
-If you have `stega.studioUrl` set in your client configuration, then `stega` defaults to `true`, otherwise it defaults to `false`.
+### `defineLive` options
+
+These options are removed:
+
+- `fetchOptions.revalidate` - caching is now controlled by an underlying `cacheLife` call, instead of as the `next.revalidate` option on a `fetch`. The options given to `cacheLife` might be configurable in the future.
+- `stega` - stega on/off is now controlled by the `sanityFetch` call itself, so there's no need for a global option.
+
+### `sanityFetch` options
+
+The deprecated `tag` is removed, use `requestTag` instead.
+
+The `stega` and `perspective` options are no longer automatically resolved, you need to pass them explicitly.
+By default `stega` is `false` and `perspective` is `'published'`.
+
+In order to recreate the behavior of `next-sanity/live`, you can do something like this:
 
 ## Studio perspective switching does not work out of the box
 

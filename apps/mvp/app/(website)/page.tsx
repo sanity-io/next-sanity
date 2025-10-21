@@ -6,11 +6,18 @@ import {unstable__adapter, unstable__environment} from 'next-sanity'
 import PostsLayout, {postsQuery} from '@/app/(website)/PostsLayout'
 
 import {sanityFetch} from './live'
-import {resolvePerspectiveFromCookie} from 'next-sanity/experimental/live'
-import {Suspense} from 'react'
+import {resolvePerspectiveFromCookies} from 'next-sanity/experimental/live'
 
 export default async function IndexPage() {
   const isDraftMode = (await draftMode()).isEnabled
+  const perspective = isDraftMode
+    ? await resolvePerspectiveFromCookies({cookies: await cookies()})
+    : 'published'
+  const {data, tags} = await sanityFetch({
+    query: postsQuery.query,
+    perspective,
+    stega: isDraftMode,
+  })
 
   return (
     <>
@@ -20,9 +27,8 @@ export default async function IndexPage() {
         data-environment={unstable__environment}
       >
         <div className="relative mx-auto max-w-7xl">
-          <Suspense fallback="Loading... (TODO do a better fallback)">
-            {isDraftMode ? <DraftContent /> : <ProductionContent />}
-          </Suspense>
+          <PostsLayout data={data} draftMode={isDraftMode} />
+          <p>{JSON.stringify({perspective, tags: tags.toSorted()})}</p>
         </div>
       </div>
       <div className="flex text-center gap-2">
@@ -51,37 +57,6 @@ export default async function IndexPage() {
           Open Studio
         </Link>
       </div>
-    </>
-  )
-}
-
-async function ProductionContent() {
-  'use cache'
-
-  const {data, perspective, tags} = await sanityFetch({
-    query: postsQuery.query,
-    perspective: 'published',
-  })
-
-  return (
-    <>
-      <PostsLayout data={data} draftMode={false} />
-      <p>{JSON.stringify({perspective, tags})}</p>
-    </>
-  )
-}
-
-async function DraftContent() {
-  const perspective = await resolvePerspectiveFromCookie({cookies: await cookies()})
-  const {data, tags} = await sanityFetch({
-    query: postsQuery.query,
-    perspective,
-  })
-
-  return (
-    <>
-      <PostsLayout data={data} draftMode />
-      <p>{JSON.stringify({perspective, tags})}</p>
     </>
   )
 }
