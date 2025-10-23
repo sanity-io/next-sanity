@@ -5,6 +5,13 @@
 All notable changes to this project will be documented in this file. See
 [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [11.5.7](https://github.com/sanity-io/next-sanity/compare/next-sanity-v11.5.6...next-sanity-v11.5.7) (2025-10-23)
+
+
+### Bug Fixes
+
+* handle `revalidateTag` warning on v16 ([2023512](https://github.com/sanity-io/next-sanity/commit/2023512622255475da356c36060e224c2c7b883b))
+
 ## [11.5.6](https://github.com/sanity-io/next-sanity/compare/next-sanity-v11.5.5...next-sanity-v11.5.6) (2025-10-21)
 
 
