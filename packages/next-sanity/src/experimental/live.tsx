@@ -14,7 +14,7 @@ import {stegaEncodeSourceMap} from '@sanity/client/stega'
 import SanityLiveClientComponent, {
   type SanityLiveProps,
 } from 'next-sanity/experimental/client-components/live'
-import {cacheTag, updateTag} from 'next/cache'
+import {cacheTag, cacheLife, updateTag} from 'next/cache'
 import {draftMode, cookies} from 'next/headers'
 import {preconnect} from 'react-dom'
 import {perspectiveCookieName} from '@sanity/preview-url-secret/constants'
@@ -25,7 +25,7 @@ import {DRAFT_SYNC_TAG_PREFIX, PUBLISHED_SYNC_TAG_PREFIX} from './constants'
 /**
  * @alpha CAUTION: This API does not follow semver and could have breaking changes in future minor releases.
  */
-export async function resolvePerspectiveFromCookie({
+export async function resolvePerspectiveFromCookies({
   cookies: jar,
 }: {
   cookies: Awaited<ReturnType<typeof cookies>>
@@ -47,7 +47,7 @@ async function sanityCachedFetch<const QueryString extends string>(
     customCacheTags = [],
   }: {
     query: QueryString
-    params?: QueryParams
+    params?: QueryParams | Promise<QueryParams>
     perspective: Exclude<ClientPerspective, 'raw'>
     stega: boolean
     requestTag: string
@@ -59,26 +59,18 @@ async function sanityCachedFetch<const QueryString extends string>(
   sourceMap: ContentSourceMap | null
   tags: string[]
 }> {
-  'use cache'
+  'use cache: remote'
 
   const client = createClient({...config, useCdn: true})
   const useCdn = perspective === 'published'
-  /**
-   * The default cache profile isn't ideal for live content, as it has unnecessary time based background validation, as well as a too lazy client stale value
-   * https://github.com/vercel/next.js/blob/8dd358002baf4244c0b2e38b5bda496daf60dacb/packages/next/cache.d.ts#L14-L26
-   */
-  // cacheLife({
-  //   stale: Infinity,
-  //   revalidate: Infinity,
-  //   expire: Infinity,
-  // })
 
-  const {result, resultSourceMap, syncTags} = await client.fetch(query, params, {
+  const {result, resultSourceMap, syncTags} = await client.fetch(query, await params, {
     filterResponse: false,
     returnQuery: false,
     perspective,
     useCdn,
     resultSourceMap: stega ? 'withKeyArraySelector' : undefined, // @TODO allow passing csm for non-stega use
+    stega: false,
     cacheMode: useCdn ? 'noStale' : undefined,
     tag: requestTag,
     token: perspective === 'published' ? config.token : draftToken || config.token, // @TODO can pass undefined instead of config.token here?
@@ -94,6 +86,10 @@ async function sanityCachedFetch<const QueryString extends string>(
    * The tags used here, are expired later on in the `expireTags` Server Action with the `expireTag` function from `next/cache`
    */
   cacheTag(...tags)
+  /**
+   * Sanity Live handles on-demand revalidation, so the default 15min time based revalidation is too short
+   */
+  cacheLife({revalidate: 60 * 60 * 24 * 90})
 
   return {data: result, sourceMap: resultSourceMap || null, tags}
 }
@@ -101,14 +97,16 @@ async function sanityCachedFetch<const QueryString extends string>(
 /**
  * @alpha CAUTION: This API does not follow semver and could have breaking changes in future minor releases.
  */
-export type DefinedSanityFetchType = <const QueryString extends string>(options: {
+export interface SanityFetchOptions<QueryString extends string> {
   query: QueryString
   params?: QueryParams | Promise<QueryParams>
+  /**
+   * @defaultValue 'published'
+   */
   perspective?: Exclude<ClientPerspective, 'raw'>
   /**
-   * Enables stega encoding of the data, this is typically only used in draft mode.
-   * If `defineLive({..., stega: true})` is provided, then it defaults to `true` in Draft Mode.
-   * If `defineLive({..., stega: false})` then it defaults to `false`.
+   * Enables stega encoding of the data, this is typically only used in draft mode in conjunction with `perspective: 'drafts'` and with `@sanity/visual-editing` setup.
+   * @defaultValue `false`
    */
   stega?: boolean
   /**
@@ -118,20 +116,23 @@ export type DefinedSanityFetchType = <const QueryString extends string>(options:
    */
   requestTag?: string
   /**
-   * Custom cache tags that can be used with next's `revalidateTag` function for custom webhook on-demand revalidation.
+   * Custom cache tags that can be used with next's `revalidateTag` and `updateTag` functions for custom webhook on-demand revalidation.
    */
   tags?: string[]
-}) => Promise<{
+}
+
+/**
+ * @alpha CAUTION: This API does not follow semver and could have breaking changes in future minor releases.
+ */
+export type DefinedSanityFetchType = <const QueryString extends string>(
+  options: SanityFetchOptions<QueryString>,
+) => Promise<{
   data: ClientReturn<QueryString, unknown>
   /**
    * The Content Source Map can be used for custom setups like `encodeSourceMap` for `data-sanity` attributes, or `stegaEncodeSourceMap` for stega encoding in your own way.
    * The Content Source Map is only fetched by default in draft mode, if `stega` is `true`. Otherwise your client configuration will need to have `resultSourceMap: 'withKeyArraySelector' | true`
    */
   sourceMap: ContentSourceMap | null
-  /**
-   * The perspective used to fetch the data, useful for debugging.
-   */
-  perspective: Exclude<ClientPerspective, 'raw'>
   /**
    * The cache tags used with `next/cache`, useful for debugging.
    */
@@ -224,11 +225,6 @@ export interface DefineSanityLiveOptions {
    * It is used to setup a `Live Draft Content` EventSource connection, and enables live previewing drafts stand-alone, outside of Presentation Tool.
    */
   browserToken?: string | false
-  /**
-   * Optional. Include stega encoding when draft mode is enabled.
-   *  @defaultValue `true` if the client configuration has the `stega.studioUrl` property set, otherwise `false`
-   */
-  stega?: boolean
 }
 
 /**
@@ -265,18 +261,25 @@ export function defineLive(config: DefineSanityLiveOptions): {
   }
 
   const client = _client.withConfig({allowReconfigure: false, useCdn: false})
-  const {token: originalToken, stega: stegaConfig} = client.config()
-  const studioUrlDefined = typeof client.config().stega.studioUrl !== 'undefined'
-  const {stega: stegaEnabled = typeof client.config().stega.studioUrl !== 'undefined'} = config
+  const {
+    token: originalToken,
+    apiHost,
+    apiVersion,
+    useProjectHostname,
+    dataset,
+    projectId,
+    requestTagPrefix,
+    stega: stegaConfig,
+  } = client.config()
 
-  const sanityFetch: DefinedSanityFetchType = async function sanityFetch<
+  const sanityFetch: DefinedSanityFetchType = function sanityFetch<
     const QueryString extends string,
   >({
     query,
     params = {},
-    stega: _stega,
+    stega = false,
+    perspective = 'published',
     tags: customCacheTags = [],
-    perspective: _perspective,
     requestTag = 'next-loader.fetch',
   }: {
     query: QueryString
@@ -286,16 +289,7 @@ export function defineLive(config: DefineSanityLiveOptions): {
     perspective?: Exclude<ClientPerspective, 'raw'>
     requestTag?: string
   }) {
-    const stega = _stega ?? (stegaEnabled && studioUrlDefined && (await draftMode()).isEnabled)
-    const perspective = _perspective ?? ((await draftMode()).isEnabled ? 'drafts' : 'published')
-
-    const {apiHost, apiVersion, useProjectHostname, dataset, projectId, requestTagPrefix} =
-      client.config()
-    const {
-      data: _data,
-      sourceMap,
-      tags,
-    } = await sanityCachedFetch(
+    return sanityCachedFetch(
       {
         apiHost,
         apiVersion,
@@ -307,21 +301,21 @@ export function defineLive(config: DefineSanityLiveOptions): {
       },
       {
         query,
-        params: await params,
+        params,
         perspective,
         stega,
         requestTag,
         draftToken: serverToken,
         customCacheTags,
       },
-    )
-
-    const data =
-      stega && sourceMap
-        ? stegaEncodeSourceMap(_data, sourceMap, {...stegaConfig, enabled: true})
-        : _data
-
-    return {data, sourceMap, tags, perspective}
+    ).then(({data, sourceMap, tags}) => ({
+      data:
+        stega && sourceMap
+          ? stegaEncodeSourceMap(data, sourceMap, {...stegaConfig, enabled: true})
+          : data,
+      sourceMap,
+      tags,
+    }))
   }
 
   const SanityLive: React.ComponentType<DefinedSanityLiveProps> = function SanityLive(props) {
@@ -376,7 +370,7 @@ interface SanityLiveServerComponentProps
 
 const SanityLiveServerComponent: React.ComponentType<SanityLiveServerComponentProps> =
   async function SanityLiveServerComponent(props) {
-    'use cache'
+    // 'use cache'
     // @TODO should this be 'max' instead?, or configured by changing the default cache profile?
     // cacheLife({
     //   stale: Infinity,
@@ -453,15 +447,10 @@ async function resolveDraftModePerspective(): Promise<ClientPerspective> {
   'use server'
   if ((await draftMode()).isEnabled) {
     const jar = await cookies()
-    return resolvePerspectiveFromCookie({cookies: jar})
+    return resolvePerspectiveFromCookies({cookies: jar})
   }
   return 'published'
 }
 
-/**
- * Add more stuff:
- * - sanityFetchMetadata: sanityFetch({query, params, stega: false, perspective: 'auto'})
- * - sanityFetchStaticParams: sanityFetch({query, params, stega: false, perspective: 'published', cacheMode: undefined})
- * - sanityFetchCached: sanityFetch({query, params, stega: 'opt-in',perspective: 'opt-in'}) useful for 'use cache' components, no unexpected magic, maybe this will be `sanityFetch` instead
- * - sanityFetchDynamic: sanityFetch({query, params, stega: 'auto', perspective: 'auto'}) just like sanityFetch of old, since `sanityFetch` will likely become opt-in
- */
+// revalidateSyncTags => actionUpdateTags
+// router.refresh() => actionRefresh

@@ -13,7 +13,7 @@ import {SanityLive} from './live'
 import {FormStatusLabel} from './FormStatus'
 import {DebugStatus} from './DebugStatus'
 import {RefreshButton} from './RefreshButton'
-// import {resolvePerspectiveFromCookie} from 'next-sanity/experimental/live'
+// import {resolvePerspectiveFromCookies} from 'next-sanity/experimental/live'
 // import {Suspense} from 'react'
 
 async function toggleDraftMode() {

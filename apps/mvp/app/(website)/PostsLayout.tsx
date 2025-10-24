@@ -35,7 +35,7 @@ export type PostsLayoutProps = {
 }
 
 export default async function Posts(props: PostsLayoutProps) {
-  'use cache'
+  'use cache: remote'
 
   const posts = postsQuery.parse(props.data)
   console.log('PostsLayout', {posts})

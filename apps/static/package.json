@@ -7,11 +7,11 @@
     "#groqd": "./groqd-client.ts"
   },
   "scripts": {
-    "build": "next build && pnpm copy-analyze",
+    "build": "next build --webpack && pnpm copy-analyze",
     "copy-analyze": "cp -r .next/analyze public/ || true",
     "dev": "next -p 3001",
     "start": "pnpx serve@latest out -p 3001",
-    "type-check": "tsc --noEmit",
+    "type-check": "next typegen && tsc --noEmit",
     "typegen": "sanity schema extract && sanity typegen generate"
   },
   "dependencies": {
@@ -29,10 +29,10 @@
     "@next/bundle-analyzer": "catalog:",
     "@next/env": "catalog:",
     "@repo/typescript-config": "workspace:*",
-    "@tailwindcss/postcss": "^4.1.14",
+    "@tailwindcss/postcss": "^4.1.16",
     "@types/react": "catalog:",
     "postcss": "^8.5.6",
-    "tailwindcss": "^4.1.14",
+    "tailwindcss": "^4.1.16",
     "typescript": "catalog:"
   }
 }
