@@ -99,7 +99,7 @@ async function sanityCachedFetch<const QueryString extends string>(
  */
 export interface SanityFetchOptions<QueryString extends string> {
   query: QueryString
-  params?: QueryParams | Promise<QueryParams>
+  params?: QueryParams
   /**
    * @defaultValue 'published'
    */
