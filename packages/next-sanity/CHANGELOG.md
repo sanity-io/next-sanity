@@ -5,6 +5,13 @@
 All notable changes to this project will be documented in this file. See
 [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [11.6.2](https://github.com/sanity-io/next-sanity/compare/next-sanity-v11.6.1...next-sanity-v11.6.2) (2025-10-24)
+
+
+### Bug Fixes
+
+* **experimental/live:** QueryParams cannot be a promise ([171dc2f](https://github.com/sanity-io/next-sanity/commit/171dc2f61e4b50f1c9a4b4e641d4e1e6c83a1e4c))
+
 ## [11.6.1](https://github.com/sanity-io/next-sanity/compare/next-sanity-v11.6.0...next-sanity-v11.6.1) (2025-10-24)
 
 
