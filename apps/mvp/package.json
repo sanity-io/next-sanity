@@ -11,7 +11,7 @@
     "copy-analyze": "cp -r .next/analyze public/ || true",
     "dev": "next dev",
     "start": "next start",
-    "type-check": "tsc --noEmit",
+    "type-check": "next typegen && tsc --noEmit",
     "typegen": "sanity schema extract && sanity typegen generate"
   },
   "dependencies": {
