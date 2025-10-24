@@ -177,7 +177,35 @@ importers:
         specifier: 'catalog:'
         version: 5.9.3
 
-  fixtures/fail/server-only:
+  fixtures/fail/server-only-live:
+    dependencies:
+      next:
+        specifier: 16.0.1-canary.1
+        version: 16.0.1-canary.1(@babel/core@7.28.4)(react-dom@19.2.0(react@19.2.0))(react@19.2.0)
+      next-sanity:
+        specifier: workspace:*
+        version: link:../../../packages/next-sanity
+      react:
+        specifier: ^19.2.0
+        version: 19.2.0
+      react-dom:
+        specifier: ^19.2.0
+        version: 19.2.0(react@19.2.0)
+    devDependencies:
+      '@repo/typescript-config':
+        specifier: workspace:*
+        version: link:../../../packages/typescript-config
+      '@types/react':
+        specifier: ^19.1.8
+        version: 19.2.2
+      '@types/react-dom':
+        specifier: ^19.1.6
+        version: 19.2.2(@types/react@19.2.2)
+      typescript:
+        specifier: 'catalog:'
+        version: 5.9.3
+
+  fixtures/pass/server-only-live:
     dependencies:
       next:
         specifier: 16.0.1-canary.1
