@@ -12,6 +12,7 @@ export default async function IndexPage() {
   const {data} = await sanityFetch({
     query: postsQuery.query,
     perspective: 'published',
+    stega: false,
   })
 
   return (
