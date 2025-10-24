@@ -5,6 +5,13 @@
 All notable changes to this project will be documented in this file. See
 [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [11.6.0](https://github.com/sanity-io/next-sanity/compare/next-sanity-v11.5.7...next-sanity-v11.6.0) (2025-10-24)
+
+
+### Features
+
+* **experimental/live:** support `use cache:remote` ([#2909](https://github.com/sanity-io/next-sanity/issues/2909)) ([4423dee](https://github.com/sanity-io/next-sanity/commit/4423dee0a818072e7d0611c109eb94e89303941b))
+
 ## [11.5.7](https://github.com/sanity-io/next-sanity/compare/next-sanity-v11.5.6...next-sanity-v11.5.7) (2025-10-23)
 
 

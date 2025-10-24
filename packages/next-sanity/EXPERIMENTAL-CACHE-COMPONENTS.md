@@ -45,7 +45,11 @@ In order to recreate the behavior of `next-sanity/live`, which includes resolvin
 // src/sanity/lib/live.ts
 
 import {createClient} from 'next-sanity'
-import {defineLive,resolvePerspectiveFromCookies,type SanityFetchOptions,} from 'next-sanity/experimental/live'
+import {
+  defineLive,
+  resolvePerspectiveFromCookies,
+  type SanityFetchOptions,
+} from 'next-sanity/experimental/live'
 
 const client = createClient({
   projectId: process.env.NEXT_PUBLIC_SANITY_PROJECT_ID,
@@ -83,7 +87,7 @@ const sanityFetch = async <const QueryString extends string>({
 const sanityFetchMetadata = async <const QueryString extends string>({
   query,
   params,
-}: Pick<SanityFetchOptions<QueryString>, 'query' | 'params'>)=> {
+}: Pick<SanityFetchOptions<QueryString>, 'query' | 'params'>) => {
   const isDraftMode = (await draftMode()).isEnabled
   const perspective = isDraftMode
     ? await resolvePerspectiveFromCookies({cookies: await cookies()})
@@ -92,10 +96,10 @@ const sanityFetchMetadata = async <const QueryString extends string>({
 }
 
 // Fetches content for generateStaticParams, which only happens at build time and should only fetch published content
-const sanityFetchStaticParams = = async <const QueryString extends string>({
+const sanityFetchStaticParams = async <const QueryString extends string>({
   query,
   params,
-}: Pick<SanityFetchOptions<QueryString>, 'query' | 'params'>)=> {
+}: Pick<SanityFetchOptions<QueryString>, 'query' | 'params'>) => {
   return _sanityFetch({query, params, perspective: 'published', stega: false})
 }
 

@@ -47,7 +47,7 @@ async function sanityCachedFetch<const QueryString extends string>(
     customCacheTags = [],
   }: {
     query: QueryString
-    params?: QueryParams | Promise<QueryParams>
+    params?: QueryParams
     perspective: Exclude<ClientPerspective, 'raw'>
     stega: boolean
     requestTag: string
@@ -64,7 +64,7 @@ async function sanityCachedFetch<const QueryString extends string>(
   const client = createClient({...config, useCdn: true})
   const useCdn = perspective === 'published'
 
-  const {result, resultSourceMap, syncTags} = await client.fetch(query, await params, {
+  const {result, resultSourceMap, syncTags} = await client.fetch(query, params, {
     filterResponse: false,
     returnQuery: false,
     perspective,
@@ -283,7 +283,7 @@ export function defineLive(config: DefineSanityLiveOptions): {
     requestTag = 'next-loader.fetch',
   }: {
     query: QueryString
-    params?: QueryParams | Promise<QueryParams>
+    params?: QueryParams
     stega?: boolean
     tags?: string[]
     perspective?: Exclude<ClientPerspective, 'raw'>
