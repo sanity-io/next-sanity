@@ -97,7 +97,7 @@ async function sanityCachedFetch<const QueryString extends string>(
 /**
  * @alpha CAUTION: This API does not follow semver and could have breaking changes in future minor releases.
  */
-export type DefinedSanityFetchType = <const QueryString extends string>(options: {
+export interface SanityFetchOptions<QueryString extends string> {
   query: QueryString
   params?: QueryParams | Promise<QueryParams>
   /**
@@ -119,7 +119,14 @@ export type DefinedSanityFetchType = <const QueryString extends string>(options:
    * Custom cache tags that can be used with next's `revalidateTag` and `updateTag` functions for custom webhook on-demand revalidation.
    */
   tags?: string[]
-}) => Promise<{
+}
+
+/**
+ * @alpha CAUTION: This API does not follow semver and could have breaking changes in future minor releases.
+ */
+export type DefinedSanityFetchType = <const QueryString extends string>(
+  options: SanityFetchOptions<QueryString>,
+) => Promise<{
   data: ClientReturn<QueryString, unknown>
   /**
    * The Content Source Map can be used for custom setups like `encodeSourceMap` for `data-sanity` attributes, or `stegaEncodeSourceMap` for stega encoding in your own way.

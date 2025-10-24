@@ -1,0 +1,22 @@
+{
+  "name": "@fixtures/pass/server-only-live",
+  "version": "0.1.0",
+  "decscription": "defineLive can only be called from a server component",
+  "private": true,
+  "scripts": {
+    "type-check": "next typegen && tsc --noEmit",
+    "test": "next build"
+  },
+  "dependencies": {
+    "next-sanity": "workspace:*",
+    "react": "catalog:",
+    "react-dom": "catalog:",
+    "next": "catalog:"
+  },
+  "devDependencies": {
+    "@repo/typescript-config": "workspace:*",
+    "typescript": "catalog:",
+    "@types/react": "catalog:",
+    "@types/react-dom": "catalog:"
+  }
+}

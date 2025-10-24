@@ -39,10 +39,65 @@ The deprecated `tag` is removed, use `requestTag` instead.
 The `stega` and `perspective` options are no longer automatically resolved, you need to pass them explicitly.
 By default `stega` is `false` and `perspective` is `'published'`.
 
-In order to recreate the behavior of `next-sanity/live`, you can do something like this:
+In order to recreate the behavior of `next-sanity/live`, which includes resolving the preview perspective from a cookie, you can do something like this:
 
-## Studio perspective switching does not work out of the box
+```tsx
+// src/sanity/lib/live.ts
 
-In `next-sanity/live`, the Studio perspective switching works out of the box, because we can use the `import {cookies} from 'next/headers'` API when in Draft Mode to read the studio perspective from a cookie and then use it in the `sanityFetch` call.
+import {createClient} from 'next-sanity'
+import {defineLive,resolvePerspectiveFromCookies,type SanityFetchOptions,} from 'next-sanity/experimental/live'
 
-In `next-sanity/experimental/live` and `cacheComponents` it's not allowed to call `await cookies()` from a function that has a parent `'use cache'` directive.
+const client = createClient({
+  projectId: process.env.NEXT_PUBLIC_SANITY_PROJECT_ID,
+  dataset: process.env.NEXT_PUBLIC_SANITY_DATASET,
+  useCdn: true,
+  apiVersion: 'v2025-03-04',
+  stega: {studioUrl: '/studio'},
+})
+
+const token = process.env.SANITY_API_READ_TOKEN
+if (!token) {
+  throw new Error('Missing SANITY_API_READ_TOKEN')
+}
+
+const {sanityFetch: _sanityFetch, SanityLive} = defineLive({
+  client,
+  serverToken: token,
+  browserToken: token,
+})
+
+// Automatically fetches draft content with the right preview perspective in draft mode, and enables stega for visual editing overlays
+const sanityFetch = async <const QueryString extends string>({
+  query,
+  params,
+}: Pick<SanityFetchOptions<QueryString>, 'query' | 'params'>) => {
+  const isDraftMode = (await draftMode()).isEnabled
+  const perspective = isDraftMode
+    ? await resolvePerspectiveFromCookies({cookies: await cookies()})
+    : 'published'
+
+  return _sanityFetch({query, params, perspective, stega: isDraftMode})
+}
+
+// Fetches content for use in generateMetadata, generateViewport and such, which may have draft content but perspective switching isn't necessary and stega should never be enabled
+const sanityFetchMetadata = async <const QueryString extends string>({
+  query,
+  params,
+}: Pick<SanityFetchOptions<QueryString>, 'query' | 'params'>)=> {
+  const isDraftMode = (await draftMode()).isEnabled
+  const perspective = isDraftMode
+    ? await resolvePerspectiveFromCookies({cookies: await cookies()})
+    : 'published'
+  return _sanityFetch({query, params, perspective, stega: false})
+}
+
+// Fetches content for generateStaticParams, which only happens at build time and should only fetch published content
+const sanityFetchStaticParams = = async <const QueryString extends string>({
+  query,
+  params,
+}: Pick<SanityFetchOptions<QueryString>, 'query' | 'params'>)=> {
+  return _sanityFetch({query, params, perspective: 'published', stega: false})
+}
+
+export {sanityFetch, sanityFetchMetadata, sanityFetchStaticParams, SanityLive}
+```
