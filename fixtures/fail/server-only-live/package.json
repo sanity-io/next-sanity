@@ -1,22 +1,22 @@
 {
   "name": "@fixtures/fail/server-only-live",
   "version": "0.1.0",
-  "decscription": "defineLive can not be called from a client component",
   "private": true,
   "scripts": {
-    "type-check": "next typegen && tsc --noEmit",
-    "test": "next build && exit 1 || exit 0"
+    "test": "next build && exit 1 || exit 0",
+    "type-check": "next typegen && tsc --noEmit"
   },
   "dependencies": {
+    "next": "catalog:",
     "next-sanity": "workspace:*",
     "react": "catalog:",
-    "react-dom": "catalog:",
-    "next": "catalog:"
+    "react-dom": "catalog:"
   },
   "devDependencies": {
     "@repo/typescript-config": "workspace:*",
-    "typescript": "catalog:",
     "@types/react": "catalog:",
-    "@types/react-dom": "catalog:"
-  }
+    "@types/react-dom": "catalog:",
+    "typescript": "catalog:"
+  },
+  "decscription": "defineLive can not be called from a client component"
 }
