@@ -5,6 +5,17 @@
 All notable changes to this project will be documented in this file. See
 [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [11.6.3](https://github.com/sanity-io/next-sanity/compare/next-sanity-v11.6.2...next-sanity-v11.6.3) (2025-10-31)
+
+
+### Bug Fixes
+
+* **deps:** update dependency @sanity/comlink to v4 (main) ([#2928](https://github.com/sanity-io/next-sanity/issues/2928)) ([96d5c47](https://github.com/sanity-io/next-sanity/commit/96d5c47ac2cff4236717571faee325e92f921e70))
+* **deps:** update dependency @sanity/presentation-comlink to v2 (main) ([#2929](https://github.com/sanity-io/next-sanity/issues/2929)) ([2e3379a](https://github.com/sanity-io/next-sanity/commit/2e3379a0e54a35776947da21f16a1c5757a183c4))
+* **deps:** update dependency @sanity/visual-editing to v4 (main) ([#2936](https://github.com/sanity-io/next-sanity/issues/2936)) ([cc4b92b](https://github.com/sanity-io/next-sanity/commit/cc4b92b648f1d8c8420f05b8a74d2f42b85b0b88))
+* **deps:** update sanity monorepo to ^4.12.0 (main) ([#2941](https://github.com/sanity-io/next-sanity/issues/2941)) ([9773311](https://github.com/sanity-io/next-sanity/commit/9773311edd0cc1d9d730bd61dd207576bceb65ee))
+* **deps:** update sanity monorepo to ^4.12.0 (main) ([#2946](https://github.com/sanity-io/next-sanity/issues/2946)) ([150b849](https://github.com/sanity-io/next-sanity/commit/150b849cf0cb6ccca6ad58b699e4b79cf338629d))
+
 ## [11.6.2](https://github.com/sanity-io/next-sanity/compare/next-sanity-v11.6.1...next-sanity-v11.6.2) (2025-10-24)
 
 
