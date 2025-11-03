@@ -16,7 +16,7 @@ const nextConfig: NextConfig = {
     },
   },
   productionBrowserSourceMaps: true,
-  webpack: (config, {isServer}) => {
+  webpack: (config) => {
     // Resolve sanity package duplicates by forcing all imports to use the same version
     config.resolve.alias = {
       ...config.resolve.alias,
