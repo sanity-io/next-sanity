@@ -294,8 +294,8 @@ importers:
         specifier: ^1.0.5
         version: 1.0.5
       '@sanity/pkg-utils':
-        specifier: ^8.1.29
-        version: 8.1.29(@types/babel__core@7.20.5)(@types/node@24.10.0)(typescript@5.9.3)
+        specifier: ^9.0.1
+        version: 9.0.1(@types/babel__core@7.20.5)(@types/node@24.10.0)(typescript@5.9.3)
       '@sanity/types':
         specifier: ^4.13.0
         version: 4.13.0(@types/react@19.2.2)(debug@4.4.3)
@@ -2364,11 +2364,11 @@ packages:
   '@rolldown/pluginutils@1.0.0-beta.46':
     resolution: {integrity: sha512-xMNwJo/pHkEP/mhNVnW+zUiJDle6/hxrwO0mfSJuEVRbBfgrJFuUSRoZx/nYUw5pCjrysl9OkNXCkAdih8GCnA==}
 
-  '@rollup/plugin-alias@5.1.1':
-    resolution: {integrity: sha512-PR9zDb+rOzkRb2VD+EuKB7UC41vU5DIwZ5qqCpk0KJudcWAyi8rvYOhS7+L5aZCspw1stTViLgN5v6FF1p5cgQ==}
-    engines: {node: '>=14.0.0'}
+  '@rollup/plugin-alias@6.0.0':
+    resolution: {integrity: sha512-tPCzJOtS7uuVZd+xPhoy5W4vThe6KWXNmsFCNktaAh5RTqcLiSfT4huPQIXkgJ6YCOjJHvecOAzQxLFhPxKr+g==}
+    engines: {node: '>=20.19.0'}
     peerDependencies:
-      rollup: ^1.20.0||^2.0.0||^3.0.0||^4.0.0
+      rollup: '>=4.0.0'
     peerDependenciesMeta:
       rollup:
         optional: true
@@ -2753,8 +2753,8 @@ packages:
   '@sanity/mutator@4.13.0':
     resolution: {integrity: sha512-aMX1xWi9MF0uqJ/bP2qaTu4uu4evtiMMaU5G1qJ3YBilrCQ/uy3Ieer58qnK8nZyvgN4kvZQ9bjF5o04Ao7+6g==}
 
-  '@sanity/pkg-utils@8.1.29':
-    resolution: {integrity: sha512-97Vo9YnYOp/hEYkE9zkI0Nj4NUm5EVo1DpRUcr6tf7jzO0u65yyventjcDSdbOFVsKmUFjMa1GrY5oKRn7Mi1Q==}
+  '@sanity/pkg-utils@9.0.1':
+    resolution: {integrity: sha512-dIw/uTIhXko09mWjsjV92wxb5EBRQ5iemLaxs0+UUluJPmhBewJt1/bazRg+h0Ng8CsMSLADeTva56xrQD1X8Q==}
     engines: {node: '>=20.19 <22 || >=22.12'}
     hasBin: true
     peerDependencies:
@@ -8748,7 +8748,7 @@ snapshots:
 
   '@rolldown/pluginutils@1.0.0-beta.46': {}
 
-  '@rollup/plugin-alias@5.1.1(rollup@4.52.5)':
+  '@rollup/plugin-alias@6.0.0(rollup@4.52.5)':
     optionalDependencies:
       rollup: 4.52.5
 
@@ -9243,7 +9243,7 @@ snapshots:
       - '@types/react'
       - supports-color
 
-  '@sanity/pkg-utils@8.1.29(@types/babel__core@7.20.5)(@types/node@24.10.0)(typescript@5.9.3)':
+  '@sanity/pkg-utils@9.0.1(@types/babel__core@7.20.5)(@types/node@24.10.0)(typescript@5.9.3)':
     dependencies:
       '@babel/core': 7.28.5
       '@babel/parser': 7.28.5
@@ -9252,7 +9252,7 @@ snapshots:
       '@microsoft/api-extractor': 7.53.3(@types/node@24.10.0)
       '@microsoft/tsdoc-config': 0.17.1
       '@optimize-lodash/rollup-plugin': 5.0.2(rollup@4.52.5)
-      '@rollup/plugin-alias': 5.1.1(rollup@4.52.5)
+      '@rollup/plugin-alias': 6.0.0(rollup@4.52.5)
       '@rollup/plugin-babel': 6.1.0(@babel/core@7.28.5)(@types/babel__core@7.20.5)(rollup@4.52.5)
       '@rollup/plugin-commonjs': 29.0.0(rollup@4.52.5)
       '@rollup/plugin-json': 6.1.0(rollup@4.52.5)
