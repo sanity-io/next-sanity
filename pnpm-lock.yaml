@@ -294,8 +294,8 @@ importers:
         specifier: ^1.0.5
         version: 1.0.5
       '@sanity/pkg-utils':
-        specifier: ^9.0.3
-        version: 9.0.3(@types/babel__core@7.20.5)(@types/node@24.10.0)(typescript@5.9.3)
+        specifier: ^9.0.5
+        version: 9.0.5(@types/babel__core@7.20.5)(@types/node@24.10.0)(typescript@5.9.3)
       '@sanity/types':
         specifier: ^4.14.2
         version: 4.14.2(@types/react@19.2.2)(debug@4.4.3)
@@ -1614,8 +1614,8 @@ packages:
   '@microsoft/api-extractor-model@7.31.3':
     resolution: {integrity: sha512-dv4quQI46p0U03TCEpasUf6JrJL3qjMN7JUAobsPElxBv4xayYYvWW9aPpfYV+Jx6hqUcVaLVOeV7+5hxsyoFQ==}
 
-  '@microsoft/api-extractor@7.53.3':
-    resolution: {integrity: sha512-p2HmQaMSVqMBj3bH3643f8xApKAqrF1jNpPsMCTQOYCYgfwLnvzsve8c+bgBWzCOBBgLK54PB6ZLIWMGLg8CZA==}
+  '@microsoft/api-extractor@7.54.0':
+    resolution: {integrity: sha512-t0SEcbVUPy4yAVykPafTNWktBg728X6p9t8qCuGDsYr1/lz2VQFihYDP2CnBFSArP5vwJPcvxktoKVSqH326cA==}
     hasBin: true
 
   '@microsoft/tsdoc-config@0.17.1':
@@ -2526,8 +2526,8 @@ packages:
   '@sanity/mutator@4.14.2':
     resolution: {integrity: sha512-7trfIXclHYlGhwBGkR/1e3iFFHL59Y1lpBuJ6KLLqr0o8waMc5mBwS8KcoWYJArbhB/k9cklGUWcn+MvhhHO8A==}
 
-  '@sanity/pkg-utils@9.0.3':
-    resolution: {integrity: sha512-+f5uR0aJR9PHN4Yi9Ue5LMWZHDv0qsg+IDFH6ANgJlN6D8x+1qcKsaoKGF/88hkbfjonSxtwF7HLxo+KbEpACQ==}
+  '@sanity/pkg-utils@9.0.5':
+    resolution: {integrity: sha512-qn4PNGGrXtjWNBIboz8exwsceIyLBBaEf+hgZWjFY3RYNLtbeZdQjJxpTr8glm65gGsZF3L76f2iHJCKEuUP3w==}
     engines: {node: '>=20.19 <22 || >=22.12'}
     hasBin: true
     peerDependencies:
@@ -6578,8 +6578,8 @@ packages:
     resolution: {integrity: sha512-zK7YHHz4ZXpW89AHXUPbQVGKI7uvkd3hzusTdotCg1UxyaVtg0zFJSTfW/Dq5f7OBBVnq6cZIaC8Ti4hb6dtCA==}
     engines: {node: '>= 14'}
 
-  zod-validation-error@4.0.2:
-    resolution: {integrity: sha512-Q6/nZLe6jxuU80qb/4uJ4t5v2VEZ44lzQjPDhYJNztRQ4wyWc6VF3D3Kb/fAuPetZQnhS3hnajCf9CsWesghLQ==}
+  zod-validation-error@5.0.0:
+    resolution: {integrity: sha512-hmk+pkyKq7Q71PiWVSDUc3VfpzpvcRHZ3QPw9yEMVvmtCekaMeOHnbr3WbxfrgEnQTv6haGP4cmv0Ojmihzsxw==}
     engines: {node: '>=18.0.0'}
     peerDependencies:
       zod: ^3.25.0 || ^4.0.0
@@ -7994,7 +7994,7 @@ snapshots:
     transitivePeerDependencies:
       - '@types/node'
 
-  '@microsoft/api-extractor@7.53.3(@types/node@24.10.0)':
+  '@microsoft/api-extractor@7.54.0(@types/node@24.10.0)':
     dependencies:
       '@microsoft/api-extractor-model': 7.31.3(@types/node@24.10.0)
       '@microsoft/tsdoc': 0.15.1
@@ -8003,6 +8003,7 @@ snapshots:
       '@rushstack/rig-package': 0.6.0
       '@rushstack/terminal': 0.19.3(@types/node@24.10.0)
       '@rushstack/ts-command-line': 5.1.3(@types/node@24.10.0)
+      diff: 8.0.2
       lodash: 4.17.21
       minimatch: 10.0.3
       resolve: 1.22.11
@@ -8977,13 +8978,13 @@ snapshots:
       - '@types/react'
       - supports-color
 
-  '@sanity/pkg-utils@9.0.3(@types/babel__core@7.20.5)(@types/node@24.10.0)(typescript@5.9.3)':
+  '@sanity/pkg-utils@9.0.5(@types/babel__core@7.20.5)(@types/node@24.10.0)(typescript@5.9.3)':
     dependencies:
       '@babel/core': 7.28.5
       '@babel/parser': 7.28.5
       '@babel/preset-typescript': 7.28.5(@babel/core@7.28.5)
       '@babel/types': 7.28.5
-      '@microsoft/api-extractor': 7.53.3(@types/node@24.10.0)
+      '@microsoft/api-extractor': 7.54.0(@types/node@24.10.0)
       '@microsoft/tsdoc-config': 0.17.1
       '@optimize-lodash/rollup-plugin': 5.0.2(rollup@4.52.5)
       '@rollup/plugin-alias': 6.0.0(rollup@4.52.5)
@@ -9024,7 +9025,7 @@ snapshots:
       typescript: 5.9.3
       uuid: 13.0.0
       zod: 4.1.12
-      zod-validation-error: 4.0.2(zod@4.1.12)
+      zod-validation-error: 5.0.0(zod@4.1.12)
     transitivePeerDependencies:
       - '@ts-macro/tsc'
       - '@types/babel__core'
@@ -13683,7 +13684,7 @@ snapshots:
       compress-commons: 6.0.2
       readable-stream: 4.7.0
 
-  zod-validation-error@4.0.2(zod@4.1.12):
+  zod-validation-error@5.0.0(zod@4.1.12):
     dependencies:
       zod: 4.1.12
 
