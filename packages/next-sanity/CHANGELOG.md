@@ -5,6 +5,13 @@
 All notable changes to this project will be documented in this file. See
 [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [11.6.7](https://github.com/sanity-io/next-sanity/compare/next-sanity-v11.6.6...next-sanity-v11.6.7) (2025-11-17)
+
+
+### Bug Fixes
+
+* **deps:** update sanity monorepo to ^4.15.0 (main) ([#2989](https://github.com/sanity-io/next-sanity/issues/2989)) ([b6fd825](https://github.com/sanity-io/next-sanity/commit/b6fd82591e5d1dbfcc762b960750aea80ef6f5b9))
+
 ## [11.6.6](https://github.com/sanity-io/next-sanity/compare/next-sanity-v11.6.5...next-sanity-v11.6.6) (2025-11-11)
 
 
