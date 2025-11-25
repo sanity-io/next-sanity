@@ -5,6 +5,15 @@
 All notable changes to this project will be documented in this file. See
 [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [11.6.9](https://github.com/sanity-io/next-sanity/compare/next-sanity-v11.6.8...next-sanity-v11.6.9) (2025-11-25)
+
+
+### Bug Fixes
+
+* **deps:** update dependency @sanity/preview-url-secret to v3 (main) ([#3018](https://github.com/sanity-io/next-sanity/issues/3018)) ([0f0765a](https://github.com/sanity-io/next-sanity/commit/0f0765a62697c025a6b9374ea9102b69f2177607))
+* **deps:** update dependency @sanity/visual-editing to ^4.0.2 (main) ([#3014](https://github.com/sanity-io/next-sanity/issues/3014)) ([fc8720d](https://github.com/sanity-io/next-sanity/commit/fc8720d1767f3eade5b47c6f2c2e4b7c64374f73))
+* **deps:** update sanity monorepo to ^4.18.0 (main) ([#3017](https://github.com/sanity-io/next-sanity/issues/3017)) ([a47b473](https://github.com/sanity-io/next-sanity/commit/a47b473c242be37acc615c61a60e947db36336a4))
+
 ## [11.6.8](https://github.com/sanity-io/next-sanity/compare/next-sanity-v11.6.7...next-sanity-v11.6.8) (2025-11-19)
 
 
