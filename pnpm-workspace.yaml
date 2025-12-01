@@ -4,7 +4,6 @@ packages:
   - packages/*
 
 catalog:
-  '@next/bundle-analyzer': 16.1.0-canary.9
   '@next/env': 16.1.0-canary.9
   '@sanity/client': ^7.13.1
   '@sanity/image-url': ^2.0.1
@@ -26,7 +25,6 @@ catalog:
 linkWorkspacePackages: deep
 
 overrides:
-  '@next/bundle-analyzer': 'catalog:'
   '@next/env': 'catalog:'
   '@types/react': 'catalog:'
   '@types/react-dom': 'catalog:'
