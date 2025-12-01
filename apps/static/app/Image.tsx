@@ -1,4 +1,4 @@
-import createImageUrlBuilder from '@sanity/image-url'
+import {createImageUrlBuilder} from '@sanity/image-url'
 import {Image as SanityImage, type ImageProps} from 'next-sanity/image'
 
 const imageBuilder = createImageUrlBuilder({

@@ -192,5 +192,5 @@ $ yarn add @sanity/image-url
 
 ```diff
 -import { createImageUrlBuilder } from 'next-sanity'
-+import createImageUrlBuilder from '@sanity/image-url'
++import { createImageUrlBuilder } from '@sanity/image-url'
 ```
