@@ -23,17 +23,16 @@ const RefreshOnReconnect = dynamic(() => import('./RefreshOnReconnect'), {ssr: f
 /**
  * @public
  */
-export interface SanityLiveProps
-  extends Pick<
-    InitializedClientConfig,
-    | 'projectId'
-    | 'dataset'
-    | 'apiHost'
-    | 'apiVersion'
-    | 'useProjectHostname'
-    | 'token'
-    | 'requestTagPrefix'
-  > {
+export interface SanityLiveProps extends Pick<
+  InitializedClientConfig,
+  | 'projectId'
+  | 'dataset'
+  | 'apiHost'
+  | 'apiVersion'
+  | 'useProjectHostname'
+  | 'token'
+  | 'requestTagPrefix'
+> {
   // handleDraftModeAction: (secret: string) => Promise<void | string>
   draftModeEnabled: boolean
   draftModePerspective?: ClientPerspective

@@ -34,11 +34,11 @@ export default async function RootLayout({children}: {children: React.ReactNode}
     <html lang="en">
       <head />
       <body className="px-8">
-        <div className="border p-4 mb-4 mt-8">
+        <div className="mt-8 mb-4 border p-4">
           <p>Draft mode: {isDraftMode ? 'On' : 'Off'}</p>
           {isDraftMode && <DebugStatus />}
           <form action={toggleDraftMode}>
-            <button className="bg-blue-500 text-white px-2 py-1 rounded font-medium">
+            <button className="rounded bg-blue-500 px-2 py-1 font-medium text-white">
               <FormStatusLabel idle="Toggle" pending="Toggling..." />
             </button>
           </form>
