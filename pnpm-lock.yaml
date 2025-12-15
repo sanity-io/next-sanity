@@ -42,8 +42,8 @@ importers:
   .:
     dependencies:
       '@sanity/prettier-config':
-        specifier: ^2.0.2
-        version: 2.0.2(prettier@3.7.3)
+        specifier: ^3.0.0
+        version: 3.0.0(prettier@3.7.3)
       oxlint:
         specifier: ^1.30.0
         version: 1.30.0
@@ -2851,10 +2851,10 @@ packages:
     resolution: {integrity: sha512-D0S2CfVyda99cd/8SnXxQ2tsVlVuRq4CAOjxRuF53evYmBhpWezSEpWKqAa0e1lunGBKK1EroxmOzb5ofNRwMg==}
     engines: {node: '>=20.19 <22 || >=22.12'}
 
-  '@sanity/prettier-config@2.0.2':
-    resolution: {integrity: sha512-JNqHc8cHJ7usSzC5DDJZOlq1mLN+uLF9ZLqtzcX5g8hZUC+Rj5vmFHJfxvOiLjGHqiFOmSS0lfyDE9DR34o3lg==}
+  '@sanity/prettier-config@3.0.0':
+    resolution: {integrity: sha512-xEfjbEzn1nIVcwlSKeXST+4wkqLevX9pq1jx3w5bUF51ku/EJFxAqlRGpBQghjwZPZbq0mQ9FAglgaB+k3/J5Q==}
     peerDependencies:
-      prettier: ^3.6.2
+      prettier: ^3.7.3
 
   '@sanity/preview-url-secret@3.0.0':
     resolution: {integrity: sha512-O7o6hsxbMp7y20znU9seV6h8WeTS+U4ovtqLd6j3oaSRyuriZenN/O6K39LJaKC2TZY1RUsYRvcv5/rNq7sAEQ==}
@@ -5450,8 +5450,8 @@ packages:
     resolution: {integrity: sha512-rU+ZAv1Ur9jAUZtGPebQVQPzdGhNzaEiQ7VL9+cjsAWPHFYOccNXPNiev1CCDSOg/2j7UujM7ojNhpkuILEVNQ==}
     engines: {node: '>=18.12'}
 
-  prettier-plugin-packagejson@2.5.19:
-    resolution: {integrity: sha512-Qsqp4+jsZbKMpEGZB1UP1pxeAT8sCzne2IwnKkr+QhUe665EXUo3BAvTf1kAPCqyMv9kg3ZmO0+7eOni/C6Uag==}
+  prettier-plugin-packagejson@2.5.20:
+    resolution: {integrity: sha512-G8cowPh+QmJJECTZlrPDKWkVVcwrFjF2rGcw546w3N8blLoc4szSs8UUPfFVxHUNLUjiru71Ah83g1lZkeK9Bw==}
     peerDependencies:
       prettier: '>= 1.16.0'
     peerDependenciesMeta:
@@ -5983,11 +5983,11 @@ packages:
   smob@1.5.0:
     resolution: {integrity: sha512-g6T+p7QO8npa+/hNx9ohv1E5pVCmWrVCUzUXJyLdMmftX6ER0oiWY/w9knEonLpnOp6b6FenKnMfR8gqwWdwig==}
 
-  sort-object-keys@1.1.3:
-    resolution: {integrity: sha512-855pvK+VkU7PaKYPc+Jjnmt4EzejQHyhhF33q31qG8x7maDzkeFhAAThdCYay11CISO+qAMwjOBP+fPZe0IPyg==}
+  sort-object-keys@2.0.1:
+    resolution: {integrity: sha512-R89fO+z3x7hiKPXX5P0qim+ge6Y60AjtlW+QQpRozrrNcR1lw9Pkpm5MLB56HoNvdcLHL4wbpq16OcvGpEDJIg==}
 
-  sort-package-json@3.4.0:
-    resolution: {integrity: sha512-97oFRRMM2/Js4oEA9LJhjyMlde+2ewpZQf53pgue27UkbEXfHJnDzHlUxQ/DWUkzqmp7DFwJp8D+wi/TYeQhpA==}
+  sort-package-json@3.5.0:
+    resolution: {integrity: sha512-moY4UtptUuP5sPuu9H9dp8xHNel7eP5/Kz/7+90jTvC0IOiPH2LigtRM/aSFSxreaWoToHUVUpEV4a2tAs2oKQ==}
     engines: {node: '>=20'}
     hasBin: true
 
@@ -8667,7 +8667,8 @@ snapshots:
 
   '@oxc-project/runtime@0.99.0': {}
 
-  '@oxc-project/types@0.97.0': {}
+  '@oxc-project/types@0.97.0':
+    optional: true
 
   '@oxc-project/types@0.99.0': {}
 
@@ -8849,6 +8850,7 @@ snapshots:
   '@prettier/plugin-oxc@0.0.5':
     dependencies:
       oxc-parser: 0.97.0
+    optional: true
 
   '@publint/pack@0.1.2': {}
 
@@ -9494,11 +9496,10 @@ snapshots:
       - '@sanity/client'
       - '@sanity/types'
 
-  '@sanity/prettier-config@2.0.2(prettier@3.7.3)':
+  '@sanity/prettier-config@3.0.0(prettier@3.7.3)':
     dependencies:
-      '@prettier/plugin-oxc': 0.0.5
       prettier: 3.7.3
-      prettier-plugin-packagejson: 2.5.19(prettier@3.7.3)
+      prettier-plugin-packagejson: 2.5.20(prettier@3.7.3)
 
   '@sanity/preview-url-secret@3.0.0(@sanity/client@7.13.2)(@sanity/icons@3.7.4(react@19.2.1))(sanity@4.22.0-next.24(@emotion/is-prop-valid@1.4.0)(@portabletext/sanity-bridge@1.2.14(@types/react@19.2.7))(@sanity/styled-components@6.1.23(react-dom@19.2.1(react@19.2.1))(react@19.2.1))(@types/node@24.10.4)(@types/react-dom@19.2.3(@types/react@19.2.7))(@types/react@19.2.7)(immer@10.2.0)(jiti@2.6.1)(lightningcss@1.30.2)(react-dom@19.2.1(react@19.2.1))(react@19.2.1)(terser@5.44.1)(tsx@4.20.6)(typescript@5.9.3)(yaml@2.8.1))':
     dependencies:
@@ -12130,6 +12131,7 @@ snapshots:
       '@oxc-parser/binding-wasm32-wasi': 0.97.0
       '@oxc-parser/binding-win32-arm64-msvc': 0.97.0
       '@oxc-parser/binding-win32-x64-msvc': 0.97.0
+    optional: true
 
   oxlint@1.30.0:
     optionalDependencies:
@@ -12338,9 +12340,9 @@ snapshots:
       find-yarn-workspace-root2: 1.2.16
       which-pm: 3.0.1
 
-  prettier-plugin-packagejson@2.5.19(prettier@3.7.3):
+  prettier-plugin-packagejson@2.5.20(prettier@3.7.3):
     dependencies:
-      sort-package-json: 3.4.0
+      sort-package-json: 3.5.0
       synckit: 0.11.11
     optionalDependencies:
       prettier: 3.7.3
@@ -13223,16 +13225,16 @@ snapshots:
 
   smob@1.5.0: {}
 
-  sort-object-keys@1.1.3: {}
+  sort-object-keys@2.0.1: {}
 
-  sort-package-json@3.4.0:
+  sort-package-json@3.5.0:
     dependencies:
       detect-indent: 7.0.2
       detect-newline: 4.0.1
       git-hooks-list: 4.1.1
       is-plain-obj: 4.1.0
       semver: 7.7.3
-      sort-object-keys: 1.1.3
+      sort-object-keys: 2.0.1
       tinyglobby: 0.2.15
 
   source-map-js@1.2.1: {}
