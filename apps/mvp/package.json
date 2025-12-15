@@ -7,8 +7,8 @@
     "#groqd": "./groqd-client.ts"
   },
   "scripts": {
-    "build": "next build --profile --webpack && sanity manifest extract --path public/studio/static && pnpm copy-analyze",
-    "copy-analyze": "cp -r .next/analyze public/ || true",
+    "analyze": "next experimental-analyze --serve",
+    "build": "next build --profile && sanity manifest extract --path public/studio/static",
     "dev": "next dev",
     "start": "next start",
     "type-check": "next typegen && tsc --noEmit",
@@ -27,7 +27,6 @@
     "sanity": "catalog:"
   },
   "devDependencies": {
-    "@next/bundle-analyzer": "catalog:",
     "@next/env": "catalog:",
     "@repo/typescript-config": "workspace:*",
     "@tailwindcss/postcss": "^4.1.17",

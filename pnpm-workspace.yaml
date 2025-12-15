@@ -4,29 +4,27 @@ packages:
   - packages/*
 
 catalog:
-  '@next/bundle-analyzer': 16.0.7
-  '@next/env': 16.0.7
+  '@next/env': 16.1.0-canary.21
   '@sanity/client': ^7.13.1
   '@sanity/image-url': ^2.0.1
   '@sanity/preview-url-secret': ^3.0.0
-  '@sanity/vision': ^4.19.0
+  '@sanity/vision': 4.22.0-next.24
   '@types/node': ^24
   '@types/react': ^19.2.7
   '@types/react-dom': ^19.2.3
   '@types/react-is': ^19.2.0
   groqd: ^1.7.1
-  next: 16.0.7
+  next: 16.1.0-canary.21
   react: ^19.2.1
   react-dom: ^19.2.1
   react-is: ^19.2.1
-  sanity: ^4.19.0
+  sanity: 4.22.0-next.24
   styled-components: ^6.1.19
   typescript: 5.9.3
 
 linkWorkspacePackages: deep
 
 overrides:
-  '@next/bundle-analyzer': 'catalog:'
   '@next/env': 'catalog:'
   '@types/react': 'catalog:'
   '@types/react-dom': 'catalog:'
