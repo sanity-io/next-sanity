@@ -14,8 +14,10 @@ import {comlinkListeners, comlink as comlinkSnapshot} from '../../hooks/context'
 /**
  * @public
  */
-export interface SanityLiveStreamProps
-  extends Pick<InitializedClientConfig, 'projectId' | 'dataset'> {
+export interface SanityLiveStreamProps extends Pick<
+  InitializedClientConfig,
+  'projectId' | 'dataset'
+> {
   query: string
   params?: QueryParams
   perspective?: Exclude<ClientPerspective, 'raw'>

@@ -108,7 +108,7 @@ export default async function Posts(props: PostsLayoutProps) {
                 </div>
               </div>
               {props.draftMode && post.status === 'draft' && (
-                <span className="absolute left-2 top-2 rounded-md bg-white/50 px-2 py-1 text-xs font-semibold uppercase backdrop-blur-sm">
+                <span className="absolute top-2 left-2 rounded-md bg-white/50 px-2 py-1 text-xs font-semibold uppercase backdrop-blur-sm">
                   {post.status}
                 </span>
               )}

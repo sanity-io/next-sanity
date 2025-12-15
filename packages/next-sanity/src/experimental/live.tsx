@@ -361,8 +361,10 @@ export function defineLive(config: DefineSanityLiveOptions): {
   return {sanityFetch, SanityLive}
 }
 
-interface SanityLiveServerComponentProps
-  extends Omit<SanityLiveProps, 'draftModeEnabled' | 'token' | 'draftModePerspective'> {
+interface SanityLiveServerComponentProps extends Omit<
+  SanityLiveProps,
+  'draftModeEnabled' | 'token' | 'draftModePerspective'
+> {
   browserToken: string | false | undefined
   // origin: string
   // perspective?: Exclude<ClientPerspective, 'raw'>
