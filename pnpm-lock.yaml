@@ -287,8 +287,8 @@ importers:
         specifier: ^1.0.5
         version: 1.0.5
       '@sanity/pkg-utils':
-        specifier: ^9.2.1
-        version: 9.2.1(@types/babel__core@7.20.5)(@types/node@24.10.4)(typescript@5.9.3)
+        specifier: ^9.2.3
+        version: 9.2.3(@types/babel__core@7.20.5)(@types/node@24.10.4)(typescript@5.9.3)
       '@sanity/types':
         specifier: ^4.21.1
         version: 4.21.1(@types/react@19.2.7)(debug@4.4.3)
@@ -2068,14 +2068,14 @@ packages:
   '@octokit/types@13.10.0':
     resolution: {integrity: sha512-ifLaO34EbbPj0Xgro4G5lP5asESjwHracYJvVaPIyXMuiuXLlhic3S47cBdTb+jfODkTE5YtGCLt3Ay3+J97sA==}
 
-  '@optimize-lodash/rollup-plugin@5.1.0':
-    resolution: {integrity: sha512-dBQYGH8+n4Z/877e61PJteVZEc+U1wfRF6IhKqW0cABRIsqMxpWynyov6M6Sd4IUjru0dnh0EG55X86JO6WakQ==}
+  '@optimize-lodash/rollup-plugin@6.0.0':
+    resolution: {integrity: sha512-zTNVDRHGcezQCT2UVK7CSqJi7YKyM1YTJPvCkbE3NecHCsI/mdlizXGqcXgoshzyemsfscY7Tf8MmGnor2HAFg==}
     engines: {node: '>= 18'}
     peerDependencies:
       rollup: '>= 4.x'
 
-  '@optimize-lodash/transform@3.0.6':
-    resolution: {integrity: sha512-9+qMSaDpahC0+vX2ChM46/ls6a5Ankqs6RTLrHSaFpm7o1mFanP82e+jm9/0o5D660ueK8dWJGPCXQrBxBNNWA==}
+  '@optimize-lodash/transform@4.0.0':
+    resolution: {integrity: sha512-/v61xAfj3e3g14UDP9qriYgkifLuSwALrhcSiY3SfuzzDJ5pRBsfp//Ih3daJlUMrODvB6IUk7dGfxgnRwcxjg==}
     engines: {node: '>= 12'}
 
   '@oxc-parser/binding-android-arm64@0.97.0':
@@ -2836,8 +2836,8 @@ packages:
   '@sanity/mutator@4.22.0-next.24':
     resolution: {integrity: sha512-euKrP+fLgHrc0C8nzIZ+U3sSU70kmAtnKIoCWyV8yBpv3C/yNt+w5sRm1SR44Anz212DFsRp1N6yPwRzax5zlA==}
 
-  '@sanity/pkg-utils@9.2.1':
-    resolution: {integrity: sha512-QeRift4LSW0XcgUX/lcUDRmHs2NH8ut2eGWVTyn1YU2UmBe4Gh8fpyHSU+P+LI68N5uT71uzpIcG1WCWMeLUeg==}
+  '@sanity/pkg-utils@9.2.3':
+    resolution: {integrity: sha512-hYkrs8fmqUTe5oXzkm9PHyztfoGKAsKVNCRlWEnPA/YG63780dXwyptbySCuwLHUy4cSX7oasxIqKCaalfD1HQ==}
     engines: {node: '>=20.19 <22 || >=22.12'}
     hasBin: true
     peerDependencies:
@@ -8607,13 +8607,13 @@ snapshots:
     dependencies:
       '@octokit/openapi-types': 24.2.0
 
-  '@optimize-lodash/rollup-plugin@5.1.0(rollup@4.53.3)':
+  '@optimize-lodash/rollup-plugin@6.0.0(rollup@4.53.3)':
     dependencies:
-      '@optimize-lodash/transform': 3.0.6
+      '@optimize-lodash/transform': 4.0.0
       '@rollup/pluginutils': 5.3.0(rollup@4.53.3)
       rollup: 4.53.3
 
-  '@optimize-lodash/transform@3.0.6':
+  '@optimize-lodash/transform@4.0.0':
     dependencies:
       estree-walker: 2.0.2
       magic-string: 0.30.21
@@ -9419,7 +9419,7 @@ snapshots:
       - '@types/react'
       - supports-color
 
-  '@sanity/pkg-utils@9.2.1(@types/babel__core@7.20.5)(@types/node@24.10.4)(typescript@5.9.3)':
+  '@sanity/pkg-utils@9.2.3(@types/babel__core@7.20.5)(@types/node@24.10.4)(typescript@5.9.3)':
     dependencies:
       '@babel/core': 7.28.5
       '@babel/parser': 7.28.5
@@ -9427,7 +9427,7 @@ snapshots:
       '@babel/types': 7.28.5
       '@microsoft/api-extractor': 7.55.1(@types/node@24.10.4)
       '@microsoft/tsdoc-config': 0.18.0
-      '@optimize-lodash/rollup-plugin': 5.1.0(rollup@4.53.3)
+      '@optimize-lodash/rollup-plugin': 6.0.0(rollup@4.53.3)
       '@rollup/plugin-alias': 6.0.0(rollup@4.53.3)
       '@rollup/plugin-babel': 6.1.0(@babel/core@7.28.5)(@types/babel__core@7.20.5)(rollup@4.53.3)
       '@rollup/plugin-commonjs': 29.0.0(rollup@4.53.3)
