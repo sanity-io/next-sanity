@@ -244,8 +244,8 @@ importers:
   packages/next-sanity:
     dependencies:
       '@portabletext/react':
-        specifier: ^5.0.0
-        version: 5.0.0(react@19.2.1)
+        specifier: ^6.0.0
+        version: 6.0.0(react@19.2.1)
       '@sanity/client':
         specifier: ^7.13.1
         version: 7.13.2(debug@4.4.3)
@@ -2296,12 +2296,6 @@ packages:
       '@portabletext/editor': ^3.3.13
       react: ^19.2.1
 
-  '@portabletext/react@5.0.0':
-    resolution: {integrity: sha512-ZEYhjsiUn2Dvrhyao3qAvi6C/re9ZBt2atp14dtwWtPruMNgp1uMf3p+URf0pEEhu+rMEh9JeK0A8FgNejEWCg==}
-    engines: {node: '>=20.19 <22 || >=22.12'}
-    peerDependencies:
-      react: ^19.2.1
-
   '@portabletext/react@6.0.0':
     resolution: {integrity: sha512-8jzmFruC6fhC8A47c+RdiFfldzRq/rRW/FwRsr5ZMeNeCf3S0dXVlM/LJQRWH5JLQXbH3oxINN1UV2mbuZQJ9w==}
     engines: {node: '>=20.19 <22 || >=22.12'}
@@ -2320,16 +2314,8 @@ packages:
     resolution: {integrity: sha512-XNr/yCS1yvcfx/rsGz82yxGtdBjqXcB0SFU5ci10M/o6BxexNTMPnLshopJgDxLQ1y0kLQBiYHUN+vbQtKqcKA==}
     engines: {node: '>=20.19 <22 || >=22.12'}
 
-  '@portabletext/toolkit@4.0.0':
-    resolution: {integrity: sha512-Jj/QIy3vzZCNcxiUGM7KjGhUhyVjch+9pOzotWRARPNe07R6nbF/cRsKL70q5Xizf+6PVtFYwks4CSXKInC+wg==}
-    engines: {node: '>=20.19 <22 || >=22.12'}
-
   '@portabletext/toolkit@5.0.0':
     resolution: {integrity: sha512-jcDOv1RKO/j08pdnc/6i5tULcAzEYCR41XDVYOqmmX8bvEJbWJabhpVjHT1ls6p27v9gtA4NG2SO5xdMpgWSQQ==}
-    engines: {node: '>=20.19 <22 || >=22.12'}
-
-  '@portabletext/types@3.0.0':
-    resolution: {integrity: sha512-7U8+bFcnguNtXr4rwMDj0EvJJDRzLaaof2mQqCjUcqxuuJpAppFaATZgrKmPI1uBgtFMi4unk1nIaOOmLHrX8Q==}
     engines: {node: '>=20.19 <22 || >=22.12'}
 
   '@portabletext/types@4.0.0':
@@ -8808,12 +8794,6 @@ snapshots:
     transitivePeerDependencies:
       - '@types/react'
 
-  '@portabletext/react@5.0.0(react@19.2.1)':
-    dependencies:
-      '@portabletext/toolkit': 4.0.0
-      '@portabletext/types': 3.0.0
-      react: 19.2.1
-
   '@portabletext/react@6.0.0(react@19.2.1)':
     dependencies:
       '@portabletext/toolkit': 5.0.0
@@ -8837,15 +8817,9 @@ snapshots:
       '@portabletext/toolkit': 5.0.0
       '@portabletext/types': 4.0.0
 
-  '@portabletext/toolkit@4.0.0':
-    dependencies:
-      '@portabletext/types': 3.0.0
-
   '@portabletext/toolkit@5.0.0':
     dependencies:
       '@portabletext/types': 4.0.0
-
-  '@portabletext/types@3.0.0': {}
 
   '@portabletext/types@4.0.0': {}
 
