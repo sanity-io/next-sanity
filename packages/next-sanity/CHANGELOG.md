@@ -5,6 +5,16 @@
 All notable changes to this project will be documented in this file. See
 [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [11.6.11](https://github.com/sanity-io/next-sanity/compare/next-sanity-v11.6.10...next-sanity-v11.6.11) (2025-12-15)
+
+
+### Bug Fixes
+
+* **deps:** update dependency @portabletext/react to v6 (main) ([#3055](https://github.com/sanity-io/next-sanity/issues/3055)) ([96d938f](https://github.com/sanity-io/next-sanity/commit/96d938f939b7eac3cdc763348d041060da7372ed))
+* **deps:** update dependency @sanity/client to ^7.13.1 (main) ([#3032](https://github.com/sanity-io/next-sanity/issues/3032)) ([f12bd94](https://github.com/sanity-io/next-sanity/commit/f12bd944c453ee99342fb19b3f431921cbc9d3db))
+* **deps:** update dependency @sanity/image-url to v2 (main) ([#3042](https://github.com/sanity-io/next-sanity/issues/3042)) ([36c63cc](https://github.com/sanity-io/next-sanity/commit/36c63ccf00918ee735dd428e541a6385c0e616c8))
+* **deps:** update dependency @sanity/visual-editing to ^4.0.3 (main) ([#3069](https://github.com/sanity-io/next-sanity/issues/3069)) ([b5b9081](https://github.com/sanity-io/next-sanity/commit/b5b90816f9f5a0bcf0ec1b6e7a477eca1c793417))
+
 ## [11.6.10](https://github.com/sanity-io/next-sanity/compare/next-sanity-v11.6.9...next-sanity-v11.6.10) (2025-11-26)
 
 
