@@ -5,6 +5,31 @@
 All notable changes to this project will be documented in this file. See
 [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [12.0.0](https://github.com/sanity-io/next-sanity/compare/next-sanity-v11.6.12...next-sanity-v12.0.0) (2025-12-16)
+
+
+### ⚠ BREAKING CHANGES
+
+* See the migration guide: https://github.com/sanity-io/next-sanity/blob/main/packages/next-sanity/MIGRATE-v11-to-v12.md
+* require react 19.2
+* **deps:** update sanity monorepo to v5 (main) (major) ([#3077](https://github.com/sanity-io/next-sanity/issues/3077))
+
+### Features
+
+* require react 19.2 ([b7e42f4](https://github.com/sanity-io/next-sanity/commit/b7e42f42e60ab93664d63ea801e906d7b67932ab))
+
+
+### Bug Fixes
+
+* **deps:** update dependency @sanity/preview-url-secret to v4 (main) ([#3080](https://github.com/sanity-io/next-sanity/issues/3080)) ([137bb2d](https://github.com/sanity-io/next-sanity/commit/137bb2d02b5df36b7d2efd1a00399317068ff690))
+* **deps:** update dependency @sanity/visual-editing to v5 (main) ([#3081](https://github.com/sanity-io/next-sanity/issues/3081)) ([e4af494](https://github.com/sanity-io/next-sanity/commit/e4af49407f09cbd70e71061e430daf269c5bb733))
+* **deps:** update sanity monorepo to v5 (main) (major) ([#3077](https://github.com/sanity-io/next-sanity/issues/3077)) ([9a0a75c](https://github.com/sanity-io/next-sanity/commit/9a0a75ccf864712b7bf6554cbc16a09008744f87))
+
+
+### Miscellaneous Chores
+
+* require `next@16` ([c0e159a](https://github.com/sanity-io/next-sanity/commit/c0e159a77e98229866dc558c13a9af8fbfc08dbf))
+
 ## [11.6.12](https://github.com/sanity-io/next-sanity/compare/next-sanity-v11.6.11...next-sanity-v11.6.12) (2025-12-16)
 
 
