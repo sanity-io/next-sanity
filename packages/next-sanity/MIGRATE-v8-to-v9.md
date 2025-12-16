@@ -16,7 +16,7 @@ Upgrade to the latest v2 stable using the following command:
 npm install @sanity/ui@latest --save-exact
 ```
 
-### Minumum required `styled-components` is now `6.1.0`
+### Minimum required `styled-components` is now `6.1.0`
 
 Upgrade using:
 

@@ -1,6 +1,6 @@
 ## Migrate
 
-### The `next-sanity/preview`, and `next-sanity/preview/live-query`, exports has been removed
+### The `next-sanity/preview` and `next-sanity/preview/live-query` exports have been removed
 
 These exports were used to implement live preview of draft content, and comes from the `@sanity/preview-kit` library, which is no longer actively developed.
 

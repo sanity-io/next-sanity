@@ -634,7 +634,7 @@ The `token` passed to `defineLive` needs [Viewer rights](https://www.sanity.io/d
 The same token can be used as both `browserToken` and `serverToken`, as the `browserToken` is only shared with the browser when Draft Mode is enabled. Draft Mode can only be initiated by either Sanity's Presentation Tool or the Vercel Toolbar.
 
 > Good to know:
-> Enterprise plans allow the creation of custom roles with more resticted access rights than the `Viewer` role, enabling the use of a `browserToken` specifically for authenticating the Live Content API. We're working to extend this capability to all Sanity price plans.
+> Enterprise plans allow the creation of custom roles with more restricted access rights than the `Viewer` role, enabling the use of a `browserToken` specifically for authenticating the Live Content API. We're working to extend this capability to all Sanity price plans.
 
 #### 2. Render `<SanityLive />` in the root `layout.tsx`
 

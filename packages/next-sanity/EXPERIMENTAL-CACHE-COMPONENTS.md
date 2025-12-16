@@ -1,6 +1,6 @@
 > [!CAUTION]
 > The experimental `next-sanity/experimental/live` API is not yet stable and could have breaking changes in future minor releases.
-> It requires `cacheComponents` to be enabled in your `next.confict.ts`, which was introduced in [`next@16.0.0`](https://nextjs.org/blog/next-16#cache-components).
+> It requires `cacheComponents` to be enabled in your `next.config.ts`, which was introduced in [`next@16.0.0`](https://nextjs.org/blog/next-16#cache-components).
 
 # Setup
 
