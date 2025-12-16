@@ -3,7 +3,6 @@
 /* eslint-disable no-restricted-globals,no-process-env */
 
 import sharedConfig from '@repo/sanity-config'
-import {debugSecrets} from '@sanity/preview-url-secret/sanity-plugin-debug-secrets'
 import {defineConfig} from 'sanity'
 import {presentationTool, type PreviewUrlResolverOptions} from 'sanity/presentation'
 
@@ -24,6 +23,5 @@ export default defineConfig({
       previewUrl: {preview: `${process.env.NEXT_PUBLIC_TEST_BASE_PATH || ''}/`, previewMode},
     }),
     sharedConfig(),
-    debugSecrets(),
   ],
 })
