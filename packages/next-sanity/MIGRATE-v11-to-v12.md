@@ -13,3 +13,7 @@ npm install sanity@latest --save-exact
 ### Minimum required `react` and `react-dom` is now `19.2.3`
 
 [If you're still on React 18, you need to upgrade to React 19.2.3 or later.](https://react.dev/blog/2024/04/25/react-19-upgrade-guide)
+
+### Minimum required `next` is now `16`
+
+v15 is no longer supported. [You need to upgrade to v16.](https://nextjs.org/docs/app/guides/upgrading/version-16)
