@@ -49,46 +49,6 @@
   "main": "./dist/index.js",
   "module": "./dist/index.js",
   "types": "./dist/index.d.ts",
-  "typesVersions": {
-    "*": {
-      "draft-mode": [
-        "./dist/draft-mode/index.d.ts"
-      ],
-      "hooks": [
-        "./dist/hooks/index.d.ts"
-      ],
-      "live": [
-        "./dist/live.d.ts"
-      ],
-      "experimental/live": [
-        "./dist/experimental/live.d.ts"
-      ],
-      "experimental/client-components/live": [
-        "./dist/experimental/client-components/live.d.ts"
-      ],
-      "image": [
-        "./dist/image/index.d.ts"
-      ],
-      "studio": [
-        "./dist/studio/index.d.ts"
-      ],
-      "studio/client-component": [
-        "./dist/studio/client-component/index.d.ts"
-      ],
-      "visual-editing": [
-        "./dist/visual-editing/index.d.ts"
-      ],
-      "visual-editing/client-component": [
-        "./dist/visual-editing/client-component/index.d.ts"
-      ],
-      "visual-editing/server-actions": [
-        "./dist/visual-editing/server-actions/index.d.ts"
-      ],
-      "webhook": [
-        "./dist/webhook/index.d.ts"
-      ]
-    }
-  },
   "files": [
     "dist",
     "src",
@@ -141,8 +101,8 @@
   "peerDependencies": {
     "@sanity/client": "^7.13.2",
     "next": "^15.1.0-0 || ^16.0.0-0",
-    "react": "^18.3 || ^19",
-    "react-dom": "^18.3 || ^19",
+    "react": "^19.2.3",
+    "react-dom": "^19.2.3",
     "sanity": "^5.0.0",
     "styled-components": "^6.1"
   },
