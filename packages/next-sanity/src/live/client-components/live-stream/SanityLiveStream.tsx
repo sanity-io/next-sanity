@@ -7,8 +7,7 @@ import {
 import {stegaEncodeSourceMap} from '@sanity/client/stega'
 import type {LoaderControllerMsg} from '@sanity/presentation-comlink'
 import {dequal} from 'dequal/lite'
-import {use, useCallback, useEffect, useState, useSyncExternalStore} from 'react'
-import {useEffectEvent} from 'use-effect-event'
+import {use, useCallback, useEffect, useState, useSyncExternalStore, useEffectEvent} from 'react'
 import {comlinkListeners, comlink as comlinkSnapshot} from '../../hooks/context'
 
 /**

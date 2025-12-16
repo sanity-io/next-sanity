@@ -7,8 +7,7 @@ import {
   type LoaderNodeMsg,
 } from '@sanity/presentation-comlink'
 import {useRouter} from 'next/navigation'
-import {startTransition, useEffect} from 'react'
-import {useEffectEvent} from 'use-effect-event'
+import {startTransition, useEffect, useEffectEvent} from 'react'
 import {
   setComlink,
   setComlinkClientConfig,

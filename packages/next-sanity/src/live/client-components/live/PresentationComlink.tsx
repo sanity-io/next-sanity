@@ -13,9 +13,8 @@ import {
 import {useRouter} from 'next/navigation'
 import {
   useEffect,
-  // useState
+  useEffectEvent,
 } from 'react'
-import {useEffectEvent} from 'use-effect-event'
 import {setComlink, setComlinkClientConfig} from '../../hooks/context'
 
 function PresentationComlink(props: {

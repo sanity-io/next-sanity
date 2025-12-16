@@ -10,8 +10,7 @@ import {revalidateSyncTags as defaultRevalidateSyncTags} from 'next-sanity/live/
 import {isMaybePresentation, isMaybePreviewWindow} from '@sanity/presentation-comlink'
 import dynamic from 'next/dynamic'
 import {useRouter} from 'next/navigation'
-import {useEffect, useMemo, useRef, useState} from 'react'
-import {useEffectEvent} from 'use-effect-event'
+import {useEffect, useMemo, useRef, useState, useEffectEvent} from 'react'
 import {setEnvironment, setPerspective} from '../../hooks/context'
 import {isCorsOriginError} from '../../../isCorsOriginError'
 
