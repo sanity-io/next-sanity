@@ -11,10 +11,7 @@ import {
   type LoaderNodeMsg,
 } from '@sanity/presentation-comlink'
 import {useRouter} from 'next/navigation'
-import {
-  useEffect,
-  useEffectEvent,
-} from 'react'
+import {useEffect, useEffectEvent} from 'react'
 import {setComlink, setComlinkClientConfig} from '../../hooks/context'
 
 function PresentationComlink(props: {
