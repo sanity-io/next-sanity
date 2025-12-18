@@ -1,6 +1,6 @@
 {
   "name": "next-sanity",
-  "version": "12.2.1",
+  "version": "13.0.0-cache-components.34",
   "description": "Sanity.io toolkit for Next.js",
   "keywords": [
     "live",
@@ -33,7 +33,8 @@
       "next-js": "./src/_env/next-js.ts",
       "react-server": "./src/_env/react-server.ts",
       "default": "./src/_env/default.ts"
-    }
+    },
+    "#live/*": "./src/live/shared/*.ts"
   },
   "exports": {
     ".": "./src/index.ts",
@@ -41,12 +42,16 @@
     "./hooks": "./src/hooks/index.ts",
     "./image": "./src/image/index.ts",
     "./live": {
-      "react-server": "./src/live.ts",
-      "default": "./src/live.server-only.ts"
+      "next-js": "./src/live/conditions/next-js/index.ts",
+      "react-server": "./src/live/conditions/react-server/index.ts",
+      "default": "./src/live/conditions/default/index.ts"
     },
-    "./live/client-components/live": "./src/live/client-components/live/index.ts",
-    "./live/client-components/live-stream": "./src/live/client-components/live-stream/index.ts",
-    "./live/server-actions": "./src/live/server-actions/index.ts",
+    "./live/cache-life": "./src/live/cache-life.ts",
+    "./live/client-components": "./src/live/client-components/index.ts",
+    "./live/server-actions": {
+      "next-js": "./src/live/server-actions/index.next-js.ts",
+      "default": "./src/live/server-actions/index.default.ts"
+    },
     "./studio": "./src/studio/index.ts",
     "./studio/client-component": "./src/studio/client-component/index.ts",
     "./visual-editing": "./src/visual-editing/index.ts",
@@ -62,12 +67,16 @@
       "./hooks": "./dist/hooks/index.js",
       "./image": "./dist/image/index.js",
       "./live": {
-        "react-server": "./dist/live.js",
-        "default": "./dist/live.server-only.js"
+        "next-js": "./dist/live/conditions/next-js/index.js",
+        "react-server": "./dist/live/conditions/react-server/index.js",
+        "default": "./dist/live/conditions/default/index.js"
       },
-      "./live/client-components/live": "./dist/live/client-components/live/index.js",
-      "./live/client-components/live-stream": "./dist/live/client-components/live-stream/index.js",
-      "./live/server-actions": "./dist/live/server-actions/index.js",
+      "./live/cache-life": "./dist/live/cache-life.js",
+      "./live/client-components": "./dist/live/client-components/index.js",
+      "./live/server-actions": {
+        "next-js": "./dist/live/server-actions/index.next-js.js",
+        "default": "./dist/live/server-actions/index.default.js"
+      },
       "./studio": "./dist/studio/index.js",
       "./studio/client-component": "./dist/studio/client-component/index.js",
       "./visual-editing": "./dist/visual-editing/index.js",
@@ -95,8 +104,7 @@
     "@sanity/webhook": "^4.0.4",
     "dequal": "^2.0.3",
     "groq": "^5.18.0",
-    "history": "^5.3.0",
-    "server-only": "^0.0.1"
+    "history": "^5.3.0"
   },
   "devDependencies": {
     "@sanity/tsconfig": "catalog:",

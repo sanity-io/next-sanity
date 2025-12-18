@@ -5,7 +5,6 @@ import {draftMode} from 'next/headers'
 import {DebugStatus} from './DebugStatus'
 import {FormStatusLabel} from './FormStatus'
 import {IsPresentationTool} from './IsPresentationTool'
-import {SanityLive} from './live'
 import {RefreshButton} from './RefreshButton'
 
 async function toggleDraftMode() {
@@ -21,6 +20,7 @@ async function toggleDraftMode() {
 }
 
 export default async function RootLayout({children}: {children: React.ReactNode}) {
+  'use cache'
   const isDraftMode = (await draftMode()).isEnabled
   return (
     <html lang="en">
@@ -39,7 +39,6 @@ export default async function RootLayout({children}: {children: React.ReactNode}
         {children}
         <RefreshButton />
         {isDraftMode && <VisualEditing />}
-        <SanityLive />
       </body>
     </html>
   )
