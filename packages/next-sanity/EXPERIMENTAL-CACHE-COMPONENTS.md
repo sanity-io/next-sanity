@@ -1,10 +1,30 @@
 > [!CAUTION]
 > The experimental `next-sanity@cache-components` canary release is not yet stable and could have breaking changes in `minor`, and `patch`, releases.
-> It requires `cacheComponents` to be enabled in your `next.config.ts`, which was introduced in [`next@16.0.0`](https://nextjs.org/blog/next-16#cache-components).
+> It requires `cacheComponents` to be enabled in your `next.config.ts`, and this guide assumes `next@16.2.x` or later.
 
-# Full working example
+# Sanity Live with Next.js Cache Components
 
-See the personal website template for a complete working example, it's BLAZING FAST :fire::fire::fire:
+This guide shows how to configure `next-sanity` for `cacheComponents: true`. The important difference from traditional Sanity Live usage is that `sanityFetch` must run inside cached boundaries, while request-time values such as `draftMode()` and cookies must be resolved outside those boundaries and passed in as props.
+
+## Automate the migration with an agent
+
+This repository includes a `sanity-live-cache-components` skill that can guide an agent through the migration. It is especially useful because draft mode and published mode have different rendering constraints, and `next build --debug-prerender` is not enough to verify draft mode behavior.
+
+```bash
+npx skills add https://github.com/sanity-io/next-sanity --skill sanity-live-cache-components
+```
+
+Suggested prompt:
+
+```txt
+Use the /sanity-live-cache-components skill to migrate this app to use Cache Components. When verifying with next dev, test both draft mode enabled and draft mode disabled because each mode has different rendering rules.
+```
+
+For best agent results, set up [`AGENTS.md`](https://nextjs.org/docs/app/guides/ai-agents#existing-projects) in the target app.
+
+## Full working example
+
+See the personal website template for a complete working example:
 
 - [Code](https://github.com/sanity-io/template-nextjs-personal-website/tree/use-cache)
 - [Demo](https://template-nextjs-personal-website-git-use-cache.sanity.dev/)
@@ -12,19 +32,21 @@ See the personal website template for a complete working example, it's BLAZING F
 
 # Setup
 
-Install the tagged prerelease:
+Install `next-sanity@13` when available. If v13 has not been promoted to `latest` yet, install the tagged prerelease:
 
 ```bash
-pnpm install next-sanity@cache-components
+npm view next-sanity dist-tags --json
 ```
 
 ```bash
+npm install next-sanity@^13 --save-exact
+# or, if v13 is not latest yet:
 npm install next-sanity@cache-components --save-exact
 ```
 
 ## 1. Configure `next.config.ts`
 
-In your `next.config.ts`, enable `cacheComponents` and optionally add the sanity `cacheLife` preset:
+In your `next.config.ts`, enable `cacheComponents` and add the Sanity `cacheLife` preset. Sanity Live handles on-demand revalidation, so cached Sanity data should not rely on the default 15 minute time-based revalidation.
 
 ```ts
 // next.config.ts
@@ -34,34 +56,45 @@ import {sanity} from 'next-sanity/live/cache-life'
 
 const nextConfig: NextConfig = {
   cacheComponents: true,
-  cacheLife: {
-    sanity, // makes `cacheLife('sanity')` available for your custom cached functions that won't be calling `sanityFetch` but should still have the same cache revalidation timing
-  },
+  cacheLife: {default: sanity},
 } satisfies NextConfig
 
 export default nextConfig
 ```
 
-## 2. Configure `defineLive`
+## 2. Configure the Sanity client
 
-Setup the `sanityFetch` and `SanityLive` exports same as in `next-sanity@12`.
+Projects typically have a `src/sanity/lib/client.ts` file. It should use a modern `apiVersion`, default to the published perspective, and configure `stega.studioUrl` for Visual Editing:
 
-You also need a `getDynamicFetchOptions()` helper that encapsulates the `draftMode()` and `cookies()` logic. This is called outside of `'use cache'` boundaries to resolve `perspective` and `stega`, which are then passed as props (and cache keys) to cached components:
+```ts
+// src/sanity/lib/client.ts
+import {createClient} from 'next-sanity'
+
+export const client = createClient({
+  projectId: process.env.NEXT_PUBLIC_SANITY_PROJECT_ID!,
+  dataset: process.env.NEXT_PUBLIC_SANITY_DATASET!,
+  useCdn: true,
+  apiVersion: 'v2026-05-19',
+  perspective: 'published',
+  stega: {studioUrl: process.env.NEXT_PUBLIC_SANITY_STUDIO_URL || 'http://localhost:3333'},
+})
+```
+
+If this file already exists, extend it rather than overwriting it. Changing `apiVersion` or removing existing `stega.*` options can break an app.
+
+## 3. Configure `defineLive`
+
+Create a `live.ts` file next to `client.ts`. Use `strict: true` so TypeScript requires every `sanityFetch` call to pass `perspective` and `stega`, and every `<SanityLive />` render to pass `includeDrafts`.
+
+You also need helpers for the places where Sanity data is fetched outside normal React Server Component rendering.
 
 ```tsx
 // src/sanity/lib/live.ts
 
-import {createClient} from 'next-sanity'
+import {type QueryParams} from 'next-sanity'
 import {defineLive, resolvePerspectiveFromCookies, type LivePerspective} from 'next-sanity/live'
 import {cookies, draftMode} from 'next/headers'
-
-const client = createClient({
-  projectId: process.env.NEXT_PUBLIC_SANITY_PROJECT_ID,
-  dataset: process.env.NEXT_PUBLIC_SANITY_DATASET,
-  useCdn: true,
-  apiVersion: 'v2025-03-04',
-  stega: {studioUrl: '/studio'},
-})
+import {client} from './client'
 
 const token = process.env.SANITY_API_READ_TOKEN
 if (!token) {
@@ -71,65 +104,69 @@ if (!token) {
 export const {sanityFetch, SanityLive} = defineLive({
   client,
   serverToken: token,
+  // The browser token is exposed to browsers in draft/live preview.
+  // It must be read-only and scoped to the minimum required permissions.
   browserToken: token,
+  strict: true,
 })
 
-// Resolves perspective and stega outside 'use cache' boundaries
 export interface DynamicFetchOptions {
   perspective: LivePerspective
   stega: boolean
-  isDraftMode: boolean
 }
+
 export async function getDynamicFetchOptions(): Promise<DynamicFetchOptions> {
   const {isEnabled: isDraftMode} = await draftMode()
   if (!isDraftMode) {
-    return {perspective: 'published', stega: false, isDraftMode}
+    return {perspective: 'published', stega: false}
   }
 
   const jar = await cookies()
   const perspective = await resolvePerspectiveFromCookies({cookies: jar})
-  return {perspective: perspective ?? 'drafts', stega: true, isDraftMode}
+  return {perspective: perspective ?? 'drafts', stega: true}
+}
+
+// For usage within `generateStaticParams`
+export async function sanityFetchStaticParams<const QueryString extends string>({
+  query,
+  params = {},
+}: {
+  query: QueryString
+  params?: QueryParams
+}) {
+  'use cache'
+  const {data} = await sanityFetch({query, params, perspective: 'published', stega: false})
+  return {data}
+}
+
+// For usage within `generateMetadata` and `generateViewport`
+export async function sanityFetchMetadata<const QueryString extends string>({
+  query,
+  params = {},
+  perspective,
+}: {
+  query: QueryString
+  params?: QueryParams
+  perspective: LivePerspective
+}) {
+  'use cache'
+  const {data} = await sanityFetch({query, params, perspective, stega: false})
+  return {data}
 }
 ```
 
-## 3. Render `<SanityLive />` in the root `layout.tsx`:
+## 4. Render `<SanityLive />` in a root layout
 
-<details>
-<summary>When `cacheComponents: false` it's sufficient to render it with no props when `serverToken` and `browserToken` is set, handling draft events and published events are automatically handled:</summary>
+Render `<SanityLive />` once in a root layout and pass `includeDrafts={isDraftMode}`. Render `<VisualEditing />` only in draft mode.
 
 ```tsx
 // src/app/layout.tsx
 
+import {SanityLive} from '@/sanity/lib/live'
 import {draftMode} from 'next/headers'
 import {VisualEditing} from 'next-sanity/visual-editing'
-import {SanityLive} from '@/sanity/lib/live'
 
-export default async function RootLayout({children}: {children: React.ReactNode}) {
-  const {isEnabled: isDraftMode} = await draftMode()
-  return (
-    <html lang="en">
-      <body>
-        {children}
-        <SanityLive />
-        {isDraftMode && <VisualEditing />}
-      </body>
-    </html>
-  )
-}
-```
-
-</details>
-
-When `cacheComponents: true` you need to toggle this behavior yourself by setting the `includeDrafts` prop. The recommended pattern is to keep the dynamic `draftMode()` call in the root layout (which is not cached), and pass the dynamic parts as props to a separate `CachedLayout` component that has `'use cache'`:
-
-```tsx
-// src/app/layout.tsx
-
-import {draftMode} from 'next/headers'
-import {VisualEditing} from 'next-sanity/visual-editing'
-import {SanityLive} from '@/sanity/lib/live'
-
-export default async function RootLayout({children}: {children: React.ReactNode}) {
+export default async function RootLayout({children}: LayoutProps<'/'>) {
   const {isEnabled: isDraftMode} = await draftMode()
   return (
     <html lang="en">
@@ -143,9 +180,9 @@ export default async function RootLayout({children}: {children: React.ReactNode}
 }
 ```
 
-This way the static shell (HTML structure) is cached, while the dynamic `draftMode()` result flows through as pre-rendered React node props.
+If the app has an embedded Sanity Studio route, for example `app/studio/[[...index]]/page.tsx`, put `<SanityLive />` in a route-group layout that the Studio route does not use, such as `src/app/(website)/layout.tsx`.
 
-## 4. Fetching data with `sanityFetch`
+## 5. Fetching data with `sanityFetch`
 
 > [!IMPORTANT]
 > [Read the intro on `'use cache'` and `'use cache: remote'` directives before you proceed.](https://nextjs.org/docs/app/getting-started/cache-components#using-use-cache)
@@ -154,15 +191,22 @@ Cache components introduce a layered caching system, and so you need to define c
 
 ### Key difference from `cacheComponents: false`
 
-When `cacheComponents: false`, `sanityFetch` automatically reads `draftMode()` to set `perspective` and `stega` for you. When `cacheComponents: true`, Next.js **does not allow calling APIs like `draftMode()` within `'use cache'` boundaries**.
+When `cacheComponents: false`, `sanityFetch` can read `draftMode()` to set `perspective` and `stega` for you. When `cacheComponents: true`, Next.js does not allow request-time APIs like `draftMode()` and `cookies()` inside `'use cache'` boundaries.
 
-To handle this, the recommended pattern uses a three-layer component structure:
+To handle this, use a three-layer structure:
 
-1. **Sync page component** -- renders `<Suspense>` with a loading fallback
-2. **Dynamic component** -- calls `getDynamicFetchOptions()` to resolve `perspective` and `stega` outside the cache boundary, then passes them as props
-3. **Cached component** -- has `'use cache'` and receives `perspective` and `stega` as props (which act as cache keys, so published and draft content get separate cache entries)
+1. Page/layout component: branches on `draftMode()` when the route can be prerendered.
+2. Dynamic component: resolves `params`, `cookies()`, and `getDynamicFetchOptions()` outside the cache boundary.
+3. Cached component: has `'use cache'` and receives serializable props, including `perspective` and `stega`.
 
-Under the hood `sanityFetch` will automatically call [the `cacheTag()` API](https://nextjs.org/docs/app/api-reference/functions/cacheTag) and [the `cacheLife()` API](https://nextjs.org/docs/app/api-reference/functions/cacheLife), so you can focus on simply defining your query and params and not worry about naming cache tags.
+Under the hood `sanityFetch` automatically calls [the `cacheTag()` API](https://nextjs.org/docs/app/api-reference/functions/cacheTag) and [the `cacheLife()` API](https://nextjs.org/docs/app/api-reference/functions/cacheLife), so you can focus on defining your query and params.
+
+Keep these rules in mind:
+
+- Any async function that calls `sanityFetch` should have a `'use cache'` or `'use cache: remote'` directive.
+- Do not hardcode `perspective: 'published'` or `stega: false` inside cached components that render page content. Resolve those values outside the cache boundary and pass them in as props.
+- Do not take `perspective` or `stega` as server action input. Server action inputs are untrusted; resolve them inside the server action and pass them to a cached helper.
+- In `route.ts` handlers, use `stega: false` unless the response is rendered into the same DOM as `<VisualEditing />`.
 
 ### Static routes
 
@@ -219,15 +263,21 @@ async function CachedProductsList({perspective, stega}: DynamicFetchOptions) {
 
 ### Dynamic routes with `params`
 
-In Next.js 16+, `params` is a `Promise`. The dynamic layer unwraps both the params and the fetch options before passing them as plain, serializable values to the cached component:
+In Next.js 16+, `params` is a `Promise`. For routes where `params` is used as input to `sanityFetch`, implement `generateStaticParams()` and use `sanityFetchStaticParams()`.
+
+The dynamic layer unwraps both `params` and the fetch options before passing plain, serializable values to the cached component:
 
 ```tsx
 // src/app/product/[slug]/page.tsx
 
 import {draftMode} from 'next/headers'
 import {defineQuery} from 'next-sanity'
-import {getDynamicFetchOptions, sanityFetch, type DynamicFetchOptions} from '@/sanity/lib/live'
-import {client} from '@/sanity/lib/client'
+import {
+  getDynamicFetchOptions,
+  sanityFetch,
+  sanityFetchStaticParams,
+  type DynamicFetchOptions,
+} from '@/sanity/lib/live'
 import {Suspense} from 'react'
 
 const SLUGS_BY_TYPE_QUERY = defineQuery(`
@@ -237,19 +287,15 @@ const PRODUCT_QUERY = defineQuery(
   `*[_type == "product" && slug.current == $slug][0]{_id,slug,title,description}`,
 )
 
-type Props = {
-  params: Promise<{slug: string}>
-}
-
 export async function generateStaticParams() {
-  return client.fetch(
-    SLUGS_BY_TYPE_QUERY,
-    {type: 'product'},
-    {perspective: 'published', stega: false},
-  )
+  const {data} = await sanityFetchStaticParams({
+    query: SLUGS_BY_TYPE_QUERY,
+    params: {type: 'product'},
+  })
+  return data
 }
 
-export default async function ProductPage({params}: Props) {
+export default async function ProductPage({params}: PageProps<'/product/[slug]'>) {
   const {isEnabled: isDraftMode} = await draftMode()
   if (isDraftMode) {
     return (
@@ -262,13 +308,16 @@ export default async function ProductPage({params}: Props) {
   return <CachedProductPage slug={slug} perspective="published" stega={false} />
 }
 
-async function DynamicProductPage({params}: Props) {
-  const {slug} = await params
-  const {perspective, stega} = await getDynamicFetchOptions()
+async function DynamicProductPage({params}: Pick<PageProps<'/product/[slug]'>, 'params'>) {
+  const [{slug}, {perspective, stega}] = await Promise.all([params, getDynamicFetchOptions()])
   return <CachedProductPage slug={slug} perspective={perspective} stega={stega} />
 }
 
-async function CachedProductPage({slug, perspective, stega}: {slug: string} & DynamicFetchOptions) {
+async function CachedProductPage({
+  slug,
+  perspective,
+  stega,
+}: Awaited<PageProps<'/product/[slug]'>['params']> & DynamicFetchOptions) {
   'use cache'
 
   const {data: product} = await sanityFetch({
@@ -286,26 +335,27 @@ async function CachedProductPage({slug, perspective, stega}: {slug: string} & Dy
 }
 ```
 
+`PageProps<'/product/[slug]'>` is provided by Next.js's `next typegen` output, so the params are typed from the route segment without having to define a `Props` type by hand.
+
 ### Caching `generateMetadata`
 
-You can also use `'use cache'` inside `generateMetadata`. Since metadata should always use published content without stega encoding, pass `perspective: 'published'` and `stega: false` explicitly:
+Metadata should not use stega encoding, but it should still resolve `perspective` so Presentation Tool can preview draft content and content releases in a new preview window. Use `sanityFetchMetadata()` and pass the resolved `perspective`.
 
 ```tsx
 // src/app/product/[slug]/page.tsx
 
 import type {Metadata, ResolvingMetadata} from 'next'
+import {getDynamicFetchOptions, sanityFetchMetadata} from '@/sanity/lib/live'
 
 export async function generateMetadata(
-  {params}: Props,
+  {params}: PageProps<'/product/[slug]'>,
   parent: ResolvingMetadata,
 ): Promise<Metadata> {
-  'use cache'
-  const {slug} = await params
-  const {data: product} = await sanityFetch({
+  const [{slug}, {perspective}] = await Promise.all([params, getDynamicFetchOptions()])
+  const {data: product} = await sanityFetchMetadata({
     query: PRODUCT_QUERY,
     params: {slug},
-    perspective: 'published',
-    stega: false,
+    perspective,
   })
   return {
     title: product?.title,
@@ -313,3 +363,22 @@ export async function generateMetadata(
   }
 }
 ```
+
+### Routes with `loading.tsx`
+
+If a dynamic route has a sibling `loading.tsx`, the route can rely on that fallback instead of adding its own `<Suspense>` boundary. In that case it can await `params` and `getDynamicFetchOptions()` directly in the page component before rendering a cached component:
+
+```tsx
+// src/app/product/[slug]/page.tsx
+
+export default async function ProductPage({params}: PageProps<'/product/[slug]'>) {
+  const [{slug}, {perspective, stega}] = await Promise.all([params, getDynamicFetchOptions()])
+  return <CachedProductPage slug={slug} perspective={perspective} stega={stega} />
+}
+```
+
+Without a sibling `loading.tsx`, keep request-time work in a dynamic component wrapped by `<Suspense>`.
+
+## Verify both modes
+
+Run the app with `next dev` and test both draft mode enabled and draft mode disabled. `next build --debug-prerender` can catch prerendering issues, but it does not prove that draft mode, Presentation Tool perspective switching, or Visual Editing overlays work correctly.
