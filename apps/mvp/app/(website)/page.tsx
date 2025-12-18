@@ -15,6 +15,7 @@ const {sanityFetch, SanityLive} = defineLive({
   serverToken: token,
   // TDOO: setup experimental_taintUniqueValue here
   browserToken: token,
+  strict: true,
 })
 
 async function CachedIndexPage({
@@ -24,6 +25,7 @@ async function CachedIndexPage({
   perspective: LivePerspective
   stega: boolean
 }) {
+  'use cache'
   const {data, tags} = await sanityFetch({
     query: postsQuery.query,
     perspective,
@@ -101,7 +103,7 @@ export default async function IndexPage() {
         </Link>
       </div>
       <SanityLiveErrorBoundary>
-        <SanityLive />
+        <SanityLive includeDrafts={isDraftMode} />
       </SanityLiveErrorBoundary>
     </>
   )

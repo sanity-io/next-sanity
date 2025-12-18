@@ -8,6 +8,7 @@ import {client} from '@/app/sanity.client'
 const {sanityFetch, SanityLive} = defineLive({client})
 
 async function getPosts() {
+  'use cache'
   const {data} = await sanityFetch({
     query: postsQuery.query,
   })
