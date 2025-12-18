@@ -18,8 +18,14 @@
     "perf": "error"
   },
   "rules": {
+    "typescript/ban-ts-comment": "error",
+    "typescript/prefer-ts-expect-error": "error",
     "react-in-jsx-scope": "off",
     "react/rules-of-hooks": "error",
+    "react/exhaustive-deps": "error",
+    "react/jsx-key": "error",
+    "eslint/no-console": ["error", {"allow": ["warn", "error"]}],
+    "import/no-unassigned-import": ["error", {"allow": ["**/*.css"]}],
     "jsx-no-new-function-as-prop": "off",
     "jsx-no-new-object-as-prop": "off"
   }

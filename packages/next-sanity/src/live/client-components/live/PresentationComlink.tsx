@@ -43,7 +43,6 @@ function PresentationComlink(props: {
             if (signal.aborted) return
             router.refresh()
           })
-          // eslint-disable-next-line no-console
           .catch((reason) => console.error('Failed to set the preview perspective cookie', reason))
       }
     },
@@ -75,10 +74,8 @@ function PresentationComlink(props: {
     const stop = comlink.start()
     // setPresentationComlink(comlink)
     setComlink(comlink)
-    // eslint-disable-next-line no-console
     // console.log('setting comlink', comlink)
     return () => {
-      // eslint-disable-next-line no-console
       // console.log('stopping comlink')
       stop()
     }

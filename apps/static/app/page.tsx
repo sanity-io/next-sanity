@@ -1,4 +1,3 @@
-/* eslint-disable @next/next/no-html-link-for-pages */
 import {unstable__adapter, unstable__environment} from 'next-sanity'
 import Link from 'next/link'
 

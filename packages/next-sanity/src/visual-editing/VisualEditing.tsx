@@ -11,7 +11,7 @@ export function VisualEditing(props: VisualEditingProps): React.ReactElement {
     try {
       autoBasePath = process.env['__NEXT_ROUTER_BASEPATH']
       if (autoBasePath) {
-        // eslint-disable-next-line no-console
+        // oxlint-disable-next-line no-console
         console.log(
           `Detected next basePath as ${JSON.stringify(autoBasePath)} by reading "process.env.__NEXT_ROUTER_BASEPATH". If this is incorrect then you can set it manually with the basePath prop on the <VisualEditing /> component.`,
         )
@@ -25,7 +25,7 @@ export function VisualEditing(props: VisualEditingProps): React.ReactElement {
     try {
       autoTrailingSlash = Boolean(process.env['__NEXT_TRAILING_SLASH'])
       if (autoTrailingSlash) {
-        // eslint-disable-next-line no-console
+        // oxlint-disable-next-line no-console
         console.log(
           `Detected next trailingSlash as ${JSON.stringify(autoTrailingSlash)} by reading "process.env.__NEXT_TRAILING_SLASH". If this is incorrect then you can set it manually with the trailingSlash prop on the <VisualEditing /> component.`,
         )

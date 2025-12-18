@@ -1,4 +1,3 @@
-/* eslint-disable @next/next/no-img-element */
 import {q} from '#groqd'
 import {createDataAttribute} from 'next-sanity'
 
@@ -38,6 +37,7 @@ export default async function Posts(props: PostsLayoutProps) {
   'use cache: remote'
 
   const posts = postsQuery.parse(props.data)
+  // oxlint-disable-next-line no-console
   console.log('PostsLayout', {posts})
 
   const random = Math.random()

@@ -1,6 +1,5 @@
 import {unstable__adapter, unstable__environment} from 'next-sanity'
 import {resolvePerspectiveFromCookies} from 'next-sanity/experimental/live'
-/* eslint-disable @next/next/no-html-link-for-pages */
 import {cookies, draftMode} from 'next/headers'
 import Link from 'next/link'
 

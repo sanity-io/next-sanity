@@ -84,7 +84,6 @@ export default function SanityLiveStream(props: SanityLiveStreamProps): React.JS
         const data = stega
           ? stegaEncodeSourceMap(result, resultSourceMap, {enabled: true, studioUrl: '/'})
           : result
-        // eslint-disable-next-line no-console
         // console.log('server function streaming is disabled', {
         //   startTransition,
         //   setPromise,
@@ -102,6 +101,7 @@ export default function SanityLiveStream(props: SanityLiveStreamProps): React.JS
         //     }) as Promise<React.JSX.Element>,
         //   ),
         // )
+        // oxlint-disable-next-line no-console
         console.groupCollapsed('rendering with server action')
         ;(
           props.children({
@@ -112,6 +112,7 @@ export default function SanityLiveStream(props: SanityLiveStreamProps): React.JS
         )
           .then(
             (children) => {
+              // oxlint-disable-next-line no-console
               console.log('setChildren(children)')
               // startTransition(() => setChildren(children))
               setChildren(children)
@@ -120,6 +121,7 @@ export default function SanityLiveStream(props: SanityLiveStreamProps): React.JS
               console.error('rendering with server action: render children error', reason)
             },
           )
+          // oxlint-disable-next-line no-console
           .finally(() => console.groupEnd())
       }
     },

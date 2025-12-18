@@ -8,7 +8,7 @@
     "bump:latest": "pnpm -r up @sanity/visual-editing@latest && pnpm dedupe",
     "dev": "turbo dev",
     "format": "oxfmt && pnpm lint --fix",
-    "lint": "oxlint --type-check --type-aware --deny-warnings",
+    "lint": "oxlint --type-check --type-aware --report-unused-disable-directives --deny-warnings",
     "prestart": "turbo build",
     "start": "turbo watch build start",
     "test": "turbo test",

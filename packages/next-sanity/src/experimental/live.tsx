@@ -249,14 +249,12 @@ export function defineLive(config: DefineSanityLiveOptions): {
   }
 
   if (process.env.NODE_ENV !== 'production' && !serverToken && serverToken !== false) {
-    // eslint-disable-next-line no-console
     console.warn(
       'No `serverToken` provided to `defineLive`. This means that only published content will be fetched and respond to live events. You can silence this warning by setting `serverToken: false`.',
     )
   }
 
   if (process.env.NODE_ENV !== 'production' && !browserToken && browserToken !== false) {
-    // eslint-disable-next-line no-console
     console.warn(
       'No `browserToken` provided to `defineLive`. This means that live previewing drafts will only work when using the Presentation Tool in your Sanity Studio. To support live previewing drafts stand-alone, provide a `browserToken`. It is shared with the browser so it should only have Viewer rights or lower. You can silence this warning by setting `browserToken: false`.',
     )
@@ -444,6 +442,7 @@ async function expireTags(_tags: unknown): Promise<void> {
   for (const tag of tags) {
     updateTag(tag)
   }
+  // oxlint-disable-next-line no-console
   console.log(`<SanityLive /> updated tags: ${tags.join(', ')}`)
 }
 

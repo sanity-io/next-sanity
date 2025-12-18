@@ -13,6 +13,7 @@ export function DebugStatus() {
   const isLivePreview = useIsLivePreview()
   const isPresentationTool = useIsPresentationTool()
 
+  // oxlint-disable-next-line no-console
   console.log({environment, perspective, isLivePreview, isPresentationTool})
 
   return (

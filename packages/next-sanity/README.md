@@ -1010,7 +1010,6 @@ export const POST = async (request) => {
   for (const _tag of tags) {
     const tag = `sanity:${_tag}`
     revalidateTag(tag)
-    // eslint-disable-next-line no-console
     console.log(`revalidated tag: ${tag}`)
   }
 }

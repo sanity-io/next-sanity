@@ -1,6 +1,5 @@
 'use cache'
 
-// oxlint-disable-next-line no-unassigned-import
 import '../globals.css'
 import {
   // cookies,

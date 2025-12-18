@@ -8,5 +8,4 @@ export function useIsMounted(): boolean {
     () => false,
   )
 }
-// eslint-disable-next-line no-empty-function
 const emptySubscribe = () => () => {}

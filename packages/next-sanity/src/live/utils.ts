@@ -13,7 +13,6 @@ export function sanitizePerspective(
     validateApiPerspective(perspective)
     return perspective === 'raw' ? fallback : perspective
   } catch (err) {
-    // eslint-disable-next-line no-console
     console.warn(`Invalid perspective:`, _perspective, perspective, err)
     return fallback
   }

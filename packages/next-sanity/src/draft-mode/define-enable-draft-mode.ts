@@ -47,7 +47,6 @@ export function defineEnableDraftMode(options: DefineEnableDraftModeOptions): En
   const {client} = options
   return {
     GET: async (request: Request) => {
-      // eslint-disable-next-line no-warning-comments
       // @TODO check if already in draft mode at a much earlier stage, and skip validation
 
       const {

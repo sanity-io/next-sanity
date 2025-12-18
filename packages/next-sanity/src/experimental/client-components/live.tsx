@@ -55,7 +55,6 @@ export interface SanityLiveProps {
 }
 
 function handleError(error: unknown) {
-  /* eslint-disable no-console */
   if (isCorsOriginError(error)) {
     console.warn(
       `Sanity Live is unable to connect to the Sanity API as the current origin - ${window.origin} - is not in the list of allowed CORS origins for this Sanity Project.`,
@@ -65,11 +64,9 @@ function handleError(error: unknown) {
   } else {
     console.error(error)
   }
-  /* eslint-enable no-console */
 }
 
 function handleOnGoAway(event: LiveEventGoAway, intervalOnGoAway: number | false) {
-  /* eslint-disable no-console */
   if (intervalOnGoAway) {
     console.warn(
       'Sanity Live connection closed, switching to long polling set to a interval of',
@@ -83,7 +80,6 @@ function handleOnGoAway(event: LiveEventGoAway, intervalOnGoAway: number | false
       event.reason,
     )
   }
-  /* eslint-enable no-console */
 }
 
 /**
@@ -134,7 +130,7 @@ export default function SanityLive(props: SanityLiveProps): React.JSX.Element | 
   const router = useRouter()
   const handleLiveEvent = useEffectEvent((event: LiveEvent) => {
     if (process.env.NODE_ENV !== 'production' && event.type === 'welcome') {
-      // eslint-disable-next-line no-console
+      // oxlint-disable-next-line no-console
       console.info(
         'Sanity is live with',
         token
@@ -296,7 +292,6 @@ export default function SanityLive(props: SanityLiveProps): React.JSX.Element | 
     clearTimeout(draftModeEnabledWarnRef.current)
     return () => {
       draftModeEnabledWarnRef.current = setTimeout(() => {
-        // eslint-disable-next-line no-console
         console.warn('Sanity Live: Draft mode was enabled, but is now being disabled')
       })
     }

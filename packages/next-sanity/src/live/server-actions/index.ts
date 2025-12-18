@@ -14,6 +14,7 @@ export async function revalidateSyncTags(tags: SyncTag[]): Promise<void> {
   for (const _tag of tags) {
     const tag = `sanity:${_tag}`
     revalidateTag(tag, {expire: 0})
+    // oxlint-disable-next-line no-console
     console.log(`<SanityLive /> revalidated tag: ${tag}`)
   }
 }

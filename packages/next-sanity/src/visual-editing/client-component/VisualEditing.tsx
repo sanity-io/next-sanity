@@ -92,7 +92,7 @@ export default function VisualEditing(props: VisualEditingProps): React.JSX.Elem
       if (refresh) return refresh(payload)
 
       const manualFastRefresh = () => {
-        // eslint-disable-next-line no-console
+        // oxlint-disable-next-line no-console
         console.debug(
           'Live preview is setup, calling router.refresh() to refresh the server components without refetching cached data',
         )
@@ -100,7 +100,7 @@ export default function VisualEditing(props: VisualEditingProps): React.JSX.Elem
         return Promise.resolve()
       }
       const manualFallbackRefresh = () => {
-        // eslint-disable-next-line no-console
+        // oxlint-disable-next-line no-console
         console.debug(
           'No loaders in live mode detected, or preview kit setup, revalidating root layout',
         )
@@ -108,7 +108,7 @@ export default function VisualEditing(props: VisualEditingProps): React.JSX.Elem
       }
 
       const mutationFallbackRefresh = () => {
-        // eslint-disable-next-line no-console
+        // oxlint-disable-next-line no-console
         console.debug(
           'No loaders in live mode detected, or preview kit setup, revalidating root layout',
         )
@@ -140,7 +140,7 @@ export default function VisualEditing(props: VisualEditingProps): React.JSX.Elem
 }
 
 function mutationFastRefresh(): false {
-  // eslint-disable-next-line no-console
+  // oxlint-disable-next-line no-console
   console.debug(
     'Live preview is setup, mutation is skipped assuming its handled by the live preview',
   )

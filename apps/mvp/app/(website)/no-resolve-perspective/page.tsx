@@ -1,7 +1,6 @@
 'use cache'
 
 import {unstable__adapter, unstable__environment} from 'next-sanity'
-/* eslint-disable @next/next/no-html-link-for-pages */
 import {draftMode} from 'next/headers'
 import Link from 'next/link'
 
