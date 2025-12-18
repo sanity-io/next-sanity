@@ -108,6 +108,8 @@ export default function SanityLive(props: SanityLiveProps): React.JSX.Element | 
   const {projectId, dataset, apiHost, apiVersion, useProjectHostname, token, requestTagPrefix} =
     config
 
+    
+
   const client = useMemo(
     () =>
       createClient({

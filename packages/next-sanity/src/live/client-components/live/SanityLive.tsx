@@ -110,6 +110,7 @@ export function SanityLive(props: SanityLiveProps): React.JSX.Element | null {
     revalidateSyncTags = defaultRevalidateSyncTags,
   } = props
 
+
   const client = useMemo(
     () =>
       createClient({
