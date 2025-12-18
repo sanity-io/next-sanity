@@ -1,3 +1,4 @@
+// oxlint-disable unbound-method
 import {createHashHistory, type History, type Listener} from 'history'
 
 /** @internal */

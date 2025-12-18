@@ -1,6 +1,6 @@
 {
   "name": "next-sanity",
-  "version": "12.0.1",
+  "version": "12.0.2-canary.0",
   "description": "Sanity.io toolkit for Next.js",
   "keywords": [
     "sanity",
@@ -25,25 +25,25 @@
   "sideEffects": false,
   "type": "module",
   "exports": {
-    ".": "./dist/index.js",
-    "./draft-mode": "./dist/draft-mode/index.js",
-    "./experimental/client-components/live": "./dist/experimental/client-components/live.js",
-    "./experimental/live": "./dist/experimental/live.js",
-    "./hooks": "./dist/hooks/index.js",
-    "./image": "./dist/image/index.js",
+    ".": "./src/index.ts",
+    "./draft-mode": "./src/draft-mode/index.ts",
+    "./experimental/client-components/live": "./src/experimental/client-components/live.tsx",
+    "./experimental/live": "./src/experimental/live.tsx",
+    "./hooks": "./src/hooks/index.ts",
+    "./image": "./src/image/index.ts",
     "./live": {
-      "react-server": "./dist/live.js",
-      "default": "./dist/live.server-only.js"
+      "react-server": "./src/live.ts",
+      "default": "./src/live.server-only.ts"
     },
-    "./live/client-components/live": "./dist/live/client-components/live/index.js",
-    "./live/client-components/live-stream": "./dist/live/client-components/live-stream/index.js",
-    "./live/server-actions": "./dist/live/server-actions/index.js",
-    "./studio": "./dist/studio/index.js",
-    "./studio/client-component": "./dist/studio/client-component/index.js",
-    "./visual-editing": "./dist/visual-editing/index.js",
-    "./visual-editing/client-component": "./dist/visual-editing/client-component/index.js",
-    "./visual-editing/server-actions": "./dist/visual-editing/server-actions/index.js",
-    "./webhook": "./dist/webhook/index.js",
+    "./live/client-components/live": "./src/live/client-components/live/index.ts",
+    "./live/client-components/live-stream": "./src/live/client-components/live-stream/index.ts",
+    "./live/server-actions": "./src/live/server-actions/index.ts",
+    "./studio": "./src/studio/index.ts",
+    "./studio/client-component": "./src/studio/client-component/index.ts",
+    "./visual-editing": "./src/visual-editing/index.ts",
+    "./visual-editing/client-component": "./src/visual-editing/client-component/index.ts",
+    "./visual-editing/server-actions": "./src/visual-editing/server-actions/index.ts",
+    "./webhook": "./src/webhook/index.ts",
     "./package.json": "./package.json"
   },
   "main": "./dist/index.js",
@@ -61,9 +61,8 @@
     "build": "tsdown --publint",
     "coverage": "npm test -- --coverage",
     "dev": "tsdown --watch",
-    "prepublishOnly": "tsdown",
-    "test": "vitest",
-    "type-check": "tsc --noEmit"
+    "prepack": "tsdown",
+    "test": "vitest"
   },
   "browserslist": "extends @sanity/browserslist-config",
   "dependencies": {
@@ -107,5 +106,29 @@
   },
   "engines": {
     "node": ">=20.19 <22 || >=22.12"
+  },
+  "publishConfig": {
+    "exports": {
+      ".": "./dist/index.js",
+      "./draft-mode": "./dist/draft-mode/index.js",
+      "./experimental/client-components/live": "./dist/experimental/client-components/live.js",
+      "./experimental/live": "./dist/experimental/live.js",
+      "./hooks": "./dist/hooks/index.js",
+      "./image": "./dist/image/index.js",
+      "./live": {
+        "react-server": "./dist/live.js",
+        "default": "./dist/live.server-only.js"
+      },
+      "./live/client-components/live": "./dist/live/client-components/live/index.js",
+      "./live/client-components/live-stream": "./dist/live/client-components/live-stream/index.js",
+      "./live/server-actions": "./dist/live/server-actions/index.js",
+      "./studio": "./dist/studio/index.js",
+      "./studio/client-component": "./dist/studio/client-component/index.js",
+      "./visual-editing": "./dist/visual-editing/index.js",
+      "./visual-editing/client-component": "./dist/visual-editing/client-component/index.js",
+      "./visual-editing/server-actions": "./dist/visual-editing/server-actions/index.js",
+      "./webhook": "./dist/webhook/index.js",
+      "./package.json": "./package.json"
+    }
   }
 }

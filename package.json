@@ -7,16 +7,17 @@
     "bump:canaries": "pnpm -r up @sanity/visual-editing@canary && pnpm dedupe",
     "bump:latest": "pnpm -r up @sanity/visual-editing@latest && pnpm dedupe",
     "dev": "turbo dev",
-    "format": "prettier --cache --write . && oxlint --fix",
-    "lint": "oxlint",
+    "format": "prettier --cache --write . && pnpm lint --fix",
+    "lint": "oxlint --type-check --type-aware --deny-warnings",
     "prestart": "turbo build",
     "start": "turbo watch build start",
     "test": "turbo test",
-    "type-check": "turbo type-check"
+    "typegen": "turbo typegen"
   },
   "dependencies": {
     "@sanity/prettier-config": "^3.0.0",
     "oxlint": "^1.33.0",
+    "oxlint-tsgolint": "^0.9.1",
     "prettier": "^3.7.4",
     "prettier-plugin-tailwindcss": "^0.7.2",
     "sanity": "catalog:",

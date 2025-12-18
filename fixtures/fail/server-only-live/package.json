@@ -5,7 +5,7 @@
   "description": "defineLive can not be called from a client component",
   "scripts": {
     "test": "next build && exit 1 || exit 0",
-    "type-check": "next typegen && tsc --noEmit"
+    "typegen": "next typegen"
   },
   "dependencies": {
     "next": "catalog:",
@@ -17,7 +17,6 @@
     "@repo/typescript-config": "workspace:*",
     "@types/node": "catalog:",
     "@types/react": "catalog:",
-    "@types/react-dom": "catalog:",
-    "typescript": "catalog:"
+    "@types/react-dom": "catalog:"
   }
 }

@@ -1,3 +1,4 @@
+// oxlint-disable no-unsafe-type-assertion
 import {
   type ClientPerspective,
   type ContentSourceMap,
@@ -55,7 +56,7 @@ export default function SanityLiveStream(props: SanityLiveStreamProps): React.JS
       dataset: dataset!,
       perspective: perspective! as ClientPerspective,
       query,
-      params: params!,
+      params: params,
       heartbeat: LISTEN_HEARTBEAT_INTERVAL,
     })
   })
@@ -99,7 +100,6 @@ export default function SanityLiveStream(props: SanityLiveStreamProps): React.JS
         //     }) as Promise<React.JSX.Element>,
         //   ),
         // )
-        // eslint-disable-next-line no-console
         console.groupCollapsed('rendering with server action')
         ;(
           props.children({
@@ -110,17 +110,14 @@ export default function SanityLiveStream(props: SanityLiveStreamProps): React.JS
         )
           .then(
             (children) => {
-              // eslint-disable-next-line no-console
               console.log('setChildren(children)')
               // startTransition(() => setChildren(children))
               setChildren(children)
             },
             (reason: unknown) => {
-              // eslint-disable-next-line no-console
               console.error('rendering with server action: render children error', reason)
             },
           )
-          // eslint-disable-next-line no-console
           .finally(() => console.groupEnd())
       }
     },

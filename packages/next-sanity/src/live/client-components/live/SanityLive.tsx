@@ -145,7 +145,7 @@ export function SanityLive(props: SanityLiveProps): React.JSX.Element | null {
       // Disable long polling when welcome event is received, this is a no-op if long polling is already disabled
       setLongPollingInterval(false)
     } else if (event.type === 'message') {
-      revalidateSyncTags(event.tags).then((result) => {
+      void revalidateSyncTags(event.tags).then((result) => {
         if (result === 'refresh') router.refresh()
       })
     } else if (event.type === 'restart' || event.type === 'reconnect') {

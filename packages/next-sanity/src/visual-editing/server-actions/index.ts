@@ -8,5 +8,5 @@ export async function revalidateRootLayout(): Promise<void> {
     console.warn('Skipped revalidatePath request because draft mode is not enabled')
     return
   }
-  await revalidatePath('/', 'layout')
+  revalidatePath('/', 'layout')
 }

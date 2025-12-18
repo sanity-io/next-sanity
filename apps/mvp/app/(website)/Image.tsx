@@ -13,7 +13,7 @@ export function Image(
   props: Omit<ImageProps, 'src' | 'alt'> & {
     src: {
       _key?: string | null
-      _type?: 'image' | string
+      _type?: 'image' | (string & {})
       asset: {
         _type: 'reference'
         _ref: string

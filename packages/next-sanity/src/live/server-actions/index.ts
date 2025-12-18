@@ -7,7 +7,7 @@ import {cookies, draftMode} from 'next/headers'
 import {sanitizePerspective} from '../utils'
 
 export async function revalidateSyncTags(tags: SyncTag[]): Promise<void> {
-  await revalidateTag('sanity:fetch-sync-tags', 'max')
+  revalidateTag('sanity:fetch-sync-tags', 'max')
 
   for (const _tag of tags) {
     const tag = `sanity:${_tag}`
@@ -23,7 +23,7 @@ export async function setPerspectiveCookie(perspective: ClientPerspective): Prom
   }
   const sanitizedPerspective = sanitizePerspective(perspective, 'drafts')
   if (perspective !== sanitizedPerspective) {
-    throw new Error(`Invalid perspective: ${perspective}`)
+    throw new Error(`Invalid perspective`, {cause: perspective})
   }
 
   ;(await cookies()).set(

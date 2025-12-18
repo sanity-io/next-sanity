@@ -28,8 +28,8 @@ jobs:
           node-version: lts/*
       - run: pnpm install --ignore-scripts
       - run: pnpm build --filter=./packages/*
+      - run: pnpm typegen
       - run: pnpm lint --format github
-      - run: pnpm type-check
 
   test:
     needs: build

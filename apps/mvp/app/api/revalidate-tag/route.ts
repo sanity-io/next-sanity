@@ -1,4 +1,3 @@
-/* eslint-disable no-process-env */
 import {revalidateTag} from 'next/cache'
 import {type NextRequest, NextResponse} from 'next/server'
 import {parseBody} from 'next-sanity/webhook'
@@ -10,7 +9,7 @@ export async function POST(req: NextRequest): Promise<any> {
       _type: string
       _id: string
       slug?: string | undefined
-    }>(req as any, process.env.SANITY_REVALIDATE_SECRET)
+    }>(req, process.env.SANITY_REVALIDATE_SECRET)
     if (!isValidSignature) {
       const message = 'Invalid signature'
       return new Response(message, {status: 401})

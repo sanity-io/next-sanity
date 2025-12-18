@@ -38,6 +38,8 @@ export default defineConfig({
   sourcemap: true,
   hash: false,
   exports: {
+    enabled: 'local-only',
+    devExports: true,
     customExports(pkg) {
       pkg['./live'] = {
         'react-server': pkg['./live'],
@@ -47,7 +49,7 @@ export default defineConfig({
       return pkg
     },
   },
-  inputOptions: {preserveEntrySignatures: 'strict'},
+  inputOptions: {preserveEntrySignatures: 'strict', experimental: {attachDebugInfo: 'none'}},
   outputOptions: {hoistTransitiveImports: false},
   platform: 'neutral',
   minify: 'dce-only',

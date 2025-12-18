@@ -5,12 +5,12 @@
     "build": {
       "dependsOn": ["^build"]
     },
+    "typegen": {},
     "test": {
       "dependsOn": ["^build"],
       "cache": false,
       "persistent": true
     },
-    "type-check": {},
     "dev": {
       "cache": false,
       "persistent": true

@@ -45,13 +45,15 @@ function reducer<QueryString extends string>(
         : {
             ...state,
             data: dequal(state.data, payload.data)
-              ? (state.data as ClientReturn<QueryString>)
+              ? // oxlint-disable-next-line no-unsafe-type-assertion
+                (state.data as ClientReturn<QueryString>)
               : payload.data,
             sourceMap: dequal(state.sourceMap, payload.sourceMap)
-              ? (state.sourceMap as ContentSourceMap | null)
+              ? state.sourceMap
               : payload.sourceMap,
             perspective: dequal(state.perspective, payload.perspective)
-              ? (state.perspective as Exclude<ClientPerspective, 'raw'>)
+              ? // oxlint-disable-next-line no-unsafe-type-assertion
+                (state.perspective as Exclude<ClientPerspective, 'raw'>)
               : payload.perspective,
           }
     default:
@@ -118,7 +120,6 @@ export function usePresentationQuery<const QueryString extends string>(props: {
   const handleQueryHeartbeat = useEffectEvent((comlink: NonNullable<typeof comlinkSnapshot>) => {
     // Handle odd case where the comlink can take events but some data is missing
     if (!projectId || !dataset || !perspective) {
-      // eslint-disable-next-line no-console
       console.warn('usePresentationQuery: projectId, dataset and perspective must be set', {
         projectId,
         dataset,

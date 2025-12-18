@@ -1,4 +1,3 @@
-/* eslint-disable @next/next/no-img-element */
 import {q} from '#groqd'
 import {memo} from 'react'
 
@@ -46,7 +45,12 @@ const PostsLayout = memo(function Posts(props: PostsLayoutProps) {
           >
             <div className="shrink-0">
               {post.mainImage ? (
-                <Image src={post.mainImage as any} width={512} height={380} />
+                <Image
+                  // @ts-expect-error - TODO: fix this
+                  src={post.mainImage}
+                  width={512}
+                  height={380}
+                />
               ) : null}
             </div>
             <div className="flex flex-1 flex-col justify-between bg-white p-6">
@@ -61,7 +65,8 @@ const PostsLayout = memo(function Posts(props: PostsLayoutProps) {
                   {post.author?.image ? (
                     <Image
                       className="rounded-full"
-                      src={post.author.image as any}
+                      // @ts-expect-error - TODO: fix this
+                      src={post.author.image}
                       height={40}
                       width={40}
                     />

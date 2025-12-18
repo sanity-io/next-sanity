@@ -11,8 +11,7 @@
     "build": "next build",
     "dev": "next -p 3001",
     "start": "pnpx serve@latest out -p 3001",
-    "type-check": "next typegen && tsc --noEmit",
-    "typegen": "sanity schema extract && sanity typegen generate"
+    "typegen": "next typegen && sanity schema extract && sanity typegen generate"
   },
   "dependencies": {
     "@repo/sanity-config": "workspace:*",
@@ -32,7 +31,6 @@
     "@types/node": "catalog:",
     "@types/react": "catalog:",
     "postcss": "^8.5.6",
-    "tailwindcss": "^4.1.18",
-    "typescript": "catalog:"
+    "tailwindcss": "^4.1.18"
   }
 }

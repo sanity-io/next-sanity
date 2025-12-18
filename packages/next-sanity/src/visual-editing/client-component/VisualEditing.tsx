@@ -63,7 +63,7 @@ export default function VisualEditing(props: VisualEditingProps): React.JSX.Elem
           case 'replace':
             return routerRef.current.replace(removePathPrefix(update.url, basePath))
           default:
-            throw new Error(`Unknown update type: ${update.type}`)
+            throw new Error(`Unknown update type`, {cause: update})
         }
       },
     }),
@@ -77,7 +77,10 @@ export default function VisualEditing(props: VisualEditingProps): React.JSX.Elem
       navigate({
         type: 'push',
         url: normalizePathTrailingSlash(
-          addPathPrefix(`${pathname}${searchParams?.size ? `?${searchParams}` : ''}`, basePath),
+          addPathPrefix(
+            `${pathname}${searchParams?.size ? `?${searchParams.toString()}` : ''}`,
+            basePath,
+          ),
           trailingSlash,
         ),
       })
