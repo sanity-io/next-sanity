@@ -53,7 +53,5 @@ export default defineConfig({
   outputOptions: {hoistTransitiveImports: false},
   platform: 'neutral',
   minify: 'dce-only',
-  // Needed to inline the types needed by `next-sanity/webhook`
-  dts: {resolve: ['@sanity/types']},
   ignoreWatch: ['.turbo'],
 })
