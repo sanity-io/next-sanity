@@ -1,4 +1,5 @@
 import {useCallback, useSyncExternalStore} from 'react'
+
 import {
   environment,
   environmentListeners,

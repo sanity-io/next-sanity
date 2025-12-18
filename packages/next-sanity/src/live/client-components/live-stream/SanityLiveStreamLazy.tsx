@@ -5,6 +5,7 @@
  */
 
 import dynamic from 'next/dynamic'
+
 import type {SanityLiveStreamProps} from './SanityLiveStream'
 
 const SanityLiveStreamClientComponent = dynamic(() => import('./SanityLiveStream'), {ssr: false})

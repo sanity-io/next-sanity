@@ -1,5 +1,7 @@
 // oxlint-disable-next-line no-unassigned-import
 import 'server-only'
+import {stegaEncodeSourceMap} from '@sanity/client/stega'
+import {perspectiveCookieName} from '@sanity/preview-url-secret/constants'
 import {
   createClient,
   type ClientPerspective,
@@ -10,16 +12,16 @@ import {
   type SanityClient,
   type SyncTag,
 } from 'next-sanity'
-import {stegaEncodeSourceMap} from '@sanity/client/stega'
 import SanityLiveClientComponent, {
   type SanityLiveProps,
 } from 'next-sanity/experimental/client-components/live'
 import {cacheTag, cacheLife, updateTag} from 'next/cache'
 import {draftMode, cookies} from 'next/headers'
 import {preconnect} from 'react-dom'
-import {perspectiveCookieName} from '@sanity/preview-url-secret/constants'
-import {sanitizePerspective} from '../live/utils'
+
 import type {SanityClientConfig} from './types'
+
+import {sanitizePerspective} from '../live/utils'
 import {DRAFT_SYNC_TAG_PREFIX, PUBLISHED_SYNC_TAG_PREFIX} from './constants'
 
 /**

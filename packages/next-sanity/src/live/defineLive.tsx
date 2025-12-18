@@ -1,4 +1,3 @@
-import {prefetchDNS, preconnect} from 'react-dom'
 import {
   type ClientPerspective,
   type ClientReturn,
@@ -11,6 +10,8 @@ import {
 import SanityLiveClientComponent from 'next-sanity/live/client-components/live'
 import SanityLiveStreamClientComponent from 'next-sanity/live/client-components/live-stream'
 import {draftMode} from 'next/headers'
+import {prefetchDNS, preconnect} from 'react-dom'
+
 import {resolveCookiePerspective} from './resolveCookiePerspective'
 
 /**

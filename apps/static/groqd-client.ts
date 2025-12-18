@@ -1,4 +1,5 @@
 import {createGroqBuilder} from 'groqd'
+
 import type {AllSanitySchemaTypes, internalGroqTypeReferenceTo} from './sanity.types.ts'
 
 type SchemaConfig = {

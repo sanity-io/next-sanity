@@ -54,7 +54,6 @@ export default defineConfig({
   platform: 'neutral',
   minify: 'dce-only',
   // Needed to inline the types needed by `next-sanity/webhook`
-  dts: {resolve: ['@sanity/types']
-  },
+  dts: {resolve: ['@sanity/types']},
   ignoreWatch: ['.turbo'],
 })

@@ -1,8 +1,10 @@
 import type {ClientPerspective, ClientReturn, ContentSourceMap, QueryParams} from '@sanity/client'
-import {stegaEncodeSourceMap} from '@sanity/client/stega'
 import type {LoaderControllerMsg} from '@sanity/presentation-comlink'
+
+import {stegaEncodeSourceMap} from '@sanity/client/stega'
 import {dequal} from 'dequal/lite'
 import {useEffect, useMemo, useReducer, useSyncExternalStore, useEffectEvent} from 'react'
+
 import {
   comlinkDataset,
   comlinkListeners,

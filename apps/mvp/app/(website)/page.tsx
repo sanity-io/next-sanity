@@ -1,12 +1,12 @@
+import {unstable__adapter, unstable__environment} from 'next-sanity'
+import {resolvePerspectiveFromCookies} from 'next-sanity/experimental/live'
 /* eslint-disable @next/next/no-html-link-for-pages */
 import {cookies, draftMode} from 'next/headers'
 import Link from 'next/link'
-import {unstable__adapter, unstable__environment} from 'next-sanity'
 
 import PostsLayout, {postsQuery} from '@/app/(website)/PostsLayout'
 
 import {sanityFetch} from './live'
-import {resolvePerspectiveFromCookies} from 'next-sanity/experimental/live'
 
 export default async function IndexPage() {
   const isDraftMode = (await draftMode()).isEnabled

@@ -3,13 +3,13 @@
   "version": "12.0.2",
   "description": "Sanity.io toolkit for Next.js",
   "keywords": [
+    "live",
+    "next.js",
+    "preview",
     "sanity",
     "sanity.io",
-    "next.js",
     "studio",
-    "studio-v3",
-    "live",
-    "preview"
+    "studio-v3"
   ],
   "homepage": "https://github.com/sanity-io/next-sanity#readme",
   "bugs": {
@@ -20,10 +20,11 @@
     "url": "git+ssh://git@github.com/sanity-io/next-sanity.git",
     "directory": "packages/next-sanity"
   },
-  "license": "MIT",
   "author": "Sanity.io <hello@sanity.io>",
+  "license": "MIT",
   "sideEffects": false,
   "type": "module",
+  "main": "./dist/index.js",
   "exports": {
     ".": "./src/index.ts",
     "./draft-mode": "./src/draft-mode/index.ts",
@@ -38,15 +39,14 @@
     "./live/client-components/live": "./src/live/client-components/live/index.ts",
     "./live/client-components/live-stream": "./src/live/client-components/live-stream/index.ts",
     "./live/server-actions": "./src/live/server-actions/index.ts",
+    "./package.json": "./package.json",
     "./studio": "./src/studio/index.ts",
     "./studio/client-component": "./src/studio/client-component/index.ts",
     "./visual-editing": "./src/visual-editing/index.ts",
     "./visual-editing/client-component": "./src/visual-editing/client-component/index.ts",
     "./visual-editing/server-actions": "./src/visual-editing/server-actions/index.ts",
-    "./webhook": "./src/webhook/index.ts",
-    "./package.json": "./package.json"
+    "./webhook": "./src/webhook/index.ts"
   },
-  "main": "./dist/index.js",
   "module": "./dist/index.js",
   "types": "./dist/index.d.ts",
   "files": [
@@ -59,7 +59,6 @@
     "prepack": "tsdown",
     "test": "vitest"
   },
-  "browserslist": "extends @sanity/browserslist-config",
   "dependencies": {
     "@portabletext/react": "^6.0.0",
     "@sanity/client": "^7.13.2",
@@ -99,6 +98,7 @@
     "sanity": "^5.0.1",
     "styled-components": "^6.1"
   },
+  "browserslist": "extends @sanity/browserslist-config",
   "engines": {
     "node": ">=20.19 <22 || >=22.12"
   },

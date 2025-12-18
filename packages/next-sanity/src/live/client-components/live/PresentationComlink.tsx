@@ -1,17 +1,19 @@
 import type {ClientPerspective} from '@sanity/client'
+
 import {
   createNode,
   createNodeMachine,
   // type Node,
 } from '@sanity/comlink'
-import {setPerspectiveCookie} from 'next-sanity/live/server-actions'
 import {
   createCompatibilityActors,
   type LoaderControllerMsg,
   type LoaderNodeMsg,
 } from '@sanity/presentation-comlink'
+import {setPerspectiveCookie} from 'next-sanity/live/server-actions'
 import {useRouter} from 'next/navigation'
 import {useEffect, useEffectEvent} from 'react'
+
 import {setComlink, setComlinkClientConfig} from '../../hooks/context'
 
 function PresentationComlink(props: {

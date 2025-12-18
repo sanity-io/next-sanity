@@ -1,6 +1,6 @@
-import {definePlugin} from 'sanity'
 import {assist} from '@sanity/assist'
 import {visionTool} from '@sanity/vision'
+import {definePlugin} from 'sanity'
 import {structureTool} from 'sanity/structure'
 
 import {schemaTypes} from './schemas'

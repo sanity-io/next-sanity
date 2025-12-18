@@ -6,13 +6,14 @@ import {
   type LiveEventGoAway,
   type SyncTag,
 } from '@sanity/client'
-import {revalidateSyncTags as defaultRevalidateSyncTags} from 'next-sanity/live/server-actions'
 import {isMaybePresentation, isMaybePreviewWindow} from '@sanity/presentation-comlink'
+import {revalidateSyncTags as defaultRevalidateSyncTags} from 'next-sanity/live/server-actions'
 import dynamic from 'next/dynamic'
 import {useRouter} from 'next/navigation'
 import {useEffect, useMemo, useRef, useState, useEffectEvent} from 'react'
-import {setEnvironment, setPerspective} from '../../hooks/context'
+
 import {isCorsOriginError} from '../../../isCorsOriginError'
+import {setEnvironment, setPerspective} from '../../hooks/context'
 
 const PresentationComlink = dynamic(() => import('./PresentationComlink'), {ssr: false})
 const RefreshOnMount = dynamic(() => import('./RefreshOnMount'), {ssr: false})
@@ -109,7 +110,6 @@ export function SanityLive(props: SanityLiveProps): React.JSX.Element | null {
     onGoAway = handleOnGoAway,
     revalidateSyncTags = defaultRevalidateSyncTags,
   } = props
-
 
   const client = useMemo(
     () =>
