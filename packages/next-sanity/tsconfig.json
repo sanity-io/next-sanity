@@ -3,28 +3,6 @@
   "include": ["**/*.ts", "**/*.tsx"],
   "exclude": ["dist", "node_modules"],
   "compilerOptions": {
-    "paths": {
-      "next-sanity/draft-mode": ["./src/draft-mode/index.ts"],
-      "next-sanity/image": ["./src/image/index.ts"],
-      "next-sanity/live": ["./src/live.ts"],
-      "next-sanity/experimental/live": ["./src/experimental/live.tsx"],
-      "next-sanity/experimental/client-components/live": [
-        "./src/experimental/client-components/live.tsx"
-      ],
-      "next-sanity/live/client-components/live": ["./src/live/client-components/live/index.ts"],
-      "next-sanity/live/client-components/live-stream": [
-        "./src/live/client-components/live-stream/index.ts"
-      ],
-      "next-sanity/live/server-actions": ["./src/live/server-actions/index.ts"],
-      "next-sanity/studio/client-component": ["./src/studio/client-component/index.ts"],
-      "next-sanity/studio": ["./src/studio/index.ts"],
-      "next-sanity/visual-editing/client-component": [
-        "./src/visual-editing/client-component/index.ts"
-      ],
-      "next-sanity/visual-editing/server-actions": ["./src/visual-editing/server-actions/index.ts"],
-      "next-sanity/webhook": ["./src/webhook/index.ts"],
-      "next-sanity": ["./src/index"]
-    },
     "plugins": [
       {
         "name": "next"
