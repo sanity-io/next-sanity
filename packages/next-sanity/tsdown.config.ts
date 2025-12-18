@@ -11,6 +11,7 @@ export default defineConfig({
     './src/hooks/index.ts',
     './src/image/index.ts',
     './src/index.ts',
+    './src/live/cache-life.ts',
     './src/live/conditions/next-js/index.ts',
     './src/live/conditions/react-server/index.ts',
     './src/live/conditions/default/index.ts',

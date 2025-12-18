@@ -12,16 +12,8 @@ const {sanityFetch, SanityLive} = defineLive({
   client,
   serverToken: token,
   browserToken: token,
+  strict: true,
 })
-
-async function getPosts(perspective: LivePerspective, stega: boolean) {
-  const {data, tags} = await sanityFetch({
-    query: postsQuery.query,
-    perspective,
-    stega,
-  })
-  return {data, tags}
-}
 
 async function CachedIndexPage({
   perspective,
@@ -30,7 +22,12 @@ async function CachedIndexPage({
   perspective: LivePerspective
   stega: boolean
 }) {
-  const {data, tags} = await getPosts(perspective, stega)
+  'use cache'
+  const {data, tags} = await sanityFetch({
+    query: postsQuery.query,
+    perspective,
+    stega,
+  })
 
   return (
     <>
@@ -102,7 +99,7 @@ export default async function IndexPage() {
           Open Studio
         </Link>
       </div>
-      <SanityLive />
+      <SanityLive includeDrafts={isDraftMode} />
     </>
   )
 }
