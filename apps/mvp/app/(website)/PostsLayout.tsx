@@ -36,6 +36,8 @@ export type PostsLayoutProps = {
 }
 
 export default async function Posts(props: PostsLayoutProps) {
+  'use cache'
+
   const posts = postsQuery.parse(props.data)
   // oxlint-disable-next-line no-console
   console.log('PostsLayout', {posts})
