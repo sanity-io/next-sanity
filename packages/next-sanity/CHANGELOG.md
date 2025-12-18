@@ -1,5 +1,11 @@
 # next-sanity
 
+## 13.0.0-cache-components.22
+
+### Patch Changes
+
+- [#3109](https://github.com/sanity-io/next-sanity/pull/3109) [`0e7dd47`](https://github.com/sanity-io/next-sanity/commit/0e7dd474a7c113a70f4aed92c9a4df870e69794d) Thanks [@stipsan](https://github.com/stipsan)! - Update `useIsPresentationTool`
+
 ## 12.1.0
 
 ### Minor Changes
