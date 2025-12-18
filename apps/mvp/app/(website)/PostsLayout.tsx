@@ -35,16 +35,18 @@ export type PostsLayoutProps = {
   draftMode: boolean
 }
 
-export default async function Posts(props: PostsLayoutProps) {
-  const posts = postsQuery.parse(props.data)
-  // oxlint-disable-next-line no-console
-  console.log('PostsLayout', {posts})
-
+async function RandomNumber() {
+  'use cache'
   const random = Math.random()
+  return <p className="mt-6">Random number: {random}</p>
+}
+
+export default function Posts(props: PostsLayoutProps) {
+  const posts = postsQuery.parse(props.data)
 
   return (
     <>
-      <p className="mt-6">Random number: {random}</p>
+      <RandomNumber />
       <div className={`mx-auto mt-12 grid max-w-lg gap-5 lg:max-w-none lg:grid-cols-3`}>
         {posts.map((post) => {
           const dataAttribute = createDataAttribute({

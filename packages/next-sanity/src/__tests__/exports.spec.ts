@@ -43,11 +43,14 @@ test(`exports snapshot for the ${JSON.stringify(env)} condition`, {timeout: 15_0
       ./live:
         defineLive: function
         isCorsOriginError: function
+        parseTags: function
         resolvePerspectiveFromCookies: function
+      ./live/cache-life:
+        sanity: object
       ./live/client-components:
         SanityLive: function
       ./live/server-actions:
-        revalidateSyncTags: function
+        revalidateSyncTagsAction: function
       ./studio:
         metadata: object
         NextStudio: function
