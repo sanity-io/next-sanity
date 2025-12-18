@@ -8,7 +8,6 @@ import {env} from '#env'
 
 vi.mock('react/jsx-dev-runtime', () => ({}))
 vi.mock('react-dom', () => ({preconnect: vi.fn(), preloadModule: vi.fn()}))
-vi.mock('server-only', () => ({}))
 
 test(`exports snapshot for the ${JSON.stringify(env)} condition`, {timeout: 15_000}, async () => {
   const manifest = await getPackageExportsManifest({
@@ -33,15 +32,7 @@ test(`exports snapshot for the ${JSON.stringify(env)} condition`, {timeout: 15_0
         unstable__environment: string
       ./draft-mode:
         defineEnableDraftMode: function
-      ./experimental/client-components/live:
-        default: function
-      ./experimental/live:
-        defineLive: function
-        resolvePerspectiveFromCookies: function
       ./hooks:
-        useDraftModeEnvironment: function
-        useDraftModePerspective: function
-        useIsLivePreview: function
         useIsPresentationTool: function
         useOptimistic: function
         usePresentationQuery: function
@@ -52,13 +43,15 @@ test(`exports snapshot for the ${JSON.stringify(env)} condition`, {timeout: 15_0
       ./live:
         defineLive: function
         isCorsOriginError: function
-      ./live/client-components/live:
-        default: function
-      ./live/client-components/live-stream:
-        default: function
+        parseTags: function
+        resolvePerspectiveFromCookies: function
+      ./live/cache-life:
+        sanity: object
+      ./live/client-components:
+        SanityLive: function
       ./live/server-actions:
-        revalidateSyncTags: function
-        setPerspectiveCookie: function
+        actionRefresh: function
+        actionUpdateTags: function
       ./studio:
         metadata: object
         NextStudio: function
@@ -70,9 +63,10 @@ test(`exports snapshot for the ${JSON.stringify(env)} condition`, {timeout: 15_0
       ./visual-editing:
         VisualEditing: function
       ./visual-editing/client-component:
-        default: function
+        VisualEditing: function
       ./visual-editing/server-actions:
-        revalidateRootLayout: function
+        actionPerspectiveChange: function
+        actionRefresh: function
       ./webhook:
         parseBody: function
       "

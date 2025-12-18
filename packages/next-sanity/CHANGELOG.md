@@ -1,5 +1,49 @@
 # next-sanity
 
+## 13.0.0-cache-components.33
+
+### Patch Changes
+
+- [#3109](https://github.com/sanity-io/next-sanity/pull/3109) [`d6938b2`](https://github.com/sanity-io/next-sanity/commit/d6938b2d6e6764ed5acddda993786725be9408a9) Thanks [@stipsan](https://github.com/stipsan)! - Bump `@sanity/visual-editing`
+
+## 13.0.0-cache-components.32
+
+### Patch Changes
+
+- [#3109](https://github.com/sanity-io/next-sanity/pull/3109) [`06054a3`](https://github.com/sanity-io/next-sanity/commit/06054a3e3a6de1d784908e4eea2c7c764f6ab500) Thanks [@stipsan](https://github.com/stipsan)! - Rename `sanity:drafts:` prefix to `sanity-drafts:`
+
+## 13.0.0-cache-components.31
+
+### Major Changes
+
+- [#3109](https://github.com/sanity-io/next-sanity/pull/3109) [`a03c286`](https://github.com/sanity-io/next-sanity/commit/a03c286a4bdf254611e5e2f2ab4f0f8c9bfb96b2) Thanks [@stipsan](https://github.com/stipsan)! - Refactor `parseTags` to take `event.tags` with prefixes as input
+
+- [#3109](https://github.com/sanity-io/next-sanity/pull/3109) [`6db515e`](https://github.com/sanity-io/next-sanity/commit/6db515e9ee0a9477017797a232c43f0555f3fa7b) Thanks [@stipsan](https://github.com/stipsan)! - Changed default prefixes from `sp:` to `sanity:` and `sd:` to `sanity:drafts:`
+
+- [#3109](https://github.com/sanity-io/next-sanity/pull/3109) [`30e6808`](https://github.com/sanity-io/next-sanity/commit/30e680856e451201d369407432c0a22a05d2f123) Thanks [@stipsan](https://github.com/stipsan)! - Rename `includeAllDocuments` to `includeDrafts` to match client.live.events({includeDrafts})
+
+### Patch Changes
+
+- [#3109](https://github.com/sanity-io/next-sanity/pull/3109) [`7e7c949`](https://github.com/sanity-io/next-sanity/commit/7e7c94904aa96414c363fd8b48b7478fd9f60d0f) Thanks [@stipsan](https://github.com/stipsan)! - Change the signature of `<SanityLive action={async (event, context)}>` to `<SanityLive action={async (unsafeTags)}>`
+
+## 13.0.0-cache-components.30
+
+### Patch Changes
+
+- [#3109](https://github.com/sanity-io/next-sanity/pull/3109) [`ec86e5e`](https://github.com/sanity-io/next-sanity/commit/ec86e5ef9aa6a22732387f3e28509db2b7df8ffb) Thanks [@stipsan](https://github.com/stipsan)! - attempt fixing eventual consistency issue by not wrapping with startTransition()
+
+## 13.0.0-cache-components.29
+
+### Major Changes
+
+- [#3109](https://github.com/sanity-io/next-sanity/pull/3109) [`e417d4c`](https://github.com/sanity-io/next-sanity/commit/e417d4c791e0bdd958c1f2d5c758ece6adf10ff9) Thanks [@stipsan](https://github.com/stipsan)! - No longer set the default cache tag 'sanity'
+
+### Patch Changes
+
+- [#3109](https://github.com/sanity-io/next-sanity/pull/3109) [`59abe40`](https://github.com/sanity-io/next-sanity/commit/59abe40ca90db6d9fa18bf7110f5cb58dc983be8) Thanks [@stipsan](https://github.com/stipsan)! - Consistent startTransition wrappers on <SanityLive />
+
+- [#3109](https://github.com/sanity-io/next-sanity/pull/3109) [`647af20`](https://github.com/sanity-io/next-sanity/commit/647af20707832807fb648caaf3528fd5ac8bb7d6) Thanks [@stipsan](https://github.com/stipsan)! - Apply the same cache tag prefix to `sanity:fetch-sync-tags` instead of hardcoding `sanity:`
+
 ## 12.1.4
 
 ### Patch Changes
