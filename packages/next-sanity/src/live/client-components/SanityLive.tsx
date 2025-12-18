@@ -40,7 +40,7 @@ function SanityLive(props: SanityLiveProps): React.JSX.Element | null {
     action,
     onError,
     onWelcome = handleWelcome,
-    onReconnect = 'refresh',
+    onReconnect = false,
     onRestart = 'refresh',
     onGoAway = handleGoaway,
   } = props

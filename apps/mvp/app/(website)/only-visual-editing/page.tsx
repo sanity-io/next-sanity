@@ -24,6 +24,7 @@ async function CachedIndexPage({
   perspective: LivePerspective
   stega: boolean
 }) {
+  'use cache'
   const {data, sourceMap, tags} = await sanityFetch({
     query: postsQuery.query,
     perspective,
