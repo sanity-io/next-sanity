@@ -1,9 +1,14 @@
 # next-sanity
 
-## 12.0.4
+## 12.0.5
+
 ### Patch Changes
 
+- [`a0e4920`](https://github.com/sanity-io/next-sanity/commit/a0e4920bd524641a2b8130b83f9e5d33ba03abac) Thanks [@stipsan](https://github.com/stipsan)! - Reduce bundlesize of `isCorsOriginError`
 
+## 12.0.4
+
+### Patch Changes
 
 - [`2264834`](https://github.com/sanity-io/next-sanity/commit/2264834161642c6391e4c3c29c873878cdc311c2) Thanks [@stipsan](https://github.com/stipsan)! - Remove `@sanity/types` dev dependency
 
