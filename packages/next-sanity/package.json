@@ -1,6 +1,6 @@
 {
   "name": "next-sanity",
-  "version": "12.0.12",
+  "version": "13.0.0-cache-components.17",
   "description": "Sanity.io toolkit for Next.js",
   "keywords": [
     "live",
@@ -28,20 +28,30 @@
   "type": "module",
   "sideEffects": false,
   "types": "./dist/index.d.ts",
+  "imports": {
+    "#env": {
+      "next-js": "./src/env/next-js.ts",
+      "react-server": "./src/env/react-server.ts",
+      "default": "./src/env/default.ts"
+    },
+    "#live/*": "./src/live/shared/*.ts"
+  },
   "exports": {
     ".": "./src/index.ts",
+    "./cache-life": "./src/cache-life.ts",
     "./draft-mode": "./src/draft-mode/index.ts",
-    "./experimental/client-components/live": "./src/experimental/client-components/live.tsx",
-    "./experimental/live": "./src/experimental/live.tsx",
     "./hooks": "./src/hooks/index.ts",
     "./image": "./src/image/index.ts",
     "./live": {
-      "react-server": "./src/live.ts",
-      "default": "./src/live.server-only.ts"
+      "next-js": "./src/live/conditions/next-js/index.ts",
+      "react-server": "./src/live/conditions/react-server/index.ts",
+      "default": "./src/live/conditions/default/index.ts"
     },
-    "./live/client-components/live": "./src/live/client-components/live/index.ts",
-    "./live/client-components/live-stream": "./src/live/client-components/live-stream/index.ts",
-    "./live/server-actions": "./src/live/server-actions/index.ts",
+    "./live/client-components": "./src/live/client-components/index.ts",
+    "./live/server-actions": {
+      "next-js": "./src/live/server-actions/index.next-js.ts",
+      "default": "./src/live/server-actions/index.default.ts"
+    },
     "./studio": "./src/studio/index.ts",
     "./studio/client-component": "./src/studio/client-component/index.ts",
     "./visual-editing": "./src/visual-editing/index.ts",
@@ -53,18 +63,20 @@
   "publishConfig": {
     "exports": {
       ".": "./dist/index.js",
+      "./cache-life": "./dist/cache-life.js",
       "./draft-mode": "./dist/draft-mode/index.js",
-      "./experimental/client-components/live": "./dist/experimental/client-components/live.js",
-      "./experimental/live": "./dist/experimental/live.js",
       "./hooks": "./dist/hooks/index.js",
       "./image": "./dist/image/index.js",
       "./live": {
-        "react-server": "./dist/live.js",
-        "default": "./dist/live.server-only.js"
+        "next-js": "./dist/live/conditions/next-js/index.js",
+        "react-server": "./dist/live/conditions/react-server/index.js",
+        "default": "./dist/live/conditions/default/index.js"
       },
-      "./live/client-components/live": "./dist/live/client-components/live/index.js",
-      "./live/client-components/live-stream": "./dist/live/client-components/live-stream/index.js",
-      "./live/server-actions": "./dist/live/server-actions/index.js",
+      "./live/client-components": "./dist/live/client-components/index.js",
+      "./live/server-actions": {
+        "next-js": "./dist/live/server-actions/index.next-js.js",
+        "default": "./dist/live/server-actions/index.default.js"
+      },
       "./studio": "./dist/studio/index.js",
       "./studio/client-component": "./dist/studio/client-component/index.js",
       "./visual-editing": "./dist/visual-editing/index.js",
@@ -90,17 +102,19 @@
     "@sanity/visual-editing": "^5.1.0",
     "dequal": "^2.0.3",
     "groq": "^5.3.0",
-    "history": "^5.3.0",
-    "server-only": "^0.0.1"
+    "history": "^5.3.0"
   },
   "devDependencies": {
     "@sanity/browserslist-config": "^1.0.5",
     "@sanity/tsconfig": "catalog:",
     "@sanity/webhook": "4.0.4",
+    "@types/js-yaml": "^4.0.9",
     "@types/node": "catalog:",
     "@types/react": "catalog:",
     "@types/react-dom": "catalog:",
+    "@vitejs/plugin-react": "^5.1.2",
     "@vitest/coverage-v8": "^4.0.17",
+    "js-yaml": "^4.1.1",
     "next": "catalog:",
     "publint": "^0.3.16",
     "react": "catalog:",
@@ -108,7 +122,8 @@
     "styled-components": "catalog:",
     "tsdown": "0.19.0",
     "typescript": "catalog:",
-    "vitest": "^4.0.17"
+    "vitest": "^4.0.17",
+    "vitest-package-exports": "^1.1.2"
   },
   "peerDependencies": {
     "@sanity/client": "^7.14.0",

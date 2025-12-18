@@ -1,13 +1,12 @@
-import {useCallback, useSyncExternalStore} from 'react'
-
 import {
   environment,
   environmentListeners,
   perspective,
   perspectiveListeners,
-  type DraftEnvironment,
-  type DraftPerspective,
-} from './context'
+  type LiveEnvironment,
+  type LivePerspective,
+} from '#live/context'
+import {useCallback, useSyncExternalStore} from 'react'
 
 /**
  * Reports the current draft mode environment.
@@ -19,7 +18,7 @@ import {
  * - Your app is not previewing anything (that could be detected).
  * @public
  */
-export function useDraftModeEnvironment(): DraftEnvironment {
+export function useDraftModeEnvironment(): LiveEnvironment {
   const subscribe = useCallback((listener: () => void) => {
     environmentListeners.add(listener)
     return () => environmentListeners.delete(listener)
@@ -38,7 +37,7 @@ export function useDraftModeEnvironment(): DraftEnvironment {
  * If the hook is used but the `<SanityLive />` component is not present then it'll stay in `'checking'` and console warn after a timeout that it seems like you're missing the component.
  * @public
  */
-export function useDraftModePerspective(): DraftPerspective {
+export function useDraftModePerspective(): LivePerspective {
   const subscribe = useCallback((listener: () => void) => {
     perspectiveListeners.add(listener)
     return () => perspectiveListeners.delete(listener)
