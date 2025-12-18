@@ -1,5 +1,12 @@
 # next-sanity
 
+## 12.0.4
+### Patch Changes
+
+
+
+- [`2264834`](https://github.com/sanity-io/next-sanity/commit/2264834161642c6391e4c3c29c873878cdc311c2) Thanks [@stipsan](https://github.com/stipsan)! - Remove `@sanity/types` dev dependency
+
 ## 12.0.3
 
 ### Patch Changes
