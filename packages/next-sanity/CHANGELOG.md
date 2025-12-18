@@ -1,9 +1,4 @@
-<!-- markdownlint-disable --><!-- textlint-disable -->
-
-# 📓 Changelog
-
-All notable changes to this project will be documented in this file. See
-[Conventional Commits](https://conventionalcommits.org) for commit guidelines.
+# next-sanity
 
 ## [12.0.2](https://github.com/sanity-io/next-sanity/compare/next-sanity-v12.0.1...next-sanity-v12.0.2) (2025-12-18)
 
