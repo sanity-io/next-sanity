@@ -1,5 +1,17 @@
 # next-sanity
 
+## 13.0.0-cache-components.46
+
+### Patch Changes
+
+- [#3109](https://github.com/sanity-io/next-sanity/pull/3109) [`a3ada17`](https://github.com/sanity-io/next-sanity/commit/a3ada17d86560ce367aee8d1bb71f69ff65baa38) Thanks [@stipsan](https://github.com/stipsan)! - Fix issue where setting `action` manually did not properly override
+
+## 13.0.0-cache-components.45
+
+### Patch Changes
+
+- [#3109](https://github.com/sanity-io/next-sanity/pull/3109) [`12484c2`](https://github.com/sanity-io/next-sanity/commit/12484c202ad68fb4179d5aa6cfaee53c89b4bbec) Thanks [@stipsan](https://github.com/stipsan)! - Only forward `waitFor` when set to `'function'` and `includeDrafts` is false
+
 ## 12.4.3
 
 ### Patch Changes
