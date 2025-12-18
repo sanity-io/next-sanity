@@ -2,17 +2,11 @@
 
 import '../globals.css'
 import {VisualEditing} from 'next-sanity/visual-editing'
-import {
-  // cookies,
-  draftMode,
-} from 'next/headers'
+import {draftMode} from 'next/headers'
 
 import {DebugStatus} from './DebugStatus'
 import {FormStatusLabel} from './FormStatus'
-import {SanityLive} from './live'
 import {RefreshButton} from './RefreshButton'
-// import {resolvePerspectiveFromCookies} from 'next-sanity/experimental/live'
-// import {Suspense} from 'react'
 
 async function toggleDraftMode() {
   'use server'
@@ -44,7 +38,6 @@ export default async function RootLayout({children}: {children: React.ReactNode}
         {children}
         <RefreshButton />
         {isDraftMode && <VisualEditing />}
-        <SanityLive />
       </body>
     </html>
   )

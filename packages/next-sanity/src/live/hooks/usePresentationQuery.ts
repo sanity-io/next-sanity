@@ -1,17 +1,16 @@
 import type {ClientPerspective, ClientReturn, ContentSourceMap, QueryParams} from '@sanity/client'
 import type {LoaderControllerMsg} from '@sanity/presentation-comlink'
 
-import {stegaEncodeSourceMap} from '@sanity/client/stega'
-import {dequal} from 'dequal/lite'
-import {useEffect, useMemo, useReducer, useSyncExternalStore, useEffectEvent} from 'react'
-
 import {
   comlinkDataset,
   comlinkListeners,
   comlinkProjectId,
+  comlinkPerspective,
   comlink as comlinkSnapshot,
-} from './context'
-import {useDraftModePerspective} from './useDraftMode'
+} from '#live/context'
+import {stegaEncodeSourceMap} from '@sanity/client/stega'
+import {dequal} from 'dequal/lite'
+import {useEffect, useMemo, useReducer, useSyncExternalStore, useEffectEvent} from 'react'
 
 /** @alpha */
 export type UsePresentationQueryReturnsInactive = {
@@ -118,7 +117,12 @@ export function usePresentationQuery<const QueryString extends string>(props: {
   /**
    * The perspective is kept in sync with Presentation Tool's perspective, and even knows what perspective the page loaded with initially and can forward it to the Sanity Studio.
    */
-  const perspective = useDraftModePerspective()
+  const perspective = useSyncExternalStore(
+    subscribe,
+    () => comlinkPerspective,
+    () => null,
+  )
+
   const handleQueryHeartbeat = useEffectEvent((comlink: NonNullable<typeof comlinkSnapshot>) => {
     // Handle odd case where the comlink can take events but some data is missing
     if (!projectId || !dataset || !perspective) {
@@ -130,7 +134,7 @@ export function usePresentationQuery<const QueryString extends string>(props: {
       return
     }
     // Another odd case where the initial perspective states haven't resolved to the actual perspective state
-    if (perspective === 'checking' || perspective === 'unknown') {
+    if (perspective === null) {
       return
     }
     comlink.post('loader/query-listen', {
