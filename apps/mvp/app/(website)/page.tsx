@@ -1,22 +1,34 @@
 import {unstable__adapter, unstable__environment} from 'next-sanity'
-import {resolvePerspectiveFromCookies} from 'next-sanity/experimental/live'
+import {resolvePerspectiveFromCookies, type LivePerspective} from 'next-sanity/live'
+import {cacheLife} from 'next/cache'
 import {cookies, draftMode} from 'next/headers'
 import Link from 'next/link'
 
 import PostsLayout, {postsQuery} from '@/app/(website)/PostsLayout'
 
-import {sanityFetch} from './live'
+import {fetch as sanityFetch} from './live'
 
-export default async function IndexPage() {
-  const isDraftMode = (await draftMode()).isEnabled
-  const perspective = isDraftMode
-    ? await resolvePerspectiveFromCookies({cookies: await cookies()})
-    : 'published'
+async function getPosts(perspective: LivePerspective) {
+  'use cache: remote'
+
+  cacheLife('sanity')
+
   const {data, tags} = await sanityFetch({
     query: postsQuery.query,
     perspective,
-    stega: isDraftMode,
+    stega: perspective !== 'published',
   })
+  return {data, tags}
+}
+
+export default async function IndexPage() {
+  let perspective: LivePerspective = 'published'
+  const isDraftMode = (await draftMode()).isEnabled
+  if (isDraftMode) {
+    perspective = await resolvePerspectiveFromCookies({cookies: await cookies()})
+  }
+
+  const {data, tags} = await getPosts(perspective)
 
   return (
     <>

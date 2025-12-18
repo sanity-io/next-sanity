@@ -1,9 +1,8 @@
 import type {ClientPerspective} from '@sanity/client'
 
+import {sanitizePerspective} from '#live/sanitizePerspective'
 import {perspectiveCookieName} from '@sanity/preview-url-secret/constants'
 import {cookies, draftMode} from 'next/headers'
-
-import {sanitizePerspective} from './utils'
 
 /**
  * @internal
