@@ -1,5 +1,11 @@
 # next-sanity
 
+## 13.0.0-cache-components.14
+
+### Patch Changes
+
+- [#3109](https://github.com/sanity-io/next-sanity/pull/3109) [`6dbb081`](https://github.com/sanity-io/next-sanity/commit/6dbb081ce9fcf3ce85a8cce845b15cf54120a485) Thanks [@stipsan](https://github.com/stipsan)! - Reuse `RefreshOn{Focus,Mount,Reconnect}` components
+
 ## 12.0.10
 
 ### Patch Changes

@@ -1,3 +1,5 @@
+import {setEnvironment, setPerspective} from '#client-components/context'
+import {isCorsOriginError} from '#live/isCorsOriginError'
 import {
   createClient,
   type ClientPerspective,
@@ -12,13 +14,10 @@ import dynamic from 'next/dynamic'
 import {useRouter} from 'next/navigation'
 import {useEffect, useMemo, useRef, useState, useEffectEvent} from 'react'
 
-import {isCorsOriginError} from '../../../isCorsOriginError'
-import {setEnvironment, setPerspective} from '../../hooks/context'
-
-const PresentationComlink = dynamic(() => import('./PresentationComlink'), {ssr: false})
-const RefreshOnMount = dynamic(() => import('./RefreshOnMount'), {ssr: false})
-const RefreshOnFocus = dynamic(() => import('./RefreshOnFocus'), {ssr: false})
-const RefreshOnReconnect = dynamic(() => import('./RefreshOnReconnect'), {ssr: false})
+const PresentationComlink = dynamic(() => import('#client-components/PresentationComlink'), {ssr: false})
+const RefreshOnMount = dynamic(() => import('#client-components/RefreshOnMount'), {ssr: false})
+const RefreshOnFocus = dynamic(() => import('#client-components/RefreshOnFocus'), {ssr: false})
+const RefreshOnReconnect = dynamic(() => import('#client-components/RefreshOnReconnect'), {ssr: false})
 
 /**
  * @public
@@ -263,9 +262,7 @@ export function SanityLive(props: SanityLiveProps): React.JSX.Element | null {
         <PresentationComlink
           projectId={projectId!}
           dataset={dataset!}
-          // handleDraftModeAction={handleDraftModeAction}
-          draftModeEnabled={draftModeEnabled}
-          draftModePerspective={draftModePerspective!}
+          // onPerspective={setPerspectiveCookie}
         />
       )}
       {!draftModeEnabled && refreshOnMount && <RefreshOnMount />}
