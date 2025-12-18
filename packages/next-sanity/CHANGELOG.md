@@ -1,1921 +1,1691 @@
 # next-sanity
 
-## [12.0.2](https://github.com/sanity-io/next-sanity/compare/next-sanity-v12.0.1...next-sanity-v12.0.2) (2025-12-18)
+## 12.0.3
 
+### Patch Changes
+
+- [`18f7392`](https://github.com/sanity-io/next-sanity/commit/18f73921f89b60af9e1b96d096b8ceeb4c5607f5) Thanks [@stipsan](https://github.com/stipsan)! - Inline `@sanity/types` in `next-sanity/webhook`
+
+## [12.0.2](https://github.com/sanity-io/next-sanity/compare/next-sanity-v12.0.1...next-sanity-v12.0.2) (2025-12-18)
 
 ### Bug Fixes
 
-* stop shipping src folder to npm ([ec9956d](https://github.com/sanity-io/next-sanity/commit/ec9956d8413f02a86744725d985352a22443e6d8))
+- stop shipping src folder to npm ([ec9956d](https://github.com/sanity-io/next-sanity/commit/ec9956d8413f02a86744725d985352a22443e6d8))
 
 ## [12.0.1](https://github.com/sanity-io/next-sanity/compare/next-sanity-v12.0.0...next-sanity-v12.0.1) (2025-12-17)
 
-
 ### Bug Fixes
 
-* **deps:** update dependency @sanity/preview-url-secret to ^4.0.1 (main) ([#3090](https://github.com/sanity-io/next-sanity/issues/3090)) ([a145ce4](https://github.com/sanity-io/next-sanity/commit/a145ce4d2487374a1e03f7cdc068c7ba0a644e92))
-* **deps:** update dependency @sanity/visual-editing to ^5.0.2 (main) ([#3086](https://github.com/sanity-io/next-sanity/issues/3086)) ([861fd4d](https://github.com/sanity-io/next-sanity/commit/861fd4df09fe74d970111b8dbc19d46a365591cb))
-* **deps:** update dependency @sanity/visual-editing to ^5.0.3 (main) ([#3091](https://github.com/sanity-io/next-sanity/issues/3091)) ([a6484f4](https://github.com/sanity-io/next-sanity/commit/a6484f486461e0f527c828c401554b4939e993c7))
-* **deps:** update sanity monorepo to ^5.0.1 (main) ([#3092](https://github.com/sanity-io/next-sanity/issues/3092)) ([002d7b5](https://github.com/sanity-io/next-sanity/commit/002d7b569e4cef73ab54d840b4a9016abcb7670b))
+- **deps:** update dependency @sanity/preview-url-secret to ^4.0.1 (main) ([#3090](https://github.com/sanity-io/next-sanity/issues/3090)) ([a145ce4](https://github.com/sanity-io/next-sanity/commit/a145ce4d2487374a1e03f7cdc068c7ba0a644e92))
+- **deps:** update dependency @sanity/visual-editing to ^5.0.2 (main) ([#3086](https://github.com/sanity-io/next-sanity/issues/3086)) ([861fd4d](https://github.com/sanity-io/next-sanity/commit/861fd4df09fe74d970111b8dbc19d46a365591cb))
+- **deps:** update dependency @sanity/visual-editing to ^5.0.3 (main) ([#3091](https://github.com/sanity-io/next-sanity/issues/3091)) ([a6484f4](https://github.com/sanity-io/next-sanity/commit/a6484f486461e0f527c828c401554b4939e993c7))
+- **deps:** update sanity monorepo to ^5.0.1 (main) ([#3092](https://github.com/sanity-io/next-sanity/issues/3092)) ([002d7b5](https://github.com/sanity-io/next-sanity/commit/002d7b569e4cef73ab54d840b4a9016abcb7670b))
 
 ## [12.0.0](https://github.com/sanity-io/next-sanity/compare/next-sanity-v11.6.12...next-sanity-v12.0.0) (2025-12-16)
 
-
 ### ⚠ BREAKING CHANGES
 
-* See the migration guide: https://github.com/sanity-io/next-sanity/blob/main/packages/next-sanity/MIGRATE-v11-to-v12.md
-* require react 19.2
-* **deps:** update sanity monorepo to v5 (main) (major) ([#3077](https://github.com/sanity-io/next-sanity/issues/3077))
+- See the migration guide: https://github.com/sanity-io/next-sanity/blob/main/packages/next-sanity/MIGRATE-v11-to-v12.md
+- require react 19.2
+- **deps:** update sanity monorepo to v5 (main) (major) ([#3077](https://github.com/sanity-io/next-sanity/issues/3077))
 
 ### Features
 
-* require react 19.2 ([b7e42f4](https://github.com/sanity-io/next-sanity/commit/b7e42f42e60ab93664d63ea801e906d7b67932ab))
-
+- require react 19.2 ([b7e42f4](https://github.com/sanity-io/next-sanity/commit/b7e42f42e60ab93664d63ea801e906d7b67932ab))
 
 ### Bug Fixes
 
-* **deps:** update dependency @sanity/preview-url-secret to v4 (main) ([#3080](https://github.com/sanity-io/next-sanity/issues/3080)) ([137bb2d](https://github.com/sanity-io/next-sanity/commit/137bb2d02b5df36b7d2efd1a00399317068ff690))
-* **deps:** update dependency @sanity/visual-editing to v5 (main) ([#3081](https://github.com/sanity-io/next-sanity/issues/3081)) ([e4af494](https://github.com/sanity-io/next-sanity/commit/e4af49407f09cbd70e71061e430daf269c5bb733))
-* **deps:** update sanity monorepo to v5 (main) (major) ([#3077](https://github.com/sanity-io/next-sanity/issues/3077)) ([9a0a75c](https://github.com/sanity-io/next-sanity/commit/9a0a75ccf864712b7bf6554cbc16a09008744f87))
-
+- **deps:** update dependency @sanity/preview-url-secret to v4 (main) ([#3080](https://github.com/sanity-io/next-sanity/issues/3080)) ([137bb2d](https://github.com/sanity-io/next-sanity/commit/137bb2d02b5df36b7d2efd1a00399317068ff690))
+- **deps:** update dependency @sanity/visual-editing to v5 (main) ([#3081](https://github.com/sanity-io/next-sanity/issues/3081)) ([e4af494](https://github.com/sanity-io/next-sanity/commit/e4af49407f09cbd70e71061e430daf269c5bb733))
+- **deps:** update sanity monorepo to v5 (main) (major) ([#3077](https://github.com/sanity-io/next-sanity/issues/3077)) ([9a0a75c](https://github.com/sanity-io/next-sanity/commit/9a0a75ccf864712b7bf6554cbc16a09008744f87))
 
 ### Miscellaneous Chores
 
-* require `next@16` ([c0e159a](https://github.com/sanity-io/next-sanity/commit/c0e159a77e98229866dc558c13a9af8fbfc08dbf))
+- require `next@16` ([c0e159a](https://github.com/sanity-io/next-sanity/commit/c0e159a77e98229866dc558c13a9af8fbfc08dbf))
 
 ## [11.6.12](https://github.com/sanity-io/next-sanity/compare/next-sanity-v11.6.11...next-sanity-v11.6.12) (2025-12-16)
 
-
 ### Bug Fixes
 
-* **deps:** update dependency @sanity/client to ^7.13.2 (main) ([#3068](https://github.com/sanity-io/next-sanity/issues/3068)) ([83cc056](https://github.com/sanity-io/next-sanity/commit/83cc056b3d3c7f37ae06b1ea38f2fc78e01fdbb4))
-* **deps:** update dependency sanity to ^4.21.1 (main) ([#3053](https://github.com/sanity-io/next-sanity/issues/3053)) ([4bb6979](https://github.com/sanity-io/next-sanity/commit/4bb6979d782b664d1c1ec44c466eebdbe0e908d0))
-* **deps:** update sanity monorepo to ^4.22.0 (main) ([#3074](https://github.com/sanity-io/next-sanity/issues/3074)) ([d7c1106](https://github.com/sanity-io/next-sanity/commit/d7c11068c11652432e9aede55ac182b5f6888cb0))
+- **deps:** update dependency @sanity/client to ^7.13.2 (main) ([#3068](https://github.com/sanity-io/next-sanity/issues/3068)) ([83cc056](https://github.com/sanity-io/next-sanity/commit/83cc056b3d3c7f37ae06b1ea38f2fc78e01fdbb4))
+- **deps:** update dependency sanity to ^4.21.1 (main) ([#3053](https://github.com/sanity-io/next-sanity/issues/3053)) ([4bb6979](https://github.com/sanity-io/next-sanity/commit/4bb6979d782b664d1c1ec44c466eebdbe0e908d0))
+- **deps:** update sanity monorepo to ^4.22.0 (main) ([#3074](https://github.com/sanity-io/next-sanity/issues/3074)) ([d7c1106](https://github.com/sanity-io/next-sanity/commit/d7c11068c11652432e9aede55ac182b5f6888cb0))
 
 ## [11.6.11](https://github.com/sanity-io/next-sanity/compare/next-sanity-v11.6.10...next-sanity-v11.6.11) (2025-12-15)
 
-
 ### Bug Fixes
 
-* **deps:** update dependency @portabletext/react to v6 (main) ([#3055](https://github.com/sanity-io/next-sanity/issues/3055)) ([96d938f](https://github.com/sanity-io/next-sanity/commit/96d938f939b7eac3cdc763348d041060da7372ed))
-* **deps:** update dependency @sanity/client to ^7.13.1 (main) ([#3032](https://github.com/sanity-io/next-sanity/issues/3032)) ([f12bd94](https://github.com/sanity-io/next-sanity/commit/f12bd944c453ee99342fb19b3f431921cbc9d3db))
-* **deps:** update dependency @sanity/image-url to v2 (main) ([#3042](https://github.com/sanity-io/next-sanity/issues/3042)) ([36c63cc](https://github.com/sanity-io/next-sanity/commit/36c63ccf00918ee735dd428e541a6385c0e616c8))
-* **deps:** update dependency @sanity/visual-editing to ^4.0.3 (main) ([#3069](https://github.com/sanity-io/next-sanity/issues/3069)) ([b5b9081](https://github.com/sanity-io/next-sanity/commit/b5b90816f9f5a0bcf0ec1b6e7a477eca1c793417))
+- **deps:** update dependency @portabletext/react to v6 (main) ([#3055](https://github.com/sanity-io/next-sanity/issues/3055)) ([96d938f](https://github.com/sanity-io/next-sanity/commit/96d938f939b7eac3cdc763348d041060da7372ed))
+- **deps:** update dependency @sanity/client to ^7.13.1 (main) ([#3032](https://github.com/sanity-io/next-sanity/issues/3032)) ([f12bd94](https://github.com/sanity-io/next-sanity/commit/f12bd944c453ee99342fb19b3f431921cbc9d3db))
+- **deps:** update dependency @sanity/image-url to v2 (main) ([#3042](https://github.com/sanity-io/next-sanity/issues/3042)) ([36c63cc](https://github.com/sanity-io/next-sanity/commit/36c63ccf00918ee735dd428e541a6385c0e616c8))
+- **deps:** update dependency @sanity/visual-editing to ^4.0.3 (main) ([#3069](https://github.com/sanity-io/next-sanity/issues/3069)) ([b5b9081](https://github.com/sanity-io/next-sanity/commit/b5b90816f9f5a0bcf0ec1b6e7a477eca1c793417))
 
 ## [11.6.10](https://github.com/sanity-io/next-sanity/compare/next-sanity-v11.6.9...next-sanity-v11.6.10) (2025-11-26)
 
-
 ### Bug Fixes
 
-* **deps:** update dependency @sanity/comlink to ^4.0.1 (main) ([#3021](https://github.com/sanity-io/next-sanity/issues/3021)) ([acc2f01](https://github.com/sanity-io/next-sanity/commit/acc2f01344029c2a0436bf47b53b24f82d3ae45a))
-* **deps:** update dependency @sanity/presentation-comlink to ^2.0.1 (main) ([#3022](https://github.com/sanity-io/next-sanity/issues/3022)) ([a9c87a1](https://github.com/sanity-io/next-sanity/commit/a9c87a1f6c7ff428a5c835c07c10ee142678d881))
-* **deps:** update sanity monorepo to ^4.19.0 (main) ([#3030](https://github.com/sanity-io/next-sanity/issues/3030)) ([033a033](https://github.com/sanity-io/next-sanity/commit/033a033b30f212614bb336b1974d0c207321ab84))
+- **deps:** update dependency @sanity/comlink to ^4.0.1 (main) ([#3021](https://github.com/sanity-io/next-sanity/issues/3021)) ([acc2f01](https://github.com/sanity-io/next-sanity/commit/acc2f01344029c2a0436bf47b53b24f82d3ae45a))
+- **deps:** update dependency @sanity/presentation-comlink to ^2.0.1 (main) ([#3022](https://github.com/sanity-io/next-sanity/issues/3022)) ([a9c87a1](https://github.com/sanity-io/next-sanity/commit/a9c87a1f6c7ff428a5c835c07c10ee142678d881))
+- **deps:** update sanity monorepo to ^4.19.0 (main) ([#3030](https://github.com/sanity-io/next-sanity/issues/3030)) ([033a033](https://github.com/sanity-io/next-sanity/commit/033a033b30f212614bb336b1974d0c207321ab84))
 
 ## [11.6.9](https://github.com/sanity-io/next-sanity/compare/next-sanity-v11.6.8...next-sanity-v11.6.9) (2025-11-25)
 
-
 ### Bug Fixes
 
-* **deps:** update dependency @sanity/preview-url-secret to v3 (main) ([#3018](https://github.com/sanity-io/next-sanity/issues/3018)) ([0f0765a](https://github.com/sanity-io/next-sanity/commit/0f0765a62697c025a6b9374ea9102b69f2177607))
-* **deps:** update dependency @sanity/visual-editing to ^4.0.2 (main) ([#3014](https://github.com/sanity-io/next-sanity/issues/3014)) ([fc8720d](https://github.com/sanity-io/next-sanity/commit/fc8720d1767f3eade5b47c6f2c2e4b7c64374f73))
-* **deps:** update sanity monorepo to ^4.18.0 (main) ([#3017](https://github.com/sanity-io/next-sanity/issues/3017)) ([a47b473](https://github.com/sanity-io/next-sanity/commit/a47b473c242be37acc615c61a60e947db36336a4))
+- **deps:** update dependency @sanity/preview-url-secret to v3 (main) ([#3018](https://github.com/sanity-io/next-sanity/issues/3018)) ([0f0765a](https://github.com/sanity-io/next-sanity/commit/0f0765a62697c025a6b9374ea9102b69f2177607))
+- **deps:** update dependency @sanity/visual-editing to ^4.0.2 (main) ([#3014](https://github.com/sanity-io/next-sanity/issues/3014)) ([fc8720d](https://github.com/sanity-io/next-sanity/commit/fc8720d1767f3eade5b47c6f2c2e4b7c64374f73))
+- **deps:** update sanity monorepo to ^4.18.0 (main) ([#3017](https://github.com/sanity-io/next-sanity/issues/3017)) ([a47b473](https://github.com/sanity-io/next-sanity/commit/a47b473c242be37acc615c61a60e947db36336a4))
 
 ## [11.6.8](https://github.com/sanity-io/next-sanity/compare/next-sanity-v11.6.7...next-sanity-v11.6.8) (2025-11-19)
 
-
 ### Bug Fixes
 
-* **deps:** update dependency @sanity/client to ^7.13.0 (main) ([#3000](https://github.com/sanity-io/next-sanity/issues/3000)) ([15896f8](https://github.com/sanity-io/next-sanity/commit/15896f8874ef74292f78428dce0805fd83b06d1e))
-* **deps:** update sanity monorepo to ^4.16.0 (main) ([#3001](https://github.com/sanity-io/next-sanity/issues/3001)) ([d6fd303](https://github.com/sanity-io/next-sanity/commit/d6fd303e7d7768df6b6c3ebb481e478b0531a013))
+- **deps:** update dependency @sanity/client to ^7.13.0 (main) ([#3000](https://github.com/sanity-io/next-sanity/issues/3000)) ([15896f8](https://github.com/sanity-io/next-sanity/commit/15896f8874ef74292f78428dce0805fd83b06d1e))
+- **deps:** update sanity monorepo to ^4.16.0 (main) ([#3001](https://github.com/sanity-io/next-sanity/issues/3001)) ([d6fd303](https://github.com/sanity-io/next-sanity/commit/d6fd303e7d7768df6b6c3ebb481e478b0531a013))
 
 ## [11.6.7](https://github.com/sanity-io/next-sanity/compare/next-sanity-v11.6.6...next-sanity-v11.6.7) (2025-11-17)
 
-
 ### Bug Fixes
 
-* **deps:** update sanity monorepo to ^4.15.0 (main) ([#2989](https://github.com/sanity-io/next-sanity/issues/2989)) ([b6fd825](https://github.com/sanity-io/next-sanity/commit/b6fd82591e5d1dbfcc762b960750aea80ef6f5b9))
+- **deps:** update sanity monorepo to ^4.15.0 (main) ([#2989](https://github.com/sanity-io/next-sanity/issues/2989)) ([b6fd825](https://github.com/sanity-io/next-sanity/commit/b6fd82591e5d1dbfcc762b960750aea80ef6f5b9))
 
 ## [11.6.6](https://github.com/sanity-io/next-sanity/compare/next-sanity-v11.6.5...next-sanity-v11.6.6) (2025-11-11)
 
-
 ### Bug Fixes
 
-* **deps:** update sanity monorepo to ^4.14.2 (main) ([#2975](https://github.com/sanity-io/next-sanity/issues/2975)) ([1ff0ac8](https://github.com/sanity-io/next-sanity/commit/1ff0ac89f6c7e4756d8db6ed09245b116cfe1c65))
+- **deps:** update sanity monorepo to ^4.14.2 (main) ([#2975](https://github.com/sanity-io/next-sanity/issues/2975)) ([1ff0ac8](https://github.com/sanity-io/next-sanity/commit/1ff0ac89f6c7e4756d8db6ed09245b116cfe1c65))
 
 ## [11.6.5](https://github.com/sanity-io/next-sanity/compare/next-sanity-v11.6.4...next-sanity-v11.6.5) (2025-11-05)
 
-
 ### Bug Fixes
 
-* **deps:** update dependency @portabletext/react to v5 (main) ([#2968](https://github.com/sanity-io/next-sanity/issues/2968)) ([e07243e](https://github.com/sanity-io/next-sanity/commit/e07243ed2fcbcd27ce7ff3e0e83fae4f0ab34010))
-* **deps:** update dependency @sanity/client to ^7.12.1 (main) ([#2965](https://github.com/sanity-io/next-sanity/issues/2965)) ([099c058](https://github.com/sanity-io/next-sanity/commit/099c05839580a23ce08246412e57d26adf705ab4))
+- **deps:** update dependency @portabletext/react to v5 (main) ([#2968](https://github.com/sanity-io/next-sanity/issues/2968)) ([e07243e](https://github.com/sanity-io/next-sanity/commit/e07243ed2fcbcd27ce7ff3e0e83fae4f0ab34010))
+- **deps:** update dependency @sanity/client to ^7.12.1 (main) ([#2965](https://github.com/sanity-io/next-sanity/issues/2965)) ([099c058](https://github.com/sanity-io/next-sanity/commit/099c05839580a23ce08246412e57d26adf705ab4))
 
 ## [11.6.4](https://github.com/sanity-io/next-sanity/compare/next-sanity-v11.6.3...next-sanity-v11.6.4) (2025-11-03)
 
-
 ### Bug Fixes
 
-* **deps:** update sanity monorepo to ^4.13.0 (main) ([#2956](https://github.com/sanity-io/next-sanity/issues/2956)) ([3fb1de0](https://github.com/sanity-io/next-sanity/commit/3fb1de0bbaa99778811b229a8be51f0c9e3363d4))
+- **deps:** update sanity monorepo to ^4.13.0 (main) ([#2956](https://github.com/sanity-io/next-sanity/issues/2956)) ([3fb1de0](https://github.com/sanity-io/next-sanity/commit/3fb1de0bbaa99778811b229a8be51f0c9e3363d4))
 
 ## [11.6.3](https://github.com/sanity-io/next-sanity/compare/next-sanity-v11.6.2...next-sanity-v11.6.3) (2025-10-31)
 
-
 ### Bug Fixes
 
-* **deps:** update dependency @sanity/comlink to v4 (main) ([#2928](https://github.com/sanity-io/next-sanity/issues/2928)) ([96d5c47](https://github.com/sanity-io/next-sanity/commit/96d5c47ac2cff4236717571faee325e92f921e70))
-* **deps:** update dependency @sanity/presentation-comlink to v2 (main) ([#2929](https://github.com/sanity-io/next-sanity/issues/2929)) ([2e3379a](https://github.com/sanity-io/next-sanity/commit/2e3379a0e54a35776947da21f16a1c5757a183c4))
-* **deps:** update dependency @sanity/visual-editing to v4 (main) ([#2936](https://github.com/sanity-io/next-sanity/issues/2936)) ([cc4b92b](https://github.com/sanity-io/next-sanity/commit/cc4b92b648f1d8c8420f05b8a74d2f42b85b0b88))
-* **deps:** update sanity monorepo to ^4.12.0 (main) ([#2941](https://github.com/sanity-io/next-sanity/issues/2941)) ([9773311](https://github.com/sanity-io/next-sanity/commit/9773311edd0cc1d9d730bd61dd207576bceb65ee))
-* **deps:** update sanity monorepo to ^4.12.0 (main) ([#2946](https://github.com/sanity-io/next-sanity/issues/2946)) ([150b849](https://github.com/sanity-io/next-sanity/commit/150b849cf0cb6ccca6ad58b699e4b79cf338629d))
+- **deps:** update dependency @sanity/comlink to v4 (main) ([#2928](https://github.com/sanity-io/next-sanity/issues/2928)) ([96d5c47](https://github.com/sanity-io/next-sanity/commit/96d5c47ac2cff4236717571faee325e92f921e70))
+- **deps:** update dependency @sanity/presentation-comlink to v2 (main) ([#2929](https://github.com/sanity-io/next-sanity/issues/2929)) ([2e3379a](https://github.com/sanity-io/next-sanity/commit/2e3379a0e54a35776947da21f16a1c5757a183c4))
+- **deps:** update dependency @sanity/visual-editing to v4 (main) ([#2936](https://github.com/sanity-io/next-sanity/issues/2936)) ([cc4b92b](https://github.com/sanity-io/next-sanity/commit/cc4b92b648f1d8c8420f05b8a74d2f42b85b0b88))
+- **deps:** update sanity monorepo to ^4.12.0 (main) ([#2941](https://github.com/sanity-io/next-sanity/issues/2941)) ([9773311](https://github.com/sanity-io/next-sanity/commit/9773311edd0cc1d9d730bd61dd207576bceb65ee))
+- **deps:** update sanity monorepo to ^4.12.0 (main) ([#2946](https://github.com/sanity-io/next-sanity/issues/2946)) ([150b849](https://github.com/sanity-io/next-sanity/commit/150b849cf0cb6ccca6ad58b699e4b79cf338629d))
 
 ## [11.6.2](https://github.com/sanity-io/next-sanity/compare/next-sanity-v11.6.1...next-sanity-v11.6.2) (2025-10-24)
 
-
 ### Bug Fixes
 
-* **experimental/live:** QueryParams cannot be a promise ([171dc2f](https://github.com/sanity-io/next-sanity/commit/171dc2f61e4b50f1c9a4b4e641d4e1e6c83a1e4c))
+- **experimental/live:** QueryParams cannot be a promise ([171dc2f](https://github.com/sanity-io/next-sanity/commit/171dc2f61e4b50f1c9a4b4e641d4e1e6c83a1e4c))
 
 ## [11.6.1](https://github.com/sanity-io/next-sanity/compare/next-sanity-v11.6.0...next-sanity-v11.6.1) (2025-10-24)
 
-
 ### Bug Fixes
 
-* **experimental/live:** QueryParams cannot be a promise ([e307fdd](https://github.com/sanity-io/next-sanity/commit/e307fddceb65552577cb8646dc9019a767a56c3e))
+- **experimental/live:** QueryParams cannot be a promise ([e307fdd](https://github.com/sanity-io/next-sanity/commit/e307fddceb65552577cb8646dc9019a767a56c3e))
 
 ## [11.6.0](https://github.com/sanity-io/next-sanity/compare/next-sanity-v11.5.7...next-sanity-v11.6.0) (2025-10-24)
 
-
 ### Features
 
-* **experimental/live:** support `use cache:remote` ([#2909](https://github.com/sanity-io/next-sanity/issues/2909)) ([4423dee](https://github.com/sanity-io/next-sanity/commit/4423dee0a818072e7d0611c109eb94e89303941b))
+- **experimental/live:** support `use cache:remote` ([#2909](https://github.com/sanity-io/next-sanity/issues/2909)) ([4423dee](https://github.com/sanity-io/next-sanity/commit/4423dee0a818072e7d0611c109eb94e89303941b))
 
 ## [11.5.7](https://github.com/sanity-io/next-sanity/compare/next-sanity-v11.5.6...next-sanity-v11.5.7) (2025-10-23)
 
-
 ### Bug Fixes
 
-* handle `revalidateTag` warning on v16 ([2023512](https://github.com/sanity-io/next-sanity/commit/2023512622255475da356c36060e224c2c7b883b))
+- handle `revalidateTag` warning on v16 ([2023512](https://github.com/sanity-io/next-sanity/commit/2023512622255475da356c36060e224c2c7b883b))
 
 ## [11.5.6](https://github.com/sanity-io/next-sanity/compare/next-sanity-v11.5.5...next-sanity-v11.5.6) (2025-10-21)
 
-
 ### Bug Fixes
 
-* **deps:** update dependency @sanity/visual-editing to ^3.2.4 (main) ([#2903](https://github.com/sanity-io/next-sanity/issues/2903)) ([84c1ff7](https://github.com/sanity-io/next-sanity/commit/84c1ff7f8723634e391594781afbdc48b4b484bf))
-* **deps:** update sanity monorepo to ^4.11.0 ([32ab6bd](https://github.com/sanity-io/next-sanity/commit/32ab6bd4ee8abc0a5be5d02d09cc831d246c15e4))
+- **deps:** update dependency @sanity/visual-editing to ^3.2.4 (main) ([#2903](https://github.com/sanity-io/next-sanity/issues/2903)) ([84c1ff7](https://github.com/sanity-io/next-sanity/commit/84c1ff7f8723634e391594781afbdc48b4b484bf))
+- **deps:** update sanity monorepo to ^4.11.0 ([32ab6bd](https://github.com/sanity-io/next-sanity/commit/32ab6bd4ee8abc0a5be5d02d09cc831d246c15e4))
 
 ## [11.5.5](https://github.com/sanity-io/next-sanity/compare/next-sanity-v11.5.4...next-sanity-v11.5.5) (2025-10-16)
 
-
 ### Bug Fixes
 
-* **deps:** update dependency @sanity/visual-editing to ^3.2.3 (main) ([#2897](https://github.com/sanity-io/next-sanity/issues/2897)) ([7a01d98](https://github.com/sanity-io/next-sanity/commit/7a01d98b544625703a4a3514da6629971a5d3fee))
+- **deps:** update dependency @sanity/visual-editing to ^3.2.3 (main) ([#2897](https://github.com/sanity-io/next-sanity/issues/2897)) ([7a01d98](https://github.com/sanity-io/next-sanity/commit/7a01d98b544625703a4a3514da6629971a5d3fee))
 
 ## [11.5.4](https://github.com/sanity-io/next-sanity/compare/next-sanity-v11.5.3...next-sanity-v11.5.4) (2025-10-16)
 
-
 ### Bug Fixes
 
-* **deps:** update dependency @sanity/visual-editing to ^3.2.2 (main) ([#2895](https://github.com/sanity-io/next-sanity/issues/2895)) ([5e5e245](https://github.com/sanity-io/next-sanity/commit/5e5e2453f121d994b598819bb99d43f5a1b44399))
+- **deps:** update dependency @sanity/visual-editing to ^3.2.2 (main) ([#2895](https://github.com/sanity-io/next-sanity/issues/2895)) ([5e5e245](https://github.com/sanity-io/next-sanity/commit/5e5e2453f121d994b598819bb99d43f5a1b44399))
 
 ## [11.5.3](https://github.com/sanity-io/next-sanity/compare/next-sanity-v11.5.2...next-sanity-v11.5.3) (2025-10-16)
 
-
 ### Bug Fixes
 
-* **deps:** update dependency @sanity/visual-editing to ^3.2.1 (main) ([#2892](https://github.com/sanity-io/next-sanity/issues/2892)) ([c463f12](https://github.com/sanity-io/next-sanity/commit/c463f12a618fa3cc0a43b1f7fafab4690c1197a6))
+- **deps:** update dependency @sanity/visual-editing to ^3.2.1 (main) ([#2892](https://github.com/sanity-io/next-sanity/issues/2892)) ([c463f12](https://github.com/sanity-io/next-sanity/commit/c463f12a618fa3cc0a43b1f7fafab4690c1197a6))
 
 ## [11.5.2](https://github.com/sanity-io/next-sanity/compare/next-sanity-v11.5.1...next-sanity-v11.5.2) (2025-10-16)
 
-
 ### Bug Fixes
 
-* **deps:** update dependency @sanity/comlink to ^3.1.1 (main) ([#2882](https://github.com/sanity-io/next-sanity/issues/2882)) ([64b4297](https://github.com/sanity-io/next-sanity/commit/64b42977e1d1562ef8f58b5813f11fc958fc915c))
-* **deps:** update dependency @sanity/presentation-comlink to ^1.0.33 (main) ([#2888](https://github.com/sanity-io/next-sanity/issues/2888)) ([c02a958](https://github.com/sanity-io/next-sanity/commit/c02a958d68a9d7b053c8bf65259cb9f01aff29e5))
-* **deps:** update dependency @sanity/visual-editing to ^3.2.0 (main) ([#2883](https://github.com/sanity-io/next-sanity/issues/2883)) ([4241929](https://github.com/sanity-io/next-sanity/commit/424192925c8de3f1fda45e35251b461a79ac3c49))
+- **deps:** update dependency @sanity/comlink to ^3.1.1 (main) ([#2882](https://github.com/sanity-io/next-sanity/issues/2882)) ([64b4297](https://github.com/sanity-io/next-sanity/commit/64b42977e1d1562ef8f58b5813f11fc958fc915c))
+- **deps:** update dependency @sanity/presentation-comlink to ^1.0.33 (main) ([#2888](https://github.com/sanity-io/next-sanity/issues/2888)) ([c02a958](https://github.com/sanity-io/next-sanity/commit/c02a958d68a9d7b053c8bf65259cb9f01aff29e5))
+- **deps:** update dependency @sanity/visual-editing to ^3.2.0 (main) ([#2883](https://github.com/sanity-io/next-sanity/issues/2883)) ([4241929](https://github.com/sanity-io/next-sanity/commit/424192925c8de3f1fda45e35251b461a79ac3c49))
 
 ## [11.5.1](https://github.com/sanity-io/next-sanity/compare/next-sanity-v11.5.0...next-sanity-v11.5.1) (2025-10-15)
 
-
 ### Bug Fixes
 
-* **deps:** update dependency @sanity/client to ^7.12.0 (main) ([#2859](https://github.com/sanity-io/next-sanity/issues/2859)) ([326bd53](https://github.com/sanity-io/next-sanity/commit/326bd5327020baa00741669162cfc607273732a2))
-* **deps:** update dependency @sanity/visual-editing to ^3.1.0 (main) ([#2879](https://github.com/sanity-io/next-sanity/issues/2879)) ([bff25e0](https://github.com/sanity-io/next-sanity/commit/bff25e00bd239d17676e09bf30937bcbaaf1e0f3))
-* **deps:** update sanity monorepo to ^4.10.3 (main) ([#2857](https://github.com/sanity-io/next-sanity/issues/2857)) ([e76e731](https://github.com/sanity-io/next-sanity/commit/e76e731fb51ef22948a6f28bf8cabd86085c1059))
+- **deps:** update dependency @sanity/client to ^7.12.0 (main) ([#2859](https://github.com/sanity-io/next-sanity/issues/2859)) ([326bd53](https://github.com/sanity-io/next-sanity/commit/326bd5327020baa00741669162cfc607273732a2))
+- **deps:** update dependency @sanity/visual-editing to ^3.1.0 (main) ([#2879](https://github.com/sanity-io/next-sanity/issues/2879)) ([bff25e0](https://github.com/sanity-io/next-sanity/commit/bff25e00bd239d17676e09bf30937bcbaaf1e0f3))
+- **deps:** update sanity monorepo to ^4.10.3 (main) ([#2857](https://github.com/sanity-io/next-sanity/issues/2857)) ([e76e731](https://github.com/sanity-io/next-sanity/commit/e76e731fb51ef22948a6f28bf8cabd86085c1059))
 
 ## [11.5.0](https://github.com/sanity-io/next-sanity/compare/next-sanity-v11.4.2...next-sanity-v11.5.0) (2025-10-15)
 
-
 ### Features
 
-* support next v16 beta ([#2877](https://github.com/sanity-io/next-sanity/issues/2877)) ([7d974e3](https://github.com/sanity-io/next-sanity/commit/7d974e364928f4a0fdde55b2053da4641d152ae1))
+- support next v16 beta ([#2877](https://github.com/sanity-io/next-sanity/issues/2877)) ([7d974e3](https://github.com/sanity-io/next-sanity/commit/7d974e364928f4a0fdde55b2053da4641d152ae1))
 
 ## [11.4.2](https://github.com/sanity-io/next-sanity/compare/next-sanity-v11.4.1...next-sanity-v11.4.2) (2025-09-26)
 
-
 ### Bug Fixes
 
-* **deps:** update sanity monorepo to ^4.10.1 (main) ([#2840](https://github.com/sanity-io/next-sanity/issues/2840)) ([91024f1](https://github.com/sanity-io/next-sanity/commit/91024f1505422300dc8bf71f17c345494cf700f9))
-* **experimental:** ensure `server-only` import at the top ([f1faca8](https://github.com/sanity-io/next-sanity/commit/f1faca8dedf679f50d300e999e30ca0ff83da977))
+- **deps:** update sanity monorepo to ^4.10.1 (main) ([#2840](https://github.com/sanity-io/next-sanity/issues/2840)) ([91024f1](https://github.com/sanity-io/next-sanity/commit/91024f1505422300dc8bf71f17c345494cf700f9))
+- **experimental:** ensure `server-only` import at the top ([f1faca8](https://github.com/sanity-io/next-sanity/commit/f1faca8dedf679f50d300e999e30ca0ff83da977))
 
 ## [11.4.1](https://github.com/sanity-io/next-sanity/compare/next-sanity-v11.4.0...next-sanity-v11.4.1) (2025-09-25)
 
-
 ### Bug Fixes
 
-* **experimental:** just refresh in draft mode ([#2842](https://github.com/sanity-io/next-sanity/issues/2842)) ([ae3a614](https://github.com/sanity-io/next-sanity/commit/ae3a614e11216fe8379f5d72be1c923b0dfe3763))
+- **experimental:** just refresh in draft mode ([#2842](https://github.com/sanity-io/next-sanity/issues/2842)) ([ae3a614](https://github.com/sanity-io/next-sanity/commit/ae3a614e11216fe8379f5d72be1c923b0dfe3763))
 
 ## [11.4.0](https://github.com/sanity-io/next-sanity/compare/next-sanity-v11.3.0...next-sanity-v11.4.0) (2025-09-25)
 
-
 ### Features
 
-* **live:** support experimental `cacheComponents` ([#2825](https://github.com/sanity-io/next-sanity/issues/2825)) ([2d6c104](https://github.com/sanity-io/next-sanity/commit/2d6c104cfb6e14ed3697ffa7da22b1e550aaddfc))
+- **live:** support experimental `cacheComponents` ([#2825](https://github.com/sanity-io/next-sanity/issues/2825)) ([2d6c104](https://github.com/sanity-io/next-sanity/commit/2d6c104cfb6e14ed3697ffa7da22b1e550aaddfc))
 
 ## [11.3.0](https://github.com/sanity-io/next-sanity/compare/next-sanity-v11.2.0...next-sanity-v11.3.0) (2025-09-25)
 
-
 ### Features
 
-* inline `@sanity/next-loader` ([#2835](https://github.com/sanity-io/next-sanity/issues/2835)) ([27dadc9](https://github.com/sanity-io/next-sanity/commit/27dadc97c3f51d30b6072f8a52ee7cea3974feb9))
+- inline `@sanity/next-loader` ([#2835](https://github.com/sanity-io/next-sanity/issues/2835)) ([27dadc9](https://github.com/sanity-io/next-sanity/commit/27dadc97c3f51d30b6072f8a52ee7cea3974feb9))
 
 ## [11.2.0](https://github.com/sanity-io/next-sanity/compare/next-sanity-v11.1.3...next-sanity-v11.2.0) (2025-09-25)
 
-
 ### Features
 
-* **live:** add back `isCorsOriginError` to root entrypoint ([#2828](https://github.com/sanity-io/next-sanity/issues/2828)) ([ab1d8ee](https://github.com/sanity-io/next-sanity/commit/ab1d8ee3db8168167705a44cf462df415467bf85))
-* support `@sanity/css-in-js` override ([#2831](https://github.com/sanity-io/next-sanity/issues/2831)) ([7ac78e3](https://github.com/sanity-io/next-sanity/commit/7ac78e3c27aa7976772c89997c29a1532f312f34))
+- **live:** add back `isCorsOriginError` to root entrypoint ([#2828](https://github.com/sanity-io/next-sanity/issues/2828)) ([ab1d8ee](https://github.com/sanity-io/next-sanity/commit/ab1d8ee3db8168167705a44cf462df415467bf85))
+- support `@sanity/css-in-js` override ([#2831](https://github.com/sanity-io/next-sanity/issues/2831)) ([7ac78e3](https://github.com/sanity-io/next-sanity/commit/7ac78e3c27aa7976772c89997c29a1532f312f34))
 
 ## [11.1.3](https://github.com/sanity-io/next-sanity/compare/next-sanity-v11.1.2...next-sanity-v11.1.3) (2025-09-23)
 
-
 ### Bug Fixes
 
-* **deps:** update sanity monorepo to ^4.10.0 (main) ([#2822](https://github.com/sanity-io/next-sanity/issues/2822)) ([38beb15](https://github.com/sanity-io/next-sanity/commit/38beb15d4cb3b81509e48eae3300fdb56fca0242))
+- **deps:** update sanity monorepo to ^4.10.0 (main) ([#2822](https://github.com/sanity-io/next-sanity/issues/2822)) ([38beb15](https://github.com/sanity-io/next-sanity/commit/38beb15d4cb3b81509e48eae3300fdb56fca0242))
 
 ## [11.1.2](https://github.com/sanity-io/next-sanity/compare/next-sanity-v11.1.1...next-sanity-v11.1.2) (2025-09-22)
 
-
 ### Bug Fixes
 
-* **deps:** update dependency @sanity/client to ^7.11.2 (main) ([#2808](https://github.com/sanity-io/next-sanity/issues/2808)) ([146e6d6](https://github.com/sanity-io/next-sanity/commit/146e6d6602610cf9f8d6ae5b970055ff751c9bfd))
+- **deps:** update dependency @sanity/client to ^7.11.2 (main) ([#2808](https://github.com/sanity-io/next-sanity/issues/2808)) ([146e6d6](https://github.com/sanity-io/next-sanity/commit/146e6d6602610cf9f8d6ae5b970055ff751c9bfd))
 
 ## [11.1.1](https://github.com/sanity-io/next-sanity/compare/next-sanity-v11.1.0...next-sanity-v11.1.1) (2025-09-16)
 
-
 ### Bug Fixes
 
-* **deps:** update sanity monorepo to ^4.9.0 (main) ([#2805](https://github.com/sanity-io/next-sanity/issues/2805)) ([d867638](https://github.com/sanity-io/next-sanity/commit/d8676381509678c8796d3dba9f04095a6bd7a20b))
+- **deps:** update sanity monorepo to ^4.9.0 (main) ([#2805](https://github.com/sanity-io/next-sanity/issues/2805)) ([d867638](https://github.com/sanity-io/next-sanity/commit/d8676381509678c8796d3dba9f04095a6bd7a20b))
 
 ## [11.1.0](https://github.com/sanity-io/next-sanity/compare/next-sanity-v11.0.1...next-sanity-v11.1.0) (2025-09-10)
 
-
 ### Features
 
-* **live:** use preconnect on live content api origin ([#2799](https://github.com/sanity-io/next-sanity/issues/2799)) ([d233866](https://github.com/sanity-io/next-sanity/commit/d233866661d358a2c97f7792fd895d8d1ec8cde3))
+- **live:** use preconnect on live content api origin ([#2799](https://github.com/sanity-io/next-sanity/issues/2799)) ([d233866](https://github.com/sanity-io/next-sanity/commit/d233866661d358a2c97f7792fd895d8d1ec8cde3))
 
 ## [11.0.1](https://github.com/sanity-io/next-sanity/compare/next-sanity-v11.0.0...next-sanity-v11.0.1) (2025-09-10)
 
-
 ### Bug Fixes
 
-* **deps:** update sanity monorepo to ^4.8.1 ([d2707e3](https://github.com/sanity-io/next-sanity/commit/d2707e3bd38dbec3aec3601ed582050105a23f1c))
+- **deps:** update sanity monorepo to ^4.8.1 ([d2707e3](https://github.com/sanity-io/next-sanity/commit/d2707e3bd38dbec3aec3601ed582050105a23f1c))
 
 ## [11.0.0](https://github.com/sanity-io/next-sanity/compare/next-sanity-v10.1.4...next-sanity-v11.0.0) (2025-09-10)
 
-
 ### ⚠ BREAKING CHANGES
 
-* See the migration guide: https://github.com/sanity-io/next-sanity/blob/main/packages/next-sanity/MIGRATE-v10-to-v11.md
+- See the migration guide: https://github.com/sanity-io/next-sanity/blob/main/packages/next-sanity/MIGRATE-v10-to-v11.md
 
 ### Bug Fixes
 
-* **deps:** update sanity monorepo to ^4.8.0 (main) ([#2794](https://github.com/sanity-io/next-sanity/issues/2794)) ([4e3b4f6](https://github.com/sanity-io/next-sanity/commit/4e3b4f6a7778e04f7099da80f482d132c6af5497))
-
+- **deps:** update sanity monorepo to ^4.8.0 (main) ([#2794](https://github.com/sanity-io/next-sanity/issues/2794)) ([4e3b4f6](https://github.com/sanity-io/next-sanity/commit/4e3b4f6a7778e04f7099da80f482d132c6af5497))
 
 ### Miscellaneous Chores
 
-* release v11 ([#2792](https://github.com/sanity-io/next-sanity/issues/2792)) ([59360c0](https://github.com/sanity-io/next-sanity/commit/59360c0f8ae3005fe457f16b048a8bb1fc2d467a)), closes [#1899](https://github.com/sanity-io/next-sanity/issues/1899)
+- release v11 ([#2792](https://github.com/sanity-io/next-sanity/issues/2792)) ([59360c0](https://github.com/sanity-io/next-sanity/commit/59360c0f8ae3005fe457f16b048a8bb1fc2d467a)), closes [#1899](https://github.com/sanity-io/next-sanity/issues/1899)
 
 ## [10.1.4](https://github.com/sanity-io/next-sanity/compare/next-sanity-v10.1.3...next-sanity-v10.1.4) (2025-09-10)
 
-
 ### Bug Fixes
 
-* **deps:** update dependency @sanity/client to ^7.11.1 ([185b929](https://github.com/sanity-io/next-sanity/commit/185b929a2518fdbc2de72f1ff4cfa71d8e851bb8))
+- **deps:** update dependency @sanity/client to ^7.11.1 ([185b929](https://github.com/sanity-io/next-sanity/commit/185b929a2518fdbc2de72f1ff4cfa71d8e851bb8))
 
 ## [10.1.3](https://github.com/sanity-io/next-sanity/compare/next-sanity-v10.1.2...next-sanity-v10.1.3) (2025-09-09)
 
-
 ### Bug Fixes
 
-* **deps:** update dependency @sanity/next-loader to ^2.1.2 (main) ([#2777](https://github.com/sanity-io/next-sanity/issues/2777)) ([34bf351](https://github.com/sanity-io/next-sanity/commit/34bf351de357ce1a0081dfeba932269d30196ea6))
-* **deps:** update dependency @sanity/visual-editing to ^3.0.5 (main) ([#2781](https://github.com/sanity-io/next-sanity/issues/2781)) ([c104b62](https://github.com/sanity-io/next-sanity/commit/c104b62db1d774e377f8b1aae39dab81319bef72))
+- **deps:** update dependency @sanity/next-loader to ^2.1.2 (main) ([#2777](https://github.com/sanity-io/next-sanity/issues/2777)) ([34bf351](https://github.com/sanity-io/next-sanity/commit/34bf351de357ce1a0081dfeba932269d30196ea6))
+- **deps:** update dependency @sanity/visual-editing to ^3.0.5 (main) ([#2781](https://github.com/sanity-io/next-sanity/issues/2781)) ([c104b62](https://github.com/sanity-io/next-sanity/commit/c104b62db1d774e377f8b1aae39dab81319bef72))
 
 ## [10.1.2](https://github.com/sanity-io/next-sanity/compare/next-sanity-v10.1.1...next-sanity-v10.1.2) (2025-09-09)
 
-
 ### Bug Fixes
 
-* **deps:** update sanity monorepo to ^4.7.0 (main) ([#2774](https://github.com/sanity-io/next-sanity/issues/2774)) ([1865f65](https://github.com/sanity-io/next-sanity/commit/1865f659fcaf993b301f485acb7a1349cc003bf5))
+- **deps:** update sanity monorepo to ^4.7.0 (main) ([#2774](https://github.com/sanity-io/next-sanity/issues/2774)) ([1865f65](https://github.com/sanity-io/next-sanity/commit/1865f659fcaf993b301f485acb7a1349cc003bf5))
 
 ## [10.1.1](https://github.com/sanity-io/next-sanity/compare/next-sanity-v10.1.0...next-sanity-v10.1.1) (2025-09-08)
 
-
 ### Bug Fixes
 
-* allow react 18 in peer deps for pages router ([af5a015](https://github.com/sanity-io/next-sanity/commit/af5a01558904255c4b779a4c02813014a0393f0e))
+- allow react 18 in peer deps for pages router ([af5a015](https://github.com/sanity-io/next-sanity/commit/af5a01558904255c4b779a4c02813014a0393f0e))
 
 ## [10.1.0](https://github.com/sanity-io/next-sanity/compare/next-sanity-v10.0.16...next-sanity-v10.1.0) (2025-09-05)
 
-
 ### Features
 
-* add `/visual-editing` and `/live` exports, root exports deprecated ([#2766](https://github.com/sanity-io/next-sanity/issues/2766)) ([1ff0dab](https://github.com/sanity-io/next-sanity/commit/1ff0dab16e0b6e82485d52232abffc19e4def7b6))
-
+- add `/visual-editing` and `/live` exports, root exports deprecated ([#2766](https://github.com/sanity-io/next-sanity/issues/2766)) ([1ff0dab](https://github.com/sanity-io/next-sanity/commit/1ff0dab16e0b6e82485d52232abffc19e4def7b6))
 
 ### Bug Fixes
 
-* **deps:** update dependency @sanity/next-loader to ^2.1.1 (main) ([#2759](https://github.com/sanity-io/next-sanity/issues/2759)) ([9d5ff05](https://github.com/sanity-io/next-sanity/commit/9d5ff05876b3810bbf974fbb0b98f9d5490fb112))
-* **deps:** update dependency @sanity/visual-editing to ^3.0.4 (main) ([#2760](https://github.com/sanity-io/next-sanity/issues/2760)) ([4e7df1f](https://github.com/sanity-io/next-sanity/commit/4e7df1f68f011a719fe60adb72f178655c9fd622))
+- **deps:** update dependency @sanity/next-loader to ^2.1.1 (main) ([#2759](https://github.com/sanity-io/next-sanity/issues/2759)) ([9d5ff05](https://github.com/sanity-io/next-sanity/commit/9d5ff05876b3810bbf974fbb0b98f9d5490fb112))
+- **deps:** update dependency @sanity/visual-editing to ^3.0.4 (main) ([#2760](https://github.com/sanity-io/next-sanity/issues/2760)) ([4e7df1f](https://github.com/sanity-io/next-sanity/commit/4e7df1f68f011a719fe60adb72f178655c9fd622))
 
 ## [10.0.16](https://github.com/sanity-io/next-sanity/compare/next-sanity-v10.0.15...next-sanity-v10.0.16) (2025-09-04)
 
-
 ### Bug Fixes
 
-* **deps:** update dependency @portabletext/react to ^4.0.2 (main) ([#2733](https://github.com/sanity-io/next-sanity/issues/2733)) ([f4fdd51](https://github.com/sanity-io/next-sanity/commit/f4fdd5104986c9481335cdf6b0a3e7ddf5f652a8))
-* **deps:** update dependency @portabletext/react to ^4.0.3 (main) ([#2746](https://github.com/sanity-io/next-sanity/issues/2746)) ([b4b6f43](https://github.com/sanity-io/next-sanity/commit/b4b6f43c8ed8a51b9469fa55ff3dc6cdfc202ff6))
-* **deps:** update sanity monorepo to ^4.6.1 (main) ([#2747](https://github.com/sanity-io/next-sanity/issues/2747)) ([b090042](https://github.com/sanity-io/next-sanity/commit/b090042f12c0533c7661bf896abdcdd3bbe084e4))
+- **deps:** update dependency @portabletext/react to ^4.0.2 (main) ([#2733](https://github.com/sanity-io/next-sanity/issues/2733)) ([f4fdd51](https://github.com/sanity-io/next-sanity/commit/f4fdd5104986c9481335cdf6b0a3e7ddf5f652a8))
+- **deps:** update dependency @portabletext/react to ^4.0.3 (main) ([#2746](https://github.com/sanity-io/next-sanity/issues/2746)) ([b4b6f43](https://github.com/sanity-io/next-sanity/commit/b4b6f43c8ed8a51b9469fa55ff3dc6cdfc202ff6))
+- **deps:** update sanity monorepo to ^4.6.1 (main) ([#2747](https://github.com/sanity-io/next-sanity/issues/2747)) ([b090042](https://github.com/sanity-io/next-sanity/commit/b090042f12c0533c7661bf896abdcdd3bbe084e4))
 
 ## [10.0.15](https://github.com/sanity-io/next-sanity/compare/next-sanity-v10.0.14...next-sanity-v10.0.15) (2025-08-27)
 
-
 ### Bug Fixes
 
-* **deps:** update dependency @portabletext/react to v4 (main) ([#2713](https://github.com/sanity-io/next-sanity/issues/2713)) ([30f757b](https://github.com/sanity-io/next-sanity/commit/30f757b513b0d9c05fcbabe8ddbe323ce395ff9b))
-* **deps:** update sanity monorepo to ^4.6.0 (main) ([#2725](https://github.com/sanity-io/next-sanity/issues/2725)) ([d7678a7](https://github.com/sanity-io/next-sanity/commit/d7678a7d8deed7f1ec6385e1f37fcc5ec3716cbd))
+- **deps:** update dependency @portabletext/react to v4 (main) ([#2713](https://github.com/sanity-io/next-sanity/issues/2713)) ([30f757b](https://github.com/sanity-io/next-sanity/commit/30f757b513b0d9c05fcbabe8ddbe323ce395ff9b))
+- **deps:** update sanity monorepo to ^4.6.0 (main) ([#2725](https://github.com/sanity-io/next-sanity/issues/2725)) ([d7678a7](https://github.com/sanity-io/next-sanity/commit/d7678a7d8deed7f1ec6385e1f37fcc5ec3716cbd))
 
 ## [10.0.14](https://github.com/sanity-io/next-sanity/compare/next-sanity-v10.0.13...next-sanity-v10.0.14) (2025-08-22)
 
-
 ### Bug Fixes
 
-* **deps:** update dependency @portabletext/react to ^3.2.4 (main) ([#2711](https://github.com/sanity-io/next-sanity/issues/2711)) ([69a7903](https://github.com/sanity-io/next-sanity/commit/69a790384c36ecb9681b73c4694b79ea9964d247))
+- **deps:** update dependency @portabletext/react to ^3.2.4 (main) ([#2711](https://github.com/sanity-io/next-sanity/issues/2711)) ([69a7903](https://github.com/sanity-io/next-sanity/commit/69a790384c36ecb9681b73c4694b79ea9964d247))
 
 ## [10.0.13](https://github.com/sanity-io/next-sanity/compare/next-sanity-v10.0.12...next-sanity-v10.0.13) (2025-08-19)
 
-
 ### Bug Fixes
 
-* **deps:** update @sanity/next-loader to v2.1.0 ([9e0315f](https://github.com/sanity-io/next-sanity/commit/9e0315f3d276ba7c3e5fc4b5cc5faa9721ca3e65))
-* **deps:** update sanity monorepo to ^4.5.0 (main) ([#2702](https://github.com/sanity-io/next-sanity/issues/2702)) ([c750ac3](https://github.com/sanity-io/next-sanity/commit/c750ac34152b3181fe586c1dea7627cb96e7545c))
+- **deps:** update @sanity/next-loader to v2.1.0 ([9e0315f](https://github.com/sanity-io/next-sanity/commit/9e0315f3d276ba7c3e5fc4b5cc5faa9721ca3e65))
+- **deps:** update sanity monorepo to ^4.5.0 (main) ([#2702](https://github.com/sanity-io/next-sanity/issues/2702)) ([c750ac3](https://github.com/sanity-io/next-sanity/commit/c750ac34152b3181fe586c1dea7627cb96e7545c))
 
 ## [10.0.12](https://github.com/sanity-io/next-sanity/compare/next-sanity-v10.0.11...next-sanity-v10.0.12) (2025-08-15)
 
-
 ### Bug Fixes
 
-* **deps:** upgrade `@sanity/visual-editing` to v3.0.3 ([5b493f7](https://github.com/sanity-io/next-sanity/commit/5b493f78e7561743fbf990b0448999a4c15b4f3c))
+- **deps:** upgrade `@sanity/visual-editing` to v3.0.3 ([5b493f7](https://github.com/sanity-io/next-sanity/commit/5b493f78e7561743fbf990b0448999a4c15b4f3c))
 
 ## [10.0.11](https://github.com/sanity-io/next-sanity/compare/next-sanity-v10.0.10...next-sanity-v10.0.11) (2025-08-15)
 
-
 ### Bug Fixes
 
-* **deps:** update sanity monorepo to ^4.4.1 (main) ([#2675](https://github.com/sanity-io/next-sanity/issues/2675)) ([d2afc1f](https://github.com/sanity-io/next-sanity/commit/d2afc1f63eaf9e48ae3e4bbe010dcb07c689d302))
+- **deps:** update sanity monorepo to ^4.4.1 (main) ([#2675](https://github.com/sanity-io/next-sanity/issues/2675)) ([d2afc1f](https://github.com/sanity-io/next-sanity/commit/d2afc1f63eaf9e48ae3e4bbe010dcb07c689d302))
 
 ## [10.0.10](https://github.com/sanity-io/next-sanity/compare/next-sanity-v10.0.9...next-sanity-v10.0.10) (2025-08-05)
 
-
 ### Bug Fixes
 
-* **deps:** update dependency @sanity/next-loader to v2 (main) ([#2661](https://github.com/sanity-io/next-sanity/issues/2661)) ([1ce3aa2](https://github.com/sanity-io/next-sanity/commit/1ce3aa2f23249770bdaec62f111ccf02c149ab9c))
-* stop generating CJS ([b01526f](https://github.com/sanity-io/next-sanity/commit/b01526fdd47f5428a2461e30ec34a4f0a5b31c45))
+- **deps:** update dependency @sanity/next-loader to v2 (main) ([#2661](https://github.com/sanity-io/next-sanity/issues/2661)) ([1ce3aa2](https://github.com/sanity-io/next-sanity/commit/1ce3aa2f23249770bdaec62f111ccf02c149ab9c))
+- stop generating CJS ([b01526f](https://github.com/sanity-io/next-sanity/commit/b01526fdd47f5428a2461e30ec34a4f0a5b31c45))
 
 ## [10.0.9](https://github.com/sanity-io/next-sanity/compare/next-sanity-v10.0.8...next-sanity-v10.0.9) (2025-08-05)
 
-
 ### Bug Fixes
 
-* **deps:** update sanity monorepo to ^4.3.0 (main) ([#2655](https://github.com/sanity-io/next-sanity/issues/2655)) ([2b98c48](https://github.com/sanity-io/next-sanity/commit/2b98c48708d776b63a96c50a19240a886cbe7e8f))
+- **deps:** update sanity monorepo to ^4.3.0 (main) ([#2655](https://github.com/sanity-io/next-sanity/issues/2655)) ([2b98c48](https://github.com/sanity-io/next-sanity/commit/2b98c48708d776b63a96c50a19240a886cbe7e8f))
 
 ## [10.0.8](https://github.com/sanity-io/next-sanity/compare/next-sanity-v10.0.7...next-sanity-v10.0.8) (2025-08-05)
 
-
 ### Bug Fixes
 
-* **deps:** update dependency @sanity/next-loader to ^1.7.5 (main) ([#2648](https://github.com/sanity-io/next-sanity/issues/2648)) ([f4c04c8](https://github.com/sanity-io/next-sanity/commit/f4c04c8315199f72a42347da3822898fc2c1cd48))
-* **deps:** update dependency @sanity/visual-editing to ^3.0.2 (main) ([#2649](https://github.com/sanity-io/next-sanity/issues/2649)) ([b668cf7](https://github.com/sanity-io/next-sanity/commit/b668cf7f45c2cd25849ca655577ea005f426f8c3))
+- **deps:** update dependency @sanity/next-loader to ^1.7.5 (main) ([#2648](https://github.com/sanity-io/next-sanity/issues/2648)) ([f4c04c8](https://github.com/sanity-io/next-sanity/commit/f4c04c8315199f72a42347da3822898fc2c1cd48))
+- **deps:** update dependency @sanity/visual-editing to ^3.0.2 (main) ([#2649](https://github.com/sanity-io/next-sanity/issues/2649)) ([b668cf7](https://github.com/sanity-io/next-sanity/commit/b668cf7f45c2cd25849ca655577ea005f426f8c3))
 
 ## [10.0.7](https://github.com/sanity-io/next-sanity/compare/next-sanity-v10.0.6...next-sanity-v10.0.7) (2025-08-04)
 
-
 ### Bug Fixes
 
-* **deps:** update dependency @sanity/next-loader to ^1.7.4 (main) ([#2635](https://github.com/sanity-io/next-sanity/issues/2635)) ([5fdda59](https://github.com/sanity-io/next-sanity/commit/5fdda59fe1efd241bd4b287a4e12b7fc70bad2de))
-* **deps:** update dependency @sanity/visual-editing to ^3.0.1 (main) ([#2636](https://github.com/sanity-io/next-sanity/issues/2636)) ([e644f67](https://github.com/sanity-io/next-sanity/commit/e644f67acd11d66ecc01417a38444d5cb831784b))
+- **deps:** update dependency @sanity/next-loader to ^1.7.4 (main) ([#2635](https://github.com/sanity-io/next-sanity/issues/2635)) ([5fdda59](https://github.com/sanity-io/next-sanity/commit/5fdda59fe1efd241bd4b287a4e12b7fc70bad2de))
+- **deps:** update dependency @sanity/visual-editing to ^3.0.1 (main) ([#2636](https://github.com/sanity-io/next-sanity/issues/2636)) ([e644f67](https://github.com/sanity-io/next-sanity/commit/e644f67acd11d66ecc01417a38444d5cb831784b))
 
 ## [10.0.6](https://github.com/sanity-io/next-sanity/compare/next-sanity-v10.0.5...next-sanity-v10.0.6) (2025-07-29)
 
-
 ### Bug Fixes
 
-* **deps:** update sanity monorepo to ^4.2.0 (main) ([#2619](https://github.com/sanity-io/next-sanity/issues/2619)) ([2bd3362](https://github.com/sanity-io/next-sanity/commit/2bd33628467abece08280532d0b8bf1bd51e79ee))
+- **deps:** update sanity monorepo to ^4.2.0 (main) ([#2619](https://github.com/sanity-io/next-sanity/issues/2619)) ([2bd3362](https://github.com/sanity-io/next-sanity/commit/2bd33628467abece08280532d0b8bf1bd51e79ee))
 
 ## [10.0.5](https://github.com/sanity-io/next-sanity/compare/next-sanity-v10.0.4...next-sanity-v10.0.5) (2025-07-28)
 
-
 ### Bug Fixes
 
-* **deps:** update dependency @sanity/next-loader to ^1.7.3 (main) ([#2608](https://github.com/sanity-io/next-sanity/issues/2608)) ([d8d02d9](https://github.com/sanity-io/next-sanity/commit/d8d02d91d39755571dbbf6b6e9cc8a441943112a))
-* **deps:** update dependency @sanity/visual-editing to v3 (main) ([#2609](https://github.com/sanity-io/next-sanity/issues/2609)) ([36b3f92](https://github.com/sanity-io/next-sanity/commit/36b3f923ed8b29bf18d45a32a44a63a257d9d3af))
+- **deps:** update dependency @sanity/next-loader to ^1.7.3 (main) ([#2608](https://github.com/sanity-io/next-sanity/issues/2608)) ([d8d02d9](https://github.com/sanity-io/next-sanity/commit/d8d02d91d39755571dbbf6b6e9cc8a441943112a))
+- **deps:** update dependency @sanity/visual-editing to v3 (main) ([#2609](https://github.com/sanity-io/next-sanity/issues/2609)) ([36b3f92](https://github.com/sanity-io/next-sanity/commit/36b3f923ed8b29bf18d45a32a44a63a257d9d3af))
 
 ## [10.0.4](https://github.com/sanity-io/next-sanity/compare/next-sanity-v10.0.3...next-sanity-v10.0.4) (2025-07-24)
 
-
 ### Bug Fixes
 
-* `@sanity/ui` doesn't need to be a peer dependency ([25b29d8](https://github.com/sanity-io/next-sanity/commit/25b29d8c3e173bc26b678fd429c4641bc6a23c91))
+- `@sanity/ui` doesn't need to be a peer dependency ([25b29d8](https://github.com/sanity-io/next-sanity/commit/25b29d8c3e173bc26b678fd429c4641bc6a23c91))
 
 ## [10.0.3](https://github.com/sanity-io/next-sanity/compare/next-sanity-v10.0.2...next-sanity-v10.0.3) (2025-07-22)
 
-
 ### Bug Fixes
 
-* **deps:** update sanity monorepo to ^4.1.1 (main) ([#2595](https://github.com/sanity-io/next-sanity/issues/2595)) ([ec3b68c](https://github.com/sanity-io/next-sanity/commit/ec3b68ccc51287a481a9e4c7f9317bcb90462ed3))
-* support presentation mode with Next.js --experimental-https flag ([#2594](https://github.com/sanity-io/next-sanity/issues/2594)) ([e9a635c](https://github.com/sanity-io/next-sanity/commit/e9a635c879e7dafd1906279f74d9f5d0eb52d8c0))
+- **deps:** update sanity monorepo to ^4.1.1 (main) ([#2595](https://github.com/sanity-io/next-sanity/issues/2595)) ([ec3b68c](https://github.com/sanity-io/next-sanity/commit/ec3b68ccc51287a481a9e4c7f9317bcb90462ed3))
+- support presentation mode with Next.js --experimental-https flag ([#2594](https://github.com/sanity-io/next-sanity/issues/2594)) ([e9a635c](https://github.com/sanity-io/next-sanity/commit/e9a635c879e7dafd1906279f74d9f5d0eb52d8c0))
 
 ## [10.0.2](https://github.com/sanity-io/next-sanity/compare/next-sanity-v10.0.1...next-sanity-v10.0.2) (2025-07-21)
 
-
 ### Bug Fixes
 
-* **deps:** update dependency @sanity/next-loader to ^1.7.2 (main) ([#2584](https://github.com/sanity-io/next-sanity/issues/2584)) ([eb40d7e](https://github.com/sanity-io/next-sanity/commit/eb40d7eb33ffeb269cbde4bd1043d22a180494ea))
-* **deps:** update dependency @sanity/visual-editing to ^2.15.4 (main) ([#2585](https://github.com/sanity-io/next-sanity/issues/2585)) ([7935458](https://github.com/sanity-io/next-sanity/commit/79354586e1adb1ae56a5fc35f6bc364be5136720))
-* **deps:** update sanity monorepo to ^4.1.0 (main) ([#2588](https://github.com/sanity-io/next-sanity/issues/2588)) ([8cc8da4](https://github.com/sanity-io/next-sanity/commit/8cc8da46e531b2719e0a34a5b59cd9accea1b674))
+- **deps:** update dependency @sanity/next-loader to ^1.7.2 (main) ([#2584](https://github.com/sanity-io/next-sanity/issues/2584)) ([eb40d7e](https://github.com/sanity-io/next-sanity/commit/eb40d7eb33ffeb269cbde4bd1043d22a180494ea))
+- **deps:** update dependency @sanity/visual-editing to ^2.15.4 (main) ([#2585](https://github.com/sanity-io/next-sanity/issues/2585)) ([7935458](https://github.com/sanity-io/next-sanity/commit/79354586e1adb1ae56a5fc35f6bc364be5136720))
+- **deps:** update sanity monorepo to ^4.1.0 (main) ([#2588](https://github.com/sanity-io/next-sanity/issues/2588)) ([8cc8da4](https://github.com/sanity-io/next-sanity/commit/8cc8da46e531b2719e0a34a5b59cd9accea1b674))
 
 ## [10.0.1](https://github.com/sanity-io/next-sanity/compare/next-sanity-v10.0.0...next-sanity-v10.0.1) (2025-07-18)
 
-
 ### Bug Fixes
 
-* **deps:** update dependency @sanity/next-loader to ^1.7.1 ([8aa26c0](https://github.com/sanity-io/next-sanity/commit/8aa26c094352202d80cbc5c1593f399e954d0776))
-* **deps:** update dependency @sanity/visual-editing to ^2.15.3 ([01c939f](https://github.com/sanity-io/next-sanity/commit/01c939fad15918f5ff306750037f0508568af2c1))
-* **deps:** update sanity monorepo to ^4.0.1 (main) ([#2577](https://github.com/sanity-io/next-sanity/issues/2577)) ([ae4a48d](https://github.com/sanity-io/next-sanity/commit/ae4a48d44d10bb315cfcf94d9347a73847026578))
+- **deps:** update dependency @sanity/next-loader to ^1.7.1 ([8aa26c0](https://github.com/sanity-io/next-sanity/commit/8aa26c094352202d80cbc5c1593f399e954d0776))
+- **deps:** update dependency @sanity/visual-editing to ^2.15.3 ([01c939f](https://github.com/sanity-io/next-sanity/commit/01c939fad15918f5ff306750037f0508568af2c1))
+- **deps:** update sanity monorepo to ^4.0.1 (main) ([#2577](https://github.com/sanity-io/next-sanity/issues/2577)) ([ae4a48d](https://github.com/sanity-io/next-sanity/commit/ae4a48d44d10bb315cfcf94d9347a73847026578))
 
 ## [10.0.0](https://github.com/sanity-io/next-sanity/compare/next-sanity-v9.12.3...next-sanity-v10.0.0) (2025-07-15)
 
-
 ### ⚠ BREAKING CHANGES
 
-* require sanity v4 ([#2573](https://github.com/sanity-io/next-sanity/issues/2573))
-* remove node 18, make base 20 ([#2572](https://github.com/sanity-io/next-sanity/issues/2572))
-* drop next v14 and react 18 ([#2571](https://github.com/sanity-io/next-sanity/issues/2571))
-* See the migration guide: https://github.com/sanity-io/next-sanity/blob/main/packages/next-sanity/MIGRATE-v9-to-v10.md#the-next-sanitypreview-and-next-sanitypreviewlive-query-exports-has-been-removed
+- require sanity v4 ([#2573](https://github.com/sanity-io/next-sanity/issues/2573))
+- remove node 18, make base 20 ([#2572](https://github.com/sanity-io/next-sanity/issues/2572))
+- drop next v14 and react 18 ([#2571](https://github.com/sanity-io/next-sanity/issues/2571))
+- See the migration guide: https://github.com/sanity-io/next-sanity/blob/main/packages/next-sanity/MIGRATE-v9-to-v10.md#the-next-sanitypreview-and-next-sanitypreviewlive-query-exports-has-been-removed
 
 ### Bug Fixes
 
-* drop next v14 and react 18 ([#2571](https://github.com/sanity-io/next-sanity/issues/2571)) ([6497b47](https://github.com/sanity-io/next-sanity/commit/6497b47380ce7405488eac63b735c0028cdd85d1))
-* remove `@sanity/preview-kit` ([#2568](https://github.com/sanity-io/next-sanity/issues/2568)) ([40eea67](https://github.com/sanity-io/next-sanity/commit/40eea67f58ef044d8e9a54509ad50514ab7b78ca))
-* remove node 18, make base 20 ([#2572](https://github.com/sanity-io/next-sanity/issues/2572)) ([3fa759d](https://github.com/sanity-io/next-sanity/commit/3fa759db1fe2dcccdf7654575569f11c7a4c56bb))
-* require sanity v4 ([#2573](https://github.com/sanity-io/next-sanity/issues/2573)) ([e4d3b82](https://github.com/sanity-io/next-sanity/commit/e4d3b820cfae2525ce09238b137ca84798f14087))
+- drop next v14 and react 18 ([#2571](https://github.com/sanity-io/next-sanity/issues/2571)) ([6497b47](https://github.com/sanity-io/next-sanity/commit/6497b47380ce7405488eac63b735c0028cdd85d1))
+- remove `@sanity/preview-kit` ([#2568](https://github.com/sanity-io/next-sanity/issues/2568)) ([40eea67](https://github.com/sanity-io/next-sanity/commit/40eea67f58ef044d8e9a54509ad50514ab7b78ca))
+- remove node 18, make base 20 ([#2572](https://github.com/sanity-io/next-sanity/issues/2572)) ([3fa759d](https://github.com/sanity-io/next-sanity/commit/3fa759db1fe2dcccdf7654575569f11c7a4c56bb))
+- require sanity v4 ([#2573](https://github.com/sanity-io/next-sanity/issues/2573)) ([e4d3b82](https://github.com/sanity-io/next-sanity/commit/e4d3b820cfae2525ce09238b137ca84798f14087))
 
 ## [9.12.3](https://github.com/sanity-io/next-sanity/compare/next-sanity-v9.12.2...next-sanity-v9.12.3) (2025-07-14)
 
-
 ### Bug Fixes
 
-* **deps:** update dependency @sanity/preview-kit to ^6.1.2 (main) ([#2563](https://github.com/sanity-io/next-sanity/issues/2563)) ([0431f4d](https://github.com/sanity-io/next-sanity/commit/0431f4d9ed1413c1154288982a288f7f5d3b76cb))
+- **deps:** update dependency @sanity/preview-kit to ^6.1.2 (main) ([#2563](https://github.com/sanity-io/next-sanity/issues/2563)) ([0431f4d](https://github.com/sanity-io/next-sanity/commit/0431f4d9ed1413c1154288982a288f7f5d3b76cb))
 
 ## [9.12.2](https://github.com/sanity-io/next-sanity/compare/next-sanity-v9.12.1...next-sanity-v9.12.2) (2025-07-11)
 
-
 ### Bug Fixes
 
-* **deps:** update dependency @sanity/next-loader to ^1.7.0 (main) ([#2556](https://github.com/sanity-io/next-sanity/issues/2556)) ([c1ca499](https://github.com/sanity-io/next-sanity/commit/c1ca4993cec91d1f4587c8d33d8b9669034e2f56))
+- **deps:** update dependency @sanity/next-loader to ^1.7.0 (main) ([#2556](https://github.com/sanity-io/next-sanity/issues/2556)) ([c1ca499](https://github.com/sanity-io/next-sanity/commit/c1ca4993cec91d1f4587c8d33d8b9669034e2f56))
 
 ## [9.12.1](https://github.com/sanity-io/next-sanity/compare/next-sanity-v9.12.0...next-sanity-v9.12.1) (2025-07-11)
 
-
 ### Bug Fixes
 
-* **deps:** update @sanity/client to ^7.6.0 ([a76b360](https://github.com/sanity-io/next-sanity/commit/a76b360caa50587abcba7539cde90ce4ca15da0c))
-* **deps:** update @sanity/client to ^7.6.0 ([dd138b1](https://github.com/sanity-io/next-sanity/commit/dd138b1d3a2ae7ef2ae1da781bf800de9992002f))
-* **deps:** update @sanity/types and sanity to ^3.95.0 ([178d8bb](https://github.com/sanity-io/next-sanity/commit/178d8bbe205f07840554339ece164304aab7bc85))
-* **deps:** update @sanity/visual-editing to ^2.15.0 ([032c99a](https://github.com/sanity-io/next-sanity/commit/032c99ac6232aab42106ca8030e02b5a11c2b2e6))
-* **deps:** update dependency @sanity/icons to ^3.7.4 (main) ([#2531](https://github.com/sanity-io/next-sanity/issues/2531)) ([19199a7](https://github.com/sanity-io/next-sanity/commit/19199a7ef747c2fa7283ffa5427d26bbc8038f67))
-* **deps:** update dependency @sanity/next-loader to ^1.6.2 (main) ([#2516](https://github.com/sanity-io/next-sanity/issues/2516)) ([4363049](https://github.com/sanity-io/next-sanity/commit/4363049e128f4171c411af6448ad117b98a96283))
-* **deps:** update dependency @sanity/next-loader to ^1.6.3 (main) ([#2549](https://github.com/sanity-io/next-sanity/issues/2549)) ([9751cee](https://github.com/sanity-io/next-sanity/commit/9751cee59672c09ce775cc38bdb93f0c633d906f))
-* **deps:** update dependency @sanity/preview-kit to ^6.1.1 (main) ([#2517](https://github.com/sanity-io/next-sanity/issues/2517)) ([7b4706b](https://github.com/sanity-io/next-sanity/commit/7b4706b6b6b1e63659ad79ff30cabea3f1c77605))
-* **deps:** update dependency @sanity/preview-url-secret to ^2.1.11 (main) ([#2507](https://github.com/sanity-io/next-sanity/issues/2507)) ([007ece3](https://github.com/sanity-io/next-sanity/commit/007ece3601469fdf79dd8c98b2618d6d91eedfdd))
-* **deps:** update dependency @sanity/ui to ^2.16.7 (main) ([#2551](https://github.com/sanity-io/next-sanity/issues/2551)) ([abd0231](https://github.com/sanity-io/next-sanity/commit/abd02313e4625d43fc2950e2016504ee741ba276))
-* **deps:** update dependency @sanity/ui to v2.16.2 (main) ([#2518](https://github.com/sanity-io/next-sanity/issues/2518)) ([ce8d6e5](https://github.com/sanity-io/next-sanity/commit/ce8d6e505172a1b0b9bdc0eebf6487572e7d5bc3))
-* **deps:** update dependency @sanity/visual-editing to ^2.15.2 (main) ([#2552](https://github.com/sanity-io/next-sanity/issues/2552)) ([518a298](https://github.com/sanity-io/next-sanity/commit/518a298013a39f48bfdf0dd26ce60641904cdc31))
-* **deps:** update groq to ^3.95.0 ([897f215](https://github.com/sanity-io/next-sanity/commit/897f215503f6f85b044a298b2c1eca3fbf3dcde7))
-* **deps:** update sanity monorepo to v3.99.0 (main) ([#2553](https://github.com/sanity-io/next-sanity/issues/2553)) ([96f03c5](https://github.com/sanity-io/next-sanity/commit/96f03c58da827281d0fad0c9360bc079eb33a974))
-* inline the `SanityDocument` type from `@sanity/types` ([4d18bf2](https://github.com/sanity-io/next-sanity/commit/4d18bf211dfaebd2fdc03df225508a4334feabab))
-* remove `@sanity/icons` peer dependency ([d5dd0a1](https://github.com/sanity-io/next-sanity/commit/d5dd0a1bfb578cb0d33197355e646ac41c306c3a))
+- **deps:** update @sanity/client to ^7.6.0 ([a76b360](https://github.com/sanity-io/next-sanity/commit/a76b360caa50587abcba7539cde90ce4ca15da0c))
+- **deps:** update @sanity/client to ^7.6.0 ([dd138b1](https://github.com/sanity-io/next-sanity/commit/dd138b1d3a2ae7ef2ae1da781bf800de9992002f))
+- **deps:** update @sanity/types and sanity to ^3.95.0 ([178d8bb](https://github.com/sanity-io/next-sanity/commit/178d8bbe205f07840554339ece164304aab7bc85))
+- **deps:** update @sanity/visual-editing to ^2.15.0 ([032c99a](https://github.com/sanity-io/next-sanity/commit/032c99ac6232aab42106ca8030e02b5a11c2b2e6))
+- **deps:** update dependency @sanity/icons to ^3.7.4 (main) ([#2531](https://github.com/sanity-io/next-sanity/issues/2531)) ([19199a7](https://github.com/sanity-io/next-sanity/commit/19199a7ef747c2fa7283ffa5427d26bbc8038f67))
+- **deps:** update dependency @sanity/next-loader to ^1.6.2 (main) ([#2516](https://github.com/sanity-io/next-sanity/issues/2516)) ([4363049](https://github.com/sanity-io/next-sanity/commit/4363049e128f4171c411af6448ad117b98a96283))
+- **deps:** update dependency @sanity/next-loader to ^1.6.3 (main) ([#2549](https://github.com/sanity-io/next-sanity/issues/2549)) ([9751cee](https://github.com/sanity-io/next-sanity/commit/9751cee59672c09ce775cc38bdb93f0c633d906f))
+- **deps:** update dependency @sanity/preview-kit to ^6.1.1 (main) ([#2517](https://github.com/sanity-io/next-sanity/issues/2517)) ([7b4706b](https://github.com/sanity-io/next-sanity/commit/7b4706b6b6b1e63659ad79ff30cabea3f1c77605))
+- **deps:** update dependency @sanity/preview-url-secret to ^2.1.11 (main) ([#2507](https://github.com/sanity-io/next-sanity/issues/2507)) ([007ece3](https://github.com/sanity-io/next-sanity/commit/007ece3601469fdf79dd8c98b2618d6d91eedfdd))
+- **deps:** update dependency @sanity/ui to ^2.16.7 (main) ([#2551](https://github.com/sanity-io/next-sanity/issues/2551)) ([abd0231](https://github.com/sanity-io/next-sanity/commit/abd02313e4625d43fc2950e2016504ee741ba276))
+- **deps:** update dependency @sanity/ui to v2.16.2 (main) ([#2518](https://github.com/sanity-io/next-sanity/issues/2518)) ([ce8d6e5](https://github.com/sanity-io/next-sanity/commit/ce8d6e505172a1b0b9bdc0eebf6487572e7d5bc3))
+- **deps:** update dependency @sanity/visual-editing to ^2.15.2 (main) ([#2552](https://github.com/sanity-io/next-sanity/issues/2552)) ([518a298](https://github.com/sanity-io/next-sanity/commit/518a298013a39f48bfdf0dd26ce60641904cdc31))
+- **deps:** update groq to ^3.95.0 ([897f215](https://github.com/sanity-io/next-sanity/commit/897f215503f6f85b044a298b2c1eca3fbf3dcde7))
+- **deps:** update sanity monorepo to v3.99.0 (main) ([#2553](https://github.com/sanity-io/next-sanity/issues/2553)) ([96f03c5](https://github.com/sanity-io/next-sanity/commit/96f03c58da827281d0fad0c9360bc079eb33a974))
+- inline the `SanityDocument` type from `@sanity/types` ([4d18bf2](https://github.com/sanity-io/next-sanity/commit/4d18bf211dfaebd2fdc03df225508a4334feabab))
+- remove `@sanity/icons` peer dependency ([d5dd0a1](https://github.com/sanity-io/next-sanity/commit/d5dd0a1bfb578cb0d33197355e646ac41c306c3a))
 
 ## [9.12.0](https://github.com/sanity-io/next-sanity/compare/next-sanity-v9.11.1...next-sanity-v9.12.0) (2025-05-27)
 
-
 ### Features
 
-* add visual editing overlay plugins ([#2511](https://github.com/sanity-io/next-sanity/issues/2511)) ([7b3d45a](https://github.com/sanity-io/next-sanity/commit/7b3d45a9392006bcbb563ffcd3e61d77739fbdc5))
-
+- add visual editing overlay plugins ([#2511](https://github.com/sanity-io/next-sanity/issues/2511)) ([7b3d45a](https://github.com/sanity-io/next-sanity/commit/7b3d45a9392006bcbb563ffcd3e61d77739fbdc5))
 
 ### Bug Fixes
 
-* **deps:** update dependency @sanity/visual-editing to ^2.14.0 (main) ([#2508](https://github.com/sanity-io/next-sanity/issues/2508)) ([da29a7b](https://github.com/sanity-io/next-sanity/commit/da29a7b8ef090ceb78be472f2e293e3532dcc065))
+- **deps:** update dependency @sanity/visual-editing to ^2.14.0 (main) ([#2508](https://github.com/sanity-io/next-sanity/issues/2508)) ([da29a7b](https://github.com/sanity-io/next-sanity/commit/da29a7b8ef090ceb78be472f2e293e3532dcc065))
 
 ## [9.11.1](https://github.com/sanity-io/next-sanity/compare/next-sanity-v9.11.0...next-sanity-v9.11.1) (2025-05-16)
 
-
 ### Bug Fixes
 
-* **deps:** update dependency @sanity/client to ^7.1.0 (main) ([#2480](https://github.com/sanity-io/next-sanity/issues/2480)) ([6f10b7c](https://github.com/sanity-io/next-sanity/commit/6f10b7c86b1f55c8860f743a1792765ffeeeb029))
-* **deps:** update dependency @sanity/next-loader to ^1.6 ([0813f9e](https://github.com/sanity-io/next-sanity/commit/0813f9e44d9e2154173ff3e0f828113407c9a471))
-* **deps:** update dependency @sanity/ui to v2.15.17 (main) ([#2495](https://github.com/sanity-io/next-sanity/issues/2495)) ([a1c4160](https://github.com/sanity-io/next-sanity/commit/a1c41602584ab5419f2f05f5cec51f3f7b091d8b))
+- **deps:** update dependency @sanity/client to ^7.1.0 (main) ([#2480](https://github.com/sanity-io/next-sanity/issues/2480)) ([6f10b7c](https://github.com/sanity-io/next-sanity/commit/6f10b7c86b1f55c8860f743a1792765ffeeeb029))
+- **deps:** update dependency @sanity/next-loader to ^1.6 ([0813f9e](https://github.com/sanity-io/next-sanity/commit/0813f9e44d9e2154173ff3e0f828113407c9a471))
+- **deps:** update dependency @sanity/ui to v2.15.17 (main) ([#2495](https://github.com/sanity-io/next-sanity/issues/2495)) ([a1c4160](https://github.com/sanity-io/next-sanity/commit/a1c41602584ab5419f2f05f5cec51f3f7b091d8b))
 
 ## [9.11.0](https://github.com/sanity-io/next-sanity/compare/next-sanity-v9.10.6...next-sanity-v9.11.0) (2025-05-07)
 
-
 ### Features
 
-* add bridge script to `next-sanity/studio` ([#2502](https://github.com/sanity-io/next-sanity/issues/2502)) ([0a7c3be](https://github.com/sanity-io/next-sanity/commit/0a7c3beb704aeb1c809bbdc1f3b2e8ab85459d08))
+- add bridge script to `next-sanity/studio` ([#2502](https://github.com/sanity-io/next-sanity/issues/2502)) ([0a7c3be](https://github.com/sanity-io/next-sanity/commit/0a7c3beb704aeb1c809bbdc1f3b2e8ab85459d08))
 
 ## [9.10.6](https://github.com/sanity-io/next-sanity/compare/next-sanity-v9.10.5...next-sanity-v9.10.6) (2025-04-30)
 
-
 ### Bug Fixes
 
-* **deps:** update dependency @sanity/preview-kit to ^6.0.12 (main) ([#2488](https://github.com/sanity-io/next-sanity/issues/2488)) ([3147894](https://github.com/sanity-io/next-sanity/commit/3147894e49f21d1a1c0a75f2435b1eaa91f78b24))
+- **deps:** update dependency @sanity/preview-kit to ^6.0.12 (main) ([#2488](https://github.com/sanity-io/next-sanity/issues/2488)) ([3147894](https://github.com/sanity-io/next-sanity/commit/3147894e49f21d1a1c0a75f2435b1eaa91f78b24))
 
 ## [9.10.5](https://github.com/sanity-io/next-sanity/compare/next-sanity-v9.10.4...next-sanity-v9.10.5) (2025-04-30)
 
-
 ### Bug Fixes
 
-* **deps:** update dependency @sanity/next-loader to ^1.5.2 (main) ([#2482](https://github.com/sanity-io/next-sanity/issues/2482)) ([9689fa1](https://github.com/sanity-io/next-sanity/commit/9689fa1ad5db23cbdfafdc0e63258d0359b30e04))
-* **deps:** update dependency @sanity/preview-kit to ^6.0.10 (main) ([#2483](https://github.com/sanity-io/next-sanity/issues/2483)) ([816bf2c](https://github.com/sanity-io/next-sanity/commit/816bf2ccbb963ba046b43096ae09ed5d5744b009))
-* **deps:** update dependency @sanity/preview-url-secret to ^2.1.10 (main) ([#2484](https://github.com/sanity-io/next-sanity/issues/2484)) ([b9b557d](https://github.com/sanity-io/next-sanity/commit/b9b557def4ee2e968e3c0974c8a9b79a7351493c))
-* **deps:** update dependency @sanity/visual-editing to ^2.13.20 (main) ([#2485](https://github.com/sanity-io/next-sanity/issues/2485)) ([56bd56c](https://github.com/sanity-io/next-sanity/commit/56bd56c91abbc7138f7a9b713a37d86cf471a8ad))
+- **deps:** update dependency @sanity/next-loader to ^1.5.2 (main) ([#2482](https://github.com/sanity-io/next-sanity/issues/2482)) ([9689fa1](https://github.com/sanity-io/next-sanity/commit/9689fa1ad5db23cbdfafdc0e63258d0359b30e04))
+- **deps:** update dependency @sanity/preview-kit to ^6.0.10 (main) ([#2483](https://github.com/sanity-io/next-sanity/issues/2483)) ([816bf2c](https://github.com/sanity-io/next-sanity/commit/816bf2ccbb963ba046b43096ae09ed5d5744b009))
+- **deps:** update dependency @sanity/preview-url-secret to ^2.1.10 (main) ([#2484](https://github.com/sanity-io/next-sanity/issues/2484)) ([b9b557d](https://github.com/sanity-io/next-sanity/commit/b9b557def4ee2e968e3c0974c8a9b79a7351493c))
+- **deps:** update dependency @sanity/visual-editing to ^2.13.20 (main) ([#2485](https://github.com/sanity-io/next-sanity/issues/2485)) ([56bd56c](https://github.com/sanity-io/next-sanity/commit/56bd56c91abbc7138f7a9b713a37d86cf471a8ad))
 
 ## [9.10.4](https://github.com/sanity-io/next-sanity/compare/next-sanity-v9.10.3...next-sanity-v9.10.4) (2025-04-30)
 
-
 ### Bug Fixes
 
-* **deps:** update @sanity/client peer dependency to v7.0.0 ([605eef8](https://github.com/sanity-io/next-sanity/commit/605eef87ad3bd1088a695fde9326af2be6216471))
-* **deps:** update dependency @sanity/ui to v2.15.14 (main) ([#2478](https://github.com/sanity-io/next-sanity/issues/2478)) ([2435b51](https://github.com/sanity-io/next-sanity/commit/2435b51dfc35efff14ec21a6b904170213692536))
+- **deps:** update @sanity/client peer dependency to v7.0.0 ([605eef8](https://github.com/sanity-io/next-sanity/commit/605eef87ad3bd1088a695fde9326af2be6216471))
+- **deps:** update dependency @sanity/ui to v2.15.14 (main) ([#2478](https://github.com/sanity-io/next-sanity/issues/2478)) ([2435b51](https://github.com/sanity-io/next-sanity/commit/2435b51dfc35efff14ec21a6b904170213692536))
 
 ## [9.10.3](https://github.com/sanity-io/next-sanity/compare/next-sanity-v9.10.2...next-sanity-v9.10.3) (2025-04-30)
 
-
 ### Bug Fixes
 
-* **deps:** allow `@sanity/client` v7 ([b8afef8](https://github.com/sanity-io/next-sanity/commit/b8afef8c8659a6330efe8fe46160fce0abbb575f))
-* **deps:** update dependency @sanity/preview-kit to ^6.0.9 (main) ([#2477](https://github.com/sanity-io/next-sanity/issues/2477)) ([ca80fb8](https://github.com/sanity-io/next-sanity/commit/ca80fb8f2dce07edfe4e88713597170afbee7bbe))
-* **deps:** upgrade to client v7 ([e851fc6](https://github.com/sanity-io/next-sanity/commit/e851fc654ca7d592dbd61a8fb04365569a859228))
+- **deps:** allow `@sanity/client` v7 ([b8afef8](https://github.com/sanity-io/next-sanity/commit/b8afef8c8659a6330efe8fe46160fce0abbb575f))
+- **deps:** update dependency @sanity/preview-kit to ^6.0.9 (main) ([#2477](https://github.com/sanity-io/next-sanity/issues/2477)) ([ca80fb8](https://github.com/sanity-io/next-sanity/commit/ca80fb8f2dce07edfe4e88713597170afbee7bbe))
+- **deps:** upgrade to client v7 ([e851fc6](https://github.com/sanity-io/next-sanity/commit/e851fc654ca7d592dbd61a8fb04365569a859228))
 
 ## [9.10.2](https://github.com/sanity-io/next-sanity/compare/next-sanity-v9.10.1...next-sanity-v9.10.2) (2025-04-11)
 
-
 ### Bug Fixes
 
-* **deps:** update @sanity/next-loader to version 1.5.0 ([e7a06ee](https://github.com/sanity-io/next-sanity/commit/e7a06eed8d815136fe69afc8e53f2ec0d89c8c2f))
-* **deps:** update @sanity/preview-kit to version 6.0.8 ([fc5a464](https://github.com/sanity-io/next-sanity/commit/fc5a464c2ebd9a65f6e7f7de6096a0aa560c9600))
-* **deps:** update @sanity/preview-url-secret to version 2.1.8 ([451f8c3](https://github.com/sanity-io/next-sanity/commit/451f8c34496716cab145dc34cf481452c5ccd436))
-* **deps:** update @sanity/visual-editing to version 2.13.18 ([928ff52](https://github.com/sanity-io/next-sanity/commit/928ff5286fc0d2f4f7798a2eaf2e3e7675134594))
-* **deps:** update dependency @sanity/client to ^6.29.0 (main) ([#2460](https://github.com/sanity-io/next-sanity/issues/2460)) ([929a041](https://github.com/sanity-io/next-sanity/commit/929a041d63ec6875f6ff6d6233b06d0174778f91))
+- **deps:** update @sanity/next-loader to version 1.5.0 ([e7a06ee](https://github.com/sanity-io/next-sanity/commit/e7a06eed8d815136fe69afc8e53f2ec0d89c8c2f))
+- **deps:** update @sanity/preview-kit to version 6.0.8 ([fc5a464](https://github.com/sanity-io/next-sanity/commit/fc5a464c2ebd9a65f6e7f7de6096a0aa560c9600))
+- **deps:** update @sanity/preview-url-secret to version 2.1.8 ([451f8c3](https://github.com/sanity-io/next-sanity/commit/451f8c34496716cab145dc34cf481452c5ccd436))
+- **deps:** update @sanity/visual-editing to version 2.13.18 ([928ff52](https://github.com/sanity-io/next-sanity/commit/928ff5286fc0d2f4f7798a2eaf2e3e7675134594))
+- **deps:** update dependency @sanity/client to ^6.29.0 (main) ([#2460](https://github.com/sanity-io/next-sanity/issues/2460)) ([929a041](https://github.com/sanity-io/next-sanity/commit/929a041d63ec6875f6ff6d6233b06d0174778f91))
 
 ## [9.10.1](https://github.com/sanity-io/next-sanity/compare/next-sanity-v9.10.0...next-sanity-v9.10.1) (2025-04-10)
 
-
 ### Bug Fixes
 
-* **deps:** update dependency @sanity/next-loader to ^1.4.1 (main) ([#2454](https://github.com/sanity-io/next-sanity/issues/2454)) ([d2dd8a2](https://github.com/sanity-io/next-sanity/commit/d2dd8a24b643bd1df8b584b6265ef377a06df52e))
+- **deps:** update dependency @sanity/next-loader to ^1.4.1 (main) ([#2454](https://github.com/sanity-io/next-sanity/issues/2454)) ([d2dd8a2](https://github.com/sanity-io/next-sanity/commit/d2dd8a24b643bd1df8b584b6265ef377a06df52e))
 
 ## [9.10.0](https://github.com/sanity-io/next-sanity/compare/next-sanity-v9.9.9...next-sanity-v9.10.0) (2025-04-10)
 
-
 ### Features
 
-* **next-loader:** add experimental query hook ([5fa9623](https://github.com/sanity-io/next-sanity/commit/5fa96236b9cf26113aadaa6ba652ea70055da19f))
-
+- **next-loader:** add experimental query hook ([5fa9623](https://github.com/sanity-io/next-sanity/commit/5fa96236b9cf26113aadaa6ba652ea70055da19f))
 
 ### Bug Fixes
 
-* **deps:** update dependency @sanity/preview-kit to ^6.0.7 ([e405ef8](https://github.com/sanity-io/next-sanity/commit/e405ef83073684abb118ad66d1af1ec57c32a0d1))
-* **deps:** update dependency @sanity/ui to v2.15.13 (main) ([#2445](https://github.com/sanity-io/next-sanity/issues/2445)) ([6b00a25](https://github.com/sanity-io/next-sanity/commit/6b00a25b30de65f2ae10efb1710dadaaafcb1acc))
-* **deps:** update dependency @sanity/visual-editing to ^2.13.16 ([d2fc2e6](https://github.com/sanity-io/next-sanity/commit/d2fc2e6d2ce177bc95c406b25dc0719a5281000c))
+- **deps:** update dependency @sanity/preview-kit to ^6.0.7 ([e405ef8](https://github.com/sanity-io/next-sanity/commit/e405ef83073684abb118ad66d1af1ec57c32a0d1))
+- **deps:** update dependency @sanity/ui to v2.15.13 (main) ([#2445](https://github.com/sanity-io/next-sanity/issues/2445)) ([6b00a25](https://github.com/sanity-io/next-sanity/commit/6b00a25b30de65f2ae10efb1710dadaaafcb1acc))
+- **deps:** update dependency @sanity/visual-editing to ^2.13.16 ([d2fc2e6](https://github.com/sanity-io/next-sanity/commit/d2fc2e6d2ce177bc95c406b25dc0719a5281000c))
 
 ## [9.9.9](https://github.com/sanity-io/next-sanity/compare/next-sanity-v9.9.8...next-sanity-v9.9.9) (2025-04-02)
 
-
 ### Bug Fixes
 
-* **deps:** update dependency @sanity/ui to v2.15.12 (main) ([#2436](https://github.com/sanity-io/next-sanity/issues/2436)) ([b263a96](https://github.com/sanity-io/next-sanity/commit/b263a969c3bc4d66d7b1fd12a6122c2af4a1792d))
+- **deps:** update dependency @sanity/ui to v2.15.12 (main) ([#2436](https://github.com/sanity-io/next-sanity/issues/2436)) ([b263a96](https://github.com/sanity-io/next-sanity/commit/b263a969c3bc4d66d7b1fd12a6122c2af4a1792d))
 
 ## [9.9.8](https://github.com/sanity-io/next-sanity/compare/next-sanity-v9.9.7...next-sanity-v9.9.8) (2025-04-01)
 
-
 ### Bug Fixes
 
-* **deps:** update @sanity/preview-kit to ^6.0.6 ([03bb3f4](https://github.com/sanity-io/next-sanity/commit/03bb3f47e9ed3dbdc97713d74a7da5e9a844f5c0))
-* **deps:** update dependency @sanity/next-loader to ^1.3.9 (main) ([#2433](https://github.com/sanity-io/next-sanity/issues/2433)) ([dcf8850](https://github.com/sanity-io/next-sanity/commit/dcf8850f209256a8cdd6c6fcdb41034f96918f54))
-* **deps:** update dependency @sanity/preview-url-secret to ^2.1.7 (main) ([#2434](https://github.com/sanity-io/next-sanity/issues/2434)) ([7d60aaa](https://github.com/sanity-io/next-sanity/commit/7d60aaa1c06910403bf3f6da18c2995df1e9e4c2))
-* **deps:** update dependency @sanity/visual-editing to ^2.13.15 (main) ([#2431](https://github.com/sanity-io/next-sanity/issues/2431)) ([08c2f04](https://github.com/sanity-io/next-sanity/commit/08c2f040841b498f37ed13aeda073c781892622d))
+- **deps:** update @sanity/preview-kit to ^6.0.6 ([03bb3f4](https://github.com/sanity-io/next-sanity/commit/03bb3f47e9ed3dbdc97713d74a7da5e9a844f5c0))
+- **deps:** update dependency @sanity/next-loader to ^1.3.9 (main) ([#2433](https://github.com/sanity-io/next-sanity/issues/2433)) ([dcf8850](https://github.com/sanity-io/next-sanity/commit/dcf8850f209256a8cdd6c6fcdb41034f96918f54))
+- **deps:** update dependency @sanity/preview-url-secret to ^2.1.7 (main) ([#2434](https://github.com/sanity-io/next-sanity/issues/2434)) ([7d60aaa](https://github.com/sanity-io/next-sanity/commit/7d60aaa1c06910403bf3f6da18c2995df1e9e4c2))
+- **deps:** update dependency @sanity/visual-editing to ^2.13.15 (main) ([#2431](https://github.com/sanity-io/next-sanity/issues/2431)) ([08c2f04](https://github.com/sanity-io/next-sanity/commit/08c2f040841b498f37ed13aeda073c781892622d))
 
 ## [9.9.7](https://github.com/sanity-io/next-sanity/compare/next-sanity-v9.9.6...next-sanity-v9.9.7) (2025-04-01)
 
-
 ### Bug Fixes
 
-* **deps:** update dependency @sanity/client to ^6.28.4 (main) ([#2421](https://github.com/sanity-io/next-sanity/issues/2421)) ([cbe7320](https://github.com/sanity-io/next-sanity/commit/cbe73201a80da6063fed5756e3a446495cb3eea3))
-* **deps:** update dependency @sanity/preview-kit to ^6.0.5 (main) ([#2428](https://github.com/sanity-io/next-sanity/issues/2428)) ([e29cfc4](https://github.com/sanity-io/next-sanity/commit/e29cfc42ae3b4ea5ac612678ab4c97addd9eb04d))
-* **deps:** update dependency @sanity/ui to v2.15.11 (main) ([#2422](https://github.com/sanity-io/next-sanity/issues/2422)) ([4899326](https://github.com/sanity-io/next-sanity/commit/48993269bdbd09622459109ac0ba63e7a6ec809f))
+- **deps:** update dependency @sanity/client to ^6.28.4 (main) ([#2421](https://github.com/sanity-io/next-sanity/issues/2421)) ([cbe7320](https://github.com/sanity-io/next-sanity/commit/cbe73201a80da6063fed5756e3a446495cb3eea3))
+- **deps:** update dependency @sanity/preview-kit to ^6.0.5 (main) ([#2428](https://github.com/sanity-io/next-sanity/issues/2428)) ([e29cfc4](https://github.com/sanity-io/next-sanity/commit/e29cfc42ae3b4ea5ac612678ab4c97addd9eb04d))
+- **deps:** update dependency @sanity/ui to v2.15.11 (main) ([#2422](https://github.com/sanity-io/next-sanity/issues/2422)) ([4899326](https://github.com/sanity-io/next-sanity/commit/48993269bdbd09622459109ac0ba63e7a6ec809f))
 
 ## [9.9.6](https://github.com/sanity-io/next-sanity/compare/next-sanity-v9.9.5...next-sanity-v9.9.6) (2025-03-26)
 
-
 ### Bug Fixes
 
-* **deps:** update dependency @sanity/next-loader to ^1.3.8 (main) ([#2412](https://github.com/sanity-io/next-sanity/issues/2412)) ([fbe39cb](https://github.com/sanity-io/next-sanity/commit/fbe39cb323b58d409d0e0d08d639eb2a2a5578c7))
-* **deps:** update dependency @sanity/ui to v2.15.8 (main) ([#2413](https://github.com/sanity-io/next-sanity/issues/2413)) ([2c5fe0e](https://github.com/sanity-io/next-sanity/commit/2c5fe0e00197e63d5dedfbe48d8280d85a438a2e))
-* **deps:** update dependency @sanity/visual-editing to ^2.13.14 (main) ([#2408](https://github.com/sanity-io/next-sanity/issues/2408)) ([ae2cc47](https://github.com/sanity-io/next-sanity/commit/ae2cc47d39438ac39943d24f324cca29f09d087e))
-* upgrade `@sanity/preview-kit` to v6.0.4 ([deee5c9](https://github.com/sanity-io/next-sanity/commit/deee5c975f75aa434d3cd3fccf282f523c30b937))
+- **deps:** update dependency @sanity/next-loader to ^1.3.8 (main) ([#2412](https://github.com/sanity-io/next-sanity/issues/2412)) ([fbe39cb](https://github.com/sanity-io/next-sanity/commit/fbe39cb323b58d409d0e0d08d639eb2a2a5578c7))
+- **deps:** update dependency @sanity/ui to v2.15.8 (main) ([#2413](https://github.com/sanity-io/next-sanity/issues/2413)) ([2c5fe0e](https://github.com/sanity-io/next-sanity/commit/2c5fe0e00197e63d5dedfbe48d8280d85a438a2e))
+- **deps:** update dependency @sanity/visual-editing to ^2.13.14 (main) ([#2408](https://github.com/sanity-io/next-sanity/issues/2408)) ([ae2cc47](https://github.com/sanity-io/next-sanity/commit/ae2cc47d39438ac39943d24f324cca29f09d087e))
+- upgrade `@sanity/preview-kit` to v6.0.4 ([deee5c9](https://github.com/sanity-io/next-sanity/commit/deee5c975f75aa434d3cd3fccf282f523c30b937))
 
 ## [9.9.5](https://github.com/sanity-io/next-sanity/compare/next-sanity-v9.9.4...next-sanity-v9.9.5) (2025-03-17)
 
-
 ### Bug Fixes
 
-* **deps:** update dependency @sanity/next-loader to ^1.3.7 (main) ([#2390](https://github.com/sanity-io/next-sanity/issues/2390)) ([6985b0e](https://github.com/sanity-io/next-sanity/commit/6985b0e046b66451b417a39dd515e9bee0ce9a9c))
-* **deps:** update dependency @sanity/preview-kit to ^6.0.3 (main) ([#2394](https://github.com/sanity-io/next-sanity/issues/2394)) ([25e6b21](https://github.com/sanity-io/next-sanity/commit/25e6b2149db15d9abeef86cad65479230407ac7c))
-* **deps:** update dependency @sanity/ui to v2.15.7 (main) ([#2393](https://github.com/sanity-io/next-sanity/issues/2393)) ([391c523](https://github.com/sanity-io/next-sanity/commit/391c523a62def6b14fcddae4d751fbaabf178584))
-* **deps:** update dependency @sanity/visual-editing to ^2.13.12 (main) ([#2391](https://github.com/sanity-io/next-sanity/issues/2391)) ([bcf6b2b](https://github.com/sanity-io/next-sanity/commit/bcf6b2b57f521e0dba46fa482a5d90a7f658b5cd))
+- **deps:** update dependency @sanity/next-loader to ^1.3.7 (main) ([#2390](https://github.com/sanity-io/next-sanity/issues/2390)) ([6985b0e](https://github.com/sanity-io/next-sanity/commit/6985b0e046b66451b417a39dd515e9bee0ce9a9c))
+- **deps:** update dependency @sanity/preview-kit to ^6.0.3 (main) ([#2394](https://github.com/sanity-io/next-sanity/issues/2394)) ([25e6b21](https://github.com/sanity-io/next-sanity/commit/25e6b2149db15d9abeef86cad65479230407ac7c))
+- **deps:** update dependency @sanity/ui to v2.15.7 (main) ([#2393](https://github.com/sanity-io/next-sanity/issues/2393)) ([391c523](https://github.com/sanity-io/next-sanity/commit/391c523a62def6b14fcddae4d751fbaabf178584))
+- **deps:** update dependency @sanity/visual-editing to ^2.13.12 (main) ([#2391](https://github.com/sanity-io/next-sanity/issues/2391)) ([bcf6b2b](https://github.com/sanity-io/next-sanity/commit/bcf6b2b57f521e0dba46fa482a5d90a7f658b5cd))
 
 ## [9.9.4](https://github.com/sanity-io/next-sanity/compare/next-sanity-v9.9.3...next-sanity-v9.9.4) (2025-03-14)
 
-
 ### Bug Fixes
 
-* **deps:** Update dependency @sanity/next-loader to v1.3.6 (main) ([#2385](https://github.com/sanity-io/next-sanity/issues/2385)) ([a9f5078](https://github.com/sanity-io/next-sanity/commit/a9f50784e1bf99bb4a65b776a15d86864dd8d5ed))
-* **deps:** Update dependency @sanity/visual-editing to v2.13.11 (main) ([#2386](https://github.com/sanity-io/next-sanity/issues/2386)) ([cc6e2f3](https://github.com/sanity-io/next-sanity/commit/cc6e2f362ef86e3dbe1bc353213702b0d607fe77))
-* **deps:** update dependency `@sanity/preview-kit` to v6.0.2 ([1fda865](https://github.com/sanity-io/next-sanity/commit/1fda8655434762c837c384e31c9af09011abdac4))
+- **deps:** Update dependency @sanity/next-loader to v1.3.6 (main) ([#2385](https://github.com/sanity-io/next-sanity/issues/2385)) ([a9f5078](https://github.com/sanity-io/next-sanity/commit/a9f50784e1bf99bb4a65b776a15d86864dd8d5ed))
+- **deps:** Update dependency @sanity/visual-editing to v2.13.11 (main) ([#2386](https://github.com/sanity-io/next-sanity/issues/2386)) ([cc6e2f3](https://github.com/sanity-io/next-sanity/commit/cc6e2f362ef86e3dbe1bc353213702b0d607fe77))
+- **deps:** update dependency `@sanity/preview-kit` to v6.0.2 ([1fda865](https://github.com/sanity-io/next-sanity/commit/1fda8655434762c837c384e31c9af09011abdac4))
 
 ## [9.9.3](https://github.com/sanity-io/next-sanity/compare/next-sanity-v9.9.2...next-sanity-v9.9.3) (2025-03-13)
 
-
 ### Bug Fixes
 
-* **deps:** Update dependency @sanity/visual-editing to v2.13.10 (main) ([#2381](https://github.com/sanity-io/next-sanity/issues/2381)) ([acfc25d](https://github.com/sanity-io/next-sanity/commit/acfc25da84adac5640433ff2f325f99be69cf52a))
+- **deps:** Update dependency @sanity/visual-editing to v2.13.10 (main) ([#2381](https://github.com/sanity-io/next-sanity/issues/2381)) ([acfc25d](https://github.com/sanity-io/next-sanity/commit/acfc25da84adac5640433ff2f325f99be69cf52a))
 
 ## [9.9.2](https://github.com/sanity-io/next-sanity/compare/next-sanity-v9.9.1...next-sanity-v9.9.2) (2025-03-12)
 
-
 ### Bug Fixes
 
-* **deps:** update dependency `@sanity/visual-editing` to v2.13.9 ([6af839b](https://github.com/sanity-io/next-sanity/commit/6af839b29543c512a6e3ef8bbf62a9d601cc488f))
+- **deps:** update dependency `@sanity/visual-editing` to v2.13.9 ([6af839b](https://github.com/sanity-io/next-sanity/commit/6af839b29543c512a6e3ef8bbf62a9d601cc488f))
 
 ## [9.9.1](https://github.com/sanity-io/next-sanity/compare/next-sanity-v9.9.0...next-sanity-v9.9.1) (2025-03-12)
 
-
 ### Bug Fixes
 
-* **deps:** Update dependency @sanity/next-loader to v1.3.5 (main) ([#2370](https://github.com/sanity-io/next-sanity/issues/2370)) ([caa56ed](https://github.com/sanity-io/next-sanity/commit/caa56edc1ffe727c83f2fa03375eb84c1f149379))
-* **deps:** update dependency @sanity/preview-kit to v6.0.1 (main) ([#2376](https://github.com/sanity-io/next-sanity/issues/2376)) ([0d8294f](https://github.com/sanity-io/next-sanity/commit/0d8294f069bb9a6f36a7127e2303adcb3d617098))
-* **deps:** update dependency @sanity/preview-url-secret to v2.1.6 (main) ([#2372](https://github.com/sanity-io/next-sanity/issues/2372)) ([8112b11](https://github.com/sanity-io/next-sanity/commit/8112b117cc09cc5e1ca0e10d7e4bb7d427acc386))
-* **deps:** update dependency @sanity/ui to v2.15.5 (main) ([#2367](https://github.com/sanity-io/next-sanity/issues/2367)) ([ca67d36](https://github.com/sanity-io/next-sanity/commit/ca67d363b12a5b33b446d1983b436d28fce1b99d))
-* **deps:** update dependency @sanity/ui to v2.15.6 (main) ([#2377](https://github.com/sanity-io/next-sanity/issues/2377)) ([b12b112](https://github.com/sanity-io/next-sanity/commit/b12b1123f8c8eb802ccec60016b47a68bdc6e868))
-* **deps:** Update dependency @sanity/visual-editing to v2.13.8 (main) ([#2371](https://github.com/sanity-io/next-sanity/issues/2371)) ([4b71fcd](https://github.com/sanity-io/next-sanity/commit/4b71fcdfb227793df023230720049afa0b3c0683))
+- **deps:** Update dependency @sanity/next-loader to v1.3.5 (main) ([#2370](https://github.com/sanity-io/next-sanity/issues/2370)) ([caa56ed](https://github.com/sanity-io/next-sanity/commit/caa56edc1ffe727c83f2fa03375eb84c1f149379))
+- **deps:** update dependency @sanity/preview-kit to v6.0.1 (main) ([#2376](https://github.com/sanity-io/next-sanity/issues/2376)) ([0d8294f](https://github.com/sanity-io/next-sanity/commit/0d8294f069bb9a6f36a7127e2303adcb3d617098))
+- **deps:** update dependency @sanity/preview-url-secret to v2.1.6 (main) ([#2372](https://github.com/sanity-io/next-sanity/issues/2372)) ([8112b11](https://github.com/sanity-io/next-sanity/commit/8112b117cc09cc5e1ca0e10d7e4bb7d427acc386))
+- **deps:** update dependency @sanity/ui to v2.15.5 (main) ([#2367](https://github.com/sanity-io/next-sanity/issues/2367)) ([ca67d36](https://github.com/sanity-io/next-sanity/commit/ca67d363b12a5b33b446d1983b436d28fce1b99d))
+- **deps:** update dependency @sanity/ui to v2.15.6 (main) ([#2377](https://github.com/sanity-io/next-sanity/issues/2377)) ([b12b112](https://github.com/sanity-io/next-sanity/commit/b12b1123f8c8eb802ccec60016b47a68bdc6e868))
+- **deps:** Update dependency @sanity/visual-editing to v2.13.8 (main) ([#2371](https://github.com/sanity-io/next-sanity/issues/2371)) ([4b71fcd](https://github.com/sanity-io/next-sanity/commit/4b71fcdfb227793df023230720049afa0b3c0683))
 
 ## [9.9.0](https://github.com/sanity-io/next-sanity/compare/next-sanity-v9.8.61...next-sanity-v9.9.0) (2025-03-05)
 
-
 ### Features
 
-* **deps:** update dependency @sanity/preview-kit to v6 (main) ([#2358](https://github.com/sanity-io/next-sanity/issues/2358)) ([dc1fce6](https://github.com/sanity-io/next-sanity/commit/dc1fce6715f9b25fddb30dc00832e102f3f772e5))
-
+- **deps:** update dependency @sanity/preview-kit to v6 (main) ([#2358](https://github.com/sanity-io/next-sanity/issues/2358)) ([dc1fce6](https://github.com/sanity-io/next-sanity/commit/dc1fce6715f9b25fddb30dc00832e102f3f772e5))
 
 ### Bug Fixes
 
-* **deps:** update dependency @sanity/client to ^6.28.3 (main) ([#2357](https://github.com/sanity-io/next-sanity/issues/2357)) ([abbf0e7](https://github.com/sanity-io/next-sanity/commit/abbf0e765ae5a95001509194026e1349579e227b))
-* **deps:** update dependency @sanity/ui to v2.15.2 (main) ([#2349](https://github.com/sanity-io/next-sanity/issues/2349)) ([81b319f](https://github.com/sanity-io/next-sanity/commit/81b319f2956ae1b047f4ab2c24bcf24a907fc557))
+- **deps:** update dependency @sanity/client to ^6.28.3 (main) ([#2357](https://github.com/sanity-io/next-sanity/issues/2357)) ([abbf0e7](https://github.com/sanity-io/next-sanity/commit/abbf0e765ae5a95001509194026e1349579e227b))
+- **deps:** update dependency @sanity/ui to v2.15.2 (main) ([#2349](https://github.com/sanity-io/next-sanity/issues/2349)) ([81b319f](https://github.com/sanity-io/next-sanity/commit/81b319f2956ae1b047f4ab2c24bcf24a907fc557))
 
 ## [9.8.61](https://github.com/sanity-io/next-sanity/compare/next-sanity-v9.8.60...next-sanity-v9.8.61) (2025-03-03)
 
-
 ### Bug Fixes
 
-* **deps:** update dependency @sanity/client to ^6.28.2 (main) ([#2336](https://github.com/sanity-io/next-sanity/issues/2336)) ([bebcf6a](https://github.com/sanity-io/next-sanity/commit/bebcf6ab9e953f90ebcf8dc1b1d6ef75f68204f5))
-* **deps:** update dependency @sanity/icons to ^3.7.0 (main) ([#2339](https://github.com/sanity-io/next-sanity/issues/2339)) ([c1745a3](https://github.com/sanity-io/next-sanity/commit/c1745a3e622ecfeb6619aaafc16a2c70ae9262b0))
-* **deps:** Update dependency @sanity/next-loader to v1.3.4 (main) ([#2341](https://github.com/sanity-io/next-sanity/issues/2341)) ([7e2474c](https://github.com/sanity-io/next-sanity/commit/7e2474c47aad217314776d4c05ecbc90c486b05d))
-* **deps:** update dependency @sanity/preview-kit to v5.2.9 (main) ([#2346](https://github.com/sanity-io/next-sanity/issues/2346)) ([dfe953a](https://github.com/sanity-io/next-sanity/commit/dfe953a50636303cdc37a7221b5574ab7811aed4))
-* **deps:** update dependency @sanity/preview-url-secret to v2.1.5 (main) ([#2343](https://github.com/sanity-io/next-sanity/issues/2343)) ([0d3b71a](https://github.com/sanity-io/next-sanity/commit/0d3b71aca4e5fe1ae513d38ae682491560577af0))
-* **deps:** update dependency @sanity/ui to v2.14.5 (main) ([#2337](https://github.com/sanity-io/next-sanity/issues/2337)) ([9321ad7](https://github.com/sanity-io/next-sanity/commit/9321ad792b20769a00fe6106e37acd74141750e2))
-* **deps:** Update dependency @sanity/visual-editing to v2.13.7 (main) ([#2342](https://github.com/sanity-io/next-sanity/issues/2342)) ([86aefb3](https://github.com/sanity-io/next-sanity/commit/86aefb3f03a6d6943a40a2498fbbe979e32d777c))
+- **deps:** update dependency @sanity/client to ^6.28.2 (main) ([#2336](https://github.com/sanity-io/next-sanity/issues/2336)) ([bebcf6a](https://github.com/sanity-io/next-sanity/commit/bebcf6ab9e953f90ebcf8dc1b1d6ef75f68204f5))
+- **deps:** update dependency @sanity/icons to ^3.7.0 (main) ([#2339](https://github.com/sanity-io/next-sanity/issues/2339)) ([c1745a3](https://github.com/sanity-io/next-sanity/commit/c1745a3e622ecfeb6619aaafc16a2c70ae9262b0))
+- **deps:** Update dependency @sanity/next-loader to v1.3.4 (main) ([#2341](https://github.com/sanity-io/next-sanity/issues/2341)) ([7e2474c](https://github.com/sanity-io/next-sanity/commit/7e2474c47aad217314776d4c05ecbc90c486b05d))
+- **deps:** update dependency @sanity/preview-kit to v5.2.9 (main) ([#2346](https://github.com/sanity-io/next-sanity/issues/2346)) ([dfe953a](https://github.com/sanity-io/next-sanity/commit/dfe953a50636303cdc37a7221b5574ab7811aed4))
+- **deps:** update dependency @sanity/preview-url-secret to v2.1.5 (main) ([#2343](https://github.com/sanity-io/next-sanity/issues/2343)) ([0d3b71a](https://github.com/sanity-io/next-sanity/commit/0d3b71aca4e5fe1ae513d38ae682491560577af0))
+- **deps:** update dependency @sanity/ui to v2.14.5 (main) ([#2337](https://github.com/sanity-io/next-sanity/issues/2337)) ([9321ad7](https://github.com/sanity-io/next-sanity/commit/9321ad792b20769a00fe6106e37acd74141750e2))
+- **deps:** Update dependency @sanity/visual-editing to v2.13.7 (main) ([#2342](https://github.com/sanity-io/next-sanity/issues/2342)) ([86aefb3](https://github.com/sanity-io/next-sanity/commit/86aefb3f03a6d6943a40a2498fbbe979e32d777c))
 
 ## [9.8.60](https://github.com/sanity-io/next-sanity/compare/next-sanity-v9.8.59...next-sanity-v9.8.60) (2025-02-25)
 
-
 ### Bug Fixes
 
-* **deps:** update dependency @sanity/client to ^6.28.1 (main) ([#2322](https://github.com/sanity-io/next-sanity/issues/2322)) ([a30233a](https://github.com/sanity-io/next-sanity/commit/a30233a6a1f09659c43ebefa71d230a69564c69e))
-* **deps:** Update dependency @sanity/next-loader to v1.3.3 (main) ([#2316](https://github.com/sanity-io/next-sanity/issues/2316)) ([4ffbd7c](https://github.com/sanity-io/next-sanity/commit/4ffbd7c7f2d86620365135f2079aff1c6ac0bd7e))
-* **deps:** update dependency @sanity/preview-kit to v5.2.8 (main) ([#2323](https://github.com/sanity-io/next-sanity/issues/2323)) ([2a4aca1](https://github.com/sanity-io/next-sanity/commit/2a4aca1174b1fe7dcf5ce953b9611771b2806461))
-* **deps:** update dependency @sanity/ui to v2.14.1 (main) ([#2312](https://github.com/sanity-io/next-sanity/issues/2312)) ([7f4d414](https://github.com/sanity-io/next-sanity/commit/7f4d414a4370a3aea590d53db7ecb0be4d84f37e))
-* **deps:** update dependency @sanity/ui to v2.14.3 (main) ([#2318](https://github.com/sanity-io/next-sanity/issues/2318)) ([7cfefe9](https://github.com/sanity-io/next-sanity/commit/7cfefe94e497ba9d1ea73fa42c790a9f0846fabc))
-* **deps:** Update dependency @sanity/visual-editing to v2.13.6 (main) ([#2317](https://github.com/sanity-io/next-sanity/issues/2317)) ([7232ca4](https://github.com/sanity-io/next-sanity/commit/7232ca49b8ca438877fb52e511574a76129539bc))
+- **deps:** update dependency @sanity/client to ^6.28.1 (main) ([#2322](https://github.com/sanity-io/next-sanity/issues/2322)) ([a30233a](https://github.com/sanity-io/next-sanity/commit/a30233a6a1f09659c43ebefa71d230a69564c69e))
+- **deps:** Update dependency @sanity/next-loader to v1.3.3 (main) ([#2316](https://github.com/sanity-io/next-sanity/issues/2316)) ([4ffbd7c](https://github.com/sanity-io/next-sanity/commit/4ffbd7c7f2d86620365135f2079aff1c6ac0bd7e))
+- **deps:** update dependency @sanity/preview-kit to v5.2.8 (main) ([#2323](https://github.com/sanity-io/next-sanity/issues/2323)) ([2a4aca1](https://github.com/sanity-io/next-sanity/commit/2a4aca1174b1fe7dcf5ce953b9611771b2806461))
+- **deps:** update dependency @sanity/ui to v2.14.1 (main) ([#2312](https://github.com/sanity-io/next-sanity/issues/2312)) ([7f4d414](https://github.com/sanity-io/next-sanity/commit/7f4d414a4370a3aea590d53db7ecb0be4d84f37e))
+- **deps:** update dependency @sanity/ui to v2.14.3 (main) ([#2318](https://github.com/sanity-io/next-sanity/issues/2318)) ([7cfefe9](https://github.com/sanity-io/next-sanity/commit/7cfefe94e497ba9d1ea73fa42c790a9f0846fabc))
+- **deps:** Update dependency @sanity/visual-editing to v2.13.6 (main) ([#2317](https://github.com/sanity-io/next-sanity/issues/2317)) ([7232ca4](https://github.com/sanity-io/next-sanity/commit/7232ca49b8ca438877fb52e511574a76129539bc))
 
 ## [9.8.59](https://github.com/sanity-io/next-sanity/compare/next-sanity-v9.8.58...next-sanity-v9.8.59) (2025-02-18)
 
-
 ### Bug Fixes
 
-* **deps:** update dependency @sanity/ui to v2.13.5 (main) ([#2300](https://github.com/sanity-io/next-sanity/issues/2300)) ([23bab3a](https://github.com/sanity-io/next-sanity/commit/23bab3a610a1e8ac319e428070d4b76f406feda0))
-* **deps:** Update dependency @sanity/visual-editing to v2.13.4 (main) ([#2303](https://github.com/sanity-io/next-sanity/issues/2303)) ([6011c13](https://github.com/sanity-io/next-sanity/commit/6011c13ac154b6e7d310c3018a766cb32252315d))
-* **deps:** Update dependency @sanity/visual-editing to v2.13.5 (main) ([#2308](https://github.com/sanity-io/next-sanity/issues/2308)) ([c8f4451](https://github.com/sanity-io/next-sanity/commit/c8f445107859c0e95299962252ae21bfadcb4761))
+- **deps:** update dependency @sanity/ui to v2.13.5 (main) ([#2300](https://github.com/sanity-io/next-sanity/issues/2300)) ([23bab3a](https://github.com/sanity-io/next-sanity/commit/23bab3a610a1e8ac319e428070d4b76f406feda0))
+- **deps:** Update dependency @sanity/visual-editing to v2.13.4 (main) ([#2303](https://github.com/sanity-io/next-sanity/issues/2303)) ([6011c13](https://github.com/sanity-io/next-sanity/commit/6011c13ac154b6e7d310c3018a766cb32252315d))
+- **deps:** Update dependency @sanity/visual-editing to v2.13.5 (main) ([#2308](https://github.com/sanity-io/next-sanity/issues/2308)) ([c8f4451](https://github.com/sanity-io/next-sanity/commit/c8f445107859c0e95299962252ae21bfadcb4761))
 
 ## [9.8.58](https://github.com/sanity-io/next-sanity/compare/next-sanity-v9.8.57...next-sanity-v9.8.58) (2025-02-17)
 
-
 ### Bug Fixes
 
-* **deps:** update dependency @sanity/icons to ^3.6.0 (main) ([#2292](https://github.com/sanity-io/next-sanity/issues/2292)) ([b0caad7](https://github.com/sanity-io/next-sanity/commit/b0caad7d39b7d85e82045915ae4a43b06e664536))
-* **deps:** Update dependency @sanity/next-loader to v1.3.2 (main) ([#2294](https://github.com/sanity-io/next-sanity/issues/2294)) ([8145e1c](https://github.com/sanity-io/next-sanity/commit/8145e1caaea39aa29197ffe96bdd4824d299bf93))
-* **deps:** update dependency @sanity/preview-kit to v5.2.7 (main) ([#2297](https://github.com/sanity-io/next-sanity/issues/2297)) ([98aa4d8](https://github.com/sanity-io/next-sanity/commit/98aa4d8a8098aa55fdcb466050f45a35567d3791))
-* **deps:** update dependency @sanity/ui to v2.13.1 (main) ([#2286](https://github.com/sanity-io/next-sanity/issues/2286)) ([5302d70](https://github.com/sanity-io/next-sanity/commit/5302d702131480e45e7aba192a976d86f82b26f7))
-* **deps:** update dependency @sanity/ui to v2.13.3 (main) ([#2291](https://github.com/sanity-io/next-sanity/issues/2291)) ([4758e90](https://github.com/sanity-io/next-sanity/commit/4758e90d1ca63046c511297ee4f09ed8d3e4f2ea))
-* **deps:** update dependency @sanity/ui to v2.13.4 (main) ([#2296](https://github.com/sanity-io/next-sanity/issues/2296)) ([78476df](https://github.com/sanity-io/next-sanity/commit/78476dfcf944e2a593863a2531ddd66302f98262))
-* **deps:** Update dependency @sanity/visual-editing to v2.13.3 (main) ([#2295](https://github.com/sanity-io/next-sanity/issues/2295)) ([de9f739](https://github.com/sanity-io/next-sanity/commit/de9f739098d1ca72b488a3298302deed28cde760))
+- **deps:** update dependency @sanity/icons to ^3.6.0 (main) ([#2292](https://github.com/sanity-io/next-sanity/issues/2292)) ([b0caad7](https://github.com/sanity-io/next-sanity/commit/b0caad7d39b7d85e82045915ae4a43b06e664536))
+- **deps:** Update dependency @sanity/next-loader to v1.3.2 (main) ([#2294](https://github.com/sanity-io/next-sanity/issues/2294)) ([8145e1c](https://github.com/sanity-io/next-sanity/commit/8145e1caaea39aa29197ffe96bdd4824d299bf93))
+- **deps:** update dependency @sanity/preview-kit to v5.2.7 (main) ([#2297](https://github.com/sanity-io/next-sanity/issues/2297)) ([98aa4d8](https://github.com/sanity-io/next-sanity/commit/98aa4d8a8098aa55fdcb466050f45a35567d3791))
+- **deps:** update dependency @sanity/ui to v2.13.1 (main) ([#2286](https://github.com/sanity-io/next-sanity/issues/2286)) ([5302d70](https://github.com/sanity-io/next-sanity/commit/5302d702131480e45e7aba192a976d86f82b26f7))
+- **deps:** update dependency @sanity/ui to v2.13.3 (main) ([#2291](https://github.com/sanity-io/next-sanity/issues/2291)) ([4758e90](https://github.com/sanity-io/next-sanity/commit/4758e90d1ca63046c511297ee4f09ed8d3e4f2ea))
+- **deps:** update dependency @sanity/ui to v2.13.4 (main) ([#2296](https://github.com/sanity-io/next-sanity/issues/2296)) ([78476df](https://github.com/sanity-io/next-sanity/commit/78476dfcf944e2a593863a2531ddd66302f98262))
+- **deps:** Update dependency @sanity/visual-editing to v2.13.3 (main) ([#2295](https://github.com/sanity-io/next-sanity/issues/2295)) ([de9f739](https://github.com/sanity-io/next-sanity/commit/de9f739098d1ca72b488a3298302deed28cde760))
 
 ## [9.8.57](https://github.com/sanity-io/next-sanity/compare/next-sanity-v9.8.56...next-sanity-v9.8.57) (2025-02-13)
 
-
 ### Bug Fixes
 
-* **defineLive:** regression in `9.8.56` ([8209602](https://github.com/sanity-io/next-sanity/commit/82096026f3426729357a9c46d6b7f33df6a29c29)), closes [#2282](https://github.com/sanity-io/next-sanity/issues/2282)
+- **defineLive:** regression in `9.8.56` ([8209602](https://github.com/sanity-io/next-sanity/commit/82096026f3426729357a9c46d6b7f33df6a29c29)), closes [#2282](https://github.com/sanity-io/next-sanity/issues/2282)
 
 ## [9.8.56](https://github.com/sanity-io/next-sanity/compare/next-sanity-v9.8.55...next-sanity-v9.8.56) (2025-02-12)
 
-
 ### Bug Fixes
 
-* **deps:** update dependency @sanity/client to ^6.28.0 (main) ([#2275](https://github.com/sanity-io/next-sanity/issues/2275)) ([400e93d](https://github.com/sanity-io/next-sanity/commit/400e93dfbc966cdebada02f31e92b169742bcdcf))
-* **deps:** Update dependency @sanity/next-loader to v1.3.0 (main) ([#2281](https://github.com/sanity-io/next-sanity/issues/2281)) ([71cb73f](https://github.com/sanity-io/next-sanity/commit/71cb73ff6ab3df72f62eb9c6af343f04f0fb845b))
-* **deps:** update dependency @sanity/preview-kit to v5.2.6 (main) ([#2279](https://github.com/sanity-io/next-sanity/issues/2279)) ([d1f3d54](https://github.com/sanity-io/next-sanity/commit/d1f3d54b24fb66360246c7e2cea979a35fd75c3e))
-* **deps:** Update dependency @sanity/visual-editing to v2.13.2 (main) ([#2280](https://github.com/sanity-io/next-sanity/issues/2280)) ([bc90cbf](https://github.com/sanity-io/next-sanity/commit/bc90cbf85a9048141da262bd3c553a8dd60be6a7))
-* **docs:** replace `previewDrafts` with `drafts` ([#2278](https://github.com/sanity-io/next-sanity/issues/2278)) ([6ec4d52](https://github.com/sanity-io/next-sanity/commit/6ec4d52e344c02d781bd704d41ce1e374b5e1fa6))
+- **deps:** update dependency @sanity/client to ^6.28.0 (main) ([#2275](https://github.com/sanity-io/next-sanity/issues/2275)) ([400e93d](https://github.com/sanity-io/next-sanity/commit/400e93dfbc966cdebada02f31e92b169742bcdcf))
+- **deps:** Update dependency @sanity/next-loader to v1.3.0 (main) ([#2281](https://github.com/sanity-io/next-sanity/issues/2281)) ([71cb73f](https://github.com/sanity-io/next-sanity/commit/71cb73ff6ab3df72f62eb9c6af343f04f0fb845b))
+- **deps:** update dependency @sanity/preview-kit to v5.2.6 (main) ([#2279](https://github.com/sanity-io/next-sanity/issues/2279)) ([d1f3d54](https://github.com/sanity-io/next-sanity/commit/d1f3d54b24fb66360246c7e2cea979a35fd75c3e))
+- **deps:** Update dependency @sanity/visual-editing to v2.13.2 (main) ([#2280](https://github.com/sanity-io/next-sanity/issues/2280)) ([bc90cbf](https://github.com/sanity-io/next-sanity/commit/bc90cbf85a9048141da262bd3c553a8dd60be6a7))
+- **docs:** replace `previewDrafts` with `drafts` ([#2278](https://github.com/sanity-io/next-sanity/issues/2278)) ([6ec4d52](https://github.com/sanity-io/next-sanity/commit/6ec4d52e344c02d781bd704d41ce1e374b5e1fa6))
 
 ## [9.8.55](https://github.com/sanity-io/next-sanity/compare/next-sanity-v9.8.54...next-sanity-v9.8.55) (2025-02-10)
 
-
 ### Bug Fixes
 
-* **deps:** Update dependency @sanity/next-loader to v1.2.24 (main) ([#2259](https://github.com/sanity-io/next-sanity/issues/2259)) ([87ab13a](https://github.com/sanity-io/next-sanity/commit/87ab13a746ae0c7a1956007447a429f256e95778))
-* **deps:** update dependency @sanity/preview-kit to v5.2.4 (main) ([#2264](https://github.com/sanity-io/next-sanity/issues/2264)) ([c304bb9](https://github.com/sanity-io/next-sanity/commit/c304bb9da0fc511855ac951873b12beb7fcd056b))
-* **deps:** update dependency @sanity/ui to v2.12.3 (main) ([#2261](https://github.com/sanity-io/next-sanity/issues/2261)) ([2f724a3](https://github.com/sanity-io/next-sanity/commit/2f724a3c2a91b7c7e0b369c0761d62b18b1c71ee))
-* **deps:** Update dependency @sanity/visual-editing to v2.13.1 (main) ([#2260](https://github.com/sanity-io/next-sanity/issues/2260)) ([ab74ceb](https://github.com/sanity-io/next-sanity/commit/ab74ceb8e161911cd17bcd5576067c6cd827f340))
-* **image:** do not overwrite existing fit param ([#2255](https://github.com/sanity-io/next-sanity/issues/2255)) ([1d8cc33](https://github.com/sanity-io/next-sanity/commit/1d8cc33d9d19dd8cd0cfa374d9e5584a0b84fe62))
+- **deps:** Update dependency @sanity/next-loader to v1.2.24 (main) ([#2259](https://github.com/sanity-io/next-sanity/issues/2259)) ([87ab13a](https://github.com/sanity-io/next-sanity/commit/87ab13a746ae0c7a1956007447a429f256e95778))
+- **deps:** update dependency @sanity/preview-kit to v5.2.4 (main) ([#2264](https://github.com/sanity-io/next-sanity/issues/2264)) ([c304bb9](https://github.com/sanity-io/next-sanity/commit/c304bb9da0fc511855ac951873b12beb7fcd056b))
+- **deps:** update dependency @sanity/ui to v2.12.3 (main) ([#2261](https://github.com/sanity-io/next-sanity/issues/2261)) ([2f724a3](https://github.com/sanity-io/next-sanity/commit/2f724a3c2a91b7c7e0b369c0761d62b18b1c71ee))
+- **deps:** Update dependency @sanity/visual-editing to v2.13.1 (main) ([#2260](https://github.com/sanity-io/next-sanity/issues/2260)) ([ab74ceb](https://github.com/sanity-io/next-sanity/commit/ab74ceb8e161911cd17bcd5576067c6cd827f340))
+- **image:** do not overwrite existing fit param ([#2255](https://github.com/sanity-io/next-sanity/issues/2255)) ([1d8cc33](https://github.com/sanity-io/next-sanity/commit/1d8cc33d9d19dd8cd0cfa374d9e5584a0b84fe62))
 
 ## [9.8.54](https://github.com/sanity-io/next-sanity/compare/next-sanity-v9.8.53...next-sanity-v9.8.54) (2025-02-07)
 
-
 ### Bug Fixes
 
-* **deps:** update dependency @sanity/ui to ^2.12.2 (main) ([#2253](https://github.com/sanity-io/next-sanity/issues/2253)) ([6e69837](https://github.com/sanity-io/next-sanity/commit/6e69837638210902b12db1304709be264fdce901))
+- **deps:** update dependency @sanity/ui to ^2.12.2 (main) ([#2253](https://github.com/sanity-io/next-sanity/issues/2253)) ([6e69837](https://github.com/sanity-io/next-sanity/commit/6e69837638210902b12db1304709be264fdce901))
 
 ## [9.8.53](https://github.com/sanity-io/next-sanity/compare/next-sanity-v9.8.52...next-sanity-v9.8.53) (2025-02-07)
 
-
 ### Bug Fixes
 
-* **deps:** update dependency @sanity/preview-kit to v5.2.3 (main) ([#2249](https://github.com/sanity-io/next-sanity/issues/2249)) ([4bd5695](https://github.com/sanity-io/next-sanity/commit/4bd56958031ba8bb1580e4d4f16a2c9e6285d5c3))
+- **deps:** update dependency @sanity/preview-kit to v5.2.3 (main) ([#2249](https://github.com/sanity-io/next-sanity/issues/2249)) ([4bd5695](https://github.com/sanity-io/next-sanity/commit/4bd56958031ba8bb1580e4d4f16a2c9e6285d5c3))
 
 ## [9.8.52](https://github.com/sanity-io/next-sanity/compare/next-sanity-v9.8.51...next-sanity-v9.8.52) (2025-02-07)
 
-
 ### Bug Fixes
 
-* **deps:** update dependency @portabletext/react to ^3.2.1 (main) ([#2243](https://github.com/sanity-io/next-sanity/issues/2243)) ([2f259e9](https://github.com/sanity-io/next-sanity/commit/2f259e9b0b6f5f6022bf646cc3026fede9378826))
-* **deps:** Update dependency @sanity/next-loader to v1.2.23 (main) ([#2245](https://github.com/sanity-io/next-sanity/issues/2245)) ([b67fb9b](https://github.com/sanity-io/next-sanity/commit/b67fb9b356b9f7976873f6890582929af917943a))
-* **deps:** update dependency @sanity/ui to ^2.12.1 (main) ([#2244](https://github.com/sanity-io/next-sanity/issues/2244)) ([35b5e97](https://github.com/sanity-io/next-sanity/commit/35b5e97043fe3f25049cbf3c130b028000cfa31e))
-* **deps:** Update dependency @sanity/visual-editing to v2.13.0 (main) ([#2246](https://github.com/sanity-io/next-sanity/issues/2246)) ([532f6d9](https://github.com/sanity-io/next-sanity/commit/532f6d9cfdde3d3c2acfff05780f11b47f359d7f))
+- **deps:** update dependency @portabletext/react to ^3.2.1 (main) ([#2243](https://github.com/sanity-io/next-sanity/issues/2243)) ([2f259e9](https://github.com/sanity-io/next-sanity/commit/2f259e9b0b6f5f6022bf646cc3026fede9378826))
+- **deps:** Update dependency @sanity/next-loader to v1.2.23 (main) ([#2245](https://github.com/sanity-io/next-sanity/issues/2245)) ([b67fb9b](https://github.com/sanity-io/next-sanity/commit/b67fb9b356b9f7976873f6890582929af917943a))
+- **deps:** update dependency @sanity/ui to ^2.12.1 (main) ([#2244](https://github.com/sanity-io/next-sanity/issues/2244)) ([35b5e97](https://github.com/sanity-io/next-sanity/commit/35b5e97043fe3f25049cbf3c130b028000cfa31e))
+- **deps:** Update dependency @sanity/visual-editing to v2.13.0 (main) ([#2246](https://github.com/sanity-io/next-sanity/issues/2246)) ([532f6d9](https://github.com/sanity-io/next-sanity/commit/532f6d9cfdde3d3c2acfff05780f11b47f359d7f))
 
 ## [9.8.51](https://github.com/sanity-io/next-sanity/compare/next-sanity-v9.8.50...next-sanity-v9.8.51) (2025-02-05)
 
-
 ### Bug Fixes
 
-* **deps:** Update dependency @sanity/visual-editing to v2.12.14 (main) ([#2238](https://github.com/sanity-io/next-sanity/issues/2238)) ([05f15e9](https://github.com/sanity-io/next-sanity/commit/05f15e99e021ab98e8126553030020f58df948ae))
+- **deps:** Update dependency @sanity/visual-editing to v2.12.14 (main) ([#2238](https://github.com/sanity-io/next-sanity/issues/2238)) ([05f15e9](https://github.com/sanity-io/next-sanity/commit/05f15e99e021ab98e8126553030020f58df948ae))
 
 ## [9.8.50](https://github.com/sanity-io/next-sanity/compare/next-sanity-v9.8.49...next-sanity-v9.8.50) (2025-02-05)
 
-
 ### Bug Fixes
 
-* **deps:** Update dependency @sanity/visual-editing to v2.12.13 (main) ([#2235](https://github.com/sanity-io/next-sanity/issues/2235)) ([cb9efb5](https://github.com/sanity-io/next-sanity/commit/cb9efb559590da0396867dd2e994252034aa9c01))
+- **deps:** Update dependency @sanity/visual-editing to v2.12.13 (main) ([#2235](https://github.com/sanity-io/next-sanity/issues/2235)) ([cb9efb5](https://github.com/sanity-io/next-sanity/commit/cb9efb559590da0396867dd2e994252034aa9c01))
 
 ## [9.8.49](https://github.com/sanity-io/next-sanity/compare/next-sanity-v9.8.48...next-sanity-v9.8.49) (2025-02-04)
 
-
 ### Bug Fixes
 
-* **deps:** update dependency @sanity/ui to ^2.11.8 (main) ([#2221](https://github.com/sanity-io/next-sanity/issues/2221)) ([6220612](https://github.com/sanity-io/next-sanity/commit/6220612ec2c3aa5d25877b43fab8a6915a17f704))
+- **deps:** update dependency @sanity/ui to ^2.11.8 (main) ([#2221](https://github.com/sanity-io/next-sanity/issues/2221)) ([6220612](https://github.com/sanity-io/next-sanity/commit/6220612ec2c3aa5d25877b43fab8a6915a17f704))
 
 ## [9.8.48](https://github.com/sanity-io/next-sanity/compare/next-sanity-v9.8.47...next-sanity-v9.8.48) (2025-02-04)
 
-
 ### Bug Fixes
 
-* **deps:** Update dependency @sanity/visual-editing to v2.12.12 (main) ([#2220](https://github.com/sanity-io/next-sanity/issues/2220)) ([139a289](https://github.com/sanity-io/next-sanity/commit/139a289788ee83b11c5e023efda870a1cdb35231))
+- **deps:** Update dependency @sanity/visual-editing to v2.12.12 (main) ([#2220](https://github.com/sanity-io/next-sanity/issues/2220)) ([139a289](https://github.com/sanity-io/next-sanity/commit/139a289788ee83b11c5e023efda870a1cdb35231))
 
 ## [9.8.47](https://github.com/sanity-io/next-sanity/compare/next-sanity-v9.8.46...next-sanity-v9.8.47) (2025-01-30)
 
-
 ### Bug Fixes
 
-* **deps:** Update dependency @sanity/next-loader to v1.2.22 (main) ([#2214](https://github.com/sanity-io/next-sanity/issues/2214)) ([c85b005](https://github.com/sanity-io/next-sanity/commit/c85b0050d11ab3b46969da1a051a2381397d8c2d))
-* **deps:** Update dependency @sanity/visual-editing to v2.12.11 (main) ([#2215](https://github.com/sanity-io/next-sanity/issues/2215)) ([e0ec09f](https://github.com/sanity-io/next-sanity/commit/e0ec09ffa4c3327337db853a45326016225f12d2))
+- **deps:** Update dependency @sanity/next-loader to v1.2.22 (main) ([#2214](https://github.com/sanity-io/next-sanity/issues/2214)) ([c85b005](https://github.com/sanity-io/next-sanity/commit/c85b0050d11ab3b46969da1a051a2381397d8c2d))
+- **deps:** Update dependency @sanity/visual-editing to v2.12.11 (main) ([#2215](https://github.com/sanity-io/next-sanity/issues/2215)) ([e0ec09f](https://github.com/sanity-io/next-sanity/commit/e0ec09ffa4c3327337db853a45326016225f12d2))
 
 ## [9.8.46](https://github.com/sanity-io/next-sanity/compare/next-sanity-v9.8.45...next-sanity-v9.8.46) (2025-01-28)
 
-
 ### Bug Fixes
 
-* **deps:** update dependency @sanity/ui to ^2.11.7 (main) ([#2208](https://github.com/sanity-io/next-sanity/issues/2208)) ([3dff3f0](https://github.com/sanity-io/next-sanity/commit/3dff3f0c7d92cc1f3682fe69d11b53c21e124c1a))
-* **docs:** add `use client` directives to `sanity.config.ts` snippets ([#2202](https://github.com/sanity-io/next-sanity/issues/2202)) ([cbdc0bb](https://github.com/sanity-io/next-sanity/commit/cbdc0bb71a78bd4cdf993dac2d8cf45c8b6be5e2))
+- **deps:** update dependency @sanity/ui to ^2.11.7 (main) ([#2208](https://github.com/sanity-io/next-sanity/issues/2208)) ([3dff3f0](https://github.com/sanity-io/next-sanity/commit/3dff3f0c7d92cc1f3682fe69d11b53c21e124c1a))
+- **docs:** add `use client` directives to `sanity.config.ts` snippets ([#2202](https://github.com/sanity-io/next-sanity/issues/2202)) ([cbdc0bb](https://github.com/sanity-io/next-sanity/commit/cbdc0bb71a78bd4cdf993dac2d8cf45c8b6be5e2))
 
 ## [9.8.45](https://github.com/sanity-io/next-sanity/compare/next-sanity-v9.8.44...next-sanity-v9.8.45) (2025-01-28)
 
-
 ### Bug Fixes
 
-* **deps:** update dependency @sanity/client to ^6.27.2 (main) ([#2194](https://github.com/sanity-io/next-sanity/issues/2194)) ([9a9ad0b](https://github.com/sanity-io/next-sanity/commit/9a9ad0bc05b8389d92e4f7b25fd9d2c808354458))
-* **deps:** Update dependency @sanity/next-loader to v1.2.21 (main) ([#2196](https://github.com/sanity-io/next-sanity/issues/2196)) ([7c8b609](https://github.com/sanity-io/next-sanity/commit/7c8b6094b025617fa8f8a7b51cac2d12d70e9fdd))
-* **deps:** update dependency @sanity/preview-kit to v5.2.2 (main) ([#2200](https://github.com/sanity-io/next-sanity/issues/2200)) ([6f014cc](https://github.com/sanity-io/next-sanity/commit/6f014cc44b93bb40275d972f8a4f3e56568c6ba9))
-* **deps:** update dependency @sanity/preview-url-secret to v2.1.4 (main) ([#2199](https://github.com/sanity-io/next-sanity/issues/2199)) ([701598c](https://github.com/sanity-io/next-sanity/commit/701598c59236a2c462a0f9ab4217df873818270f))
-* **deps:** Update dependency @sanity/visual-editing to v2.12.10 (main) ([#2197](https://github.com/sanity-io/next-sanity/issues/2197)) ([23ad6d6](https://github.com/sanity-io/next-sanity/commit/23ad6d671ab504f724cfb6137f1e357b32512475))
+- **deps:** update dependency @sanity/client to ^6.27.2 (main) ([#2194](https://github.com/sanity-io/next-sanity/issues/2194)) ([9a9ad0b](https://github.com/sanity-io/next-sanity/commit/9a9ad0bc05b8389d92e4f7b25fd9d2c808354458))
+- **deps:** Update dependency @sanity/next-loader to v1.2.21 (main) ([#2196](https://github.com/sanity-io/next-sanity/issues/2196)) ([7c8b609](https://github.com/sanity-io/next-sanity/commit/7c8b6094b025617fa8f8a7b51cac2d12d70e9fdd))
+- **deps:** update dependency @sanity/preview-kit to v5.2.2 (main) ([#2200](https://github.com/sanity-io/next-sanity/issues/2200)) ([6f014cc](https://github.com/sanity-io/next-sanity/commit/6f014cc44b93bb40275d972f8a4f3e56568c6ba9))
+- **deps:** update dependency @sanity/preview-url-secret to v2.1.4 (main) ([#2199](https://github.com/sanity-io/next-sanity/issues/2199)) ([701598c](https://github.com/sanity-io/next-sanity/commit/701598c59236a2c462a0f9ab4217df873818270f))
+- **deps:** Update dependency @sanity/visual-editing to v2.12.10 (main) ([#2197](https://github.com/sanity-io/next-sanity/issues/2197)) ([23ad6d6](https://github.com/sanity-io/next-sanity/commit/23ad6d671ab504f724cfb6137f1e357b32512475))
 
 ## [9.8.44](https://github.com/sanity-io/next-sanity/compare/next-sanity-v9.8.43...next-sanity-v9.8.44) (2025-01-28)
 
-
 ### Bug Fixes
 
-* **deps:** update dependency @sanity/preview-kit to v5.2.1 (main) ([#2191](https://github.com/sanity-io/next-sanity/issues/2191)) ([3c13ae3](https://github.com/sanity-io/next-sanity/commit/3c13ae35d08f3ee70b6c976a74a37eea4c98725c))
+- **deps:** update dependency @sanity/preview-kit to v5.2.1 (main) ([#2191](https://github.com/sanity-io/next-sanity/issues/2191)) ([3c13ae3](https://github.com/sanity-io/next-sanity/commit/3c13ae35d08f3ee70b6c976a74a37eea4c98725c))
 
 ## [9.8.43](https://github.com/sanity-io/next-sanity/compare/next-sanity-v9.8.42...next-sanity-v9.8.43) (2025-01-27)
 
-
 ### Bug Fixes
 
-* **deps:** update dependency @sanity/ui to ^2.11.6 (main) ([#2184](https://github.com/sanity-io/next-sanity/issues/2184)) ([209eb7c](https://github.com/sanity-io/next-sanity/commit/209eb7c6aa4b032b4c75143040c0781c5ddaeb3f))
-* **deps:** Update dependency @sanity/visual-editing to v2.12.9 (main) ([#2183](https://github.com/sanity-io/next-sanity/issues/2183)) ([54eb227](https://github.com/sanity-io/next-sanity/commit/54eb227c8746ffe9977d1d05f0f55511fc1002c0))
-* **deps:** Update sanity monorepo to ^3.71.2 (main) ([#2178](https://github.com/sanity-io/next-sanity/issues/2178)) ([def7e63](https://github.com/sanity-io/next-sanity/commit/def7e6365314e15026e2245bc6ec367c77a88003))
+- **deps:** update dependency @sanity/ui to ^2.11.6 (main) ([#2184](https://github.com/sanity-io/next-sanity/issues/2184)) ([209eb7c](https://github.com/sanity-io/next-sanity/commit/209eb7c6aa4b032b4c75143040c0781c5ddaeb3f))
+- **deps:** Update dependency @sanity/visual-editing to v2.12.9 (main) ([#2183](https://github.com/sanity-io/next-sanity/issues/2183)) ([54eb227](https://github.com/sanity-io/next-sanity/commit/54eb227c8746ffe9977d1d05f0f55511fc1002c0))
+- **deps:** Update sanity monorepo to ^3.71.2 (main) ([#2178](https://github.com/sanity-io/next-sanity/issues/2178)) ([def7e63](https://github.com/sanity-io/next-sanity/commit/def7e6365314e15026e2245bc6ec367c77a88003))
 
 ## [9.8.42](https://github.com/sanity-io/next-sanity/compare/next-sanity-v9.8.41...next-sanity-v9.8.42) (2025-01-23)
 
-
 ### Bug Fixes
 
-* **deps:** update dependency `@sanity/preview-kit` to 5.2.0 ([1791500](https://github.com/sanity-io/next-sanity/commit/17915005b794c05871d507eda74c08f052e2dbaf))
+- **deps:** update dependency `@sanity/preview-kit` to 5.2.0 ([1791500](https://github.com/sanity-io/next-sanity/commit/17915005b794c05871d507eda74c08f052e2dbaf))
 
 ## [9.8.41](https://github.com/sanity-io/next-sanity/compare/next-sanity-v9.8.40...next-sanity-v9.8.41) (2025-01-23)
 
-
 ### Bug Fixes
 
-* **deps:** bump non-major ([c2f5a34](https://github.com/sanity-io/next-sanity/commit/c2f5a3426f3b78199c7c40461db4ce30d0ab0409))
+- **deps:** bump non-major ([c2f5a34](https://github.com/sanity-io/next-sanity/commit/c2f5a3426f3b78199c7c40461db4ce30d0ab0409))
 
 ## [9.8.40](https://github.com/sanity-io/next-sanity/compare/next-sanity-v9.8.39...next-sanity-v9.8.40) (2025-01-22)
 
-
 ### Bug Fixes
 
-* **deps:** update dependency @sanity/client to ^6.27.0 (main) ([#2161](https://github.com/sanity-io/next-sanity/issues/2161)) ([cb9258d](https://github.com/sanity-io/next-sanity/commit/cb9258d8e83142f9715f0c28f593d10ee3e4c4c2))
-* **deps:** update dependency @sanity/client to ^6.27.1 (main) ([#2166](https://github.com/sanity-io/next-sanity/issues/2166)) ([bb5f610](https://github.com/sanity-io/next-sanity/commit/bb5f6104c5b1365d04e456bf34947e5b1faca738))
-* **deps:** Update dependency @sanity/next-loader to v1.2.17 (main) ([#2157](https://github.com/sanity-io/next-sanity/issues/2157)) ([4611371](https://github.com/sanity-io/next-sanity/commit/4611371a2a88c867c321e083586d6b2161205480))
-* **deps:** Update dependency @sanity/next-loader to v1.2.18 (main) ([#2164](https://github.com/sanity-io/next-sanity/issues/2164)) ([7b82994](https://github.com/sanity-io/next-sanity/commit/7b82994b8b1ee1c9ed74b369f9374656b2417a17))
-* **deps:** update dependency @sanity/preview-kit to v5.1.32 (main) ([#2167](https://github.com/sanity-io/next-sanity/issues/2167)) ([0effc2e](https://github.com/sanity-io/next-sanity/commit/0effc2e60ca45edf2663c2e4c6cd3dc4b62f8fd9))
-* **deps:** update dependency @sanity/preview-url-secret to v2.1.2 (main) ([#2160](https://github.com/sanity-io/next-sanity/issues/2160)) ([4b4b366](https://github.com/sanity-io/next-sanity/commit/4b4b3667d03cf307831e7b5103e0ca0429a5bc2a))
-* **deps:** Update dependency @sanity/visual-editing to v2.12.6 (main) ([#2151](https://github.com/sanity-io/next-sanity/issues/2151)) ([e63f144](https://github.com/sanity-io/next-sanity/commit/e63f1447f8374abf62e3f469ded4ee69fbad1d59))
-* **deps:** Update dependency @sanity/visual-editing to v2.12.7 (main) ([#2165](https://github.com/sanity-io/next-sanity/issues/2165)) ([993ad54](https://github.com/sanity-io/next-sanity/commit/993ad543a444290e86ebd162b62aa7b44b092638))
+- **deps:** update dependency @sanity/client to ^6.27.0 (main) ([#2161](https://github.com/sanity-io/next-sanity/issues/2161)) ([cb9258d](https://github.com/sanity-io/next-sanity/commit/cb9258d8e83142f9715f0c28f593d10ee3e4c4c2))
+- **deps:** update dependency @sanity/client to ^6.27.1 (main) ([#2166](https://github.com/sanity-io/next-sanity/issues/2166)) ([bb5f610](https://github.com/sanity-io/next-sanity/commit/bb5f6104c5b1365d04e456bf34947e5b1faca738))
+- **deps:** Update dependency @sanity/next-loader to v1.2.17 (main) ([#2157](https://github.com/sanity-io/next-sanity/issues/2157)) ([4611371](https://github.com/sanity-io/next-sanity/commit/4611371a2a88c867c321e083586d6b2161205480))
+- **deps:** Update dependency @sanity/next-loader to v1.2.18 (main) ([#2164](https://github.com/sanity-io/next-sanity/issues/2164)) ([7b82994](https://github.com/sanity-io/next-sanity/commit/7b82994b8b1ee1c9ed74b369f9374656b2417a17))
+- **deps:** update dependency @sanity/preview-kit to v5.1.32 (main) ([#2167](https://github.com/sanity-io/next-sanity/issues/2167)) ([0effc2e](https://github.com/sanity-io/next-sanity/commit/0effc2e60ca45edf2663c2e4c6cd3dc4b62f8fd9))
+- **deps:** update dependency @sanity/preview-url-secret to v2.1.2 (main) ([#2160](https://github.com/sanity-io/next-sanity/issues/2160)) ([4b4b366](https://github.com/sanity-io/next-sanity/commit/4b4b3667d03cf307831e7b5103e0ca0429a5bc2a))
+- **deps:** Update dependency @sanity/visual-editing to v2.12.6 (main) ([#2151](https://github.com/sanity-io/next-sanity/issues/2151)) ([e63f144](https://github.com/sanity-io/next-sanity/commit/e63f1447f8374abf62e3f469ded4ee69fbad1d59))
+- **deps:** Update dependency @sanity/visual-editing to v2.12.7 (main) ([#2165](https://github.com/sanity-io/next-sanity/issues/2165)) ([993ad54](https://github.com/sanity-io/next-sanity/commit/993ad543a444290e86ebd162b62aa7b44b092638))
 
 ## [9.8.39](https://github.com/sanity-io/next-sanity/compare/next-sanity-v9.8.38...next-sanity-v9.8.39) (2025-01-20)
 
-
 ### Bug Fixes
 
-* **deps:** update dependency @sanity/preview-kit to v5.1.31 (main) ([#2144](https://github.com/sanity-io/next-sanity/issues/2144)) ([34cd9ca](https://github.com/sanity-io/next-sanity/commit/34cd9ca0ede5aed9b07d8dc78190a978a29f863d))
+- **deps:** update dependency @sanity/preview-kit to v5.1.31 (main) ([#2144](https://github.com/sanity-io/next-sanity/issues/2144)) ([34cd9ca](https://github.com/sanity-io/next-sanity/commit/34cd9ca0ede5aed9b07d8dc78190a978a29f863d))
 
 ## [9.8.38](https://github.com/sanity-io/next-sanity/compare/next-sanity-v9.8.37...next-sanity-v9.8.38) (2025-01-17)
 
-
 ### Bug Fixes
 
-* **deps:** update dependency @sanity/client to ^6.25.0 (main) ([#2137](https://github.com/sanity-io/next-sanity/issues/2137)) ([b8661af](https://github.com/sanity-io/next-sanity/commit/b8661af820ed8b20bff226fbcc5fd004ebc7b48d))
-* **deps:** Update dependency @sanity/next-loader to v1.2.15 (main) ([#2135](https://github.com/sanity-io/next-sanity/issues/2135)) ([9f1f75f](https://github.com/sanity-io/next-sanity/commit/9f1f75fe7617071390658104e7a77e4b0ed5a897))
-* **deps:** update dependency @sanity/preview-kit to v5.1.30 (main) ([#2142](https://github.com/sanity-io/next-sanity/issues/2142)) ([e92184e](https://github.com/sanity-io/next-sanity/commit/e92184e90f4971b38020e35520cc0708d12f1a03))
-* **deps:** Update dependency @sanity/visual-editing to v2.12.3 (main) ([#2136](https://github.com/sanity-io/next-sanity/issues/2136)) ([16e7991](https://github.com/sanity-io/next-sanity/commit/16e79914c9c981aca975469525b74ce08ad77e7f))
+- **deps:** update dependency @sanity/client to ^6.25.0 (main) ([#2137](https://github.com/sanity-io/next-sanity/issues/2137)) ([b8661af](https://github.com/sanity-io/next-sanity/commit/b8661af820ed8b20bff226fbcc5fd004ebc7b48d))
+- **deps:** Update dependency @sanity/next-loader to v1.2.15 (main) ([#2135](https://github.com/sanity-io/next-sanity/issues/2135)) ([9f1f75f](https://github.com/sanity-io/next-sanity/commit/9f1f75fe7617071390658104e7a77e4b0ed5a897))
+- **deps:** update dependency @sanity/preview-kit to v5.1.30 (main) ([#2142](https://github.com/sanity-io/next-sanity/issues/2142)) ([e92184e](https://github.com/sanity-io/next-sanity/commit/e92184e90f4971b38020e35520cc0708d12f1a03))
+- **deps:** Update dependency @sanity/visual-editing to v2.12.3 (main) ([#2136](https://github.com/sanity-io/next-sanity/issues/2136)) ([16e7991](https://github.com/sanity-io/next-sanity/commit/16e79914c9c981aca975469525b74ce08ad77e7f))
 
 ## [9.8.37](https://github.com/sanity-io/next-sanity/compare/next-sanity-v9.8.36...next-sanity-v9.8.37) (2025-01-15)
 
-
 ### Bug Fixes
 
-* **deps:** update dependency @sanity/preview-kit to v5.1.29 (main) ([#2128](https://github.com/sanity-io/next-sanity/issues/2128)) ([acef56b](https://github.com/sanity-io/next-sanity/commit/acef56b1ef1ff06b549e31b1ddbf073d5faa9f2c))
+- **deps:** update dependency @sanity/preview-kit to v5.1.29 (main) ([#2128](https://github.com/sanity-io/next-sanity/issues/2128)) ([acef56b](https://github.com/sanity-io/next-sanity/commit/acef56b1ef1ff06b549e31b1ddbf073d5faa9f2c))
 
 ## [9.8.36](https://github.com/sanity-io/next-sanity/compare/next-sanity-v9.8.35...next-sanity-v9.8.36) (2025-01-14)
 
-
 ### Bug Fixes
 
-* **deps:** Update dependency @sanity/next-loader to v1.2.13 (main) ([#2114](https://github.com/sanity-io/next-sanity/issues/2114)) ([4ee3fa4](https://github.com/sanity-io/next-sanity/commit/4ee3fa4b9ef0083812804bf0976734d605ef0f40))
-* **deps:** Update dependency @sanity/next-loader to v1.2.14 (main) ([#2122](https://github.com/sanity-io/next-sanity/issues/2122)) ([e10d3e8](https://github.com/sanity-io/next-sanity/commit/e10d3e80ba1ef7ac83a48ad6e3266a90842dc33c))
-* **deps:** update dependency @sanity/preview-url-secret to v2.1.0 (main) ([#2117](https://github.com/sanity-io/next-sanity/issues/2117)) ([65dd8c8](https://github.com/sanity-io/next-sanity/commit/65dd8c831b755a043ee66441f1b27b69cad5df33))
-* **deps:** Update dependency @sanity/visual-editing to v2.12.2 (main) ([#2116](https://github.com/sanity-io/next-sanity/issues/2116)) ([d1bdd9d](https://github.com/sanity-io/next-sanity/commit/d1bdd9de8df29a1705504a1c0c8e2d0f859b7d88))
+- **deps:** Update dependency @sanity/next-loader to v1.2.13 (main) ([#2114](https://github.com/sanity-io/next-sanity/issues/2114)) ([4ee3fa4](https://github.com/sanity-io/next-sanity/commit/4ee3fa4b9ef0083812804bf0976734d605ef0f40))
+- **deps:** Update dependency @sanity/next-loader to v1.2.14 (main) ([#2122](https://github.com/sanity-io/next-sanity/issues/2122)) ([e10d3e8](https://github.com/sanity-io/next-sanity/commit/e10d3e80ba1ef7ac83a48ad6e3266a90842dc33c))
+- **deps:** update dependency @sanity/preview-url-secret to v2.1.0 (main) ([#2117](https://github.com/sanity-io/next-sanity/issues/2117)) ([65dd8c8](https://github.com/sanity-io/next-sanity/commit/65dd8c831b755a043ee66441f1b27b69cad5df33))
+- **deps:** Update dependency @sanity/visual-editing to v2.12.2 (main) ([#2116](https://github.com/sanity-io/next-sanity/issues/2116)) ([d1bdd9d](https://github.com/sanity-io/next-sanity/commit/d1bdd9de8df29a1705504a1c0c8e2d0f859b7d88))
 
 ## [9.8.35](https://github.com/sanity-io/next-sanity/compare/next-sanity-v9.8.34...next-sanity-v9.8.35) (2025-01-10)
 
-
 ### Bug Fixes
 
-* **deps:** Update dependency @sanity/next-loader to v1.2.12 (main) ([#2110](https://github.com/sanity-io/next-sanity/issues/2110)) ([53f5d95](https://github.com/sanity-io/next-sanity/commit/53f5d955f45a4c60dad16416b0cc4d3491b99f4e))
-* **deps:** Update dependency @sanity/preview-kit to v5.1.28 ([59cc392](https://github.com/sanity-io/next-sanity/commit/59cc3921752f1a5ae230496c8e8a2dc754a0e615))
-* **deps:** Update dependency @sanity/visual-editing to v2.11.9 (main) ([#2099](https://github.com/sanity-io/next-sanity/issues/2099)) ([5e3a0e3](https://github.com/sanity-io/next-sanity/commit/5e3a0e3394307ee7b1decd71ce37c9128a578027))
+- **deps:** Update dependency @sanity/next-loader to v1.2.12 (main) ([#2110](https://github.com/sanity-io/next-sanity/issues/2110)) ([53f5d95](https://github.com/sanity-io/next-sanity/commit/53f5d955f45a4c60dad16416b0cc4d3491b99f4e))
+- **deps:** Update dependency @sanity/preview-kit to v5.1.28 ([59cc392](https://github.com/sanity-io/next-sanity/commit/59cc3921752f1a5ae230496c8e8a2dc754a0e615))
+- **deps:** Update dependency @sanity/visual-editing to v2.11.9 (main) ([#2099](https://github.com/sanity-io/next-sanity/issues/2099)) ([5e3a0e3](https://github.com/sanity-io/next-sanity/commit/5e3a0e3394307ee7b1decd71ce37c9128a578027))
 
 ## [9.8.34](https://github.com/sanity-io/next-sanity/compare/next-sanity-v9.8.33...next-sanity-v9.8.34) (2025-01-09)
 
-
 ### Bug Fixes
 
-* **deps:** update dependency @sanity/client to ^6.24.3 (main) ([#2097](https://github.com/sanity-io/next-sanity/issues/2097)) ([778c9f8](https://github.com/sanity-io/next-sanity/commit/778c9f8ac533cff609f29496965dee0b8c477a1d))
-* **deps:** Update dependency @sanity/next-loader to v1.2.11 (main) ([#2105](https://github.com/sanity-io/next-sanity/issues/2105)) ([54a5cb7](https://github.com/sanity-io/next-sanity/commit/54a5cb76c15a377bc4b75b3bb136ec5aedf39e4a))
-* **deps:** update dependency @sanity/preview-url-secret to v2.0.7 (main) ([#2107](https://github.com/sanity-io/next-sanity/issues/2107)) ([b40d915](https://github.com/sanity-io/next-sanity/commit/b40d9157c68da9c9e176bde7a69375c0ad767255))
-* **deps:** Update dependency @sanity/visual-editing to v2.11.8 (main) ([#2106](https://github.com/sanity-io/next-sanity/issues/2106)) ([05cd1c8](https://github.com/sanity-io/next-sanity/commit/05cd1c84ef73201d082432251904e9e61ee8e0c3))
+- **deps:** update dependency @sanity/client to ^6.24.3 (main) ([#2097](https://github.com/sanity-io/next-sanity/issues/2097)) ([778c9f8](https://github.com/sanity-io/next-sanity/commit/778c9f8ac533cff609f29496965dee0b8c477a1d))
+- **deps:** Update dependency @sanity/next-loader to v1.2.11 (main) ([#2105](https://github.com/sanity-io/next-sanity/issues/2105)) ([54a5cb7](https://github.com/sanity-io/next-sanity/commit/54a5cb76c15a377bc4b75b3bb136ec5aedf39e4a))
+- **deps:** update dependency @sanity/preview-url-secret to v2.0.7 (main) ([#2107](https://github.com/sanity-io/next-sanity/issues/2107)) ([b40d915](https://github.com/sanity-io/next-sanity/commit/b40d9157c68da9c9e176bde7a69375c0ad767255))
+- **deps:** Update dependency @sanity/visual-editing to v2.11.8 (main) ([#2106](https://github.com/sanity-io/next-sanity/issues/2106)) ([05cd1c8](https://github.com/sanity-io/next-sanity/commit/05cd1c84ef73201d082432251904e9e61ee8e0c3))
 
 ## [9.8.33](https://github.com/sanity-io/next-sanity/compare/next-sanity-v9.8.32...next-sanity-v9.8.33) (2025-01-09)
 
-
 ### Bug Fixes
 
-* **deps:** Update dependency @sanity/next-loader to v1.2.9 (main) ([#2085](https://github.com/sanity-io/next-sanity/issues/2085)) ([3e98900](https://github.com/sanity-io/next-sanity/commit/3e989004a936bb1339c0bd991a8dfe104d695ce0))
-* **deps:** update dependency @sanity/preview-kit to v5.1.27 (main) ([#2089](https://github.com/sanity-io/next-sanity/issues/2089)) ([9244388](https://github.com/sanity-io/next-sanity/commit/92443882569714086957ad497ca0a8af2c3eed9b))
-* **deps:** Update dependency @sanity/visual-editing to v2.11.5 (main) ([#2086](https://github.com/sanity-io/next-sanity/issues/2086)) ([8dffc30](https://github.com/sanity-io/next-sanity/commit/8dffc309a5b7ec0a4cae38e770c833a7fefc3161))
-* forward vercel protection bypass params ([ee219a7](https://github.com/sanity-io/next-sanity/commit/ee219a74234cfd67fa2620309bb0a4acf8a1b371))
+- **deps:** Update dependency @sanity/next-loader to v1.2.9 (main) ([#2085](https://github.com/sanity-io/next-sanity/issues/2085)) ([3e98900](https://github.com/sanity-io/next-sanity/commit/3e989004a936bb1339c0bd991a8dfe104d695ce0))
+- **deps:** update dependency @sanity/preview-kit to v5.1.27 (main) ([#2089](https://github.com/sanity-io/next-sanity/issues/2089)) ([9244388](https://github.com/sanity-io/next-sanity/commit/92443882569714086957ad497ca0a8af2c3eed9b))
+- **deps:** Update dependency @sanity/visual-editing to v2.11.5 (main) ([#2086](https://github.com/sanity-io/next-sanity/issues/2086)) ([8dffc30](https://github.com/sanity-io/next-sanity/commit/8dffc309a5b7ec0a4cae38e770c833a7fefc3161))
+- forward vercel protection bypass params ([ee219a7](https://github.com/sanity-io/next-sanity/commit/ee219a74234cfd67fa2620309bb0a4acf8a1b371))
 
 ## [9.8.32](https://github.com/sanity-io/next-sanity/compare/next-sanity-v9.8.31...next-sanity-v9.8.32) (2025-01-06)
 
-
 ### Bug Fixes
 
-* ensure draft mode cookies are set on safari ([#2074](https://github.com/sanity-io/next-sanity/issues/2074)) ([33d5955](https://github.com/sanity-io/next-sanity/commit/33d59558f8e16b1c1aeb3bf472bcf1f6d66ae630))
+- ensure draft mode cookies are set on safari ([#2074](https://github.com/sanity-io/next-sanity/issues/2074)) ([33d5955](https://github.com/sanity-io/next-sanity/commit/33d59558f8e16b1c1aeb3bf472bcf1f6d66ae630))
 
 ## [9.8.31](https://github.com/sanity-io/next-sanity/compare/next-sanity-v9.8.30...next-sanity-v9.8.31) (2025-01-02)
 
-
 ### Bug Fixes
 
-* **deps:** Update dependency @sanity/visual-editing to v2.11.3 (main) ([#2063](https://github.com/sanity-io/next-sanity/issues/2063)) ([22441eb](https://github.com/sanity-io/next-sanity/commit/22441eb0d8c2537764b89db7ec5283edacb73a77))
-* **deps:** Update dependency @sanity/visual-editing to v2.11.4 (main) ([#2072](https://github.com/sanity-io/next-sanity/issues/2072)) ([291e844](https://github.com/sanity-io/next-sanity/commit/291e844eeb75d32f9130bafe8a6221ab5123650d))
+- **deps:** Update dependency @sanity/visual-editing to v2.11.3 (main) ([#2063](https://github.com/sanity-io/next-sanity/issues/2063)) ([22441eb](https://github.com/sanity-io/next-sanity/commit/22441eb0d8c2537764b89db7ec5283edacb73a77))
+- **deps:** Update dependency @sanity/visual-editing to v2.11.4 (main) ([#2072](https://github.com/sanity-io/next-sanity/issues/2072)) ([291e844](https://github.com/sanity-io/next-sanity/commit/291e844eeb75d32f9130bafe8a6221ab5123650d))
 
 ## [9.8.30](https://github.com/sanity-io/next-sanity/compare/next-sanity-v9.8.29...next-sanity-v9.8.30) (2024-12-21)
 
-
 ### Bug Fixes
 
-* **deps:** bump @sanity/visual-editing ([f2b8b00](https://github.com/sanity-io/next-sanity/commit/f2b8b00f46a04404883622a7bb715670a47e730a))
+- **deps:** bump @sanity/visual-editing ([f2b8b00](https://github.com/sanity-io/next-sanity/commit/f2b8b00f46a04404883622a7bb715670a47e730a))
 
 ## [9.8.29](https://github.com/sanity-io/next-sanity/compare/next-sanity-v9.8.28...next-sanity-v9.8.29) (2024-12-20)
 
-
 ### Bug Fixes
 
-* createDataAttribute missing on edge-light ([5aa90df](https://github.com/sanity-io/next-sanity/commit/5aa90df441f4b6f8070ea36645ffe5c19a2925b3))
+- createDataAttribute missing on edge-light ([5aa90df](https://github.com/sanity-io/next-sanity/commit/5aa90df441f4b6f8070ea36645ffe5c19a2925b3))
 
 ## [9.8.28](https://github.com/sanity-io/next-sanity/compare/next-sanity-v9.8.27...next-sanity-v9.8.28) (2024-12-18)
 
-
 ### Bug Fixes
 
-* **deps:** Update dependency @sanity/next-loader to v1.2.7 (main) ([#2041](https://github.com/sanity-io/next-sanity/issues/2041)) ([846e7d1](https://github.com/sanity-io/next-sanity/commit/846e7d1f2b66d039de1e9d9e681846c76b9472b1))
-* **deps:** update dependency @sanity/preview-kit to v5.1.25 (main) ([#2042](https://github.com/sanity-io/next-sanity/issues/2042)) ([3bb904e](https://github.com/sanity-io/next-sanity/commit/3bb904ea5fe403b4043b27a713f7bb013a165c62))
-* **deps:** Update dependency @sanity/visual-editing to v2.10.10 (main) ([#2038](https://github.com/sanity-io/next-sanity/issues/2038)) ([ba27de2](https://github.com/sanity-io/next-sanity/commit/ba27de20d3d846c5b63048ddc8ea5a1b52410a3c))
+- **deps:** Update dependency @sanity/next-loader to v1.2.7 (main) ([#2041](https://github.com/sanity-io/next-sanity/issues/2041)) ([846e7d1](https://github.com/sanity-io/next-sanity/commit/846e7d1f2b66d039de1e9d9e681846c76b9472b1))
+- **deps:** update dependency @sanity/preview-kit to v5.1.25 (main) ([#2042](https://github.com/sanity-io/next-sanity/issues/2042)) ([3bb904e](https://github.com/sanity-io/next-sanity/commit/3bb904ea5fe403b4043b27a713f7bb013a165c62))
+- **deps:** Update dependency @sanity/visual-editing to v2.10.10 (main) ([#2038](https://github.com/sanity-io/next-sanity/issues/2038)) ([ba27de2](https://github.com/sanity-io/next-sanity/commit/ba27de20d3d846c5b63048ddc8ea5a1b52410a3c))
 
 ## [9.8.27](https://github.com/sanity-io/next-sanity/compare/next-sanity-v9.8.26...next-sanity-v9.8.27) (2024-12-12)
 
-
 ### Bug Fixes
 
-* **deps:** upgrade `@sanity/next-loader` to `1.2.5` ([e840d6e](https://github.com/sanity-io/next-sanity/commit/e840d6e63a68082dcf9fc04b4f313a137db89ec3))
+- **deps:** upgrade `@sanity/next-loader` to `1.2.5` ([e840d6e](https://github.com/sanity-io/next-sanity/commit/e840d6e63a68082dcf9fc04b4f313a137db89ec3))
 
 ## [9.8.26](https://github.com/sanity-io/next-sanity/compare/next-sanity-v9.8.25...next-sanity-v9.8.26) (2024-12-12)
 
-
 ### Bug Fixes
 
-* **deps:** update dependency @portabletext/react to ^3.2.0 (main) ([#2024](https://github.com/sanity-io/next-sanity/issues/2024)) ([cc7a703](https://github.com/sanity-io/next-sanity/commit/cc7a70330a33a3805241c8ae346856b1a6a3a5fa))
-* **deps:** Update dependency @sanity/visual-editing to v2.10.6 (main) ([#2028](https://github.com/sanity-io/next-sanity/issues/2028)) ([ea15c81](https://github.com/sanity-io/next-sanity/commit/ea15c81ce750374c57b93097d27fa0772b9cb491))
-* **deps:** upgrade `@sanity/next-loader` to `1.2.4` ([638e712](https://github.com/sanity-io/next-sanity/commit/638e712d6da36e826e11951cebc13e6ce59e41ba))
+- **deps:** update dependency @portabletext/react to ^3.2.0 (main) ([#2024](https://github.com/sanity-io/next-sanity/issues/2024)) ([cc7a703](https://github.com/sanity-io/next-sanity/commit/cc7a70330a33a3805241c8ae346856b1a6a3a5fa))
+- **deps:** Update dependency @sanity/visual-editing to v2.10.6 (main) ([#2028](https://github.com/sanity-io/next-sanity/issues/2028)) ([ea15c81](https://github.com/sanity-io/next-sanity/commit/ea15c81ce750374c57b93097d27fa0772b9cb491))
+- **deps:** upgrade `@sanity/next-loader` to `1.2.4` ([638e712](https://github.com/sanity-io/next-sanity/commit/638e712d6da36e826e11951cebc13e6ce59e41ba))
 
 ## [9.8.25](https://github.com/sanity-io/next-sanity/compare/next-sanity-v9.8.24...next-sanity-v9.8.25) (2024-12-06)
 
-
 ### Bug Fixes
 
-* **deps:** Update dependency @sanity/visual-editing to v2.10.5 (main) ([#2018](https://github.com/sanity-io/next-sanity/issues/2018)) ([ca72b37](https://github.com/sanity-io/next-sanity/commit/ca72b37430d9ac2bccbc657fc26d853abba10db7))
+- **deps:** Update dependency @sanity/visual-editing to v2.10.5 (main) ([#2018](https://github.com/sanity-io/next-sanity/issues/2018)) ([ca72b37](https://github.com/sanity-io/next-sanity/commit/ca72b37430d9ac2bccbc657fc26d853abba10db7))
 
 ## [9.8.24](https://github.com/sanity-io/next-sanity/compare/next-sanity-v9.8.23...next-sanity-v9.8.24) (2024-12-05)
 
-
 ### Bug Fixes
 
-* **deps:** update dependency @sanity/preview-kit to v5.1.23 (main) ([#2010](https://github.com/sanity-io/next-sanity/issues/2010)) ([00d94ec](https://github.com/sanity-io/next-sanity/commit/00d94eca5a92321afcd82eef71a1137e2119533e))
+- **deps:** update dependency @sanity/preview-kit to v5.1.23 (main) ([#2010](https://github.com/sanity-io/next-sanity/issues/2010)) ([00d94ec](https://github.com/sanity-io/next-sanity/commit/00d94eca5a92321afcd82eef71a1137e2119533e))
 
 ## [9.8.23](https://github.com/sanity-io/next-sanity/compare/next-sanity-v9.8.22...next-sanity-v9.8.23) (2024-12-05)
 
-
 ### Bug Fixes
 
-* **deps:** Update dependency @sanity/visual-editing to v2.10.4 (main) ([#2008](https://github.com/sanity-io/next-sanity/issues/2008)) ([434d298](https://github.com/sanity-io/next-sanity/commit/434d298b93c16cb2be3a863d36c5171298631353))
+- **deps:** Update dependency @sanity/visual-editing to v2.10.4 (main) ([#2008](https://github.com/sanity-io/next-sanity/issues/2008)) ([434d298](https://github.com/sanity-io/next-sanity/commit/434d298b93c16cb2be3a863d36c5171298631353))
 
 ## [9.8.22](https://github.com/sanity-io/next-sanity/compare/next-sanity-v9.8.21...next-sanity-v9.8.22) (2024-12-05)
 
-
 ### Bug Fixes
 
-* **deps:** bump `@sanity/next-loader` to `1.2.3` ([174e4fb](https://github.com/sanity-io/next-sanity/commit/174e4fbed144339c5213401e2db1a4d6e2319fd2))
+- **deps:** bump `@sanity/next-loader` to `1.2.3` ([174e4fb](https://github.com/sanity-io/next-sanity/commit/174e4fbed144339c5213401e2db1a4d6e2319fd2))
 
 ## [9.8.21](https://github.com/sanity-io/next-sanity/compare/next-sanity-v9.8.20...next-sanity-v9.8.21) (2024-12-04)
 
-
 ### Bug Fixes
 
-* **deps:** update dependency @sanity/client to ^6.24.1 (main) ([#1999](https://github.com/sanity-io/next-sanity/issues/1999)) ([aa3a0d6](https://github.com/sanity-io/next-sanity/commit/aa3a0d6e6118c4ab45d8e239c48494f847e0c327))
-* **deps:** Update dependency @sanity/next-loader to v1.2.2 (main) ([#1997](https://github.com/sanity-io/next-sanity/issues/1997)) ([c63fc7b](https://github.com/sanity-io/next-sanity/commit/c63fc7b0e491dd80b1eb0b185c79a0a27bb57710))
-* **deps:** update dependency @sanity/preview-kit to v5.1.22 (main) ([#2003](https://github.com/sanity-io/next-sanity/issues/2003)) ([144d0aa](https://github.com/sanity-io/next-sanity/commit/144d0aac99cdb7e76d56c1710e443872c81675e2))
+- **deps:** update dependency @sanity/client to ^6.24.1 (main) ([#1999](https://github.com/sanity-io/next-sanity/issues/1999)) ([aa3a0d6](https://github.com/sanity-io/next-sanity/commit/aa3a0d6e6118c4ab45d8e239c48494f847e0c327))
+- **deps:** Update dependency @sanity/next-loader to v1.2.2 (main) ([#1997](https://github.com/sanity-io/next-sanity/issues/1997)) ([c63fc7b](https://github.com/sanity-io/next-sanity/commit/c63fc7b0e491dd80b1eb0b185c79a0a27bb57710))
+- **deps:** update dependency @sanity/preview-kit to v5.1.22 (main) ([#2003](https://github.com/sanity-io/next-sanity/issues/2003)) ([144d0aa](https://github.com/sanity-io/next-sanity/commit/144d0aac99cdb7e76d56c1710e443872c81675e2))
 
 ## [9.8.20](https://github.com/sanity-io/next-sanity/compare/next-sanity-v9.8.19...next-sanity-v9.8.20) (2024-12-02)
 
-
 ### Bug Fixes
 
-* **defineLive:** use APICDN for published content ([dc998ce](https://github.com/sanity-io/next-sanity/commit/dc998ce054bd0cfb922c95e5b8cab6fdc3db0925))
-* **deps:** update dependency @sanity/client to ^6.23.0 (main) ([#1988](https://github.com/sanity-io/next-sanity/issues/1988)) ([1b4a77a](https://github.com/sanity-io/next-sanity/commit/1b4a77a316072a5bbb9a0814cacadb0929df0b2a))
-* **deps:** Update dependency @sanity/next-loader to v1.1.12 (main) ([#1991](https://github.com/sanity-io/next-sanity/issues/1991)) ([c0bd7ea](https://github.com/sanity-io/next-sanity/commit/c0bd7ea89d25bd51c9f97fe948665e1f4b43d9a1))
-* **deps:** update dependency @sanity/preview-kit to v5.1.20 (main) ([#1992](https://github.com/sanity-io/next-sanity/issues/1992)) ([2b3e566](https://github.com/sanity-io/next-sanity/commit/2b3e566ea5dd8ab45e56a78b0f7f649ed0c7d6b6))
-* **deps:** update dependency @sanity/preview-url-secret to v2.0.5 (main) ([#1993](https://github.com/sanity-io/next-sanity/issues/1993)) ([95c54d4](https://github.com/sanity-io/next-sanity/commit/95c54d4416358977589c064af33520862e5a3aa6))
-* **deps:** Update dependency @sanity/visual-editing to v2.10.2 (main) ([#1984](https://github.com/sanity-io/next-sanity/issues/1984)) ([cf9024f](https://github.com/sanity-io/next-sanity/commit/cf9024fa78130d52f81e4513c325a879f527e0aa))
-* **deps:** Update dependency @sanity/visual-editing to v2.10.3 (main) ([#1989](https://github.com/sanity-io/next-sanity/issues/1989)) ([93e91db](https://github.com/sanity-io/next-sanity/commit/93e91db25750291e180605867ff48fcb82d29572))
+- **defineLive:** use APICDN for published content ([dc998ce](https://github.com/sanity-io/next-sanity/commit/dc998ce054bd0cfb922c95e5b8cab6fdc3db0925))
+- **deps:** update dependency @sanity/client to ^6.23.0 (main) ([#1988](https://github.com/sanity-io/next-sanity/issues/1988)) ([1b4a77a](https://github.com/sanity-io/next-sanity/commit/1b4a77a316072a5bbb9a0814cacadb0929df0b2a))
+- **deps:** Update dependency @sanity/next-loader to v1.1.12 (main) ([#1991](https://github.com/sanity-io/next-sanity/issues/1991)) ([c0bd7ea](https://github.com/sanity-io/next-sanity/commit/c0bd7ea89d25bd51c9f97fe948665e1f4b43d9a1))
+- **deps:** update dependency @sanity/preview-kit to v5.1.20 (main) ([#1992](https://github.com/sanity-io/next-sanity/issues/1992)) ([2b3e566](https://github.com/sanity-io/next-sanity/commit/2b3e566ea5dd8ab45e56a78b0f7f649ed0c7d6b6))
+- **deps:** update dependency @sanity/preview-url-secret to v2.0.5 (main) ([#1993](https://github.com/sanity-io/next-sanity/issues/1993)) ([95c54d4](https://github.com/sanity-io/next-sanity/commit/95c54d4416358977589c064af33520862e5a3aa6))
+- **deps:** Update dependency @sanity/visual-editing to v2.10.2 (main) ([#1984](https://github.com/sanity-io/next-sanity/issues/1984)) ([cf9024f](https://github.com/sanity-io/next-sanity/commit/cf9024fa78130d52f81e4513c325a879f527e0aa))
+- **deps:** Update dependency @sanity/visual-editing to v2.10.3 (main) ([#1989](https://github.com/sanity-io/next-sanity/issues/1989)) ([93e91db](https://github.com/sanity-io/next-sanity/commit/93e91db25750291e180605867ff48fcb82d29572))
 
 ## [9.8.19](https://github.com/sanity-io/next-sanity/compare/next-sanity-v9.8.18...next-sanity-v9.8.19) (2024-11-28)
 
-
 ### Bug Fixes
 
-* **deps:** Update dependency @sanity/next-loader to v1.1.11 (main) ([#1976](https://github.com/sanity-io/next-sanity/issues/1976)) ([9d06ae4](https://github.com/sanity-io/next-sanity/commit/9d06ae42c0ad69aa84253fe2d895429816ef38dc))
-* **deps:** Update dependency @sanity/visual-editing to v2.10.1 (main) ([#1977](https://github.com/sanity-io/next-sanity/issues/1977)) ([43be9ff](https://github.com/sanity-io/next-sanity/commit/43be9ffc8d2d0c1af4b1e778dcf4c94908bd668a))
+- **deps:** Update dependency @sanity/next-loader to v1.1.11 (main) ([#1976](https://github.com/sanity-io/next-sanity/issues/1976)) ([9d06ae4](https://github.com/sanity-io/next-sanity/commit/9d06ae42c0ad69aa84253fe2d895429816ef38dc))
+- **deps:** Update dependency @sanity/visual-editing to v2.10.1 (main) ([#1977](https://github.com/sanity-io/next-sanity/issues/1977)) ([43be9ff](https://github.com/sanity-io/next-sanity/commit/43be9ffc8d2d0c1af4b1e778dcf4c94908bd668a))
 
 ## [9.8.18](https://github.com/sanity-io/next-sanity/compare/next-sanity-v9.8.17...next-sanity-v9.8.18) (2024-11-27)
 
-
 ### Bug Fixes
 
-* **deps:** Update dependency @sanity/next-loader to v1.1.10 (main) ([#1974](https://github.com/sanity-io/next-sanity/issues/1974)) ([f8e9e81](https://github.com/sanity-io/next-sanity/commit/f8e9e81654c08664a7fc50d1d5f32dba7663f36d))
+- **deps:** Update dependency @sanity/next-loader to v1.1.10 (main) ([#1974](https://github.com/sanity-io/next-sanity/issues/1974)) ([f8e9e81](https://github.com/sanity-io/next-sanity/commit/f8e9e81654c08664a7fc50d1d5f32dba7663f36d))
 
 ## [9.8.17](https://github.com/sanity-io/next-sanity/compare/next-sanity-v9.8.16...next-sanity-v9.8.17) (2024-11-27)
 
-
 ### Bug Fixes
 
-* **deps:** Update dependency @sanity/next-loader to v1.1.9 (main) ([#1961](https://github.com/sanity-io/next-sanity/issues/1961)) ([2e48bcc](https://github.com/sanity-io/next-sanity/commit/2e48bccb6cd0546a2d995fb4b21fe6ec99ec0f80))
-* **deps:** update dependency @sanity/preview-kit to v5.1.19 (main) ([#1967](https://github.com/sanity-io/next-sanity/issues/1967)) ([ecd5dce](https://github.com/sanity-io/next-sanity/commit/ecd5dceee6fcf7fd39491d8f7c633d779ca9a062))
-* **deps:** Update dependency @sanity/visual-editing to v2.10.0 (main) ([#1972](https://github.com/sanity-io/next-sanity/issues/1972)) ([90e9876](https://github.com/sanity-io/next-sanity/commit/90e9876490d72fb378fa4019988514954772a6c4))
-* **deps:** Update dependency @sanity/visual-editing to v2.9.0 (main) ([#1963](https://github.com/sanity-io/next-sanity/issues/1963)) ([291faea](https://github.com/sanity-io/next-sanity/commit/291faea9da9fe218c22b6b5ca5368d0c2567c281))
+- **deps:** Update dependency @sanity/next-loader to v1.1.9 (main) ([#1961](https://github.com/sanity-io/next-sanity/issues/1961)) ([2e48bcc](https://github.com/sanity-io/next-sanity/commit/2e48bccb6cd0546a2d995fb4b21fe6ec99ec0f80))
+- **deps:** update dependency @sanity/preview-kit to v5.1.19 (main) ([#1967](https://github.com/sanity-io/next-sanity/issues/1967)) ([ecd5dce](https://github.com/sanity-io/next-sanity/commit/ecd5dceee6fcf7fd39491d8f7c633d779ca9a062))
+- **deps:** Update dependency @sanity/visual-editing to v2.10.0 (main) ([#1972](https://github.com/sanity-io/next-sanity/issues/1972)) ([90e9876](https://github.com/sanity-io/next-sanity/commit/90e9876490d72fb378fa4019988514954772a6c4))
+- **deps:** Update dependency @sanity/visual-editing to v2.9.0 (main) ([#1963](https://github.com/sanity-io/next-sanity/issues/1963)) ([291faea](https://github.com/sanity-io/next-sanity/commit/291faea9da9fe218c22b6b5ca5368d0c2567c281))
 
 ## [9.8.16](https://github.com/sanity-io/next-sanity/compare/next-sanity-v9.8.15...next-sanity-v9.8.16) (2024-11-19)
 
-
 ### Bug Fixes
 
-* **deps:** update dependency @sanity/client to ^6.22.5 (main) ([#1906](https://github.com/sanity-io/next-sanity/issues/1906)) ([e6da62e](https://github.com/sanity-io/next-sanity/commit/e6da62e897d75460c958b5617a4e71ff9b974f77))
-* **deps:** Update dependency @sanity/next-loader to v1.1.8 (main) ([#1945](https://github.com/sanity-io/next-sanity/issues/1945)) ([282ba0a](https://github.com/sanity-io/next-sanity/commit/282ba0a55c14ff045f843a70a6db0ad83207a8ba))
-* **deps:** update dependency @sanity/preview-kit to v5.1.18 (main) ([#1948](https://github.com/sanity-io/next-sanity/issues/1948)) ([b21b2b6](https://github.com/sanity-io/next-sanity/commit/b21b2b6734d597e9d0ce4484e4fbd38f85903b25))
-* **deps:** update dependency @sanity/preview-url-secret to v2.0.4 (main) ([#1946](https://github.com/sanity-io/next-sanity/issues/1946)) ([a411d65](https://github.com/sanity-io/next-sanity/commit/a411d655381b31b43a4ff77ff15583c682d3d8fb))
-* **deps:** Update dependency @sanity/visual-editing to v2.8.0 (main) ([#1947](https://github.com/sanity-io/next-sanity/issues/1947)) ([a2f782d](https://github.com/sanity-io/next-sanity/commit/a2f782dc7c5b7bab21ccf5b678507e312100b8e3))
+- **deps:** update dependency @sanity/client to ^6.22.5 (main) ([#1906](https://github.com/sanity-io/next-sanity/issues/1906)) ([e6da62e](https://github.com/sanity-io/next-sanity/commit/e6da62e897d75460c958b5617a4e71ff9b974f77))
+- **deps:** Update dependency @sanity/next-loader to v1.1.8 (main) ([#1945](https://github.com/sanity-io/next-sanity/issues/1945)) ([282ba0a](https://github.com/sanity-io/next-sanity/commit/282ba0a55c14ff045f843a70a6db0ad83207a8ba))
+- **deps:** update dependency @sanity/preview-kit to v5.1.18 (main) ([#1948](https://github.com/sanity-io/next-sanity/issues/1948)) ([b21b2b6](https://github.com/sanity-io/next-sanity/commit/b21b2b6734d597e9d0ce4484e4fbd38f85903b25))
+- **deps:** update dependency @sanity/preview-url-secret to v2.0.4 (main) ([#1946](https://github.com/sanity-io/next-sanity/issues/1946)) ([a411d65](https://github.com/sanity-io/next-sanity/commit/a411d655381b31b43a4ff77ff15583c682d3d8fb))
+- **deps:** Update dependency @sanity/visual-editing to v2.8.0 (main) ([#1947](https://github.com/sanity-io/next-sanity/issues/1947)) ([a2f782d](https://github.com/sanity-io/next-sanity/commit/a2f782dc7c5b7bab21ccf5b678507e312100b8e3))
 
 ## [9.8.15](https://github.com/sanity-io/next-sanity/compare/next-sanity-v9.8.14...next-sanity-v9.8.15) (2024-11-15)
 
-
 ### Bug Fixes
 
-* **deps:** Update dependency @sanity/visual-editing to v2.7.2 (main) ([#1934](https://github.com/sanity-io/next-sanity/issues/1934)) ([76c0c48](https://github.com/sanity-io/next-sanity/commit/76c0c48c0ea616cb1bffefdf267c7627d4700447))
-* upgrade `@sanity/preview-kit` to `v5.1.17` ([4b5d390](https://github.com/sanity-io/next-sanity/commit/4b5d39064869a83af47376f6882bc4d4b778aeea))
+- **deps:** Update dependency @sanity/visual-editing to v2.7.2 (main) ([#1934](https://github.com/sanity-io/next-sanity/issues/1934)) ([76c0c48](https://github.com/sanity-io/next-sanity/commit/76c0c48c0ea616cb1bffefdf267c7627d4700447))
+- upgrade `@sanity/preview-kit` to `v5.1.17` ([4b5d390](https://github.com/sanity-io/next-sanity/commit/4b5d39064869a83af47376f6882bc4d4b778aeea))
 
 ## [9.8.14](https://github.com/sanity-io/next-sanity/compare/next-sanity-v9.8.13...next-sanity-v9.8.14) (2024-11-15)
 
-
 ### Bug Fixes
 
-* **deps:** Update dependency @sanity/next-loader to v1.1.7 (main) ([#1929](https://github.com/sanity-io/next-sanity/issues/1929)) ([272f758](https://github.com/sanity-io/next-sanity/commit/272f758ef54646629feb88923861482e190c6a95))
-* **deps:** Update dependency @sanity/visual-editing to v2.7.1 (main) ([#1930](https://github.com/sanity-io/next-sanity/issues/1930)) ([d482073](https://github.com/sanity-io/next-sanity/commit/d4820738607f5b00812005178c37b1c562ac3a73))
+- **deps:** Update dependency @sanity/next-loader to v1.1.7 (main) ([#1929](https://github.com/sanity-io/next-sanity/issues/1929)) ([272f758](https://github.com/sanity-io/next-sanity/commit/272f758ef54646629feb88923861482e190c6a95))
+- **deps:** Update dependency @sanity/visual-editing to v2.7.1 (main) ([#1930](https://github.com/sanity-io/next-sanity/issues/1930)) ([d482073](https://github.com/sanity-io/next-sanity/commit/d4820738607f5b00812005178c37b1c562ac3a73))
 
 ## [9.8.13](https://github.com/sanity-io/next-sanity/compare/next-sanity-v9.8.12...next-sanity-v9.8.13) (2024-11-13)
 
-
 ### Bug Fixes
 
-* **deps:** update dependency @sanity/preview-kit to v5.1.16 (main) ([#1920](https://github.com/sanity-io/next-sanity/issues/1920)) ([cd103e6](https://github.com/sanity-io/next-sanity/commit/cd103e602b5c94b1580589deee477334532ba98a))
+- **deps:** update dependency @sanity/preview-kit to v5.1.16 (main) ([#1920](https://github.com/sanity-io/next-sanity/issues/1920)) ([cd103e6](https://github.com/sanity-io/next-sanity/commit/cd103e602b5c94b1580589deee477334532ba98a))
 
 ## [9.8.12](https://github.com/sanity-io/next-sanity/compare/next-sanity-v9.8.11...next-sanity-v9.8.12) (2024-11-12)
 
-
 ### Bug Fixes
 
-* **deps:** Update dependency @sanity/next-loader to v1.1.6 (main) ([#1914](https://github.com/sanity-io/next-sanity/issues/1914)) ([9981f9b](https://github.com/sanity-io/next-sanity/commit/9981f9b2627e9abd976617797de8d5509259b703))
-* **deps:** Update dependency @sanity/visual-editing to v2.7.0 (main) ([#1912](https://github.com/sanity-io/next-sanity/issues/1912)) ([9628bd0](https://github.com/sanity-io/next-sanity/commit/9628bd00e4fc9d8b729eb035d28bacc123b39a62))
+- **deps:** Update dependency @sanity/next-loader to v1.1.6 (main) ([#1914](https://github.com/sanity-io/next-sanity/issues/1914)) ([9981f9b](https://github.com/sanity-io/next-sanity/commit/9981f9b2627e9abd976617797de8d5509259b703))
+- **deps:** Update dependency @sanity/visual-editing to v2.7.0 (main) ([#1912](https://github.com/sanity-io/next-sanity/issues/1912)) ([9628bd0](https://github.com/sanity-io/next-sanity/commit/9628bd00e4fc9d8b729eb035d28bacc123b39a62))
 
 ## [9.8.11](https://github.com/sanity-io/next-sanity/compare/next-sanity-v9.8.10...next-sanity-v9.8.11) (2024-11-12)
 
-
 ### Bug Fixes
 
-* **deps:** update dependency @sanity/client to ^6.22.4 (main) ([#1906](https://github.com/sanity-io/next-sanity/issues/1906)) ([7dced0f](https://github.com/sanity-io/next-sanity/commit/7dced0f9fc7f8169a145d9eff57f2530026358f7))
-* **deps:** Update dependency @sanity/next-loader to v1.1.4 (main) ([#1895](https://github.com/sanity-io/next-sanity/issues/1895)) ([606f2ec](https://github.com/sanity-io/next-sanity/commit/606f2ec7274ae053972309527b816137dc6c9fb0))
-* **deps:** Update dependency @sanity/next-loader to v1.1.5 (main) ([#1905](https://github.com/sanity-io/next-sanity/issues/1905)) ([5594a40](https://github.com/sanity-io/next-sanity/commit/5594a40ab727985c72b3e5a8abb604890ec83b2a))
-* **deps:** update dependency @sanity/preview-kit to v5.1.15 (main) ([#1907](https://github.com/sanity-io/next-sanity/issues/1907)) ([bbf94d2](https://github.com/sanity-io/next-sanity/commit/bbf94d290ad932bd64f09c29f52899b141e368fe))
-* **deps:** update dependency @sanity/preview-url-secret to v2.0.3 (main) ([#1897](https://github.com/sanity-io/next-sanity/issues/1897)) ([dce5b5e](https://github.com/sanity-io/next-sanity/commit/dce5b5eb4a7986e63249523d4fa80bfc24c00d17))
-* **deps:** Update dependency @sanity/visual-editing to v2.5.2 (main) ([#1896](https://github.com/sanity-io/next-sanity/issues/1896)) ([ce7fbfc](https://github.com/sanity-io/next-sanity/commit/ce7fbfc0238a70a06c38233cc17c14aa3dd21ab4))
-* **deps:** Update dependency @sanity/visual-editing to v2.6.0 (main) ([#1908](https://github.com/sanity-io/next-sanity/issues/1908)) ([dd5a50d](https://github.com/sanity-io/next-sanity/commit/dd5a50d7d4ed44459bd8efd0d809d795602b0cee))
+- **deps:** update dependency @sanity/client to ^6.22.4 (main) ([#1906](https://github.com/sanity-io/next-sanity/issues/1906)) ([7dced0f](https://github.com/sanity-io/next-sanity/commit/7dced0f9fc7f8169a145d9eff57f2530026358f7))
+- **deps:** Update dependency @sanity/next-loader to v1.1.4 (main) ([#1895](https://github.com/sanity-io/next-sanity/issues/1895)) ([606f2ec](https://github.com/sanity-io/next-sanity/commit/606f2ec7274ae053972309527b816137dc6c9fb0))
+- **deps:** Update dependency @sanity/next-loader to v1.1.5 (main) ([#1905](https://github.com/sanity-io/next-sanity/issues/1905)) ([5594a40](https://github.com/sanity-io/next-sanity/commit/5594a40ab727985c72b3e5a8abb604890ec83b2a))
+- **deps:** update dependency @sanity/preview-kit to v5.1.15 (main) ([#1907](https://github.com/sanity-io/next-sanity/issues/1907)) ([bbf94d2](https://github.com/sanity-io/next-sanity/commit/bbf94d290ad932bd64f09c29f52899b141e368fe))
+- **deps:** update dependency @sanity/preview-url-secret to v2.0.3 (main) ([#1897](https://github.com/sanity-io/next-sanity/issues/1897)) ([dce5b5e](https://github.com/sanity-io/next-sanity/commit/dce5b5eb4a7986e63249523d4fa80bfc24c00d17))
+- **deps:** Update dependency @sanity/visual-editing to v2.5.2 (main) ([#1896](https://github.com/sanity-io/next-sanity/issues/1896)) ([ce7fbfc](https://github.com/sanity-io/next-sanity/commit/ce7fbfc0238a70a06c38233cc17c14aa3dd21ab4))
+- **deps:** Update dependency @sanity/visual-editing to v2.6.0 (main) ([#1908](https://github.com/sanity-io/next-sanity/issues/1908)) ([dd5a50d](https://github.com/sanity-io/next-sanity/commit/dd5a50d7d4ed44459bd8efd0d809d795602b0cee))
 
 ## [9.8.10](https://github.com/sanity-io/next-sanity/compare/next-sanity-v9.8.9...next-sanity-v9.8.10) (2024-11-06)
 
-
 ### Bug Fixes
 
-* **deps:** Update dependency @sanity/next-loader to v1.1.3 (main) ([#1886](https://github.com/sanity-io/next-sanity/issues/1886)) ([953ac51](https://github.com/sanity-io/next-sanity/commit/953ac513f14bfda0a0bd30e65bb394f47050b15a))
-* **deps:** update dependency @sanity/preview-kit to v5.1.13 (main) ([#1881](https://github.com/sanity-io/next-sanity/issues/1881)) ([e35fa2b](https://github.com/sanity-io/next-sanity/commit/e35fa2bc861abd5dc0d4fa9c848e7795863e0cb1))
-* **deps:** update dependency @sanity/preview-kit to v5.1.14 (main) ([#1890](https://github.com/sanity-io/next-sanity/issues/1890)) ([5e01795](https://github.com/sanity-io/next-sanity/commit/5e017952c84eeac2bd40c8dd6e512a05aa071c14))
-* **deps:** update dependency @sanity/preview-url-secret to v2.0.1 (main) ([#1888](https://github.com/sanity-io/next-sanity/issues/1888)) ([e75d936](https://github.com/sanity-io/next-sanity/commit/e75d9369127d6e0fed2334bead8ce8275e895150))
-* **deps:** Update dependency @sanity/visual-editing to v2.5.1 (main) ([#1887](https://github.com/sanity-io/next-sanity/issues/1887)) ([c3ba53b](https://github.com/sanity-io/next-sanity/commit/c3ba53babf0635e57833abbdafaeebc197291e3b))
+- **deps:** Update dependency @sanity/next-loader to v1.1.3 (main) ([#1886](https://github.com/sanity-io/next-sanity/issues/1886)) ([953ac51](https://github.com/sanity-io/next-sanity/commit/953ac513f14bfda0a0bd30e65bb394f47050b15a))
+- **deps:** update dependency @sanity/preview-kit to v5.1.13 (main) ([#1881](https://github.com/sanity-io/next-sanity/issues/1881)) ([e35fa2b](https://github.com/sanity-io/next-sanity/commit/e35fa2bc861abd5dc0d4fa9c848e7795863e0cb1))
+- **deps:** update dependency @sanity/preview-kit to v5.1.14 (main) ([#1890](https://github.com/sanity-io/next-sanity/issues/1890)) ([5e01795](https://github.com/sanity-io/next-sanity/commit/5e017952c84eeac2bd40c8dd6e512a05aa071c14))
+- **deps:** update dependency @sanity/preview-url-secret to v2.0.1 (main) ([#1888](https://github.com/sanity-io/next-sanity/issues/1888)) ([e75d936](https://github.com/sanity-io/next-sanity/commit/e75d9369127d6e0fed2334bead8ce8275e895150))
+- **deps:** Update dependency @sanity/visual-editing to v2.5.1 (main) ([#1887](https://github.com/sanity-io/next-sanity/issues/1887)) ([c3ba53b](https://github.com/sanity-io/next-sanity/commit/c3ba53babf0635e57833abbdafaeebc197291e3b))
 
 ## [9.8.9](https://github.com/sanity-io/next-sanity/compare/next-sanity-v9.8.8...next-sanity-v9.8.9) (2024-11-06)
 
-
 ### Bug Fixes
 
-* **deps:** update dependency @sanity/client to ^6.22.3 (main) ([#1879](https://github.com/sanity-io/next-sanity/issues/1879)) ([459c22e](https://github.com/sanity-io/next-sanity/commit/459c22e4220ac3b95a291a291e1d8b58fcd1d7f4))
-* **deps:** Update dependency @sanity/next-loader to v1.1.1 (main) ([#1864](https://github.com/sanity-io/next-sanity/issues/1864)) ([1afc37e](https://github.com/sanity-io/next-sanity/commit/1afc37e80551f5623f98bfde32394668a581480d))
-* **deps:** Update dependency @sanity/next-loader to v1.1.2 (main) ([#1876](https://github.com/sanity-io/next-sanity/issues/1876)) ([41e55b6](https://github.com/sanity-io/next-sanity/commit/41e55b601cf5e922bf51a11bd4b6b72841f9b2f1))
-* **deps:** update dependency @sanity/preview-kit to v5.1.12 (main) ([#1869](https://github.com/sanity-io/next-sanity/issues/1869)) ([5ccd9f2](https://github.com/sanity-io/next-sanity/commit/5ccd9f20e3083ef09894c2be27206f18021b738f))
-* **deps:** Update dependency @sanity/visual-editing to v2.5.0 (main) ([#1877](https://github.com/sanity-io/next-sanity/issues/1877)) ([405370f](https://github.com/sanity-io/next-sanity/commit/405370fd21102d7663a8ca0404897d71d167e866))
+- **deps:** update dependency @sanity/client to ^6.22.3 (main) ([#1879](https://github.com/sanity-io/next-sanity/issues/1879)) ([459c22e](https://github.com/sanity-io/next-sanity/commit/459c22e4220ac3b95a291a291e1d8b58fcd1d7f4))
+- **deps:** Update dependency @sanity/next-loader to v1.1.1 (main) ([#1864](https://github.com/sanity-io/next-sanity/issues/1864)) ([1afc37e](https://github.com/sanity-io/next-sanity/commit/1afc37e80551f5623f98bfde32394668a581480d))
+- **deps:** Update dependency @sanity/next-loader to v1.1.2 (main) ([#1876](https://github.com/sanity-io/next-sanity/issues/1876)) ([41e55b6](https://github.com/sanity-io/next-sanity/commit/41e55b601cf5e922bf51a11bd4b6b72841f9b2f1))
+- **deps:** update dependency @sanity/preview-kit to v5.1.12 (main) ([#1869](https://github.com/sanity-io/next-sanity/issues/1869)) ([5ccd9f2](https://github.com/sanity-io/next-sanity/commit/5ccd9f20e3083ef09894c2be27206f18021b738f))
+- **deps:** Update dependency @sanity/visual-editing to v2.5.0 (main) ([#1877](https://github.com/sanity-io/next-sanity/issues/1877)) ([405370f](https://github.com/sanity-io/next-sanity/commit/405370fd21102d7663a8ca0404897d71d167e866))
 
 ## [9.8.8](https://github.com/sanity-io/next-sanity/compare/next-sanity-v9.8.7...next-sanity-v9.8.8) (2024-10-28)
 
-
 ### Bug Fixes
 
-* **deps:** Update dependency @sanity/visual-editing to v2.4.2 (main) ([#1860](https://github.com/sanity-io/next-sanity/issues/1860)) ([6511709](https://github.com/sanity-io/next-sanity/commit/65117098335c231891ef03264ec0a6ff7d4d2c3b))
+- **deps:** Update dependency @sanity/visual-editing to v2.4.2 (main) ([#1860](https://github.com/sanity-io/next-sanity/issues/1860)) ([6511709](https://github.com/sanity-io/next-sanity/commit/65117098335c231891ef03264ec0a6ff7d4d2c3b))
 
 ## [9.8.7](https://github.com/sanity-io/next-sanity/compare/next-sanity-v9.8.6...next-sanity-v9.8.7) (2024-10-24)
 
-
 ### Bug Fixes
 
-* **deps:** Update dependency @sanity/next-loader to v1.1.0 (main) ([#1852](https://github.com/sanity-io/next-sanity/issues/1852)) ([389a1eb](https://github.com/sanity-io/next-sanity/commit/389a1eb672074b22f79acbbdbc49f39ea4a7f0be))
-* **deps:** update dependency @sanity/preview-kit to v5.1.10 (main) ([#1854](https://github.com/sanity-io/next-sanity/issues/1854)) ([8be118a](https://github.com/sanity-io/next-sanity/commit/8be118ae6688fbcdde62922eb9cabf40d09dbffb))
-* **deps:** Update dependency @sanity/visual-editing to v2.4.0 (main) ([#1850](https://github.com/sanity-io/next-sanity/issues/1850)) ([f343eda](https://github.com/sanity-io/next-sanity/commit/f343eda2ed0bedfe0c3ec200699ab9f1aa88884e))
+- **deps:** Update dependency @sanity/next-loader to v1.1.0 (main) ([#1852](https://github.com/sanity-io/next-sanity/issues/1852)) ([389a1eb](https://github.com/sanity-io/next-sanity/commit/389a1eb672074b22f79acbbdbc49f39ea4a7f0be))
+- **deps:** update dependency @sanity/preview-kit to v5.1.10 (main) ([#1854](https://github.com/sanity-io/next-sanity/issues/1854)) ([8be118a](https://github.com/sanity-io/next-sanity/commit/8be118ae6688fbcdde62922eb9cabf40d09dbffb))
+- **deps:** Update dependency @sanity/visual-editing to v2.4.0 (main) ([#1850](https://github.com/sanity-io/next-sanity/issues/1850)) ([f343eda](https://github.com/sanity-io/next-sanity/commit/f343eda2ed0bedfe0c3ec200699ab9f1aa88884e))
 
 ## [9.8.6](https://github.com/sanity-io/next-sanity/compare/next-sanity-v9.8.5...next-sanity-v9.8.6) (2024-10-24)
 
-
 ### Bug Fixes
 
-* **deps:** Update dependency @sanity/visual-editing to v2.3.2 (main) ([#1842](https://github.com/sanity-io/next-sanity/issues/1842)) ([c97deff](https://github.com/sanity-io/next-sanity/commit/c97deff4e09196e2a506ba5c412d4c502ae11eea))
+- **deps:** Update dependency @sanity/visual-editing to v2.3.2 (main) ([#1842](https://github.com/sanity-io/next-sanity/issues/1842)) ([c97deff](https://github.com/sanity-io/next-sanity/commit/c97deff4e09196e2a506ba5c412d4c502ae11eea))
 
 ## [9.8.5](https://github.com/sanity-io/next-sanity/compare/next-sanity-v9.8.4...next-sanity-v9.8.5) (2024-10-24)
 
-
 ### Bug Fixes
 
-* **deps:** update dependency @sanity/preview-kit to v5.1.9 (main) ([#1839](https://github.com/sanity-io/next-sanity/issues/1839)) ([d10ea99](https://github.com/sanity-io/next-sanity/commit/d10ea99cda768b1139448df01cffa0115e9dd354))
+- **deps:** update dependency @sanity/preview-kit to v5.1.9 (main) ([#1839](https://github.com/sanity-io/next-sanity/issues/1839)) ([d10ea99](https://github.com/sanity-io/next-sanity/commit/d10ea99cda768b1139448df01cffa0115e9dd354))
 
 ## [9.8.4](https://github.com/sanity-io/next-sanity/compare/next-sanity-v9.8.3...next-sanity-v9.8.4) (2024-10-23)
 
-
 ### Bug Fixes
 
-* **deps:** Update dependency @sanity/next-loader to v1.0.7 (main) ([#1833](https://github.com/sanity-io/next-sanity/issues/1833)) ([721f049](https://github.com/sanity-io/next-sanity/commit/721f04934b1d4804009e8fabbc796ac3b4bfa550))
-* **deps:** Update dependency @sanity/visual-editing to v2.3.1 (main) ([#1834](https://github.com/sanity-io/next-sanity/issues/1834)) ([c381a53](https://github.com/sanity-io/next-sanity/commit/c381a535bd2afa78038fcf5ffb8a265d9e8c3a89))
+- **deps:** Update dependency @sanity/next-loader to v1.0.7 (main) ([#1833](https://github.com/sanity-io/next-sanity/issues/1833)) ([721f049](https://github.com/sanity-io/next-sanity/commit/721f04934b1d4804009e8fabbc796ac3b4bfa550))
+- **deps:** Update dependency @sanity/visual-editing to v2.3.1 (main) ([#1834](https://github.com/sanity-io/next-sanity/issues/1834)) ([c381a53](https://github.com/sanity-io/next-sanity/commit/c381a535bd2afa78038fcf5ffb8a265d9e8c3a89))
 
 ## [9.8.3](https://github.com/sanity-io/next-sanity/compare/next-sanity-v9.8.2...next-sanity-v9.8.3) (2024-10-23)
 
-
 ### Bug Fixes
 
-* edge runtime dynamic code eval ([#1831](https://github.com/sanity-io/next-sanity/issues/1831)) ([320aa2f](https://github.com/sanity-io/next-sanity/commit/320aa2fbac6c858f4dd0ee7cdcea9c31f47fb4bf))
+- edge runtime dynamic code eval ([#1831](https://github.com/sanity-io/next-sanity/issues/1831)) ([320aa2f](https://github.com/sanity-io/next-sanity/commit/320aa2fbac6c858f4dd0ee7cdcea9c31f47fb4bf))
 
 ## [9.8.2](https://github.com/sanity-io/next-sanity/compare/next-sanity-v9.8.1...next-sanity-v9.8.2) (2024-10-23)
 
-
 ### Bug Fixes
 
-* **deps:** update dependency @sanity/preview-kit to v5.1.8 (main) ([#1828](https://github.com/sanity-io/next-sanity/issues/1828)) ([5bb3eac](https://github.com/sanity-io/next-sanity/commit/5bb3eac580d0a0b52c02f3a7113a6a5e14c251d6))
-* edge runtime dynamic code eval ([#1829](https://github.com/sanity-io/next-sanity/issues/1829)) ([369ee8b](https://github.com/sanity-io/next-sanity/commit/369ee8b31aa8799484f9da2ad1291b5f31dc04a5))
+- **deps:** update dependency @sanity/preview-kit to v5.1.8 (main) ([#1828](https://github.com/sanity-io/next-sanity/issues/1828)) ([5bb3eac](https://github.com/sanity-io/next-sanity/commit/5bb3eac580d0a0b52c02f3a7113a6a5e14c251d6))
+- edge runtime dynamic code eval ([#1829](https://github.com/sanity-io/next-sanity/issues/1829)) ([369ee8b](https://github.com/sanity-io/next-sanity/commit/369ee8b31aa8799484f9da2ad1291b5f31dc04a5))
 
 ## [9.8.1](https://github.com/sanity-io/next-sanity/compare/next-sanity-v9.8.0...next-sanity-v9.8.1) (2024-10-23)
 
-
 ### Bug Fixes
 
-* **deps:** Update dependency @sanity/next-loader to v1.0.6 (main) ([#1822](https://github.com/sanity-io/next-sanity/issues/1822)) ([c06ddf5](https://github.com/sanity-io/next-sanity/commit/c06ddf5a271c50d45e28d9ce4408e0c8ffe0749b))
+- **deps:** Update dependency @sanity/next-loader to v1.0.6 (main) ([#1822](https://github.com/sanity-io/next-sanity/issues/1822)) ([c06ddf5](https://github.com/sanity-io/next-sanity/commit/c06ddf5a271c50d45e28d9ce4408e0c8ffe0749b))
 
 ## [9.8.0](https://github.com/sanity-io/next-sanity/compare/next-sanity-v9.7.1...next-sanity-v9.8.0) (2024-10-23)
 
-
 ### Features
 
-* add `defineLive` & `next-sanity/hooks` ([#1786](https://github.com/sanity-io/next-sanity/issues/1786)) ([a7f1df4](https://github.com/sanity-io/next-sanity/commit/a7f1df44f41d3459cb95ecef060164a56608a562))
+- add `defineLive` & `next-sanity/hooks` ([#1786](https://github.com/sanity-io/next-sanity/issues/1786)) ([a7f1df4](https://github.com/sanity-io/next-sanity/commit/a7f1df44f41d3459cb95ecef060164a56608a562))
 
 ## [9.7.1](https://github.com/sanity-io/next-sanity/compare/next-sanity-v9.7.0...next-sanity-v9.7.1) (2024-10-23)
 
-
 ### Bug Fixes
 
-* **deps:** Update dependency @sanity/visual-editing to v2.3.0 (main) ([#1810](https://github.com/sanity-io/next-sanity/issues/1810)) ([40d1b2a](https://github.com/sanity-io/next-sanity/commit/40d1b2aaf026eede3f28e8beba050bd293c14f24))
+- **deps:** Update dependency @sanity/visual-editing to v2.3.0 (main) ([#1810](https://github.com/sanity-io/next-sanity/issues/1810)) ([40d1b2a](https://github.com/sanity-io/next-sanity/commit/40d1b2aaf026eede3f28e8beba050bd293c14f24))
 
 ## [9.7.0](https://github.com/sanity-io/next-sanity/compare/next-sanity-v9.6.0...next-sanity-v9.7.0) (2024-10-22)
 
-
 ### Features
 
-* pass components prop to visual editing component ([#1805](https://github.com/sanity-io/next-sanity/issues/1805)) ([ad8896f](https://github.com/sanity-io/next-sanity/commit/ad8896febc4678a02d3afedc3b6612f53c165924))
+- pass components prop to visual editing component ([#1805](https://github.com/sanity-io/next-sanity/issues/1805)) ([ad8896f](https://github.com/sanity-io/next-sanity/commit/ad8896febc4678a02d3afedc3b6612f53c165924))
 
 ## [9.6.0](https://github.com/sanity-io/next-sanity/compare/next-sanity-v9.5.6...next-sanity-v9.6.0) (2024-10-22)
 
-
 ### Features
 
-* add `defineEnableDraftMode` ([#1803](https://github.com/sanity-io/next-sanity/issues/1803)) ([8069787](https://github.com/sanity-io/next-sanity/commit/80697872d7c1056bf0e747bdb9e20b6b33adf102))
+- add `defineEnableDraftMode` ([#1803](https://github.com/sanity-io/next-sanity/issues/1803)) ([8069787](https://github.com/sanity-io/next-sanity/commit/80697872d7c1056bf0e747bdb9e20b6b33adf102))
 
 ## [9.5.6](https://github.com/sanity-io/next-sanity/compare/next-sanity-v9.5.5...next-sanity-v9.5.6) (2024-10-22)
 
-
 ### Bug Fixes
 
-* **deps:** update dependency @sanity/preview-kit to v5.1.6 (main) ([#1795](https://github.com/sanity-io/next-sanity/issues/1795)) ([3de4730](https://github.com/sanity-io/next-sanity/commit/3de4730037e39492af0f5fd2a06713857ecfa0ce))
-* **deps:** update dependency @sanity/preview-kit to v5.1.7 (main) ([#1802](https://github.com/sanity-io/next-sanity/issues/1802)) ([78197de](https://github.com/sanity-io/next-sanity/commit/78197de75370815093c08e0157ad3e1fb2dabb65))
-* **deps:** Update dependency @sanity/visual-editing to v2.2.0 (main) ([#1787](https://github.com/sanity-io/next-sanity/issues/1787)) ([5a3b49c](https://github.com/sanity-io/next-sanity/commit/5a3b49c1755ed97497653eb6d383dc11ac4fae81))
-* **deps:** Update dependency @sanity/visual-editing to v2.2.1 (main) ([#1794](https://github.com/sanity-io/next-sanity/issues/1794)) ([ec670ff](https://github.com/sanity-io/next-sanity/commit/ec670ffcf37672e5c67375caece5ff00e60d7f87))
-* **deps:** Update dependency @sanity/visual-editing to v2.2.2 (main) ([#1801](https://github.com/sanity-io/next-sanity/issues/1801)) ([0692691](https://github.com/sanity-io/next-sanity/commit/0692691549464db9f1611aad0a6a11448b80be55))
+- **deps:** update dependency @sanity/preview-kit to v5.1.6 (main) ([#1795](https://github.com/sanity-io/next-sanity/issues/1795)) ([3de4730](https://github.com/sanity-io/next-sanity/commit/3de4730037e39492af0f5fd2a06713857ecfa0ce))
+- **deps:** update dependency @sanity/preview-kit to v5.1.7 (main) ([#1802](https://github.com/sanity-io/next-sanity/issues/1802)) ([78197de](https://github.com/sanity-io/next-sanity/commit/78197de75370815093c08e0157ad3e1fb2dabb65))
+- **deps:** Update dependency @sanity/visual-editing to v2.2.0 (main) ([#1787](https://github.com/sanity-io/next-sanity/issues/1787)) ([5a3b49c](https://github.com/sanity-io/next-sanity/commit/5a3b49c1755ed97497653eb6d383dc11ac4fae81))
+- **deps:** Update dependency @sanity/visual-editing to v2.2.1 (main) ([#1794](https://github.com/sanity-io/next-sanity/issues/1794)) ([ec670ff](https://github.com/sanity-io/next-sanity/commit/ec670ffcf37672e5c67375caece5ff00e60d7f87))
+- **deps:** Update dependency @sanity/visual-editing to v2.2.2 (main) ([#1801](https://github.com/sanity-io/next-sanity/issues/1801)) ([0692691](https://github.com/sanity-io/next-sanity/commit/0692691549464db9f1611aad0a6a11448b80be55))
 
 ## [9.5.5](https://github.com/sanity-io/next-sanity/compare/next-sanity-v9.5.4...next-sanity-v9.5.5) (2024-10-17)
 
-
 ### Bug Fixes
 
-* **deps:** update dependency @sanity/client to ^6.22.2 (main) ([#1776](https://github.com/sanity-io/next-sanity/issues/1776)) ([099b063](https://github.com/sanity-io/next-sanity/commit/099b063497cffc0e4e746687b1462e583aabbfa4))
-* **deps:** update dependency @sanity/preview-kit to v5.1.5 (main) ([#1779](https://github.com/sanity-io/next-sanity/issues/1779)) ([5cb8fce](https://github.com/sanity-io/next-sanity/commit/5cb8fce5c0e79cb5a89573030f4a3aaf14402690))
+- **deps:** update dependency @sanity/client to ^6.22.2 (main) ([#1776](https://github.com/sanity-io/next-sanity/issues/1776)) ([099b063](https://github.com/sanity-io/next-sanity/commit/099b063497cffc0e4e746687b1462e583aabbfa4))
+- **deps:** update dependency @sanity/preview-kit to v5.1.5 (main) ([#1779](https://github.com/sanity-io/next-sanity/issues/1779)) ([5cb8fce](https://github.com/sanity-io/next-sanity/commit/5cb8fce5c0e79cb5a89573030f4a3aaf14402690))
 
 ## [9.5.4](https://github.com/sanity-io/next-sanity/compare/next-sanity-v9.5.3...next-sanity-v9.5.4) (2024-10-15)
 
-
 ### Bug Fixes
 
-* **deps:** update dependency groq to ^3.60.0 ([865979c](https://github.com/sanity-io/next-sanity/commit/865979c936de2102fa829b67b65d9e88a6cfd4f0))
-* regression in pages router on `next/dynamic` imports ([01701b2](https://github.com/sanity-io/next-sanity/commit/01701b2ecb7cd36e453dd643d952b9f91ff1116a))
+- **deps:** update dependency groq to ^3.60.0 ([865979c](https://github.com/sanity-io/next-sanity/commit/865979c936de2102fa829b67b65d9e88a6cfd4f0))
+- regression in pages router on `next/dynamic` imports ([01701b2](https://github.com/sanity-io/next-sanity/commit/01701b2ecb7cd36e453dd643d952b9f91ff1116a))
 
 ## [9.5.3](https://github.com/sanity-io/next-sanity/compare/next-sanity-v9.5.2...next-sanity-v9.5.3) (2024-10-15)
 
-
 ### Bug Fixes
 
-* **deps:** update dependency @sanity/preview-kit to v5.1.4 ([c2d32d6](https://github.com/sanity-io/next-sanity/commit/c2d32d66f9e054bb715fc0ed995c7d33acc57feb))
-* **NextStudio:** support turbopack ([72a8f37](https://github.com/sanity-io/next-sanity/commit/72a8f37ab253c91f68afaa6fd8f459071db66438))
-* **VisualEditing:** support turbopack ([53e4b5a](https://github.com/sanity-io/next-sanity/commit/53e4b5ae3750e03243a28d8bfe893432796579f5))
+- **deps:** update dependency @sanity/preview-kit to v5.1.4 ([c2d32d6](https://github.com/sanity-io/next-sanity/commit/c2d32d66f9e054bb715fc0ed995c7d33acc57feb))
+- **NextStudio:** support turbopack ([72a8f37](https://github.com/sanity-io/next-sanity/commit/72a8f37ab253c91f68afaa6fd8f459071db66438))
+- **VisualEditing:** support turbopack ([53e4b5a](https://github.com/sanity-io/next-sanity/commit/53e4b5ae3750e03243a28d8bfe893432796579f5))
 
 ## [9.5.2](https://github.com/sanity-io/next-sanity/compare/next-sanity-v9.5.1...next-sanity-v9.5.2) (2024-10-14)
 
-
 ### Bug Fixes
 
-* **deps:** update dependency @sanity/preview-kit to v5.1.3 (main) ([#1728](https://github.com/sanity-io/next-sanity/issues/1728)) ([6d593e2](https://github.com/sanity-io/next-sanity/commit/6d593e25d208432f8dade843fbba7db995f97257))
+- **deps:** update dependency @sanity/preview-kit to v5.1.3 (main) ([#1728](https://github.com/sanity-io/next-sanity/issues/1728)) ([6d593e2](https://github.com/sanity-io/next-sanity/commit/6d593e25d208432f8dade843fbba7db995f97257))
 
 ## [9.5.1](https://github.com/sanity-io/next-sanity/compare/next-sanity-v9.5.0...next-sanity-v9.5.1) (2024-10-14)
 
-
 ### Bug Fixes
 
-* **deps:** update dependency @sanity/client to ^6.22.1 (main) ([#1729](https://github.com/sanity-io/next-sanity/issues/1729)) ([027fae0](https://github.com/sanity-io/next-sanity/commit/027fae02cef1d427e96b2c480bfd32f024af2bbd))
+- **deps:** update dependency @sanity/client to ^6.22.1 (main) ([#1729](https://github.com/sanity-io/next-sanity/issues/1729)) ([027fae0](https://github.com/sanity-io/next-sanity/commit/027fae02cef1d427e96b2c480bfd32f024af2bbd))
 
 ## [9.5.0](https://github.com/sanity-io/next-sanity/compare/next-sanity-v9.4.7...next-sanity-v9.5.0) (2024-09-19)
 
-
 ### Features
 
-* **client:** export `stegaClean` utility ([235259f](https://github.com/sanity-io/next-sanity/commit/235259fbb461df6047a801665f0c193c8a066afb))
-
+- **client:** export `stegaClean` utility ([235259f](https://github.com/sanity-io/next-sanity/commit/235259fbb461df6047a801665f0c193c8a066afb))
 
 ### Bug Fixes
 
-* **deps:** update dependency @sanity/client to ^6.21.3 (main) ([#1664](https://github.com/sanity-io/next-sanity/issues/1664)) ([697f411](https://github.com/sanity-io/next-sanity/commit/697f411e1e1505b563835f0a65507abb59564e2d))
-* **deps:** Update dependency @sanity/preview-kit to v5.1.1 ([e75e41f](https://github.com/sanity-io/next-sanity/commit/e75e41f8d76f664f3917184c9c4104af0a69fc6d))
-* **deps:** Update dependency @sanity/visual-editing to v2.1.10 ([2b32360](https://github.com/sanity-io/next-sanity/commit/2b32360b40b5ee79120ce5f0bdeaea40d3cb6779))
-* **deps:** Update dependency groq to v3.57.4 ([1ac314c](https://github.com/sanity-io/next-sanity/commit/1ac314cedd90fe2a95de80394f0115d5891d18c7))
-* **deps:** update dependency sanity to v3.57.4 ([5077f60](https://github.com/sanity-io/next-sanity/commit/5077f606b6ba6d3e45c4d0748932aa81df7bd78b))
-* **deps:** Update dependency typescript to v5.6.2 (main) ([#1660](https://github.com/sanity-io/next-sanity/issues/1660)) ([e94b13e](https://github.com/sanity-io/next-sanity/commit/e94b13ea9001d029cd0a8b7dc40dfe7e3e56e481))
+- **deps:** update dependency @sanity/client to ^6.21.3 (main) ([#1664](https://github.com/sanity-io/next-sanity/issues/1664)) ([697f411](https://github.com/sanity-io/next-sanity/commit/697f411e1e1505b563835f0a65507abb59564e2d))
+- **deps:** Update dependency @sanity/preview-kit to v5.1.1 ([e75e41f](https://github.com/sanity-io/next-sanity/commit/e75e41f8d76f664f3917184c9c4104af0a69fc6d))
+- **deps:** Update dependency @sanity/visual-editing to v2.1.10 ([2b32360](https://github.com/sanity-io/next-sanity/commit/2b32360b40b5ee79120ce5f0bdeaea40d3cb6779))
+- **deps:** Update dependency groq to v3.57.4 ([1ac314c](https://github.com/sanity-io/next-sanity/commit/1ac314cedd90fe2a95de80394f0115d5891d18c7))
+- **deps:** update dependency sanity to v3.57.4 ([5077f60](https://github.com/sanity-io/next-sanity/commit/5077f606b6ba6d3e45c4d0748932aa81df7bd78b))
+- **deps:** Update dependency typescript to v5.6.2 (main) ([#1660](https://github.com/sanity-io/next-sanity/issues/1660)) ([e94b13e](https://github.com/sanity-io/next-sanity/commit/e94b13ea9001d029cd0a8b7dc40dfe7e3e56e481))
 
 ## [9.4.7](https://github.com/sanity-io/next-sanity/compare/v9.4.6...v9.4.7) (2024-08-20)
 
-
 ### Bug Fixes
 
-* update readme to preach automatic type inference ([#1652](https://github.com/sanity-io/next-sanity/issues/1652)) ([e35c285](https://github.com/sanity-io/next-sanity/commit/e35c2856830bc3636a86e61a66199f55c99b74b3))
+- update readme to preach automatic type inference ([#1652](https://github.com/sanity-io/next-sanity/issues/1652)) ([e35c285](https://github.com/sanity-io/next-sanity/commit/e35c2856830bc3636a86e61a66199f55c99b74b3))
 
 ## [9.4.6](https://github.com/sanity-io/next-sanity/compare/v9.4.5...v9.4.6) (2024-08-20)
 
-
 ### Bug Fixes
 
-* update groq dep and export defineQuery ([#1650](https://github.com/sanity-io/next-sanity/issues/1650)) ([2e91587](https://github.com/sanity-io/next-sanity/commit/2e915879ec2895b0a0b5cef126af23064c3de816))
+- update groq dep and export defineQuery ([#1650](https://github.com/sanity-io/next-sanity/issues/1650)) ([2e91587](https://github.com/sanity-io/next-sanity/commit/2e915879ec2895b0a0b5cef126af23064c3de816))
 
 ## [9.4.5](https://github.com/sanity-io/next-sanity/compare/v9.4.4...v9.4.5) (2024-08-09)
 
-
 ### Bug Fixes
 
-* **deps:** update dependency @sanity/client to ^6.21.2 ([#1645](https://github.com/sanity-io/next-sanity/issues/1645)) ([e788e24](https://github.com/sanity-io/next-sanity/commit/e788e24b9a6226ee4ae127c6dc14ea22aa1164e9))
+- **deps:** update dependency @sanity/client to ^6.21.2 ([#1645](https://github.com/sanity-io/next-sanity/issues/1645)) ([e788e24](https://github.com/sanity-io/next-sanity/commit/e788e24b9a6226ee4ae127c6dc14ea22aa1164e9))
 
 ## [9.4.4](https://github.com/sanity-io/next-sanity/compare/v9.4.3...v9.4.4) (2024-08-06)
 
-
 ### Bug Fixes
 
-* **deps:** update dependency @sanity/client to ^6.21.1 ([#1632](https://github.com/sanity-io/next-sanity/issues/1632)) ([7273308](https://github.com/sanity-io/next-sanity/commit/727330821db5e9b53e4f3b51fe1a1f10d4e30fab))
-* **deps:** Update dependency @sanity/visual-editing to v2.1.8 ([#1630](https://github.com/sanity-io/next-sanity/issues/1630)) ([87efc27](https://github.com/sanity-io/next-sanity/commit/87efc273a6263e0da04442c8dd14255071a1000f))
-* **deps:** Update dependency typescript to v5.5.3 ([#1631](https://github.com/sanity-io/next-sanity/issues/1631)) ([5b6a37e](https://github.com/sanity-io/next-sanity/commit/5b6a37ea7f57b3442357dc754d09fdfc425125d0))
+- **deps:** update dependency @sanity/client to ^6.21.1 ([#1632](https://github.com/sanity-io/next-sanity/issues/1632)) ([7273308](https://github.com/sanity-io/next-sanity/commit/727330821db5e9b53e4f3b51fe1a1f10d4e30fab))
+- **deps:** Update dependency @sanity/visual-editing to v2.1.8 ([#1630](https://github.com/sanity-io/next-sanity/issues/1630)) ([87efc27](https://github.com/sanity-io/next-sanity/commit/87efc273a6263e0da04442c8dd14255071a1000f))
+- **deps:** Update dependency typescript to v5.5.3 ([#1631](https://github.com/sanity-io/next-sanity/issues/1631)) ([5b6a37e](https://github.com/sanity-io/next-sanity/commit/5b6a37ea7f57b3442357dc754d09fdfc425125d0))
 
 ## [9.4.3](https://github.com/sanity-io/next-sanity/compare/v9.4.2...v9.4.3) (2024-07-31)
 
-
 ### Bug Fixes
 
-* revalidatePath function ([#1622](https://github.com/sanity-io/next-sanity/issues/1622)) ([0fca21f](https://github.com/sanity-io/next-sanity/commit/0fca21fc208338cfe8734d40efe76bc69d919672))
+- revalidatePath function ([#1622](https://github.com/sanity-io/next-sanity/issues/1622)) ([0fca21f](https://github.com/sanity-io/next-sanity/commit/0fca21fc208338cfe8734d40efe76bc69d919672))
 
 ## [9.4.2](https://github.com/sanity-io/next-sanity/compare/v9.4.1...v9.4.2) (2024-06-20)
 
-
 ### Bug Fixes
 
-* remove react-compiler export condition ([#1613](https://github.com/sanity-io/next-sanity/issues/1613)) ([096090b](https://github.com/sanity-io/next-sanity/commit/096090b94dbc134051ab64bd74926f171f663507))
+- remove react-compiler export condition ([#1613](https://github.com/sanity-io/next-sanity/issues/1613)) ([096090b](https://github.com/sanity-io/next-sanity/commit/096090b94dbc134051ab64bd74926f171f663507))
 
 ## [9.4.1](https://github.com/sanity-io/next-sanity/compare/v9.4.0...v9.4.1) (2024-06-20)
 
-
 ### Bug Fixes
 
-* use dynamic path that works in CJS ([#1610](https://github.com/sanity-io/next-sanity/issues/1610)) ([49b907e](https://github.com/sanity-io/next-sanity/commit/49b907e48ae8788fb407c7521f64f83875b9374d))
-* use dynamic path that works in CJS ([#1611](https://github.com/sanity-io/next-sanity/issues/1611)) ([33309ac](https://github.com/sanity-io/next-sanity/commit/33309acfbd71196030a082acb6bdb5fbc3066ef1))
+- use dynamic path that works in CJS ([#1610](https://github.com/sanity-io/next-sanity/issues/1610)) ([49b907e](https://github.com/sanity-io/next-sanity/commit/49b907e48ae8788fb407c7521f64f83875b9374d))
+- use dynamic path that works in CJS ([#1611](https://github.com/sanity-io/next-sanity/issues/1611)) ([33309ac](https://github.com/sanity-io/next-sanity/commit/33309acfbd71196030a082acb6bdb5fbc3066ef1))
 
 ## [9.4.0](https://github.com/sanity-io/next-sanity/compare/v9.3.10...v9.4.0) (2024-06-20)
 
-
 ### Features
 
-* add `react-compiler` condition and improve lazy load perf ([#1609](https://github.com/sanity-io/next-sanity/issues/1609)) ([bd0756f](https://github.com/sanity-io/next-sanity/commit/bd0756f732f19e449bf548478fbdfcad38566944))
-
+- add `react-compiler` condition and improve lazy load perf ([#1609](https://github.com/sanity-io/next-sanity/issues/1609)) ([bd0756f](https://github.com/sanity-io/next-sanity/commit/bd0756f732f19e449bf548478fbdfcad38566944))
 
 ### Bug Fixes
 
-* **deps:** update dependency @sanity/client to ^6.20.1 ([#1607](https://github.com/sanity-io/next-sanity/issues/1607)) ([c651ffa](https://github.com/sanity-io/next-sanity/commit/c651ffa75743b8ca3946c9507edbfaf3d9a714b7))
+- **deps:** update dependency @sanity/client to ^6.20.1 ([#1607](https://github.com/sanity-io/next-sanity/issues/1607)) ([c651ffa](https://github.com/sanity-io/next-sanity/commit/c651ffa75743b8ca3946c9507edbfaf3d9a714b7))
 
 ## [9.3.10](https://github.com/sanity-io/next-sanity/compare/v9.3.9...v9.3.10) (2024-05-30)
 
-
 ### Bug Fixes
 
-* **deps:** update dependency @sanity/preview-kit to v5.1.0 ([#1580](https://github.com/sanity-io/next-sanity/issues/1580)) ([28050ce](https://github.com/sanity-io/next-sanity/commit/28050ce696b9c3a5b4f9cc6adc29c371d738548f))
+- **deps:** update dependency @sanity/preview-kit to v5.1.0 ([#1580](https://github.com/sanity-io/next-sanity/issues/1580)) ([28050ce](https://github.com/sanity-io/next-sanity/commit/28050ce696b9c3a5b4f9cc6adc29c371d738548f))
 
 ## [9.3.9](https://github.com/sanity-io/next-sanity/compare/v9.3.8...v9.3.9) (2024-05-30)
 
-
 ### Bug Fixes
 
-* **deps:** update dependency @sanity/client to ^6.19.1 ([#1575](https://github.com/sanity-io/next-sanity/issues/1575)) ([762a910](https://github.com/sanity-io/next-sanity/commit/762a910363544dc5445f8ba02092ecd2e6c7b573))
-* **deps:** update dependency @sanity/preview-kit to v5.0.62 ([#1579](https://github.com/sanity-io/next-sanity/issues/1579)) ([999f58b](https://github.com/sanity-io/next-sanity/commit/999f58b0e68498ce9be9c63d4be25d7559fdae77))
-* **deps:** Update dependency @sanity/visual-editing to v2.1.3 ([#1578](https://github.com/sanity-io/next-sanity/issues/1578)) ([008284a](https://github.com/sanity-io/next-sanity/commit/008284af3ef61c28ab76a53cd057bd68c70bfddf))
+- **deps:** update dependency @sanity/client to ^6.19.1 ([#1575](https://github.com/sanity-io/next-sanity/issues/1575)) ([762a910](https://github.com/sanity-io/next-sanity/commit/762a910363544dc5445f8ba02092ecd2e6c7b573))
+- **deps:** update dependency @sanity/preview-kit to v5.0.62 ([#1579](https://github.com/sanity-io/next-sanity/issues/1579)) ([999f58b](https://github.com/sanity-io/next-sanity/commit/999f58b0e68498ce9be9c63d4be25d7559fdae77))
+- **deps:** Update dependency @sanity/visual-editing to v2.1.3 ([#1578](https://github.com/sanity-io/next-sanity/issues/1578)) ([008284a](https://github.com/sanity-io/next-sanity/commit/008284af3ef61c28ab76a53cd057bd68c70bfddf))
 
 ## [9.3.8](https://github.com/sanity-io/next-sanity/compare/v9.3.7...v9.3.8) (2024-05-29)
 
-
 ### Bug Fixes
 
-* **deps:** Update dependency @sanity/icons to v3 ([#1570](https://github.com/sanity-io/next-sanity/issues/1570)) ([e599875](https://github.com/sanity-io/next-sanity/commit/e5998754e52fcbc490420a6abbebbf936ddb8a22))
-* **deps:** update dependency @sanity/preview-kit to v5.0.61 ([#1572](https://github.com/sanity-io/next-sanity/issues/1572)) ([cf75a2a](https://github.com/sanity-io/next-sanity/commit/cf75a2aee4cba6172e88c986e6cb244d7672d984))
-* **deps:** Update dependency @sanity/visual-editing to v2.1.2 ([#1569](https://github.com/sanity-io/next-sanity/issues/1569)) ([42d162e](https://github.com/sanity-io/next-sanity/commit/42d162e32388620dbed2e9f501d6d2acc2e0de64))
+- **deps:** Update dependency @sanity/icons to v3 ([#1570](https://github.com/sanity-io/next-sanity/issues/1570)) ([e599875](https://github.com/sanity-io/next-sanity/commit/e5998754e52fcbc490420a6abbebbf936ddb8a22))
+- **deps:** update dependency @sanity/preview-kit to v5.0.61 ([#1572](https://github.com/sanity-io/next-sanity/issues/1572)) ([cf75a2a](https://github.com/sanity-io/next-sanity/commit/cf75a2aee4cba6172e88c986e6cb244d7672d984))
+- **deps:** Update dependency @sanity/visual-editing to v2.1.2 ([#1569](https://github.com/sanity-io/next-sanity/issues/1569)) ([42d162e](https://github.com/sanity-io/next-sanity/commit/42d162e32388620dbed2e9f501d6d2acc2e0de64))
 
 ## [9.3.7](https://github.com/sanity-io/next-sanity/compare/v9.3.6...v9.3.7) (2024-05-29)
 
-
 ### Bug Fixes
 
-* **deps:** Update dependency @sanity/visual-editing to v2.1.1 ([#1567](https://github.com/sanity-io/next-sanity/issues/1567)) ([e206b75](https://github.com/sanity-io/next-sanity/commit/e206b75e143140c4df2453be4f9baf41869a81e2))
+- **deps:** Update dependency @sanity/visual-editing to v2.1.1 ([#1567](https://github.com/sanity-io/next-sanity/issues/1567)) ([e206b75](https://github.com/sanity-io/next-sanity/commit/e206b75e143140c4df2453be4f9baf41869a81e2))
 
 ## [9.3.6](https://github.com/sanity-io/next-sanity/compare/v9.3.5...v9.3.6) (2024-05-29)
 
-
 ### Bug Fixes
 
-* **deps:** update dependency @sanity/preview-kit to v5.0.60 ([#1561](https://github.com/sanity-io/next-sanity/issues/1561)) ([98ec1d9](https://github.com/sanity-io/next-sanity/commit/98ec1d9e5694696c1a17cf6bbf2e921e4d79a49b))
+- **deps:** update dependency @sanity/preview-kit to v5.0.60 ([#1561](https://github.com/sanity-io/next-sanity/issues/1561)) ([98ec1d9](https://github.com/sanity-io/next-sanity/commit/98ec1d9e5694696c1a17cf6bbf2e921e4d79a49b))
 
 ## [9.3.5](https://github.com/sanity-io/next-sanity/compare/v9.3.4...v9.3.5) (2024-05-28)
 
-
 ### Bug Fixes
 
-* **deps:** Update dependency @sanity/visual-editing to v2.1.0 ([#1560](https://github.com/sanity-io/next-sanity/issues/1560)) ([d8c74ee](https://github.com/sanity-io/next-sanity/commit/d8c74ee89a6e314653c1aa85e826d3211f1b2f5e))
+- **deps:** Update dependency @sanity/visual-editing to v2.1.0 ([#1560](https://github.com/sanity-io/next-sanity/issues/1560)) ([d8c74ee](https://github.com/sanity-io/next-sanity/commit/d8c74ee89a6e314653c1aa85e826d3211f1b2f5e))
 
 ## [9.3.4](https://github.com/sanity-io/next-sanity/compare/v9.3.3...v9.3.4) (2024-05-28)
 
-
 ### Bug Fixes
 
-* **deps:** update dependency @portabletext/react to ^3.1.0 ([#1554](https://github.com/sanity-io/next-sanity/issues/1554)) ([aee447f](https://github.com/sanity-io/next-sanity/commit/aee447f0f607ed7ef45e5a0b50626d17626bfe9c))
+- **deps:** update dependency @portabletext/react to ^3.1.0 ([#1554](https://github.com/sanity-io/next-sanity/issues/1554)) ([aee447f](https://github.com/sanity-io/next-sanity/commit/aee447f0f607ed7ef45e5a0b50626d17626bfe9c))
 
 ## [9.3.3](https://github.com/sanity-io/next-sanity/compare/v9.3.2...v9.3.3) (2024-05-28)
 
-
 ### Bug Fixes
 
-* **deps:** update dependency @sanity/client to ^6.19.0 ([#1551](https://github.com/sanity-io/next-sanity/issues/1551)) ([2518184](https://github.com/sanity-io/next-sanity/commit/2518184a312bd067c87bc95f4571fc456ec53f41))
+- **deps:** update dependency @sanity/client to ^6.19.0 ([#1551](https://github.com/sanity-io/next-sanity/issues/1551)) ([2518184](https://github.com/sanity-io/next-sanity/commit/2518184a312bd067c87bc95f4571fc456ec53f41))
 
 ## [9.3.2](https://github.com/sanity-io/next-sanity/compare/v9.3.1...v9.3.2) (2024-05-28)
 
-
 ### Bug Fixes
 
-* **deps:** update dependency @portabletext/react to ^3.1.0 ([#1550](https://github.com/sanity-io/next-sanity/issues/1550)) ([5f3a8a3](https://github.com/sanity-io/next-sanity/commit/5f3a8a3fd2ae67e5c5039b88a891cebe78c67ecb))
+- **deps:** update dependency @portabletext/react to ^3.1.0 ([#1550](https://github.com/sanity-io/next-sanity/issues/1550)) ([5f3a8a3](https://github.com/sanity-io/next-sanity/commit/5f3a8a3fd2ae67e5c5039b88a891cebe78c67ecb))
 
 ## [9.3.1](https://github.com/sanity-io/next-sanity/compare/v9.3.0...v9.3.1) (2024-05-28)
 
-
 ### Bug Fixes
 
-* **deps:** Update dependency @sanity/visual-editing to v2 ([#1548](https://github.com/sanity-io/next-sanity/issues/1548)) ([893494e](https://github.com/sanity-io/next-sanity/commit/893494e3893ec1e0c05b190979a07af4c74aa932))
+- **deps:** Update dependency @sanity/visual-editing to v2 ([#1548](https://github.com/sanity-io/next-sanity/issues/1548)) ([893494e](https://github.com/sanity-io/next-sanity/commit/893494e3893ec1e0c05b190979a07af4c74aa932))
 
 ## [9.3.0](https://github.com/sanity-io/next-sanity/compare/v9.2.1...v9.3.0) (2024-05-24)
 
-
 ### Features
 
-* **visual-editing:** add `trailingSlash ` support ([#1540](https://github.com/sanity-io/next-sanity/issues/1540)) ([5977fb5](https://github.com/sanity-io/next-sanity/commit/5977fb5cde6aee8eedb2c811755819b679ebbb6b))
+- **visual-editing:** add `trailingSlash ` support ([#1540](https://github.com/sanity-io/next-sanity/issues/1540)) ([5977fb5](https://github.com/sanity-io/next-sanity/commit/5977fb5cde6aee8eedb2c811755819b679ebbb6b))
 
 ## [9.2.1](https://github.com/sanity-io/next-sanity/compare/v9.2.0...v9.2.1) (2024-05-24)
 
-
 ### Bug Fixes
 
-* **deps:** update dependency @sanity/client to ^6.18.3 ([#1537](https://github.com/sanity-io/next-sanity/issues/1537)) ([fdc92d2](https://github.com/sanity-io/next-sanity/commit/fdc92d213b6fc824b0393744029f821212fc7e36))
-* **deps:** update dependency @sanity/preview-kit to v5.0.59 ([#1538](https://github.com/sanity-io/next-sanity/issues/1538)) ([b30b8f6](https://github.com/sanity-io/next-sanity/commit/b30b8f66b4e0627bf71341dc85a6aeb98ee67f61))
+- **deps:** update dependency @sanity/client to ^6.18.3 ([#1537](https://github.com/sanity-io/next-sanity/issues/1537)) ([fdc92d2](https://github.com/sanity-io/next-sanity/commit/fdc92d213b6fc824b0393744029f821212fc7e36))
+- **deps:** update dependency @sanity/preview-kit to v5.0.59 ([#1538](https://github.com/sanity-io/next-sanity/issues/1538)) ([b30b8f6](https://github.com/sanity-io/next-sanity/commit/b30b8f66b4e0627bf71341dc85a6aeb98ee67f61))
 
 ## [9.2.0](https://github.com/sanity-io/next-sanity/compare/v9.1.1...v9.2.0) (2024-05-22)
 
-
 ### Features
 
-* **image:** set fit param to max when height is unspecified ([#1520](https://github.com/sanity-io/next-sanity/issues/1520)) ([fae2812](https://github.com/sanity-io/next-sanity/commit/fae2812e180f74a6f8f492dc10b58b0d2f2e034e))
+- **image:** set fit param to max when height is unspecified ([#1520](https://github.com/sanity-io/next-sanity/issues/1520)) ([fae2812](https://github.com/sanity-io/next-sanity/commit/fae2812e180f74a6f8f492dc10b58b0d2f2e034e))
 
 ## [9.1.1](https://github.com/sanity-io/next-sanity/compare/v9.1.0...v9.1.1) (2024-05-22)
 
-
 ### Bug Fixes
 
-* add v19 to `react` peer dep range ([#1519](https://github.com/sanity-io/next-sanity/issues/1519)) ([db2f301](https://github.com/sanity-io/next-sanity/commit/db2f301be9043b5c76b7100d0ff541583acfa2cb))
+- add v19 to `react` peer dep range ([#1519](https://github.com/sanity-io/next-sanity/issues/1519)) ([db2f301](https://github.com/sanity-io/next-sanity/commit/db2f301be9043b5c76b7100d0ff541583acfa2cb))
 
 ## [9.1.0](https://github.com/sanity-io/next-sanity/compare/v9.0.20...v9.1.0) (2024-05-21)
 
-
 ### Features
 
-* **visual-editing:** add `basePath` support ([#1510](https://github.com/sanity-io/next-sanity/issues/1510)) ([9378e61](https://github.com/sanity-io/next-sanity/commit/9378e6136d3e6ef14d88965b4ffdc47c6703a882))
+- **visual-editing:** add `basePath` support ([#1510](https://github.com/sanity-io/next-sanity/issues/1510)) ([9378e61](https://github.com/sanity-io/next-sanity/commit/9378e6136d3e6ef14d88965b4ffdc47c6703a882))
 
 ## [9.0.20](https://github.com/sanity-io/next-sanity/compare/v9.0.19...v9.0.20) (2024-05-16)
 
-
 ### Bug Fixes
 
-* **deps:** Update dependency @sanity/visual-editing to v1.8.21 ([#1499](https://github.com/sanity-io/next-sanity/issues/1499)) ([c3a8980](https://github.com/sanity-io/next-sanity/commit/c3a8980d56e40cb102328c4203b54f246261927f))
+- **deps:** Update dependency @sanity/visual-editing to v1.8.21 ([#1499](https://github.com/sanity-io/next-sanity/issues/1499)) ([c3a8980](https://github.com/sanity-io/next-sanity/commit/c3a8980d56e40cb102328c4203b54f246261927f))
 
 ## [9.0.19](https://github.com/sanity-io/next-sanity/compare/v9.0.18...v9.0.19) (2024-05-15)
 
-
 ### Bug Fixes
 
-* **deps:** update dependency @sanity/preview-kit to v5.0.58 ([#1498](https://github.com/sanity-io/next-sanity/issues/1498)) ([cbbda4e](https://github.com/sanity-io/next-sanity/commit/cbbda4e35287a25c168174e5532b07b6835b60e7))
-* **deps:** Update dependency @sanity/visual-editing to v1.8.20 ([#1495](https://github.com/sanity-io/next-sanity/issues/1495)) ([0a60fc5](https://github.com/sanity-io/next-sanity/commit/0a60fc5330347893037089e1b034d6027fcaa8c2))
+- **deps:** update dependency @sanity/preview-kit to v5.0.58 ([#1498](https://github.com/sanity-io/next-sanity/issues/1498)) ([cbbda4e](https://github.com/sanity-io/next-sanity/commit/cbbda4e35287a25c168174e5532b07b6835b60e7))
+- **deps:** Update dependency @sanity/visual-editing to v1.8.20 ([#1495](https://github.com/sanity-io/next-sanity/issues/1495)) ([0a60fc5](https://github.com/sanity-io/next-sanity/commit/0a60fc5330347893037089e1b034d6027fcaa8c2))
 
 ## [9.0.18](https://github.com/sanity-io/next-sanity/compare/v9.0.17...v9.0.18) (2024-05-15)
 
-
 ### Bug Fixes
 
-* `improve` viewport typings ([#1491](https://github.com/sanity-io/next-sanity/issues/1491)) ([7b3f84d](https://github.com/sanity-io/next-sanity/commit/7b3f84d0101f74cd6961d933c4ac76a900c21490))
-* **deps:** update dependency @sanity/client to ^6.18.2 ([#1485](https://github.com/sanity-io/next-sanity/issues/1485)) ([0300c16](https://github.com/sanity-io/next-sanity/commit/0300c16fbd25addfc6bb1977b88c423be2828f9e))
-* **deps:** update dependency @sanity/preview-kit to v5.0.57 ([#1492](https://github.com/sanity-io/next-sanity/issues/1492)) ([e72eaa9](https://github.com/sanity-io/next-sanity/commit/e72eaa928cf16ab49916d83e35262476b308919f))
+- `improve` viewport typings ([#1491](https://github.com/sanity-io/next-sanity/issues/1491)) ([7b3f84d](https://github.com/sanity-io/next-sanity/commit/7b3f84d0101f74cd6961d933c4ac76a900c21490))
+- **deps:** update dependency @sanity/client to ^6.18.2 ([#1485](https://github.com/sanity-io/next-sanity/issues/1485)) ([0300c16](https://github.com/sanity-io/next-sanity/commit/0300c16fbd25addfc6bb1977b88c423be2828f9e))
+- **deps:** update dependency @sanity/preview-kit to v5.0.57 ([#1492](https://github.com/sanity-io/next-sanity/issues/1492)) ([e72eaa9](https://github.com/sanity-io/next-sanity/commit/e72eaa928cf16ab49916d83e35262476b308919f))
 
 ## [9.0.17](https://github.com/sanity-io/next-sanity/compare/v9.0.16...v9.0.17) (2024-05-13)
 
-
 ### Bug Fixes
 
-* **deps:** update dependency @sanity/preview-kit to v5.0.55 ([#1473](https://github.com/sanity-io/next-sanity/issues/1473)) ([f9abfd9](https://github.com/sanity-io/next-sanity/commit/f9abfd9900fbdb046f4f4656bfb8cb3c4bdf2048))
+- **deps:** update dependency @sanity/preview-kit to v5.0.55 ([#1473](https://github.com/sanity-io/next-sanity/issues/1473)) ([f9abfd9](https://github.com/sanity-io/next-sanity/commit/f9abfd9900fbdb046f4f4656bfb8cb3c4bdf2048))
 
 ## [9.0.16](https://github.com/sanity-io/next-sanity/compare/v9.0.15...v9.0.16) (2024-05-13)
 
-
 ### Bug Fixes
 
-* **deps:** update dependency @sanity/client to ^6.18.1 ([#1470](https://github.com/sanity-io/next-sanity/issues/1470)) ([bc01ab2](https://github.com/sanity-io/next-sanity/commit/bc01ab2009706f05cb3cb93666574f710e611ced))
-* **deps:** update dependency @sanity/preview-kit to v5.0.55 ([#1471](https://github.com/sanity-io/next-sanity/issues/1471)) ([edf81c4](https://github.com/sanity-io/next-sanity/commit/edf81c453fbc4c172aab0179a04531c9ac7eb8f5))
-* **deps:** Update dependency @sanity/visual-editing to v1.8.19 ([#1466](https://github.com/sanity-io/next-sanity/issues/1466)) ([0e409d9](https://github.com/sanity-io/next-sanity/commit/0e409d980322003d878555bc03b4ec3ce1c0847a))
+- **deps:** update dependency @sanity/client to ^6.18.1 ([#1470](https://github.com/sanity-io/next-sanity/issues/1470)) ([bc01ab2](https://github.com/sanity-io/next-sanity/commit/bc01ab2009706f05cb3cb93666574f710e611ced))
+- **deps:** update dependency @sanity/preview-kit to v5.0.55 ([#1471](https://github.com/sanity-io/next-sanity/issues/1471)) ([edf81c4](https://github.com/sanity-io/next-sanity/commit/edf81c453fbc4c172aab0179a04531c9ac7eb8f5))
+- **deps:** Update dependency @sanity/visual-editing to v1.8.19 ([#1466](https://github.com/sanity-io/next-sanity/issues/1466)) ([0e409d9](https://github.com/sanity-io/next-sanity/commit/0e409d980322003d878555bc03b4ec3ce1c0847a))
 
 ## [9.0.15](https://github.com/sanity-io/next-sanity/compare/v9.0.14...v9.0.15) (2024-05-07)
 
-
 ### Bug Fixes
 
-* **deps:** update dependency @sanity/client to ^6.18.0 ([#1440](https://github.com/sanity-io/next-sanity/issues/1440)) ([745798d](https://github.com/sanity-io/next-sanity/commit/745798d7adb870715e8b26124210c2dffc6b5934))
-* **deps:** update dependency @sanity/preview-kit to v5.0.54 ([#1448](https://github.com/sanity-io/next-sanity/issues/1448)) ([0f7663b](https://github.com/sanity-io/next-sanity/commit/0f7663be2820b05085e9d853b614678ac7d6bc71))
+- **deps:** update dependency @sanity/client to ^6.18.0 ([#1440](https://github.com/sanity-io/next-sanity/issues/1440)) ([745798d](https://github.com/sanity-io/next-sanity/commit/745798d7adb870715e8b26124210c2dffc6b5934))
+- **deps:** update dependency @sanity/preview-kit to v5.0.54 ([#1448](https://github.com/sanity-io/next-sanity/issues/1448)) ([0f7663b](https://github.com/sanity-io/next-sanity/commit/0f7663be2820b05085e9d853b614678ac7d6bc71))
 
 ## [9.0.14](https://github.com/sanity-io/next-sanity/compare/v9.0.13...v9.0.14) (2024-05-05)
 
-
 ### Bug Fixes
 
-* **deps:** update dependency @sanity/preview-kit to v5.0.52 ([#1419](https://github.com/sanity-io/next-sanity/issues/1419)) ([83270d7](https://github.com/sanity-io/next-sanity/commit/83270d7510a2172e8f13faf9bc073a3690f15a91))
-* **deps:** update dependency @sanity/preview-kit to v5.0.53 ([#1427](https://github.com/sanity-io/next-sanity/issues/1427)) ([4cfeb28](https://github.com/sanity-io/next-sanity/commit/4cfeb28634dd25220ce49feed8a5fe322114d3db))
-* **deps:** Update dependency @sanity/visual-editing to v1.8.18 ([#1425](https://github.com/sanity-io/next-sanity/issues/1425)) ([4f7d84e](https://github.com/sanity-io/next-sanity/commit/4f7d84e3465a02c8852febc523158e529616f538))
+- **deps:** update dependency @sanity/preview-kit to v5.0.52 ([#1419](https://github.com/sanity-io/next-sanity/issues/1419)) ([83270d7](https://github.com/sanity-io/next-sanity/commit/83270d7510a2172e8f13faf9bc073a3690f15a91))
+- **deps:** update dependency @sanity/preview-kit to v5.0.53 ([#1427](https://github.com/sanity-io/next-sanity/issues/1427)) ([4cfeb28](https://github.com/sanity-io/next-sanity/commit/4cfeb28634dd25220ce49feed8a5fe322114d3db))
+- **deps:** Update dependency @sanity/visual-editing to v1.8.18 ([#1425](https://github.com/sanity-io/next-sanity/issues/1425)) ([4f7d84e](https://github.com/sanity-io/next-sanity/commit/4f7d84e3465a02c8852febc523158e529616f538))
 
 ## [9.0.13](https://github.com/sanity-io/next-sanity/compare/v9.0.12...v9.0.13) (2024-05-03)
 
-
 ### Bug Fixes
 
-* **deps:** update dependency @sanity/client to ^6.17.0 ([#1411](https://github.com/sanity-io/next-sanity/issues/1411)) ([e10cb73](https://github.com/sanity-io/next-sanity/commit/e10cb73388d8a057a78eb7d962fda5a6526035ce))
-* **deps:** update dependency @sanity/preview-kit to v5.0.50 ([#1417](https://github.com/sanity-io/next-sanity/issues/1417)) ([e24381c](https://github.com/sanity-io/next-sanity/commit/e24381cab9439fc0fe34d4252bb126d6cb2f9cac))
-* **deps:** update dependency @sanity/preview-kit to v5.0.51 ([#1418](https://github.com/sanity-io/next-sanity/issues/1418)) ([6013d41](https://github.com/sanity-io/next-sanity/commit/6013d41242cce32d4d4e25b9cf9fc721779930d5))
-* **deps:** Update dependency @sanity/visual-editing to v1.8.17 ([#1409](https://github.com/sanity-io/next-sanity/issues/1409)) ([2221be4](https://github.com/sanity-io/next-sanity/commit/2221be445a07ae0ea376538b82e3c714f5fae8c2))
+- **deps:** update dependency @sanity/client to ^6.17.0 ([#1411](https://github.com/sanity-io/next-sanity/issues/1411)) ([e10cb73](https://github.com/sanity-io/next-sanity/commit/e10cb73388d8a057a78eb7d962fda5a6526035ce))
+- **deps:** update dependency @sanity/preview-kit to v5.0.50 ([#1417](https://github.com/sanity-io/next-sanity/issues/1417)) ([e24381c](https://github.com/sanity-io/next-sanity/commit/e24381cab9439fc0fe34d4252bb126d6cb2f9cac))
+- **deps:** update dependency @sanity/preview-kit to v5.0.51 ([#1418](https://github.com/sanity-io/next-sanity/issues/1418)) ([6013d41](https://github.com/sanity-io/next-sanity/commit/6013d41242cce32d4d4e25b9cf9fc721779930d5))
+- **deps:** Update dependency @sanity/visual-editing to v1.8.17 ([#1409](https://github.com/sanity-io/next-sanity/issues/1409)) ([2221be4](https://github.com/sanity-io/next-sanity/commit/2221be445a07ae0ea376538b82e3c714f5fae8c2))
 
 ## [9.0.12](https://github.com/sanity-io/next-sanity/compare/v9.0.11...v9.0.12) (2024-04-26)
 
-
 ### Bug Fixes
 
-* **deps:** update dependency @sanity/preview-kit to v5.0.49 ([#1386](https://github.com/sanity-io/next-sanity/issues/1386)) ([763fc2d](https://github.com/sanity-io/next-sanity/commit/763fc2d02b4b30289ed431ea777fd3932c03f48c))
-* **deps:** Update dependency @sanity/visual-editing to v1.8.16 ([#1387](https://github.com/sanity-io/next-sanity/issues/1387)) ([a0f98c0](https://github.com/sanity-io/next-sanity/commit/a0f98c0521aeae9d2d8e205c91e57368c1adc902))
+- **deps:** update dependency @sanity/preview-kit to v5.0.49 ([#1386](https://github.com/sanity-io/next-sanity/issues/1386)) ([763fc2d](https://github.com/sanity-io/next-sanity/commit/763fc2d02b4b30289ed431ea777fd3932c03f48c))
+- **deps:** Update dependency @sanity/visual-editing to v1.8.16 ([#1387](https://github.com/sanity-io/next-sanity/issues/1387)) ([a0f98c0](https://github.com/sanity-io/next-sanity/commit/a0f98c0521aeae9d2d8e205c91e57368c1adc902))
 
 ## [9.0.11](https://github.com/sanity-io/next-sanity/compare/v9.0.10...v9.0.11) (2024-04-25)
 
-
 ### Bug Fixes
 
-* **deps:** update dependency @sanity/webhook to v4.0.4 ([2b02fa0](https://github.com/sanity-io/next-sanity/commit/2b02fa0350a35b0cfb83642bd77365d6e9fa9397))
+- **deps:** update dependency @sanity/webhook to v4.0.4 ([2b02fa0](https://github.com/sanity-io/next-sanity/commit/2b02fa0350a35b0cfb83642bd77365d6e9fa9397))
 
 ## [9.0.10](https://github.com/sanity-io/next-sanity/compare/v9.0.9...v9.0.10) (2024-04-23)
 
-
 ### Bug Fixes
 
-* improve bundler output ([#1358](https://github.com/sanity-io/next-sanity/issues/1358)) ([b45cb04](https://github.com/sanity-io/next-sanity/commit/b45cb040c7abca60a8ccbba32d3b8d363f054ad2))
+- improve bundler output ([#1358](https://github.com/sanity-io/next-sanity/issues/1358)) ([b45cb04](https://github.com/sanity-io/next-sanity/commit/b45cb040c7abca60a8ccbba32d3b8d363f054ad2))
 
 ## [9.0.9](https://github.com/sanity-io/next-sanity/compare/v9.0.8...v9.0.9) (2024-04-23)
 
-
 ### Bug Fixes
 
-* **deps:** update dependency @sanity/client to ^6.15.20 ([#1353](https://github.com/sanity-io/next-sanity/issues/1353)) ([b85abc4](https://github.com/sanity-io/next-sanity/commit/b85abc4ce90f53d0e9f956e1ca39b0a7058afbbe))
-* **deps:** update dependency @sanity/preview-kit to v5.0.47 ([#1357](https://github.com/sanity-io/next-sanity/issues/1357)) ([a8dbebe](https://github.com/sanity-io/next-sanity/commit/a8dbebeec8a9420bf0fa8c9a11364e67dab83e6c))
-* **deps:** Update dependency @sanity/visual-editing to v1.8.15 ([#1352](https://github.com/sanity-io/next-sanity/issues/1352)) ([028b009](https://github.com/sanity-io/next-sanity/commit/028b009c2b717dfb8d104d1db45030c4cc482614))
+- **deps:** update dependency @sanity/client to ^6.15.20 ([#1353](https://github.com/sanity-io/next-sanity/issues/1353)) ([b85abc4](https://github.com/sanity-io/next-sanity/commit/b85abc4ce90f53d0e9f956e1ca39b0a7058afbbe))
+- **deps:** update dependency @sanity/preview-kit to v5.0.47 ([#1357](https://github.com/sanity-io/next-sanity/issues/1357)) ([a8dbebe](https://github.com/sanity-io/next-sanity/commit/a8dbebeec8a9420bf0fa8c9a11364e67dab83e6c))
+- **deps:** Update dependency @sanity/visual-editing to v1.8.15 ([#1352](https://github.com/sanity-io/next-sanity/issues/1352)) ([028b009](https://github.com/sanity-io/next-sanity/commit/028b009c2b717dfb8d104d1db45030c4cc482614))
 
 ## [9.0.8](https://github.com/sanity-io/next-sanity/compare/v9.0.7...v9.0.8) (2024-04-22)
 
-
 ### Bug Fixes
 
-* **deps:** update dependency @sanity/preview-kit to v5.0.46 ([#1328](https://github.com/sanity-io/next-sanity/issues/1328)) ([dd7f24b](https://github.com/sanity-io/next-sanity/commit/dd7f24b17b2643efac70818aeac812b2a33b5018))
-* **deps:** Update dependency @sanity/visual-editing to v1.8.13 ([#1337](https://github.com/sanity-io/next-sanity/issues/1337)) ([b109568](https://github.com/sanity-io/next-sanity/commit/b1095683db666d5b1b93ec89dec8dcc1393c025c))
-* **deps:** Update dependency @sanity/visual-editing to v1.8.14 ([#1347](https://github.com/sanity-io/next-sanity/issues/1347)) ([80281be](https://github.com/sanity-io/next-sanity/commit/80281be9b88b21969de96a23ce8e065c6c8badf6))
+- **deps:** update dependency @sanity/preview-kit to v5.0.46 ([#1328](https://github.com/sanity-io/next-sanity/issues/1328)) ([dd7f24b](https://github.com/sanity-io/next-sanity/commit/dd7f24b17b2643efac70818aeac812b2a33b5018))
+- **deps:** Update dependency @sanity/visual-editing to v1.8.13 ([#1337](https://github.com/sanity-io/next-sanity/issues/1337)) ([b109568](https://github.com/sanity-io/next-sanity/commit/b1095683db666d5b1b93ec89dec8dcc1393c025c))
+- **deps:** Update dependency @sanity/visual-editing to v1.8.14 ([#1347](https://github.com/sanity-io/next-sanity/issues/1347)) ([80281be](https://github.com/sanity-io/next-sanity/commit/80281be9b88b21969de96a23ce8e065c6c8badf6))
 
 ## [9.0.7](https://github.com/sanity-io/next-sanity/compare/v9.0.6...v9.0.7) (2024-04-19)
 
-
 ### Bug Fixes
 
-* handle bug affecting next 14.2.2 during static pregeneration ([#1338](https://github.com/sanity-io/next-sanity/issues/1338)) ([7373737](https://github.com/sanity-io/next-sanity/commit/737373726b86c53cae29dd0cb9da0dd31db38067))
+- handle bug affecting next 14.2.2 during static pregeneration ([#1338](https://github.com/sanity-io/next-sanity/issues/1338)) ([7373737](https://github.com/sanity-io/next-sanity/commit/737373726b86c53cae29dd0cb9da0dd31db38067))
 
 ## [9.0.6](https://github.com/sanity-io/next-sanity/compare/v9.0.5...v9.0.6) (2024-04-17)
 
-
 ### Bug Fixes
 
-* **deps:** update dependency @sanity/preview-kit to v5.0.45 ([03a3cff](https://github.com/sanity-io/next-sanity/commit/03a3cff15ff4839d238977c26b24c8622ce22bb2))
+- **deps:** update dependency @sanity/preview-kit to v5.0.45 ([03a3cff](https://github.com/sanity-io/next-sanity/commit/03a3cff15ff4839d238977c26b24c8622ce22bb2))
 
 ## [9.0.5](https://github.com/sanity-io/next-sanity/compare/v9.0.4...v9.0.5) (2024-04-17)
 
-
 ### Bug Fixes
 
-* **deps:** update dependency @sanity/client to ^6.15.17 ([#1323](https://github.com/sanity-io/next-sanity/issues/1323)) ([d91eace](https://github.com/sanity-io/next-sanity/commit/d91eace601f4c3928f22dc104076cfd328d4915c))
-* **deps:** Update dependency @sanity/visual-editing to v1.8.12 ([#1327](https://github.com/sanity-io/next-sanity/issues/1327)) ([4e8b7b7](https://github.com/sanity-io/next-sanity/commit/4e8b7b79b831ac794b4b45d1a27afc8fafe3f124))
+- **deps:** update dependency @sanity/client to ^6.15.17 ([#1323](https://github.com/sanity-io/next-sanity/issues/1323)) ([d91eace](https://github.com/sanity-io/next-sanity/commit/d91eace601f4c3928f22dc104076cfd328d4915c))
+- **deps:** Update dependency @sanity/visual-editing to v1.8.12 ([#1327](https://github.com/sanity-io/next-sanity/issues/1327)) ([4e8b7b7](https://github.com/sanity-io/next-sanity/commit/4e8b7b79b831ac794b4b45d1a27afc8fafe3f124))
 
 ## [9.0.4](https://github.com/sanity-io/next-sanity/compare/v9.0.3...v9.0.4) (2024-04-17)
 
-
 ### Bug Fixes
 
-* **deps:** update dependency @sanity/preview-kit to v5.0.43 ([#1315](https://github.com/sanity-io/next-sanity/issues/1315)) ([7049907](https://github.com/sanity-io/next-sanity/commit/7049907639e7177a080ed6d719dfadc41d021df7))
+- **deps:** update dependency @sanity/preview-kit to v5.0.43 ([#1315](https://github.com/sanity-io/next-sanity/issues/1315)) ([7049907](https://github.com/sanity-io/next-sanity/commit/7049907639e7177a080ed6d719dfadc41d021df7))
 
 ## [9.0.3](https://github.com/sanity-io/next-sanity/compare/v9.0.2...v9.0.3) (2024-04-16)
 
-
 ### Bug Fixes
 
-* **deps:** update dependency @sanity/client to ^6.15.14 ([#1309](https://github.com/sanity-io/next-sanity/issues/1309)) ([9d73477](https://github.com/sanity-io/next-sanity/commit/9d73477e95b39d507374e9cb0528c2717e0f6e52))
-* **deps:** update dependency @sanity/preview-kit to v5.0.42 ([c7039ce](https://github.com/sanity-io/next-sanity/commit/c7039cee65eed510a37411cd736fa173656c1898))
-* **deps:** update dependency @sanity/visual-editing to v1.8.10 ([e1202ea](https://github.com/sanity-io/next-sanity/commit/e1202eacc9bfbf0fe6e858a3d735bc1ee215bf23))
-* update allowed canary range for `next` ([2d095af](https://github.com/sanity-io/next-sanity/commit/2d095af72129886e7e3b41c8dd3b7d5c75bc3a7a))
+- **deps:** update dependency @sanity/client to ^6.15.14 ([#1309](https://github.com/sanity-io/next-sanity/issues/1309)) ([9d73477](https://github.com/sanity-io/next-sanity/commit/9d73477e95b39d507374e9cb0528c2717e0f6e52))
+- **deps:** update dependency @sanity/preview-kit to v5.0.42 ([c7039ce](https://github.com/sanity-io/next-sanity/commit/c7039cee65eed510a37411cd736fa173656c1898))
+- **deps:** update dependency @sanity/visual-editing to v1.8.10 ([e1202ea](https://github.com/sanity-io/next-sanity/commit/e1202eacc9bfbf0fe6e858a3d735bc1ee215bf23))
+- update allowed canary range for `next` ([2d095af](https://github.com/sanity-io/next-sanity/commit/2d095af72129886e7e3b41c8dd3b7d5c75bc3a7a))
 
 ## [9.0.2](https://github.com/sanity-io/next-sanity/compare/v9.0.1...v9.0.2) (2024-04-12)
 
-
 ### Bug Fixes
 
-* **deps:** update dependency @sanity/client to ^6.15.13 ([#1292](https://github.com/sanity-io/next-sanity/issues/1292)) ([a0445fe](https://github.com/sanity-io/next-sanity/commit/a0445fe83ad80d6e4e97f53a2d5009a37ba88771))
+- **deps:** update dependency @sanity/client to ^6.15.13 ([#1292](https://github.com/sanity-io/next-sanity/issues/1292)) ([a0445fe](https://github.com/sanity-io/next-sanity/commit/a0445fe83ad80d6e4e97f53a2d5009a37ba88771))
 
 ## [9.0.1](https://github.com/sanity-io/next-sanity/compare/v9.0.0...v9.0.1) (2024-04-11)
 
-
 ### Bug Fixes
 
-* allow canary releases of next in peer range ([6bc9cb9](https://github.com/sanity-io/next-sanity/commit/6bc9cb9006143e9a0396aacff6e1861f8f97d254))
-* **deps:** update dependency @portabletext/react to ^3.0.18 ([#1287](https://github.com/sanity-io/next-sanity/issues/1287)) ([afc5d68](https://github.com/sanity-io/next-sanity/commit/afc5d689b3d3037231c3e0de9a24bfe6ee69ce5a))
-* **deps:** update dependency @sanity/visual-editing to 1.8.8 ([582adf5](https://github.com/sanity-io/next-sanity/commit/582adf57ddd6984249441f887738e9b950967251))
+- allow canary releases of next in peer range ([6bc9cb9](https://github.com/sanity-io/next-sanity/commit/6bc9cb9006143e9a0396aacff6e1861f8f97d254))
+- **deps:** update dependency @portabletext/react to ^3.0.18 ([#1287](https://github.com/sanity-io/next-sanity/issues/1287)) ([afc5d68](https://github.com/sanity-io/next-sanity/commit/afc5d689b3d3037231c3e0de9a24bfe6ee69ce5a))
+- **deps:** update dependency @sanity/visual-editing to 1.8.8 ([582adf5](https://github.com/sanity-io/next-sanity/commit/582adf57ddd6984249441f887738e9b950967251))
 
 ## [9.0.0](https://github.com/sanity-io/next-sanity/compare/v8.5.5...v9.0.0) (2024-04-09)
 
-
 ### ⚠ BREAKING CHANGES
 
-* require sanity 3.37.1 or later
-* remove Pages Router support from `next-sanity/webhook`
-* remove deprecated `next-sanity/studio/viewport` export
-* remove deprecated `next-sanity/studio/metadata` export ([#1261](https://github.com/sanity-io/next-sanity/issues/1261))
-* require `styled-components` `6.1` or later ([#1258](https://github.com/sanity-io/next-sanity/issues/1258))
-* require `@sanity/ui` `2.0.11` or later ([#1256](https://github.com/sanity-io/next-sanity/issues/1256))
+- require sanity 3.37.1 or later
+- remove Pages Router support from `next-sanity/webhook`
+- remove deprecated `next-sanity/studio/viewport` export
+- remove deprecated `next-sanity/studio/metadata` export ([#1261](https://github.com/sanity-io/next-sanity/issues/1261))
+- require `styled-components` `6.1` or later ([#1258](https://github.com/sanity-io/next-sanity/issues/1258))
+- require `@sanity/ui` `2.0.11` or later ([#1256](https://github.com/sanity-io/next-sanity/issues/1256))
 
 ### Bug Fixes
 
-* remove deprecated `next-sanity/studio/metadata` export ([#1261](https://github.com/sanity-io/next-sanity/issues/1261)) ([1d43f02](https://github.com/sanity-io/next-sanity/commit/1d43f0299de197c33477e1eeb242368419311370))
-* remove deprecated `next-sanity/studio/viewport` export ([f8fd759](https://github.com/sanity-io/next-sanity/commit/f8fd759b34e41502c0629c39fb2221379226578b))
-* remove Pages Router support from `next-sanity/webhook` ([c2a7bd3](https://github.com/sanity-io/next-sanity/commit/c2a7bd345f35bb617c926912af434a30280f3db0))
-* require `@sanity/ui` `2.0.11` or later ([#1256](https://github.com/sanity-io/next-sanity/issues/1256)) ([37f9fed](https://github.com/sanity-io/next-sanity/commit/37f9fedbf81f9e0e75b17698b84b4f56cc382eb0))
-* require `styled-components` `6.1` or later ([#1258](https://github.com/sanity-io/next-sanity/issues/1258)) ([8560426](https://github.com/sanity-io/next-sanity/commit/856042655beca9a594a7a05929b9522d6f7d02a8))
-* require sanity 3.37.1 or later ([6764bd0](https://github.com/sanity-io/next-sanity/commit/6764bd00dbded0dfb205959d74bbcd5c2bc4c3cf))
+- remove deprecated `next-sanity/studio/metadata` export ([#1261](https://github.com/sanity-io/next-sanity/issues/1261)) ([1d43f02](https://github.com/sanity-io/next-sanity/commit/1d43f0299de197c33477e1eeb242368419311370))
+- remove deprecated `next-sanity/studio/viewport` export ([f8fd759](https://github.com/sanity-io/next-sanity/commit/f8fd759b34e41502c0629c39fb2221379226578b))
+- remove Pages Router support from `next-sanity/webhook` ([c2a7bd3](https://github.com/sanity-io/next-sanity/commit/c2a7bd345f35bb617c926912af434a30280f3db0))
+- require `@sanity/ui` `2.0.11` or later ([#1256](https://github.com/sanity-io/next-sanity/issues/1256)) ([37f9fed](https://github.com/sanity-io/next-sanity/commit/37f9fedbf81f9e0e75b17698b84b4f56cc382eb0))
+- require `styled-components` `6.1` or later ([#1258](https://github.com/sanity-io/next-sanity/issues/1258)) ([8560426](https://github.com/sanity-io/next-sanity/commit/856042655beca9a594a7a05929b9522d6f7d02a8))
+- require sanity 3.37.1 or later ([6764bd0](https://github.com/sanity-io/next-sanity/commit/6764bd00dbded0dfb205959d74bbcd5c2bc4c3cf))
 
 ## [8.5.5](https://github.com/sanity-io/next-sanity/compare/v8.5.4...v8.5.5) (2024-04-07)
 
-
 ### Bug Fixes
 
-* **deps:** update dependency @sanity/preview-kit to v5.0.41 ([#1247](https://github.com/sanity-io/next-sanity/issues/1247)) ([c2b788d](https://github.com/sanity-io/next-sanity/commit/c2b788d5927f7c8dbfdec7ae1abc7eb1abdfc197))
-* **deps:** Update dependency @sanity/visual-editing to v1.8.7 ([#1244](https://github.com/sanity-io/next-sanity/issues/1244)) ([7305aa4](https://github.com/sanity-io/next-sanity/commit/7305aa4e05b6679fd3450b60900586af364834aa))
+- **deps:** update dependency @sanity/preview-kit to v5.0.41 ([#1247](https://github.com/sanity-io/next-sanity/issues/1247)) ([c2b788d](https://github.com/sanity-io/next-sanity/commit/c2b788d5927f7c8dbfdec7ae1abc7eb1abdfc197))
+- **deps:** Update dependency @sanity/visual-editing to v1.8.7 ([#1244](https://github.com/sanity-io/next-sanity/issues/1244)) ([7305aa4](https://github.com/sanity-io/next-sanity/commit/7305aa4e05b6679fd3450b60900586af364834aa))
 
 ## [8.5.4](https://github.com/sanity-io/next-sanity/compare/v8.5.3...v8.5.4) (2024-04-05)
 
-
 ### Bug Fixes
 
-* **deps:** update dependency @sanity/client to ^6.15.11 ([#1235](https://github.com/sanity-io/next-sanity/issues/1235)) ([84fa5a5](https://github.com/sanity-io/next-sanity/commit/84fa5a5a3ef402975848347802d5bc4a78b27737))
-* **deps:** update dependency @sanity/preview-kit to v5.0.40 ([#1237](https://github.com/sanity-io/next-sanity/issues/1237)) ([e5c2253](https://github.com/sanity-io/next-sanity/commit/e5c2253341fc1068ba8fe3e370f736472005f772))
+- **deps:** update dependency @sanity/client to ^6.15.11 ([#1235](https://github.com/sanity-io/next-sanity/issues/1235)) ([84fa5a5](https://github.com/sanity-io/next-sanity/commit/84fa5a5a3ef402975848347802d5bc4a78b27737))
+- **deps:** update dependency @sanity/preview-kit to v5.0.40 ([#1237](https://github.com/sanity-io/next-sanity/issues/1237)) ([e5c2253](https://github.com/sanity-io/next-sanity/commit/e5c2253341fc1068ba8fe3e370f736472005f772))
 
 ## [8.5.3](https://github.com/sanity-io/next-sanity/compare/v8.5.2...v8.5.3) (2024-04-05)
 
-
 ### Bug Fixes
 
-* **deps:** update dependency @portabletext/react to ^3.0.17 ([#1225](https://github.com/sanity-io/next-sanity/issues/1225)) ([5910a5c](https://github.com/sanity-io/next-sanity/commit/5910a5cf9955cce7e58bff7c4f221db2dc5d15bb))
-* **deps:** update dependency @sanity/client to ^6.15.10 ([#1226](https://github.com/sanity-io/next-sanity/issues/1226)) ([ef50663](https://github.com/sanity-io/next-sanity/commit/ef50663be08eb773aa0dea6e514a0c961b2ea183))
-* **deps:** update dependency @sanity/preview-kit to v5.0.39 ([#1229](https://github.com/sanity-io/next-sanity/issues/1229)) ([9974899](https://github.com/sanity-io/next-sanity/commit/99748999d332dd3b64ef8d7bc8508994499abef5))
-* **deps:** Update dependency @sanity/visual-editing to v1.8.6 ([#1234](https://github.com/sanity-io/next-sanity/issues/1234)) ([a00b36e](https://github.com/sanity-io/next-sanity/commit/a00b36e1a05fbed4955ce998fae56059617242cb))
+- **deps:** update dependency @portabletext/react to ^3.0.17 ([#1225](https://github.com/sanity-io/next-sanity/issues/1225)) ([5910a5c](https://github.com/sanity-io/next-sanity/commit/5910a5cf9955cce7e58bff7c4f221db2dc5d15bb))
+- **deps:** update dependency @sanity/client to ^6.15.10 ([#1226](https://github.com/sanity-io/next-sanity/issues/1226)) ([ef50663](https://github.com/sanity-io/next-sanity/commit/ef50663be08eb773aa0dea6e514a0c961b2ea183))
+- **deps:** update dependency @sanity/preview-kit to v5.0.39 ([#1229](https://github.com/sanity-io/next-sanity/issues/1229)) ([9974899](https://github.com/sanity-io/next-sanity/commit/99748999d332dd3b64ef8d7bc8508994499abef5))
+- **deps:** Update dependency @sanity/visual-editing to v1.8.6 ([#1234](https://github.com/sanity-io/next-sanity/issues/1234)) ([a00b36e](https://github.com/sanity-io/next-sanity/commit/a00b36e1a05fbed4955ce998fae56059617242cb))
 
 ## [8.5.2](https://github.com/sanity-io/next-sanity/compare/v8.5.1...v8.5.2) (2024-04-04)
 
-
 ### Bug Fixes
 
-* **deps:** update dependency @sanity/preview-kit to v5.0.37 ([#1220](https://github.com/sanity-io/next-sanity/issues/1220)) ([5d386ed](https://github.com/sanity-io/next-sanity/commit/5d386edf56abf863381fdfb8fbde648e98a58dc5))
-* **deps:** Update dependency @sanity/visual-editing to v1.8.5 ([#1217](https://github.com/sanity-io/next-sanity/issues/1217)) ([f9400a5](https://github.com/sanity-io/next-sanity/commit/f9400a5b9980846969df9dd026e00fd14d0d258d))
+- **deps:** update dependency @sanity/preview-kit to v5.0.37 ([#1220](https://github.com/sanity-io/next-sanity/issues/1220)) ([5d386ed](https://github.com/sanity-io/next-sanity/commit/5d386edf56abf863381fdfb8fbde648e98a58dc5))
+- **deps:** Update dependency @sanity/visual-editing to v1.8.5 ([#1217](https://github.com/sanity-io/next-sanity/issues/1217)) ([f9400a5](https://github.com/sanity-io/next-sanity/commit/f9400a5b9980846969df9dd026e00fd14d0d258d))
 
 ## [8.5.1](https://github.com/sanity-io/next-sanity/compare/v8.5.0...v8.5.1) (2024-04-03)
 
-
 ### Bug Fixes
 
-* **deps:** update dependency @sanity/client to ^6.15.9 ([#1209](https://github.com/sanity-io/next-sanity/issues/1209)) ([9d73a22](https://github.com/sanity-io/next-sanity/commit/9d73a22b66825dfe32c3677a4f871413ef4cabf7))
-* **deps:** update dependency @sanity/preview-kit to v5.0.37 ([#1215](https://github.com/sanity-io/next-sanity/issues/1215)) ([2fa2a55](https://github.com/sanity-io/next-sanity/commit/2fa2a552c45a6429f80d8d38b73a798371127009))
+- **deps:** update dependency @sanity/client to ^6.15.9 ([#1209](https://github.com/sanity-io/next-sanity/issues/1209)) ([9d73a22](https://github.com/sanity-io/next-sanity/commit/9d73a22b66825dfe32c3677a4f871413ef4cabf7))
+- **deps:** update dependency @sanity/preview-kit to v5.0.37 ([#1215](https://github.com/sanity-io/next-sanity/issues/1215)) ([2fa2a55](https://github.com/sanity-io/next-sanity/commit/2fa2a552c45a6429f80d8d38b73a798371127009))
 
 ## [8.5.0](https://github.com/sanity-io/next-sanity/compare/v8.4.6...v8.5.0) (2024-03-22)
 
-
 ### Features
 
-* **studio:** add `history="hash"` prop enabling static exports ([#1192](https://github.com/sanity-io/next-sanity/issues/1192)) ([4ebc8bd](https://github.com/sanity-io/next-sanity/commit/4ebc8bd58c8294af1375a350bddcfdb8cafe8a8b))
-
+- **studio:** add `history="hash"` prop enabling static exports ([#1192](https://github.com/sanity-io/next-sanity/issues/1192)) ([4ebc8bd](https://github.com/sanity-io/next-sanity/commit/4ebc8bd58c8294af1375a350bddcfdb8cafe8a8b))
 
 ### Bug Fixes
 
-* **deps:** update dependency @portabletext/react to ^3.0.15 ([#1189](https://github.com/sanity-io/next-sanity/issues/1189)) ([7d84dce](https://github.com/sanity-io/next-sanity/commit/7d84dce87bbb97290870b85aeb5b0023d7ba1bc5))
-* **deps:** Update dependency @sanity/visual-editing to v1.8.4 ([#1188](https://github.com/sanity-io/next-sanity/issues/1188)) ([6d7be65](https://github.com/sanity-io/next-sanity/commit/6d7be652295f2949c67b3e80958e74cc2a173009))
+- **deps:** update dependency @portabletext/react to ^3.0.15 ([#1189](https://github.com/sanity-io/next-sanity/issues/1189)) ([7d84dce](https://github.com/sanity-io/next-sanity/commit/7d84dce87bbb97290870b85aeb5b0023d7ba1bc5))
+- **deps:** Update dependency @sanity/visual-editing to v1.8.4 ([#1188](https://github.com/sanity-io/next-sanity/issues/1188)) ([6d7be65](https://github.com/sanity-io/next-sanity/commit/6d7be652295f2949c67b3e80958e74cc2a173009))
 
 ## [8.4.6](https://github.com/sanity-io/next-sanity/compare/v8.4.5...v8.4.6) (2024-03-20)
 
-
 ### Bug Fixes
 
-* **deps:** update dependency @portabletext/react to ^3.0.15 ([#1184](https://github.com/sanity-io/next-sanity/issues/1184)) ([5627bb6](https://github.com/sanity-io/next-sanity/commit/5627bb675a4bdf0d26a09f45f866c198a54d7c11))
-* **deps:** update dependency @sanity/preview-kit to v5.0.36 ([#1181](https://github.com/sanity-io/next-sanity/issues/1181)) ([1aaf59b](https://github.com/sanity-io/next-sanity/commit/1aaf59bd1c2b1e136216bd781be381700f44ac0c))
+- **deps:** update dependency @portabletext/react to ^3.0.15 ([#1184](https://github.com/sanity-io/next-sanity/issues/1184)) ([5627bb6](https://github.com/sanity-io/next-sanity/commit/5627bb675a4bdf0d26a09f45f866c198a54d7c11))
+- **deps:** update dependency @sanity/preview-kit to v5.0.36 ([#1181](https://github.com/sanity-io/next-sanity/issues/1181)) ([1aaf59b](https://github.com/sanity-io/next-sanity/commit/1aaf59bd1c2b1e136216bd781be381700f44ac0c))
 
 ## [8.4.5](https://github.com/sanity-io/next-sanity/compare/v8.4.4...v8.4.5) (2024-03-20)
 
-
 ### Bug Fixes
 
-* **deps:** update dependency @sanity/preview-kit to v5.0.36 ([#1179](https://github.com/sanity-io/next-sanity/issues/1179)) ([efcb2a0](https://github.com/sanity-io/next-sanity/commit/efcb2a0cedd1c16731cc261d63f850b8a00765a7))
-* **deps:** Update dependency @sanity/visual-editing to v1.8.3 ([#1172](https://github.com/sanity-io/next-sanity/issues/1172)) ([946f6f9](https://github.com/sanity-io/next-sanity/commit/946f6f98af41600b500863b7fc91ae9fc6367fb8))
+- **deps:** update dependency @sanity/preview-kit to v5.0.36 ([#1179](https://github.com/sanity-io/next-sanity/issues/1179)) ([efcb2a0](https://github.com/sanity-io/next-sanity/commit/efcb2a0cedd1c16731cc261d63f850b8a00765a7))
+- **deps:** Update dependency @sanity/visual-editing to v1.8.3 ([#1172](https://github.com/sanity-io/next-sanity/issues/1172)) ([946f6f9](https://github.com/sanity-io/next-sanity/commit/946f6f98af41600b500863b7fc91ae9fc6367fb8))
 
 ## [8.4.4](https://github.com/sanity-io/next-sanity/compare/v8.4.3...v8.4.4) (2024-03-20)
 
-
 ### Bug Fixes
 
-* **deps:** update dependency @sanity/client to ^6.15.6 ([#1163](https://github.com/sanity-io/next-sanity/issues/1163)) ([3b8a159](https://github.com/sanity-io/next-sanity/commit/3b8a159af7e70b76563b34f5ebc868c00dd76171))
-* **deps:** update dependency @sanity/client to ^6.15.7 ([#1168](https://github.com/sanity-io/next-sanity/issues/1168)) ([7de1942](https://github.com/sanity-io/next-sanity/commit/7de1942d40ab27cd402930086f0d36cae8715d7e))
-* **deps:** update dependency @sanity/preview-kit to v5.0.34 ([#1160](https://github.com/sanity-io/next-sanity/issues/1160)) ([f8c96b0](https://github.com/sanity-io/next-sanity/commit/f8c96b0d3041e6d7ae579bb1d2b3bfee68dce729))
-* **deps:** update dependency @sanity/preview-kit to v5.0.35 ([#1169](https://github.com/sanity-io/next-sanity/issues/1169)) ([98810b7](https://github.com/sanity-io/next-sanity/commit/98810b78d39d30994453cb49cb084892d5651d3d))
+- **deps:** update dependency @sanity/client to ^6.15.6 ([#1163](https://github.com/sanity-io/next-sanity/issues/1163)) ([3b8a159](https://github.com/sanity-io/next-sanity/commit/3b8a159af7e70b76563b34f5ebc868c00dd76171))
+- **deps:** update dependency @sanity/client to ^6.15.7 ([#1168](https://github.com/sanity-io/next-sanity/issues/1168)) ([7de1942](https://github.com/sanity-io/next-sanity/commit/7de1942d40ab27cd402930086f0d36cae8715d7e))
+- **deps:** update dependency @sanity/preview-kit to v5.0.34 ([#1160](https://github.com/sanity-io/next-sanity/issues/1160)) ([f8c96b0](https://github.com/sanity-io/next-sanity/commit/f8c96b0d3041e6d7ae579bb1d2b3bfee68dce729))
+- **deps:** update dependency @sanity/preview-kit to v5.0.35 ([#1169](https://github.com/sanity-io/next-sanity/issues/1169)) ([98810b7](https://github.com/sanity-io/next-sanity/commit/98810b78d39d30994453cb49cb084892d5651d3d))
 
 ## [8.4.3](https://github.com/sanity-io/next-sanity/compare/v8.4.2...v8.4.3) (2024-03-18)
 
-
 ### Bug Fixes
 
-* **deps:** update dependency @portabletext/react to ^3.0.13 ([#1143](https://github.com/sanity-io/next-sanity/issues/1143)) ([1b93559](https://github.com/sanity-io/next-sanity/commit/1b93559e0acdc2d45e61c8d88a691dd5280fedef))
-* **deps:** Update dependency @sanity/visual-editing to v1.8.2 ([#1155](https://github.com/sanity-io/next-sanity/issues/1155)) ([ae63462](https://github.com/sanity-io/next-sanity/commit/ae63462c7c8b0396133f57e80df4dda07c6bbab4))
+- **deps:** update dependency @portabletext/react to ^3.0.13 ([#1143](https://github.com/sanity-io/next-sanity/issues/1143)) ([1b93559](https://github.com/sanity-io/next-sanity/commit/1b93559e0acdc2d45e61c8d88a691dd5280fedef))
+- **deps:** Update dependency @sanity/visual-editing to v1.8.2 ([#1155](https://github.com/sanity-io/next-sanity/issues/1155)) ([ae63462](https://github.com/sanity-io/next-sanity/commit/ae63462c7c8b0396133f57e80df4dda07c6bbab4))
 
 ## [8.4.2](https://github.com/sanity-io/next-sanity/compare/v8.4.1...v8.4.2) (2024-03-16)
 
-
 ### Bug Fixes
 
-* **deps:** update dependency @portabletext/react to ^3.0.12 ([1b5032c](https://github.com/sanity-io/next-sanity/commit/1b5032c02e10b9a7ac7c608fb9442273ce6769df))
+- **deps:** update dependency @portabletext/react to ^3.0.12 ([1b5032c](https://github.com/sanity-io/next-sanity/commit/1b5032c02e10b9a7ac7c608fb9442273ce6769df))
 
 ## [8.4.1](https://github.com/sanity-io/next-sanity/compare/v8.4.0...v8.4.1) (2024-03-15)
 
-
 ### Bug Fixes
 
-* regression in RSC caused by `createDataAttribute` ([d27cc49](https://github.com/sanity-io/next-sanity/commit/d27cc49ef52433c71a16630987948ed04006c1d2))
+- regression in RSC caused by `createDataAttribute` ([d27cc49](https://github.com/sanity-io/next-sanity/commit/d27cc49ef52433c71a16630987948ed04006c1d2))
 
 ## [8.4.0](https://github.com/sanity-io/next-sanity/compare/v8.3.2...v8.4.0) (2024-03-15)
 
-
 ### Features
 
-* **visual-editing:** add `createDataAttribute` ([a500061](https://github.com/sanity-io/next-sanity/commit/a500061ecaa191604a8341509f7709038838c3b9))
-
+- **visual-editing:** add `createDataAttribute` ([a500061](https://github.com/sanity-io/next-sanity/commit/a500061ecaa191604a8341509f7709038838c3b9))
 
 ### Bug Fixes
 
-* **deps:** update dependency @sanity/client to ^6.15.5 ([#1136](https://github.com/sanity-io/next-sanity/issues/1136)) ([af7a8b4](https://github.com/sanity-io/next-sanity/commit/af7a8b4565d029182c0970b45f1ca752857152e6))
-* **deps:** update dependency @sanity/preview-kit to v5.0.33 ([feba5cc](https://github.com/sanity-io/next-sanity/commit/feba5cc68ba93a8200093b92cca7c4ec4ebad0d8))
-* **deps:** Update dependency @sanity/visual-editing to v1.8.0 ([#1139](https://github.com/sanity-io/next-sanity/issues/1139)) ([9b417b8](https://github.com/sanity-io/next-sanity/commit/9b417b87ee3d2aec59e20d720a8c5282ac13e4cc))
+- **deps:** update dependency @sanity/client to ^6.15.5 ([#1136](https://github.com/sanity-io/next-sanity/issues/1136)) ([af7a8b4](https://github.com/sanity-io/next-sanity/commit/af7a8b4565d029182c0970b45f1ca752857152e6))
+- **deps:** update dependency @sanity/preview-kit to v5.0.33 ([feba5cc](https://github.com/sanity-io/next-sanity/commit/feba5cc68ba93a8200093b92cca7c4ec4ebad0d8))
+- **deps:** Update dependency @sanity/visual-editing to v1.8.0 ([#1139](https://github.com/sanity-io/next-sanity/issues/1139)) ([9b417b8](https://github.com/sanity-io/next-sanity/commit/9b417b87ee3d2aec59e20d720a8c5282ac13e4cc))
 
 ## [8.3.2](https://github.com/sanity-io/next-sanity/compare/v8.3.1...v8.3.2) (2024-03-11)
 
-
 ### Bug Fixes
 
-* **deps:** update dependency @sanity/visual-editing to ^1.7.1 ([0284913](https://github.com/sanity-io/next-sanity/commit/0284913002f34293fb0213b43acfb052daf24124))
+- **deps:** update dependency @sanity/visual-editing to ^1.7.1 ([0284913](https://github.com/sanity-io/next-sanity/commit/0284913002f34293fb0213b43acfb052daf24124))
 
 ## [8.3.1](https://github.com/sanity-io/next-sanity/compare/v8.3.0...v8.3.1) (2024-03-11)
 
-
 ### Bug Fixes
 
-* **deps:** update dependency @sanity/preview-kit to v5.0.32 ([#1113](https://github.com/sanity-io/next-sanity/issues/1113)) ([b593cb4](https://github.com/sanity-io/next-sanity/commit/b593cb4a60276c78d609f3cbf95b4bddddfebb1f))
-* remove turbopack workaround ([bcfc59b](https://github.com/sanity-io/next-sanity/commit/bcfc59bccc8b77c0a350bb01a5559d7e22e846a8))
+- **deps:** update dependency @sanity/preview-kit to v5.0.32 ([#1113](https://github.com/sanity-io/next-sanity/issues/1113)) ([b593cb4](https://github.com/sanity-io/next-sanity/commit/b593cb4a60276c78d609f3cbf95b4bddddfebb1f))
+- remove turbopack workaround ([bcfc59b](https://github.com/sanity-io/next-sanity/commit/bcfc59bccc8b77c0a350bb01a5559d7e22e846a8))
 
 ## [8.3.0](https://github.com/sanity-io/next-sanity/compare/v8.2.1...v8.3.0) (2024-03-07)
 
-
 ### Features
 
-* add Image component and image loader ([d98069b](https://github.com/sanity-io/next-sanity/commit/d98069b8f0a29e831ba8034b937e7230418faa33))
-
+- add Image component and image loader ([d98069b](https://github.com/sanity-io/next-sanity/commit/d98069b8f0a29e831ba8034b937e7230418faa33))
 
 ### Bug Fixes
 
-* workaround turbopack issue with default revalidate server action ([33224b4](https://github.com/sanity-io/next-sanity/commit/33224b457bd9c9844f8e76efe7adf42483f397ed))
+- workaround turbopack issue with default revalidate server action ([33224b4](https://github.com/sanity-io/next-sanity/commit/33224b457bd9c9844f8e76efe7adf42483f397ed))
 
 ## [8.2.1](https://github.com/sanity-io/next-sanity/compare/v8.2.0...v8.2.1) (2024-03-07)
 
-
 ### Bug Fixes
 
-* **deps:** update dependency @sanity/client to ^6.15.3 ([#1104](https://github.com/sanity-io/next-sanity/issues/1104)) ([571d11e](https://github.com/sanity-io/next-sanity/commit/571d11e053c226944a74fac131db77e80411e6b7))
-* **deps:** update dependency @sanity/preview-kit to ^5.0.31 ([5659f1d](https://github.com/sanity-io/next-sanity/commit/5659f1ded03f4b8971c1e7d173c52ae6b45e785c))
-* remove `node` export conditions ([431d1f6](https://github.com/sanity-io/next-sanity/commit/431d1f6fe5f0ec03f2f06b7a3fb9c131019bf756))
+- **deps:** update dependency @sanity/client to ^6.15.3 ([#1104](https://github.com/sanity-io/next-sanity/issues/1104)) ([571d11e](https://github.com/sanity-io/next-sanity/commit/571d11e053c226944a74fac131db77e80411e6b7))
+- **deps:** update dependency @sanity/preview-kit to ^5.0.31 ([5659f1d](https://github.com/sanity-io/next-sanity/commit/5659f1ded03f4b8971c1e7d173c52ae6b45e785c))
+- remove `node` export conditions ([431d1f6](https://github.com/sanity-io/next-sanity/commit/431d1f6fe5f0ec03f2f06b7a3fb9c131019bf756))
 
 ## [8.2.0](https://github.com/sanity-io/next-sanity/compare/v8.1.6...v8.2.0) (2024-03-07)
 
-
 ### Features
 
-* add `@portabletext/react` and `@portabletext/types` exports ([43bbdb8](https://github.com/sanity-io/next-sanity/commit/43bbdb8dee6649533f17e20f1a1bd4bfd1240564))
-
+- add `@portabletext/react` and `@portabletext/types` exports ([43bbdb8](https://github.com/sanity-io/next-sanity/commit/43bbdb8dee6649533f17e20f1a1bd4bfd1240564))
 
 ### Bug Fixes
 
-* **deps:** update dependency @sanity/client to ^6.15.2 ([#1097](https://github.com/sanity-io/next-sanity/issues/1097)) ([fccc398](https://github.com/sanity-io/next-sanity/commit/fccc398a410cc89a7deb78b13032c5c86a520da2))
-* **deps:** update dependency @sanity/preview-kit to v5.0.30 ([#1101](https://github.com/sanity-io/next-sanity/issues/1101)) ([d2be37e](https://github.com/sanity-io/next-sanity/commit/d2be37e78f8b957cb31c6ddd6cba8533240119b2))
+- **deps:** update dependency @sanity/client to ^6.15.2 ([#1097](https://github.com/sanity-io/next-sanity/issues/1097)) ([fccc398](https://github.com/sanity-io/next-sanity/commit/fccc398a410cc89a7deb78b13032c5c86a520da2))
+- **deps:** update dependency @sanity/preview-kit to v5.0.30 ([#1101](https://github.com/sanity-io/next-sanity/issues/1101)) ([d2be37e](https://github.com/sanity-io/next-sanity/commit/d2be37e78f8b957cb31c6ddd6cba8533240119b2))
 
 ## [8.1.6](https://github.com/sanity-io/next-sanity/compare/v8.1.5...v8.1.6) (2024-03-07)
 
-
 ### Bug Fixes
 
-* don't render overlays if the Vercel Toolbar is present ([112872c](https://github.com/sanity-io/next-sanity/commit/112872cafed76661428b512cfe680282915bf030))
+- don't render overlays if the Vercel Toolbar is present ([112872c](https://github.com/sanity-io/next-sanity/commit/112872cafed76661428b512cfe680282915bf030))
 
 ## [8.1.5](https://github.com/sanity-io/next-sanity/compare/v8.1.4...v8.1.5) (2024-03-06)
 
-
 ### Bug Fixes
 
-* **deps:** update dependency @sanity/preview-kit to v5.0.29 ([#1070](https://github.com/sanity-io/next-sanity/issues/1070)) ([08a51f3](https://github.com/sanity-io/next-sanity/commit/08a51f386071533f4402bb4ef6c9ae34a18ff6e8))
-* **deps:** Update dependency @sanity/visual-editing to v1.6.0 ([#1086](https://github.com/sanity-io/next-sanity/issues/1086)) ([1d19878](https://github.com/sanity-io/next-sanity/commit/1d19878ad7da62e97dcdf397e6689c44806ba4ee))
+- **deps:** update dependency @sanity/preview-kit to v5.0.29 ([#1070](https://github.com/sanity-io/next-sanity/issues/1070)) ([08a51f3](https://github.com/sanity-io/next-sanity/commit/08a51f386071533f4402bb4ef6c9ae34a18ff6e8))
+- **deps:** Update dependency @sanity/visual-editing to v1.6.0 ([#1086](https://github.com/sanity-io/next-sanity/issues/1086)) ([1d19878](https://github.com/sanity-io/next-sanity/commit/1d19878ad7da62e97dcdf397e6689c44806ba4ee))
 
 ## [8.1.4](https://github.com/sanity-io/next-sanity/compare/v8.1.3...v8.1.4) (2024-03-01)
 
-
 ### Bug Fixes
 
-* **deps:** update dependency @sanity/preview-kit to v5.0.28 ([5a92172](https://github.com/sanity-io/next-sanity/commit/5a92172069e6b90c78d2d6899c635331f6df6216))
+- **deps:** update dependency @sanity/preview-kit to v5.0.28 ([5a92172](https://github.com/sanity-io/next-sanity/commit/5a92172069e6b90c78d2d6899c635331f6df6216))
 
 ## [8.1.3](https://github.com/sanity-io/next-sanity/compare/v8.1.2...v8.1.3) (2024-02-28)
 
-
 ### Bug Fixes
 
-* **deps:** update dependency @sanity/client to ^6.15.1 ([#1063](https://github.com/sanity-io/next-sanity/issues/1063)) ([d668e87](https://github.com/sanity-io/next-sanity/commit/d668e87f656ed68fd5e976d7de4a51e91ee9fa01))
-* make NextStudio streaming SSR safe ([9300eae](https://github.com/sanity-io/next-sanity/commit/9300eae38e82f596efc257f87293ae6ccc2bc5bc))
-* resolve SSR hydration mismatch for NextStudioNoScript ([d11acd1](https://github.com/sanity-io/next-sanity/commit/d11acd1dde94b2cadb0af28768d15ae50dd5e275))
+- **deps:** update dependency @sanity/client to ^6.15.1 ([#1063](https://github.com/sanity-io/next-sanity/issues/1063)) ([d668e87](https://github.com/sanity-io/next-sanity/commit/d668e87f656ed68fd5e976d7de4a51e91ee9fa01))
+- make NextStudio streaming SSR safe ([9300eae](https://github.com/sanity-io/next-sanity/commit/9300eae38e82f596efc257f87293ae6ccc2bc5bc))
+- resolve SSR hydration mismatch for NextStudioNoScript ([d11acd1](https://github.com/sanity-io/next-sanity/commit/d11acd1dde94b2cadb0af28768d15ae50dd5e275))
 
 ## [8.1.2](https://github.com/sanity-io/next-sanity/compare/v8.1.1...v8.1.2) (2024-02-27)
 
-
 ### Bug Fixes
 
-* **typings:** set the correct return types ([d8301e0](https://github.com/sanity-io/next-sanity/commit/d8301e03b71ca412107713af2a52cd9687df2ec2))
+- **typings:** set the correct return types ([d8301e0](https://github.com/sanity-io/next-sanity/commit/d8301e03b71ca412107713af2a52cd9687df2ec2))
 
 ## [8.1.1](https://github.com/sanity-io/next-sanity/compare/v8.1.0...v8.1.1) (2024-02-27)
 
-
 ### Bug Fixes
 
-* **deps:** update dependency @sanity/webhook to v4.0.2 ([911a84a](https://github.com/sanity-io/next-sanity/commit/911a84a95cc7147514f0b1d8587132012bc40080))
+- **deps:** update dependency @sanity/webhook to v4.0.2 ([911a84a](https://github.com/sanity-io/next-sanity/commit/911a84a95cc7147514f0b1d8587132012bc40080))
 
 ## [8.1.0](https://github.com/sanity-io/next-sanity/compare/v8.0.3...v8.1.0) (2024-02-27)
 
-
 ### Features
 
-* implement upcoming refresh API ([#1037](https://github.com/sanity-io/next-sanity/issues/1037)) ([06c24e9](https://github.com/sanity-io/next-sanity/commit/06c24e9c14f70321da14fe70d2f07b3bda9d3072))
-
+- implement upcoming refresh API ([#1037](https://github.com/sanity-io/next-sanity/issues/1037)) ([06c24e9](https://github.com/sanity-io/next-sanity/commit/06c24e9c14f70321da14fe70d2f07b3bda9d3072))
 
 ### Bug Fixes
 
-* **deps:** update dependency @sanity/preview-kit to v5.0.26 ([#1042](https://github.com/sanity-io/next-sanity/issues/1042)) ([47d04d2](https://github.com/sanity-io/next-sanity/commit/47d04d2263eb394c19d9aa3454dbb9a379fc3424))
-* **deps:** update dependency @sanity/preview-kit to v5.0.27 ([#1049](https://github.com/sanity-io/next-sanity/issues/1049)) ([e2c0936](https://github.com/sanity-io/next-sanity/commit/e2c0936bc06a6b33b7bae423f60be06e93087b9d))
-* **deps:** Update dependency @sanity/visual-editing to v1.5.2 ([#1011](https://github.com/sanity-io/next-sanity/issues/1011)) ([c27dfc2](https://github.com/sanity-io/next-sanity/commit/c27dfc2d76cf18b3e05536cd473973727e49c3e0))
+- **deps:** update dependency @sanity/preview-kit to v5.0.26 ([#1042](https://github.com/sanity-io/next-sanity/issues/1042)) ([47d04d2](https://github.com/sanity-io/next-sanity/commit/47d04d2263eb394c19d9aa3454dbb9a379fc3424))
+- **deps:** update dependency @sanity/preview-kit to v5.0.27 ([#1049](https://github.com/sanity-io/next-sanity/issues/1049)) ([e2c0936](https://github.com/sanity-io/next-sanity/commit/e2c0936bc06a6b33b7bae423f60be06e93087b9d))
+- **deps:** Update dependency @sanity/visual-editing to v1.5.2 ([#1011](https://github.com/sanity-io/next-sanity/issues/1011)) ([c27dfc2](https://github.com/sanity-io/next-sanity/commit/c27dfc2d76cf18b3e05536cd473973727e49c3e0))
 
 ## [8.0.3](https://github.com/sanity-io/next-sanity/compare/v8.0.2...v8.0.3) (2024-02-26)
 
-
 ### Bug Fixes
 
-* **deps:** update dependency @sanity/client to ^6.15.0 ([#1043](https://github.com/sanity-io/next-sanity/issues/1043)) ([20b2201](https://github.com/sanity-io/next-sanity/commit/20b2201a5df8c5ff4933ee859edd3d4e7e32fa8f))
+- **deps:** update dependency @sanity/client to ^6.15.0 ([#1043](https://github.com/sanity-io/next-sanity/issues/1043)) ([20b2201](https://github.com/sanity-io/next-sanity/commit/20b2201a5df8c5ff4933ee859edd3d4e7e32fa8f))
 
 ## [8.0.2](https://github.com/sanity-io/next-sanity/compare/next-sanity-v8.0.1...next-sanity-v8.0.2) (2024-02-23)
 
