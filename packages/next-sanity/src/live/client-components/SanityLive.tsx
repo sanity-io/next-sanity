@@ -1,10 +1,11 @@
-import {createClient, type LiveEvent, type SyncTag} from '@sanity/client'
-import {revalidateSyncTags as defaultRevalidateSyncTags} from 'next-sanity/live/server-actions'
+import {createClient, type LiveEvent} from '@sanity/client'
 import {useRouter} from 'next/navigation'
 import {useEffect, useMemo, useState, useEffectEvent, startTransition} from 'react'
 
+import {cacheTagPrefix} from '#live/constants'
 import type {
   SanityClientConfig,
+  SanityLiveAction,
   SanityLiveContext,
   SanityLiveOnError,
   SanityLiveOnGoaway,
@@ -21,7 +22,7 @@ export interface SanityLiveProps {
   requestTag: string
   waitFor: 'function' | undefined
 
-  revalidateSyncTags?: (tags: SyncTag[]) => Promise<void | 'refresh'>
+  action: SanityLiveAction
   onError: SanityLiveOnError | undefined
   onWelcome: SanityLiveOnWelcome | false | undefined
   onReconnect: SanityLiveOnReconnect | false | undefined
@@ -36,7 +37,7 @@ function SanityLive(props: SanityLiveProps): React.JSX.Element | null {
     requestTag,
     waitFor,
 
-    revalidateSyncTags = defaultRevalidateSyncTags,
+    action,
     onError,
     onWelcome = handleWelcome,
     onReconnect = 'refresh',
@@ -92,14 +93,15 @@ function SanityLive(props: SanityLiveProps): React.JSX.Element | null {
         break
       }
       case 'message': {
-        if (waitFor === 'function') {
-          // Cache is already revalidated by the Sanity Function, just refresh the router
-          startTransition(() => router.refresh())
-        } else {
-          void revalidateSyncTags(event.tags).then((result) => {
-            if (result === 'refresh') startTransition(() => router.refresh())
-          })
-        }
+        startTransition(() =>
+          action === 'refresh'
+            ? router.refresh()
+            : action(event.tags.map((tag) => `${cacheTagPrefix}${tag}`)).then((result) => {
+                if (result === 'refresh') {
+                  startTransition(() => router.refresh())
+                }
+              }),
+        )
         break
       }
       case 'reconnect': {

@@ -4,7 +4,6 @@ import type {
   ContentSourceMap,
   QueryParams,
   SanityClient,
-  SyncTag,
   InitializedClientConfig,
   LiveEvent,
 } from 'next-sanity'
@@ -16,9 +15,11 @@ import type {
 export type LivePerspective = Exclude<ClientPerspective, 'raw'>
 
 /**
- * Use this function to fetch data from Sanity in your React Server Components.
- * When used within a `generateMetadata` or `generateViewport` function, make sure you set `stega: false`.
- * When used within a `generateStaticParams` function, make sure you set `stega: false` and `perspective: 'published'`.
+ * Fetches data through the configured Sanity client and returns the result
+ * together with the source map and cache tags that Sanity Live uses for
+ * targeted revalidation.
+ *
+ * Returned by `defineLive({strict: false})` and `defineLive({strict: undefined})`.
  */
 export type DefinedFetchType = <const QueryString extends string>(options: {
   /**
@@ -32,26 +33,29 @@ export type DefinedFetchType = <const QueryString extends string>(options: {
   /**
    * Content perspective used for the fetch.
    *
-   * @defaultValue 'published' or when in draft mode it's 'drafts' or the value of a cookie named 'sanity-preview-perspective' that is set by `defineEnableDraftMode`.
+   * @defaultValue The configured client perspective, usually `'published'`.
    */
   perspective?: LivePerspective
   /**
    * Enables stega encoding of the data. This is typically only used in draft
    * mode with `perspective: 'drafts'` and `@sanity/visual-editing`.
    *
-   * @defaultValue `false` or when in draft mode it's `true`
+   * @defaultValue `false`
    */
   stega?: boolean
   /**
-   * Add custom `next.tags` to the underlying fetch request.
-   * @see https://nextjs.org/docs/app/api-reference/functions/fetch#optionsnexttags
-   * This can be used in conjunction with custom fallback revalidation strategies, as well as with custom Server Actions that mutate data and want to render with fresh data right away (faster than the Live Event latency).
+   * Additional cache tags to associate with this fetch.
+   *
+   * `sanityFetch` automatically adds Sanity Live sync tags for the query. Use
+   * this for custom tags that should also be invalidated by your own server
+   * actions, for example after a mutation that needs read-your-own-write UI.
    */
   tags?: string[]
   /**
-   * This request tag is used to identify the request when viewing request logs from your Sanity Content Lake.
-   * @see https://www.sanity.io/docs/platform-management/reference-api-request-tags
-   * @defaultValue 'next-loader.fetch'
+   * Request tag used to identify the request in Sanity Content Lake logs.
+   *
+   * @see https://www.sanity.io/docs/reference-api-request-tags
+   * @defaultValue `'next-loader.fetch'` or `'next-loader.fetch.cache-components'`
    */
   requestTag?: string
 }) => Promise<{
@@ -66,17 +70,20 @@ export type DefinedFetchType = <const QueryString extends string>(options: {
  */
 export interface DefinedLiveProps {
   /**
-   * Include draft and content release version events in the live connection, instead of only published documents.
+   * Include draft and content release version events in the live connection.
    *
-   * A `browserToken` must be configured in `defineLive()` for draft events to be included.
+   * Set this to `true` when draft mode is enabled. A `browserToken` must be
+   * configured in `defineLive()` for draft events to be included.
    *
-   * @defaultValue `(await draftMode()).isEnabled`
+   * @defaultValue `false`
    */
   includeDrafts?: boolean
   /**
-   * This request tag is used to identify the request when viewing request logs from your Sanity Content Lake.
-   * @see https://www.sanity.io/docs/platform-management/reference-api-request-tags
-   * @defaultValue 'next-loader.live'
+   * Request tag used to identify the live EventSource request in Sanity Content
+   * Lake logs.
+   *
+   * @see https://www.sanity.io/docs/reference-api-request-tags
+   * @defaultValue `'next-loader.live'` or `'next-loader.live.cache-components'`
    */
   requestTag?: string
   /**
@@ -88,10 +95,12 @@ export interface DefinedLiveProps {
    */
   waitFor?: 'function'
   /**
-   * Override how cache tags are invalidated, you need to pass a server action here.
-   * You can also pass a `use client` function here, and have `router.refresh()` be called if the promise resolves to `'refresh'`.
+   * Server action called for each content-change message from the Live Content
+   * API.
+   *
+   * The default action revalidates the cache tags produced by `sanityFetch`.
    */
-  revalidateSyncTags?: (tags: SyncTag[]) => Promise<void | 'refresh'>
+  action?: SanityLiveAction
   /**
    * Custom error handler. If none is provided the error will be thrown during render and caught by the nearest React error boundary.
    */
@@ -138,7 +147,43 @@ export interface DefineLiveOptions {
    * previewing drafts outside Presentation Tool.
    */
   browserToken?: string | false
+  /**
+   * Require explicit live-content options at every call site.
+   *
+   * When `true`, `includeDrafts` is required on `<SanityLive />` and
+   * `perspective`/`stega` are required on `sanityFetch()`. This matches the
+   * explicit data flow needed inside Cache Components, where `draftMode()` and
+   * `cookies()` must be resolved outside `'use cache'` boundaries.
+   *
+   * @defaultValue `false`
+   */
+  strict?: boolean
 }
+
+/**
+ * Like {@link DefinedLiveProps} but with `includeDrafts` required.
+ * Returned by `defineLive({strict: true})`.
+ */
+export interface StrictDefinedLiveProps extends Omit<DefinedLiveProps, 'includeDrafts'> {
+  includeDrafts: boolean
+}
+
+/**
+ * Like {@link DefinedFetchType} but with `perspective` and `stega` required.
+ * Returned by `defineLive({strict: true})`.
+ */
+export type StrictDefinedFetchType = <const QueryString extends string>(options: {
+  query: QueryString
+  params?: QueryParams | Promise<QueryParams>
+  perspective: LivePerspective
+  stega: boolean
+  tags?: string[]
+  requestTag?: string
+}) => Promise<{
+  data: ClientReturn<QueryString, unknown>
+  sourceMap: ContentSourceMap | null
+  tags: string[]
+}>
 
 export interface SanityClientConfig extends Pick<
   InitializedClientConfig,
@@ -166,6 +211,21 @@ export interface SanityLiveContext {
   waitFor: 'function' | undefined
 }
 
+/**
+ * Server action invoked when Sanity Live receives a content-change message.
+ *
+ * The argument is the list of cache tags derived from the Live Content API
+ * event. The default action revalidates those tags. Return `'refresh'` from a
+ * custom action to also call `router.refresh()` in the browser.
+ *
+ * There's three types of values you can give `action`:
+ * - 'use server'; export async function action() {}
+ * - 'use client'; export async function action() {}
+ * - 'refresh'
+ *
+ * If you give the string 'refresh', it's the same as if the action just `async () => 'refresh'`, which leads to <SanityLive /> calling `router.refresh()` for you
+ */
+export type SanityLiveAction = ((unsafeTags: unknown) => Promise<void | 'refresh'>) | 'refresh'
 /**
  * Handles connection, parsing, and event-processing errors.
  *
