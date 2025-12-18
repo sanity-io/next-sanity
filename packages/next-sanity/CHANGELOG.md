@@ -1,5 +1,17 @@
 # next-sanity
 
+## 12.4.5
+
+### Patch Changes
+
+- [`9446c27`](https://github.com/sanity-io/next-sanity/commit/9446c278fc39c3b708d82fb97ca924f34ea46792) Thanks [@stipsan](https://github.com/stipsan)! - Fix a regression introduced in v12.4.0 ([#3430](https://github.com/sanity-io/next-sanity/issues/3430)) that lead to live preview sometimes failing to refresh and show draft content automatically
+
+## 12.4.4
+
+### Patch Changes
+
+- [`8e9e032`](https://github.com/sanity-io/next-sanity/commit/8e9e032d97216d427b2c836776f704a2adc07c61) Thanks [@stipsan](https://github.com/stipsan)! - fix(deps): update dependency @sanity/preview-url-secret to ^4.0.6
+
 ## 12.4.3
 
 ### Patch Changes

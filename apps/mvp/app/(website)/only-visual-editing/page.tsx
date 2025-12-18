@@ -12,6 +12,7 @@ const {sanityFetch} = defineLive({
   client,
   serverToken: token,
   browserToken: token,
+  strict: true,
 })
 
 async function CachedIndexPage({
@@ -21,6 +22,7 @@ async function CachedIndexPage({
   perspective: LivePerspective
   stega: boolean
 }) {
+  'use cache'
   const {data, tags} = await sanityFetch({
     query: postsQuery.query,
     perspective,

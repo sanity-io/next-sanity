@@ -1,36 +1,38 @@
 'use server'
 
-import type {SyncTag} from '@sanity/client'
-import {revalidateTag, updateTag} from 'next/cache'
+import {refresh, revalidateTag} from 'next/cache'
 import {draftMode} from 'next/headers'
 
-/**
- * @internal CAUTION: this is an internal action and does not follow semver. Using it directly is at your own risk.
- */
-export async function revalidateSyncTags(tags: SyncTag[]): Promise<void | 'refresh'> {
-  const {isEnabled: isDraftMode} = await draftMode()
+import {parseTags} from '#live/parseTags'
 
-  if (!isDraftMode) {
-    revalidateTag('sanity:fetch-sync-tags', 'max')
+/**
+ * @alpha CAUTION: this is an internal action and does not follow semver. Using it directly is at your own risk.
+ */
+export async function revalidateSyncTagsAction(unsafeTags: unknown): Promise<void> {
+  const {tags, prefixType} = parseTags(unsafeTags)
+  if ((await draftMode()).isEnabled) {
+    console.warn(
+      `<SanityLive ${prefixType === 'drafts' ? 'includeDrafts ' : ''}/> action called in draft mode, cache is bypassed in draft mode so the refresh() function is called instead of updateTag()`,
+      {tags},
+    )
+    refresh()
+    return undefined
   }
 
-  const logTags: string[] = []
-  for (const _tag of tags) {
-    const tag = `sanity:${_tag}`
-    if (isDraftMode) {
-      revalidateTag(tag, 'max')
-    } else {
-      updateTag(tag)
-    }
-    logTags.push(tag)
+  for (const tag of tags) {
+    revalidateTag(tag, 'max')
   }
 
   // oxlint-disable-next-line no-console
   console.log(
-    `<SanityLive /> ${isDraftMode ? `revalidated tags: ${logTags.join(', ')} with cache profile "max" ` : `updated tags: ${logTags.join(', ')} and revalidated tag: "sanity:fetch-sync-tags" with cache profile "max"`}`,
+    `<SanityLive ${prefixType === 'drafts' ? 'includeDrafts ' : ''}/> revalidated tags: ${tags.join(', ')} with cache profile "max" `,
   )
+}
 
-  if (isDraftMode) {
-    return 'refresh'
-  }
+/**
+ * Used by `<SanityLive onReconnect={refreshAction} onRestart={refreshAction} />`
+ * @deprecated - refactor `onReconnect` and `onRestart` to support `() => 'refresh'`
+ */
+export async function refreshAction(): Promise<void> {
+  refresh()
 }
