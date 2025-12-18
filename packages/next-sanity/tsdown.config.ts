@@ -7,17 +7,17 @@ import {defineConfig} from 'tsdown'
 export default defineConfig({
   tsconfig: 'tsconfig.build.json',
   entry: [
+    './src/cache-life.ts',
     './src/draft-mode/index.ts',
     './src/hooks/index.ts',
     './src/image/index.ts',
-    './src/experimental/live.tsx',
-    './src/experimental/client-components/live.tsx',
     './src/index.ts',
-    './src/live.ts',
-    './src/live.server-only.ts',
-    './src/live/client-components/live/index.ts',
-    './src/live/client-components/live-stream/index.ts',
-    './src/live/server-actions/index.ts',
+    './src/live/client-components/index.ts',
+    './src/live/conditions/default/index.ts',
+    './src/live/conditions/next-js/index.ts',
+    './src/live/conditions/react-server/index.ts',
+    './src/live/server-actions/index.next-js.ts',
+    './src/live/server-actions/index.default.ts',
     './src/studio/client-component/index.ts',
     './src/studio/index.ts',
     './src/visual-editing/client-component/index.ts',
@@ -35,10 +35,20 @@ export default defineConfig({
       delete pkg['./package.json']
 
       pkg['./live'] = {
-        'react-server': pkg['./live'],
-        'default': pkg['./live.server-only'],
+        'next-js': pkg['./live/conditions/next-js'],
+        'react-server': pkg['./live/conditions/react-server'],
+        'default': pkg['./live/conditions/default'],
       }
-      delete pkg['./live.server-only']
+      delete pkg['./live/conditions/default']
+      delete pkg['./live/conditions/next-js']
+      delete pkg['./live/conditions/react-server']
+
+      pkg['./live/server-actions'] = {
+        'next-js': pkg['./live/server-actions/index.next-js'],
+        'default': pkg['./live/server-actions/index.default'],
+      }
+      delete pkg['./live/server-actions/index.next-js']
+      delete pkg['./live/server-actions/index.default']
 
       const sortedPkg = {} as typeof pkg
       Object.keys(pkg)

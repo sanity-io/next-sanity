@@ -1,18 +1,28 @@
 'use cache'
 
 import {unstable__adapter, unstable__environment} from 'next-sanity'
+import {defineLive} from 'next-sanity/live'
+import {cacheLife} from 'next/cache'
 import Link from 'next/link'
 
 import PostsLayout, {postsQuery} from '@/app/(website)/PostsLayout'
+import {client} from '@/app/sanity.client'
 
-import {sanityFetch} from '../live'
+const {sanityFetch, SanityLive} = defineLive({client})
 
-export default async function IndexPage() {
+async function getPosts() {
+  'use cache: remote'
+
+  cacheLife('sanity')
+
   const {data} = await sanityFetch({
     query: postsQuery.query,
-    perspective: 'published',
-    stega: false,
   })
+  return data
+}
+
+export default async function IndexPage() {
+  const data = await getPosts()
 
   return (
     <>
@@ -45,12 +55,20 @@ export default async function IndexPage() {
         </span>
         <Link
           prefetch={false}
+          href="/only-visual-editing"
+          className="mx-2 my-4 inline-block rounded-full border border-gray-200 px-4 py-1 text-sm font-semibold text-gray-600 hover:border-transparent hover:bg-gray-600 hover:text-white focus:ring-2 focus:ring-gray-600 focus:ring-offset-2 focus:outline-hidden"
+        >
+          Only Visual Editing
+        </Link>
+        <Link
+          prefetch={false}
           href="/studio"
           className="mx-2 my-4 inline-block rounded-full border border-gray-200 px-4 py-1 text-sm font-semibold text-gray-600 hover:border-transparent hover:bg-gray-600 hover:text-white focus:ring-2 focus:ring-gray-600 focus:ring-offset-2 focus:outline-hidden"
         >
           Open Studio
         </Link>
       </div>
+      <SanityLive />
     </>
   )
 }

@@ -327,6 +327,7 @@ export type SanityImageMetadata = {
   palette?: SanityImagePalette
   lqip?: string
   blurHash?: string
+  thumbHash?: string
   hasAlpha?: boolean
   isOpaque?: boolean
 }
@@ -424,3 +425,44 @@ export type AllSanitySchemaTypes =
   | Geopoint
 
 export declare const internalGroqTypeReferenceTo: unique symbol
+
+type ArrayOf<T> = Array<
+  T & {
+    _key: string
+  }
+>
+
+// Source: app/(website)/DebugStatus.tsx
+// Variable: debugQuery
+// Query: *[_type == "post"] | order(publishedAt desc, _updatedAt desc) { _id, _type, title, "slug": slug.current, "mainImage": mainImage { asset, crop, hotspot, alt }, publishedAt, "author": author-> { name, "image": image { asset, crop, hotspot, alt } }, "status": select( _originalId in path("drafts.**") => "draft", default => "published" ) }
+export type DebugQueryResult = Array<{
+  _id: string
+  _type: 'post'
+  title: string | null
+  slug: string | null
+  mainImage: {
+    asset: SanityImageAssetReference | null
+    crop: SanityImageCrop | null
+    hotspot: SanityImageHotspot | null
+    alt: string | null
+  } | null
+  publishedAt: string | null
+  author: {
+    name: string | null
+    image: {
+      asset: SanityImageAssetReference | null
+      crop: SanityImageCrop | null
+      hotspot: SanityImageHotspot | null
+      alt: string | null
+    } | null
+  } | null
+  status: 'draft'
+}>
+
+// Query TypeMap
+import '@sanity/client'
+declare module '@sanity/client' {
+  interface SanityQueries {
+    '*[_type == "post"] | order(publishedAt desc, _updatedAt desc) { _id, _type, title, "slug": slug.current, "mainImage": mainImage { asset, crop, hotspot, alt }, publishedAt, "author": author-> { name, "image": image { asset, crop, hotspot, alt } }, "status": select( _originalId in path("drafts.**") => "draft", default => "published" ) }': DebugQueryResult
+  }
+}
