@@ -1,6 +1,5 @@
 'use client'
 
-
 import sharedConfig from '@repo/sanity-config'
 import {defineConfig} from 'sanity'
 
