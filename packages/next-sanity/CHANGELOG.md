@@ -5,6 +5,13 @@
 All notable changes to this project will be documented in this file. See
 [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [12.0.2](https://github.com/sanity-io/next-sanity/compare/next-sanity-v12.0.1...next-sanity-v12.0.2) (2025-12-18)
+
+
+### Bug Fixes
+
+* stop shipping src folder to npm ([ec9956d](https://github.com/sanity-io/next-sanity/commit/ec9956d8413f02a86744725d985352a22443e6d8))
+
 ## [12.0.1](https://github.com/sanity-io/next-sanity/compare/next-sanity-v12.0.0...next-sanity-v12.0.1) (2025-12-17)
 
 
