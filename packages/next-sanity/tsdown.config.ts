@@ -11,9 +11,12 @@ export default defineConfig({
     './src/hooks/index.ts',
     './src/image/index.ts',
     './src/index.ts',
-    './src/live/conditions/react-server/index.ts',
-    './src/live/conditions/default/index.ts',
+    './src/live/cache-life.ts',
     './src/live/client-components/index.ts',
+    './src/live/conditions/default/index.ts',
+    './src/live/conditions/next-js/index.ts',
+    './src/live/conditions/react-server/index.ts',
+    './src/live/server-actions/index.next-js.ts',
     './src/live/server-actions/index.default.ts',
     './src/studio/client-component/index.ts',
     './src/studio/index.ts',
@@ -54,15 +57,19 @@ export default defineConfig({
       delete pkg['./package.json']
 
       pkg['./live'] = {
+        'next-js': pkg['./live/conditions/next-js'],
         'react-server': pkg['./live/conditions/react-server'],
         'default': pkg['./live/conditions/default'],
       }
       delete pkg['./live/conditions/default']
+      delete pkg['./live/conditions/next-js']
       delete pkg['./live/conditions/react-server']
 
       pkg['./live/server-actions'] = {
-        default: pkg['./live/server-actions/index.default'],
+        'next-js': pkg['./live/server-actions/index.next-js'],
+        'default': pkg['./live/server-actions/index.default'],
       }
+      delete pkg['./live/server-actions/index.next-js']
       delete pkg['./live/server-actions/index.default']
 
       const sortedPkg = {} as typeof pkg

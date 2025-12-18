@@ -20,6 +20,7 @@ async function toggleDraftMode() {
 }
 
 export default async function RootLayout({children}: {children: React.ReactNode}) {
+  'use cache'
   const isDraftMode = (await draftMode()).isEnabled
   return (
     <html lang="en">

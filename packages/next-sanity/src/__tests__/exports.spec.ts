@@ -33,9 +33,6 @@ test(`exports snapshot for the ${JSON.stringify(env)} condition`, {timeout: 15_0
       ./draft-mode:
         defineEnableDraftMode: function
       ./hooks:
-        useDraftModeEnvironment: function
-        useDraftModePerspective: function
-        useIsLivePreview: function
         useIsPresentationTool: function
         useOptimistic: function
         usePresentationQuery: function
@@ -46,11 +43,15 @@ test(`exports snapshot for the ${JSON.stringify(env)} condition`, {timeout: 15_0
       ./live:
         defineLive: function
         isCorsOriginError: function
+        parseTags: function
+        resolvePerspectiveFromCookies: function
+      ./live/cache-life:
+        sanity: object
       ./live/client-components:
-        default: function
+        SanityLive: function
       ./live/server-actions:
-        revalidateSyncTags: function
-        setPerspectiveCookie: function
+        actionRefresh: function
+        actionUpdateTags: function
       ./studio:
         metadata: object
         NextStudio: function
@@ -62,9 +63,10 @@ test(`exports snapshot for the ${JSON.stringify(env)} condition`, {timeout: 15_0
       ./visual-editing:
         VisualEditing: function
       ./visual-editing/client-component:
-        default: function
+        VisualEditing: function
       ./visual-editing/server-actions:
-        revalidateRootLayout: function
+        actionPerspectiveChange: function
+        actionRefresh: function
       ./webhook:
         parseBody: function
       "
