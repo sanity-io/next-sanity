@@ -7,9 +7,16 @@ import PostsLayout, {postsQuery} from '@/app/(website)/PostsLayout'
 import {client} from '@/app/sanity.client'
 
 const token = process.env.SANITY_API_READ_TOKEN!
-const {sanityFetch, SanityLive} = defineLive({client, serverToken: token, browserToken: token})
+const {sanityFetch, SanityLive} = defineLive({
+  client,
+  serverToken: token,
+  browserToken: token,
+  strict: true,
+})
 
 async function getPosts(perspective: 'drafts' | 'published') {
+  'use cache'
+
   const {data} = await sanityFetch({
     query: postsQuery.query,
     perspective,
@@ -67,7 +74,7 @@ export default async function IndexPage() {
           Open Studio
         </Link>
       </div>
-      <SanityLive />
+      <SanityLive includeDrafts={isDraftMode} />
     </>
   )
 }
