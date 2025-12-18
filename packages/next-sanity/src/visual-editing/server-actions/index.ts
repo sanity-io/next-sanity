@@ -2,10 +2,18 @@
 
 import type {ClientPerspective} from '@sanity/client'
 import {perspectiveCookieName} from '@sanity/preview-url-secret/constants'
+import type {HistoryRefresh} from '@sanity/visual-editing/react'
 import {refresh} from 'next/cache'
 import {cookies} from 'next/headers'
 
 import {sanitizePerspective} from '#live/sanitizePerspective'
+
+/**
+ * @internal CAUTION: this is an internal action and does not follow semver. Using it directly is at your own risk.
+ */
+export async function actionRefresh(_payload: HistoryRefresh): Promise<void> {
+  refresh()
+}
 
 /**
  * @internal CAUTION: this is an internal action and does not follow semver. Using it directly is at your own risk.

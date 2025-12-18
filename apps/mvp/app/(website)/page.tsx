@@ -1,6 +1,7 @@
 import {unstable__adapter, unstable__environment} from 'next-sanity'
-import {defineLive} from 'next-sanity/live'
-import {draftMode} from 'next/headers'
+import {defineLive, resolvePerspectiveFromCookies, type LivePerspective} from 'next-sanity/live'
+import {cacheLife} from 'next/cache'
+import {cookies, draftMode} from 'next/headers'
 import Link from 'next/link'
 import {Suspense} from 'react'
 
@@ -8,36 +9,64 @@ import PostsLayout, {postsQuery} from '@/app/(website)/PostsLayout'
 import {client} from '@/app/sanity.client'
 
 const token = process.env.SANITY_API_READ_TOKEN!
-const {sanityFetch, SanityLive} = defineLive({
+const {sanityFetch, SanityLive: Live} = defineLive({
   client,
   serverToken: token,
   browserToken: token,
 })
 
-async function getPosts() {
+async function getPosts(perspective: LivePerspective) {
+  'use cache: remote'
+
+  cacheLife('sanity')
+
   const {data, tags} = await sanityFetch({
     query: postsQuery.query,
+    perspective,
+    stega: perspective !== 'published',
   })
   return {data, tags}
 }
 
+async function resolvePerspective(): Promise<LivePerspective> {
+  const {isEnabled: isDraftMode} = await draftMode()
+  const jar = await cookies()
+  if (isDraftMode) {
+    return await resolvePerspectiveFromCookies({cookies: jar})
+  }
+  return 'published'
+}
+
+async function SanityLive() {
+  const {isEnabled: isDraftMode} = await draftMode()
+  return <Live includeDrafts={isDraftMode} />
+}
+
 async function CachedIndexPage() {
-  const {data, tags} = await getPosts()
+  'use cache'
+
+  cacheLife('sanity')
+
+  const perspective = 'published' satisfies LivePerspective
+
+  const {data, tags} = await getPosts(perspective)
 
   return (
     <>
-      <p>{JSON.stringify({tags: tags.toSorted()})}</p>
+      <p>{JSON.stringify({perspective, tags: tags.toSorted()})}</p>
       <PostsLayout data={data} draftMode={false} />
     </>
   )
 }
 
 async function DynamicIndexPage() {
-  const {data, tags} = await getPosts()
+  const perspective = await resolvePerspective()
+
+  const {data, tags} = await getPosts(perspective)
 
   return (
     <>
-      <p>{JSON.stringify({tags: tags.toSorted()})}</p>
+      <p>{JSON.stringify({perspective, tags: tags.toSorted()})}</p>
       <PostsLayout data={data} draftMode={true} />
     </>
   )

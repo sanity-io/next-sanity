@@ -5,6 +5,7 @@ import {
   VisualEditing as VisualEditingComponent,
   type VisualEditingOptions,
 } from '@sanity/visual-editing/react'
+import {actionRefresh} from 'next-sanity/visual-editing/server-actions'
 import {usePathname, useRouter, useSearchParams} from 'next/navigation'
 import {useCallback, useEffect, useMemo, useRef, useState} from 'react'
 
@@ -37,7 +38,15 @@ export interface VisualEditingProps extends Omit<VisualEditingOptions, 'history'
 }
 
 export default function VisualEditing(props: VisualEditingProps): React.JSX.Element | null {
-  const {basePath = '', plugins, components, refresh, trailingSlash = false, zIndex} = props
+  const {
+    basePath = '',
+    plugins,
+    components,
+    refresh,
+    trailingSlash = false,
+    zIndex,
+    onPerspectiveChange,
+  } = props
 
   const router = useRouter()
   const routerRef = useRef(router)
@@ -86,11 +95,10 @@ export default function VisualEditing(props: VisualEditingProps): React.JSX.Elem
     }
   }, [basePath, navigate, pathname, searchParams, trailingSlash])
 
-  const handleRefresh = useCallback((payload: HistoryRefresh): false => {
+  const handleRefresh = useCallback((payload: HistoryRefresh): false | Promise<void> => {
     switch (payload.source) {
       case 'manual':
-        routerRef.current.refresh()
-        break
+        return actionRefresh(payload)
       case 'mutation': {
         if (payload.livePreviewEnabled) {
           // oxlint-disable-next-line no-console
@@ -99,13 +107,11 @@ export default function VisualEditing(props: VisualEditingProps): React.JSX.Elem
           )
           return false
         }
-        routerRef.current.refresh()
-        break
+        return actionRefresh(payload)
       }
       default:
         throw new Error('Unknown refresh source', {cause: payload})
     }
-    return false
   }, [])
 
   return (
@@ -115,6 +121,7 @@ export default function VisualEditing(props: VisualEditingProps): React.JSX.Elem
       history={history}
       portal
       refresh={refresh ?? handleRefresh}
+      onPerspectiveChange={onPerspectiveChange}
       zIndex={zIndex}
     />
   )

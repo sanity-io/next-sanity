@@ -1,24 +1,9 @@
-import type {
-  DefineSanityLiveOptions,
-  DefinedSanityFetchType,
-  DefinedSanityLiveProps,
-} from '../react-server/defineLive'
+// This is the implementation of `import {defineLive} from 'next-sanity/live' that is used when `cacheComponents: true` is set in `next.config.ts`.
+// Next.js will, when `cacheComponents: true`, automatically import `next-js` conditions instead of `react-server`, to allow targeting this mode.
 
-/**
- * @public
- */
-export function defineLive(_config: DefineSanityLiveOptions): {
-  sanityFetch: DefinedSanityFetchType
-  SanityLive: React.ComponentType<DefinedSanityLiveProps>
-} {
-  throw new Error(
-    'defineLive does not yet support `cacheComponents: true`. Wait for the next major version of next-sanity, or use the prerelease with `pnpm install next-sanity@cache-components`',
-  )
-}
-
-/**
- * @public
- */
-export type {DefineSanityLiveOptions, DefinedSanityFetchType, DefinedSanityLiveProps}
-
+export {defineLive} from './defineLive'
 export {isCorsOriginError} from '#live/isCorsOriginError'
+export {parseTags} from '#live/parseTags'
+export {resolvePerspectiveFromCookies} from '#live/resolvePerspectiveFromCookies'
+
+export type {PerspectiveType as LivePerspective} from '#live/types'
