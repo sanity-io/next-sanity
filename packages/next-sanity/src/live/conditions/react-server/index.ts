@@ -1,14 +1,21 @@
 export {defineLive} from './defineLive'
+
 export type {
-  DefinedFetchType as DefinedSanityFetchType,
-  DefinedLiveProps as DefinedSanityLiveProps,
-  DefineLiveOptions as DefineSanityLiveOptions,
+  DefinedFetchType,
+  DefinedLiveProps,
+  DefineLiveOptions,
   LivePerspective,
+  SanityLiveAction,
   SanityLiveContext,
+  SanityLiveOnError,
   SanityLiveOnGoaway,
   SanityLiveOnReconnect,
   SanityLiveOnRestart,
   SanityLiveOnWelcome,
+  StrictDefinedFetchType,
+  StrictDefinedLiveProps,
 } from '#live/types'
+
 export {isCorsOriginError} from '#live/isCorsOriginError'
+export {parseTags} from '#live/parseTags'
 export {resolvePerspectiveFromCookies} from '#live/resolvePerspectiveFromCookies'

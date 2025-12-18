@@ -1,12 +1,13 @@
-import {createClient, type LiveEvent, type SyncTag} from '@sanity/client'
-import {revalidateSyncTags as defaultRevalidateSyncTags} from 'next-sanity/live/server-actions'
+import {createClient, type LiveEvent} from '@sanity/client'
 import {useRouter} from 'next/navigation'
 import {useEffect, useMemo, useState, useEffectEvent, startTransition} from 'react'
 
-import {isCorsOriginError} from '#live/isCorsOriginError'
+import {cacheTagPrefix} from '#live/constants'
 import type {
   SanityClientConfig,
+  SanityLiveAction,
   SanityLiveContext,
+  SanityLiveOnError,
   SanityLiveOnGoaway,
   SanityLiveOnReconnect,
   SanityLiveOnRestart,
@@ -21,8 +22,8 @@ export interface SanityLiveProps {
   requestTag: string
   waitFor: 'function' | undefined
 
-  revalidateSyncTags?: (tags: SyncTag[]) => Promise<void | 'refresh'>
-  onError?: (error: unknown) => void
+  action: SanityLiveAction
+  onError: SanityLiveOnError | false | undefined
   onWelcome: SanityLiveOnWelcome | false | undefined
   onReconnect: SanityLiveOnReconnect | false | undefined
   onRestart: SanityLiveOnRestart | false | undefined
@@ -36,8 +37,8 @@ function SanityLive(props: SanityLiveProps): React.JSX.Element | null {
     requestTag,
     waitFor,
 
-    revalidateSyncTags = defaultRevalidateSyncTags,
-    onError = handleError,
+    action,
+    onError,
     onWelcome = handleWelcome,
     onReconnect = 'refresh',
     onRestart = 'refresh',
@@ -66,6 +67,19 @@ function SanityLive(props: SanityLiveProps): React.JSX.Element | null {
   // The interval is set in milliseconds, false means long polling is disabled
   const [refreshOnInterval, setRefreshOnInterval] = useState<number | false>(false)
 
+  const [error, setError] = useState<unknown>(null)
+  if (error) {
+    // Throw during render to bubble up to the nearest <ErrorBoundary>, if `onError` is provided we won't rethrow
+    throw error
+  }
+  const handleError = useEffectEvent((error: unknown) => {
+    if (onError) {
+      void onError(error, actionContext)
+    } else {
+      setError(error)
+    }
+  })
+
   const router = useRouter()
   const handleLiveEvent = useEffectEvent((event: LiveEvent) => {
     switch (event.type) {
@@ -79,14 +93,15 @@ function SanityLive(props: SanityLiveProps): React.JSX.Element | null {
         break
       }
       case 'message': {
-        if (waitFor === 'function') {
-          // Cache is already revalidated by the Sanity Function, just refresh the router
-          startTransition(() => router.refresh())
-        } else {
-          void revalidateSyncTags(event.tags).then((result) => {
-            if (result === 'refresh') startTransition(() => router.refresh())
-          })
-        }
+        startTransition(() =>
+          action === 'refresh'
+            ? router.refresh()
+            : action(event.tags.map((tag) => `${cacheTagPrefix}${tag}`)).then((result) => {
+                if (result === 'refresh') {
+                  startTransition(() => router.refresh())
+                }
+              }),
+        )
         break
       }
       case 'reconnect': {
@@ -140,17 +155,17 @@ function SanityLive(props: SanityLiveProps): React.JSX.Element | null {
         }
         break
       }
+      default:
+        handleError(new Error(`Unknown live event type`, {cause: event}))
+        break
     }
   })
   useEffect(() => {
-    const subscription = client.live.events({includeDrafts, tag: requestTag, waitFor}).subscribe({
-      next: handleLiveEvent,
-      error: (err: unknown) => {
-        onError(err)
-      },
-    })
+    const subscription = client.live
+      .events({includeDrafts, tag: requestTag, waitFor})
+      .subscribe({next: handleLiveEvent, error: handleError})
     return () => subscription.unsubscribe()
-  }, [client.live, onError, requestTag, includeDrafts, waitFor])
+  }, [client.live, requestTag, includeDrafts, waitFor])
 
   if (refreshOnInterval && Number.isFinite(refreshOnInterval) && refreshOnInterval > 0) {
     return <RefreshOnInterval interval={refreshOnInterval} />
@@ -161,18 +176,6 @@ function SanityLive(props: SanityLiveProps): React.JSX.Element | null {
 SanityLive.displayName = 'SanityLiveClientComponent'
 
 export default SanityLive
-
-function handleError(error: unknown) {
-  if (isCorsOriginError(error)) {
-    console.warn(
-      `Sanity Live is unable to connect to the Sanity API as the current origin - ${window.origin} - is not in the list of allowed CORS origins for this Sanity Project.`,
-      error.addOriginUrl && `Add it here:`,
-      error.addOriginUrl?.toString(),
-    )
-  } else {
-    console.error(error)
-  }
-}
 
 const handleWelcome: SanityLiveOnWelcome = (_, {includeDrafts, waitFor}) => {
   // oxlint-disable-next-line no-console
