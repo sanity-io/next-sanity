@@ -7,9 +7,9 @@ on:
   # Validate TypeDoc generation on PRs
   pull_request:
     paths:
-      - "packages/next-sanity/src/**"
-      - "packages/next-sanity/typedoc.json"
-      - ".github/workflows/upload-docs.yml"
+      - 'packages/next-sanity/src/**'
+      - 'packages/next-sanity/typedoc.json'
+      - '.github/workflows/upload-docs.yml'
   # Manual trigger
   workflow_dispatch:
     inputs:
@@ -46,7 +46,7 @@ jobs:
 
       - name: Install project dependencies
         run: pnpm install
-      
+
       - name: Generate TypeDoc
         id: generate
         run: |
@@ -82,7 +82,7 @@ jobs:
         if: github.event_name == 'pull_request' && steps.generate.outputs.success == 'true'
         uses: thollander/actions-comment-pull-request@24bffb9b452ba05a4f3f77933840a6a841d1b32b # v3
         with:
-          comment-tag: "typedoc-result"
+          comment-tag: 'typedoc-result'
           message: |
             ## 📚 TypeDoc Generation Result
 
@@ -128,7 +128,7 @@ jobs:
           ) && steps.generate.outputs.success == 'true'
         uses: sanity-io/reference-api-typedoc/.github/actions/typedoc-upload@main
         with:
-          packageName: "next-sanity"
+          packageName: 'next-sanity'
           version: ${{ steps.version.outputs.version }}
           typedocJsonPath: ${{ env.TYPEDOC_OUTPUT }}
         env:
