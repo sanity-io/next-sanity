@@ -55,7 +55,7 @@ afterEach(() => {
 
 vi.mock('next/cache')
 
-describe.each([/*{cacheComponents: true},*/ {cacheComponents: false}])(
+describe.each([{cacheComponents: true}, {cacheComponents: false}])(
   'sanityFetch when %o',
   async ({cacheComponents}) => {
     const {defineLive} = cacheComponents
@@ -258,10 +258,7 @@ describe.each([/*{cacheComponents: true},*/ {cacheComponents: false}])(
       test('is set to "published" by default', async () => {
         const {query, params} = getSanityFetchMock(
           '{"perspective": $perspective, "token": $token}',
-          {
-            perspective: 'published',
-            token: `Bearer ${token}`,
-          },
+          {perspective: 'published', token: `Bearer ${token}`},
         )
 
         // When using client.fetch directly it respects the `perspective` and `token` settings
@@ -329,10 +326,7 @@ describe.each([/*{cacheComponents: true},*/ {cacheComponents: false}])(
         const perspective = ['drafts', 'r5RGhbQN9']
         const {query, params} = getSanityFetchMock(
           '{"perspective": $perspective, "token": $token}',
-          {
-            perspective,
-            token: `Bearer ${token}`,
-          },
+          {perspective, token: `Bearer ${token}`},
         )
         // When using client.fetch directly it respects the `perspective` and `token` settings
         await expect(

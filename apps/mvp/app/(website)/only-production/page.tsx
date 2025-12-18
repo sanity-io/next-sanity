@@ -10,6 +10,7 @@ import {ContentSourceMapDebug} from '../ContentSourceMapDebug'
 const {sanityFetch, SanityLive} = defineLive({client})
 
 async function getPosts() {
+  'use cache'
   const {data, sourceMap} = await sanityFetch({
     query: postsQuery.query,
   })

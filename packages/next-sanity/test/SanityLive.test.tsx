@@ -31,7 +31,7 @@ afterEach(() => {
 
 vi.mock('next-sanity/live/client-components', {spy: true})
 
-describe.each([/*{cacheComponents: true},*/ {cacheComponents: false}])(
+describe.each([{cacheComponents: true}, {cacheComponents: false}])(
   'SanityLive when %o',
   async ({cacheComponents}) => {
     const {defineLive} = cacheComponents

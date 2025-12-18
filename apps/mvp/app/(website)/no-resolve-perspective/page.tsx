@@ -10,9 +10,16 @@ import {ContentSourceMapDebug} from '../ContentSourceMapDebug'
 import {onError} from './client-functions'
 
 const token = process.env.SANITY_API_READ_TOKEN!
-const {sanityFetch, SanityLive} = defineLive({client, serverToken: token, browserToken: token})
+const {sanityFetch, SanityLive} = defineLive({
+  client,
+  serverToken: token,
+  browserToken: token,
+  strict: true,
+})
 
 async function getPosts(perspective: 'drafts' | 'published') {
+  'use cache'
+
   const {data, sourceMap} = await sanityFetch({
     query: postsQuery.query,
     perspective,
@@ -71,7 +78,7 @@ export default async function IndexPage() {
           Open Studio
         </Link>
       </div>
-      <SanityLive onError={onError} />
+      <SanityLive includeDrafts={isDraftMode} onError={onError} />
     </>
   )
 }
