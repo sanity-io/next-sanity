@@ -641,10 +641,11 @@ The same token can be used as both `browserToken` and `serverToken`, as the `bro
 ```tsx
 // src/app/layout.tsx
 
+import {draftMode} from 'next/headers'
 import {VisualEditing} from 'next-sanity/visual-editing'
 import {SanityLive} from '@/sanity/lib/live'
 
-export default function RootLayout({children}: {children: React.ReactNode}) {
+export default async function RootLayout({children}: {children: React.ReactNode}) {
   return (
     <html lang="en">
       <body>

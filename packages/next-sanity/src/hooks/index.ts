@@ -1,6 +1,6 @@
 'use client'
 
-export * from '../live/hooks'
+export {usePresentationQuery} from '../visual-editing/hooks/usePresentationQuery'
 export {
   useIsPresentationTool,
   useOptimistic,

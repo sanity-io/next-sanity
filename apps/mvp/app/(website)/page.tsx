@@ -1,23 +1,79 @@
 import {unstable__adapter, unstable__environment} from 'next-sanity'
-import {resolvePerspectiveFromCookies} from 'next-sanity/experimental/live'
+import {defineLive, resolvePerspectiveFromCookies, type LivePerspective} from 'next-sanity/live'
+import {cacheLife} from 'next/cache'
 import {cookies, draftMode} from 'next/headers'
 import Link from 'next/link'
+import {Suspense} from 'react'
 
 import PostsLayout, {postsQuery} from '@/app/(website)/PostsLayout'
+import {client} from '@/app/sanity.client'
 
-import {sanityFetch} from './live'
+const token = process.env.SANITY_API_READ_TOKEN!
+const {sanityFetch, SanityLive: Live} = defineLive({
+  client,
+  serverToken: token,
+  browserToken: token,
+})
 
-export default async function IndexPage() {
-  const isDraftMode = (await draftMode()).isEnabled
-  const perspective = isDraftMode
-    ? await resolvePerspectiveFromCookies({cookies: await cookies()})
-    : 'published'
+async function getPosts(perspective: LivePerspective) {
+  'use cache: remote'
+
+  cacheLife('sanity')
+
   const {data, tags} = await sanityFetch({
     query: postsQuery.query,
     perspective,
-    stega: isDraftMode,
+    stega: perspective !== 'published',
   })
+  return {data, tags}
+}
 
+async function resolvePerspective(): Promise<LivePerspective> {
+  const {isEnabled: isDraftMode} = await draftMode()
+  const jar = await cookies()
+  if (isDraftMode) {
+    return await resolvePerspectiveFromCookies({cookies: jar})
+  }
+  return 'published'
+}
+
+async function SanityLive() {
+  const {isEnabled: isDraftMode} = await draftMode()
+  return <Live includeAllDocuments={isDraftMode} />
+}
+
+async function CachedIndexPage() {
+  'use cache'
+
+  cacheLife('sanity')
+
+  const perspective = 'published' satisfies LivePerspective
+
+  const {data, tags} = await getPosts(perspective)
+
+  return (
+    <>
+      <p>{JSON.stringify({perspective, tags: tags.toSorted()})}</p>
+      <PostsLayout data={data} draftMode={false} />
+    </>
+  )
+}
+
+async function DynamicIndexPage() {
+  const perspective = await resolvePerspective()
+
+  const {data, tags} = await getPosts(perspective)
+
+  return (
+    <>
+      <p>{JSON.stringify({perspective, tags: tags.toSorted()})}</p>
+      <PostsLayout data={data} draftMode={true} />
+    </>
+  )
+}
+
+export default async function IndexPage() {
+  const {isEnabled: isDraftMode} = await draftMode()
   return (
     <>
       <div
@@ -26,8 +82,9 @@ export default async function IndexPage() {
         data-environment={unstable__environment}
       >
         <div className="relative mx-auto max-w-7xl">
-          <PostsLayout data={data} draftMode={isDraftMode} />
-          <p>{JSON.stringify({perspective, tags: tags.toSorted()})}</p>
+          <Suspense fallback={isDraftMode ? null : <CachedIndexPage />}>
+            <DynamicIndexPage />
+          </Suspense>
         </div>
       </div>
       <div className="flex gap-2 text-center">
@@ -50,12 +107,20 @@ export default async function IndexPage() {
         </Link>
         <Link
           prefetch={false}
+          href="/only-visual-editing"
+          className="mx-2 my-4 inline-block rounded-full border border-gray-200 px-4 py-1 text-sm font-semibold text-gray-600 hover:border-transparent hover:bg-gray-600 hover:text-white focus:ring-2 focus:ring-gray-600 focus:ring-offset-2 focus:outline-hidden"
+        >
+          Only Visual Editing
+        </Link>
+        <Link
+          prefetch={false}
           href="/studio"
           className="mx-2 my-4 inline-block rounded-full border border-gray-200 px-4 py-1 text-sm font-semibold text-gray-600 hover:border-transparent hover:bg-gray-600 hover:text-white focus:ring-2 focus:ring-gray-600 focus:ring-offset-2 focus:outline-hidden"
         >
           Open Studio
         </Link>
       </div>
+      <SanityLive />
     </>
   )
 }

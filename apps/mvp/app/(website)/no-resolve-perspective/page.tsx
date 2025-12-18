@@ -1,20 +1,32 @@
-'use cache'
-
 import {unstable__adapter, unstable__environment} from 'next-sanity'
+import {defineLive} from 'next-sanity/live'
+import {cacheLife} from 'next/cache'
 import {draftMode} from 'next/headers'
 import Link from 'next/link'
 
 import PostsLayout, {postsQuery} from '@/app/(website)/PostsLayout'
+import {client} from '@/app/sanity.client'
 
-import {sanityFetch} from '../live'
+const token = process.env.SANITY_API_READ_TOKEN!
+const {sanityFetch, SanityLive} = defineLive({client, serverToken: token, browserToken: token})
+
+async function getPosts(perspective: 'drafts' | 'published') {
+  'use cache: remote'
+
+  cacheLife('sanity')
+
+  const {data} = await sanityFetch({
+    query: postsQuery.query,
+    perspective,
+    stega: perspective !== 'published',
+  })
+  return data
+}
 
 export default async function IndexPage() {
   const isDraftMode = (await draftMode()).isEnabled
-  const {data} = await sanityFetch({
-    query: postsQuery.query,
-    perspective: isDraftMode ? 'drafts' : 'published',
-    stega: isDraftMode,
-  })
+  const perspective = isDraftMode ? 'drafts' : 'published'
+  const data = await getPosts(perspective)
 
   return (
     <>
@@ -47,12 +59,20 @@ export default async function IndexPage() {
         </Link>
         <Link
           prefetch={false}
+          href="/only-visual-editing"
+          className="mx-2 my-4 inline-block rounded-full border border-gray-200 px-4 py-1 text-sm font-semibold text-gray-600 hover:border-transparent hover:bg-gray-600 hover:text-white focus:ring-2 focus:ring-gray-600 focus:ring-offset-2 focus:outline-hidden"
+        >
+          Only Visual Editing
+        </Link>
+        <Link
+          prefetch={false}
           href="/studio"
           className="mx-2 my-4 inline-block rounded-full border border-gray-200 px-4 py-1 text-sm font-semibold text-gray-600 hover:border-transparent hover:bg-gray-600 hover:text-white focus:ring-2 focus:ring-gray-600 focus:ring-offset-2 focus:outline-hidden"
         >
           Open Studio
         </Link>
       </div>
+      <SanityLive includeAllDocuments={isDraftMode} />
     </>
   )
 }
