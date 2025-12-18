@@ -36,6 +36,7 @@ export type PostsLayoutProps = {
 }
 
 async function RandomNumber() {
+  'use cache'
   const random = Math.random()
   return <p className="mt-6">Random number: {random}</p>
 }
