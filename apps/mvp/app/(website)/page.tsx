@@ -1,5 +1,5 @@
 import {unstable__adapter, unstable__environment} from 'next-sanity'
-import {resolvePerspectiveFromCookies} from 'next-sanity/experimental/live'
+import {resolvePerspectiveFromCookies} from 'next-sanity/live'
 import {cookies, draftMode} from 'next/headers'
 import Link from 'next/link'
 

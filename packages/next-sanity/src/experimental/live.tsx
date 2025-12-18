@@ -1,7 +1,5 @@
-// oxlint-disable-next-line no-unassigned-import
-import 'server-only'
+import {resolvePerspectiveFromCookies} from '#live/resolvePerspectiveFromCookies'
 import {stegaEncodeSourceMap} from '@sanity/client/stega'
-import {perspectiveCookieName} from '@sanity/preview-url-secret/constants'
 import {
   createClient,
   type ClientPerspective,
@@ -21,21 +19,7 @@ import {preconnect} from 'react-dom'
 
 import type {SanityClientConfig} from './types'
 
-import {sanitizePerspective} from '../live/utils'
 import {DRAFT_SYNC_TAG_PREFIX, PUBLISHED_SYNC_TAG_PREFIX} from './constants'
-
-/**
- * @alpha CAUTION: This API does not follow semver and could have breaking changes in future minor releases.
- */
-export async function resolvePerspectiveFromCookies({
-  cookies: jar,
-}: {
-  cookies: Awaited<ReturnType<typeof cookies>>
-}): Promise<Exclude<ClientPerspective, 'raw'>> {
-  return jar.has(perspectiveCookieName)
-    ? sanitizePerspective(jar.get(perspectiveCookieName)?.value, 'drafts')
-    : 'drafts'
-}
 
 async function sanityCachedFetch<const QueryString extends string>(
   config: SanityClientConfig,

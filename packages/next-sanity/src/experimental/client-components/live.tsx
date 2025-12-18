@@ -1,5 +1,8 @@
 'use client'
 
+import {setEnvironment, setPerspective} from '#client-components/context'
+import {isCorsOriginError} from '#live/isCorsOriginError'
+import {sanitizePerspective} from '#live/sanitizePerspective'
 import {
   createClient,
   type ClientPerspective,
@@ -14,9 +17,6 @@ import {useEffect, useMemo, useRef, useState, useEffectEvent} from 'react'
 
 import type {SanityClientConfig} from '../types'
 
-import {isCorsOriginError} from '../../isCorsOriginError'
-import {setEnvironment, setPerspective} from '../../live/hooks/context'
-import {sanitizePerspective} from '../../live/utils'
 import {PUBLISHED_SYNC_TAG_PREFIX, type DRAFT_SYNC_TAG_PREFIX} from '../constants'
 
 const PresentationComlink = dynamic(() => import('./PresentationComlink'), {ssr: false})

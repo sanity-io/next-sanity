@@ -1,5 +1,47 @@
 # next-sanity
 
+## 13.0.0-cache-components.5
+
+### Patch Changes
+
+- [#3109](https://github.com/sanity-io/next-sanity/pull/3109) [`cecadb3`](https://github.com/sanity-io/next-sanity/commit/cecadb3cc9e99cd194614db966fea8f3045a7b15) Thanks [@stipsan](https://github.com/stipsan)! - Add temp debug function
+
+## 13.0.0-cache-components.4
+
+### Major Changes
+
+- [#3109](https://github.com/sanity-io/next-sanity/pull/3109) [`a060c49`](https://github.com/sanity-io/next-sanity/commit/a060c49fa535bcb2e7c019186023f2f9adcf55ee) Thanks [@stipsan](https://github.com/stipsan)! - Remove `type DraftPerspective`, `type DraftEnvironment` and `type ClientPerspective` from `import 'next-sanity/hooks'`
+
+- [#3109](https://github.com/sanity-io/next-sanity/pull/3109) [`7b02967`](https://github.com/sanity-io/next-sanity/commit/7b02967c9349e206c74b10527ab4adf90a63b35b) Thanks [@stipsan](https://github.com/stipsan)! - Remove the experimental `<SanityLiveStream>` API
+
+## 13.0.0-cache-components.3
+
+### Patch Changes
+
+- [#3109](https://github.com/sanity-io/next-sanity/pull/3109) [`424759f`](https://github.com/sanity-io/next-sanity/commit/424759f4c9fa86c37d796573a94a702c39de956f) Thanks [@stipsan](https://github.com/stipsan)! - Dedupe `resolvePerspectiveFromCookies`
+
+## 13.0.0-cache-components.2
+
+### Major Changes
+
+- [#3109](https://github.com/sanity-io/next-sanity/pull/3109) [`21f75c0`](https://github.com/sanity-io/next-sanity/commit/21f75c0872b8db1907a3e488e797d6136bf131e4) Thanks [@stipsan](https://github.com/stipsan)! - Merge `next-sanity/experimental/live` export into `next-sanity/live`
+
+### Minor Changes
+
+- [#3109](https://github.com/sanity-io/next-sanity/pull/3109) [`bcd61a3`](https://github.com/sanity-io/next-sanity/commit/bcd61a30b905bd53023e4c317773f19d466bdbb2) Thanks [@stipsan](https://github.com/stipsan)! - Add `resolvePerspectiveFromCookies` export
+
+## 12.0.6-cache-components.1
+
+### Patch Changes
+
+- [#3109](https://github.com/sanity-io/next-sanity/pull/3109) [`2bc7388`](https://github.com/sanity-io/next-sanity/commit/2bc7388b12a92ad698a772e2f371ea5f4b0f1001) Thanks [@stipsan](https://github.com/stipsan)! - Use private import for `#isCorsOriginError`
+
+## 12.0.6-cache-components.0
+
+### Patch Changes
+
+- [#3109](https://github.com/sanity-io/next-sanity/pull/3109) [`b7a313f`](https://github.com/sanity-io/next-sanity/commit/b7a313fb4784474a30d368bf920027e18ee5ca82) Thanks [@stipsan](https://github.com/stipsan)! - Test pre release
+
 ## 12.0.5
 
 ### Patch Changes

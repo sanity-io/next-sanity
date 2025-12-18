@@ -2,11 +2,10 @@
 
 import type {ClientPerspective, SyncTag} from '@sanity/client'
 
+import {sanitizePerspective} from '#live/sanitizePerspective'
 import {perspectiveCookieName} from '@sanity/preview-url-secret/constants'
 import {revalidateTag} from 'next/cache'
 import {cookies, draftMode} from 'next/headers'
-
-import {sanitizePerspective} from '../utils'
 
 export async function revalidateSyncTags(tags: SyncTag[]): Promise<void> {
   revalidateTag('sanity:fetch-sync-tags', 'max')
