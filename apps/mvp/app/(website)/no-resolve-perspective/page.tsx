@@ -1,5 +1,6 @@
 import {unstable__adapter, unstable__environment} from 'next-sanity'
 import {defineLive} from 'next-sanity/live'
+import {cacheLife} from 'next/cache'
 import {draftMode} from 'next/headers'
 import Link from 'next/link'
 
@@ -10,6 +11,10 @@ const token = process.env.SANITY_API_READ_TOKEN!
 const {sanityFetch, SanityLive} = defineLive({client, serverToken: token, browserToken: token})
 
 async function getPosts(perspective: 'drafts' | 'published') {
+  'use cache: remote'
+
+  cacheLife('sanity')
+
   const {data} = await sanityFetch({
     query: postsQuery.query,
     perspective,
@@ -67,7 +72,7 @@ export default async function IndexPage() {
           Open Studio
         </Link>
       </div>
-      <SanityLive />
+      <SanityLive includeDrafts={isDraftMode} />
     </>
   )
 }
