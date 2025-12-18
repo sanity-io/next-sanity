@@ -1,6 +1,6 @@
 {
   "name": "next-sanity",
-  "version": "12.4.3",
+  "version": "13.0.0-cache-components.45",
   "description": "Sanity.io toolkit for Next.js",
   "keywords": [
     "live",
@@ -46,6 +46,7 @@
       "react-server": "./src/live/conditions/react-server/index.ts",
       "default": "./src/live/conditions/default/index.ts"
     },
+    "./live/cache-life": "./src/live/cache-life.ts",
     "./live/client-components": "./src/live/client-components/index.ts",
     "./live/server-actions": "./src/live/server-actions/index.ts",
     "./studio": "./src/studio/index.ts",
@@ -67,6 +68,7 @@
         "react-server": "./dist/live/conditions/react-server/index.js",
         "default": "./dist/live/conditions/default/index.js"
       },
+      "./live/cache-life": "./dist/live/cache-life.js",
       "./live/client-components": "./dist/live/client-components/index.js",
       "./live/server-actions": "./dist/live/server-actions/index.js",
       "./studio": "./dist/studio/index.js",
@@ -89,12 +91,10 @@
   "dependencies": {
     "@portabletext/react": "^6.2.0",
     "@sanity/client": "^7.22.0",
-    "@sanity/comlink": "^4.0.1",
-    "@sanity/presentation-comlink": "^2.0.1",
+    "@sanity/generate-help-url": "^4.0.0",
     "@sanity/preview-url-secret": "^4.0.5",
     "@sanity/visual-editing": "^5.3.4",
     "@sanity/webhook": "^4.0.4",
-    "dequal": "^2.0.3",
     "groq": "^5.24.0",
     "history": "^5.3.0"
   },

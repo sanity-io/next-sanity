@@ -1,60 +1,38 @@
 'use server'
 
-import type {ClientPerspective, SyncTag} from '@sanity/client'
-import {perspectiveCookieName} from '@sanity/preview-url-secret/constants'
-import {revalidateTag, updateTag} from 'next/cache'
-import {cookies, draftMode} from 'next/headers'
+import {refresh, revalidateTag} from 'next/cache'
+import {draftMode} from 'next/headers'
 
-import {sanitizePerspective} from '#live/sanitizePerspective'
+import {parseTags} from '#live/parseTags'
 
 /**
- * @internal CAUTION: this is an internal action and does not follow semver. Using it directly is at your own risk.
+ * @alpha CAUTION: this is an internal action and does not follow semver. Using it directly is at your own risk.
  */
-export async function revalidateSyncTags(tags: SyncTag[]): Promise<void> {
-  const {isEnabled: isDraftMode} = await draftMode()
-
-  if (!isDraftMode) {
-    revalidateTag('sanity:fetch-sync-tags', 'max')
+export async function revalidateSyncTagsAction(unsafeTags: unknown): Promise<void> {
+  const {tags, prefixType} = parseTags(unsafeTags)
+  if ((await draftMode()).isEnabled) {
+    console.warn(
+      `<SanityLive ${prefixType === 'drafts' ? 'includeDrafts ' : ''}/> action called in draft mode, cache is bypassed in draft mode so the refresh() function is called instead of updateTag()`,
+      {tags},
+    )
+    refresh()
+    return undefined
   }
 
-  const logTags: string[] = []
-  for (const _tag of tags) {
-    const tag = `sanity:${_tag}`
-    if (isDraftMode) {
-      revalidateTag(tag, 'max')
-    } else {
-      updateTag(tag)
-    }
-    logTags.push(tag)
+  for (const tag of tags) {
+    revalidateTag(tag, 'max')
   }
 
   // oxlint-disable-next-line no-console
   console.log(
-    `<SanityLive /> ${isDraftMode ? `revalidated tags: ${logTags.join(', ')} with cache profile "max" ` : `updated tags: ${logTags.join(', ')} and revalidated tag: "sanity:fetch-sync-tags" with cache profile "max"`}`,
+    `<SanityLive ${prefixType === 'drafts' ? 'includeDrafts ' : ''}/> revalidated tags: ${tags.join(', ')} with cache profile "max" `,
   )
 }
 
 /**
- * @internal CAUTION: this is an internal action and does not follow semver. Using it directly is at your own risk.
+ * Used by `<SanityLive onReconnect={refreshAction} onRestart={refreshAction} />`
+ * @deprecated - refactor `onReconnect` and `onRestart` to support `() => 'refresh'`
  */
-export async function setPerspectiveCookie(perspective: ClientPerspective): Promise<void> {
-  if (!(await draftMode()).isEnabled) {
-    // throw new Error('Draft mode is not enabled, setting perspective cookie is not allowed')
-    return
-  }
-  const sanitizedPerspective = sanitizePerspective(perspective, 'drafts')
-  if (perspective !== sanitizedPerspective) {
-    throw new Error(`Invalid perspective`, {cause: perspective})
-  }
-
-  ;(await cookies()).set(
-    perspectiveCookieName,
-    Array.isArray(sanitizedPerspective) ? sanitizedPerspective.join(',') : sanitizedPerspective,
-    {
-      httpOnly: true,
-      path: '/',
-      secure: true,
-      sameSite: 'none',
-    },
-  )
+export async function refreshAction(): Promise<void> {
+  refresh()
 }

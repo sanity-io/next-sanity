@@ -1,5 +1,6 @@
 import type {VisualEditingProps} from 'next-sanity/visual-editing/client-component'
 import {VisualEditing as VisualEditingComponent} from 'next-sanity/visual-editing/client-component'
+import {perspectiveChangeAction} from 'next-sanity/visual-editing/server-actions'
 
 /**
  * @public
@@ -35,6 +36,7 @@ export function VisualEditing(props: VisualEditingProps): React.ReactElement {
   }
   return (
     <VisualEditingComponent
+      onPerspectiveChange={perspectiveChangeAction}
       {...props}
       basePath={props.basePath ?? autoBasePath}
       trailingSlash={props.trailingSlash ?? autoTrailingSlash}

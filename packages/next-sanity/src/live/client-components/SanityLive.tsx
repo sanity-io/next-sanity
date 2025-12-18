@@ -1,79 +1,65 @@
-import {
-  createClient,
-  type ClientPerspective,
-  type InitializedClientConfig,
-  type LiveEvent,
-  type LiveEventGoAway,
-  type SyncTag,
-} from '@sanity/client'
-import {isMaybePresentation, isMaybePreviewWindow} from '@sanity/presentation-comlink'
-import {revalidateSyncTags as defaultRevalidateSyncTags} from 'next-sanity/live/server-actions'
+import {createClient, type LiveEvent} from '@sanity/client'
 import dynamic from 'next/dynamic'
 import {useRouter} from 'next/navigation'
-import {useEffect, useMemo, useRef, useState, useEffectEvent, startTransition} from 'react'
+import {useEffect, useMemo, useState, useEffectEvent, startTransition} from 'react'
 
+import {cacheTagPrefixes} from '#live/constants'
 import {isCorsOriginError} from '#live/isCorsOriginError'
+import type {
+  SanityClientConfig,
+  SanityLiveAction,
+  SanityLiveActionContext,
+  SanityLiveOnError,
+  SanityLiveOnGoaway,
+  SanityLiveOnReconnect,
+  SanityLiveOnRestart,
+  SanityLiveOnWelcome,
+} from '#live/types'
 
-import {setEnvironment, setPerspective} from '../hooks/context'
-
-const PresentationComlink = dynamic(() => import('./PresentationComlink'))
 const RefreshOnFocus = dynamic(() => import('./RefreshOnFocus'))
 const RefreshOnMount = dynamic(() => import('./RefreshOnMount'))
 const RefreshOnInterval = dynamic(() => import('./RefreshOnInterval'))
 const RefreshOnReconnect = dynamic(() => import('./RefreshOnReconnect'))
 
-export interface SanityLiveProps extends Pick<
-  InitializedClientConfig,
-  | 'projectId'
-  | 'dataset'
-  | 'apiHost'
-  | 'apiVersion'
-  | 'useProjectHostname'
-  | 'token'
-  | 'requestTagPrefix'
-> {
-  draftModeEnabled: boolean
-  draftModePerspective?: ClientPerspective
-  requestTag: string | undefined
-  waitFor?: 'function'
+export interface SanityLiveProps {
+  config: SanityClientConfig
+  includeDrafts: boolean | undefined
+  requestTag: string
+  waitFor: 'function' | undefined
 
-  revalidateSyncTags?: (tags: SyncTag[]) => Promise<void | 'refresh'>
-  onError?: (error: unknown) => void
-  intervalOnGoAway?: number | false
-  onGoAway?: (event: LiveEventGoAway, intervalOnGoAway: number | false) => void
+  action: SanityLiveAction
+  onError: SanityLiveOnError | false | undefined
+  onWelcome: SanityLiveOnWelcome | false | undefined
+  onReconnect: SanityLiveOnReconnect | false | undefined
+  onRestart: SanityLiveOnRestart | false | undefined
+  onGoAway: SanityLiveOnGoaway | false | undefined
 
-  refreshOnMount?: boolean
-  refreshOnFocus?: boolean
-  refreshOnReconnect?: boolean
+  refreshOnMount: boolean | undefined
+  refreshOnFocus: boolean | undefined
+  refreshOnReconnect: boolean | undefined
 }
 
 function SanityLive(props: SanityLiveProps): React.JSX.Element | null {
   const {
-    projectId,
-    dataset,
-    apiHost,
-    apiVersion,
-    useProjectHostname,
-    token,
-    requestTagPrefix,
-    draftModeEnabled,
-    draftModePerspective,
-    requestTag = 'next-loader.live',
+    config,
+    includeDrafts = false,
+    requestTag,
     waitFor,
 
-    revalidateSyncTags = defaultRevalidateSyncTags,
-    onError = handleError,
-    intervalOnGoAway = 30_000,
-    onGoAway = handleOnGoAway,
+    action,
+    onError,
+    onWelcome = handleWelcome,
+    onReconnect,
+    onRestart,
+    onGoAway = handleGoaway,
 
     refreshOnMount = false,
-    refreshOnFocus = draftModeEnabled
-      ? false
-      : typeof window === 'undefined'
-        ? true
-        : window.self === window.top,
+    refreshOnFocus = false,
     refreshOnReconnect = true,
   } = props
+  const {projectId, dataset, apiHost, apiVersion, useProjectHostname, token, requestTagPrefix} =
+    config
+  const actionContext = {includeDrafts} satisfies SanityLiveActionContext
 
   const client = useMemo(
     () =>
@@ -93,155 +79,108 @@ function SanityLive(props: SanityLiveProps): React.JSX.Element | null {
 
   const [refreshOnInterval, setRefreshOnInterval] = useState<number | false>(false)
 
-  /**
-   * 1. Handle Live Events and call revalidateTag or router.refresh when needed
-   */
+  const [error, setError] = useState<unknown>(null)
+  if (error) {
+    // Throw during render to bubble up to the nearest <ErrorBoundary>, if `onError` is provided we won't rethrow
+    throw error
+  }
+  const handleError = useEffectEvent((error: unknown) => {
+    if (onError) {
+      void onError(error, actionContext)
+    } else {
+      setError(
+        isCorsOriginError(error)
+          ? new Error(
+              `Sanity Live is unable to connect to the Sanity API as the current origin - ${window.origin} - is not in the list of allowed CORS origins for this Sanity Project.${error.addOriginUrl ? ` Add it here: ${error.addOriginUrl}` : ''}`,
+              {cause: error},
+            )
+          : error,
+      )
+    }
+  })
+
   const router = useRouter()
   const handleLiveEvent = useEffectEvent((event: LiveEvent) => {
-    if (process.env.NODE_ENV !== 'production' && event.type === 'welcome') {
-      // oxlint-disable-next-line no-console
-      console.info(
-        'Sanity is live with',
-        token
-          ? 'automatic revalidation for draft content changes as well as published content'
-          : draftModeEnabled
-            ? 'automatic revalidation for only published content. Provide a `browserToken` to `defineLive` to support draft content outside of Presentation Tool.'
-            : 'automatic revalidation of published content',
-      )
-      // Disable long polling when welcome event is received, this is a no-op if long polling is already disabled
-      startTransition(() => setRefreshOnInterval(false))
-    } else if (event.type === 'message') {
-      if (waitFor === 'function') {
-        // Cache is already revalidated by the Sanity Function, just refresh the router
-        startTransition(() => router.refresh())
-      } else {
-        void revalidateSyncTags(event.tags).then((result) => {
-          if (result === 'refresh') startTransition(() => router.refresh())
-        })
+    switch (event.type) {
+      case 'welcome': {
+        // Disable long polling when welcome event is received, this is a no-op if long polling is already disabled
+        startTransition(() => setRefreshOnInterval(false))
+
+        if (onWelcome) {
+          startTransition(() => onWelcome(event, actionContext))
+        }
+        break
       }
-    } else if (event.type === 'restart' || event.type === 'reconnect') {
-      // Disable long polling when restart/reconnect event is received, this is a no-op if long polling is already disabled
-      startTransition(() => setRefreshOnInterval(false))
-      // @TODO add support for `onRestart` and `onReconnect` events so this can be customized
-      startTransition(() => router.refresh())
-    } else if (event.type === 'goaway') {
-      onGoAway(event, intervalOnGoAway)
-      startTransition(() => setRefreshOnInterval(intervalOnGoAway))
+      case 'message': {
+        startTransition(() =>
+          action(
+            event.tags.map(
+              (tag) =>
+                `${includeDrafts ? cacheTagPrefixes.drafts : cacheTagPrefixes.published}${tag}`,
+            ),
+          ).then((result) => {
+            if (result === 'refresh') {
+              startTransition(() => router.refresh())
+            }
+          }),
+        )
+        break
+      }
+      case 'restart': {
+        // Disable long polling when restart event is received, this is a no-op if long polling is already disabled
+        startTransition(() => setRefreshOnInterval(false))
+
+        if (onRestart) {
+          startTransition(() => onRestart(event, actionContext))
+        }
+        break
+      }
+      case 'reconnect': {
+        // Disable long polling when reconnect event is received, this is a no-op if long polling is already disabled
+        startTransition(() => setRefreshOnInterval(false))
+
+        if (onReconnect) {
+          startTransition(() => onReconnect(event, actionContext))
+        }
+        break
+      }
+      case 'goaway': {
+        if (onGoAway) {
+          startTransition(() =>
+            onGoAway(event, actionContext, (interval) =>
+              startTransition(() => setRefreshOnInterval(interval)),
+            ),
+          )
+        } else if (!onGoAway) {
+          handleError(
+            new Error(
+              `Sanity Live connection closed, automatic revalidation is disabled, the server gave this reason: ${event.reason}`,
+              {cause: event},
+            ),
+          )
+        }
+        break
+      }
+      default:
+        handleError(new Error(`Unknown live event type`, {cause: event}))
+        break
     }
   })
   useEffect(() => {
     const subscription = client.live
-      .events({includeDrafts: !!token, tag: requestTag, waitFor})
-      .subscribe({
-        next: handleLiveEvent,
-        error: (err: unknown) => {
-          onError(err)
-        },
-      })
+      .events({includeDrafts, tag: requestTag, waitFor})
+      .subscribe({next: handleLiveEvent, error: handleError})
     return () => subscription.unsubscribe()
-  }, [client.live, onError, requestTag, token, waitFor])
-
-  /**
-   * 2. Notify what perspective we're in, when in Draft Mode
-   */
-  useEffect(() => {
-    if (draftModeEnabled && draftModePerspective) {
-      setPerspective(draftModePerspective)
-    } else {
-      setPerspective('unknown')
-    }
-  }, [draftModeEnabled, draftModePerspective])
-
-  const [loadComlink, setLoadComlink] = useState(false)
-  /**
-   * 3. Notify what environment we're in, when in Draft Mode
-   */
-  useEffect(() => {
-    // If we might be in Presentation Tool, then skip detecting here as it's handled later
-    if (isMaybePresentation()) return
-
-    // If we're definitely not in Presentation Tool, then we can set the environment as stand-alone live preview
-    // if we have both a browser token, and draft mode is enabled
-    if (draftModeEnabled && token) {
-      setEnvironment('live')
-      return
-    }
-    // If we're in draft mode, but don't have a browser token, then we're in static mode
-    // which means that published content is still live, but draft changes likely need manual refresh
-    if (draftModeEnabled) {
-      setEnvironment('static')
-      return
-    }
-
-    // Fallback to `unknown` otherwise, as we simply don't know how it's setup
-    setEnvironment('unknown')
-    return
-  }, [draftModeEnabled, token])
-
-  /**
-   * 4. If Presentation Tool is detected, load up the comlink and integrate with it
-   */
-  useEffect(() => {
-    if (!isMaybePresentation()) return
-    const controller = new AbortController()
-    // Wait for a while to see if Presentation Tool is detected, before assuming the env to be stand-alone live preview
-    const timeout = setTimeout(() => setEnvironment('live'), 3_000)
-    window.addEventListener(
-      'message',
-      ({data}: MessageEvent<unknown>) => {
-        if (
-          data &&
-          typeof data === 'object' &&
-          'domain' in data &&
-          data.domain === 'sanity/channels' &&
-          'from' in data &&
-          data.from === 'presentation'
-        ) {
-          clearTimeout(timeout)
-          setEnvironment(isMaybePreviewWindow() ? 'presentation-window' : 'presentation-iframe')
-          setLoadComlink(true)
-          controller.abort()
-        }
-      },
-      {signal: controller.signal},
-    )
-    return () => {
-      clearTimeout(timeout)
-      controller.abort()
-    }
-  }, [])
-
-  /**
-   * 5. Warn if draft mode is being disabled
-   * @TODO move logic into PresentationComlink, or maybe VisualEditing?
-   */
-  const draftModeEnabledWarnRef = useRef<ReturnType<typeof setTimeout> | undefined>(undefined)
-  useEffect(() => {
-    if (!draftModeEnabled) return
-    clearTimeout(draftModeEnabledWarnRef.current)
-    return () => {
-      draftModeEnabledWarnRef.current = setTimeout(() => {
-        console.warn('Sanity Live: Draft mode was enabled, but is now being disabled')
-      })
-    }
-  }, [draftModeEnabled])
+  }, [client.live, requestTag, includeDrafts, waitFor])
 
   return (
     <>
-      {draftModeEnabled && loadComlink && (
-        <PresentationComlink
-          projectId={projectId!}
-          dataset={dataset!}
-          draftModeEnabled={draftModeEnabled}
-          draftModePerspective={draftModePerspective!}
-        />
-      )}
-      {!draftModeEnabled && refreshOnMount && <RefreshOnMount />}
+      {refreshOnMount && <RefreshOnMount />}
       {refreshOnInterval && Number.isFinite(refreshOnInterval) && refreshOnInterval > 0 && (
         <RefreshOnInterval interval={refreshOnInterval} />
       )}
-      {!draftModeEnabled && refreshOnFocus && <RefreshOnFocus />}
-      {!draftModeEnabled && refreshOnReconnect && <RefreshOnReconnect />}
+      {refreshOnFocus && <RefreshOnFocus />}
+      {refreshOnReconnect && <RefreshOnReconnect />}
     </>
   )
 }
@@ -250,30 +189,19 @@ SanityLive.displayName = 'SanityLiveClientComponent'
 
 export default SanityLive
 
-function handleError(error: unknown) {
-  if (isCorsOriginError(error)) {
-    console.warn(
-      `Sanity Live is unable to connect to the Sanity API as the current origin - ${window.origin} - is not in the list of allowed CORS origins for this Sanity Project.`,
-      error.addOriginUrl && `Add it here:`,
-      error.addOriginUrl?.toString(),
-    )
-  } else {
-    console.error(error)
-  }
+const handleWelcome: SanityLiveOnWelcome = (_, {includeDrafts}) => {
+  // oxlint-disable-next-line no-console
+  console.info(
+    `<SanityLive${includeDrafts ? ' includeDrafts' : ''}> is connected and listening for live events to ${includeDrafts ? 'all content including drafts and version documents in content releases' : 'published content'}`,
+  )
 }
 
-function handleOnGoAway(event: LiveEventGoAway, intervalOnGoAway: number | false) {
-  if (intervalOnGoAway) {
-    console.warn(
-      'Sanity Live connection closed, switching to long polling set to a interval of',
-      intervalOnGoAway / 1000,
-      'seconds and the server gave this reason:',
-      event.reason,
-    )
-  } else {
-    console.error(
-      'Sanity Live connection closed, automatic revalidation is disabled, the server gave this reason:',
-      event.reason,
-    )
-  }
+const handleGoaway: SanityLiveOnGoaway = (event, {includeDrafts}, setLongPollingInterval) => {
+  const interval = 30_000
+  console.warn(
+    `<SanityLive${includeDrafts ? ' includeDrafts' : ''}> connection is closed after receiving a 'goaway' event, the server gave this reason:`,
+    event.reason,
+    `Content will now be refreshed every ${interval / 1_000} seconds`,
+  )
+  setLongPollingInterval(interval)
 }
