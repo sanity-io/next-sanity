@@ -1,0 +1,16 @@
+name: Add changeset to Renovate updates
+
+on:
+  pull_request_target:
+    types: [opened, synchronize]
+
+concurrency: ${{ github.workflow }}-${{ github.ref }}
+
+permissions:
+  contents: read # for checkout
+
+jobs:
+  call:
+    uses: sanity-io/.github/.github/workflows/changesets-from-conventional-commits.yml@main
+    if: github.event.pull_request.user.login == 'renovate[bot]'
+    secrets: inherit

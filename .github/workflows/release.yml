@@ -1,0 +1,21 @@
+name: Release
+
+on:
+  push:
+    branches:
+      - main
+
+concurrency: ${{ github.workflow }}-${{ github.ref }}
+
+permissions:
+  contents: read # for checkout
+
+jobs:
+  release:
+    uses: sanity-io/.github/.github/workflows/changesets.yml@main
+    permissions:
+      contents: read # for checkout
+      id-token: write # to enable use of OIDC for npm provenance
+    with:
+      TURBO_TEAM: ${{ vars.TURBO_TEAM }}
+    secrets: inherit
