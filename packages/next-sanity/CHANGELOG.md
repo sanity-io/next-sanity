@@ -1,5 +1,11 @@
 # next-sanity
 
+## 12.0.6-cache-components.1
+
+### Patch Changes
+
+- [#3109](https://github.com/sanity-io/next-sanity/pull/3109) [`2bc7388`](https://github.com/sanity-io/next-sanity/commit/2bc7388b12a92ad698a772e2f371ea5f4b0f1001) Thanks [@stipsan](https://github.com/stipsan)! - Use private import for `#isCorsOriginError`
+
 ## 12.0.6-cache-components.0
 
 ### Patch Changes
