@@ -1,6 +1,7 @@
 import type {SanityDocument} from '@sanity/types'
-import {isValidSignature, SIGNATURE_HEADER_NAME} from '@sanity/webhook'
 import type {NextRequest} from 'next/server'
+
+import {isValidSignature, SIGNATURE_HEADER_NAME} from '@sanity/webhook'
 
 /** @public */
 export type ParsedBody<T> = {

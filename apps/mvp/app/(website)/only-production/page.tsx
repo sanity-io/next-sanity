@@ -1,8 +1,8 @@
 'use cache'
 
+import {unstable__adapter, unstable__environment} from 'next-sanity'
 /* eslint-disable @next/next/no-html-link-for-pages */
 import Link from 'next/link'
-import {unstable__adapter, unstable__environment} from 'next-sanity'
 
 import PostsLayout, {postsQuery} from '@/app/(website)/PostsLayout'
 

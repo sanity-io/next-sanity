@@ -11,9 +11,11 @@ import {isMaybePresentation, isMaybePreviewWindow} from '@sanity/presentation-co
 import dynamic from 'next/dynamic'
 import {useRouter} from 'next/navigation'
 import {useEffect, useMemo, useRef, useState, useEffectEvent} from 'react'
-import {setEnvironment, setPerspective} from '../../live/hooks/context'
-import {isCorsOriginError} from '../../isCorsOriginError'
+
 import type {SanityClientConfig} from '../types'
+
+import {isCorsOriginError} from '../../isCorsOriginError'
+import {setEnvironment, setPerspective} from '../../live/hooks/context'
 import {sanitizePerspective} from '../../live/utils'
 import {PUBLISHED_SYNC_TAG_PREFIX, type DRAFT_SYNC_TAG_PREFIX} from '../constants'
 
@@ -107,8 +109,6 @@ export default function SanityLive(props: SanityLiveProps): React.JSX.Element | 
   } = props
   const {projectId, dataset, apiHost, apiVersion, useProjectHostname, token, requestTagPrefix} =
     config
-
-    
 
   const client = useMemo(
     () =>

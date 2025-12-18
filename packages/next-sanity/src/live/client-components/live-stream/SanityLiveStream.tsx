@@ -1,3 +1,5 @@
+import type {LoaderControllerMsg} from '@sanity/presentation-comlink'
+
 // oxlint-disable no-unsafe-type-assertion
 import {
   type ClientPerspective,
@@ -6,9 +8,9 @@ import {
   type QueryParams,
 } from '@sanity/client'
 import {stegaEncodeSourceMap} from '@sanity/client/stega'
-import type {LoaderControllerMsg} from '@sanity/presentation-comlink'
 import {dequal} from 'dequal/lite'
 import {use, useCallback, useEffect, useState, useSyncExternalStore, useEffectEvent} from 'react'
+
 import {comlinkListeners, comlink as comlinkSnapshot} from '../../hooks/context'
 
 /**
