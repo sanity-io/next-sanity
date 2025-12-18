@@ -1,5 +1,11 @@
 # next-sanity
 
+## 12.0.6-cache-components.0
+
+### Patch Changes
+
+- [#3109](https://github.com/sanity-io/next-sanity/pull/3109) [`b7a313f`](https://github.com/sanity-io/next-sanity/commit/b7a313fb4784474a30d368bf920027e18ee5ca82) Thanks [@stipsan](https://github.com/stipsan)! - Test pre release
+
 ## 12.0.5
 
 ### Patch Changes
