@@ -18,6 +18,7 @@ const {sanityFetch, SanityLive} = defineLive({
 })
 
 async function getPosts(perspective: 'drafts' | 'published') {
+  'use cache'
   const {data, sourceMap} = await sanityFetch({
     query: postsQuery.query,
     perspective,

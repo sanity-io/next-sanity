@@ -55,7 +55,7 @@ afterEach(() => {
 
 vi.mock('next/cache')
 
-describe.each([/*{cacheComponents: true},*/ {cacheComponents: false}])(
+describe.each([{cacheComponents: true}, {cacheComponents: false}])(
   'sanityFetch when %o',
   async ({cacheComponents}) => {
     const {defineLive} = cacheComponents
