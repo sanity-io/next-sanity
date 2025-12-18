@@ -281,8 +281,8 @@ importers:
         specifier: ^1.0.5
         version: 1.0.5
       '@sanity/pkg-utils':
-        specifier: ^10.2.1
-        version: 10.2.1(@types/babel__core@7.20.5)(@types/node@24.10.4)(typescript@5.9.3)
+        specifier: ^10.2.2
+        version: 10.2.2(@types/babel__core@7.20.5)(@types/node@24.10.4)(typescript@5.9.3)
       '@sanity/tsconfig':
         specifier: 'catalog:'
         version: 2.1.0
@@ -3072,12 +3072,12 @@ packages:
   '@sanity/mutator@5.0.1':
     resolution: {integrity: sha512-92TmAz6f4neqnmjLEi+Lnbjg7SiVMyTMZGRuo0Io8ljShgizNHUl/FG3qGhXcupUfzVUVgleXFUi8ypnIZ1ljA==}
 
-  '@sanity/parse-package-json@2.0.0':
-    resolution: {integrity: sha512-C3gK7+Y/lGP1FV7YZ6WniFwXnROf/upgNXpMmJDty2aD2G2a/6XvQWBhy2qr8LEQyxNoU1qgEWatD31GGG6f6w==}
+  '@sanity/parse-package-json@2.0.1':
+    resolution: {integrity: sha512-V55e6DPxMWg+oA4mOqZRXXlZ2cEI8WFHH97bG/ophnBDYzZKzbe0avj0eeshG9ok3dx7lX/8VGX1Py0cu5p4wg==}
     engines: {node: '>=20.19 <22 || >=22.12'}
 
-  '@sanity/pkg-utils@10.2.1':
-    resolution: {integrity: sha512-kdHlKFoHbui4xSpt0ICWOWxcAVh0UazoxMrUHul0BPInfhV2amUF/rQe+QE6Nutp1X0SUSgfxd09MfuAjQdTtA==}
+  '@sanity/pkg-utils@10.2.2':
+    resolution: {integrity: sha512-7nl+aH61NY/jwnG3xZqzfUOLBbOtaAsa4hj7frPTlzXF1WiXqaUrs358IMJitpO6KSmKpXpDk+Se/lqQs+b6Dg==}
     engines: {node: '>=20.19 <22 || >=22.12'}
     hasBin: true
     peerDependencies:
@@ -10163,11 +10163,11 @@ snapshots:
       - '@types/react'
       - supports-color
 
-  '@sanity/parse-package-json@2.0.0':
+  '@sanity/parse-package-json@2.0.1':
     dependencies:
       zod: 4.2.1
 
-  '@sanity/pkg-utils@10.2.1(@types/babel__core@7.20.5)(@types/node@24.10.4)(typescript@5.9.3)':
+  '@sanity/pkg-utils@10.2.2(@types/babel__core@7.20.5)(@types/node@24.10.4)(typescript@5.9.3)':
     dependencies:
       '@babel/core': 7.28.5
       '@babel/parser': 7.28.5
@@ -10184,7 +10184,7 @@ snapshots:
       '@rollup/plugin-replace': 6.0.3(rollup@4.53.5)
       '@rollup/plugin-terser': 0.4.4(rollup@4.53.5)
       '@sanity/browserslist-config': 1.0.5
-      '@sanity/parse-package-json': 2.0.0
+      '@sanity/parse-package-json': 2.0.1
       '@vanilla-extract/rollup-plugin': 1.5.1(rollup@4.53.5)
       browserslist: 4.28.1
       cac: 6.7.14
