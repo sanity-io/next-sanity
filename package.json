@@ -7,7 +7,7 @@
     "bump:canaries": "pnpm -r up @sanity/visual-editing@canary && pnpm dedupe",
     "bump:latest": "pnpm -r up @sanity/visual-editing@latest && pnpm dedupe",
     "dev": "turbo dev",
-    "format": "oxfmt . --no-error-on-unmatched-pattern && pnpm lint --fix",
+    "format": "oxfmt && pnpm lint --fix",
     "lint": "oxlint --type-check --type-aware --deny-warnings",
     "prestart": "turbo build",
     "start": "turbo watch build start",
