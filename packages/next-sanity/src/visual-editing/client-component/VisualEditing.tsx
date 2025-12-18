@@ -5,7 +5,7 @@ import {
   VisualEditing as VisualEditingComponent,
   type VisualEditingOptions,
 } from '@sanity/visual-editing/react'
-import {revalidateRootLayout} from 'next-sanity/visual-editing/server-actions'
+import {actionRefresh} from 'next-sanity/visual-editing/server-actions'
 import {usePathname, useRouter, useSearchParams} from 'next/navigation'
 import {useCallback, useEffect, useMemo, useRef, useState} from 'react'
 
@@ -38,7 +38,15 @@ export interface VisualEditingProps extends Omit<VisualEditingOptions, 'history'
 }
 
 export default function VisualEditing(props: VisualEditingProps): React.JSX.Element | null {
-  const {basePath = '', plugins, components, refresh, trailingSlash = false, zIndex} = props
+  const {
+    basePath = '',
+    plugins,
+    components,
+    refresh,
+    trailingSlash = false,
+    zIndex,
+    onPerspectiveChange,
+  } = props
 
   const router = useRouter()
   const routerRef = useRef(router)
@@ -87,45 +95,24 @@ export default function VisualEditing(props: VisualEditingProps): React.JSX.Elem
     }
   }, [basePath, navigate, pathname, searchParams, trailingSlash])
 
-  const handleRefresh = useCallback(
-    (payload: HistoryRefresh) => {
-      if (refresh) return refresh(payload)
-
-      const manualFastRefresh = () => {
-        // oxlint-disable-next-line no-console
-        console.debug(
-          'Live preview is setup, calling router.refresh() to refresh the server components without refetching cached data',
-        )
-        routerRef.current.refresh()
-        return Promise.resolve()
+  const handleRefresh = useCallback((payload: HistoryRefresh): false | Promise<void> => {
+    switch (payload.source) {
+      case 'manual':
+        return actionRefresh(payload)
+      case 'mutation': {
+        if (payload.livePreviewEnabled) {
+          // oxlint-disable-next-line no-console
+          console.debug(
+            'Live preview is setup, mutation is skipped assuming its handled by the live preview',
+          )
+          return false
+        }
+        return actionRefresh(payload)
       }
-      const manualFallbackRefresh = () => {
-        // oxlint-disable-next-line no-console
-        console.debug(
-          'No loaders in live mode detected, or preview kit setup, revalidating root layout',
-        )
-        return revalidateRootLayout()
-      }
-
-      const mutationFallbackRefresh = () => {
-        // oxlint-disable-next-line no-console
-        console.debug(
-          'No loaders in live mode detected, or preview kit setup, revalidating root layout',
-        )
-        return revalidateRootLayout()
-      }
-
-      switch (payload.source) {
-        case 'manual':
-          return payload.livePreviewEnabled ? manualFastRefresh() : manualFallbackRefresh()
-        case 'mutation':
-          return payload.livePreviewEnabled ? mutationFastRefresh() : mutationFallbackRefresh()
-        default:
-          throw new Error('Unknown refresh source', {cause: payload})
-      }
-    },
-    [refresh],
-  )
+      default:
+        throw new Error('Unknown refresh source', {cause: payload})
+    }
+  }, [])
 
   return (
     <VisualEditingComponent
@@ -133,16 +120,9 @@ export default function VisualEditing(props: VisualEditingProps): React.JSX.Elem
       components={components}
       history={history}
       portal
-      refresh={handleRefresh}
+      refresh={refresh ?? handleRefresh}
+      onPerspectiveChange={onPerspectiveChange}
       zIndex={zIndex}
     />
   )
-}
-
-function mutationFastRefresh(): false {
-  // oxlint-disable-next-line no-console
-  console.debug(
-    'Live preview is setup, mutation is skipped assuming its handled by the live preview',
-  )
-  return false
 }
