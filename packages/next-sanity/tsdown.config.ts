@@ -7,16 +7,16 @@ import {defineConfig} from 'tsdown'
 export default defineConfig({
   tsconfig: 'tsconfig.build.json',
   entry: [
+    './src/cache-life.ts',
     './src/draft-mode/index.ts',
     './src/hooks/index.ts',
     './src/image/index.ts',
-    './src/experimental/live.tsx',
     './src/experimental/client-components/live.tsx',
     './src/index.ts',
-    './src/live.ts',
-    './src/live.server-only.ts',
+    './src/live.tsx',
+    './src/live.next-js.tsx',
+    './src/live.react-server.tsx',
     './src/live/client-components/live/index.ts',
-    './src/live/client-components/live-stream/index.ts',
     './src/live/server-actions/index.ts',
     './src/studio/client-component/index.ts',
     './src/studio/index.ts',
@@ -25,16 +25,7 @@ export default defineConfig({
     './src/visual-editing/server-actions/index.ts',
     './src/webhook/index.ts',
   ],
-  external: [
-    'next-sanity',
-    'next-sanity/experimental/client-components/live',
-    'next-sanity/live/client-components/live',
-    'next-sanity/live/client-components/live-stream',
-    'next-sanity/live/server-actions',
-    'next-sanity/studio/client-component',
-    'next-sanity/visual-editing/client-component',
-    'next-sanity/visual-editing/server-actions',
-  ],
+  external: /^next-sanity(?:\/|$)/,
   sourcemap: true,
   hash: false,
   exports: {
@@ -42,10 +33,12 @@ export default defineConfig({
     devExports: true,
     customExports(pkg) {
       pkg['./live'] = {
-        'react-server': pkg['./live'],
-        'default': pkg['./live.server-only'],
+        'next-js': pkg['./live.next-js'],
+        'react-server': pkg['./live.react-server'],
+        'default': pkg['./live'],
       }
-      delete pkg['./live.server-only']
+      delete pkg['./live.react-server']
+      delete pkg['./live.next-js']
       return pkg
     },
   },
