@@ -33,26 +33,29 @@ export type DefinedFetchType = <const QueryString extends string>(options: {
   /**
    * Content perspective used for the fetch.
    *
-   * @defaultValue 'published' or when in draft mode it's 'drafts' or the value of a cookie named 'sanity-preview-perspective' that is set by `defineEnableDraftMode`.
+   * @defaultValue The configured client perspective, usually `'published'`.
    */
   perspective?: LivePerspective
   /**
    * Enables stega encoding of the data. This is typically only used in draft
    * mode with `perspective: 'drafts'` and `@sanity/visual-editing`.
    *
-   * @defaultValue `false` or when in draft mode it's `true`
+   * @defaultValue `false`
    */
   stega?: boolean
   /**
-   * Add custom `next.tags` to the underlying fetch request.
-   * @see https://nextjs.org/docs/app/api-reference/functions/fetch#optionsnexttags
-   * This can be used in conjunction with custom fallback revalidation strategies, as well as with custom Server Actions that mutate data and want to render with fresh data right away (faster than the Live Event latency).
+   * Additional cache tags to associate with this fetch.
+   *
+   * `sanityFetch` automatically adds Sanity Live sync tags for the query. Use
+   * this for custom tags that should also be invalidated by your own server
+   * actions, for example after a mutation that needs read-your-own-write UI.
    */
   tags?: string[]
   /**
-   * This request tag is used to identify the request when viewing request logs from your Sanity Content Lake.
-   * @see https://www.sanity.io/docs/platform-management/reference-api-request-tags
-   * @defaultValue 'next-loader.fetch'
+   * Request tag used to identify the request in Sanity Content Lake logs.
+   *
+   * @see https://www.sanity.io/docs/reference-api-request-tags
+   * @defaultValue `'next-loader.fetch'` or `'next-loader.fetch.cache-components'`
    */
   requestTag?: string
 }) => Promise<{
@@ -67,17 +70,20 @@ export type DefinedFetchType = <const QueryString extends string>(options: {
  */
 export interface DefinedLiveProps {
   /**
-   * Include draft and content release version events in the live connection, instead of only published documents.
+   * Include draft and content release version events in the live connection.
    *
-   * A `browserToken` must be configured in `defineLive()` for draft events to be included.
+   * Set this to `true` when draft mode is enabled. A `browserToken` must be
+   * configured in `defineLive()` for draft events to be included.
    *
-   * @defaultValue `(await draftMode()).isEnabled`
+   * @defaultValue `false`
    */
   includeDrafts?: boolean
   /**
-   * This request tag is used to identify the request when viewing request logs from your Sanity Content Lake.
-   * @see https://www.sanity.io/docs/platform-management/reference-api-request-tags
-   * @defaultValue 'next-loader.live'
+   * Request tag used to identify the live EventSource request in Sanity Content
+   * Lake logs.
+   *
+   * @see https://www.sanity.io/docs/reference-api-request-tags
+   * @defaultValue `'next-loader.live'` or `'next-loader.live.cache-components'`
    */
   requestTag?: string
   /**
