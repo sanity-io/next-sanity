@@ -25,6 +25,9 @@
   "sideEffects": false,
   "type": "module",
   "main": "./dist/index.js",
+  "imports": {
+    "#isCorsOriginError": "./src/isCorsOriginError.ts"
+  },
   "exports": {
     ".": "./src/index.ts",
     "./draft-mode": "./src/draft-mode/index.ts",
@@ -39,13 +42,13 @@
     "./live/client-components/live": "./src/live/client-components/live/index.ts",
     "./live/client-components/live-stream": "./src/live/client-components/live-stream/index.ts",
     "./live/server-actions": "./src/live/server-actions/index.ts",
-    "./package.json": "./package.json",
     "./studio": "./src/studio/index.ts",
     "./studio/client-component": "./src/studio/client-component/index.ts",
     "./visual-editing": "./src/visual-editing/index.ts",
     "./visual-editing/client-component": "./src/visual-editing/client-component/index.ts",
     "./visual-editing/server-actions": "./src/visual-editing/server-actions/index.ts",
-    "./webhook": "./src/webhook/index.ts"
+    "./webhook": "./src/webhook/index.ts",
+    "./package.json": "./package.json"
   },
   "module": "./dist/index.js",
   "types": "./dist/index.d.ts",

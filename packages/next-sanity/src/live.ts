@@ -5,4 +5,4 @@ export {
   type DefinedSanityLiveStreamType,
   defineLive,
 } from './live/defineLive'
-export {isCorsOriginError} from './isCorsOriginError'
+export {isCorsOriginError} from '#isCorsOriginError'

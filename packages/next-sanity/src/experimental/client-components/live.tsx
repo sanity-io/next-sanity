@@ -14,7 +14,7 @@ import {useEffect, useMemo, useRef, useState, useEffectEvent} from 'react'
 
 import type {SanityClientConfig} from '../types'
 
-import {isCorsOriginError} from '../../isCorsOriginError'
+import {isCorsOriginError} from '#isCorsOriginError'
 import {setEnvironment, setPerspective} from '../../live/hooks/context'
 import {sanitizePerspective} from '../../live/utils'
 import {PUBLISHED_SYNC_TAG_PREFIX, type DRAFT_SYNC_TAG_PREFIX} from '../constants'
