@@ -1,5 +1,11 @@
 # next-sanity
 
+## 13.0.0-cache-components.5
+
+### Patch Changes
+
+- [#3109](https://github.com/sanity-io/next-sanity/pull/3109) [`cecadb3`](https://github.com/sanity-io/next-sanity/commit/cecadb3cc9e99cd194614db966fea8f3045a7b15) Thanks [@stipsan](https://github.com/stipsan)! - Add temp debug function
+
 ## 13.0.0-cache-components.4
 
 ### Major Changes
