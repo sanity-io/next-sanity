@@ -1,5 +1,13 @@
 # next-sanity
 
+## 13.0.0-cache-components.4
+
+### Major Changes
+
+- [#3109](https://github.com/sanity-io/next-sanity/pull/3109) [`a060c49`](https://github.com/sanity-io/next-sanity/commit/a060c49fa535bcb2e7c019186023f2f9adcf55ee) Thanks [@stipsan](https://github.com/stipsan)! - Remove `type DraftPerspective`, `type DraftEnvironment` and `type ClientPerspective` from `import 'next-sanity/hooks'`
+
+- [#3109](https://github.com/sanity-io/next-sanity/pull/3109) [`7b02967`](https://github.com/sanity-io/next-sanity/commit/7b02967c9349e206c74b10527ab4adf90a63b35b) Thanks [@stipsan](https://github.com/stipsan)! - Remove the experimental `<SanityLiveStream>` API
+
 ## 13.0.0-cache-components.3
 
 ### Patch Changes
