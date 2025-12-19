@@ -8,7 +8,6 @@ export default defineConfig({
   tsconfig: 'tsconfig.build.json',
   entry: [
     './src/cache-life.ts',
-    './src/debug.ts',
     './src/draft-mode/index.ts',
     './src/hooks/index.ts',
     './src/image/index.ts',
