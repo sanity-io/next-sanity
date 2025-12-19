@@ -9,14 +9,14 @@ import {type LoaderControllerMsg, type LoaderNodeMsg} from '@sanity/presentation
  * This value is what's used by default.
  * @public
  */
-export type DraftPerspective = 'checking' | 'unknown' | ClientPerspective
+export type LivePerspective = 'checking' | 'unknown' | ClientPerspective
 
 /** @internal */
 export const perspectiveListeners: Set<() => void> = new Set()
 /** @internal */
-export let perspective: DraftPerspective = 'checking'
+export let perspective: LivePerspective = 'checking'
 /** @internal */
-export function setPerspective(nextPerspective: DraftPerspective): void {
+export function setPerspective(nextPerspective: LivePerspective): void {
   if (perspective.toString() === nextPerspective.toString()) return
   perspective = nextPerspective
   for (const onPerspectiveChange of perspectiveListeners) {

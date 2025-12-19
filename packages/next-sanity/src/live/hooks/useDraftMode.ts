@@ -6,7 +6,7 @@ import {
   perspective,
   perspectiveListeners,
   type DraftEnvironment,
-  type DraftPerspective,
+  type LivePerspective,
 } from './context'
 
 /**
@@ -38,7 +38,7 @@ export function useDraftModeEnvironment(): DraftEnvironment {
  * If the hook is used but the `<SanityLive />` component is not present then it'll stay in `'checking'` and console warn after a timeout that it seems like you're missing the component.
  * @public
  */
-export function useDraftModePerspective(): DraftPerspective {
+export function useDraftModePerspective(): LivePerspective {
   const subscribe = useCallback((listener: () => void) => {
     perspectiveListeners.add(listener)
     return () => perspectiveListeners.delete(listener)

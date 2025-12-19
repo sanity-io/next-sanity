@@ -26,6 +26,7 @@
   "type": "module",
   "main": "./dist/index.js",
   "imports": {
+    "#client-components/*": "./src/shared/client-components/*.tsx",
     "#live/*": "./src/shared/live/*.ts"
   },
   "exports": {
