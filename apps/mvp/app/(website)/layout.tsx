@@ -13,6 +13,13 @@ import {SanityLive} from './live'
 import {RefreshButton} from './RefreshButton'
 // import {resolvePerspectiveFromCookies} from 'next-sanity/experimental/live'
 // import {Suspense} from 'react'
+import {debug} from 'next-sanity/debug'
+import { refresh, updateTag } from 'next/cache'
+
+async function cacheDebug() {
+  'use cache: remote'
+  return await debug()
+}
 
 async function toggleDraftMode() {
   'use server'
@@ -33,6 +40,16 @@ export default async function RootLayout({children}: {children: React.ReactNode}
       <head />
       <body className="px-8">
         <div className="mt-8 mb-4 border p-4">
+          <p>Debug: {JSON.stringify(await cacheDebug())}</p>
+          <form action={async () => {'use server'
+            updateTag('sanity:debug')
+            }}><button type="submit">updateTag</button></form>
+            <form action={async () => {'use server'
+            refresh()}}><button type="submit">refresh</button></form>
+            <form action={async () => {'use server'
+            updateTag('sanity:debug')
+            refresh()}}><button type="submit">updateTag + refresh</button></form>
+          
           <p>Draft mode: {isDraftMode ? 'On' : 'Off'}</p>
           {isDraftMode && <DebugStatus />}
           <form action={toggleDraftMode}>
