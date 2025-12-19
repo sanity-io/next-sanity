@@ -1,5 +1,15 @@
 # next-sanity
 
+## 13.0.0-cache-components.2
+
+### Major Changes
+
+- [#3109](https://github.com/sanity-io/next-sanity/pull/3109) [`21f75c0`](https://github.com/sanity-io/next-sanity/commit/21f75c0872b8db1907a3e488e797d6136bf131e4) Thanks [@stipsan](https://github.com/stipsan)! - Merge `next-sanity/experimental/live` export into `next-sanity/live`
+
+### Minor Changes
+
+- [#3109](https://github.com/sanity-io/next-sanity/pull/3109) [`bcd61a3`](https://github.com/sanity-io/next-sanity/commit/bcd61a30b905bd53023e4c317773f19d466bdbb2) Thanks [@stipsan](https://github.com/stipsan)! - Add `resolvePerspectiveFromCookies` export
+
 ## 12.0.6-cache-components.1
 
 ### Patch Changes
