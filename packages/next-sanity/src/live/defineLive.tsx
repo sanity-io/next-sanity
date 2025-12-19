@@ -1,3 +1,5 @@
+// import type {DefinedFetchType, DefinedLiveProps} from '#live/types'
+
 import {
   type ClientPerspective,
   type ClientReturn,
@@ -28,10 +30,6 @@ export type DefinedSanityFetchType = <const QueryString extends string>(options:
   tags?: string[]
   perspective?: Exclude<ClientPerspective, 'raw'>
   stega?: boolean
-  /**
-   * @deprecated use `requestTag` instead
-   */
-  tag?: never
   /**
    * This request tag is used to identify the request when viewing request logs from your Sanity Content Lake.
    * @see https://www.sanity.io/docs/reference-api-request-tags
@@ -74,11 +72,6 @@ export interface DefinedSanityLiveProps {
    * @defaultValue `30_000` 30 seconds interval
    */
   intervalOnGoAway?: number | false
-
-  /**
-   * @deprecated use `requestTag` instead
-   */
-  tag?: never
 
   /**
    * This request tag is used to identify the request when viewing request logs from your Sanity Content Lake.
@@ -143,24 +136,17 @@ export interface DefineSanityLiveOptions {
   stega?: boolean
 }
 
-// export type VerifyPreviewSecretType = (
-//   secret: string,
-// ) => Promise<{isValid: boolean; studioUrl: string | null}>
-
-/**
- * @public
- */
 export function defineLive(config: DefineSanityLiveOptions): {
   /**
-   * Use this function to fetch data from Sanity in your React Server Components.
-   * @public
+   * @deprecated use `fetch` instead, and define your own `sanityFetch` function with logic for when to toggle `stega` and `perspective`
    */
   sanityFetch: DefinedSanityFetchType
   /**
-   * Render this in your root layout.tsx to make your page revalidate on new content live, automatically.
-   * @public
+   * @deprecated use `Live` instead, and define your own `SanityLive` component with logic for when to toggle `perspective`
    */
   SanityLive: React.ComponentType<DefinedSanityLiveProps>
+  // fetch: DefinedFetchType
+  // Live: React.ComponentType<DefinedLiveProps>
 } {
   const {
     client: _client,
@@ -252,8 +238,7 @@ export function defineLive(config: DefineSanityLiveOptions): {
       refreshOnMount,
       refreshOnFocus,
       refreshOnReconnect,
-      tag,
-      requestTag = tag,
+      requestTag,
       onError,
       onGoAway,
       intervalOnGoAway,

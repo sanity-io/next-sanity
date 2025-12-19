@@ -4,3 +4,5 @@
 export {isCorsOriginError} from '#live/isCorsOriginError'
 export {defineLive} from './experimental/live'
 export {resolvePerspectiveFromCookies} from '#live/resolvePerspectiveFromCookies'
+
+export type {PerspectiveType as LivePerspective} from '#live/types'

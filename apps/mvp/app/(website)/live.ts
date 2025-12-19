@@ -4,7 +4,7 @@ import {client} from '@/app/sanity.client'
 
 const token = process.env.SANITY_API_READ_TOKEN!
 
-export const {sanityFetch, SanityLive} = defineLive({
+export const {fetch, Live} = defineLive({
   client,
   serverToken: token,
   browserToken: token,

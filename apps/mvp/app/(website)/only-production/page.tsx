@@ -1,18 +1,26 @@
 'use cache'
 
 import {unstable__adapter, unstable__environment} from 'next-sanity'
+import {cacheLife} from 'next/cache'
 import Link from 'next/link'
 
 import PostsLayout, {postsQuery} from '@/app/(website)/PostsLayout'
 
-import {sanityFetch} from '../live'
+import {fetch as sanityFetch} from '../live'
 
-export default async function IndexPage() {
+async function getPosts() {
+  'use cache'
+
+  cacheLife('sanity')
+
   const {data} = await sanityFetch({
     query: postsQuery.query,
-    perspective: 'published',
-    stega: false,
   })
+  return data
+}
+
+export default async function IndexPage() {
+  const data = await getPosts()
 
   return (
     <>

@@ -4,7 +4,8 @@
 // The implementation here though should all throw errors, as importing this file means userland made a mistake and somehow a client component is
 // trying to pull in something it shouldn't.
 
-export {isCorsOriginError} from '#live/isCorsOriginError'
+import type {ResolvePerspectiveFromCookies} from '#live/resolvePerspectiveFromCookies'
+import type {DefinedFetchType, DefinedLiveProps} from '#live/types'
 
 import type {
   DefineSanityLiveOptions,
@@ -12,22 +13,25 @@ import type {
   DefinedSanityLiveProps,
 } from './live/defineLive'
 
+export {isCorsOriginError} from '#live/isCorsOriginError'
+
 /**
  * @public
  */
 export function defineLive(_config: DefineSanityLiveOptions): {
+  fetch: DefinedFetchType
+  Live: React.ComponentType<DefinedLiveProps>
+  /**
+   * @deprecated use `fetch` instead, and define your own `sanityFetch` function with logic for when to toggle `stega` and `perspective`
+   */
   sanityFetch: DefinedSanityFetchType
+  /**
+   * @deprecated use `Live` instead, and define your own `SanityLive` component with logic for when to toggle `perspective`
+   */
   SanityLive: React.ComponentType<DefinedSanityLiveProps>
 } {
   throw new Error(`defineLive can't be imported by a client component`)
 }
-
-/**
- * @public
- */
-export type {DefineSanityLiveOptions, DefinedSanityFetchType, DefinedSanityLiveProps}
-
-import type {ResolvePerspectiveFromCookies} from '#live/resolvePerspectiveFromCookies'
 
 /**
  * Resolves the perspective from the cookie that is set by `import { defineEnableDraftMode } from "next-sanity/draft-mode"`
@@ -36,3 +40,5 @@ import type {ResolvePerspectiveFromCookies} from '#live/resolvePerspectiveFromCo
 export const resolvePerspectiveFromCookies: ResolvePerspectiveFromCookies = () => {
   throw new Error(`resolvePerspectiveFromCookies can't be imported by a client component`)
 }
+
+export type {PerspectiveType as LivePerspective} from '#live/types'
