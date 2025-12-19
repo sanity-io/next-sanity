@@ -1,5 +1,11 @@
 # next-sanity
 
+## 13.0.0-cache-components.6
+
+### Minor Changes
+
+- [#3109](https://github.com/sanity-io/next-sanity/pull/3109) [`013d655`](https://github.com/sanity-io/next-sanity/commit/013d655159e5ce5fee3e03106b57a9f344beec9b) Thanks [@stipsan](https://github.com/stipsan)! - Add `import {sanity} from 'next-sanity/cache-life'`
+
 ## 13.0.0-cache-components.5
 
 ### Patch Changes
