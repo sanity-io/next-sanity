@@ -1,3 +1,4 @@
+import {isCorsOriginError} from '#isCorsOriginError'
 import {
   createClient,
   type ClientPerspective,
@@ -12,7 +13,6 @@ import dynamic from 'next/dynamic'
 import {useRouter} from 'next/navigation'
 import {useEffect, useMemo, useRef, useState, useEffectEvent} from 'react'
 
-import {isCorsOriginError} from '#isCorsOriginError'
 import {setEnvironment, setPerspective} from '../../hooks/context'
 
 const PresentationComlink = dynamic(() => import('./PresentationComlink'), {ssr: false})

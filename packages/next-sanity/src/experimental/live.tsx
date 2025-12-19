@@ -1,5 +1,3 @@
-// oxlint-disable-next-line no-unassigned-import
-import 'server-only'
 import {stegaEncodeSourceMap} from '@sanity/client/stega'
 import {perspectiveCookieName} from '@sanity/preview-url-secret/constants'
 import {

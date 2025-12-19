@@ -26,18 +26,18 @@
   "type": "module",
   "main": "./dist/index.js",
   "imports": {
-    "#isCorsOriginError": "./src/isCorsOriginError.ts"
+    "#isCorsOriginError": "./src/shared/live/isCorsOriginError.ts"
   },
   "exports": {
     ".": "./src/index.ts",
     "./draft-mode": "./src/draft-mode/index.ts",
     "./experimental/client-components/live": "./src/experimental/client-components/live.tsx",
-    "./experimental/live": "./src/experimental/live.tsx",
     "./hooks": "./src/hooks/index.ts",
     "./image": "./src/image/index.ts",
     "./live": {
-      "react-server": "./src/live.ts",
-      "default": "./src/live.server-only.ts"
+      "next-js": "./src/live.next-js.tsx",
+      "react-server": "./src/live.react-server.tsx",
+      "default": "./src/live.tsx"
     },
     "./live/client-components/live": "./src/live/client-components/live/index.ts",
     "./live/client-components/live-stream": "./src/live/client-components/live-stream/index.ts",
@@ -71,8 +71,7 @@
     "@sanity/visual-editing": "^5.0.3",
     "dequal": "^2.0.3",
     "groq": "^5.0.1",
-    "history": "^5.3.0",
-    "server-only": "^0.0.1"
+    "history": "^5.3.0"
   },
   "devDependencies": {
     "@sanity/browserslist-config": "^1.0.5",
@@ -108,12 +107,12 @@
       ".": "./dist/index.js",
       "./draft-mode": "./dist/draft-mode/index.js",
       "./experimental/client-components/live": "./dist/experimental/client-components/live.js",
-      "./experimental/live": "./dist/experimental/live.js",
       "./hooks": "./dist/hooks/index.js",
       "./image": "./dist/image/index.js",
       "./live": {
-        "react-server": "./dist/live.js",
-        "default": "./dist/live.server-only.js"
+        "next-js": "./dist/live.next-js.js",
+        "react-server": "./dist/live.react-server.js",
+        "default": "./dist/live.js"
       },
       "./live/client-components/live": "./dist/live/client-components/live/index.js",
       "./live/client-components/live-stream": "./dist/live/client-components/live-stream/index.js",
