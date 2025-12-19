@@ -1,5 +1,8 @@
 'use client'
 
+import {setEnvironment, setPerspective} from '#client-components/context'
+import {isCorsOriginError} from '#live/isCorsOriginError'
+import {sanitizePerspective} from '#live/sanitizePerspective'
 import {
   createClient,
   type ClientPerspective,
@@ -8,16 +11,14 @@ import {
   type SyncTag,
 } from '@sanity/client'
 import {isMaybePresentation, isMaybePreviewWindow} from '@sanity/presentation-comlink'
+import {expireTags} from 'next-sanity/live/server-actions'
 import dynamic from 'next/dynamic'
 import {useRouter} from 'next/navigation'
 import {useEffect, useMemo, useRef, useState, useEffectEvent} from 'react'
 
 import type {SanityClientConfig} from '../types'
 
-import {isCorsOriginError} from '../../isCorsOriginError'
-import {setEnvironment, setPerspective} from '../../live/hooks/context'
-import {sanitizePerspective} from '../../live/utils'
-import {PUBLISHED_SYNC_TAG_PREFIX, type DRAFT_SYNC_TAG_PREFIX} from '../constants'
+import {PUBLISHED_SYNC_TAG_PREFIX} from '../constants'
 
 const PresentationComlink = dynamic(() => import('./PresentationComlink'), {ssr: false})
 const RefreshOnMount = dynamic(() => import('../../live/client-components/live/RefreshOnMount'), {
@@ -48,9 +49,7 @@ export interface SanityLiveProps {
   onError?: (error: unknown) => void
   intervalOnGoAway?: number | false
   onGoAway?: (event: LiveEventGoAway, intervalOnGoAway: number | false) => void
-  revalidateSyncTags: (
-    tags: `${typeof PUBLISHED_SYNC_TAG_PREFIX | typeof DRAFT_SYNC_TAG_PREFIX}${SyncTag}`[],
-  ) => Promise<void | 'refresh'>
+  revalidateSyncTags?: (tags: string[]) => Promise<void | 'refresh'>
   resolveDraftModePerspective: () => Promise<ClientPerspective>
 }
 
@@ -100,7 +99,7 @@ export default function SanityLive(props: SanityLiveProps): React.JSX.Element | 
     requestTag = 'next-loader.live',
     onError = handleError,
     onGoAway = handleOnGoAway,
-    revalidateSyncTags,
+    revalidateSyncTags = expireTags,
     resolveDraftModePerspective,
   } = props
   const {projectId, dataset, apiHost, apiVersion, useProjectHostname, token, requestTagPrefix} =
