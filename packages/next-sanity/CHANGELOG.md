@@ -1,5 +1,17 @@
 # next-sanity
 
+## 13.0.0-cache-components.7
+
+### Major Changes
+
+- [#3109](https://github.com/sanity-io/next-sanity/pull/3109) [`14f595e`](https://github.com/sanity-io/next-sanity/commit/14f595ec0e46b7deb4432744dd540336eb2b8f21) Thanks [@stipsan](https://github.com/stipsan)! - `sanityFetch` and `SanityLive` are replaced by `fetch` and `SanityLive`
+
+- [#3109](https://github.com/sanity-io/next-sanity/pull/3109) [`d97d1f4`](https://github.com/sanity-io/next-sanity/commit/d97d1f44fbc0de02567dc3594868a7f518f467f8) Thanks [@stipsan](https://github.com/stipsan)! - Removed `type DefineSanityLiveOptions`, `type DefinedSanityFetchType` and `type DefinedSanityLiveProps` type exports
+
+### Patch Changes
+
+- [#3109](https://github.com/sanity-io/next-sanity/pull/3109) [`ddad769`](https://github.com/sanity-io/next-sanity/commit/ddad769dbf815dbd1de0c5d6b4fc11cf2fcb3061) Thanks [@stipsan](https://github.com/stipsan)! - Remove `next-sanity/debug`
+
 ## 13.0.0-cache-components.6
 
 ### Minor Changes
