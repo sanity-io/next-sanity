@@ -11,14 +11,14 @@ import {
   type SyncTag,
 } from '@sanity/client'
 import {isMaybePresentation, isMaybePreviewWindow} from '@sanity/presentation-comlink'
+import {expireTags} from 'next-sanity/live/server-actions'
 import dynamic from 'next/dynamic'
 import {useRouter} from 'next/navigation'
 import {useEffect, useMemo, useRef, useState, useEffectEvent} from 'react'
 
 import type {SanityClientConfig} from '../types'
 
-import {PUBLISHED_SYNC_TAG_PREFIX, type DRAFT_SYNC_TAG_PREFIX} from '../constants'
-import { expireTags } from 'next-sanity/live/server-actions'
+import {PUBLISHED_SYNC_TAG_PREFIX} from '../constants'
 
 const PresentationComlink = dynamic(() => import('./PresentationComlink'), {ssr: false})
 const RefreshOnMount = dynamic(() => import('../../live/client-components/live/RefreshOnMount'), {
@@ -49,9 +49,7 @@ export interface SanityLiveProps {
   onError?: (error: unknown) => void
   intervalOnGoAway?: number | false
   onGoAway?: (event: LiveEventGoAway, intervalOnGoAway: number | false) => void
-  revalidateSyncTags: (
-    tags: `${typeof PUBLISHED_SYNC_TAG_PREFIX | typeof DRAFT_SYNC_TAG_PREFIX}${string}`[],
-  ) => Promise<void | 'refresh'>
+  revalidateSyncTags?: (tags: string[]) => Promise<void | 'refresh'>
   resolveDraftModePerspective: () => Promise<ClientPerspective>
 }
 

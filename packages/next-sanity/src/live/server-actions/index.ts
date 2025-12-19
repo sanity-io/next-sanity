@@ -6,7 +6,8 @@ import {sanitizePerspective} from '#live/sanitizePerspective'
 import {perspectiveCookieName} from '@sanity/preview-url-secret/constants'
 import {revalidateTag, updateTag} from 'next/cache'
 import {cookies, draftMode} from 'next/headers'
-import { PUBLISHED_SYNC_TAG_PREFIX } from '../../experimental/constants'
+
+import {PUBLISHED_SYNC_TAG_PREFIX} from '../../experimental/constants'
 
 export async function revalidateSyncTags(tags: SyncTag[]): Promise<void> {
   revalidateTag('sanity:fetch-sync-tags', 'max')
@@ -41,12 +42,10 @@ export async function setPerspectiveCookie(perspective: ClientPerspective): Prom
   )
 }
 
-
 // @TODO expose parseTags function that returns the correct array of tags
 // we already have s1: prefixes, but they could change
 // use sp: for prod, sd: for draft, keep em short
 export async function expireTags(_tags: unknown): Promise<void> {
-  
   // @TODO Draft Mode bypasses cache anyway so we don't bother with expiring tags for draft content
   // const isDraftMode = (await draftMode()).isEnabled
   // const tags = _tags.map((tag) => `${isDraftMode ? 'drafts' : 'sanity'}:${tag}`)

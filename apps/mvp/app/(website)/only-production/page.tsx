@@ -21,7 +21,6 @@ async function getPosts() {
 
 export default async function IndexPage() {
   const data = await getPosts()
-  
 
   return (
     <>

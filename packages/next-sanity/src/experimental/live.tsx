@@ -2,7 +2,7 @@ import type {DefinedFetchType, DefinedLiveProps, LiveOptions, PerspectiveType} f
 
 import {resolvePerspectiveFromCookies} from '#live/resolvePerspectiveFromCookies'
 import SanityLiveClientComponent from 'next-sanity/experimental/client-components/live'
-import {cacheTag, updateTag} from 'next/cache'
+import {cacheTag} from 'next/cache'
 import {draftMode, cookies} from 'next/headers'
 import {Suspense} from 'react'
 import {preconnect} from 'react-dom'
@@ -126,7 +126,6 @@ export function defineLive(config: LiveOptions): {
       intervalOnGoAway,
     } = props
 
-    
     if (onChangeIncludingDrafts) {
       console.warn('`onChangeIncludingDrafts` is not implemented yet')
     }
@@ -186,8 +185,6 @@ export function defineLive(config: LiveOptions): {
     },
   }
 }
-
-
 
 async function resolveDraftModePerspective(): Promise<PerspectiveType> {
   'use server'
