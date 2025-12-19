@@ -18,6 +18,7 @@ import {useEffect, useMemo, useRef, useState, useEffectEvent} from 'react'
 import type {SanityClientConfig} from '../types'
 
 import {PUBLISHED_SYNC_TAG_PREFIX, type DRAFT_SYNC_TAG_PREFIX} from '../constants'
+import { expireTags } from 'next-sanity/live/server-actions'
 
 const PresentationComlink = dynamic(() => import('./PresentationComlink'), {ssr: false})
 const RefreshOnMount = dynamic(() => import('../../live/client-components/live/RefreshOnMount'), {
@@ -49,7 +50,7 @@ export interface SanityLiveProps {
   intervalOnGoAway?: number | false
   onGoAway?: (event: LiveEventGoAway, intervalOnGoAway: number | false) => void
   revalidateSyncTags: (
-    tags: `${typeof PUBLISHED_SYNC_TAG_PREFIX | typeof DRAFT_SYNC_TAG_PREFIX}${SyncTag}`[],
+    tags: `${typeof PUBLISHED_SYNC_TAG_PREFIX | typeof DRAFT_SYNC_TAG_PREFIX}${string}`[],
   ) => Promise<void | 'refresh'>
   resolveDraftModePerspective: () => Promise<ClientPerspective>
 }
@@ -100,7 +101,7 @@ export default function SanityLive(props: SanityLiveProps): React.JSX.Element | 
     requestTag = 'next-loader.live',
     onError = handleError,
     onGoAway = handleOnGoAway,
-    revalidateSyncTags,
+    revalidateSyncTags = expireTags,
     resolveDraftModePerspective,
   } = props
   const {projectId, dataset, apiHost, apiVersion, useProjectHostname, token, requestTagPrefix} =

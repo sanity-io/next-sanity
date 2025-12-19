@@ -126,9 +126,7 @@ export function defineLive(config: LiveOptions): {
       intervalOnGoAway,
     } = props
 
-    if (onChange) {
-      console.warn('`onChange` is not implemented yet')
-    }
+    
     if (onChangeIncludingDrafts) {
       console.warn('`onChangeIncludingDrafts` is not implemented yet')
     }
@@ -166,7 +164,7 @@ export function defineLive(config: LiveOptions): {
           onError={onError}
           onGoAway={onGoAway}
           intervalOnGoAway={intervalOnGoAway}
-          revalidateSyncTags={expireTags}
+          revalidateSyncTags={onChange}
           resolveDraftModePerspective={resolveDraftModePerspective}
         />
       </Suspense>
@@ -189,31 +187,7 @@ export function defineLive(config: LiveOptions): {
   }
 }
 
-// @TODO expose parseTags function that returns the correct array of tags
-// we already have s1: prefixes, but they could change
-// use sp: for prod, sd: for draft, keep em short
-async function expireTags(_tags: unknown): Promise<void> {
-  'use server'
-  // @TODO Draft Mode bypasses cache anyway so we don't bother with expiring tags for draft content
-  // const isDraftMode = (await draftMode()).isEnabled
-  // const tags = _tags.map((tag) => `${isDraftMode ? 'drafts' : 'sanity'}:${tag}`)
-  if (!Array.isArray(_tags)) {
-    console.warn('<SanityLive /> `expireTags` called with non-array tags', _tags)
-    return undefined
-  }
-  const tags = _tags.filter(
-    (tag) => typeof tag === 'string' && tag.startsWith(PUBLISHED_SYNC_TAG_PREFIX),
-  )
-  if (!tags.length) {
-    console.warn('<SanityLive /> `expireTags` called with no valid tags', _tags)
-    return undefined
-  }
-  for (const tag of tags) {
-    updateTag(tag)
-  }
-  // oxlint-disable-next-line no-console
-  console.log(`<SanityLive /> updated tags: ${tags.join(', ')}`)
-}
+
 
 async function resolveDraftModePerspective(): Promise<PerspectiveType> {
   'use server'
