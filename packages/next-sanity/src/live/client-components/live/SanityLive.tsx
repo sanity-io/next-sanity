@@ -1,3 +1,4 @@
+import {setEnvironment, setPerspective} from '#client-components/context'
 import {isCorsOriginError} from '#live/isCorsOriginError'
 import {
   createClient,
@@ -12,8 +13,6 @@ import {revalidateSyncTags as defaultRevalidateSyncTags} from 'next-sanity/live/
 import dynamic from 'next/dynamic'
 import {useRouter} from 'next/navigation'
 import {useEffect, useMemo, useRef, useState, useEffectEvent} from 'react'
-
-import {setEnvironment, setPerspective} from '../../hooks/context'
 
 const PresentationComlink = dynamic(() => import('./PresentationComlink'), {ssr: false})
 const RefreshOnMount = dynamic(() => import('./RefreshOnMount'), {ssr: false})

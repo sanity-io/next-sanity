@@ -1,13 +1,12 @@
-import {useCallback, useSyncExternalStore} from 'react'
-
 import {
   environment,
   environmentListeners,
   perspective,
   perspectiveListeners,
-  type DraftEnvironment,
+  type LiveEnvironment,
   type LivePerspective,
-} from './context'
+} from '#client-components/context'
+import {useCallback, useSyncExternalStore} from 'react'
 
 /**
  * Reports the current draft mode environment.
@@ -19,7 +18,7 @@ import {
  * - Your app is not previewing anything (that could be detected).
  * @public
  */
-export function useDraftModeEnvironment(): DraftEnvironment {
+export function useDraftModeEnvironment(): LiveEnvironment {
   const subscribe = useCallback((listener: () => void) => {
     environmentListeners.add(listener)
     return () => environmentListeners.delete(listener)

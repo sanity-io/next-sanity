@@ -16,7 +16,6 @@ export default defineConfig({
     './src/live.next-js.tsx',
     './src/live.react-server.tsx',
     './src/live/client-components/live/index.ts',
-    './src/live/client-components/live-stream/index.ts',
     './src/live/server-actions/index.ts',
     './src/studio/client-component/index.ts',
     './src/studio/index.ts',

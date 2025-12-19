@@ -1,5 +1,11 @@
 import type {ClientPerspective} from '@sanity/client'
 
+import {
+  setComlink,
+  setComlinkClientConfig,
+  setPerspective,
+  perspective,
+} from '#client-components/context'
 import {sanitizePerspective} from '#live/sanitizePerspective'
 import {createNode, createNodeMachine} from '@sanity/comlink'
 import {
@@ -10,13 +16,6 @@ import {
 import {setPerspectiveCookie} from 'next-sanity/live/server-actions'
 import {useRouter} from 'next/navigation'
 import {startTransition, useEffect, useEffectEvent} from 'react'
-
-import {
-  setComlink,
-  setComlinkClientConfig,
-  setPerspective,
-  perspective,
-} from '../../live/hooks/context'
 
 export default function PresentationComlink(props: {
   projectId: string

@@ -8,7 +8,6 @@ import {
   type SyncTag,
 } from '@sanity/client'
 import SanityLiveClientComponent from 'next-sanity/live/client-components/live'
-import SanityLiveStreamClientComponent from 'next-sanity/live/client-components/live-stream'
 import {draftMode} from 'next/headers'
 import {prefetchDNS, preconnect} from 'react-dom'
 
@@ -44,40 +43,6 @@ export type DefinedSanityFetchType = <const QueryString extends string>(options:
   sourceMap: ContentSourceMap | null
   tags: string[]
 }>
-
-/**
- * @public
- */
-export type DefinedSanityLiveStreamType = <const QueryString extends string>(props: {
-  query: QueryString
-  params?: QueryParams | Promise<QueryParams>
-  /**
-   * Add custom `next.tags` to the underlying fetch request.
-   * @see https://nextjs.org/docs/app/api-reference/functions/fetch#optionsnexttags
-   * This can be used in conjunction with custom fallback revalidation strategies, as well as with custom Server Actions that mutate data and want to render with fresh data right away (faster than the Live Event latency).
-   * @defaultValue `['sanity']`
-   */
-  tags?: string[]
-  perspective?: Exclude<ClientPerspective, 'raw'>
-  stega?: boolean
-  /**
-   * @deprecated use `requestTag` instead
-   */
-  tag?: never
-  /**
-   * This request tag is used to identify the request when viewing request logs from your Sanity Content Lake.
-   * @see https://www.sanity.io/docs/reference-api-request-tags
-   * @defaultValue 'next-loader.live-stream.fetch'
-   */
-  requestTag?: string
-  children: (result: {
-    data: ClientReturn<QueryString>
-    sourceMap: ContentSourceMap | null
-    tags: string[]
-  }) => Promise<Awaited<React.ReactNode>>
-  // @TODO follow up on this after React 19: https://github.com/vercel/next.js/discussions/67365#discussioncomment-9935377
-  // }) => Promise<Awaited<React.ReactNode>>
-}) => React.ReactNode
 
 /**
  * @public
@@ -196,11 +161,6 @@ export function defineLive(config: DefineSanityLiveOptions): {
    * @public
    */
   SanityLive: React.ComponentType<DefinedSanityLiveProps>
-  /**
-   * @alpha experimental, it may change or even be removed at any time
-   */
-  SanityLiveStream: DefinedSanityLiveStreamType
-  // verifyPreviewSecret: VerifyPreviewSecretType
 } {
   const {
     client: _client,
@@ -332,90 +292,8 @@ export function defineLive(config: DefineSanityLiveOptions): {
     )
   }
 
-  const SanityLiveStream: DefinedSanityLiveStreamType = async function SanityLiveStream(props) {
-    const {
-      query,
-      params,
-      perspective: _perspective,
-      stega: _stega,
-      tags,
-      children,
-      tag,
-      requestTag = tag ?? 'next-loader.live-stream.fetch',
-    } = props
-    const {
-      data,
-      sourceMap,
-      tags: cacheTags,
-    } = await sanityFetch({
-      query,
-      params,
-      tags,
-      perspective: _perspective,
-      stega: _stega,
-      requestTag,
-    })
-    const {isEnabled: isDraftModeEnabled} = await draftMode()
-
-    if (isDraftModeEnabled) {
-      const stega = _stega ?? (stegaEnabled && studioUrlDefined && (await draftMode()).isEnabled)
-      const perspective = _perspective ?? (await resolveCookiePerspective())
-      const {projectId, dataset} = client.config()
-      return (
-        <SanityLiveStreamClientComponent
-          projectId={projectId}
-          dataset={dataset}
-          query={query}
-          params={await params}
-          perspective={perspective}
-          stega={stega}
-          initial={children({data, sourceMap, tags: cacheTags})}
-          // oxlint-disable-next-line react/no-children-prop
-          children={
-            // oxlint-disable-next-line no-unsafe-type-assertion
-            children as unknown as any
-          }
-        />
-      )
-    }
-
-    return children({data, sourceMap, tags: cacheTags})
-  }
-
-  // const verifyPreviewSecret: VerifyPreviewSecretType = async (secret) => {
-  //   if (!serverToken) {
-  //     throw new Error(
-  //       '`serverToken` is required to verify a preview secrets and initiate draft mode',
-  //     )
-  //   }
-
-  //   if (typeof secret !== 'string') {
-  //     throw new TypeError('`secret` must be a string')
-  //   }
-  //   if (!secret.trim()) {
-  //     throw new Error('`secret` must not be an empty string')
-  //   }
-
-  //   const client = _client.withConfig({
-  //     // Use the token that is setup to query draft documents, it should also have permission to query for secrets
-  //     token: serverToken,
-  //     // Userland might be using an API version that's too old to use perspectives
-  //     apiVersion,
-  //     // We can't use the CDN, the secret is typically validated right after it's created
-  //     useCdn: false,
-  //     // Don't waste time returning a source map, we don't need it
-  //     resultSourceMap: false,
-  //     // Stega is not needed
-  //     stega: false,
-  //   })
-  //   const {isValid, studioUrl} = await validateSecret(client, secret, false)
-  //   return {isValid, studioUrl}
-  // }
-
   return {
     sanityFetch,
     SanityLive,
-    SanityLiveStream,
-    // verifyPreviewSecret
   }
 }

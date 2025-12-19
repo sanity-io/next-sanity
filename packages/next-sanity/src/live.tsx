@@ -10,7 +10,6 @@ import type {
   DefineSanityLiveOptions,
   DefinedSanityFetchType,
   DefinedSanityLiveProps,
-  DefinedSanityLiveStreamType,
 } from './live/defineLive'
 
 /**
@@ -19,7 +18,6 @@ import type {
 export function defineLive(_config: DefineSanityLiveOptions): {
   sanityFetch: DefinedSanityFetchType
   SanityLive: React.ComponentType<DefinedSanityLiveProps>
-  SanityLiveStream: DefinedSanityLiveStreamType
 } {
   throw new Error(`defineLive can't be imported by a client component`)
 }
@@ -27,12 +25,7 @@ export function defineLive(_config: DefineSanityLiveOptions): {
 /**
  * @public
  */
-export type {
-  DefineSanityLiveOptions,
-  DefinedSanityFetchType,
-  DefinedSanityLiveProps,
-  DefinedSanityLiveStreamType,
-}
+export type {DefineSanityLiveOptions, DefinedSanityFetchType, DefinedSanityLiveProps}
 
 import type {ResolvePerspectiveFromCookies} from '#live/resolvePerspectiveFromCookies'
 

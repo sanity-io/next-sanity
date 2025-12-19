@@ -1,3 +1,4 @@
+import {resolvePerspectiveFromCookies} from '#live/resolvePerspectiveFromCookies'
 import {stegaEncodeSourceMap} from '@sanity/client/stega'
 import {
   createClient,
@@ -19,9 +20,6 @@ import {preconnect} from 'react-dom'
 import type {SanityClientConfig} from './types'
 
 import {DRAFT_SYNC_TAG_PREFIX, PUBLISHED_SYNC_TAG_PREFIX} from './constants'
-import { resolvePerspectiveFromCookies } from '#live/resolvePerspectiveFromCookies'
-
-
 
 async function sanityCachedFetch<const QueryString extends string>(
   config: SanityClientConfig,
