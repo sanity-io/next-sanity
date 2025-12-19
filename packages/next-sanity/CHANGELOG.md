@@ -1,5 +1,11 @@
 # next-sanity
 
+## 13.0.0-cache-components.3
+
+### Patch Changes
+
+- [#3109](https://github.com/sanity-io/next-sanity/pull/3109) [`424759f`](https://github.com/sanity-io/next-sanity/commit/424759f4c9fa86c37d796573a94a702c39de956f) Thanks [@stipsan](https://github.com/stipsan)! - Dedupe `resolvePerspectiveFromCookies`
+
 ## 13.0.0-cache-components.2
 
 ### Major Changes
