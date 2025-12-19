@@ -9,7 +9,7 @@ import PostsLayout, {postsQuery} from '@/app/(website)/PostsLayout'
 import {fetch as sanityFetch} from '../live'
 
 async function getPosts() {
-  'use cache'
+  'use cache: remote'
 
   cacheLife('sanity')
 
@@ -21,6 +21,7 @@ async function getPosts() {
 
 export default async function IndexPage() {
   const data = await getPosts()
+  
 
   return (
     <>

@@ -9,7 +9,7 @@ import PostsLayout, {postsQuery} from '@/app/(website)/PostsLayout'
 import {fetch as sanityFetch} from './live'
 
 async function getPosts(perspective: LivePerspective) {
-  'use cache'
+  'use cache: remote'
 
   cacheLife('sanity')
 

@@ -8,16 +8,16 @@ import PostsLayout, {postsQuery} from '@/app/(website)/PostsLayout'
 import {fetch as sanityFetch} from '../live'
 
 async function getPosts(perspective: 'drafts' | 'published') {
-  'use cache'
+  'use cache: remote'
 
   cacheLife('sanity')
 
-  const {data, tags} = await sanityFetch({
+  const {data} = await sanityFetch({
     query: postsQuery.query,
     perspective,
     stega: perspective !== 'published',
   })
-  return {data, tags}
+  return data
 }
 
 export default async function IndexPage() {
