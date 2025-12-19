@@ -13,7 +13,7 @@ import {
 import SanityLiveClientComponent, {
   type SanityLiveProps,
 } from 'next-sanity/experimental/client-components/live'
-import {cacheTag, cacheLife, updateTag} from 'next/cache'
+import {cacheTag, updateTag} from 'next/cache'
 import {draftMode, cookies} from 'next/headers'
 import {preconnect} from 'react-dom'
 
@@ -45,7 +45,7 @@ async function sanityCachedFetch<const QueryString extends string>(
   sourceMap: ContentSourceMap | null
   tags: string[]
 }> {
-  'use cache: remote'
+  // 'use cache: remote'
 
   const client = createClient({...config, useCdn: true})
   const useCdn = perspective === 'published'
@@ -75,7 +75,7 @@ async function sanityCachedFetch<const QueryString extends string>(
   /**
    * Sanity Live handles on-demand revalidation, so the default 15min time based revalidation is too short
    */
-  cacheLife({revalidate: 60 * 60 * 24 * 90})
+  // cacheLife({revalidate: 60 * 60 * 24 * 90})
 
   return {data: result, sourceMap: resultSourceMap || null, tags}
 }
@@ -102,7 +102,8 @@ export interface SanityFetchOptions<QueryString extends string> {
    */
   requestTag?: string
   /**
-   * Custom cache tags that can be used with next's `revalidateTag` and `updateTag` functions for custom webhook on-demand revalidation.
+   * Custom cache tags that can be used with next's  `updateTag` functions for custom `read-your-write` server actions,
+   * for example a like button that uses client.mutate to update a document and then immediately shows the result.
    */
   tags?: string[]
 }
