@@ -21,7 +21,7 @@ export function defineLive(_config: DefineSanityLiveOptions): {
   SanityLive: React.ComponentType<DefinedSanityLiveProps>
   SanityLiveStream: DefinedSanityLiveStreamType
 } {
-  throw new Error('defineLive can only be used in React Server Components')
+  throw new Error(`defineLive can't be imported by a client component`)
 }
 
 /**
@@ -32,4 +32,14 @@ export type {
   DefinedSanityFetchType,
   DefinedSanityLiveProps,
   DefinedSanityLiveStreamType,
+}
+
+import type {ResolvePerspectiveFromCookies} from '#live/resolvePerspectiveFromCookies'
+
+/**
+ * Resolves the perspective from the cookie that is set by `import { defineEnableDraftMode } from "next-sanity/draft-mode"`
+ * @public
+ */
+export const resolvePerspectiveFromCookies: ResolvePerspectiveFromCookies = async () => {
+  throw new Error(`resolvePerspectiveFromCookies can't be imported by a client component`)
 }

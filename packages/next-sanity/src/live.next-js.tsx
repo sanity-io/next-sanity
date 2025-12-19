@@ -9,5 +9,6 @@ export {
   type DefinedSanityLiveProps,
   type SanityFetchOptions,
   defineLive,
-  resolvePerspectiveFromCookies,
 } from './experimental/live'
+
+export {resolvePerspectiveFromCookies} from '#live/resolvePerspectiveFromCookies'

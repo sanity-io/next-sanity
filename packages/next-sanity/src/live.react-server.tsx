@@ -11,3 +11,5 @@ export {
   type DefinedSanityLiveStreamType,
   defineLive,
 } from './live/defineLive'
+
+export {resolvePerspectiveFromCookies} from '#live/resolvePerspectiveFromCookies'
