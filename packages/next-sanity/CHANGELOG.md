@@ -1,5 +1,11 @@
 # next-sanity
 
+## 13.0.0-cache-components.8
+
+### Patch Changes
+
+- [#3109](https://github.com/sanity-io/next-sanity/pull/3109) [`522d696`](https://github.com/sanity-io/next-sanity/commit/522d696f7675ab17b5a441f71cb46da43ef28d05) Thanks [@stipsan](https://github.com/stipsan)! - Fix missing server action
+
 ## 13.0.0-cache-components.7
 
 ### Major Changes
