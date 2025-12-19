@@ -40,6 +40,6 @@ import type {ResolvePerspectiveFromCookies} from '#live/resolvePerspectiveFromCo
  * Resolves the perspective from the cookie that is set by `import { defineEnableDraftMode } from "next-sanity/draft-mode"`
  * @public
  */
-export const resolvePerspectiveFromCookies: ResolvePerspectiveFromCookies = async () => {
+export const resolvePerspectiveFromCookies: ResolvePerspectiveFromCookies = () => {
   throw new Error(`resolvePerspectiveFromCookies can't be imported by a client component`)
 }
