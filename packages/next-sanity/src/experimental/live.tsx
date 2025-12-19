@@ -1,3 +1,4 @@
+import {sanitizePerspective} from '#live/sanitizePerspective'
 import {stegaEncodeSourceMap} from '@sanity/client/stega'
 import {perspectiveCookieName} from '@sanity/preview-url-secret/constants'
 import {
@@ -19,7 +20,6 @@ import {preconnect} from 'react-dom'
 
 import type {SanityClientConfig} from './types'
 
-import {sanitizePerspective} from '../live/utils'
 import {DRAFT_SYNC_TAG_PREFIX, PUBLISHED_SYNC_TAG_PREFIX} from './constants'
 
 /**

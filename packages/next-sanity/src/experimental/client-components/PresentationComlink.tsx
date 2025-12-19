@@ -1,5 +1,6 @@
 import type {ClientPerspective} from '@sanity/client'
 
+import {sanitizePerspective} from '#live/sanitizePerspective'
 import {createNode, createNodeMachine} from '@sanity/comlink'
 import {
   createCompatibilityActors,
@@ -16,7 +17,6 @@ import {
   setPerspective,
   perspective,
 } from '../../live/hooks/context'
-import {sanitizePerspective} from '../../live/utils'
 
 export default function PresentationComlink(props: {
   projectId: string

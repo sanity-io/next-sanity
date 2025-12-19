@@ -1,4 +1,4 @@
-import {isCorsOriginError} from '#isCorsOriginError'
+import {isCorsOriginError} from '#live/isCorsOriginError'
 import {
   createClient,
   type ClientPerspective,

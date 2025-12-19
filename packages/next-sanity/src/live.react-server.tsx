@@ -3,7 +3,7 @@
 // While this implementation works, it's not super ideal, and we should warn in NOdE_ENV !== 'production' that we recommend using `cacheComponents: true` instead.
 // Among other reasons we have to double-fetch to set cache tags, while the customer doesn't pay for the additional fetch it still adds latency to the server render.
 
-export {isCorsOriginError} from '#isCorsOriginError'
+export {isCorsOriginError} from '#live/isCorsOriginError'
 export {
   type DefineSanityLiveOptions,
   type DefinedSanityFetchType,

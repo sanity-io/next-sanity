@@ -26,16 +26,6 @@ export default defineConfig({
     './src/webhook/index.ts',
   ],
   external: /^next-sanity(?:\/|$)/,
-  // [
-  //   'next-sanity',
-  //   'next-sanity/experimental/client-components/live',
-  //   'next-sanity/live/client-components/live',
-  //   'next-sanity/live/client-components/live-stream',
-  //   'next-sanity/live/server-actions',
-  //   'next-sanity/studio/client-component',
-  //   'next-sanity/visual-editing/client-component',
-  //   'next-sanity/visual-editing/server-actions',
-  // ],
   sourcemap: true,
   hash: false,
   exports: {

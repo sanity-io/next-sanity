@@ -1,6 +1,5 @@
 import {validateApiPerspective, type ClientPerspective} from '@sanity/client'
 
-/** @internal */
 export function sanitizePerspective(
   _perspective: unknown,
   fallback: 'drafts' | 'published',

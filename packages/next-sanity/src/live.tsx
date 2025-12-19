@@ -4,7 +4,7 @@
 // The implementation here though should all throw errors, as importing this file means userland made a mistake and somehow a client component is
 // trying to pull in something it shouldn't.
 
-export {isCorsOriginError} from '#isCorsOriginError'
+export {isCorsOriginError} from '#live/isCorsOriginError'
 
 import type {
   DefineSanityLiveOptions,
