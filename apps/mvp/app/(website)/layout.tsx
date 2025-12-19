@@ -9,7 +9,7 @@ import {
 // import {Suspense} from 'react'
 import {debug} from 'next-sanity/debug'
 import {VisualEditing} from 'next-sanity/visual-editing'
-import {refresh, updateTag} from 'next/cache'
+import {cacheLife, refresh, updateTag} from 'next/cache'
 
 import {DebugStatus} from './DebugStatus'
 import {FormStatusLabel} from './FormStatus'
@@ -18,6 +18,7 @@ import {RefreshButton} from './RefreshButton'
 
 async function cacheDebug() {
   'use cache: remote'
+  cacheLife('sanity')
   return await debug()
 }
 
