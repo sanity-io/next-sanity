@@ -1,5 +1,11 @@
 # next-sanity
 
+## 13.0.0-cache-components.9
+
+### Patch Changes
+
+- [#3109](https://github.com/sanity-io/next-sanity/pull/3109) [`114ab9d`](https://github.com/sanity-io/next-sanity/commit/114ab9d1202c1b59d3f9baeff472f75c2b039ad1) Thanks [@stipsan](https://github.com/stipsan)! - Remove `main` and `module` fields from `package.json`
+
 ## 12.0.7
 
 ### Patch Changes
