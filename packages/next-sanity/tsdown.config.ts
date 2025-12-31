@@ -25,7 +25,7 @@ export default defineConfig({
     './src/visual-editing/server-actions/index.ts',
     './src/webhook/index.ts',
   ],
-  external: /^next-sanity(?:\/|$)/,
+  external: [/^next-sanity(?:\/|$)/, /^#/],
   sourcemap: true,
   hash: false,
   exports: {
