@@ -1,5 +1,11 @@
 # next-sanity
 
+## 13.0.0-cache-components.10
+
+### Patch Changes
+
+- [#3109](https://github.com/sanity-io/next-sanity/pull/3109) [`c89aa9c`](https://github.com/sanity-io/next-sanity/commit/c89aa9caca9e73dd0f9ee5462d7d5251fda286cd) Thanks [@stipsan](https://github.com/stipsan)! - Conditional imports accidentally in build output
+
 ## 13.0.0-cache-components.9
 
 ### Patch Changes
