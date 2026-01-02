@@ -1,5 +1,15 @@
 # next-sanity
 
+## 12.0.8
+
+### Patch Changes
+
+- [#3139](https://github.com/sanity-io/next-sanity/pull/3139) [`4f7bc10`](https://github.com/sanity-io/next-sanity/commit/4f7bc108174e6cacb3cffb0ebf6f4fa86e5c49b1) Thanks [@renovate](https://github.com/apps/renovate)! - fix(deps): update dependency @portabletext/react to ^6.0.2
+
+- [#3140](https://github.com/sanity-io/next-sanity/pull/3140) [`d895e94`](https://github.com/sanity-io/next-sanity/commit/d895e941751ff2939a5c7b34fc84a47f9db257a2) Thanks [@renovate](https://github.com/apps/renovate)! - fix(deps): update dependency @sanity/preview-url-secret to ^4.0.2
+
+- [#3141](https://github.com/sanity-io/next-sanity/pull/3141) [`9cbb189`](https://github.com/sanity-io/next-sanity/commit/9cbb18925239de36592d26eaf53716f2796f3769) Thanks [@renovate](https://github.com/apps/renovate)! - fix(deps): update dependency @sanity/visual-editing to ^5.0.4
+
 ## 12.0.7
 
 ### Patch Changes
