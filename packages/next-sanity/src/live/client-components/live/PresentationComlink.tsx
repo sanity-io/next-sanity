@@ -5,6 +5,7 @@ import {
   createNodeMachine,
   // type Node,
 } from '@sanity/comlink'
+import {setComlink, setComlinkClientConfig} from '#client-components/context'
 import {
   createCompatibilityActors,
   type LoaderControllerMsg,
@@ -13,8 +14,6 @@ import {
 import {setPerspectiveCookie} from 'next-sanity/live/server-actions'
 import {useRouter} from 'next/navigation'
 import {useEffect, useEffectEvent} from 'react'
-
-import {setComlink, setComlinkClientConfig} from '../../hooks/context'
 
 function PresentationComlink(props: {
   projectId: string

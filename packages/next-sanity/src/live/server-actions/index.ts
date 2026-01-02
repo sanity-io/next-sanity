@@ -2,11 +2,12 @@
 
 import type {ClientPerspective, SyncTag} from '@sanity/client'
 
+import {sanitizePerspective} from '#live/sanitizePerspective'
 import {perspectiveCookieName} from '@sanity/preview-url-secret/constants'
-import {revalidateTag} from 'next/cache'
+import {revalidateTag, updateTag} from 'next/cache'
 import {cookies, draftMode} from 'next/headers'
 
-import {sanitizePerspective} from '../utils'
+import {PUBLISHED_SYNC_TAG_PREFIX} from '../../experimental/constants'
 
 export async function revalidateSyncTags(tags: SyncTag[]): Promise<void> {
   revalidateTag('sanity:fetch-sync-tags', 'max')
@@ -39,4 +40,29 @@ export async function setPerspectiveCookie(perspective: ClientPerspective): Prom
       sameSite: 'none',
     },
   )
+}
+
+// @TODO expose parseTags function that returns the correct array of tags
+// we already have s1: prefixes, but they could change
+// use sp: for prod, sd: for draft, keep em short
+export async function expireTags(_tags: unknown): Promise<void> {
+  // @TODO Draft Mode bypasses cache anyway so we don't bother with expiring tags for draft content
+  // const isDraftMode = (await draftMode()).isEnabled
+  // const tags = _tags.map((tag) => `${isDraftMode ? 'drafts' : 'sanity'}:${tag}`)
+  if (!Array.isArray(_tags)) {
+    console.warn('<SanityLive /> `expireTags` called with non-array tags', _tags)
+    return undefined
+  }
+  const tags = _tags.filter(
+    (tag) => typeof tag === 'string' && tag.startsWith(PUBLISHED_SYNC_TAG_PREFIX),
+  )
+  if (!tags.length) {
+    console.warn('<SanityLive /> `expireTags` called with no valid tags', _tags)
+    return undefined
+  }
+  for (const tag of tags) {
+    updateTag(tag)
+  }
+  // oxlint-disable-next-line no-console
+  console.log(`<SanityLive /> updated tags: ${tags.join(', ')}`)
 }
