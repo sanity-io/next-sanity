@@ -31,7 +31,7 @@ export const sanity = {
   /**
    * Sanity Live handles on-demand revalidation, so the default 15min time based revalidation is too short
    */
-  revalidate: 7_776_000,
+  revalidate: 31_536_000, // 365 days
 } as const satisfies {
   /**
    * This cache may be stale on clients for ... seconds before checking with the server.

@@ -77,7 +77,12 @@ export function defineLive(config: LiveOptions): {
     /**
      * Sanity Live handles on-demand revalidation, so the default 15min time based revalidation is too short
      */
-    cacheLife({revalidate})
+    try {
+      cacheLife('sanity')
+    } catch {
+      // TODO: warn in dev mode that fallback is used?
+      cacheLife({revalidate})
+    }
 
     return {data: result, sourceMap: resultSourceMap || null, tags}
   }
