@@ -1,5 +1,13 @@
 # next-sanity
 
+## 13.0.0-cache-components.12
+
+### Patch Changes
+
+- [#3109](https://github.com/sanity-io/next-sanity/pull/3109) [`103df58`](https://github.com/sanity-io/next-sanity/commit/103df586811acab7c06546e23ada6953a43f7c0e) Thanks [@stipsan](https://github.com/stipsan)! - Group constants in one file
+
+- [#3109](https://github.com/sanity-io/next-sanity/pull/3109) [`91d34d8`](https://github.com/sanity-io/next-sanity/commit/91d34d8273c521dacf96b57b56131e1b798ec988) Thanks [@stipsan](https://github.com/stipsan)! - Update revalidation period for Sanity Live to 365 days and enhance cache life handling with fallback mechanism
+
 ## 12.0.8
 
 ### Patch Changes
