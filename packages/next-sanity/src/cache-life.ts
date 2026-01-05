@@ -1,3 +1,5 @@
+import { revalidate } from "#live/constants"
+
 /**
  * For usage with `cacheComponents: true`, and `defineLive`:
  * ```ts
@@ -29,7 +31,7 @@ export const sanity = {
   /**
    * Sanity Live handles on-demand revalidation, so the default 15min time based revalidation is too short
    */
-  revalidate: 7_776_000, // 90 days,
+  revalidate: 7_776_000,
 } as const satisfies {
   /**
    * This cache may be stale on clients for ... seconds before checking with the server.
@@ -38,7 +40,7 @@ export const sanity = {
   /**
    * If the server receives a new request after ... seconds, start revalidating new values in the background.
    */
-  revalidate?: number
+  revalidate?: typeof revalidate
   /**
    * If this entry has no traffic for ... seconds it will expire. The next request will recompute it.
    */

@@ -2,7 +2,7 @@ import type {DefinedFetchType, DefinedLiveProps, LiveOptions, PerspectiveType} f
 
 import {resolvePerspectiveFromCookies} from '#live/resolvePerspectiveFromCookies'
 import SanityLiveClientComponent from 'next-sanity/experimental/client-components/live'
-import {cacheTag} from 'next/cache'
+import {cacheLife, cacheTag} from 'next/cache'
 import {draftMode, cookies} from 'next/headers'
 import {Suspense} from 'react'
 import {preconnect} from 'react-dom'
@@ -10,6 +10,7 @@ import {preconnect} from 'react-dom'
 import type {DefinedSanityFetchType, DefinedSanityLiveProps} from '../live/defineLive'
 
 import {DRAFT_SYNC_TAG_PREFIX, PUBLISHED_SYNC_TAG_PREFIX} from './constants'
+import { revalidate } from '#live/constants'
 
 export function defineLive(config: LiveOptions): {
   fetch: DefinedFetchType
@@ -78,37 +79,9 @@ export function defineLive(config: LiveOptions): {
     /**
      * Sanity Live handles on-demand revalidation, so the default 15min time based revalidation is too short
      */
-    // cacheLife({revalidate: 60 * 60 * 24 * 90})
+    cacheLife({revalidate})
 
     return {data: result, sourceMap: resultSourceMap || null, tags}
-
-    // return sanityCachedFetch(
-    //   {
-    //     apiHost,
-    //     apiVersion,
-    //     useProjectHostname,
-    //     dataset,
-    //     projectId,
-    //     requestTagPrefix,
-    //     token: originalToken,
-    //   },
-    //   {
-    //     query,
-    //     params,
-    //     perspective,
-    //     stega,
-    //     requestTag,
-    //     draftToken: serverToken,
-    //     customCacheTags,
-    //   },
-    // ).then(({data, sourceMap, tags}) => ({
-    //   data:
-    //     stega && sourceMap
-    //       ? stegaEncodeSourceMap(data, sourceMap, {...stegaConfig, enabled: true})
-    //       : data,
-    //   sourceMap,
-    //   tags,
-    // }))
   }
 
   const Live: React.ComponentType<DefinedLiveProps> = function Live(props) {
