@@ -1,5 +1,11 @@
 # next-sanity
 
+## 13.0.0-cache-components.11
+
+### Patch Changes
+
+- [#3109](https://github.com/sanity-io/next-sanity/pull/3109) [`708e779`](https://github.com/sanity-io/next-sanity/commit/708e77928af685fe1ad994526d1b9e67057c91d8) Thanks [@stipsan](https://github.com/stipsan)! - Set default cacheLife
+
 ## 13.0.0-cache-components.10
 
 ### Patch Changes
