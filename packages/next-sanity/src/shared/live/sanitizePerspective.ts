@@ -1,5 +1,6 @@
 import {validateApiPerspective, type ClientPerspective} from '@sanity/client'
 
+// @TODO split into sanitizePerspective and parsePerspective, expose parsePerspective on the /live export
 export function sanitizePerspective(
   _perspective: unknown,
   fallback: 'drafts' | 'published',

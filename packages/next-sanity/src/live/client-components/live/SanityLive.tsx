@@ -14,7 +14,7 @@ import dynamic from 'next/dynamic'
 import {useRouter} from 'next/navigation'
 import {useEffect, useMemo, useRef, useState, useEffectEvent} from 'react'
 
-const PresentationComlink = dynamic(() => import('./PresentationComlink'), {ssr: false})
+const PresentationComlink = dynamic(() => import('#client-components/PresentationComlink'), {ssr: false})
 const RefreshOnMount = dynamic(() => import('./RefreshOnMount'), {ssr: false})
 const RefreshOnFocus = dynamic(() => import('./RefreshOnFocus'), {ssr: false})
 const RefreshOnReconnect = dynamic(() => import('./RefreshOnReconnect'), {ssr: false})
@@ -262,9 +262,7 @@ export function SanityLive(props: SanityLiveProps): React.JSX.Element | null {
         <PresentationComlink
           projectId={projectId!}
           dataset={dataset!}
-          // handleDraftModeAction={handleDraftModeAction}
-          draftModeEnabled={draftModeEnabled}
-          draftModePerspective={draftModePerspective!}
+          // onPerspective={setPerspectiveCookie}
         />
       )}
       {!draftModeEnabled && refreshOnMount && <RefreshOnMount />}

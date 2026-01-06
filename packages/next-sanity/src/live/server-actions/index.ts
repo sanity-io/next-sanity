@@ -5,8 +5,8 @@ import type {ClientPerspective, SyncTag} from '@sanity/client'
 import {PUBLISHED_SYNC_TAG_PREFIX} from '#live/constants'
 import {sanitizePerspective} from '#live/sanitizePerspective'
 import {perspectiveCookieName} from '@sanity/preview-url-secret/constants'
-import {revalidateTag, updateTag} from 'next/cache'
-import {cookies, draftMode} from 'next/headers'
+import {refresh, revalidateTag, updateTag} from 'next/cache'
+import {cookies} from 'next/headers'
 
 export async function revalidateSyncTags(tags: SyncTag[]): Promise<void> {
   revalidateTag('sanity:fetch-sync-tags', 'max')
@@ -20,16 +20,14 @@ export async function revalidateSyncTags(tags: SyncTag[]): Promise<void> {
 }
 
 export async function setPerspectiveCookie(perspective: ClientPerspective): Promise<void> {
-  if (!(await draftMode()).isEnabled) {
-    // throw new Error('Draft mode is not enabled, setting perspective cookie is not allowed')
-    return
-  }
+  const jar = await cookies()
   const sanitizedPerspective = sanitizePerspective(perspective, 'drafts')
-  if (perspective !== sanitizedPerspective) {
+  if (!sanitizedPerspective || Array.isArray(sanitizedPerspective) && sanitizedPerspective.length === 0) {
     throw new Error(`Invalid perspective`, {cause: perspective})
   }
 
-  ;(await cookies()).set(
+  // @TODO check if the cookie is already set, before setting it and then calling refresh()
+  jar.set(
     perspectiveCookieName,
     Array.isArray(sanitizedPerspective) ? sanitizedPerspective.join(',') : sanitizedPerspective,
     {
@@ -39,6 +37,8 @@ export async function setPerspectiveCookie(perspective: ClientPerspective): Prom
       sameSite: 'none',
     },
   )
+
+  refresh()
 }
 
 // @TODO expose parseTags function that returns the correct array of tags

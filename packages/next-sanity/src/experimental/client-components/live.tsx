@@ -19,7 +19,7 @@ import {useEffect, useMemo, useRef, useState, useEffectEvent} from 'react'
 
 import type {SanityClientConfig} from '../types'
 
-const PresentationComlink = dynamic(() => import('./PresentationComlink'), {ssr: false})
+const PresentationComlink = dynamic(() => import('#client-components/PresentationComlink'), {ssr: false})
 const RefreshOnMount = dynamic(() => import('../../live/client-components/live/RefreshOnMount'), {
   ssr: false,
 })
@@ -310,7 +310,7 @@ export default function SanityLive(props: SanityLiveProps): React.JSX.Element | 
         <PresentationComlink
           projectId={projectId!}
           dataset={dataset!}
-          draftModeEnabled={draftModeEnabled}
+          // onPerspective={setPerspectiveCookie}
         />
       )}
       {!draftModeEnabled && refreshOnMount && <RefreshOnMount />}
