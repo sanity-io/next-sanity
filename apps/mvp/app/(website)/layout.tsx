@@ -1,5 +1,3 @@
-'use cache'
-
 import '../globals.css'
 import {resolvePerspectiveFromCookies, type LivePerspective} from 'next-sanity/live'
 import {VisualEditing} from 'next-sanity/visual-editing'
@@ -27,8 +25,9 @@ async function toggleDraftMode() {
 async function SanityLive() {
   let perspective: LivePerspective = 'published'
   const isDraftMode = (await draftMode()).isEnabled
+  const jar = await cookies()
   if (isDraftMode) {
-    perspective = await resolvePerspectiveFromCookies({cookies: await cookies()})
+    perspective = await resolvePerspectiveFromCookies({cookies: jar})
   }
 
   return <Live perspective={perspective} />

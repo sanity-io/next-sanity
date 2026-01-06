@@ -24,8 +24,9 @@ async function getPosts(perspective: LivePerspective) {
 export default async function IndexPage() {
   let perspective: LivePerspective = 'published'
   const isDraftMode = (await draftMode()).isEnabled
+  const jar = await cookies()
   if (isDraftMode) {
-    perspective = await resolvePerspectiveFromCookies({cookies: await cookies()})
+    perspective = await resolvePerspectiveFromCookies({cookies: jar})
   }
 
   const {data, tags} = await getPosts(perspective)
