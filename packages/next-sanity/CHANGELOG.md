@@ -1,5 +1,13 @@
 # next-sanity
 
+## 13.0.0-cache-components.13
+
+### Patch Changes
+
+- [#3109](https://github.com/sanity-io/next-sanity/pull/3109) [`b28e432`](https://github.com/sanity-io/next-sanity/commit/b28e43234350415f01fcda14998a2666bbf4f339) Thanks [@stipsan](https://github.com/stipsan)! - Handle empty perspectives
+
+- [#3109](https://github.com/sanity-io/next-sanity/pull/3109) [`dd2c5dc`](https://github.com/sanity-io/next-sanity/commit/dd2c5dcbf837c0973bb0ece3bebfda38f65690be) Thanks [@stipsan](https://github.com/stipsan)! - Reuse PresentationComlink
+
 ## 12.0.9
 
 ### Patch Changes
