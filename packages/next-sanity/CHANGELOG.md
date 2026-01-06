@@ -1,5 +1,11 @@
 # next-sanity
 
+## 12.0.9
+
+### Patch Changes
+
+- [#3151](https://github.com/sanity-io/next-sanity/pull/3151) [`11e4b16`](https://github.com/sanity-io/next-sanity/commit/11e4b1651d23a00c30ee32cfe2a6e5887201d596) Thanks [@renovate](https://github.com/apps/renovate)! - fix(deps): update dependency @sanity/client to ^7.14.0
+
 ## 12.0.8
 
 ### Patch Changes
