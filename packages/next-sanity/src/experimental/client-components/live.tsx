@@ -20,14 +20,14 @@ import {useEffect, useMemo, useRef, useState, useEffectEvent} from 'react'
 import type {SanityClientConfig} from '../types'
 
 const PresentationComlink = dynamic(() => import('#client-components/PresentationComlink'), {ssr: false})
-const RefreshOnMount = dynamic(() => import('../../live/client-components/live/RefreshOnMount'), {
+const RefreshOnMount = dynamic(() => import('#client-components/RefreshOnMount'), {
   ssr: false,
 })
-const RefreshOnFocus = dynamic(() => import('../../live/client-components/live/RefreshOnFocus'), {
+const RefreshOnFocus = dynamic(() => import('#client-components/RefreshOnFocus'), {
   ssr: false,
 })
 const RefreshOnReconnect = dynamic(
-  () => import('../../live/client-components/live/RefreshOnReconnect'),
+  () => import('#client-components/RefreshOnReconnect'),
   {ssr: false},
 )
 

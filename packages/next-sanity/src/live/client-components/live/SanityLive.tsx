@@ -15,9 +15,9 @@ import {useRouter} from 'next/navigation'
 import {useEffect, useMemo, useRef, useState, useEffectEvent} from 'react'
 
 const PresentationComlink = dynamic(() => import('#client-components/PresentationComlink'), {ssr: false})
-const RefreshOnMount = dynamic(() => import('./RefreshOnMount'), {ssr: false})
-const RefreshOnFocus = dynamic(() => import('./RefreshOnFocus'), {ssr: false})
-const RefreshOnReconnect = dynamic(() => import('./RefreshOnReconnect'), {ssr: false})
+const RefreshOnMount = dynamic(() => import('#client-components/RefreshOnMount'), {ssr: false})
+const RefreshOnFocus = dynamic(() => import('#client-components/RefreshOnFocus'), {ssr: false})
+const RefreshOnReconnect = dynamic(() => import('#client-components/RefreshOnReconnect'), {ssr: false})
 
 /**
  * @public
