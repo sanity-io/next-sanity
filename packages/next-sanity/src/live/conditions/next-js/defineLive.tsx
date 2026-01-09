@@ -1,25 +1,20 @@
-import type {DefinedFetchType, DefinedLiveProps, LiveOptions, PerspectiveType} from '#live/types'
+import type {DefinedFetchType, DefinedLiveProps, LiveOptions} from '#live/types'
 
 import {DRAFT_SYNC_TAG_PREFIX, PUBLISHED_SYNC_TAG_PREFIX, revalidate} from '#live/constants'
-import {resolvePerspectiveFromCookies} from '#live/resolvePerspectiveFromCookies'
-import SanityLiveClientComponent from 'next-sanity/experimental/client-components/live'
+import {SanityLive as SanityLiveClientComponent} from 'next-sanity/live/client-components'
+import {
+  actionStudioPerspective,
+  actionLiveEvent,
+  actionLiveEventIncludingDrafts,
+} from 'next-sanity/live/server-actions'
 import {cacheLife, cacheTag} from 'next/cache'
-import {draftMode, cookies} from 'next/headers'
 import {Suspense} from 'react'
 import {preconnect} from 'react-dom'
 
-import type {DefinedSanityFetchType, DefinedSanityLiveProps} from '../live/defineLive'
+import type {DefinedSanityFetchType, DefinedSanityLiveProps} from '../react-server/defineLive'
 
 export function defineLive(config: LiveOptions): {
-  fetch: DefinedFetchType
-  Live: React.ComponentType<DefinedLiveProps>
-  /**
-   * @deprecated use `fetch` instead, and define your own `sanityFetch` function with logic for when to toggle `stega` and `perspective`
-   */
   sanityFetch: DefinedSanityFetchType
-  /**
-   * @deprecated use `Live` instead, and define your own `SanityLive` component with logic for when to toggle `perspective`
-   */
   SanityLive: React.ComponentType<DefinedSanityLiveProps>
 } {
   const {client: _client, serverToken, browserToken} = config
@@ -79,7 +74,6 @@ export function defineLive(config: LiveOptions): {
      * userland can still set a shorter revalidate time by calling `cacheLife` themselves.
      */
     cacheLife({revalidate})
-    
 
     return {data: result, sourceMap: resultSourceMap || null, tags}
   }
@@ -87,9 +81,9 @@ export function defineLive(config: LiveOptions): {
   const Live: React.ComponentType<DefinedLiveProps> = function Live(props) {
     const {
       perspective = 'published',
-      onChange,
-      onChangeIncludingDrafts,
-      onStudioPerspective,
+      onChange = actionLiveEvent,
+      onChangeIncludingDrafts = actionLiveEventIncludingDrafts,
+      onStudioPerspective = actionStudioPerspective,
       refreshOnMount = false,
       refreshOnFocus = false,
       refreshOnReconnect = false,
@@ -99,20 +93,13 @@ export function defineLive(config: LiveOptions): {
       intervalOnGoAway,
     } = props
 
-    if (onChangeIncludingDrafts) {
-      console.warn('`onChangeIncludingDrafts` is not implemented yet')
-    }
-    if (onStudioPerspective) {
-      console.warn('`onStudioPerspective` is not implemented yet')
-    }
-
     const includeDrafts = typeof browserToken === 'string' && perspective !== 'published'
 
     const {projectId, dataset, apiHost, apiVersion, useProjectHostname, requestTagPrefix} =
       client.config()
-    const {origin} = new URL(client.getUrl('', false))
 
     // Preconnect to the Live Event API origin early, as the Sanity API is almost always on a different origin than the app
+    const {origin} = new URL(client.getUrl('', false))
     preconnect(origin)
 
     return (
@@ -127,46 +114,25 @@ export function defineLive(config: LiveOptions): {
             requestTagPrefix,
             token: includeDrafts ? browserToken : undefined,
           }}
+          perspective={perspective}
+          onLiveEvent={onChange}
+          onLiveEventIncludingDrafts={onChangeIncludingDrafts}
+          onPresentationPerspective={onStudioPerspective}
           requestTag={requestTag}
-          // origin={origin}
-          draftModeEnabled={includeDrafts}
           refreshOnMount={refreshOnMount}
           refreshOnFocus={refreshOnFocus}
           refreshOnReconnect={refreshOnReconnect}
           onError={onError}
           onGoAway={onGoAway}
           intervalOnGoAway={intervalOnGoAway}
-          revalidateSyncTags={onChange}
-          resolveDraftModePerspective={resolveDraftModePerspective}
         />
       </Suspense>
     )
   }
+  Live.displayName = 'DefinedSanityLive'
 
   return {
-    fetch,
-    Live,
-    sanityFetch: () => {
-      throw new Error(
-        '`defineLive().sanityFetch` is not available when `cacheComponents: true`, use `defineLive().fetch` instead',
-      )
-    },
-    SanityLive: () => {
-      throw new Error(
-        '`defineLive().SanityLive` is not available when `cacheComponents: true`, use `defineLive().Live` instead',
-      )
-    },
+    sanityFetch: fetch,
+    SanityLive: Live,
   }
 }
-
-async function resolveDraftModePerspective(): Promise<PerspectiveType> {
-  'use server'
-  if ((await draftMode()).isEnabled) {
-    const jar = await cookies()
-    return resolvePerspectiveFromCookies({cookies: jar})
-  }
-  return 'published'
-}
-
-// revalidateSyncTags => actionUpdateTags
-// router.refresh() => actionRefresh

@@ -4,7 +4,7 @@
 // Among other reasons we have to double-fetch to set cache tags, while the customer doesn't pay for the additional fetch it still adds latency to the server render.
 
 export {isCorsOriginError} from '#live/isCorsOriginError'
-export {defineLive} from './live/defineLive'
+export {defineLive} from './defineLive'
 export {resolvePerspectiveFromCookies} from '#live/resolvePerspectiveFromCookies'
 
 export type {PerspectiveType as LivePerspective} from '#live/types'

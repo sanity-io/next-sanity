@@ -4,7 +4,7 @@ import {sanity} from 'next-sanity/cache-life'
 
 const nextConfig: NextConfig = {
   experimental: {
-    viewTransition: true
+    viewTransition: true,
   },
   // basePath: process.env.NEXT_PUBLIC_TEST_BASE_PATH,
   // trailingSlash: true,

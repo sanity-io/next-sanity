@@ -1,12 +1,14 @@
 'use cache'
 
 import {unstable__adapter, unstable__environment} from 'next-sanity'
+import {defineLive} from 'next-sanity/live'
 import {cacheLife} from 'next/cache'
 import Link from 'next/link'
 
 import PostsLayout, {postsQuery} from '@/app/(website)/PostsLayout'
+import {client} from '@/app/sanity.client'
 
-import {fetch as sanityFetch} from '../live'
+const {sanityFetch, SanityLive} = defineLive({client})
 
 async function getPosts() {
   'use cache: remote'
@@ -59,6 +61,7 @@ export default async function IndexPage() {
           Open Studio
         </Link>
       </div>
+      <SanityLive />
     </>
   )
 }

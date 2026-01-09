@@ -1,8 +1,9 @@
 import type {ClientPerspective} from '@sanity/client'
 import type {cookies} from 'next/headers'
 
-import {sanitizePerspective} from '#live/sanitizePerspective'
 import {perspectiveCookieName} from '@sanity/preview-url-secret/constants'
+
+import {sanitizePerspective} from './sanitizePerspective'
 
 export type ResolvePerspectiveFromCookies = (options: {
   /**

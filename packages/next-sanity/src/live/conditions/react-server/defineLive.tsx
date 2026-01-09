@@ -1,19 +1,22 @@
-// import type {DefinedFetchType, DefinedLiveProps} from '#live/types'
+import type {DefinedLiveProps, PerspectiveType} from '#live/types'
 
+import {sanitizePerspective} from '#live/sanitizePerspective'
 import {
   type ClientPerspective,
   type ClientReturn,
   type ContentSourceMap,
-  type LiveEventGoAway,
   type QueryParams,
   type SanityClient,
-  type SyncTag,
 } from '@sanity/client'
-import SanityLiveClientComponent from 'next-sanity/live/client-components/live'
-import {draftMode} from 'next/headers'
-import {prefetchDNS, preconnect} from 'react-dom'
-
-import {resolveCookiePerspective} from './resolveCookiePerspective'
+import {perspectiveCookieName} from '@sanity/preview-url-secret/constants'
+import {SanityLive as SanityLiveClientComponent} from 'next-sanity/live/client-components'
+import {
+  actionStudioPerspective,
+  actionLiveEvent,
+  actionLiveEventIncludingDrafts,
+} from 'next-sanity/live/server-actions'
+import {cookies, draftMode} from 'next/headers'
+import {preconnect} from 'react-dom'
 
 /**
  * @public
@@ -45,60 +48,11 @@ export type DefinedSanityFetchType = <const QueryString extends string>(options:
 /**
  * @public
  */
-export interface DefinedSanityLiveProps {
+export interface DefinedSanityLiveProps extends DefinedLiveProps {
   /**
-   * Automatic refresh of RSC when the component <SanityLive /> is mounted.
-   * Note that this is different from revalidation, which is based on tags and causes `sanityFetch` calls to be re-fetched.
-   * @defaultValue `true`
+   * @defaultValue `automatically resolved`
    */
-  refreshOnMount?: boolean
-  /**
-   * Automatically refresh when window gets focused
-   * Note that this is different from revalidation, which is based on tags and causes `sanityFetch` calls to be re-fetched.
-   * @defaultValue `false` if draftMode().isEnabled, otherwise `true` if not inside an iframe
-   */
-  refreshOnFocus?: boolean
-  /**
-   * Automatically refresh when the browser regains a network connection (via navigator.onLine)
-   * Note that this is different from revalidation, which is based on tags and causes `sanityFetch` calls to be re-fetched.
-   * @defaultValue `true`
-   */
-  refreshOnReconnect?: boolean
-  /**
-   * Automatically refresh on an interval when the Live Event API emits a `goaway` event, which indicates that the connection is rejected or closed.
-   * This typically happens if the connection limit is reached, or if the connection is idle for too long.
-   * To disable this long polling fallback behavior set `intervalOnGoAway` to `false` or `0`.
-   * You can also use `onGoAway` to handle the `goaway` event in your own way, and read the reason why the event was emitted.
-   * @defaultValue `30_000` 30 seconds interval
-   */
-  intervalOnGoAway?: number | false
-
-  /**
-   * This request tag is used to identify the request when viewing request logs from your Sanity Content Lake.
-   * @see https://www.sanity.io/docs/reference-api-request-tags
-   * @defaultValue 'next-loader.live'
-   */
-  requestTag?: string
-
-  /**
-   * Handle errors from the Live Events subscription.
-   * By default it's reported using `console.error`, you can override this prop to handle it in your own way.
-   */
-  onError?: (error: unknown) => void
-
-  /**
-   * Handle the `goaway` event if the connection is rejected/closed.
-   * `event.reason` will be a string of why the event was emitted, for example `'connection limit reached'`.
-   * When this happens the `<SanityLive />` will fallback to long polling with a default interval of 30 seconds, providing your own `onGoAway` handler does not change this behavior.
-   * If you want to disable long polling set `intervalOnGoAway` to `false` or `0`.
-   */
-  onGoAway?: (event: LiveEventGoAway, intervalOnGoAway: number | false) => void
-
-  /**
-   * Override how cache tags are invalidated, you need to pass a server action here.
-   * You can also pass a `use client` function here, and have `router.refresh()` be called if the promise resolves to `'refresh'`.
-   */
-  revalidateSyncTags?: (tags: SyncTag[]) => Promise<void | 'refresh'>
+  perspective?: PerspectiveType
 }
 
 /**
@@ -234,51 +188,64 @@ export function defineLive(config: DefineSanityLiveOptions): {
 
   const SanityLive: React.ComponentType<DefinedSanityLiveProps> = async function SanityLive(props) {
     const {
-      // handleDraftModeAction = handleDraftModeActionMissing
+      onChange = actionLiveEvent,
+      onChangeIncludingDrafts = actionLiveEventIncludingDrafts,
+      onStudioPerspective = actionStudioPerspective,
       refreshOnMount,
       refreshOnFocus,
       refreshOnReconnect,
-      requestTag,
+      requestTag = 'next-loader.live',
       onError,
       onGoAway,
       intervalOnGoAway,
-      revalidateSyncTags,
+      perspective: _perspective,
     } = props
     const {projectId, dataset, apiHost, apiVersion, useProjectHostname, requestTagPrefix} =
       client.config()
-    const {isEnabled: isDraftModeEnabled} = await draftMode()
+    const perspective = _perspective ?? (await resolveCookiePerspective())
+    const includeDrafts = typeof browserToken === 'string' && perspective !== 'published'
 
-    // Preconnect to the Live Event API origin, or at least prefetch the DNS if preconenct is not supported
+    // Preconnect to the Live Event API origin early, as the Sanity API is almost always on a different origin than the app
     const {origin} = new URL(client.getUrl('', false))
     preconnect(origin)
-    prefetchDNS(origin)
 
     return (
       <SanityLiveClientComponent
-        projectId={projectId}
-        dataset={dataset}
-        apiHost={apiHost}
-        apiVersion={apiVersion}
-        useProjectHostname={useProjectHostname}
-        requestTagPrefix={requestTagPrefix}
+        config={{
+          projectId,
+          dataset,
+          apiHost,
+          apiVersion,
+          useProjectHostname,
+          requestTagPrefix,
+          token: includeDrafts ? browserToken : undefined,
+        }}
+        perspective={await resolveCookiePerspective()}
+        onLiveEvent={onChange}
+        onLiveEventIncludingDrafts={onChangeIncludingDrafts}
+        onPresentationPerspective={onStudioPerspective}
         requestTag={requestTag}
-        token={typeof browserToken === 'string' && isDraftModeEnabled ? browserToken : undefined}
-        draftModeEnabled={isDraftModeEnabled}
-        // handleDraftModeAction={handleDraftModeAction}
-        draftModePerspective={await resolveCookiePerspective()}
         refreshOnMount={refreshOnMount}
         refreshOnFocus={refreshOnFocus}
         refreshOnReconnect={refreshOnReconnect}
         onError={onError}
         onGoAway={onGoAway}
         intervalOnGoAway={intervalOnGoAway}
-        revalidateSyncTags={revalidateSyncTags}
       />
     )
   }
+  SanityLive.displayName = 'DefinedSanityLive'
 
   return {
     sanityFetch,
     SanityLive,
   }
+}
+
+async function resolveCookiePerspective(): Promise<Exclude<ClientPerspective, 'raw'>> {
+  return (await draftMode()).isEnabled
+    ? (await cookies()).has(perspectiveCookieName)
+      ? sanitizePerspective((await cookies()).get(perspectiveCookieName)?.value, 'drafts')
+      : 'drafts'
+    : 'published'
 }
