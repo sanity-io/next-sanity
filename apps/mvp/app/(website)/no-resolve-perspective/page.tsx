@@ -1,20 +1,28 @@
-'use cache'
-
 import {unstable__adapter, unstable__environment} from 'next-sanity'
+import {cacheLife} from 'next/cache'
 import {draftMode} from 'next/headers'
 import Link from 'next/link'
 
 import PostsLayout, {postsQuery} from '@/app/(website)/PostsLayout'
 
-import {sanityFetch} from '../live'
+import {fetch as sanityFetch} from '../live'
+
+async function getPosts(perspective: 'drafts' | 'published') {
+  'use cache: remote'
+
+  cacheLife('sanity')
+
+  const {data} = await sanityFetch({
+    query: postsQuery.query,
+    perspective,
+    stega: perspective !== 'published',
+  })
+  return data
+}
 
 export default async function IndexPage() {
   const isDraftMode = (await draftMode()).isEnabled
-  const {data} = await sanityFetch({
-    query: postsQuery.query,
-    perspective: isDraftMode ? 'drafts' : 'published',
-    stega: isDraftMode,
-  })
+  const data = await getPosts(isDraftMode ? 'drafts' : 'published')
 
   return (
     <>
