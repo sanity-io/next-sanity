@@ -5,6 +5,7 @@ import type {
   LiveEventGoAway,
   QueryParams,
   SanityClient,
+  InitializedClientConfig,
 } from 'next-sanity'
 
 /**
@@ -58,7 +59,7 @@ export interface DefinedLiveProps {
    * which can be read with `resolvePerspectiveFromCookies` and used to ensure data fetching in the preview
    * matches the perspective and content viewed in the Studio, allowing you to quickly switch and preview different perspectives.
    */
-  onStudioPerspective?: (perspective: PerspectiveType) => void
+  onStudioPerspective?: (perspective: ClientPerspective) => Promise<void>
 
   /**
    * Automatic refresh of RSC when the component <SanityLive /> is mounted.
@@ -134,3 +135,14 @@ export interface LiveOptions {
    */
   browserToken?: string | false
 }
+
+export interface SanityClientConfig extends Pick<
+  InitializedClientConfig,
+  | 'projectId'
+  | 'dataset'
+  | 'apiHost'
+  | 'apiVersion'
+  | 'useProjectHostname'
+  | 'token'
+  | 'requestTagPrefix'
+> {}

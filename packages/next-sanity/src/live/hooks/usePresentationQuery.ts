@@ -6,7 +6,7 @@ import {
   comlinkListeners,
   comlinkProjectId,
   comlink as comlinkSnapshot,
-} from '#client-components/context'
+} from '#live/context'
 import {stegaEncodeSourceMap} from '@sanity/client/stega'
 import {dequal} from 'dequal/lite'
 import {useEffect, useMemo, useReducer, useSyncExternalStore, useEffectEvent} from 'react'

@@ -1,4 +1,5 @@
-import {setEnvironment, setPerspective} from '#client-components/context'
+import {PUBLISHED_SYNC_TAG_PREFIX} from '#live/constants'
+import {setEnvironment} from '#live/context'
 import {isCorsOriginError} from '#live/isCorsOriginError'
 import {
   createClient,
@@ -9,20 +10,20 @@ import {
   type SyncTag,
 } from '@sanity/client'
 import {isMaybePresentation, isMaybePreviewWindow} from '@sanity/presentation-comlink'
-import {revalidateSyncTags as defaultRevalidateSyncTags} from 'next-sanity/live/server-actions'
 import dynamic from 'next/dynamic'
 import {useRouter} from 'next/navigation'
-import {useEffect, useMemo, useRef, useState, useEffectEvent} from 'react'
+import {useEffect, useMemo, useState, useEffectEvent} from 'react'
 
-const PresentationComlink = dynamic(() => import('#client-components/PresentationComlink'), {ssr: false})
-const RefreshOnMount = dynamic(() => import('#client-components/RefreshOnMount'), {ssr: false})
-const RefreshOnFocus = dynamic(() => import('#client-components/RefreshOnFocus'), {ssr: false})
-const RefreshOnReconnect = dynamic(() => import('#client-components/RefreshOnReconnect'), {ssr: false})
+const PresentationComlink = dynamic(() => import('./PresentationComlink'), {
+  ssr: false,
+})
+const RefreshOnMount = dynamic(() => import('./RefreshOnMount'), {ssr: false})
+const RefreshOnFocus = dynamic(() => import('./RefreshOnFocus'), {ssr: false})
+const RefreshOnReconnect = dynamic(() => import('./RefreshOnReconnect'), {
+  ssr: false,
+})
 
-/**
- * @public
- */
-export interface SanityLiveProps extends Pick<
+interface SanityClientConfig extends Pick<
   InitializedClientConfig,
   | 'projectId'
   | 'dataset'
@@ -31,14 +32,27 @@ export interface SanityLiveProps extends Pick<
   | 'useProjectHostname'
   | 'token'
   | 'requestTagPrefix'
-> {
-  // handleDraftModeAction: (secret: string) => Promise<void | string>
-  draftModeEnabled: boolean
-  draftModePerspective?: ClientPerspective
+> {}
+
+/**
+ * @alpha CAUTION: this is an internal component and does not follow semver. Using it directly is at your own risk.
+ */
+export interface SanityLiveProps {
+  config: SanityClientConfig
+  /**
+   * Setting this to 'published' opens one live event connection, setting it to any other value opens both the live event connections if needed
+   */
+  perspective: Exclude<ClientPerspective, 'raw'>
+
+  onLiveEvent: (tags: string[]) => Promise<void | 'refresh'>
+  onLiveEventIncludingDrafts: (tags: string[]) => Promise<void | 'refresh'>
+  onPresentationPerspective: (perspective: ClientPerspective) => Promise<void>
+
   refreshOnMount?: boolean
   refreshOnFocus?: boolean
   refreshOnReconnect?: boolean
-  requestTag: string | undefined
+  requestTag: string
+
   /**
    * Handle errors from the Live Events subscription.
    * By default it's reported using `console.error`, you can override this prop to handle it in your own way.
@@ -46,7 +60,6 @@ export interface SanityLiveProps extends Pick<
   onError?: (error: unknown) => void
   intervalOnGoAway?: number | false
   onGoAway?: (event: LiveEventGoAway, intervalOnGoAway: number | false) => void
-  revalidateSyncTags?: (tags: SyncTag[]) => Promise<void | 'refresh'>
 }
 
 function handleError(error: unknown) {
@@ -77,34 +90,28 @@ function handleOnGoAway(event: LiveEventGoAway, intervalOnGoAway: number | false
   }
 }
 
-/**
- * @public
- */
-export function SanityLive(props: SanityLiveProps): React.JSX.Element | null {
+function SanityLive(props: SanityLiveProps): React.JSX.Element | null {
   const {
-    projectId,
-    dataset,
-    apiHost,
-    apiVersion,
-    useProjectHostname,
-    token,
-    requestTagPrefix,
-    // handleDraftModeAction,
-    draftModeEnabled,
-    draftModePerspective,
+    config,
+    onLiveEvent,
+    // onLiveEventIncludingDrafts,
+    onPresentationPerspective,
+    perspective,
+
     refreshOnMount = false,
-    refreshOnFocus = draftModeEnabled
+    refreshOnFocus = perspective !== 'published'
       ? false
       : typeof window === 'undefined'
         ? true
         : window.self === window.top,
     refreshOnReconnect = true,
     intervalOnGoAway = 30_000,
-    requestTag = 'next-loader.live',
+    requestTag,
     onError = handleError,
     onGoAway = handleOnGoAway,
-    revalidateSyncTags = defaultRevalidateSyncTags,
   } = props
+  const {projectId, dataset, apiHost, apiVersion, useProjectHostname, token, requestTagPrefix} =
+    config
 
   const client = useMemo(
     () =>
@@ -134,14 +141,16 @@ export function SanityLive(props: SanityLiveProps): React.JSX.Element | null {
         'Sanity is live with',
         token
           ? 'automatic revalidation for draft content changes as well as published content'
-          : draftModeEnabled
+          : perspective === 'published'
             ? 'automatic revalidation for only published content. Provide a `browserToken` to `defineLive` to support draft content outside of Presentation Tool.'
             : 'automatic revalidation of published content',
       )
       // Disable long polling when welcome event is received, this is a no-op if long polling is already disabled
       setLongPollingInterval(false)
     } else if (event.type === 'message') {
-      void revalidateSyncTags(event.tags).then((result) => {
+      void onLiveEvent(
+        event.tags.map((tag: SyncTag) => `${PUBLISHED_SYNC_TAG_PREFIX}${tag}` as const),
+      ).then((result) => {
         if (result === 'refresh') router.refresh()
       })
     } else if (event.type === 'restart' || event.type === 'reconnect') {
@@ -162,42 +171,7 @@ export function SanityLive(props: SanityLiveProps): React.JSX.Element | null {
     return () => subscription.unsubscribe()
   }, [client.live, onError, requestTag, token])
 
-  /**
-   * 2. Notify what perspective we're in, when in Draft Mode
-   */
-  useEffect(() => {
-    if (draftModeEnabled && draftModePerspective) {
-      setPerspective(draftModePerspective)
-    } else {
-      setPerspective('unknown')
-    }
-  }, [draftModeEnabled, draftModePerspective])
-
   const [loadComlink, setLoadComlink] = useState(false)
-  /**
-   * 3. Notify what environment we're in, when in Draft Mode
-   */
-  useEffect(() => {
-    // If we might be in Presentation Tool, then skip detecting here as it's handled later
-    if (isMaybePresentation()) return
-
-    // If we're definitely not in Presentation Tool, then we can set the environment as stand-alone live preview
-    // if we have both a browser token, and draft mode is enabled
-    if (draftModeEnabled && token) {
-      setEnvironment('live')
-      return
-    }
-    // If we're in draft mode, but don't have a browser token, then we're in static mode
-    // which means that published content is still live, but draft changes likely need manual refresh
-    if (draftModeEnabled) {
-      setEnvironment('static')
-      return
-    }
-
-    // Fallback to `unknown` otherwise, as we simply don't know how it's setup
-    setEnvironment('unknown')
-    return
-  }, [draftModeEnabled, token])
 
   /**
    * 4. If Presentation Tool is detected, load up the comlink and integrate with it
@@ -233,21 +207,6 @@ export function SanityLive(props: SanityLiveProps): React.JSX.Element | null {
   }, [])
 
   /**
-   * 5. Warn if draft mode is being disabled
-   * @TODO move logic into PresentationComlink, or maybe VisualEditing?
-   */
-  const draftModeEnabledWarnRef = useRef<ReturnType<typeof setTimeout> | undefined>(undefined)
-  useEffect(() => {
-    if (!draftModeEnabled) return
-    clearTimeout(draftModeEnabledWarnRef.current)
-    return () => {
-      draftModeEnabledWarnRef.current = setTimeout(() => {
-        console.warn('Sanity Live: Draft mode was enabled, but is now being disabled')
-      })
-    }
-  }, [draftModeEnabled])
-
-  /**
    * 6. Handle switching to long polling when needed
    */
   useEffect(() => {
@@ -258,16 +217,20 @@ export function SanityLive(props: SanityLiveProps): React.JSX.Element | null {
 
   return (
     <>
-      {draftModeEnabled && loadComlink && (
+      {loadComlink && (
         <PresentationComlink
           projectId={projectId!}
           dataset={dataset!}
-          // onPerspective={setPerspectiveCookie}
+          onPerspective={onPresentationPerspective}
         />
       )}
-      {!draftModeEnabled && refreshOnMount && <RefreshOnMount />}
-      {!draftModeEnabled && refreshOnFocus && <RefreshOnFocus />}
-      {!draftModeEnabled && refreshOnReconnect && <RefreshOnReconnect />}
+      {refreshOnMount && <RefreshOnMount />}
+      {refreshOnFocus && <RefreshOnFocus />}
+      {refreshOnReconnect && <RefreshOnReconnect />}
     </>
   )
 }
+
+SanityLive.displayName = 'SanityLiveClientComponent'
+
+export default SanityLive
