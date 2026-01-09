@@ -12,15 +12,14 @@ import {
   type LoaderControllerMsg,
   type LoaderNodeMsg,
 } from '@sanity/presentation-comlink'
-import {setPerspectiveCookie} from 'next-sanity/live/server-actions'
 import {startTransition, useEffect, useEffectEvent} from 'react'
 
 export default function PresentationComlink(props: {
   projectId: string
   dataset: string
-  onPerspective?: (perspective: ClientPerspective) => Promise<void>
+  onPerspective: (perspective: ClientPerspective) => Promise<void>
 }): React.JSX.Element | null {
-  const {projectId, dataset, onPerspective = setPerspectiveCookie} = props
+  const {projectId, dataset, onPerspective} = props
 
   useEffect(() => {
     setComlinkClientConfig(projectId, dataset)

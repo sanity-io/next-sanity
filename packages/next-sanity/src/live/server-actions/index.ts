@@ -1,18 +1,30 @@
 'use server'
 
-import type {ClientPerspective, SyncTag} from '@sanity/client'
+import type {ClientPerspective} from '@sanity/client'
 
-import {PUBLISHED_SYNC_TAG_PREFIX} from '#live/constants'
+import {DRAFT_SYNC_TAG_PREFIX, PUBLISHED_SYNC_TAG_PREFIX} from '#live/constants'
 import {sanitizePerspective} from '#live/sanitizePerspective'
 import {perspectiveCookieName} from '@sanity/preview-url-secret/constants'
 import {refresh, revalidateTag, updateTag} from 'next/cache'
-import {cookies} from 'next/headers'
+import {cookies, draftMode} from 'next/headers'
 
-export async function revalidateSyncTags(tags: SyncTag[]): Promise<void> {
+export async function revalidateSyncTags(_tags: unknown): Promise<void> {
+  if (!Array.isArray(_tags)) {
+    console.warn('<SanityLive /> `expireTags` called with non-array tags', _tags)
+    return undefined
+  }
+  const tags = _tags.filter(
+    (tag) => typeof tag === 'string' && tag.startsWith(PUBLISHED_SYNC_TAG_PREFIX),
+  )
+  if (!tags.length) {
+    console.warn('<SanityLive /> `expireTags` called with no valid tags', _tags)
+    return undefined
+  }
+
+
   revalidateTag('sanity:fetch-sync-tags', 'max')
 
-  for (const _tag of tags) {
-    const tag = `sanity:${_tag}`
+  for (const tag of tags) {
     revalidateTag(tag, {expire: 0})
     // oxlint-disable-next-line no-console
     console.log(`<SanityLive /> revalidated tag: ${tag}`)
@@ -44,7 +56,7 @@ export async function setPerspectiveCookie(perspective: ClientPerspective): Prom
 // @TODO expose parseTags function that returns the correct array of tags
 // we already have s1: prefixes, but they could change
 // use sp: for prod, sd: for draft, keep em short
-export async function expireTags(_tags: unknown): Promise<void> {
+export async function expirePublishedTags(_tags: unknown): Promise<void> {
   // @TODO Draft Mode bypasses cache anyway so we don't bother with expiring tags for draft content
   // const isDraftMode = (await draftMode()).isEnabled
   // const tags = _tags.map((tag) => `${isDraftMode ? 'drafts' : 'sanity'}:${tag}`)
@@ -64,4 +76,33 @@ export async function expireTags(_tags: unknown): Promise<void> {
   }
   // oxlint-disable-next-line no-console
   console.log(`<SanityLive /> updated tags: ${tags.join(', ')}`)
+}
+
+export async function expireDraftTags(_tags: unknown): Promise<void> {
+  if (!Array.isArray(_tags)) {
+    console.warn('<SanityLive /> `expireTags` called with non-array tags', _tags)
+    return undefined
+  }
+  const tags = _tags.filter(
+    (tag) => typeof tag === 'string' && tag.startsWith(DRAFT_SYNC_TAG_PREFIX),
+  )
+  if (!tags.length) {
+    console.warn('<SanityLive /> `expireTags` called with no valid tags', _tags)
+    return undefined
+  }
+  for (const tag of tags) {
+    updateTag(tag)
+  }
+  // oxlint-disable-next-line no-console
+  console.log(`<SanityLive /> updated tags: ${tags.join(', ')}`)
+}
+
+export async function expireDraftTagsOrRefreshOnExpire(tags: unknown): Promise<void> {
+  const {isEnabled} = await draftMode()
+  if(isEnabled) {
+    // With cache components just refresh by default when in draft mode and assume bypass
+    refresh()
+  } else {
+    return expireDraftTags(tags)
+  }
 }

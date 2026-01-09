@@ -11,7 +11,6 @@ export default defineConfig({
     './src/draft-mode/index.ts',
     './src/hooks/index.ts',
     './src/image/index.ts',
-    './src/experimental/client-components/live.tsx',
     './src/index.ts',
     './src/live.tsx',
     './src/live.next-js.tsx',
