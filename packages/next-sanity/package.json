@@ -29,23 +29,24 @@
   "sideEffects": false,
   "types": "./dist/index.d.ts",
   "imports": {
-    "#client-components/*": "./src/shared/client-components/*.tsx",
-    "#live/*": "./src/shared/live/*.ts"
+    "#live/*": "./src/live/shared/*.ts"
   },
   "exports": {
     ".": "./src/index.ts",
     "./cache-life": "./src/cache-life.ts",
     "./draft-mode": "./src/draft-mode/index.ts",
-    "./experimental/client-components/live": "./src/experimental/client-components/live.tsx",
     "./hooks": "./src/hooks/index.ts",
     "./image": "./src/image/index.ts",
     "./live": {
-      "next-js": "./src/live.next-js.tsx",
-      "react-server": "./src/live.react-server.tsx",
-      "default": "./src/live.tsx"
+      "next-js": "./src/live/conditions/next-js/index.ts",
+      "react-server": "./src/live/conditions/react-server/index.ts",
+      "default": "./src/live/conditions/default/index.ts"
     },
-    "./live/client-components/live": "./src/live/client-components/live/index.ts",
-    "./live/server-actions": "./src/live/server-actions/index.ts",
+    "./live/client-components": "./src/live/client-components/index.ts",
+    "./live/server-actions": {
+      "next-js": "./src/live/server-actions/index.next-js.ts",
+      "default": "./src/live/server-actions/index.default.ts"
+    },
     "./studio": "./src/studio/index.ts",
     "./studio/client-component": "./src/studio/client-component/index.ts",
     "./visual-editing": "./src/visual-editing/index.ts",
@@ -59,16 +60,18 @@
       ".": "./dist/index.js",
       "./cache-life": "./dist/cache-life.js",
       "./draft-mode": "./dist/draft-mode/index.js",
-      "./experimental/client-components/live": "./dist/experimental/client-components/live.js",
       "./hooks": "./dist/hooks/index.js",
       "./image": "./dist/image/index.js",
       "./live": {
-        "next-js": "./dist/live.next-js.js",
-        "react-server": "./dist/live.react-server.js",
-        "default": "./dist/live.js"
+        "next-js": "./dist/live/conditions/next-js/index.js",
+        "react-server": "./dist/live/conditions/react-server/index.js",
+        "default": "./dist/live/conditions/default/index.js"
       },
-      "./live/client-components/live": "./dist/live/client-components/live/index.js",
-      "./live/server-actions": "./dist/live/server-actions/index.js",
+      "./live/client-components": "./dist/live/client-components/index.js",
+      "./live/server-actions": {
+        "next-js": "./dist/live/server-actions/index.next-js.js",
+        "default": "./dist/live/server-actions/index.default.js"
+      },
       "./studio": "./dist/studio/index.js",
       "./studio/client-component": "./dist/studio/client-component/index.js",
       "./visual-editing": "./dist/visual-editing/index.js",

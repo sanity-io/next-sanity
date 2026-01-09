@@ -5,7 +5,7 @@ import {
   perspectiveListeners,
   type LiveEnvironment,
   type LivePerspective,
-} from '#client-components/context'
+} from '#live/context'
 import {useCallback, useSyncExternalStore} from 'react'
 
 /**

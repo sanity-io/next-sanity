@@ -11,7 +11,7 @@ import type {
   DefineSanityLiveOptions,
   DefinedSanityFetchType,
   DefinedSanityLiveProps,
-} from './live/defineLive'
+} from '../react-server/defineLive'
 
 export {isCorsOriginError} from '#live/isCorsOriginError'
 
