@@ -1,5 +1,11 @@
 # next-sanity
 
+## 13.0.0-cache-components.15
+
+### Patch Changes
+
+- [#3109](https://github.com/sanity-io/next-sanity/pull/3109) [`a4fb2ed`](https://github.com/sanity-io/next-sanity/commit/a4fb2ed7a164ba3593a6d5ac183f2dc5ea0c7a78) Thanks [@stipsan](https://github.com/stipsan)! - Merge the two SanityLive components
+
 ## 13.0.0-cache-components.14
 
 ### Patch Changes
