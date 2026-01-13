@@ -1,5 +1,13 @@
 # next-sanity
 
+## 13.0.0-cache-components.16
+
+### Patch Changes
+
+- [#3109](https://github.com/sanity-io/next-sanity/pull/3109) [`4a6538f`](https://github.com/sanity-io/next-sanity/commit/4a6538fbcc1bbf9ed6ee92b508cfb394e35650e9) Thanks [@stipsan](https://github.com/stipsan)! - Only SanityLiveClientComponent needs ssr: false
+
+- [#3109](https://github.com/sanity-io/next-sanity/pull/3109) [`83f5e52`](https://github.com/sanity-io/next-sanity/commit/83f5e52136a4b010b469113d8dcf0517ce90a038) Thanks [@stipsan](https://github.com/stipsan)! - Rename displayName on defined sanity live
+
 ## 13.0.0-cache-components.15
 
 ### Patch Changes
