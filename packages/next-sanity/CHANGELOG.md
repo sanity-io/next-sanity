@@ -1,5 +1,11 @@
 # next-sanity
 
+## 12.0.12
+
+### Patch Changes
+
+- [#3180](https://github.com/sanity-io/next-sanity/pull/3180) [`44cc987`](https://github.com/sanity-io/next-sanity/commit/44cc9872c4d4e27850949e8a216001d1f8ed8154) Thanks [@renovate](https://github.com/apps/renovate)! - fix(deps): update sanity monorepo to v5.3.0
+
 ## 12.0.11
 
 ### Patch Changes
