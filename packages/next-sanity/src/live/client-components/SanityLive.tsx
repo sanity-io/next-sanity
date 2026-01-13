@@ -39,7 +39,6 @@ export interface SanityLiveProps {
 
   onLiveEvent: (tags: string[]) => Promise<void | 'refresh'>
   onLiveEventIncludingDrafts: (tags: string[]) => Promise<void | 'refresh'>
-  onPresentationPerspective: (perspective: ClientPerspective) => Promise<void>
 
   refreshOnMount?: boolean
   refreshOnFocus?: boolean
@@ -88,7 +87,6 @@ function SanityLive(props: SanityLiveProps): React.JSX.Element | null {
     config,
     onLiveEvent,
     // onLiveEventIncludingDrafts,
-    onPresentationPerspective,
     perspective,
 
     refreshOnMount = false,
@@ -210,13 +208,7 @@ function SanityLive(props: SanityLiveProps): React.JSX.Element | null {
 
   return (
     <>
-      {loadComlink && (
-        <PresentationComlink
-          projectId={projectId!}
-          dataset={dataset!}
-          onPerspective={onPresentationPerspective}
-        />
-      )}
+      {loadComlink && <PresentationComlink projectId={projectId!} dataset={dataset!} />}
       {refreshOnMount && <RefreshOnMount />}
       {refreshOnFocus && <RefreshOnFocus />}
       {refreshOnReconnect && <RefreshOnReconnect />}

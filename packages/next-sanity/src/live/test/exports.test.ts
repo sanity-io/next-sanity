@@ -1,13 +1,13 @@
 import {env} from '#env'
-import yaml from 'js-yaml'
+import * as yaml from 'js-yaml'
 import {fileURLToPath} from 'node:url'
-import {expect, it, vi} from 'vitest'
+import {expect, test, vi} from 'vitest'
 import {getPackageExportsManifest} from 'vitest-package-exports'
 
 vi.mock('react/jsx-dev-runtime', () => ({}))
 vi.mock('react-dom', () => ({preconnect: vi.fn(), preloadModule: vi.fn()}))
 
-it(`exports snapshot for the ${JSON.stringify(env)} condition`, async () => {
+test(`exports snapshot for the ${JSON.stringify(env)} condition`, {timeout: 15_000}, async () => {
   const manifest = await getPackageExportsManifest({
     importMode: 'dist',
     cwd: fileURLToPath(import.meta.url),
@@ -51,7 +51,6 @@ it(`exports snapshot for the ${JSON.stringify(env)} condition`, async () => {
       ./live/server-actions:
         actionLiveEvent: function
         actionLiveEventIncludingDrafts: function
-        actionStudioPerspective: function
       ./studio:
         metadata: object
         NextStudio: function
@@ -63,9 +62,10 @@ it(`exports snapshot for the ${JSON.stringify(env)} condition`, async () => {
       ./visual-editing:
         VisualEditing: function
       ./visual-editing/client-component:
-        default: function
+        VisualEditing: function
       ./visual-editing/server-actions:
-        revalidateRootLayout: function
+        actionPerspectiveChange: function
+        actionRefresh: function
       ./webhook:
         parseBody: function
       "

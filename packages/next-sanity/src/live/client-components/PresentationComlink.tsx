@@ -8,23 +8,20 @@ import {
   type LoaderControllerMsg,
   type LoaderNodeMsg,
 } from '@sanity/presentation-comlink'
-import {startTransition, useEffect, useEffectEvent} from 'react'
+import {useEffect, useEffectEvent} from 'react'
 
 export default function PresentationComlink(props: {
   projectId: string
   dataset: string
-  onPerspective: (perspective: ClientPerspective) => Promise<void>
 }): React.JSX.Element | null {
-  const {projectId, dataset, onPerspective} = props
+  const {projectId, dataset} = props
 
   useEffect(() => {
     setComlinkClientConfig(projectId, dataset)
   }, [dataset, projectId])
 
   const handlePerspectiveChange = useEffectEvent((perspective: ClientPerspective) => {
-    // @TODO remove `setPerspective` util and state
     setPerspective(sanitizePerspective(perspective, 'drafts'))
-    startTransition(() => onPerspective(perspective))
   })
 
   useEffect(() => {

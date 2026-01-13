@@ -54,14 +54,6 @@ export interface DefinedLiveProps {
   perspective?: PerspectiveType
 
   /**
-   * TODO: If Presentation Tool is present this event will fire with the current `perspective` stack used in the
-   * Sanity Studio global perspective menu. The default event handler will store this state in a cookie,
-   * which can be read with `resolvePerspectiveFromCookies` and used to ensure data fetching in the preview
-   * matches the perspective and content viewed in the Studio, allowing you to quickly switch and preview different perspectives.
-   */
-  onStudioPerspective?: (perspective: ClientPerspective) => Promise<void>
-
-  /**
    * Automatic refresh of RSC when the component <SanityLive /> is mounted.
    * @defaultValue `false`
    */

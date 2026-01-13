@@ -2,11 +2,7 @@ import type {DefinedFetchType, DefinedLiveProps, LiveOptions} from '#live/types'
 
 import {DRAFT_SYNC_TAG_PREFIX, PUBLISHED_SYNC_TAG_PREFIX, revalidate} from '#live/constants'
 import {SanityLive as SanityLiveClientComponent} from 'next-sanity/live/client-components'
-import {
-  actionStudioPerspective,
-  actionLiveEvent,
-  actionLiveEventIncludingDrafts,
-} from 'next-sanity/live/server-actions'
+import {actionLiveEvent, actionLiveEventIncludingDrafts} from 'next-sanity/live/server-actions'
 import {cacheLife, cacheTag} from 'next/cache'
 import {Suspense} from 'react'
 import {preconnect} from 'react-dom'
@@ -83,7 +79,6 @@ export function defineLive(config: LiveOptions): {
       perspective = 'published',
       onChange = actionLiveEvent,
       onChangeIncludingDrafts = actionLiveEventIncludingDrafts,
-      onStudioPerspective = actionStudioPerspective,
       refreshOnMount = false,
       refreshOnFocus = false,
       refreshOnReconnect = false,
@@ -117,7 +112,6 @@ export function defineLive(config: LiveOptions): {
           perspective={perspective}
           onLiveEvent={onChange}
           onLiveEventIncludingDrafts={onChangeIncludingDrafts}
-          onPresentationPerspective={onStudioPerspective}
           requestTag={requestTag}
           refreshOnMount={refreshOnMount}
           refreshOnFocus={refreshOnFocus}

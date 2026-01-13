@@ -9,7 +9,7 @@ import PostsLayout, {postsQuery} from '@/app/(website)/PostsLayout'
 import {client} from '@/app/sanity.client'
 
 const token = process.env.SANITY_API_READ_TOKEN!
-const {sanityFetch, SanityLive: Live} = defineLive({
+const {sanityFetch} = defineLive({
   client,
   serverToken: token,
   browserToken: token,
@@ -35,11 +35,6 @@ async function resolvePerspective(): Promise<LivePerspective> {
     return await resolvePerspectiveFromCookies({cookies: jar})
   }
   return 'published'
-}
-
-async function SanityLive() {
-  const perspective = await resolvePerspective()
-  return <Live perspective={perspective} />
 }
 
 async function CachedIndexPage() {
@@ -88,9 +83,13 @@ export default async function IndexPage() {
         </div>
       </div>
       <div className="flex gap-2 text-center">
-        <span className="mx-2 my-4 inline-block rounded-full border border-transparent bg-gray-600 px-4 py-1 text-sm font-semibold text-white">
+        <Link
+          prefetch={false}
+          href="/"
+          className="mx-2 my-4 inline-block rounded-full border border-gray-200 px-4 py-1 text-sm font-semibold text-gray-600 hover:border-transparent hover:bg-gray-600 hover:text-white focus:ring-2 focus:ring-gray-600 focus:ring-offset-2 focus:outline-hidden"
+        >
           Resolve perspective
-        </span>
+        </Link>
         <Link
           prefetch={false}
           href="/no-resolve-perspective"
@@ -105,13 +104,9 @@ export default async function IndexPage() {
         >
           Only production
         </Link>
-        <Link
-          prefetch={false}
-          href="/only-visual-editing"
-          className="mx-2 my-4 inline-block rounded-full border border-gray-200 px-4 py-1 text-sm font-semibold text-gray-600 hover:border-transparent hover:bg-gray-600 hover:text-white focus:ring-2 focus:ring-gray-600 focus:ring-offset-2 focus:outline-hidden"
-        >
+        <span className="mx-2 my-4 inline-block rounded-full border border-transparent bg-gray-600 px-4 py-1 text-sm font-semibold text-white">
           Only Visual Editing
-        </Link>
+        </span>
         <Link
           prefetch={false}
           href="/studio"
@@ -120,9 +115,6 @@ export default async function IndexPage() {
           Open Studio
         </Link>
       </div>
-      <Suspense fallback={<Live perspective="published" />}>
-        <SanityLive />
-      </Suspense>
     </>
   )
 }

@@ -1,46 +1,7 @@
 'use server'
 
-import type {ClientPerspective} from '@sanity/client'
-
 import {DRAFT_SYNC_TAG_PREFIX, PUBLISHED_SYNC_TAG_PREFIX} from '#live/constants'
-import {sanitizePerspective} from '#live/sanitizePerspective'
-import {perspectiveCookieName} from '@sanity/preview-url-secret/constants'
-import {refresh, revalidateTag, updateTag} from 'next/cache'
-import {cookies, draftMode} from 'next/headers'
-
-/**
- * Used by `<SanityLive onStudioPerspective={actionStudioPerspective} />`
- */
-export async function actionStudioPerspective(perspective: ClientPerspective): Promise<void> {
-  const {isEnabled} = await draftMode()
-  if (!isEnabled) {
-    console.warn('Draft mode is not enabled, skipping actionStudioPerspective')
-    return
-  }
-
-  const jar = await cookies()
-  const sanitizedPerspective = sanitizePerspective(perspective, 'drafts')
-  if (
-    !sanitizedPerspective ||
-    (Array.isArray(sanitizedPerspective) && sanitizedPerspective.length === 0)
-  ) {
-    throw new Error(`Invalid perspective`, {cause: perspective})
-  }
-
-  // @TODO check if the cookie is already set, before setting it and then calling refresh()
-  jar.set(
-    perspectiveCookieName,
-    Array.isArray(sanitizedPerspective) ? sanitizedPerspective.join(',') : sanitizedPerspective,
-    {
-      httpOnly: true,
-      path: '/',
-      secure: true,
-      sameSite: 'none',
-    },
-  )
-
-  refresh()
-}
+import {revalidateTag, updateTag} from 'next/cache'
 
 /**
  * Used by `<SanityLive onLiveEvent={actionLiveEvent} />`

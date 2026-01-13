@@ -10,11 +10,7 @@ import {
 } from '@sanity/client'
 import {perspectiveCookieName} from '@sanity/preview-url-secret/constants'
 import {SanityLive as SanityLiveClientComponent} from 'next-sanity/live/client-components'
-import {
-  actionStudioPerspective,
-  actionLiveEvent,
-  actionLiveEventIncludingDrafts,
-} from 'next-sanity/live/server-actions'
+import {actionLiveEvent, actionLiveEventIncludingDrafts} from 'next-sanity/live/server-actions'
 import {cookies, draftMode} from 'next/headers'
 import {preconnect} from 'react-dom'
 
@@ -190,7 +186,6 @@ export function defineLive(config: DefineSanityLiveOptions): {
     const {
       onChange = actionLiveEvent,
       onChangeIncludingDrafts = actionLiveEventIncludingDrafts,
-      onStudioPerspective = actionStudioPerspective,
       refreshOnMount,
       refreshOnFocus,
       refreshOnReconnect,
@@ -223,7 +218,6 @@ export function defineLive(config: DefineSanityLiveOptions): {
         perspective={await resolveCookiePerspective()}
         onLiveEvent={onChange}
         onLiveEventIncludingDrafts={onChangeIncludingDrafts}
-        onPresentationPerspective={onStudioPerspective}
         requestTag={requestTag}
         refreshOnMount={refreshOnMount}
         refreshOnFocus={refreshOnFocus}
