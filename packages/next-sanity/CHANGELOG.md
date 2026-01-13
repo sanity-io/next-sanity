@@ -1,5 +1,11 @@
 # next-sanity
 
+## 13.0.0-cache-components.17
+
+### Patch Changes
+
+- [#3109](https://github.com/sanity-io/next-sanity/pull/3109) [`76dec00`](https://github.com/sanity-io/next-sanity/commit/76dec0063acb23be355fb7215a160ee3c7848401) Thanks [@stipsan](https://github.com/stipsan)! - Handle perspective cookie changes in <VisualEditing> instead of <SanityLive>
+
 ## 12.0.11
 
 ### Patch Changes
