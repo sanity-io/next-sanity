@@ -14,14 +14,10 @@ import dynamic from 'next/dynamic'
 import {useRouter} from 'next/navigation'
 import {useEffect, useMemo, useState, useEffectEvent} from 'react'
 
-const PresentationComlink = dynamic(() => import('./PresentationComlink'), {
-  ssr: false,
-})
-const RefreshOnMount = dynamic(() => import('./RefreshOnMount'), {ssr: false})
-const RefreshOnFocus = dynamic(() => import('./RefreshOnFocus'), {ssr: false})
-const RefreshOnReconnect = dynamic(() => import('./RefreshOnReconnect'), {
-  ssr: false,
-})
+const PresentationComlink = dynamic(() => import('./PresentationComlink'))
+const RefreshOnMount = dynamic(() => import('./RefreshOnMount'))
+const RefreshOnFocus = dynamic(() => import('./RefreshOnFocus'))
+const RefreshOnReconnect = dynamic(() => import('./RefreshOnReconnect'))
 
 interface SanityClientConfig extends Pick<
   InitializedClientConfig,
