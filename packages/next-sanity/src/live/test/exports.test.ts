@@ -33,12 +33,12 @@ test(`exports snapshot for the ${JSON.stringify(env)} condition`, {timeout: 15_0
       ./draft-mode:
         defineEnableDraftMode: function
       ./hooks:
-        useDraftModeEnvironment: function
-        useDraftModePerspective: function
         useIsLivePreview: function
         useIsPresentationTool: function
+        useLiveEnvironment: function
         useOptimistic: function
         usePresentationQuery: function
+        useVisualEditingEnvironment: function
       ./image:
         Image: function
         imageLoader: function

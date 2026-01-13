@@ -1,5 +1,3 @@
-import {useDraftModeEnvironment} from './useDraftMode'
-
 /**
  * Detects if the application is being previewed inside Sanity Presentation Tool.
  * Presentation Tool can open the application in an iframe, or in a new window.
@@ -11,8 +9,8 @@ import {useDraftModeEnvironment} from './useDraftMode'
  * @public
  */
 export function useIsPresentationTool(): boolean | null {
-  const environment = useDraftModeEnvironment()
-  return environment === 'checking'
-    ? null
-    : environment === 'presentation-iframe' || environment === 'presentation-window'
+  // oxlint-disable-next-line no-console
+  console.log('TODO: Implement useIsPresentationTool')
+
+  return null
 }

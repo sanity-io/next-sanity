@@ -2,7 +2,6 @@
 
 import '../globals.css'
 import {VisualEditing} from 'next-sanity/visual-editing'
-import {refresh, updateTag} from 'next/cache'
 import {draftMode} from 'next/headers'
 
 import {DebugStatus} from './DebugStatus'
@@ -28,33 +27,6 @@ export default async function RootLayout({children}: {children: React.ReactNode}
       <head />
       <body className="px-8">
         <div className="mt-8 mb-4 border p-4">
-          <p>Debug: {JSON.stringify({env: 'unknown'})}</p>
-          <form
-            action={async () => {
-              'use server'
-              updateTag('sanity:debug')
-            }}
-          >
-            <button type="submit">updateTag</button>
-          </form>
-          <form
-            action={async () => {
-              'use server'
-              refresh()
-            }}
-          >
-            <button type="submit">refresh</button>
-          </form>
-          <form
-            action={async () => {
-              'use server'
-              updateTag('sanity:debug')
-              refresh()
-            }}
-          >
-            <button type="submit">updateTag + refresh</button>
-          </form>
-
           <p>Draft mode: {isDraftMode ? 'On' : 'Off'}</p>
           {isDraftMode && <DebugStatus />}
           <form action={toggleDraftMode}>

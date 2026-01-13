@@ -1,5 +1,4 @@
 import {PUBLISHED_SYNC_TAG_PREFIX} from '#live/constants'
-import {setEnvironment} from '#live/context'
 import {isCorsOriginError} from '#live/isCorsOriginError'
 import {
   createClient,
@@ -9,7 +8,11 @@ import {
   type LiveEventGoAway,
   type SyncTag,
 } from '@sanity/client'
-import {isMaybePresentation, isMaybePreviewWindow} from '@sanity/presentation-comlink'
+import {
+  isMaybePresentation,
+
+  // isMaybePreviewWindow
+} from '@sanity/presentation-comlink'
 import dynamic from 'next/dynamic'
 import {useRouter} from 'next/navigation'
 import {useEffect, useMemo, useState, useEffectEvent} from 'react'
@@ -171,7 +174,7 @@ function SanityLive(props: SanityLiveProps): React.JSX.Element | null {
     if (!isMaybePresentation()) return
     const controller = new AbortController()
     // Wait for a while to see if Presentation Tool is detected, before assuming the env to be stand-alone live preview
-    const timeout = setTimeout(() => setEnvironment('live'), 3_000)
+    // const timeout = setTimeout(() => setEnvironment('live'), 3_000)
     window.addEventListener(
       'message',
       ({data}: MessageEvent<unknown>) => {
@@ -183,8 +186,8 @@ function SanityLive(props: SanityLiveProps): React.JSX.Element | null {
           'from' in data &&
           data.from === 'presentation'
         ) {
-          clearTimeout(timeout)
-          setEnvironment(isMaybePreviewWindow() ? 'presentation-window' : 'presentation-iframe')
+          // clearTimeout(timeout)
+          // setEnvironment(isMaybePreviewWindow() ? 'presentation-window' : 'presentation-iframe')
           setLoadComlink(true)
           controller.abort()
         }
@@ -192,7 +195,7 @@ function SanityLive(props: SanityLiveProps): React.JSX.Element | null {
       {signal: controller.signal},
     )
     return () => {
-      clearTimeout(timeout)
+      // clearTimeout(timeout)
       controller.abort()
     }
   }, [])

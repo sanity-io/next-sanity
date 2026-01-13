@@ -1,5 +1,3 @@
-import {useDraftModeEnvironment} from './useDraftMode'
-
 /**
  * Detects if the application is considered to be in a "Live Preview" mode.
  * Live Preview means that the application is either:
@@ -16,10 +14,8 @@ import {useDraftModeEnvironment} from './useDraftMode'
  * @public
  */
 export function useIsLivePreview(): boolean | null {
-  const environment = useDraftModeEnvironment()
-  return environment === 'checking'
-    ? null
-    : environment === 'presentation-iframe' ||
-        environment === 'presentation-window' ||
-        environment === 'live'
+  // oxlint-disable-next-line no-console
+  console.log('TODO: Implement useIsLivePreview')
+
+  return null
 }

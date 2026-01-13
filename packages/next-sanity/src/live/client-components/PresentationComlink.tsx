@@ -1,6 +1,6 @@
 import type {ClientPerspective} from '@sanity/client'
 
-import {setComlink, setComlinkClientConfig, setPerspective} from '#live/context'
+import {setComlink, setComlinkClientConfig, setComlinkPerspective} from '#live/context'
 import {sanitizePerspective} from '#live/sanitizePerspective'
 import {createNode, createNodeMachine} from '@sanity/comlink'
 import {
@@ -21,7 +21,7 @@ export default function PresentationComlink(props: {
   }, [dataset, projectId])
 
   const handlePerspectiveChange = useEffectEvent((perspective: ClientPerspective) => {
-    setPerspective(sanitizePerspective(perspective, 'drafts'))
+    setComlinkPerspective(sanitizePerspective(perspective, 'drafts'))
   })
 
   useEffect(() => {
