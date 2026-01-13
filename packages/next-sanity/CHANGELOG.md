@@ -1,5 +1,11 @@
 # next-sanity
 
+## 13.0.0-cache-components.18
+
+### Major Changes
+
+- [#3109](https://github.com/sanity-io/next-sanity/pull/3109) [`39f8537`](https://github.com/sanity-io/next-sanity/commit/39f853729f3cc308d0049acda7c9d57bfb67f1c5) Thanks [@stipsan](https://github.com/stipsan)! - Remove `useDraftModeEnvironment` and `useDraftModePerspective` hooks
+
 ## 12.0.12
 
 ### Patch Changes
