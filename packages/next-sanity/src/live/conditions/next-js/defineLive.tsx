@@ -129,7 +129,7 @@ export function defineLive(config: LiveOptions): {
       </Suspense>
     )
   }
-  Live.displayName = 'DefinedSanityLive'
+  Live.displayName = 'SanityLiveServerComponent'
 
   return {
     sanityFetch: fetch,

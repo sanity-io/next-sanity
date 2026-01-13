@@ -234,7 +234,7 @@ export function defineLive(config: DefineSanityLiveOptions): {
       />
     )
   }
-  SanityLive.displayName = 'DefinedSanityLive'
+  SanityLive.displayName = 'SanityLiveServerComponent'
 
   return {
     sanityFetch,
