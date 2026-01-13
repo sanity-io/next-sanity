@@ -1,5 +1,11 @@
 # next-sanity
 
+## 12.0.11
+
+### Patch Changes
+
+- [#3176](https://github.com/sanity-io/next-sanity/pull/3176) [`cac530b`](https://github.com/sanity-io/next-sanity/commit/cac530b145c45b9f00bc26b368e75812af5f3953) Thanks [@renovate](https://github.com/apps/renovate)! - fix(deps): update dependency @sanity/visual-editing to ^5.1.0
+
 ## 12.0.10
 
 ### Patch Changes
