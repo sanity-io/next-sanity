@@ -1,5 +1,11 @@
 # next-sanity
 
+## 13.0.0-cache-components.19
+
+### Patch Changes
+
+- [#3109](https://github.com/sanity-io/next-sanity/pull/3109) [`8427d82`](https://github.com/sanity-io/next-sanity/commit/8427d82ac78206c7d4cef14604311256ca4f9159) Thanks [@stipsan](https://github.com/stipsan)! - Implement onLiveEventIncludingDrafts
+
 ## 13.0.0-cache-components.18
 
 ### Major Changes
