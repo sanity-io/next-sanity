@@ -1,22 +1,14 @@
-import {PUBLISHED_SYNC_TAG_PREFIX} from '#live/constants'
 import {isCorsOriginError} from '#live/isCorsOriginError'
-import {
-  createClient,
-  type ClientPerspective,
-  type InitializedClientConfig,
-  type LiveEvent,
-  type LiveEventGoAway,
-  type SyncTag,
-} from '@sanity/client'
+import {createClient, type InitializedClientConfig, type LiveEventGoAway} from '@sanity/client'
 import {
   isMaybePresentation,
-
   // isMaybePreviewWindow
 } from '@sanity/presentation-comlink'
 import dynamic from 'next/dynamic'
-import {useRouter} from 'next/navigation'
-import {useEffect, useMemo, useState, useEffectEvent} from 'react'
+import {useEffect, useMemo, useState} from 'react'
 
+const LiveEvents = dynamic(() => import('./LiveEvents'))
+const LiveEventsIncludingDrafts = dynamic(() => import('./LiveEventsIncludingDrafts'))
 const PresentationComlink = dynamic(() => import('./PresentationComlink'))
 const RefreshOnMount = dynamic(() => import('./RefreshOnMount'))
 const RefreshOnFocus = dynamic(() => import('./RefreshOnFocus'))
@@ -35,10 +27,7 @@ interface SanityClientConfig extends Pick<
 
 export interface SanityLiveProps {
   config: SanityClientConfig
-  /**
-   * Setting this to 'published' opens one live event connection, setting it to any other value opens both the live event connections if needed
-   */
-  perspective: Exclude<ClientPerspective, 'raw'>
+  includeDrafts?: boolean
 
   onLiveEvent: (tags: string[]) => Promise<void | 'refresh'>
   onLiveEventIncludingDrafts: (tags: string[]) => Promise<void | 'refresh'>
@@ -88,16 +77,11 @@ function handleOnGoAway(event: LiveEventGoAway, intervalOnGoAway: number | false
 function SanityLive(props: SanityLiveProps): React.JSX.Element | null {
   const {
     config,
+    includeDrafts,
     onLiveEvent,
-    // onLiveEventIncludingDrafts,
-    perspective,
-
+    onLiveEventIncludingDrafts,
     refreshOnMount = false,
-    refreshOnFocus = perspective !== 'published'
-      ? false
-      : typeof window === 'undefined'
-        ? true
-        : window.self === window.top,
+    refreshOnFocus = false,
     refreshOnReconnect = true,
     intervalOnGoAway = 30_000,
     requestTag,
@@ -122,54 +106,8 @@ function SanityLive(props: SanityLiveProps): React.JSX.Element | null {
       }),
     [apiHost, apiVersion, dataset, projectId, requestTagPrefix, token, useProjectHostname],
   )
-  const [longPollingInterval, setLongPollingInterval] = useState<number | false>(false)
-
-  /**
-   * 1. Handle Live Events and call revalidateTag or router.refresh when needed
-   */
-  const router = useRouter()
-  const handleLiveEvent = useEffectEvent((event: LiveEvent) => {
-    if (process.env.NODE_ENV !== 'production' && event.type === 'welcome') {
-      // oxlint-disable-next-line no-console
-      console.info(
-        'Sanity is live with',
-        token
-          ? 'automatic revalidation for draft content changes as well as published content'
-          : perspective === 'published'
-            ? 'automatic revalidation for only published content. Provide a `browserToken` to `defineLive` to support draft content outside of Presentation Tool.'
-            : 'automatic revalidation of published content',
-      )
-      // Disable long polling when welcome event is received, this is a no-op if long polling is already disabled
-      setLongPollingInterval(false)
-    } else if (event.type === 'message') {
-      void onLiveEvent(
-        event.tags.map((tag: SyncTag) => `${PUBLISHED_SYNC_TAG_PREFIX}${tag}` as const),
-      ).then((result) => {
-        if (result === 'refresh') router.refresh()
-      })
-    } else if (event.type === 'restart' || event.type === 'reconnect') {
-      router.refresh()
-    } else if (event.type === 'goaway') {
-      onGoAway(event, intervalOnGoAway)
-      setLongPollingInterval(intervalOnGoAway)
-    }
-  })
-  useEffect(() => {
-    const subscription = client.live.events({includeDrafts: !!token, tag: requestTag}).subscribe({
-      next: handleLiveEvent,
-      error: (err: unknown) => {
-        // console.error('What?', err)
-        onError(err)
-      },
-    })
-    return () => subscription.unsubscribe()
-  }, [client.live, onError, requestTag, token])
 
   const [loadComlink, setLoadComlink] = useState(false)
-
-  /**
-   * 4. If Presentation Tool is detected, load up the comlink and integrate with it
-   */
   useEffect(() => {
     if (!isMaybePresentation()) return
     const controller = new AbortController()
@@ -200,17 +138,28 @@ function SanityLive(props: SanityLiveProps): React.JSX.Element | null {
     }
   }, [])
 
-  /**
-   * 6. Handle switching to long polling when needed
-   */
-  useEffect(() => {
-    if (!longPollingInterval) return
-    const interval = setInterval(() => router.refresh(), longPollingInterval)
-    return () => clearInterval(interval)
-  }, [longPollingInterval, router])
-
   return (
     <>
+      {onLiveEvent && (
+        <LiveEvents
+          client={client}
+          onEvent={onLiveEvent}
+          requestTag={requestTag}
+          onError={onError}
+          onGoAway={onGoAway}
+          intervalOnGoAway={intervalOnGoAway}
+        />
+      )}
+      {includeDrafts && onLiveEventIncludingDrafts && (
+        <LiveEventsIncludingDrafts
+          client={client}
+          onEvent={onLiveEventIncludingDrafts}
+          requestTag={requestTag}
+          onError={onError}
+          onGoAway={onGoAway}
+          intervalOnGoAway={intervalOnGoAway}
+        />
+      )}
       {loadComlink && <PresentationComlink projectId={projectId!} dataset={dataset!} />}
       {refreshOnMount && <RefreshOnMount />}
       {refreshOnFocus && <RefreshOnFocus />}

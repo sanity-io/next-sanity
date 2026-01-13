@@ -4,7 +4,6 @@ import {DRAFT_SYNC_TAG_PREFIX, PUBLISHED_SYNC_TAG_PREFIX, revalidate} from '#liv
 import {SanityLive as SanityLiveClientComponent} from 'next-sanity/live/client-components'
 import {actionLiveEvent, actionLiveEventIncludingDrafts} from 'next-sanity/live/server-actions'
 import {cacheLife, cacheTag} from 'next/cache'
-import {Suspense} from 'react'
 import {preconnect} from 'react-dom'
 
 import type {DefinedSanityFetchType, DefinedSanityLiveProps} from '../react-server/defineLive'
@@ -76,9 +75,9 @@ export function defineLive(config: LiveOptions): {
 
   const Live: React.ComponentType<DefinedLiveProps> = function Live(props) {
     const {
-      perspective = 'published',
-      onChange = actionLiveEvent,
-      onChangeIncludingDrafts = actionLiveEventIncludingDrafts,
+      includeDrafts = false,
+      onLiveEvent = actionLiveEvent,
+      onLiveEventIncludingDrafts = actionLiveEventIncludingDrafts,
       refreshOnMount = false,
       refreshOnFocus = false,
       refreshOnReconnect = false,
@@ -88,7 +87,7 @@ export function defineLive(config: LiveOptions): {
       intervalOnGoAway,
     } = props
 
-    const includeDrafts = typeof browserToken === 'string' && perspective !== 'published'
+    const shouldIncludeDrafts = typeof browserToken === 'string' && includeDrafts
 
     const {projectId, dataset, apiHost, apiVersion, useProjectHostname, requestTagPrefix} =
       client.config()
@@ -98,29 +97,27 @@ export function defineLive(config: LiveOptions): {
     preconnect(origin)
 
     return (
-      <Suspense>
-        <SanityLiveClientComponent
-          config={{
-            projectId,
-            dataset,
-            apiHost,
-            apiVersion,
-            useProjectHostname,
-            requestTagPrefix,
-            token: includeDrafts ? browserToken : undefined,
-          }}
-          perspective={perspective}
-          onLiveEvent={onChange}
-          onLiveEventIncludingDrafts={onChangeIncludingDrafts}
-          requestTag={requestTag}
-          refreshOnMount={refreshOnMount}
-          refreshOnFocus={refreshOnFocus}
-          refreshOnReconnect={refreshOnReconnect}
-          onError={onError}
-          onGoAway={onGoAway}
-          intervalOnGoAway={intervalOnGoAway}
-        />
-      </Suspense>
+      <SanityLiveClientComponent
+        config={{
+          projectId,
+          dataset,
+          apiHost,
+          apiVersion,
+          useProjectHostname,
+          requestTagPrefix,
+          token: shouldIncludeDrafts ? browserToken : undefined,
+        }}
+        includeDrafts={shouldIncludeDrafts}
+        onLiveEvent={onLiveEvent}
+        onLiveEventIncludingDrafts={onLiveEventIncludingDrafts}
+        requestTag={requestTag}
+        refreshOnMount={refreshOnMount}
+        refreshOnFocus={refreshOnFocus}
+        refreshOnReconnect={refreshOnReconnect}
+        onError={onError}
+        onGoAway={onGoAway}
+        intervalOnGoAway={intervalOnGoAway}
+      />
     )
   }
   Live.displayName = 'SanityLiveServerComponent'

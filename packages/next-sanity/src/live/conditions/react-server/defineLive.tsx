@@ -184,8 +184,9 @@ export function defineLive(config: DefineSanityLiveOptions): {
 
   const SanityLive: React.ComponentType<DefinedSanityLiveProps> = async function SanityLive(props) {
     const {
-      onChange = actionLiveEvent,
-      onChangeIncludingDrafts = actionLiveEventIncludingDrafts,
+      includeDrafts = (await draftMode()).isEnabled,
+      onLiveEvent: onChange = actionLiveEvent,
+      onLiveEventIncludingDrafts: onChangeIncludingDrafts = actionLiveEventIncludingDrafts,
       refreshOnMount,
       refreshOnFocus,
       refreshOnReconnect,
@@ -197,8 +198,7 @@ export function defineLive(config: DefineSanityLiveOptions): {
     } = props
     const {projectId, dataset, apiHost, apiVersion, useProjectHostname, requestTagPrefix} =
       client.config()
-    const perspective = _perspective ?? (await resolveCookiePerspective())
-    const includeDrafts = typeof browserToken === 'string' && perspective !== 'published'
+    const shouldIncludeDrafts = typeof browserToken === 'string' && includeDrafts
 
     // Preconnect to the Live Event API origin early, as the Sanity API is almost always on a different origin than the app
     const {origin} = new URL(client.getUrl('', false))
@@ -213,9 +213,9 @@ export function defineLive(config: DefineSanityLiveOptions): {
           apiVersion,
           useProjectHostname,
           requestTagPrefix,
-          token: includeDrafts ? browserToken : undefined,
+          token: shouldIncludeDrafts ? browserToken : undefined,
         }}
-        perspective={await resolveCookiePerspective()}
+        includeDrafts={shouldIncludeDrafts}
         onLiveEvent={onChange}
         onLiveEventIncludingDrafts={onChangeIncludingDrafts}
         requestTag={requestTag}

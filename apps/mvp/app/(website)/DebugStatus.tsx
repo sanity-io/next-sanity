@@ -10,7 +10,11 @@ import {
 } from 'next-sanity/hooks'
 
 const debugQuery = defineQuery(
-  `*[_type == "post"] | order(publishedAt desc, _updatedAt desc) [0] { _id, _type, title, "slug": slug.current, "status": select( _originalId in path("drafts.**") => "draft", default => "published" ) }`,
+  `{
+  "type tag": count(*[ _type == $type ]),
+  "id tag": count(*[_type == $type && _id == $id]),
+  "slug tag": count(*[_type == $type && slug.current == $slug]),
+}`,
 )
 
 export function DebugStatus() {

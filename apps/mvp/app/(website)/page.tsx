@@ -38,8 +38,8 @@ async function resolvePerspective(): Promise<LivePerspective> {
 }
 
 async function SanityLive() {
-  const perspective = await resolvePerspective()
-  return <Live perspective={perspective} />
+  const {isEnabled: isDraftMode} = await draftMode()
+  return <Live includeDrafts={isDraftMode} />
 }
 
 async function CachedIndexPage() {
@@ -120,9 +120,7 @@ export default async function IndexPage() {
           Open Studio
         </Link>
       </div>
-      <Suspense fallback={<Live perspective="published" />}>
-        <SanityLive />
-      </Suspense>
+      <SanityLive />
     </>
   )
 }

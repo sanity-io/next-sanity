@@ -48,10 +48,9 @@ export type DefinedFetchType = <const QueryString extends string>(options: {
 
 export interface DefinedLiveProps {
   /**
-   * TODO: should match the `perspective` you give `defineLive().fetch()`, setting it to a value other than `"published"`
-   * and with `browserToken` set will cause it to subscribe to draft content changes as well as published content.
+   * TODO: docs, settings this to `true` enables live events for draft content and requires `browserToken` to be set.
    */
-  perspective?: PerspectiveType
+  includeDrafts?: boolean
 
   /**
    * Automatic refresh of RSC when the component <SanityLive /> is mounted.
@@ -101,14 +100,14 @@ export interface DefinedLiveProps {
   /**
    * TODO: docs, this handles events for published content only, and can be used to revalidate content for all your users when in presentation tool
    */
-  onChange?: (tags: string[]) => Promise<void | 'refresh'>
+  onLiveEvent?: (tags: string[]) => Promise<void | 'refresh'>
 
   /**
    * TODO: docs, this handles events for all changes, published, drafts and even version documents in content releases.
    * It's only used when `browserToken` is provided, and the `perspective` prop is other than `"published"`.
    * Wether you should just `refresh()` or use `updateTag` to expire tags depends on how you fetch draft content and wether it's cached or not.
    */
-  onChangeIncludingDrafts?: (tags: string[]) => Promise<void | 'refresh'>
+  onLiveEventIncludingDrafts?: (tags: string[]) => Promise<void | 'refresh'>
 }
 
 export interface LiveOptions {
