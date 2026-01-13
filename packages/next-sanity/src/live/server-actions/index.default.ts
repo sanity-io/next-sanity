@@ -2,12 +2,11 @@
 
 import type {ClientPerspective} from '@sanity/client'
 
+import {DRAFT_SYNC_TAG_PREFIX, PUBLISHED_SYNC_TAG_PREFIX} from '#live/constants'
+import {sanitizePerspective} from '#live/sanitizePerspective'
 import {perspectiveCookieName} from '@sanity/preview-url-secret/constants'
 import {refresh, revalidateTag, updateTag} from 'next/cache'
 import {cookies, draftMode} from 'next/headers'
-
-import {DRAFT_SYNC_TAG_PREFIX, PUBLISHED_SYNC_TAG_PREFIX} from '../shared/constants'
-import {sanitizePerspective} from '../shared/sanitizePerspective'
 
 /**
  * Used by `<SanityLive onStudioPerspective={actionStudioPerspective} />`

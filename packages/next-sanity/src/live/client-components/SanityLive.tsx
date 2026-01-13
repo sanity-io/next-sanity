@@ -30,9 +30,6 @@ interface SanityClientConfig extends Pick<
   | 'requestTagPrefix'
 > {}
 
-/**
- * @alpha CAUTION: this is an internal component and does not follow semver. Using it directly is at your own risk.
- */
 export interface SanityLiveProps {
   config: SanityClientConfig
   /**

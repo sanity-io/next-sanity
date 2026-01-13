@@ -29,6 +29,11 @@
   "sideEffects": false,
   "types": "./dist/index.d.ts",
   "imports": {
+    "#env": {
+      "next-js": "./src/env/next-js.ts",
+      "react-server": "./src/env/react-server.ts",
+      "default": "./src/env/default.ts"
+    },
     "#live/*": "./src/live/shared/*.ts"
   },
   "exports": {
@@ -103,10 +108,13 @@
     "@sanity/browserslist-config": "^1.0.5",
     "@sanity/tsconfig": "catalog:",
     "@sanity/webhook": "4.0.4",
+    "@types/js-yaml": "^4.0.9",
     "@types/node": "catalog:",
     "@types/react": "catalog:",
     "@types/react-dom": "catalog:",
+    "@vitejs/plugin-react": "^5.1.2",
     "@vitest/coverage-v8": "^4.0.17",
+    "js-yaml": "^4.1.1",
     "next": "catalog:",
     "publint": "^0.3.16",
     "react": "catalog:",
@@ -114,7 +122,8 @@
     "styled-components": "catalog:",
     "tsdown": "0.19.0",
     "typescript": "catalog:",
-    "vitest": "^4.0.17"
+    "vitest": "^4.0.17",
+    "vitest-package-exports": "^1.1.2"
   },
   "peerDependencies": {
     "@sanity/client": "^7.14.0",
