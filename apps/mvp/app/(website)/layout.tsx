@@ -1,11 +1,11 @@
 'use cache'
 
 import '../globals.css'
+import {VisualEditing} from 'next-sanity/visual-editing'
 import {
   // cookies,
   draftMode,
 } from 'next/headers'
-import {VisualEditing} from 'next-sanity/visual-editing'
 
 import {DebugStatus} from './DebugStatus'
 import {FormStatusLabel} from './FormStatus'
