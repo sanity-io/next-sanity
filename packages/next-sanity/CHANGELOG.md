@@ -1,5 +1,11 @@
 # next-sanity
 
+## 13.0.0-cache-components.20
+
+### Patch Changes
+
+- [#3109](https://github.com/sanity-io/next-sanity/pull/3109) [`e2fba78`](https://github.com/sanity-io/next-sanity/commit/e2fba781ec807e21a3c8b16fd8f83027e9a784bd) Thanks [@stipsan](https://github.com/stipsan)! - Rewrite of the experimental API
+
 ## 12.0.14
 
 ### Patch Changes
