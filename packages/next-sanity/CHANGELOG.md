@@ -1,5 +1,15 @@
 # next-sanity
 
+## 12.0.15
+
+### Patch Changes
+
+- [#3210](https://github.com/sanity-io/next-sanity/pull/3210) [`fda7c94`](https://github.com/sanity-io/next-sanity/commit/fda7c94e8020ac1e7b9b2fcea67c076223171f62) Thanks [@renovate](https://github.com/apps/renovate)! - fix(deps): update dependency @sanity/client to ^7.14.1
+
+- [#3217](https://github.com/sanity-io/next-sanity/pull/3217) [`99751f3`](https://github.com/sanity-io/next-sanity/commit/99751f377d3cbc0cf0755a81d1d27fd07946cb66) Thanks [@renovate](https://github.com/apps/renovate)! - fix(deps): update sanity monorepo to v5.7.0
+
+- [`bcf4dd1`](https://github.com/sanity-io/next-sanity/commit/bcf4dd1803f0a945ccae1edf6003cd551eec827c) Thanks [@stipsan](https://github.com/stipsan)! - Stop inlining `@sanity/webhook`
+
 ## 12.0.14
 
 ### Patch Changes
