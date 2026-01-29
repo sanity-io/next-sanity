@@ -1,5 +1,11 @@
 # next-sanity
 
+## 12.0.16
+
+### Patch Changes
+
+- [`8ae31a4`](https://github.com/sanity-io/next-sanity/commit/8ae31a4e83d69025b39e267d6eea3afb243e7488) Thanks [@stipsan](https://github.com/stipsan)! - Remove `@sanity/browserslist-config` dependency
+
 ## 12.0.15
 
 ### Patch Changes
