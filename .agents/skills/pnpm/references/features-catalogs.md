@@ -54,14 +54,14 @@ catalogs:
   react17:
     react: ^17.0.2
     react-dom: ^17.0.2
-  
+
   react18:
     react: ^18.2.0
     react-dom: ^18.2.0
-  
+
   testing:
     vitest: ^1.0.0
-    "@testing-library/react": ^14.0.0
+    '@testing-library/react': ^14.0.0
 ```
 
 Reference named catalogs:
@@ -87,12 +87,12 @@ Reference named catalogs:
 
 ## Catalog vs Overrides
 
-| Feature | Catalogs | Overrides |
-|---------|----------|-----------|
-| Purpose | Define versions for direct dependencies | Force versions for any dependency |
-| Scope | Direct dependencies only | All dependencies (including transitive) |
-| Usage | `"pkg": "catalog:"` | Applied automatically |
-| Opt-in | Explicit per package.json | Global to workspace |
+| Feature | Catalogs                                | Overrides                               |
+| ------- | --------------------------------------- | --------------------------------------- |
+| Purpose | Define versions for direct dependencies | Force versions for any dependency       |
+| Scope   | Direct dependencies only                | All dependencies (including transitive) |
+| Usage   | `"pkg": "catalog:"`                     | Applied automatically                   |
+| Opt-in  | Explicit per package.json               | Global to workspace                     |
 
 ## Publishing with Catalogs
 
@@ -153,7 +153,7 @@ catalog:
 # "dependencies": { "@myorg/utils": "workspace:^" }
 ```
 
-<!-- 
+<!--
 Source references:
 - https://pnpm.io/catalogs
 -->

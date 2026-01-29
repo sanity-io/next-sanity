@@ -42,7 +42,7 @@ tsdown -w --on-success "node dist/index.mjs"
 ## Config File
 
 ```ts
-import { defineConfig } from 'tsdown'
+import {defineConfig} from 'tsdown'
 
 export default defineConfig({
   entry: ['src/index.ts'],
@@ -54,7 +54,7 @@ export default defineConfig({
 
 > **Tip:** Watch mode eliminates manual rebuilds during development.
 
-<!-- 
+<!--
 Source references:
 - https://tsdown.dev/options/watch-mode
 -->

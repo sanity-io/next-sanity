@@ -16,7 +16,7 @@ The recommended location for pnpm-specific configurations. Place at project root
 packages:
   - 'packages/*'
   - 'apps/*'
-  - '!**/test/**'  # Exclude pattern
+  - '!**/test/**' # Exclude pattern
 
 # Catalog for shared dependency versions
 catalog:
@@ -67,7 +67,7 @@ shamefully-hoist=false
 # Store location
 store-dir=~/.pnpm-store
 
-# Virtual store location  
+# Virtual store location
 virtual-store-dir=node_modules/.pnpm
 
 # Lockfile settings
@@ -130,7 +130,7 @@ package-extensions[foo@1].peerDependencies.bar=*
 Settings are read in order (later overrides earlier):
 
 1. `/etc/npmrc` - Global config
-2. `~/.npmrc` - User config  
+2. `~/.npmrc` - User config
 3. `<project>/.npmrc` - Project config
 4. Environment variables: `npm_config_<key>=<value>`
 5. `pnpm-workspace.yaml` settings field
@@ -180,7 +180,7 @@ pnpm reads specific fields from `package.json`:
 3. **Catalogs**: Centralized version management
 4. **Content-addressable store**: Shared across projects
 
-<!-- 
+<!--
 Source references:
 - https://pnpm.io/pnpm-workspace_yaml
 - https://pnpm.io/npmrc

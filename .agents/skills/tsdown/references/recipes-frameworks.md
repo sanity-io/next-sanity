@@ -20,7 +20,7 @@ npx create-tsdown@latest -t react-compiler  # With React Compiler
 
 ```ts
 // tsdown.config.ts
-import { defineConfig } from 'tsdown'
+import {defineConfig} from 'tsdown'
 
 export default defineConfig({
   entry: ['./src/index.ts'],
@@ -49,7 +49,7 @@ pnpm add -D @rollup/plugin-babel babel-plugin-react-compiler
 
 ```ts
 import pluginBabel from '@rollup/plugin-babel'
-import { defineConfig } from 'tsdown'
+import {defineConfig} from 'tsdown'
 
 export default defineConfig({
   plugins: [
@@ -80,14 +80,14 @@ npx create-tsdown@latest -t vue
 
 ```ts
 // tsdown.config.ts
-import { defineConfig } from 'tsdown'
+import {defineConfig} from 'tsdown'
 import Vue from 'unplugin-vue/rolldown'
 
 export default defineConfig({
   entry: ['./src/index.ts'],
   platform: 'neutral',
-  plugins: [Vue({ isProduction: true })],
-  dts: { vue: true },
+  plugins: [Vue({isProduction: true})],
+  dts: {vue: true},
 })
 ```
 
@@ -102,7 +102,7 @@ pnpm add -D unplugin-vue vue-tsc
 
 > **Tip:** Use `platform: 'neutral'` for libraries that may run in both browser and Node.js.
 
-<!-- 
+<!--
 Source references:
 - https://tsdown.dev/recipes/react-support
 - https://tsdown.dev/recipes/vue-support

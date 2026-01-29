@@ -114,7 +114,7 @@ Output directory is cleaned by default:
 tsdown --no-clean  # Keep existing files
 ```
 
-<!-- 
+<!--
 Source references:
 - https://tsdown.dev/options/output-format
 - https://tsdown.dev/options/output-directory

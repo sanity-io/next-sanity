@@ -18,7 +18,7 @@ tsdown searches for a configuration file by looking in the current directory and
 
 ```ts
 // tsdown.config.ts
-import { defineConfig } from 'tsdown'
+import {defineConfig} from 'tsdown'
 
 export default defineConfig({
   entry: 'src/index.ts',
@@ -32,7 +32,7 @@ export default defineConfig({
 Build multiple outputs with different settings:
 
 ```ts
-import { defineConfig } from 'tsdown'
+import {defineConfig} from 'tsdown'
 
 export default defineConfig([
   {
@@ -80,7 +80,7 @@ tsdown --from-vite        # Load vite.config.*
 tsdown --from-vite vitest # Load vitest.config.*
 ```
 
-<!-- 
+<!--
 Source references:
 - https://tsdown.dev/options/config-file
 -->

@@ -12,9 +12,9 @@ Analytics, logging, and error tracking don't block user interaction. Load them a
 **Incorrect (blocks initial bundle):**
 
 ```tsx
-import { Analytics } from '@vercel/analytics/react'
+import {Analytics} from '@vercel/analytics/react'
 
-export default function RootLayout({ children }) {
+export default function RootLayout({children}) {
   return (
     <html>
       <body>
@@ -31,12 +31,11 @@ export default function RootLayout({ children }) {
 ```tsx
 import dynamic from 'next/dynamic'
 
-const Analytics = dynamic(
-  () => import('@vercel/analytics/react').then(m => m.Analytics),
-  { ssr: false }
-)
+const Analytics = dynamic(() => import('@vercel/analytics/react').then((m) => m.Analytics), {
+  ssr: false,
+})
 
-export default function RootLayout({ children }) {
+export default function RootLayout({children}) {
   return (
     <html>
       <body>

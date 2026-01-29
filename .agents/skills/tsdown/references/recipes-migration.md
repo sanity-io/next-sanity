@@ -31,12 +31,12 @@ npx tsdown-migrate packages/foo packages/bar
 
 ### Changed Defaults
 
-| Option | tsup | tsdown |
-|--------|------|--------|
-| `format` | - | `esm` |
-| `clean` | `false` | `true` |
-| `dts` | `false` | Auto-enabled if `types` field exists |
-| `target` | - | Reads from `engines.node` |
+| Option   | tsup    | tsdown                               |
+| -------- | ------- | ------------------------------------ |
+| `format` | -       | `esm`                                |
+| `clean`  | `false` | `true`                               |
+| `dts`    | `false` | Auto-enabled if `types` field exists |
+| `target` | -       | Reads from `engines.node`            |
 
 ### New Features
 
@@ -59,11 +59,13 @@ tsdown does not support stub mode because:
 ### Alternatives to Stub Mode
 
 1. **Watch Mode** - Auto-rebuild on changes:
+
    ```bash
    tsdown --watch
    ```
 
 2. **Dev Exports** - Point to source during development:
+
    ```ts
    export default defineConfig({
      exports: {
@@ -77,7 +79,7 @@ tsdown does not support stub mode because:
    - Without plugins: [tsx](https://github.com/privatenumber/tsx), [jiti](https://github.com/unjs/jiti)
    - Node.js v22.18+: Native TypeScript support
 
-<!-- 
+<!--
 Source references:
 - https://tsdown.dev/guide/migrate-from-tsup
 - https://tsdown.dev/guide/faq

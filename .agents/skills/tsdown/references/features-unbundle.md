@@ -10,7 +10,7 @@ Outputs files that mirror your source structure instead of bundling into single 
 ## Enable Unbundle Mode
 
 ```ts
-import { defineConfig } from 'tsdown'
+import {defineConfig} from 'tsdown'
 
 export default defineConfig({
   entry: ['src/index.ts'],
@@ -23,6 +23,7 @@ export default defineConfig({
 Every source file referenced from entry points is compiled and output separately:
 
 **Source:**
+
 ```
 src/
   index.ts
@@ -31,7 +32,7 @@ src/
 
 ```ts
 // src/index.ts
-import { foo } from './mod'
+import {foo} from './mod'
 foo()
 ```
 
@@ -43,6 +44,7 @@ export function foo() {
 ```
 
 **Output with `unbundle: true`:**
+
 ```
 dist/
   index.js
@@ -57,7 +59,7 @@ Each output file corresponds directly to its source file.
 - **Monorepo/library scenarios** - Consumers can import individual modules
 - **Transpile-only builds** - Focus on transformation without combining files
 
-<!-- 
+<!--
 Source references:
 - https://tsdown.dev/options/unbundle
 -->

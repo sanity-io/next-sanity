@@ -12,12 +12,8 @@ Use explicit ternary operators (`? :`) instead of `&&` for conditional rendering
 **Incorrect (renders "0" when count is 0):**
 
 ```tsx
-function Badge({ count }: { count: number }) {
-  return (
-    <div>
-      {count && <span className="badge">{count}</span>}
-    </div>
-  )
+function Badge({count}: {count: number}) {
+  return <div>{count && <span className="badge">{count}</span>}</div>
 }
 
 // When count = 0, renders: <div>0</div>
@@ -27,12 +23,8 @@ function Badge({ count }: { count: number }) {
 **Correct (renders nothing when count is 0):**
 
 ```tsx
-function Badge({ count }: { count: number }) {
-  return (
-    <div>
-      {count > 0 ? <span className="badge">{count}</span> : null}
-    </div>
-  )
+function Badge({count}: {count: number}) {
+  return <div>{count > 0 ? <span className="badge">{count}</span> : null}</div>
 }
 
 // When count = 0, renders: <div></div>

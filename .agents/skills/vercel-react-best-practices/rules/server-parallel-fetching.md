@@ -64,7 +64,7 @@ async function Sidebar() {
   return <nav>{items.map(renderItem)}</nav>
 }
 
-function Layout({ children }: { children: ReactNode }) {
+function Layout({children}: {children: ReactNode}) {
   return (
     <div>
       <Header />

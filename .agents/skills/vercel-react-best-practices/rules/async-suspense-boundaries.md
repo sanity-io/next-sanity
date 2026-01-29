@@ -14,7 +14,7 @@ Instead of awaiting data in async components before returning JSX, use Suspense 
 ```tsx
 async function Page() {
   const data = await fetchData() // Blocks entire page
-  
+
   return (
     <div>
       <div>Sidebar</div>
@@ -62,7 +62,7 @@ Sidebar, Header, and Footer render immediately. Only DataDisplay waits for data.
 function Page() {
   // Start fetch immediately, but don't await
   const dataPromise = fetchData()
-  
+
   return (
     <div>
       <div>Sidebar</div>
@@ -76,12 +76,12 @@ function Page() {
   )
 }
 
-function DataDisplay({ dataPromise }: { dataPromise: Promise<Data> }) {
+function DataDisplay({dataPromise}: {dataPromise: Promise<Data>}) {
   const data = use(dataPromise) // Unwraps the promise
   return <div>{data.content}</div>
 }
 
-function DataSummary({ dataPromise }: { dataPromise: Promise<Data> }) {
+function DataSummary({dataPromise}: {dataPromise: Promise<Data>}) {
   const data = use(dataPromise) // Reuses the same promise
   return <div>{data.summary}</div>
 }
