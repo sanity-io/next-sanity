@@ -34,7 +34,10 @@ export default defineConfig({
       },
       {
         extends: true,
-        test: {name: 'integration-tests', exclude: [...configDefaults.exclude, 'src/__tests__/exports.spec.ts']},
+        test: {
+          name: 'integration-tests',
+          exclude: [...configDefaults.exclude, 'src/__tests__/exports.spec.ts'],
+        },
       },
     ],
   },
