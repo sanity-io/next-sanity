@@ -1,5 +1,11 @@
 # next-sanity
 
+## 13.0.0-cache-components.21
+
+### Patch Changes
+
+- [#3109](https://github.com/sanity-io/next-sanity/pull/3109) [`b25a866`](https://github.com/sanity-io/next-sanity/commit/b25a866a0dd7f4fb966992c2ed5cf5452d71b0b3) Thanks [@stipsan](https://github.com/stipsan)! - The `defineLive({fetchOptions: {revalidate}})` property has been removed, `defineLive({stega}})` is deprecated
+
 ## 12.0.16
 
 ### Patch Changes
