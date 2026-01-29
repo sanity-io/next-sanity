@@ -1,4 +1,4 @@
-import type {DefinedFetchType, DefinedLiveProps, LiveOptions} from '#live/types'
+import type {DefinedFetchType, DefinedLiveProps, DefineLiveOptions} from '#live/types'
 
 import {DRAFT_SYNC_TAG_PREFIX, PUBLISHED_SYNC_TAG_PREFIX, revalidate} from '#live/constants'
 import {SanityLive as SanityLiveClientComponent} from 'next-sanity/live/client-components'
@@ -8,7 +8,7 @@ import {preconnect} from 'react-dom'
 
 import type {DefinedSanityFetchType} from '../react-server/defineLive'
 
-export function defineLive(config: LiveOptions): {
+export function defineLive(config: DefineLiveOptions): {
   sanityFetch: DefinedSanityFetchType
   SanityLive: React.ComponentType<DefinedLiveProps>
 } {

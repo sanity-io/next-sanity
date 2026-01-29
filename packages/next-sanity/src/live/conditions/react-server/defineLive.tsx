@@ -1,4 +1,4 @@
-import type {DefinedLiveProps} from '#live/types'
+import type {DefinedLiveProps, DefineLiveOptions} from '#live/types'
 
 import {sanitizePerspective} from '#live/sanitizePerspective'
 import {
@@ -6,7 +6,6 @@ import {
   type ClientReturn,
   type ContentSourceMap,
   type QueryParams,
-  type SanityClient,
 } from '@sanity/client'
 import {perspectiveCookieName} from '@sanity/preview-url-secret/constants'
 import {SanityLive as SanityLiveClientComponent} from 'next-sanity/live/client-components'
@@ -41,58 +40,16 @@ export type DefinedSanityFetchType = <const QueryString extends string>(options:
   tags: string[]
 }>
 
-/**
- * @public
- */
-export interface DefineSanityLiveOptions {
-  /**
-   * Required for `sanityFetch` and `SanityLive` to work
-   */
-  client: SanityClient
-  /**
-   * Optional. If provided then the token needs to have permissions to query documents with `drafts.` prefixes in order for `perspective: 'drafts'` to work.
-   * This token is not shared with the browser.
-   */
-  serverToken?: string | false
-  /**
-   * Optional. This token is shared with the browser, and should only have access to query published documents.
-   * It is used to setup a `Live Draft Content` EventSource connection, and enables live previewing drafts stand-alone, outside of Presentation Tool.
-   */
-  browserToken?: string | false
-  /**
-   * Fetch options used by `sanityFetch`
-   */
-  fetchOptions?: {
-    /**
-     * Optional, enables time based revalidation in addition to the EventSource connection.
-     * @defaultValue `false`
-     */
-    revalidate?: number | false
-  }
-  /**
-   * Optional. Include stega encoding when draft mode is enabled.
-   *  @defaultValue `true`
-   */
-  stega?: boolean
-}
 
-export function defineLive(config: DefineSanityLiveOptions): {
-  /**
-   * @deprecated use `fetch` instead, and define your own `sanityFetch` function with logic for when to toggle `stega` and `perspective`
-   */
+
+export function defineLive(config: DefineLiveOptions): {
   sanityFetch: DefinedSanityFetchType
-  /**
-   * @deprecated use `Live` instead, and define your own `SanityLive` component with logic for when to toggle `perspective`
-   */
   SanityLive: React.ComponentType<DefinedLiveProps>
-  // fetch: DefinedFetchType
-  // Live: React.ComponentType<DefinedLiveProps>
 } {
   const {
     client: _client,
     serverToken,
     browserToken,
-    fetchOptions,
     stega: stegaEnabled = true,
   } = config
 
@@ -138,12 +95,7 @@ export function defineLive(config: DefineSanityLiveOptions): {
     const stega = _stega ?? (stegaEnabled && studioUrlDefined && (await draftMode()).isEnabled)
     const perspective = _perspective ?? (await resolveCookiePerspective())
     const useCdn = perspective === 'published'
-    const revalidate =
-      fetchOptions?.revalidate !== undefined
-        ? fetchOptions.revalidate
-        : process.env.NODE_ENV === 'production'
-          ? false
-          : undefined
+    const revalidate = false
 
     // fetch the tags first, with revalidate to 1s to ensure we get the latest tags, eventually
     const {syncTags} = await client.fetch(query, await params, {

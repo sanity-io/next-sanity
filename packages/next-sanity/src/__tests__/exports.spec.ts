@@ -29,33 +29,29 @@ test(`exports snapshot for the ${JSON.stringify(env)} condition`, {timeout: 15_0
         toPlainText: function
         unstable__adapter: string
         unstable__environment: string
+      ./cache-life:
+        sanity: object
       ./draft-mode:
         defineEnableDraftMode: function
-      ./experimental/client-components/live:
-        default: function
-      ./experimental/live:
-        defineLive: function
-        resolvePerspectiveFromCookies: function
       ./hooks:
-        useDraftModeEnvironment: function
-        useDraftModePerspective: function
         useIsLivePreview: function
         useIsPresentationTool: function
+        useLiveEnvironment: function
         useOptimistic: function
         usePresentationQuery: function
+        useVisualEditingEnvironment: function
       ./image:
         Image: function
         imageLoader: function
       ./live:
         defineLive: function
         isCorsOriginError: function
-      ./live/client-components/live:
-        default: function
-      ./live/client-components/live-stream:
-        default: function
+        resolvePerspectiveFromCookies: function
+      ./live/client-components:
+        SanityLive: function
       ./live/server-actions:
-        revalidateSyncTags: function
-        setPerspectiveCookie: function
+        actionRefresh: function
+        actionUpdateTags: function
       ./studio:
         metadata: object
         NextStudio: function
@@ -67,9 +63,10 @@ test(`exports snapshot for the ${JSON.stringify(env)} condition`, {timeout: 15_0
       ./visual-editing:
         VisualEditing: function
       ./visual-editing/client-component:
-        default: function
+        VisualEditing: function
       ./visual-editing/server-actions:
-        revalidateRootLayout: function
+        actionPerspectiveChange: function
+        actionRefresh: function
       ./webhook:
         parseBody: function
       "

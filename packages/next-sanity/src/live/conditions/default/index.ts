@@ -5,16 +5,16 @@
 // trying to pull in something it shouldn't.
 
 import type {ResolvePerspectiveFromCookies} from '#live/resolvePerspectiveFromCookies'
-import type {DefinedLiveProps} from '#live/types'
+import type {DefinedLiveProps, DefineLiveOptions} from '#live/types'
 
-import type {DefineSanityLiveOptions, DefinedSanityFetchType} from '../react-server/defineLive'
+import type {DefinedSanityFetchType} from '../react-server/defineLive'
 
 export {isCorsOriginError} from '#live/isCorsOriginError'
 
 /**
  * @public
  */
-export function defineLive(_config: DefineSanityLiveOptions): {
+export function defineLive(_config: DefineLiveOptions): {
   sanityFetch: DefinedSanityFetchType
   SanityLive: React.ComponentType<DefinedLiveProps>
 } {

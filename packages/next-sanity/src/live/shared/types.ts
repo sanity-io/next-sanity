@@ -119,7 +119,7 @@ export interface DefinedLiveProps {
   requestTag?: string
 }
 
-export interface LiveOptions {
+export interface DefineLiveOptions {
   /**
    * Required for `fetch()` and `<Live>` to work
    */
@@ -134,6 +134,12 @@ export interface LiveOptions {
    * It is used to setup a `Live Draft Content` EventSource connection, and enables live previewing drafts stand-alone, outside of Presentation Tool.
    */
   browserToken?: string | false
+  /**
+   * Optional. Include stega encoding when draft mode is enabled.
+   *  @deprecated This option is deprecated, as it does not have an effect when `cacheComponents: true`
+   *  @defaultValue `true`
+   */
+  stega?: boolean
 }
 
 export interface SanityClientConfig extends Pick<
