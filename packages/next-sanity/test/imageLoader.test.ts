@@ -1,6 +1,5 @@
+import {imageLoader} from 'next-sanity/image'
 import {expect, test} from 'vitest'
-
-import {imageLoader} from '../src/image/imageLoader'
 
 test('adds basic width and format parameters', () => {
   const result = imageLoader({

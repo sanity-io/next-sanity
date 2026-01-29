@@ -25,28 +25,32 @@ export default defineConfig({
     './src/visual-editing/server-actions/index.ts',
     './src/webhook/index.ts',
   ],
-  external: [
-    'next-sanity',
-    'next-sanity/experimental/client-components/live',
-    'next-sanity/live/client-components/live',
-    'next-sanity/live/client-components/live-stream',
-    'next-sanity/live/server-actions',
-    'next-sanity/studio/client-component',
-    'next-sanity/visual-editing/client-component',
-    'next-sanity/visual-editing/server-actions',
-  ],
+  external: [/^next-sanity(?:\/|$)/],
   sourcemap: true,
   hash: false,
   exports: {
     enabled: 'local-only',
     devExports: true,
     customExports(pkg) {
+      delete pkg['./package.json']
+
       pkg['./live'] = {
         'react-server': pkg['./live'],
         'default': pkg['./live.server-only'],
       }
       delete pkg['./live.server-only']
-      return pkg
+
+      const sortedPkg = {} as typeof pkg
+      Object.keys(pkg)
+        .toSorted()
+        .forEach((key) => {
+          sortedPkg[key] = pkg[key]
+        })
+
+      // Append package.json at the end
+      sortedPkg['./package.json'] = './package.json'
+
+      return sortedPkg
     },
   },
   inputOptions: {preserveEntrySignatures: 'strict', experimental: {attachDebugInfo: 'none'}},

@@ -28,6 +28,13 @@
   "type": "module",
   "sideEffects": false,
   "types": "./dist/index.d.ts",
+  "imports": {
+    "#env": {
+      "next-js": "./src/_env/next-js.ts",
+      "react-server": "./src/_env/react-server.ts",
+      "default": "./src/_env/default.ts"
+    }
+  },
   "exports": {
     ".": "./src/index.ts",
     "./draft-mode": "./src/draft-mode/index.ts",
@@ -95,12 +102,14 @@
     "server-only": "^0.0.1"
   },
   "devDependencies": {
-    "@sanity/browserslist-config": "^1.0.5",
     "@sanity/tsconfig": "catalog:",
+    "@types/js-yaml": "^4.0.9",
     "@types/node": "catalog:",
     "@types/react": "catalog:",
     "@types/react-dom": "catalog:",
+    "@vitejs/plugin-react": "^5.1.2",
     "@vitest/coverage-v8": "^4.0.18",
+    "js-yaml": "^4.1.1",
     "next": "catalog:",
     "publint": "^0.3.17",
     "react": "catalog:",
@@ -108,7 +117,8 @@
     "styled-components": "catalog:",
     "tsdown": "0.20.1",
     "typescript": "catalog:",
-    "vitest": "^4.0.18"
+    "vitest": "^4.0.18",
+    "vitest-package-exports": "^1.1.2"
   },
   "peerDependencies": {
     "@sanity/client": "^7.14.1",
@@ -118,7 +128,6 @@
     "sanity": "^5.7.0",
     "styled-components": "^6.1"
   },
-  "browserslist": "extends @sanity/browserslist-config",
   "engines": {
     "node": ">=20.19 <22 || >=22.12"
   }
