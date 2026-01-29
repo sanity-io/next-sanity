@@ -44,9 +44,9 @@ When creating tasks/scripts/pipelines, you MUST:
 // turbo.json - register tasks
 {
   "tasks": {
-    "build": { "dependsOn": ["^build"], "outputs": ["dist/**"] },
+    "build": {"dependsOn": ["^build"], "outputs": ["dist/**"]},
     "lint": {},
-    "test": { "dependsOn": ["build"] }
+    "test": {"dependsOn": ["build"]}
   }
 }
 ```
@@ -691,10 +691,10 @@ packages/
 
 ```typescript
 // WRONG: Reaching into another package's internals
-import { Button } from "../../packages/ui/src/button";
+import {Button} from '../../packages/ui/src/button'
 
 // CORRECT: Install and import properly
-import { Button } from "@repo/ui/button";
+import {Button} from '@repo/ui/button'
 ```
 
 ### Too Many Root Dependencies
@@ -809,8 +809,8 @@ Some tasks can run in parallel (don't need built output from dependencies) but m
 ```json
 {
   "tasks": {
-    "transit": { "dependsOn": ["^transit"] },
-    "my-task": { "dependsOn": ["transit"] }
+    "transit": {"dependsOn": ["^transit"]},
+    "my-task": {"dependsOn": ["transit"]}
   }
 }
 ```

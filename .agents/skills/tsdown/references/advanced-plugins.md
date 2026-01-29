@@ -19,10 +19,10 @@ Most `unplugin-*` plugins work seamlessly:
 
 ```ts
 import UnpluginVue from 'unplugin-vue/rolldown'
-import { defineConfig } from 'tsdown'
+import {defineConfig} from 'tsdown'
 
 export default defineConfig({
-  plugins: [UnpluginVue({ isProduction: true })],
+  plugins: [UnpluginVue({isProduction: true})],
 })
 ```
 
@@ -32,7 +32,7 @@ Most Rollup plugins work without modification:
 
 ```ts
 import SomeRollupPlugin from 'some-rollup-plugin'
-import { defineConfig } from 'tsdown'
+import {defineConfig} from 'tsdown'
 
 export default defineConfig({
   plugins: [SomeRollupPlugin() as any], // Cast to any for type compatibility
@@ -47,7 +47,7 @@ May work if they don't rely on Vite-specific internals:
 
 ```ts
 import SomeVitePlugin from 'some-vite-plugin'
-import { defineConfig } from 'tsdown'
+import {defineConfig} from 'tsdown'
 
 export default defineConfig({
   plugins: [SomeVitePlugin() as any],
@@ -60,7 +60,7 @@ Add to the `plugins` array in config (not available via CLI):
 
 ```ts
 import SomePlugin from 'some-plugin'
-import { defineConfig } from 'tsdown'
+import {defineConfig} from 'tsdown'
 
 export default defineConfig({
   entry: ['src/index.ts'],
@@ -73,7 +73,7 @@ export default defineConfig({
 Follow Rolldown's plugin API (similar to Rollup):
 
 ```ts
-import { defineConfig } from 'tsdown'
+import {defineConfig} from 'tsdown'
 
 export default defineConfig({
   plugins: [
@@ -91,7 +91,7 @@ export default defineConfig({
 
 See [Rolldown Plugin Development Guide](https://rolldown.rs/guide/plugin-development) for details.
 
-<!-- 
+<!--
 Source references:
 - https://tsdown.dev/advanced/plugins
 -->

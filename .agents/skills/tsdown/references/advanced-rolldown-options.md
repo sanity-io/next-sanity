@@ -12,7 +12,7 @@ tsdown exposes Rolldown's `inputOptions` and `outputOptions` for fine-grained co
 ### Object Syntax
 
 ```ts
-import { defineConfig } from 'tsdown'
+import {defineConfig} from 'tsdown'
 
 export default defineConfig({
   inputOptions: {
@@ -26,7 +26,7 @@ export default defineConfig({
 Dynamically modify based on format:
 
 ```ts
-import { defineConfig } from 'tsdown'
+import {defineConfig} from 'tsdown'
 
 export default defineConfig({
   inputOptions(inputOptions, format) {
@@ -41,7 +41,7 @@ export default defineConfig({
 ### Object Syntax
 
 ```ts
-import { defineConfig } from 'tsdown'
+import {defineConfig} from 'tsdown'
 
 export default defineConfig({
   outputOptions: {
@@ -55,7 +55,7 @@ export default defineConfig({
 Format-specific output options:
 
 ```ts
-import { defineConfig } from 'tsdown'
+import {defineConfig} from 'tsdown'
 
 export default defineConfig({
   outputOptions(outputOptions, format) {
@@ -108,7 +108,7 @@ export default defineConfig({
 
 > **Warning:** Understand Rolldown options before overriding. Refer to [Rolldown documentation](https://rolldown.rs/options/input).
 
-<!-- 
+<!--
 Source references:
 - https://tsdown.dev/advanced/rolldown-options
 -->

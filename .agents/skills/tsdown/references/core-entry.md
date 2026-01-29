@@ -18,7 +18,7 @@ tsdown src/entry1.ts src/entry2.ts
 ### Single Entry
 
 ```ts
-import { defineConfig } from 'tsdown'
+import {defineConfig} from 'tsdown'
 
 export default defineConfig({
   entry: 'src/index.ts',
@@ -28,7 +28,7 @@ export default defineConfig({
 ### Multiple Entries
 
 ```ts
-import { defineConfig } from 'tsdown'
+import {defineConfig} from 'tsdown'
 
 export default defineConfig({
   entry: ['src/entry1.ts', 'src/entry2.ts'],
@@ -40,7 +40,7 @@ export default defineConfig({
 Use an object to define custom output names:
 
 ```ts
-import { defineConfig } from 'tsdown'
+import {defineConfig} from 'tsdown'
 
 export default defineConfig({
   entry: {
@@ -57,7 +57,7 @@ Output: `dist/main.js` and `dist/utils.js`
 Match multiple files dynamically:
 
 ```ts
-import { defineConfig } from 'tsdown'
+import {defineConfig} from 'tsdown'
 
 export default defineConfig({
   entry: 'src/**/*.ts',
@@ -68,7 +68,7 @@ This includes all `.ts` files in `src` and subdirectories as entry points.
 
 > **Note:** On Windows, use forward slashes (`/`) in glob patterns, not backslashes.
 
-<!-- 
+<!--
 Source references:
 - https://tsdown.dev/options/entry
 -->

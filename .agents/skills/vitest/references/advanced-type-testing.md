@@ -13,8 +13,8 @@ Type tests use `.test-d.ts` extension:
 
 ```ts
 // math.test-d.ts
-import { expectTypeOf } from 'vitest'
-import { add } from './math'
+import {expectTypeOf} from 'vitest'
+import {add} from './math'
 
 test('add returns number', () => {
   expectTypeOf(add).returns.toBeNumber()
@@ -28,16 +28,16 @@ defineConfig({
   test: {
     typecheck: {
       enabled: true,
-      
+
       // Only type check
       only: false,
-      
+
       // Checker: 'tsc' or 'vue-tsc'
       checker: 'tsc',
-      
+
       // Include patterns
       include: ['**/*.test-d.ts'],
-      
+
       // tsconfig to use
       tsconfig: './tsconfig.json',
     },
@@ -48,7 +48,7 @@ defineConfig({
 ## expectTypeOf API
 
 ```ts
-import { expectTypeOf } from 'vitest'
+import {expectTypeOf} from 'vitest'
 
 // Basic type checks
 expectTypeOf<string>().toBeString()
@@ -72,8 +72,8 @@ expectTypeOf<symbol>().toBeSymbol()
 const value = 'hello'
 expectTypeOf(value).toBeString()
 
-const obj = { name: 'test', count: 42 }
-expectTypeOf(obj).toMatchTypeOf<{ name: string }>()
+const obj = {name: 'test', count: 42}
+expectTypeOf(obj).toMatchTypeOf<{name: string}>()
 expectTypeOf(obj).toHaveProperty('name')
 ```
 
@@ -105,28 +105,33 @@ expectTypeOf<User>().toHaveProperty('id')
 expectTypeOf<User>().toHaveProperty('name').toBeString()
 
 // Check shape
-expectTypeOf({ id: 1, name: 'test' }).toMatchTypeOf<User>()
+expectTypeOf({id: 1, name: 'test'}).toMatchTypeOf<User>()
 ```
 
 ## Equality vs Matching
 
 ```ts
-interface A { x: number }
-interface B { x: number; y: string }
+interface A {
+  x: number
+}
+interface B {
+  x: number
+  y: string
+}
 
 // toMatchTypeOf - subset matching
-expectTypeOf<B>().toMatchTypeOf<A>()  // B extends A
+expectTypeOf<B>().toMatchTypeOf<A>() // B extends A
 
 // toEqualTypeOf - exact match
-expectTypeOf<A>().not.toEqualTypeOf<B>()  // Not exact match
-expectTypeOf<A>().toEqualTypeOf<{ x: number }>()  // Exact match
+expectTypeOf<A>().not.toEqualTypeOf<B>() // Not exact match
+expectTypeOf<A>().toEqualTypeOf<{x: number}>() // Exact match
 ```
 
 ## Branded Types
 
 ```ts
-type UserId = number & { __brand: 'UserId' }
-type PostId = number & { __brand: 'PostId' }
+type UserId = number & {__brand: 'UserId'}
+type PostId = number & {__brand: 'PostId'}
 
 expectTypeOf<UserId>().not.toEqualTypeOf<PostId>()
 expectTypeOf<UserId>().not.toEqualTypeOf<number>()
@@ -157,18 +162,18 @@ expectTypeOf<string>().not.toBeNullable()
 Assert a value matches a type (no assertion at runtime):
 
 ```ts
-import { assertType } from 'vitest'
+import {assertType} from 'vitest'
 
 function getUser(): User | null {
-  return { id: 1, name: 'test' }
+  return {id: 1, name: 'test'}
 }
 
 test('returns user', () => {
   const result = getUser()
-  
+
   // @ts-expect-error - should fail type check
   assertType<string>(result)
-  
+
   // Correct type
   assertType<User | null>(result)
 })
@@ -181,7 +186,7 @@ Test that code produces type error:
 ```ts
 test('rejects wrong types', () => {
   function requireString(s: string) {}
-  
+
   // @ts-expect-error - number not assignable to string
   requireString(123)
 })
@@ -206,8 +211,8 @@ Combine runtime and type tests:
 
 ```ts
 // user.test.ts
-import { describe, expect, expectTypeOf, test } from 'vitest'
-import { createUser } from './user'
+import {describe, expect, expectTypeOf, test} from 'vitest'
+import {createUser} from './user'
 
 describe('createUser', () => {
   test('runtime: creates user', () => {
@@ -216,7 +221,7 @@ describe('createUser', () => {
   })
 
   test('types: returns User type', () => {
-    expectTypeOf(createUser).returns.toMatchTypeOf<{ name: string }>()
+    expectTypeOf(createUser).returns.toMatchTypeOf<{name: string}>()
   })
 })
 ```
@@ -230,7 +235,7 @@ describe('createUser', () => {
 - Use `@ts-expect-error` to test type errors
 - Run with `vitest typecheck` or `--typecheck`
 
-<!-- 
+<!--
 Source references:
 - https://vitest.dev/guide/testing-types.html
 - https://vitest.dev/api/expect-typeof.html

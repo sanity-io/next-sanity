@@ -16,7 +16,7 @@ tsdown --shims
 ```
 
 ```ts
-import { defineConfig } from 'tsdown'
+import {defineConfig} from 'tsdown'
 
 export default defineConfig({
   shims: true,
@@ -24,9 +24,10 @@ export default defineConfig({
 ```
 
 Usage in ESM output:
+
 ```js
-console.log(__dirname)   // Available with shims
-console.log(__filename)  // Available with shims
+console.log(__dirname) // Available with shims
+console.log(__filename) // Available with shims
 ```
 
 > **Note:** Shims add minimal runtime overhead. Unused shims are tree-shaken.
@@ -49,9 +50,9 @@ This is always enabled for ESM output targeting Node.js.
 These ESM variables are automatically shimmed in CJS output:
 
 ```js
-console.log(import.meta.url)       // Works in CJS
-console.log(import.meta.dirname)   // Works in CJS
-console.log(import.meta.filename)  // Works in CJS
+console.log(import.meta.url) // Works in CJS
+console.log(import.meta.dirname) // Works in CJS
+console.log(import.meta.filename) // Works in CJS
 ```
 
 No configuration needed.
@@ -85,7 +86,7 @@ export = greet
 
 This improves compatibility with `require('your-module')` consumers.
 
-<!-- 
+<!--
 Source references:
 - https://tsdown.dev/options/shims
 - https://tsdown.dev/options/cjs-default

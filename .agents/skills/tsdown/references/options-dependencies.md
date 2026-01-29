@@ -22,7 +22,7 @@ description: tsdown dependency handling - external, noExternal, bundling behavio
 Prevent bundling any dependencies from `node_modules`:
 
 ```ts
-import { defineConfig } from 'tsdown'
+import {defineConfig} from 'tsdown'
 
 export default defineConfig({
   skipNodeModulesBundle: true,
@@ -34,7 +34,7 @@ export default defineConfig({
 ### Mark as External
 
 ```ts
-import { defineConfig } from 'tsdown'
+import {defineConfig} from 'tsdown'
 
 export default defineConfig({
   external: ['lodash', /^@my-scope\//],
@@ -52,7 +52,7 @@ tsdown --external lodash
 Bundle dependencies even if listed in `dependencies`/`peerDependencies`:
 
 ```ts
-import { defineConfig } from 'tsdown'
+import {defineConfig} from 'tsdown'
 
 export default defineConfig({
   noExternal: ['some-package'],
@@ -64,25 +64,25 @@ export default defineConfig({
 Same bundling logic applies to `.d.ts` files. For complex third-party types:
 
 ```ts
-import { defineConfig } from 'tsdown'
+import {defineConfig} from 'tsdown'
 
 export default defineConfig({
   dts: {
-    resolver: 'tsc',  // Use TypeScript resolver for better compatibility
+    resolver: 'tsc', // Use TypeScript resolver for better compatibility
   },
 })
 ```
 
 ## Summary
 
-| Dependency Type | Default Behavior |
-|-----------------|------------------|
-| `dependencies` | External |
-| `peerDependencies` | External |
-| `devDependencies` | Bundled if used |
-| Phantom deps | Bundled if used |
+| Dependency Type    | Default Behavior |
+| ------------------ | ---------------- |
+| `dependencies`     | External         |
+| `peerDependencies` | External         |
+| `devDependencies`  | Bundled if used  |
+| Phantom deps       | Bundled if used  |
 
-<!-- 
+<!--
 Source references:
 - https://tsdown.dev/options/dependencies
 -->

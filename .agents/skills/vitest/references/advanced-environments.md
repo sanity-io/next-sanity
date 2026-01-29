@@ -19,7 +19,7 @@ description: Configure environments like jsdom, happy-dom for browser APIs
 defineConfig({
   test: {
     environment: 'jsdom',
-    
+
     // Environment-specific options
     environmentOptions: {
       jsdom: {
@@ -47,7 +47,7 @@ Use magic comment at top of file:
 ```ts
 // @vitest-environment jsdom
 
-import { expect, test } from 'vitest'
+import {expect, test} from 'vitest'
 
 test('DOM test', () => {
   const div = document.createElement('div')
@@ -64,10 +64,10 @@ Full browser environment simulation:
 
 test('DOM manipulation', () => {
   document.body.innerHTML = '<div id="app"></div>'
-  
+
   const app = document.getElementById('app')
   app.textContent = 'Hello'
-  
+
   expect(app.textContent).toBe('Hello')
 })
 
@@ -141,16 +141,16 @@ Create custom environment package:
 
 ```ts
 // vitest-environment-custom/index.ts
-import type { Environment } from 'vitest/runtime'
+import type {Environment} from 'vitest/runtime'
 
 export default <Environment>{
   name: 'custom',
   viteEnvironment: 'ssr', // or 'client'
-  
+
   setup() {
     // Setup global state
     globalThis.myGlobal = 'value'
-    
+
     return {
       teardown() {
         delete globalThis.myGlobal
@@ -178,11 +178,11 @@ For full isolation:
 export default <Environment>{
   name: 'isolated',
   viteEnvironment: 'ssr',
-  
+
   async setupVM() {
     const vm = await import('node:vm')
     const context = vm.createContext()
-    
+
     return {
       getVmContext() {
         return context
@@ -190,9 +190,9 @@ export default <Environment>{
       teardown() {},
     }
   },
-  
+
   setup() {
-    return { teardown() {} }
+    return {teardown() {}}
   },
 }
 ```
@@ -221,7 +221,7 @@ In jsdom/happy-dom, configure CSS handling:
 defineConfig({
   test: {
     css: true, // Process CSS
-    
+
     // Or with options
     css: {
       include: /\.module\.css$/,
@@ -258,7 +258,7 @@ defineConfig({
 - Use projects for multiple environment configurations
 - Browser Mode is for real browser testing, not environment
 
-<!-- 
+<!--
 Source references:
 - https://vitest.dev/guide/environment.html
 -->

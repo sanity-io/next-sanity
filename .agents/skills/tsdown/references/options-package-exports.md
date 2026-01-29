@@ -10,7 +10,7 @@ tsdown can automatically generate `exports`, `main`, `module`, and `types` field
 ## Enable Auto Exports
 
 ```ts
-import { defineConfig } from 'tsdown'
+import {defineConfig} from 'tsdown'
 
 export default defineConfig({
   exports: true,
@@ -108,7 +108,7 @@ export default defineConfig({
 })
 ```
 
-<!-- 
+<!--
 Source references:
 - https://tsdown.dev/options/package-exports
 -->

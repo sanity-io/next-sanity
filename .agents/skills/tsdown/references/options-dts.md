@@ -16,7 +16,7 @@ tsdown --dts
 ```
 
 ```ts
-import { defineConfig } from 'tsdown'
+import {defineConfig} from 'tsdown'
 
 export default defineConfig({
   dts: true,
@@ -56,7 +56,7 @@ Enable `.d.ts.map` files for source navigation (useful in monorepos):
 ### Via tsdown Config
 
 ```ts
-import { defineConfig } from 'tsdown'
+import {defineConfig} from 'tsdown'
 
 export default defineConfig({
   dts: {
@@ -70,11 +70,11 @@ export default defineConfig({
 For complex third-party types (e.g., `@types/babel__generator`), use the TypeScript resolver:
 
 ```ts
-import { defineConfig } from 'tsdown'
+import {defineConfig} from 'tsdown'
 
 export default defineConfig({
   dts: {
-    resolver: 'tsc',  // Slower but more compatible
+    resolver: 'tsc', // Slower but more compatible
   },
 })
 ```
@@ -84,10 +84,10 @@ export default defineConfig({
 For Vue component libraries:
 
 ```ts
-import { defineConfig } from 'tsdown'
+import {defineConfig} from 'tsdown'
 
 export default defineConfig({
-  dts: { vue: true },
+  dts: {vue: true},
 })
 ```
 
@@ -98,7 +98,7 @@ Requires `vue-tsc` installed.
 - **ESM output:** `.js` and `.d.ts` generated in same build process
 - **CJS output:** Separate build process for `.d.ts` to ensure compatibility
 
-<!-- 
+<!--
 Source references:
 - https://tsdown.dev/options/dts
 -->

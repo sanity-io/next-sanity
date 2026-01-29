@@ -10,7 +10,7 @@ Use tsdown directly from code for custom build scripts and automation.
 ## Basic Example
 
 ```ts
-import { build } from 'tsdown'
+import {build} from 'tsdown'
 
 await build({
   entry: ['src/index.ts'],
@@ -23,7 +23,7 @@ await build({
 ## Full Example
 
 ```ts
-import { build } from 'tsdown'
+import {build} from 'tsdown'
 
 await build({
   entry: ['src/index.ts'],
@@ -46,7 +46,7 @@ await build({
 ## Multiple Builds
 
 ```ts
-import { build } from 'tsdown'
+import {build} from 'tsdown'
 
 // Build multiple configurations
 await build([
@@ -72,7 +72,7 @@ await build([
 
 All CLI options are available as properties in the options object.
 
-<!-- 
+<!--
 Source references:
 - https://tsdown.dev/advanced/programmatic-usage
 -->

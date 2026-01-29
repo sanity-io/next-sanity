@@ -149,8 +149,8 @@ npm install typescript@latest --workspaces
 ```yaml
 # pnpm-workspace.yaml
 packages:
-  - "apps/*"
-  - "packages/*"
+  - 'apps/*'
+  - 'packages/*'
 
 catalog:
   react: ^18.2.0
@@ -161,7 +161,7 @@ catalog:
 // Any package.json
 {
   "dependencies": {
-    "react": "catalog:"  // Uses version from catalog
+    "react": "catalog:" // Uses version from catalog
   }
 }
 ```
@@ -183,7 +183,7 @@ Turborepo understands these relationships and orders builds accordingly.
 ### External (npm Registry)
 
 ```json
-{ "lodash": "^4.17.21" }
+{"lodash": "^4.17.21"}
 ```
 
 Standard semver versioning from npm.
@@ -200,7 +200,7 @@ For library packages that expect the consumer to provide dependencies:
     "react-dom": "^18.0.0"
   },
   "devDependencies": {
-    "react": "^18.0.0",      // For development/testing
+    "react": "^18.0.0", // For development/testing
     "react-dom": "^18.0.0"
   }
 }

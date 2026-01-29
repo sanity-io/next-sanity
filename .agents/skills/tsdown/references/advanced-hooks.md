@@ -12,7 +12,7 @@ Hooks allow extending the build process at specific lifecycle stages.
 ### Object Syntax
 
 ```ts
-import { defineConfig } from 'tsdown'
+import {defineConfig} from 'tsdown'
 
 export default defineConfig({
   hooks: {
@@ -26,7 +26,7 @@ export default defineConfig({
 ### Function Syntax
 
 ```ts
-import { defineConfig } from 'tsdown'
+import {defineConfig} from 'tsdown'
 
 export default defineConfig({
   hooks(hooks) {
@@ -81,7 +81,7 @@ hooks: {
 - **Plugins:** For code transformation, asset handling, virtual modules
 - **Hooks:** For build lifecycle tasks (setup, cleanup, notifications)
 
-<!-- 
+<!--
 Source references:
 - https://tsdown.dev/advanced/hooks
 -->

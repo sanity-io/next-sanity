@@ -28,7 +28,7 @@ export function hello(x: number) {
 
 ```ts
 // src/index.ts
-import { hello } from './util'
+import {hello} from './util'
 hello(1)
 ```
 
@@ -47,6 +47,7 @@ tsdown --minify
 ### Example
 
 Input:
+
 ```ts
 const x = 1
 function hello(x: number) {
@@ -57,8 +58,13 @@ hello(x)
 ```
 
 Output (minified):
+
 ```js
-const e=1;function t(e){console.log(`Hello World`),console.log(e)}t(e);
+const e = 1
+function t(e) {
+  ;(console.log(`Hello World`), console.log(e))
+}
+t(e)
 ```
 
 ## Source Maps
@@ -72,10 +78,11 @@ tsdown --sourcemap
 Source maps are auto-enabled if `declarationMap: true` in `tsconfig.json`.
 
 Source maps allow:
+
 - Tracing errors to original source files
 - Debugging bundled code in dev tools
 
-<!-- 
+<!--
 Source references:
 - https://tsdown.dev/options/tree-shaking
 - https://tsdown.dev/options/minification

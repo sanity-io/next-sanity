@@ -21,16 +21,16 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      
+
       - uses: pnpm/action-setup@v4
         with:
           version: 9
-      
+
       - uses: actions/setup-node@v4
         with:
           node-version: 20
           cache: 'pnpm'
-      
+
       - run: pnpm install --frozen-lockfile
       - run: pnpm test
       - run: pnpm build
@@ -278,7 +278,7 @@ jobs:
 5. **Use `--filter`** in monorepos to build only what changed
 6. **Multi-stage Docker builds** for smaller images
 
-<!-- 
+<!--
 Source references:
 - https://pnpm.io/continuous-integration
 - https://github.com/pnpm/action-setup
