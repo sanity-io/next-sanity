@@ -1,5 +1,17 @@
 # next-sanity
 
+## 12.0.17
+
+### Patch Changes
+
+- [#3233](https://github.com/sanity-io/next-sanity/pull/3233) [`3588da9`](https://github.com/sanity-io/next-sanity/commit/3588da910834037680f8010c80b11712b411d2e8) Thanks [@renovate](https://github.com/apps/renovate)! - fix(deps): update dependency @sanity/preview-url-secret to ^4.0.3
+
+- [#3234](https://github.com/sanity-io/next-sanity/pull/3234) [`68d467f`](https://github.com/sanity-io/next-sanity/commit/68d467fa9f4b31c9c48763ada741a43661ac4ce0) Thanks [@renovate](https://github.com/apps/renovate)! - fix(deps): update dependency @sanity/visual-editing to ^5.1.2
+
+- [#3242](https://github.com/sanity-io/next-sanity/pull/3242) [`55cb929`](https://github.com/sanity-io/next-sanity/commit/55cb9299440363e3624c2b41ef1b83d12ab55b4c) Thanks [@renovate](https://github.com/apps/renovate)! - fix(deps): update sanity monorepo to v5.8.0
+
+- [#3249](https://github.com/sanity-io/next-sanity/pull/3249) [`ba5873d`](https://github.com/sanity-io/next-sanity/commit/ba5873d69f26dfd325ba47a0fc71441d30687ab2) Thanks [@renovate](https://github.com/apps/renovate)! - fix(deps): update sanity monorepo to v5.8.1
+
 ## 12.0.16
 
 ### Patch Changes
