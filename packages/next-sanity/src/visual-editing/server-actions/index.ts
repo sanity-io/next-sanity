@@ -31,7 +31,7 @@ export async function actionPerspectiveChange(perspective: ClientPerspective): P
     ? sanitizedPerspective.join(',')
     : sanitizedPerspective
   const jar = await cookies()
-  if (nextPerspective === jar.get(perspectiveCookieName)?.value) {
+  if (nextPerspective === jar.get(perspectiveCookieName)?.value && process.env.NODE_ENV !== 'production') {
     // oxlint-disable-next-line no-console
     console.debug('actionPerspectiveChange', 'Perspective is the same, skipping', nextPerspective)
     return
