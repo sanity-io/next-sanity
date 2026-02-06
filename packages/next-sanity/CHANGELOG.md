@@ -1,5 +1,11 @@
 # next-sanity
 
+## 13.0.0-cache-components.23
+
+### Patch Changes
+
+- [#3109](https://github.com/sanity-io/next-sanity/pull/3109) [`94bcb08`](https://github.com/sanity-io/next-sanity/commit/94bcb086991f0e71620089ebe1c05750c085497d) Thanks [@stipsan](https://github.com/stipsan)! - Also `await params` in the `next-js` version of `defineLive().sanityFetch`
+
 ## 13.0.0-cache-components.22
 
 ### Patch Changes
