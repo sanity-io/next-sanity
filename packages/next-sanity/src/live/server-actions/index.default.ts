@@ -3,7 +3,7 @@
 import type {SanityLiveActionContext} from '#live/types'
 import type {LiveEvent} from '@sanity/client'
 
-import {DRAFT_SYNC_TAG_PREFIX, PUBLISHED_SYNC_TAG_PREFIX} from '#live/constants'
+import {parseTags} from '#live/parseTags'
 import {refresh, revalidateTag, updateTag} from 'next/cache'
 import {draftMode} from 'next/headers'
 
@@ -21,6 +21,7 @@ export async function actionUpdateTags(
     )
     return undefined
   }
+
   if (context.includeAllDocuments) {
     if (!(await draftMode()).isEnabled) {
       console.warn('<SanityLive includeAllDocuments /> action called in non-draft mode, ignoring', {
@@ -29,7 +30,7 @@ export async function actionUpdateTags(
       })
       return undefined
     }
-    const tags = event.tags.map((tag) => `${DRAFT_SYNC_TAG_PREFIX}${tag}`)
+    const tags = parseTags(event.tags, context)
     for (const tag of tags) {
       updateTag(tag)
     }
@@ -39,7 +40,7 @@ export async function actionUpdateTags(
     revalidateTag('sanity:fetch-sync-tags', 'max')
     // oxlint-disable-next-line no-console
     console.log(`<SanityLive /> revalidated tag: "sanity:fetch-sync-tags" with cache profile "max"`)
-    const tags = event.tags.map((tag) => `${PUBLISHED_SYNC_TAG_PREFIX}${tag}`)
+    const tags = parseTags(event.tags, context)
     for (const tag of tags) {
       updateTag(tag)
     }

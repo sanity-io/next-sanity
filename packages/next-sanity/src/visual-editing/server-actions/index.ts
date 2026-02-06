@@ -33,7 +33,7 @@ export async function actionPerspectiveChange(perspective: ClientPerspective): P
   const jar = await cookies()
   if (nextPerspective === jar.get(perspectiveCookieName)?.value) {
     // oxlint-disable-next-line no-console
-    console.debug('Perspective is the same, skipping', nextPerspective)
+    console.debug('actionPerspectiveChange', 'Perspective is the same, skipping', nextPerspective)
     return
   }
   jar.set(perspectiveCookieName, nextPerspective, {

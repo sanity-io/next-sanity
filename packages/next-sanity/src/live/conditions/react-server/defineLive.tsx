@@ -1,5 +1,6 @@
 import type {DefinedFetchType, DefinedLiveProps, DefineLiveOptions} from '#live/types'
 
+import {DRAFT_SYNC_TAG_PREFIX, PUBLISHED_SYNC_TAG_PREFIX} from '#live/constants'
 import {sanitizePerspective} from '#live/sanitizePerspective'
 import {type ClientPerspective, type QueryParams} from '@sanity/client'
 import {perspectiveCookieName} from '@sanity/preview-url-secret/constants'
@@ -31,7 +32,7 @@ export function defineLive(config: DefineLiveOptions): {
   }
 
   const client = _client.withConfig({allowReconfigure: false, useCdn: false})
-  const {token: originalToken} = client.config()
+  const {token: originalToken, perspective: originalPerspective = 'published'} = client.config()
   const studioUrlDefined = typeof client.config().stega.studioUrl !== 'undefined'
 
   const sanityFetch: DefinedFetchType = async function sanityFetch<
@@ -54,7 +55,11 @@ export function defineLive(config: DefineLiveOptions): {
     requestTag?: string
   }) {
     const stega = _stega ?? (stegaEnabled && studioUrlDefined && (await draftMode()).isEnabled)
-    const perspective = _perspective ?? (await resolveCookiePerspective())
+    const perspective =
+      _perspective ??
+      (await resolveCookiePerspective(
+        originalPerspective === 'raw' ? 'published' : originalPerspective,
+      ))
     const useCdn = perspective === 'published'
     const revalidate = false
 
@@ -70,7 +75,13 @@ export function defineLive(config: DefineLiveOptions): {
       tag: [requestTag, 'fetch-sync-tags'].filter(Boolean).join('.'),
     })
 
-    const cacheTags = [...tags, ...(syncTags?.map((tag) => `sanity:${tag}`) || [])]
+    const cacheTags = [
+      ...tags,
+      ...(syncTags?.map(
+        (tag) =>
+          `${perspective === 'published' ? PUBLISHED_SYNC_TAG_PREFIX : DRAFT_SYNC_TAG_PREFIX}${tag}`,
+      ) || []),
+    ]
 
     const {result, resultSourceMap} = await client.fetch(query, await params, {
       filterResponse: false,
@@ -138,10 +149,12 @@ export function defineLive(config: DefineLiveOptions): {
   }
 }
 
-async function resolveCookiePerspective(): Promise<Exclude<ClientPerspective, 'raw'>> {
+async function resolveCookiePerspective(
+  fallback: Exclude<ClientPerspective, 'raw'>,
+): Promise<Exclude<ClientPerspective, 'raw'>> {
   return (await draftMode()).isEnabled
     ? (await cookies()).has(perspectiveCookieName)
       ? sanitizePerspective((await cookies()).get(perspectiveCookieName)?.value, 'drafts')
       : 'drafts'
-    : 'published'
+    : fallback
 }

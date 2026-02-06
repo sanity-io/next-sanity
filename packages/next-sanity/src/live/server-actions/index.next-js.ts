@@ -3,7 +3,7 @@
 import type {SanityLiveActionContext} from '#live/types'
 import type {LiveEvent} from '@sanity/client'
 
-import {DRAFT_SYNC_TAG_PREFIX, PUBLISHED_SYNC_TAG_PREFIX} from '#live/constants'
+import {parseTags} from '#live/parseTags'
 import {refresh, updateTag} from 'next/cache'
 import {draftMode} from 'next/headers'
 
@@ -30,10 +30,7 @@ export async function actionUpdateTags(
     return undefined
   }
 
-  const tags = event.tags.map(
-    (tag) =>
-      `${context.includeAllDocuments ? PUBLISHED_SYNC_TAG_PREFIX : DRAFT_SYNC_TAG_PREFIX}${tag}`,
-  )
+  const tags = parseTags(event.tags, context)
   for (const tag of tags) {
     updateTag(tag)
   }

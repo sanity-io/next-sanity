@@ -8,6 +8,7 @@ import type {ResolvePerspectiveFromCookies} from '#live/resolvePerspectiveFromCo
 import type {DefinedFetchType, DefinedLiveProps, DefineLiveOptions} from '#live/types'
 
 export {isCorsOriginError} from '#live/isCorsOriginError'
+export {parseTags} from '#live/parseTags'
 
 /**
  * @public

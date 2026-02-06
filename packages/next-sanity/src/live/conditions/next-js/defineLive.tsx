@@ -29,12 +29,12 @@ export function defineLive(config: DefineLiveOptions): {
   }
 
   const client = _client.withConfig({allowReconfigure: false, useCdn: true})
-  const {token: originalToken} = client.config()
+  const {token: originalToken, perspective: originalPerspective = 'published'} = client.config()
 
   const fetch: DefinedFetchType = async function fetch({
     query,
     params = {},
-    perspective = 'published',
+    perspective = originalPerspective,
     stega = false,
     tags: customCacheTags = [],
     requestTag = 'next-loader.fetch.cache-components',
