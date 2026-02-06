@@ -1,6 +1,5 @@
 import type {ClientPerspective, ClientReturn, ContentSourceMap, QueryParams} from '@sanity/client'
 
-
 /** @alpha */
 export type UsePresentationQueryReturnsInactive = {
   data: null
@@ -19,14 +18,11 @@ export type UsePresentationQueryReturns<QueryString extends string> =
   | UsePresentationQueryReturnsInactive
   | UsePresentationQueryReturnsActive<QueryString>
 
-
 const initialState: UsePresentationQueryReturnsInactive = {
   data: null,
   sourceMap: null,
   perspective: null,
 }
-
-
 
 /**
  * Experimental hook that can run queries in Presentation Tool.

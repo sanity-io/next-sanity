@@ -19,7 +19,7 @@ export type PerspectiveType = Exclude<ClientPerspective, 'raw'>
  */
 export type DefinedFetchType = <const QueryString extends string>(options: {
   query: QueryString
-  params?: QueryParams
+  params?: QueryParams | Promise<QueryParams>
   /**
    * @defaultValue 'published'
    */

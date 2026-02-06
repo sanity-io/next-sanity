@@ -1,47 +1,15 @@
-import type {DefinedLiveProps, DefineLiveOptions} from '#live/types'
+import type {DefinedFetchType, DefinedLiveProps, DefineLiveOptions} from '#live/types'
 
 import {sanitizePerspective} from '#live/sanitizePerspective'
-import {
-  type ClientPerspective,
-  type ClientReturn,
-  type ContentSourceMap,
-  type QueryParams,
-} from '@sanity/client'
+import {type ClientPerspective, type QueryParams} from '@sanity/client'
 import {perspectiveCookieName} from '@sanity/preview-url-secret/constants'
 import {SanityLive as SanityLiveClientComponent} from 'next-sanity/live/client-components'
 import {actionRefresh, actionUpdateTags} from 'next-sanity/live/server-actions'
 import {cookies, draftMode} from 'next/headers'
 import {preconnect} from 'react-dom'
 
-/**
- * @public
- */
-export type DefinedSanityFetchType = <const QueryString extends string>(options: {
-  query: QueryString
-  params?: QueryParams | Promise<QueryParams>
-  /**
-   * Add custom `next.tags` to the underlying fetch request.
-   * @see https://nextjs.org/docs/app/api-reference/functions/fetch#optionsnexttags
-   * This can be used in conjunction with custom fallback revalidation strategies, as well as with custom Server Actions that mutate data and want to render with fresh data right away (faster than the Live Event latency).
-   * @defaultValue `['sanity']`
-   */
-  tags?: string[]
-  perspective?: Exclude<ClientPerspective, 'raw'>
-  stega?: boolean
-  /**
-   * This request tag is used to identify the request when viewing request logs from your Sanity Content Lake.
-   * @see https://www.sanity.io/docs/reference-api-request-tags
-   * @defaultValue 'next-loader.fetch'
-   */
-  requestTag?: string
-}) => Promise<{
-  data: ClientReturn<QueryString>
-  sourceMap: ContentSourceMap | null
-  tags: string[]
-}>
-
 export function defineLive(config: DefineLiveOptions): {
-  sanityFetch: DefinedSanityFetchType
+  sanityFetch: DefinedFetchType
   SanityLive: React.ComponentType<DefinedLiveProps>
 } {
   const {client: _client, serverToken, browserToken, stega: stegaEnabled = true} = config
@@ -66,7 +34,7 @@ export function defineLive(config: DefineLiveOptions): {
   const {token: originalToken} = client.config()
   const studioUrlDefined = typeof client.config().stega.studioUrl !== 'undefined'
 
-  const sanityFetch: DefinedSanityFetchType = async function sanityFetch<
+  const sanityFetch: DefinedFetchType = async function sanityFetch<
     const QueryString extends string,
   >({
     query,

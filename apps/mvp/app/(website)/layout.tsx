@@ -9,7 +9,6 @@ import {FormStatusLabel} from './FormStatus'
 import {IsPresentationTool} from './IsPresentationTool'
 import {RefreshButton} from './RefreshButton'
 
-
 async function toggleDraftMode() {
   'use server'
 

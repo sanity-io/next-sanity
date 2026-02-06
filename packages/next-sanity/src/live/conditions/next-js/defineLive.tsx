@@ -6,10 +6,8 @@ import {actionRefresh, actionUpdateTags} from 'next-sanity/live/server-actions'
 import {cacheLife, cacheTag} from 'next/cache'
 import {preconnect} from 'react-dom'
 
-import type {DefinedSanityFetchType} from '../react-server/defineLive'
-
 export function defineLive(config: DefineLiveOptions): {
-  sanityFetch: DefinedSanityFetchType
+  sanityFetch: DefinedFetchType
   SanityLive: React.ComponentType<DefinedLiveProps>
 } {
   const {client: _client, serverToken, browserToken} = config
@@ -43,7 +41,7 @@ export function defineLive(config: DefineLiveOptions): {
   }) {
     const useCdn = perspective === 'published'
 
-    const {result, resultSourceMap, syncTags} = await client.fetch(query, params, {
+    const {result, resultSourceMap, syncTags} = await client.fetch(query, await params, {
       filterResponse: false,
       returnQuery: false,
       perspective,
