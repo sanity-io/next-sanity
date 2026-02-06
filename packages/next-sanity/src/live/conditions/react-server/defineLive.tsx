@@ -100,10 +100,13 @@ export function defineLive(config: DefineLiveOptions): {
     const {
       includeAllDocuments = (await draftMode()).isEnabled,
       action = actionUpdateTags,
-      restartAction = actionRefresh,
-      reconnectAction = actionRefresh,
-      goAwayAction,
-      welcomeAction,
+      onReconnect = actionRefresh,
+      onRestart = actionRefresh,
+
+      onWelcome = false,
+      onError = false,
+      onGoAway = false,
+
       refreshOnMount,
       refreshOnFocus,
       refreshOnReconnect,
@@ -130,10 +133,11 @@ export function defineLive(config: DefineLiveOptions): {
         }}
         includeAllDocuments={shouldIncludeAllDocuments}
         action={action}
-        reconnectAction={reconnectAction === false ? undefined : reconnectAction}
-        restartAction={restartAction === false ? undefined : restartAction}
-        welcomeAction={welcomeAction}
-        goAwayAction={goAwayAction}
+        onReconnect={onReconnect}
+        onRestart={onRestart}
+        onWelcome={onWelcome}
+        onError={onError}
+        onGoAway={onGoAway}
         requestTag={requestTag}
         refreshOnMount={refreshOnMount}
         refreshOnFocus={refreshOnFocus}

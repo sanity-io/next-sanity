@@ -1,4 +1,12 @@
-import type {SanityLiveActionContext} from '#live/types'
+import type {
+  SanityLiveAction,
+  SanityLiveActionContext,
+  SanityLiveOnError,
+  SanityLiveOnGoaway,
+  SanityLiveOnReconnect,
+  SanityLiveOnRestart,
+  SanityLiveOnWelcome,
+} from '#live/types'
 
 import {isCorsOriginError} from '#live/isCorsOriginError'
 import {createClient, type InitializedClientConfig, type LiveEvent} from '@sanity/client'
@@ -26,30 +34,12 @@ export interface SanityLiveProps {
   includeAllDocuments?: boolean
   requestTag: string
 
-  action: (
-    event: Extract<LiveEvent, {type: 'message'}>,
-    context: SanityLiveActionContext,
-  ) => Promise<void>
-  reconnectAction?: (
-    event: Extract<LiveEvent, {type: 'reconnect'}>,
-    context: SanityLiveActionContext,
-  ) => Promise<void>
-  restartAction?: (
-    event: Extract<LiveEvent, {type: 'restart'}>,
-    context: SanityLiveActionContext,
-  ) => Promise<void>
-  welcomeAction?:
-    | ((
-        event: Extract<LiveEvent, {type: 'welcome'}>,
-        context: SanityLiveActionContext,
-      ) => Promise<void>)
-    | false
-  goAwayAction?:
-    | ((
-        event: Extract<LiveEvent, {type: 'goaway'}>,
-        context: SanityLiveActionContext,
-      ) => Promise<number | false>)
-    | false
+  action: SanityLiveAction
+  onError: SanityLiveOnError | false | undefined
+  onWelcome: SanityLiveOnWelcome | false | undefined
+  onReconnect: SanityLiveOnReconnect | false | undefined
+  onRestart: SanityLiveOnRestart | false | undefined
+  onGoAway: SanityLiveOnGoaway | false | undefined
 
   refreshOnMount?: boolean
   refreshOnFocus?: boolean
@@ -61,10 +51,11 @@ function SanityLive(props: SanityLiveProps): React.JSX.Element | null {
     config,
     includeAllDocuments = false,
     action,
-    goAwayAction,
-    reconnectAction,
-    restartAction,
-    welcomeAction,
+    onError,
+    onWelcome = handleWelcome,
+    onReconnect,
+    onRestart,
+    onGoAway = handleGoaway,
     refreshOnMount = false,
     refreshOnFocus = false,
     refreshOnReconnect = true,
@@ -73,17 +64,6 @@ function SanityLive(props: SanityLiveProps): React.JSX.Element | null {
   const {projectId, dataset, apiHost, apiVersion, useProjectHostname, token, requestTagPrefix} =
     config
   const actionContext = {includeAllDocuments} satisfies SanityLiveActionContext
-  const [error, setError] = useState<unknown>(null)
-  if (error) {
-    if (isCorsOriginError(error)) {
-      throw new Error(
-        `Sanity Live is unable to connect to the Sanity API as the current origin - ${window.origin} - is not in the list of allowed CORS origins for this Sanity Project.${error.addOriginUrl ? ` Add it here: ${error.addOriginUrl}` : ''}`,
-        {cause: error},
-      )
-    } else {
-      throw error
-    }
-  }
 
   const client = useMemo(
     () =>
@@ -103,19 +83,36 @@ function SanityLive(props: SanityLiveProps): React.JSX.Element | null {
 
   const [refreshOnInterval, setRefreshOnInterval] = useState<number | false>(false)
 
+  const [error, setError] = useState<unknown>(null)
+  if (error) {
+    // Throw during render to bubble up to the nearest <ErrorBoundary>, if `onError` is provided we won't rethrow
+    throw error
+  }
+  const handleError = useEffectEvent((error: unknown) => {
+    if (onError) {
+      void onError(error, actionContext)
+    } else {
+      startTransition(() =>
+        setError(
+          isCorsOriginError(error)
+            ? new Error(
+                `Sanity Live is unable to connect to the Sanity API as the current origin - ${window.origin} - is not in the list of allowed CORS origins for this Sanity Project.${error.addOriginUrl ? ` Add it here: ${error.addOriginUrl}` : ''}`,
+                {cause: error},
+              )
+            : error,
+        ),
+      )
+    }
+  })
+
   const handleLiveEvent = useEffectEvent(async (event: LiveEvent) => {
     switch (event.type) {
       case 'welcome': {
         // Disable long polling when welcome event is received, this is a no-op if long polling is already disabled
         setRefreshOnInterval(false)
 
-        if (welcomeAction) {
-          await welcomeAction(event, actionContext)
-        } else if (welcomeAction !== false && process.env.NODE_ENV !== 'production') {
-          // oxlint-disable-next-line no-console
-          console.info(
-            `<SanityLive> is connected and listening for live events to ${includeAllDocuments ? 'all content including drafts and version documents in content releases' : 'published content'}`,
-          )
+        if (onWelcome) {
+          await onWelcome(event, actionContext)
         }
         break
       }
@@ -124,30 +121,30 @@ function SanityLive(props: SanityLiveProps): React.JSX.Element | null {
         break
       }
       case 'restart': {
-        await restartAction?.(event, actionContext)
+        // Disable long polling when restart event is received, this is a no-op if long polling is already disabled
+        setRefreshOnInterval(false)
+
+        if (onRestart) {
+          await onRestart(event, actionContext)
+        }
         break
       }
       case 'reconnect': {
-        await reconnectAction?.(event, actionContext)
+        // Disable long polling when reconnect event is received, this is a no-op if long polling is already disabled
+        setRefreshOnInterval(false)
+
+        if (onReconnect) {
+          await onReconnect(event, actionContext)
+        }
         break
       }
       case 'goaway': {
-        if (goAwayAction !== false) {
-          let interval = goAwayAction ? await goAwayAction(event, actionContext) : 30_000
-          if (interval === false) return
-          if (Number.isFinite(interval) && interval > 0) {
-            startTransition(() => setRefreshOnInterval(interval))
-            if (process.env.NODE_ENV !== 'production') {
-              console.warn(
-                'Sanity Live connection closed, switching to long polling set to a interval of',
-                interval / 1_000,
-                'seconds and the server gave this reason:',
-                event.reason,
-              )
-            }
-          }
-        } else {
-          setError(
+        if (onGoAway) {
+          await onGoAway(event, actionContext, (interval) =>
+            startTransition(() => setRefreshOnInterval(interval)),
+          )
+        } else if (!onGoAway) {
+          handleError(
             new Error(
               `Sanity Live connection closed, automatic revalidation is disabled, the server gave this reason: ${event.reason}`,
               {cause: event},
@@ -157,7 +154,7 @@ function SanityLive(props: SanityLiveProps): React.JSX.Element | null {
         break
       }
       default:
-        setError(new Error(`Unknown live event type`, {cause: event}))
+        handleError(new Error(`Unknown live event type`, {cause: event}))
         break
     }
   })
@@ -166,7 +163,7 @@ function SanityLive(props: SanityLiveProps): React.JSX.Element | null {
       .events({includeDrafts: includeAllDocuments, tag: requestTag})
       .subscribe({
         next: (event) => startTransition(() => handleLiveEvent(event)),
-        error: (error) => startTransition(() => setError(error)),
+        error: handleError,
       })
     return () => subscription.unsubscribe()
   }, [client.live, requestTag, includeAllDocuments])
@@ -174,7 +171,9 @@ function SanityLive(props: SanityLiveProps): React.JSX.Element | null {
   return (
     <>
       {refreshOnFocus && <RefreshOnFocus />}
-      {refreshOnInterval && <RefreshOnInterval interval={refreshOnInterval} />}
+      {refreshOnInterval && Number.isFinite(refreshOnInterval) && refreshOnInterval > 0 && (
+        <RefreshOnInterval interval={refreshOnInterval} />
+      )}
       {refreshOnMount && <RefreshOnMount />}
       {refreshOnReconnect && <RefreshOnReconnect />}
     </>
@@ -184,3 +183,20 @@ function SanityLive(props: SanityLiveProps): React.JSX.Element | null {
 SanityLive.displayName = 'SanityLiveClientComponent'
 
 export default SanityLive
+
+const handleWelcome: SanityLiveOnWelcome = (_, {includeAllDocuments}) => {
+  // oxlint-disable-next-line no-console
+  console.info(
+    `<SanityLive${includeAllDocuments ? ' includeAllDocuments' : ''}> is connected and listening for live events to ${includeAllDocuments ? 'all content including drafts and version documents in content releases' : 'published content'}`,
+  )
+}
+
+const handleGoaway: SanityLiveOnGoaway = (event, {includeAllDocuments}, setLongPollingInterval) => {
+  const interval = 30_000
+  console.warn(
+    `<SanityLive${includeAllDocuments ? ' includeAllDocuments' : ''}> connection is closed after receiving a 'goaway' event, the server gave this reason:`,
+    event.reason,
+    `Content will now be refreshed every ${interval / 1_000} seconds`,
+  )
+  setLongPollingInterval(interval)
+}

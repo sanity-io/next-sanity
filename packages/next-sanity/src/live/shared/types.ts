@@ -55,6 +55,57 @@ export interface SanityLiveActionContext {
 
 /**
  * TODO: docs
+ * Has a default implementation tailed the nextjs env and config
+ */
+export type SanityLiveAction = (
+  event: Extract<LiveEvent, {type: 'message'}>,
+  context: SanityLiveActionContext,
+) => Promise<void>
+/**
+ * TODO: docs
+ * If not defined it'll throw the error during render instead, which will crash the react app
+ * unless there's an <ErrorBoundary> surrounding the <SanityLive> component
+ */
+export type SanityLiveOnError = (
+  event: unknown,
+  context: SanityLiveActionContext,
+) => void | Promise<void>
+/**
+ * TODO: docs
+ * Optional, logs console.info by default
+ */
+export type SanityLiveOnWelcome = (
+  event: Extract<LiveEvent, {type: 'welcome'}>,
+  context: SanityLiveActionContext,
+) => void | Promise<void>
+/**
+ * TODO: docs
+ */
+export type SanityLiveOnReconnect = (
+  event: Extract<LiveEvent, {type: 'reconnect'}>,
+  context: SanityLiveActionContext,
+) => void | Promise<void>
+/**
+ * TODO: docs
+ */
+export type SanityLiveOnRestart = (
+  event: Extract<LiveEvent, {type: 'restart'}>,
+  context: SanityLiveActionContext,
+) => void | Promise<void>
+/**
+ * TODO: docs
+ * This event is fired when the API has hit the limit of concurrent connections, and the API will not deliver live events, in this case long polling intervals is a possible fallback strategy.
+ * By default a message will be logged to the console, that creates a refresh interval of 30 seconds.
+ * If you set your own event handler make sure you call `setPollingInterval` if you want to activate long-polling, otherwise content goes stale.
+ */
+export type SanityLiveOnGoaway = (
+  event: Extract<LiveEvent, {type: 'goaway'}>,
+  context: SanityLiveActionContext,
+  setPollingInterval: (interval: number) => void,
+) => void | Promise<void>
+
+/**
+ * TODO: docs
  */
 export type Logger = typeof console | Pick<typeof console, 'warn' | 'error' | 'log'>
 
@@ -66,34 +117,27 @@ export interface DefinedLiveProps {
   /**
    * TODO: docs
    */
-  action?: (
-    event: Extract<LiveEvent, {type: 'message'}>,
-    context: SanityLiveActionContext,
-  ) => Promise<void>
-  welcomeAction?:
-    | ((
-        event: Extract<LiveEvent, {type: 'welcome'}>,
-        context: SanityLiveActionContext,
-      ) => Promise<void>)
-    | false
-  goAwayAction?:
-    | ((
-        event: Extract<LiveEvent, {type: 'goaway'}>,
-        context: SanityLiveActionContext,
-      ) => Promise<number | false>)
-    | false
-  reconnectAction?:
-    | ((
-        event: Extract<LiveEvent, {type: 'reconnect'}>,
-        context: SanityLiveActionContext,
-      ) => Promise<void>)
-    | false
-  restartAction?:
-    | ((
-        event: Extract<LiveEvent, {type: 'restart'}>,
-        context: SanityLiveActionContext,
-      ) => Promise<void>)
-    | false
+  action?: SanityLiveAction
+  /**
+   * TODO: docs
+   */
+  onError?: SanityLiveOnError | false
+  /**
+   * TODO: docs
+   */
+  onWelcome?: SanityLiveOnWelcome | false
+  /**
+   * TODO: docs
+   */
+  onReconnect?: SanityLiveOnReconnect | false
+  /**
+   * TODO: docs
+   */
+  onRestart?: SanityLiveOnRestart | false
+  /**
+   *
+   */
+  onGoAway?: SanityLiveOnGoaway | false
 
   /**
    * Automatic refresh of RSC when the component <SanityLive /> is mounted.
@@ -114,7 +158,7 @@ export interface DefinedLiveProps {
   /**
    * This request tag is used to identify the request when viewing request logs from your Sanity Content Lake.
    * @see https://www.sanity.io/docs/reference-api-request-tags
-   * @defaultValue 'next-loader.live'
+   * @defaultValue 'next-loader.live'|'next-loader.live.cache-components'
    */
   requestTag?: string
 }

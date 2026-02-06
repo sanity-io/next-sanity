@@ -31,7 +31,7 @@ export function defineLive(config: DefineLiveOptions): {
   const client = _client.withConfig({allowReconfigure: false, useCdn: true})
   const {token: originalToken, perspective: originalPerspective = 'published'} = client.config()
 
-  const fetch: DefinedFetchType = async function fetch({
+  const sanityFetch: DefinedFetchType = async function sanityFetch({
     query,
     params = {},
     perspective = originalPerspective,
@@ -71,14 +71,17 @@ export function defineLive(config: DefineLiveOptions): {
     return {data: result, sourceMap: resultSourceMap || null, tags}
   }
 
-  const Live: React.ComponentType<DefinedLiveProps> = function Live(props) {
+  const SanityLive: React.ComponentType<DefinedLiveProps> = function SanityLive(props) {
     const {
       includeAllDocuments = false,
       action = actionUpdateTags,
-      restartAction = actionRefresh,
-      reconnectAction = actionRefresh,
-      goAwayAction,
-      welcomeAction,
+      onReconnect = actionRefresh,
+      onRestart = actionRefresh,
+
+      onWelcome,
+      onError,
+      onGoAway,
+
       refreshOnMount = false,
       refreshOnFocus = false,
       refreshOnReconnect = false,
@@ -107,10 +110,11 @@ export function defineLive(config: DefineLiveOptions): {
         }}
         includeAllDocuments={shouldIncludeDrafts}
         action={action}
-        reconnectAction={reconnectAction === false ? undefined : reconnectAction}
-        restartAction={restartAction === false ? undefined : restartAction}
-        welcomeAction={welcomeAction}
-        goAwayAction={goAwayAction}
+        onReconnect={onReconnect}
+        onRestart={onRestart}
+        onWelcome={onWelcome}
+        onError={onError}
+        onGoAway={onGoAway}
         requestTag={requestTag}
         refreshOnMount={refreshOnMount}
         refreshOnFocus={refreshOnFocus}
@@ -118,10 +122,10 @@ export function defineLive(config: DefineLiveOptions): {
       />
     )
   }
-  Live.displayName = 'SanityLiveServerComponent'
+  SanityLive.displayName = 'SanityLiveServerComponent'
 
   return {
-    sanityFetch: fetch,
-    SanityLive: Live,
+    sanityFetch: sanityFetch,
+    SanityLive: SanityLive,
   }
 }
