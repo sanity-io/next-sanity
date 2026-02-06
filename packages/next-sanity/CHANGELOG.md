@@ -1,5 +1,19 @@
 # next-sanity
 
+## 12.1.0
+
+### Minor Changes
+
+- [#3250](https://github.com/sanity-io/next-sanity/pull/3250) [`d206756`](https://github.com/sanity-io/next-sanity/commit/d206756e5b9eb0294a2931955140ee608eac3bd8) Thanks [@stipsan](https://github.com/stipsan)! - Add `useVisualEditingEnvironment` hook
+
+- [#3250](https://github.com/sanity-io/next-sanity/pull/3250) [`d206756`](https://github.com/sanity-io/next-sanity/commit/d206756e5b9eb0294a2931955140ee608eac3bd8) Thanks [@stipsan](https://github.com/stipsan)! - Refactor `useIsPresentationTool` implementation to no longer require `<SanityLive />`, it uses `<VisualEditing />` instead.
+
+### Patch Changes
+
+- [#3255](https://github.com/sanity-io/next-sanity/pull/3255) [`7d4a0c0`](https://github.com/sanity-io/next-sanity/commit/7d4a0c0e59c6320501f5748df11005d17a2ed905) Thanks [@renovate](https://github.com/apps/renovate)! - fix(deps): update dependency @sanity/visual-editing to ^5.2.1
+
+- [#3250](https://github.com/sanity-io/next-sanity/pull/3250) [`d206756`](https://github.com/sanity-io/next-sanity/commit/d206756e5b9eb0294a2931955140ee608eac3bd8) Thanks [@stipsan](https://github.com/stipsan)! - Mark `useDraftModeEnvironment`, `useDraftModePerspective`, and `useIsLivePreview`, as deprecated
+
 ## 12.0.17
 
 ### Patch Changes
