@@ -2,6 +2,7 @@ import {q} from '#groqd'
 import {createDataAttribute} from 'next-sanity'
 
 import {Image} from './Image'
+import {PostTitle} from './PostTitle'
 
 export const postsQuery = q.star
   .filterByType('post')
@@ -72,7 +73,9 @@ export default async function Posts(props: PostsLayoutProps) {
               <div className="flex flex-1 flex-col justify-between bg-white p-6">
                 <div className="flex-1">
                   <a className="mt-2 block">
-                    <p className="text-xl font-semibold text-gray-900">{post.title}</p>
+                    <p className="text-xl font-semibold text-gray-900">
+                      <PostTitle id={post._id} title={post.title} />
+                    </p>
                   </a>
                 </div>
                 <div className="mt-6 flex items-center">

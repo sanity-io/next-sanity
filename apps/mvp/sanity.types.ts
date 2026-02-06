@@ -327,6 +327,7 @@ export type SanityImageMetadata = {
   palette?: SanityImagePalette
   lqip?: string
   blurHash?: string
+  thumbHash?: string
   hasAlpha?: boolean
   isOpaque?: boolean
 }
@@ -424,3 +425,16 @@ export type AllSanitySchemaTypes =
   | Geopoint
 
 export declare const internalGroqTypeReferenceTo: unique symbol
+
+// Source: app/(website)/PostsTitle.tsx
+// Variable: postTitleQuery
+// Query: *[_type == "post" && _id == $id][0].title
+export type PostTitleQueryResult = string | null
+
+// Query TypeMap
+import '@sanity/client'
+declare module '@sanity/client' {
+  interface SanityQueries {
+    '*[_type == "post" && _id == $id][0].title': PostTitleQueryResult
+  }
+}

@@ -43,6 +43,7 @@ test(`exports snapshot for the ${JSON.stringify(env)} condition`, {timeout: 15_0
         useIsPresentationTool: function
         useOptimistic: function
         usePresentationQuery: function
+        useVisualEditingEnvironment: function
       ./image:
         Image: function
         imageLoader: function
