@@ -1,0 +1,5 @@
+---
+"next-sanity": patch
+---
+
+🤦

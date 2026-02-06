@@ -1,5 +1,35 @@
 # next-sanity
 
+## 13.0.0-cache-components.26
+
+### Patch Changes
+
+- [#3109](https://github.com/sanity-io/next-sanity/pull/3109) [`83dd3ec`](https://github.com/sanity-io/next-sanity/commit/83dd3ecfb1a11de2fff7e7bf73c46572f3b9652a) Thanks [@stipsan](https://github.com/stipsan)! - 🤦
+
+## 13.0.0-cache-components.25
+
+### Patch Changes
+
+- [#3109](https://github.com/sanity-io/next-sanity/pull/3109) [`6de0409`](https://github.com/sanity-io/next-sanity/commit/6de04099de17175d5b994c311fcf5e83368a3982) Thanks [@stipsan](https://github.com/stipsan)! - Refactor events props to use consistent naming and types
+
+## 13.0.0-cache-components.24
+
+### Patch Changes
+
+- [#3109](https://github.com/sanity-io/next-sanity/pull/3109) [`1d94e10`](https://github.com/sanity-io/next-sanity/commit/1d94e10da4aa2ee82a8d04bbf6193075c5812016) Thanks [@stipsan](https://github.com/stipsan)! - Add `parseTags` util for `<SanityLive action />`
+
+## 13.0.0-cache-components.23
+
+### Patch Changes
+
+- [#3109](https://github.com/sanity-io/next-sanity/pull/3109) [`94bcb08`](https://github.com/sanity-io/next-sanity/commit/94bcb086991f0e71620089ebe1c05750c085497d) Thanks [@stipsan](https://github.com/stipsan)! - Also `await params` in the `next-js` version of `defineLive().sanityFetch`
+
+## 13.0.0-cache-components.22
+
+### Patch Changes
+
+- [#3109](https://github.com/sanity-io/next-sanity/pull/3109) [`0e7dd47`](https://github.com/sanity-io/next-sanity/commit/0e7dd474a7c113a70f4aed92c9a4df870e69794d) Thanks [@stipsan](https://github.com/stipsan)! - Update `useIsPresentationTool`
+
 ## 12.1.0
 
 ### Minor Changes
