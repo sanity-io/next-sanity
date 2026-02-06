@@ -1,5 +1,11 @@
 # next-sanity
 
+## 13.0.0-cache-components.24
+
+### Patch Changes
+
+- [#3109](https://github.com/sanity-io/next-sanity/pull/3109) [`1d94e10`](https://github.com/sanity-io/next-sanity/commit/1d94e10da4aa2ee82a8d04bbf6193075c5812016) Thanks [@stipsan](https://github.com/stipsan)! - Add `parseTags` util for `<SanityLive action />`
+
 ## 13.0.0-cache-components.23
 
 ### Patch Changes
