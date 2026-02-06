@@ -832,6 +832,7 @@ import {
   useIsPresentationTool,
   useDraftModeEnvironment,
   useDraftModePerspective,
+  useVisualEditingEnvironment,
 } from 'next-sanity/hooks'
 ```
 

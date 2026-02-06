@@ -14,6 +14,7 @@ import {useDraftModeEnvironment} from './useDraftMode'
  * The hook returns `null` initially, to signal it doesn't yet know if it's live previewing or not.
  * Then `true` if it is, and `false` otherwise.
  * @public
+ * @deprecated this hook will be removed in the next major version
  */
 export function useIsLivePreview(): boolean | null {
   const environment = useDraftModeEnvironment()

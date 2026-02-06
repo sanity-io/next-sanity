@@ -1,4 +1,8 @@
 'use client'
 
 export * from '../live/hooks'
-export {useOptimistic} from '@sanity/visual-editing/react'
+export {
+  useIsPresentationTool,
+  useOptimistic,
+  useVisualEditingEnvironment,
+} from '@sanity/visual-editing/react'

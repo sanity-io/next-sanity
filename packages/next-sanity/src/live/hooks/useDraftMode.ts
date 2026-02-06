@@ -18,6 +18,7 @@ import {
  * - Your app is previewing drafts, but not live.
  * - Your app is not previewing anything (that could be detected).
  * @public
+ * @deprecated this hook will be removed in the next major version
  */
 export function useDraftModeEnvironment(): DraftEnvironment {
   const subscribe = useCallback((listener: () => void) => {
@@ -37,6 +38,7 @@ export function useDraftModeEnvironment(): DraftEnvironment {
  * If the hook is used outside Draft Mode it will resolve to `'unknown'`.
  * If the hook is used but the `<SanityLive />` component is not present then it'll stay in `'checking'` and console warn after a timeout that it seems like you're missing the component.
  * @public
+ * @deprecated this hook will be removed in the next major version
  */
 export function useDraftModePerspective(): DraftPerspective {
   const subscribe = useCallback((listener: () => void) => {

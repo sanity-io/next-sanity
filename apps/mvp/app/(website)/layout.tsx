@@ -9,6 +9,7 @@ import {
 
 import {DebugStatus} from './DebugStatus'
 import {FormStatusLabel} from './FormStatus'
+import {IsPresentationTool} from './IsPresentationTool'
 import {SanityLive} from './live'
 import {RefreshButton} from './RefreshButton'
 // import {resolvePerspectiveFromCookies} from 'next-sanity/experimental/live'
@@ -34,6 +35,7 @@ export default async function RootLayout({children}: {children: React.ReactNode}
       <body className="px-8">
         <div className="mt-8 mb-4 border p-4">
           <p>Draft mode: {isDraftMode ? 'On' : 'Off'}</p>
+          <IsPresentationTool />
           {isDraftMode && <DebugStatus />}
           <form action={toggleDraftMode}>
             <button className="rounded bg-blue-500 px-2 py-1 font-medium text-white">
