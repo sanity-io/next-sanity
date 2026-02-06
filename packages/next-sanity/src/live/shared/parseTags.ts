@@ -34,6 +34,6 @@ export function parseTags<const Tags extends Extract<LiveEvent, {type: 'message'
   }
   return tags.map(
     (tag) =>
-      `${context.includeAllDocuments ? PUBLISHED_SYNC_TAG_PREFIX : DRAFT_SYNC_TAG_PREFIX}${tag}` as const,
+      `${context.includeAllDocuments ? DRAFT_SYNC_TAG_PREFIX : PUBLISHED_SYNC_TAG_PREFIX}${tag}` as const,
   )
 }
