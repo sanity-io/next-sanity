@@ -1,5 +1,11 @@
 # next-sanity
 
+## 13.0.0-cache-components.25
+
+### Patch Changes
+
+- [#3109](https://github.com/sanity-io/next-sanity/pull/3109) [`6de0409`](https://github.com/sanity-io/next-sanity/commit/6de04099de17175d5b994c311fcf5e83368a3982) Thanks [@stipsan](https://github.com/stipsan)! - Refactor events props to use consistent naming and types
+
 ## 13.0.0-cache-components.24
 
 ### Patch Changes
