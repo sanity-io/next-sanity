@@ -106,7 +106,7 @@ jobs:
             echo "📋 Extracted version from tag: $VERSION"
           else
             # For manual dispatch, get version from package.json
-            VERSION=$(node -p "require('./package.json').version")
+            VERSION=$(node -p "require('.packages/next-sanity/package.json').version")
             echo "version=$VERSION" >> $GITHUB_OUTPUT
             echo "📋 Using package.json version: $VERSION"
           fi
