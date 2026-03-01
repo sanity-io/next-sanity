@@ -52,8 +52,8 @@ export default function SanityLiveStream(props: SanityLiveStreamProps): React.JS
   )
   const [children, setChildren] = useState<React.ReactNode | undefined>(undefined)
 
-  const handleQueryHeartbeat = useEffectEvent((comlink: NonNullable<typeof comlinkSnapshot>) => {
-    comlink.post('loader/query-listen', {
+  const handleQueryHeartbeat = useEffectEvent((activeComlink: NonNullable<typeof comlinkSnapshot>) => {
+    activeComlink.post('loader/query-listen', {
       projectId: projectId!,
       dataset: dataset!,
       perspective: perspective! as ClientPerspective,
@@ -111,11 +111,11 @@ export default function SanityLiveStream(props: SanityLiveStreamProps): React.JS
           }) as Promise<React.JSX.Element>
         )
           .then(
-            (children) => {
+            (renderedChildren) => {
               // oxlint-disable-next-line no-console
               console.log('setChildren(children)')
               // startTransition(() => setChildren(children))
-              setChildren(children)
+              setChildren(renderedChildren)
             },
             (reason: unknown) => {
               console.error('rendering with server action: render children error', reason)

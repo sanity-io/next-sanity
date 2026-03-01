@@ -271,7 +271,7 @@ export function defineLive(config: DefineSanityLiveOptions): {
       tag: [requestTag, 'fetch-sync-tags'].filter(Boolean).join('.'),
     })
 
-    const cacheTags = [...tags, ...(syncTags?.map((tag) => `sanity:${tag}`) || [])]
+    const cacheTags = [...tags, ...(syncTags?.map((syncTag) => `sanity:${syncTag}`) || [])]
 
     const {result, resultSourceMap} = await client.fetch(query, await params, {
       filterResponse: false,

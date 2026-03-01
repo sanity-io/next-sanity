@@ -36,12 +36,12 @@ export function Image(
   },
 ) {
   const {src, ...rest} = props
-  const imageBuilder = urlForImage(props.src)
+  const imageUrlBuilder = urlForImage(props.src)
   if (props.width) {
-    imageBuilder.width(typeof props.width === 'string' ? parseInt(props.width, 10) : props.width)
+    imageUrlBuilder.width(typeof props.width === 'string' ? parseInt(props.width, 10) : props.width)
   }
   if (props.height) {
-    imageBuilder.height(
+    imageUrlBuilder.height(
       typeof props.height === 'string' ? parseInt(props.height, 10) : props.height,
     )
   }
@@ -50,7 +50,7 @@ export function Image(
     <SanityImage
       alt={typeof src.alt === 'string' ? src.alt : ''}
       {...rest}
-      src={imageBuilder.url()}
+      src={imageUrlBuilder.url()}
     />
   )
 }

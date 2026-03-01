@@ -331,8 +331,14 @@ export function defineLive(config: DefineSanityLiveOptions): {
       revalidateSyncTags = expireTags,
     } = props
 
-    const {projectId, dataset, apiHost, apiVersion, useProjectHostname, requestTagPrefix} =
-      client.config()
+    const {
+      projectId: liveProjectId,
+      dataset: liveDataset,
+      apiHost: liveApiHost,
+      apiVersion: liveApiVersion,
+      useProjectHostname: liveUseProjectHostname,
+      requestTagPrefix: liveRequestTagPrefix,
+    } = client.config()
     const {origin} = new URL(client.getUrl('', false))
 
     // Preconnect to the Live Event API origin early, as the Sanity API is almost always on a different origin than the app
@@ -340,7 +346,14 @@ export function defineLive(config: DefineSanityLiveOptions): {
 
     return (
       <SanityLiveServerComponent
-        config={{projectId, dataset, apiHost, apiVersion, useProjectHostname, requestTagPrefix}}
+        config={{
+          projectId: liveProjectId,
+          dataset: liveDataset,
+          apiHost: liveApiHost,
+          apiVersion: liveApiVersion,
+          useProjectHostname: liveUseProjectHostname,
+          requestTagPrefix: liveRequestTagPrefix,
+        }}
         requestTag={requestTag}
         browserToken={browserToken}
         // origin={origin}
@@ -352,7 +365,7 @@ export function defineLive(config: DefineSanityLiveOptions): {
         intervalOnGoAway={intervalOnGoAway}
         revalidateSyncTags={revalidateSyncTags}
         resolveDraftModePerspective={
-          props.resolveDraftModePerspective ?? resolveDraftModePerspective
+          props.resolveDraftModePerspective ?? defaultResolveDraftModePerspective
         }
       />
     )
@@ -446,7 +459,7 @@ async function expireTags(_tags: unknown): Promise<void> {
   console.log(`<SanityLive /> updated tags: ${tags.join(', ')}`)
 }
 
-async function resolveDraftModePerspective(): Promise<ClientPerspective> {
+async function defaultResolveDraftModePerspective(): Promise<ClientPerspective> {
   'use server'
   if ((await draftMode()).isEnabled) {
     const jar = await cookies()

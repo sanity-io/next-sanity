@@ -119,7 +119,7 @@ export function usePresentationQuery<const QueryString extends string>(props: {
    * The perspective is kept in sync with Presentation Tool's perspective, and even knows what perspective the page loaded with initially and can forward it to the Sanity Studio.
    */
   const perspective = useDraftModePerspective()
-  const handleQueryHeartbeat = useEffectEvent((comlink: NonNullable<typeof comlinkSnapshot>) => {
+  const handleQueryHeartbeat = useEffectEvent((activeComlink: NonNullable<typeof comlinkSnapshot>) => {
     // Handle odd case where the comlink can take events but some data is missing
     if (!projectId || !dataset || !perspective) {
       console.warn('usePresentationQuery: projectId, dataset and perspective must be set', {
@@ -133,7 +133,7 @@ export function usePresentationQuery<const QueryString extends string>(props: {
     if (perspective === 'checking' || perspective === 'unknown') {
       return
     }
-    comlink.post('loader/query-listen', {
+    activeComlink.post('loader/query-listen', {
       projectId,
       dataset,
       perspective,

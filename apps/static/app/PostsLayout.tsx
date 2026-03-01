@@ -16,9 +16,9 @@ const postsQuery = q.star
     author: sub
       .field('author')
       .deref()
-      .project((sub) => ({
+      .project((authorSub) => ({
         name: true,
-        image: sub.field('image').project({asset: true, crop: true, hotspot: true, alt: true}),
+        image: authorSub.field('image').project({asset: true, crop: true, hotspot: true, alt: true}),
       })),
     status: sub.select({
       '_originalId in path("drafts.**")': q.value('draft'),
