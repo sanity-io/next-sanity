@@ -113,8 +113,8 @@ export default function SanityLiveStream(props: SanityLiveStreamProps): React.JS
           .then(
             (renderedChildren) => {
               // oxlint-disable-next-line no-console
-              console.log('setChildren(children)')
-              // startTransition(() => setChildren(children))
+              console.log('setChildren(renderedChildren)')
+              // startTransition(() => setChildren(renderedChildren))
               setChildren(renderedChildren)
             },
             (reason: unknown) => {
