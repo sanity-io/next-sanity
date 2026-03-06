@@ -1,8 +1,8 @@
 'use client'
 
-export {usePresentationQuery} from '../visual-editing/hooks/usePresentationQuery'
 export {
   useIsPresentationTool,
   useOptimistic,
+  usePresentationQuery,
   useVisualEditingEnvironment,
 } from '@sanity/visual-editing/react'
