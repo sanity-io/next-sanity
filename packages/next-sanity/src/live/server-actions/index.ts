@@ -1,7 +1,6 @@
 'use server'
 
 import type {ClientPerspective, SyncTag} from '@sanity/client'
-
 import {perspectiveCookieName} from '@sanity/preview-url-secret/constants'
 import {revalidateTag} from 'next/cache'
 import {cookies, draftMode} from 'next/headers'
