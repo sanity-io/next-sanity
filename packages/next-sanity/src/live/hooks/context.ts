@@ -52,23 +52,8 @@ export const comlinkListeners: Set<() => void> = new Set()
 /** @internal */
 export let comlink: Node<LoaderNodeMsg, LoaderControllerMsg> | null = null
 /** @internal */
-export let comlinkProjectId: string | null = null
-/** @internal */
-export let comlinkDataset: string | null = null
-/** @internal */
 export function setComlink(nextComlink: Node<LoaderNodeMsg, LoaderControllerMsg> | null): void {
   comlink = nextComlink
-  for (const onComlinkChange of comlinkListeners) {
-    onComlinkChange()
-  }
-}
-/** @internal */
-export function setComlinkClientConfig(
-  nextComlinkProjectId: string | null,
-  nextComlinkDataset: string | null,
-): void {
-  comlinkProjectId = nextComlinkProjectId
-  comlinkDataset = nextComlinkDataset
   for (const onComlinkChange of comlinkListeners) {
     onComlinkChange()
   }

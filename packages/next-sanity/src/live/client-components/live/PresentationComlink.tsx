@@ -13,26 +13,20 @@ import {setPerspectiveCookie} from 'next-sanity/live/server-actions'
 import {useRouter} from 'next/navigation'
 import {useEffect, useEffectEvent} from 'react'
 
-import {setComlink, setComlinkClientConfig} from '../../hooks/context'
+import {setComlink} from '../../hooks/context'
 
 function PresentationComlink(props: {
-  projectId: string
-  dataset: string
   // handleDraftModeAction: (secret: string) => Promise<void | string>
   draftModeEnabled: boolean
   draftModePerspective: ClientPerspective
 }): React.JSX.Element | null {
-  const {projectId, dataset, draftModeEnabled, draftModePerspective} = props
+  const {draftModeEnabled, draftModePerspective} = props
   const router = useRouter()
 
   // const [presentationComlink, setPresentationComlink] = useState<Node<
   //   LoaderControllerMsg,
   //   LoaderNodeMsg
   // > | null>(null)
-
-  useEffect(() => {
-    setComlinkClientConfig(projectId, dataset)
-  }, [dataset, projectId])
 
   const handlePerspectiveChange = useEffectEvent(
     (perspective: ClientPerspective, signal: AbortSignal) => {

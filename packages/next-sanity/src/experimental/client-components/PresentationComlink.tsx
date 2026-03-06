@@ -11,23 +11,16 @@ import {startTransition, useEffect, useEffectEvent} from 'react'
 
 import {
   setComlink,
-  setComlinkClientConfig,
   setPerspective,
   perspective,
 } from '../../live/hooks/context'
 import {sanitizePerspective} from '../../live/utils'
 
 export default function PresentationComlink(props: {
-  projectId: string
-  dataset: string
   draftModeEnabled: boolean
 }): React.JSX.Element | null {
-  const {projectId, dataset, draftModeEnabled} = props
+  const {draftModeEnabled} = props
   const router = useRouter()
-
-  useEffect(() => {
-    setComlinkClientConfig(projectId, dataset)
-  }, [dataset, projectId])
 
   const handlePerspectiveChange = useEffectEvent(
     (_perspective: ClientPerspective, signal: AbortSignal) => {

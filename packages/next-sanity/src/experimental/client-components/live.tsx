@@ -309,8 +309,6 @@ export default function SanityLive(props: SanityLiveProps): React.JSX.Element | 
     <>
       {draftModeEnabled && loadComlink && resolvedInitialPerspective && (
         <PresentationComlink
-          projectId={projectId!}
-          dataset={dataset!}
           draftModeEnabled={draftModeEnabled}
         />
       )}

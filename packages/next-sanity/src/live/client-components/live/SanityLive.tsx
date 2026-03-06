@@ -261,8 +261,6 @@ export function SanityLive(props: SanityLiveProps): React.JSX.Element | null {
     <>
       {draftModeEnabled && loadComlink && (
         <PresentationComlink
-          projectId={projectId!}
-          dataset={dataset!}
           // handleDraftModeAction={handleDraftModeAction}
           draftModeEnabled={draftModeEnabled}
           draftModePerspective={draftModePerspective!}
