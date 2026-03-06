@@ -1,5 +1,6 @@
-import {q} from '#groqd'
 import {memo} from 'react'
+
+import {q} from '#groqd'
 
 import {Image} from './Image'
 

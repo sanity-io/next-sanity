@@ -1,5 +1,4 @@
 import type {ClientPerspective} from '@sanity/client'
-
 import {type Node} from '@sanity/comlink'
 import {type LoaderControllerMsg, type LoaderNodeMsg} from '@sanity/presentation-comlink'
 

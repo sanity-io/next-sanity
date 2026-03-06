@@ -1,5 +1,6 @@
-import {q} from '#groqd'
 import {createDataAttribute} from 'next-sanity'
+
+import {q} from '#groqd'
 
 import {Image} from './Image'
 import {PostTitle} from './PostTitle'

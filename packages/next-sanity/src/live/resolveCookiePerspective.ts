@@ -1,5 +1,4 @@
 import type {ClientPerspective} from '@sanity/client'
-
 import {perspectiveCookieName} from '@sanity/preview-url-secret/constants'
 import {cookies, draftMode} from 'next/headers'
 
