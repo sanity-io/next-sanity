@@ -265,8 +265,8 @@ importers:
         specifier: ^4.0.3
         version: 4.0.3(@sanity/client@7.14.1(debug@4.4.3))
       '@sanity/visual-editing':
-        specifier: ^5.2.1
-        version: 5.2.1(@emotion/is-prop-valid@1.4.0)(@sanity/client@7.14.1)(@sanity/styled-components@6.1.23(react-dom@19.2.4(react@19.2.4))(react@19.2.4))(@sanity/types@5.8.1(@types/react@19.2.13))(next@16.2.0-canary.29(@babel/core@7.29.0)(babel-plugin-react-compiler@1.0.0)(react-dom@19.2.4(react@19.2.4))(react@19.2.4))(react-dom@19.2.4(react@19.2.4))(react-is@19.2.4)(react@19.2.4)(typescript@5.9.3)
+        specifier: ^5.3.0
+        version: 5.3.0(@emotion/is-prop-valid@1.4.0)(@sanity/client@7.14.1)(@sanity/styled-components@6.1.23(react-dom@19.2.4(react@19.2.4))(react@19.2.4))(@sanity/types@5.8.1(@types/react@19.2.13))(next@16.2.0-canary.29(@babel/core@7.29.0)(babel-plugin-react-compiler@1.0.0)(react-dom@19.2.4(react@19.2.4))(react@19.2.4))(react-dom@19.2.4(react@19.2.4))(react-is@19.2.4)(react@19.2.4)(typescript@5.9.3)
       '@sanity/webhook':
         specifier: ^4.0.4
         version: 4.0.4
@@ -2683,8 +2683,8 @@ packages:
       '@sanity/types':
         optional: true
 
-  '@sanity/visual-editing@5.2.1':
-    resolution: {integrity: sha512-69KGJGyf6QVi8F67mODWe2wBTadzXiezj8lRvBXU2H1u98t7WARVkK28izK2oNWmjn5FbCE9zgSLL6d824H5MA==}
+  '@sanity/visual-editing@5.3.0':
+    resolution: {integrity: sha512-FN8DslcXzKXDOI6B/aUSO8Z+20Rur3tDnUD9b10AoP87as/elWZL8IEkoVSd2aLKh6xJRQaUc/FDaF5eHR/sCw==}
     engines: {node: '>=20.19'}
     peerDependencies:
       '@sanity/client': ^7.14.1
@@ -3286,6 +3286,7 @@ packages:
   basic-ftp@5.1.0:
     resolution: {integrity: sha512-RkaJzeJKDbaDWTIPiJwubyljaEPwpVWkm9Rt5h9Nd6h7tEXTJ3VB4qxdZBioV7JO5yLUaOKwz7vDOzlncUsegw==}
     engines: {node: '>=10.0.0'}
+    deprecated: Security vulnerability fixed in 5.2.0, please upgrade
 
   before-after-hook@4.0.0:
     resolution: {integrity: sha512-q6tR3RPqIB1pMiTRMFcZwuG5T8vwp+vUvEG0vuI6B+Rikh5BfPp2fQ82c925FOs+b0lcFQ8CFrL+KbilfZFhOQ==}
@@ -9587,7 +9588,7 @@ snapshots:
     optionalDependencies:
       '@sanity/types': 5.8.1(@types/react@19.2.13)(debug@4.4.3)
 
-  '@sanity/visual-editing@5.2.1(@emotion/is-prop-valid@1.4.0)(@sanity/client@7.14.1)(@sanity/styled-components@6.1.23(react-dom@19.2.4(react@19.2.4))(react@19.2.4))(@sanity/types@5.8.1(@types/react@19.2.13))(next@16.2.0-canary.29(@babel/core@7.29.0)(babel-plugin-react-compiler@1.0.0)(react-dom@19.2.4(react@19.2.4))(react@19.2.4))(react-dom@19.2.4(react@19.2.4))(react-is@19.2.4)(react@19.2.4)(typescript@5.9.3)':
+  '@sanity/visual-editing@5.3.0(@emotion/is-prop-valid@1.4.0)(@sanity/client@7.14.1)(@sanity/styled-components@6.1.23(react-dom@19.2.4(react@19.2.4))(react@19.2.4))(@sanity/types@5.8.1(@types/react@19.2.13))(next@16.2.0-canary.29(@babel/core@7.29.0)(babel-plugin-react-compiler@1.0.0)(react-dom@19.2.4(react@19.2.4))(react@19.2.4))(react-dom@19.2.4(react@19.2.4))(react-is@19.2.4)(react@19.2.4)(typescript@5.9.3)':
     dependencies:
       '@sanity/comlink': 4.0.1
       '@sanity/icons': 3.7.4(react@19.2.4)
@@ -9598,6 +9599,7 @@ snapshots:
       '@sanity/ui': 3.1.11(@emotion/is-prop-valid@1.4.0)(@sanity/styled-components@6.1.23(react-dom@19.2.4(react@19.2.4))(react@19.2.4))(react-dom@19.2.4(react@19.2.4))(react-is@19.2.4)(react@19.2.4)
       '@sanity/visual-editing-csm': 3.0.5(@sanity/client@7.14.1)(@sanity/types@5.8.1(@types/react@19.2.13))(typescript@5.9.3)
       '@vercel/stega': 1.0.0
+      dequal: 2.0.3
       react: 19.2.4
       react-dom: 19.2.4(react@19.2.4)
       rxjs: 7.8.2
