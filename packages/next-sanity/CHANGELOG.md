@@ -1,5 +1,17 @@
 # next-sanity
 
+## 12.1.1
+
+### Patch Changes
+
+- [#3269](https://github.com/sanity-io/next-sanity/pull/3269) [`2ac9366`](https://github.com/sanity-io/next-sanity/commit/2ac936649e0b5ce79b62df0980f3ec63a78b290d) Thanks [@renovate](https://github.com/apps/renovate)! - fix(deps): update sanity monorepo to v5.13.0
+
+- [#3271](https://github.com/sanity-io/next-sanity/pull/3271) [`767ef51`](https://github.com/sanity-io/next-sanity/commit/767ef51ccc801e15d2c364a96bfac862a9446c0a) Thanks [@renovate](https://github.com/apps/renovate)! - fix(deps): update dependency @sanity/client to ^7.16.0
+
+- [#3274](https://github.com/sanity-io/next-sanity/pull/3274) [`da9965e`](https://github.com/sanity-io/next-sanity/commit/da9965e09e313360e4a80e8c3d36267368d93a1e) Thanks [@renovate](https://github.com/apps/renovate)! - fix(deps): update dependency @portabletext/react to ^6.0.3
+
+- [#3289](https://github.com/sanity-io/next-sanity/pull/3289) [`971289c`](https://github.com/sanity-io/next-sanity/commit/971289c339da5c60dbc8e2dde3686b933ea76d9b) Thanks [@renovate](https://github.com/apps/renovate)! - fix(deps): update dependency @sanity/visual-editing to ^5.3.0
+
 ## 12.1.0
 
 ### Minor Changes
