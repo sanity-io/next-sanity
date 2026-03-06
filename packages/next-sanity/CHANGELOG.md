@@ -1,5 +1,11 @@
 # next-sanity
 
+## 13.0.0-cache-components.27
+
+### Minor Changes
+
+- [#3292](https://github.com/sanity-io/next-sanity/pull/3292) [`7d78254`](https://github.com/sanity-io/next-sanity/commit/7d7825479defc834d50c5de8219af2a1ad4d680b) Thanks [@copilot-swe-agent](https://github.com/apps/copilot-swe-agent)! - Add `usePresentationQuery` hook to `next-sanity/hooks`
+
 ## 13.0.0-cache-components.26
 
 ### Patch Changes
