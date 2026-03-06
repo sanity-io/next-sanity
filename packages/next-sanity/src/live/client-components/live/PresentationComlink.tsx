@@ -1,5 +1,4 @@
 import type {ClientPerspective} from '@sanity/client'
-
 import {
   createNode,
   createNodeMachine,

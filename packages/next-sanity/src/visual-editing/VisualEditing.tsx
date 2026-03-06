@@ -1,5 +1,4 @@
 import type {VisualEditingProps} from 'next-sanity/visual-editing/client-component'
-
 import VisualEditingComponent from 'next-sanity/visual-editing/client-component'
 
 /**

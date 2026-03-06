@@ -12,12 +12,11 @@ import dynamic from 'next/dynamic'
 import {useRouter} from 'next/navigation'
 import {useEffect, useMemo, useRef, useState, useEffectEvent} from 'react'
 
-import type {SanityClientConfig} from '../types'
-
 import {isCorsOriginError} from '../../isCorsOriginError'
 import {setEnvironment, setPerspective} from '../../live/hooks/context'
 import {sanitizePerspective} from '../../live/utils'
 import {PUBLISHED_SYNC_TAG_PREFIX, type DRAFT_SYNC_TAG_PREFIX} from '../constants'
+import type {SanityClientConfig} from '../types'
 
 const PresentationComlink = dynamic(() => import('./PresentationComlink'), {ssr: false})
 const RefreshOnMount = dynamic(() => import('../../live/client-components/live/RefreshOnMount'), {

@@ -1,8 +1,10 @@
-import {env} from '#env'
-import * as yaml from 'js-yaml'
 import {fileURLToPath} from 'node:url'
+
+import * as yaml from 'js-yaml'
 import {expect, test, vi} from 'vitest'
 import {getPackageExportsManifest} from 'vitest-package-exports'
+
+import {env} from '#env'
 
 vi.mock('react/jsx-dev-runtime', () => ({}))
 vi.mock('react-dom', () => ({preconnect: vi.fn(), preloadModule: vi.fn()}))
