@@ -1,0 +1,135 @@
+name: Upload Docs
+
+on:
+  # Generate and upload TypeDoc on releases
+  release:
+    types: [published]
+  # Validate TypeDoc generation on PRs
+  pull_request:
+    paths:
+      - "packages/next-sanity/src/**"
+      - "packages/next-sanity/typedoc.json"
+      - ".github/workflows/upload-docs.yml"
+  # Manual trigger
+  workflow_dispatch:
+    inputs:
+      upload:
+        description: Upload generated TypeDoc file
+        required: false
+        default: false
+        type: boolean
+
+env:
+  TYPEDOC_OUTPUT: docs/next-sanity.json
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+  pull-requests: write
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+        with:
+          fetch-depth: 0
+
+      - uses: pnpm/action-setup@v4
+
+      - uses: actions/setup-node@v5
+        with:
+          node-version: lts/*
+
+      - name: Install project dependencies
+        run: pnpm install
+      
+      - name: Generate TypeDoc
+        id: generate
+        run: |
+          echo "🔄 Generating TypeDoc documentation..."
+          pnpm run docs:generate
+
+          # Check if the file was generated successfully
+          if [ -f "$TYPEDOC_OUTPUT" ]; then
+            FILE_SIZE=$(du -h "$TYPEDOC_OUTPUT" | cut -f1)
+            EXPORT_COUNT=$(jq '[.children[]?.children // empty | length] | add // 0' "$TYPEDOC_OUTPUT")
+            echo "✅ TypeDoc generated successfully"
+            echo "📄 File size: $FILE_SIZE"
+            echo "📊 Total exports: $EXPORT_COUNT"
+            echo "file_size=$FILE_SIZE" >> $GITHUB_OUTPUT
+            echo "export_count=$EXPORT_COUNT" >> $GITHUB_OUTPUT
+            echo "success=true" >> $GITHUB_OUTPUT
+          else
+            echo "❌ TypeDoc file was not generated"
+            echo "success=false" >> $GITHUB_OUTPUT
+            exit 1
+          fi
+
+      - name: Upload HTML docs artifact
+        if: github.event_name == 'pull_request' && steps.generate.outputs.success == 'true'
+        id: html-artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: typedoc-html-pr-${{ github.event.pull_request.number }}
+          path: docs/html
+          retention-days: 7
+
+      - name: Comment on PR
+        if: github.event_name == 'pull_request' && steps.generate.outputs.success == 'true'
+        uses: thollander/actions-comment-pull-request@24bffb9b452ba05a4f3f77933840a6a841d1b32b # v3
+        with:
+          comment-tag: "typedoc-result"
+          message: |
+            ## 📚 TypeDoc Generation Result
+
+            ✅ **TypeDoc generated successfully!**
+
+            - **File size:** ${{ steps.generate.outputs.file_size }}
+            - **Total exports:** ${{ steps.generate.outputs.export_count }}
+            - **Artifact:** `typedoc-${{ github.sha }}`
+            - **HTML docs preview:** [Download artifact](${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}/artifacts/${{ steps.html-artifact.outputs.artifact-id }})
+
+            The TypeDoc JSON file has been generated and validated. All documentation scripts completed successfully.
+
+      - name: Extract version from tag
+        if: >-
+          (
+            github.event_name == 'release'
+            && !github.event.release.prerelease
+            && startsWith(github.event.release.tag_name, 'next-sanity@')
+          || github.event.inputs.upload == 'true'
+          ) && steps.generate.outputs.success == 'true'
+        id: version
+        run: |
+          if [[ "${{ github.event.release.tag_name }}" == next-sanity@* ]]; then
+            # Extract version from release tag (e.g., next-sanity@1.2.3 -> 1.2.3)
+            VERSION="${{ github.event.release.tag_name }}"
+            VERSION="${VERSION#next-sanity@}"
+            echo "version=$VERSION" >> $GITHUB_OUTPUT
+            echo "📋 Extracted version from tag: $VERSION"
+          else
+            # For manual dispatch, get version from package.json
+            VERSION=$(node -p "require('./packages/next-sanity/package.json').version")
+            echo "version=$VERSION" >> $GITHUB_OUTPUT
+            echo "📋 Using package.json version: $VERSION"
+          fi
+
+      - name: Upload Docs
+        if: >-
+          (
+            github.event_name == 'release'
+            && !github.event.release.prerelease
+            && startsWith(github.event.release.tag_name, 'next-sanity@')
+          || github.event.inputs.upload == 'true'
+          ) && steps.generate.outputs.success == 'true'
+        uses: sanity-io/reference-api-typedoc/.github/actions/typedoc-upload@main
+        with:
+          packageName: "next-sanity"
+          version: ${{ steps.version.outputs.version }}
+          typedocJsonPath: ${{ env.TYPEDOC_OUTPUT }}
+        env:
+          SANITY_DOCS_API_TOKEN: ${{ secrets.SANITY_DOCS_API_TOKEN }}

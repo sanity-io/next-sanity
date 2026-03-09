@@ -86,7 +86,8 @@
     "coverage": "npm test -- --coverage",
     "dev": "tsdown --watch",
     "prepack": "tsdown",
-    "test": "vitest"
+    "test": "vitest",
+    "docs:generate": "typedoc"
   },
   "dependencies": {
     "@portabletext/react": "^6.0.3",
@@ -116,6 +117,7 @@
     "react-dom": "catalog:",
     "styled-components": "catalog:",
     "tsdown": "0.20.3",
+    "typedoc": "^0.28.17",
     "typescript": "catalog:",
     "vitest": "^4.0.18",
     "vitest-package-exports": "^1.2.0"
