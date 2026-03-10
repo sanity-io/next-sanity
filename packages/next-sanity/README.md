@@ -148,42 +148,49 @@ export const POST_QUERY = defineQuery(`*[_type == "post" && slug.current == $slu
 
 ### Generate TypeScript Types
 
-You can use [Sanity TypeGen to generate TypeScript types][sanity-typegen] for your schema types and GROQ query results in your Next.js application. It should be readily available if you have used `sanity init` and chosen the embedded Studio.
+You can use [Sanity TypeGen to generate TypeScript types][sanity-typegen] for your schema types and GROQ query results in your Next.js application.
 
-> [!TIP]
-> Sanity TypeGen will [create Types for queries][sanity-typegen-queries] that are assigned to a variable and use the `groq` template literal or `defineQuery` function.
+> [!NOTE]
+> As of version 4.19.0, it is recommended to configure typegen through the Sanity CLI config rather than a separate `sanity-typegen.json` file.
 
-If your Sanity Studio schema types are in a different project or repository, you can [configure Sanity TypeGen to write types to your Next.js project][sanity-typegen-monorepo].
+#### Configuration
 
-**Create** a `sanity-typegen.json` file at the root of your project to configure Sanity TypeGen:
+**Create or update** `sanity.cli.ts` at the root of your project:
+```ts
+// sanity.cli.ts
+import {defineCliConfig} from 'sanity/cli'
 
-```json
-// sanity-typegen.json
-{
-  "path": "./src/**/*.{ts,tsx,js,jsx}",
-  "schema": "./src/sanity/extract.json",
-  "generates": "./src/sanity/types.ts"
-}
+const projectId = process.env.NEXT_PUBLIC_SANITY_PROJECT_ID!
+const dataset = process.env.NEXT_PUBLIC_SANITY_DATASET!
+
+export default defineCliConfig({
+  api: {projectId, dataset},
+  typegen: {
+    path: './src/**/*.{ts,tsx,js,jsx}',
+    schema: './src/sanity/extract.json',
+    generates: './src/sanity/sanity-types.ts', // Avoid collision with sanity/types/ directory
+  },
+})
 ```
 
-Note: This configuration is strongly opinionated that the generated Types and the schema extraction are both within the `/src/sanity` directory, not the root which is the default. This configuration is complimented by setting the path of the schema extraction in the updated package.json scripts below.
+> [!WARNING]
+> **Naming collision warning:** If you have a `sanity/types/` directory (common in Sanity projects for organizing schema definitions), do not generate to `./sanity/types.ts`. Node's module resolver will prioritize the file over the directory, breaking imports like `import { schema } from './sanity/types'`. Use a different name like `sanity-types.ts` or `generated-types.ts` instead.
 
-**Run** the following command in your terminal to extract your Sanity Studio schema to a JSON file
+#### Usage
 
+**Run** the following command in your terminal to extract your Sanity Studio schema to a JSON file:
 ```bash
 # Run this each time your schema types change
-npx sanity@latest schema extract
+npx sanity@latest schema extract --path=src/sanity/extract.json
 ```
 
-**Run** the following command in your terminal to generate TypeScript types for both your Sanity Studio schema and GROQ queries
-
+**Run** the following command in your terminal to generate TypeScript types for both your Sanity Studio schema and GROQ queries:
 ```bash
 # Run this each time your schema types or GROQ queries change
 npx sanity@latest typegen generate
 ```
 
-**Update** your Next.js project's `package.json` to perform both of these commands by running `npm run typegen`
-
+**Update** your Next.js project's `package.json` to perform both of these commands by running `npm run typegen`:
 ```json
 "scripts": {
   "predev": "npm run typegen",
@@ -196,6 +203,11 @@ npx sanity@latest typegen generate
 },
 ```
 
+> [!TIP]
+> Sanity TypeGen will [create Types for queries][sanity-typegen-queries] that are assigned to a variable and use the `groq` template literal or `defineQuery` function.
+
+If your Sanity Studio schema types are in a different project or repository, you can [configure Sanity TypeGen to write types to your Next.js project][sanity-typegen-monorepo].
+
 ### Using query result types
 
 Sanity TypeGen creates TypeScript types for the results of your GROQ queries, which _can_ be used as generics like this:
@@ -203,7 +215,7 @@ Sanity TypeGen creates TypeScript types for the results of your GROQ queries, wh
 ```ts
 import {client} from '@/sanity/lib/client'
 import {POSTS_QUERY} from '@/sanity/lib/queries'
-import {POSTS_QUERYResult} from '@/sanity/types'
+import {POSTS_QUERYResult} from '@/sanity/sanity-types'
 
 const posts = await client.fetch<POSTS_QUERYResult>(POSTS_QUERY)
 //    ^? const post: POST_QUERYResult
