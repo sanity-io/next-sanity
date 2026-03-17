@@ -72,7 +72,7 @@ jobs:
       - name: Upload HTML docs artifact
         if: github.event_name == 'pull_request' && steps.generate.outputs.success == 'true'
         id: html-artifact
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: typedoc-html-pr-${{ github.event.pull_request.number }}
           path: docs/html
