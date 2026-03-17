@@ -1,5 +1,13 @@
 # next-sanity
 
+## 12.1.2
+
+### Patch Changes
+
+- [#3304](https://github.com/sanity-io/next-sanity/pull/3304) [`b44f430`](https://github.com/sanity-io/next-sanity/commit/b44f43030f60a6886bc783292d45a462b2633d9f) Thanks [@renovate](https://github.com/apps/renovate)! - fix(deps): update dependency @sanity/client to ^7.17.0
+
+- [#3313](https://github.com/sanity-io/next-sanity/pull/3313) [`e3801c9`](https://github.com/sanity-io/next-sanity/commit/e3801c97cd7532f0264247168c91b73bd5563553) Thanks [@renovate](https://github.com/apps/renovate)! - fix(deps): update sanity monorepo to v5.16.0
+
 ## 12.1.1
 
 ### Patch Changes
