@@ -1,7 +1,7 @@
-import sanityJson from 'sanity/package.json' assert {type: 'json'}
+import sanityJson from 'sanity/package.json' with {type: 'json'}
 import {expect, test} from 'vitest'
 
-import nextSanityJson from '../package.json' assert {type: 'json'}
+import nextSanityJson from '../package.json' with {type: 'json'}
 
 /**
  * It's important that the `history` package used by `sanity` to underpin its router is the same we use to implement hash history support
