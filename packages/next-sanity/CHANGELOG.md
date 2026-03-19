@@ -1,5 +1,19 @@
 # next-sanity
 
+## 12.1.3
+
+### Patch Changes
+
+- [`a9c9c4d`](https://github.com/sanity-io/next-sanity/commit/a9c9c4d3fa0173dbc382986d9b6a84b4913e8afe) Thanks [@stipsan](https://github.com/stipsan)! - Upgrade `@sanity/visual-editing` to ^5.3.1
+
+- [#3318](https://github.com/sanity-io/next-sanity/pull/3318) [`b888827`](https://github.com/sanity-io/next-sanity/commit/b888827e8595a56d5b7c7071b73ba4ce5da9876d) Thanks [@renovate](https://github.com/apps/renovate)! - fix(deps): update sanity monorepo to v5.17.1
+
+- [#3323](https://github.com/sanity-io/next-sanity/pull/3323) [`35aae81`](https://github.com/sanity-io/next-sanity/commit/35aae814ce0819d95afc5a49b21d53f9efe90a36) Thanks [@renovate](https://github.com/apps/renovate)! - fix(deps): update dependency @sanity/preview-url-secret to ^4.0.4
+
+- [`bcbd46d`](https://github.com/sanity-io/next-sanity/commit/bcbd46dfc10bc3c5c1092b616a0b8726f76c9f00) Thanks [@stipsan](https://github.com/stipsan)! - Upgrade `@sanity/client` to ^7.18.0
+
+- [`d9ef0a1`](https://github.com/sanity-io/next-sanity/commit/d9ef0a15b1d1920c17524c2a9f9b2f6297752a68) Thanks [@stipsan](https://github.com/stipsan)! - Upgrade `@sanity/preview-url-secret` to ^4.0.4
+
 ## 12.1.2
 
 ### Patch Changes
