@@ -1,5 +1,11 @@
 # next-sanity
 
+## 13.0.0-cache-components.28
+
+### Patch Changes
+
+- [#3109](https://github.com/sanity-io/next-sanity/pull/3109) [`ce6562c`](https://github.com/sanity-io/next-sanity/commit/ce6562cbb21cd096d0d356c5fecdd311c1d61f74) Thanks [@stipsan](https://github.com/stipsan)! - Bump dependencies
+
 ## 12.1.3
 
 ### Patch Changes
