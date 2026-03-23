@@ -105,44 +105,44 @@ function SanityLive(props: SanityLiveProps): React.JSX.Element | null {
     }
   })
 
-  const handleLiveEvent = useEffectEvent(async (event: LiveEvent) => {
+  const handleLiveEvent = useEffectEvent((event: LiveEvent) => {
     switch (event.type) {
       case 'welcome': {
         // Disable long polling when welcome event is received, this is a no-op if long polling is already disabled
-        setRefreshOnInterval(false)
+        startTransition(() => setRefreshOnInterval(false))
 
         if (onWelcome) {
-          await onWelcome(event, actionContext)
+          startTransition(() => onWelcome(event, actionContext))
         }
         break
       }
       case 'message': {
-        await action(event, actionContext)
+        startTransition(() => action(event, actionContext))
         break
       }
       case 'restart': {
         // Disable long polling when restart event is received, this is a no-op if long polling is already disabled
-        setRefreshOnInterval(false)
+        startTransition(() => setRefreshOnInterval(false))
 
         if (onRestart) {
-          await onRestart(event, actionContext)
+          startTransition(() => onRestart(event, actionContext))
         }
         break
       }
       case 'reconnect': {
         // Disable long polling when reconnect event is received, this is a no-op if long polling is already disabled
-        setRefreshOnInterval(false)
+        startTransition(() => setRefreshOnInterval(false))
 
         if (onReconnect) {
-          await onReconnect(event, actionContext)
+          startTransition(() => onReconnect(event, actionContext))
         }
         break
       }
       case 'goaway': {
         if (onGoAway) {
-          await onGoAway(event, actionContext, (interval) =>
+          startTransition(() => onGoAway(event, actionContext, (interval) =>
             startTransition(() => setRefreshOnInterval(interval)),
-          )
+          ))
         } else if (!onGoAway) {
           handleError(
             new Error(
@@ -162,7 +162,7 @@ function SanityLive(props: SanityLiveProps): React.JSX.Element | null {
     const subscription = client.live
       .events({includeDrafts: includeAllDocuments, tag: requestTag})
       .subscribe({
-        next: (event) => startTransition(() => handleLiveEvent(event)),
+        next: handleLiveEvent,
         error: handleError,
       })
     return () => subscription.unsubscribe()
