@@ -140,9 +140,11 @@ function SanityLive(props: SanityLiveProps): React.JSX.Element | null {
       }
       case 'goaway': {
         if (onGoAway) {
-          startTransition(() => onGoAway(event, actionContext, (interval) =>
-            startTransition(() => setRefreshOnInterval(interval)),
-          ))
+          startTransition(() =>
+            onGoAway(event, actionContext, (interval) =>
+              startTransition(() => setRefreshOnInterval(interval)),
+            ),
+          )
         } else if (!onGoAway) {
           handleError(
             new Error(

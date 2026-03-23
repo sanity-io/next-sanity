@@ -62,6 +62,8 @@ export function defineLive(config: DefineLiveOptions): {
       ))
     const useCdn = perspective === 'published'
     const revalidate = false
+    const cacheTagPrefix =
+      perspective === 'published' ? PUBLISHED_SYNC_TAG_PREFIX : DRAFT_SYNC_TAG_PREFIX
 
     // fetch the tags first, with revalidate to 1s to ensure we get the latest tags, eventually
     const {syncTags} = await client.fetch(query, await params, {
@@ -69,19 +71,13 @@ export function defineLive(config: DefineLiveOptions): {
       perspective: perspective as ClientPerspective,
       stega: false,
       returnQuery: false,
-      next: {revalidate, tags: [...tags, 'sanity:fetch-sync-tags']},
+      next: {revalidate, tags: [...tags, 'fetch-sync-tags'].map((tag) => `${cacheTagPrefix}${tag}`)},
       useCdn,
       cacheMode: useCdn ? 'noStale' : undefined,
       tag: [requestTag, 'fetch-sync-tags'].filter(Boolean).join('.'),
     })
 
-    const cacheTags = [
-      ...tags,
-      ...(syncTags?.map(
-        (tag) =>
-          `${perspective === 'published' ? PUBLISHED_SYNC_TAG_PREFIX : DRAFT_SYNC_TAG_PREFIX}${tag}`,
-      ) || []),
-    ]
+    const cacheTags = [...tags, ...(syncTags?.map((tag) => `${cacheTagPrefix}${tag}`) || [])]
 
     const {result, resultSourceMap} = await client.fetch(query, await params, {
       filterResponse: false,
