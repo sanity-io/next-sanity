@@ -41,7 +41,7 @@ export function defineLive(config: DefineLiveOptions): {
     query,
     params = {},
     stega: _stega,
-    tags = ['sanity'],
+    tags = [],
     perspective: _perspective,
     tag,
     requestTag = tag ?? 'next-loader.fetch',
