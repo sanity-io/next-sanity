@@ -1,5 +1,17 @@
 # next-sanity
 
+## 13.0.0-cache-components.29
+
+### Major Changes
+
+- [#3109](https://github.com/sanity-io/next-sanity/pull/3109) [`e417d4c`](https://github.com/sanity-io/next-sanity/commit/e417d4c791e0bdd958c1f2d5c758ece6adf10ff9) Thanks [@stipsan](https://github.com/stipsan)! - No longer set the default cache tag 'sanity'
+
+### Patch Changes
+
+- [#3109](https://github.com/sanity-io/next-sanity/pull/3109) [`59abe40`](https://github.com/sanity-io/next-sanity/commit/59abe40ca90db6d9fa18bf7110f5cb58dc983be8) Thanks [@stipsan](https://github.com/stipsan)! - Consistent startTransition wrappers on <SanityLive />
+
+- [#3109](https://github.com/sanity-io/next-sanity/pull/3109) [`647af20`](https://github.com/sanity-io/next-sanity/commit/647af20707832807fb648caaf3528fd5ac8bb7d6) Thanks [@stipsan](https://github.com/stipsan)! - Apply the same cache tag prefix to `sanity:fetch-sync-tags` instead of hardcoding `sanity:`
+
 ## 12.1.4
 
 ### Patch Changes
