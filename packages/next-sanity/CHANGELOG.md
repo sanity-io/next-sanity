@@ -1,5 +1,11 @@
 # next-sanity
 
+## 12.1.5
+
+### Patch Changes
+
+- [#3335](https://github.com/sanity-io/next-sanity/pull/3335) [`71e609a`](https://github.com/sanity-io/next-sanity/commit/71e609af889a357584c7932fb4f10ed15dfc5cba) Thanks [@stipsan](https://github.com/stipsan)! - Stop using `['sanity']` as the default fallback when `sanityFetch` does not specify custom `tags`
+
 ## 12.1.4
 
 ### Patch Changes
