@@ -1,5 +1,11 @@
 # next-sanity
 
+## 13.0.0-cache-components.30
+
+### Patch Changes
+
+- [#3109](https://github.com/sanity-io/next-sanity/pull/3109) [`ec86e5e`](https://github.com/sanity-io/next-sanity/commit/ec86e5ef9aa6a22732387f3e28509db2b7df8ffb) Thanks [@stipsan](https://github.com/stipsan)! - attempt fixing eventual consistency issue by not wrapping with startTransition()
+
 ## 13.0.0-cache-components.29
 
 ### Major Changes
