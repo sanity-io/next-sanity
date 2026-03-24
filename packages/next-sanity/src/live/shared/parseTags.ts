@@ -1,7 +1,19 @@
-import type {LiveEvent, SyncTag} from '@sanity/client'
+import type {SyncTag} from '@sanity/client'
 
-import {DRAFT_SYNC_TAG_PREFIX, PUBLISHED_SYNC_TAG_PREFIX} from './constants'
-import type {SanityLiveActionContext} from './types'
+import {cacheTagPrefixes} from './constants'
+
+
+interface ParsedPublishedTags {
+  tags: `${typeof cacheTagPrefixes.published}${SyncTag}`[]
+  prefix: typeof cacheTagPrefixes.published
+  prefixType: 'published'
+}
+interface ParsedDraftTags {
+  tags: `${typeof cacheTagPrefixes.drafts}${SyncTag}`[]
+  prefix: typeof cacheTagPrefixes.drafts
+  prefixType: 'drafts'
+}
+type ParsedTags = ParsedPublishedTags | ParsedDraftTags
 
 /**
  * Prefixes live event tags according to the conventions used by `defineLive().sanityFetch()`
@@ -24,15 +36,55 @@ import type {SanityLiveActionContext} from './types'
  * />
  * ```
  */
-export function parseTags<const Tags extends Extract<LiveEvent, {type: 'message'}>['tags']>(
-  tags: Tags,
-  context: SanityLiveActionContext,
-): `${typeof PUBLISHED_SYNC_TAG_PREFIX | typeof DRAFT_SYNC_TAG_PREFIX}${SyncTag}`[] {
-  if (!Array.isArray(tags)) {
-    throw new TypeError('tags must be an array', {cause: {tags, context}})
+export function parseTags(
+  unsafeTags: unknown,
+): ParsedTags {
+  if (!Array.isArray(unsafeTags)) {
+    throw new TypeError('tags must be an array', {cause: {unsafeTags}})
   }
-  return tags.map(
-    (tag) =>
-      `${context.includeDrafts ? DRAFT_SYNC_TAG_PREFIX : PUBLISHED_SYNC_TAG_PREFIX}${tag}` as const,
-  )
+  if(unsafeTags.length === 0) {
+    throw new TypeError('tags must be an non-empty array', {cause: {unsafeTags}})
+  }
+  if(unsafeTags.some(tag => typeof tag !== 'string')) {
+    throw new TypeError('tags must be an array of strings', {cause: {unsafeTags}})
+  }
+  if(unsafeTags.some(tag => tag.startsWith(cacheTagPrefixes.published))) {
+    const prefixType = 'published'
+    const tags: ParsedPublishedTags['tags'] = []
+    for (const tag of (unsafeTags as string[])) {
+      if(tag.startsWith(cacheTagPrefixes.drafts)) {
+        throw new TypeError('cannot mix published and drafts tags', {cause: {tag, unsafeTags}})
+      }
+      if(!(tag.startsWith(cacheTagPrefixes.published))) {
+        throw new TypeError('tag must start with a valid prefix', {cause: {tag}})
+      }
+      tags.push(tag as `${typeof cacheTagPrefixes.published}${SyncTag}`)
+    }
+    return {tags, prefix: cacheTagPrefixes.published, prefixType}
+
+  } else if(unsafeTags.some(tag => tag.startsWith(cacheTagPrefixes.drafts))) {
+    const prefixType = 'drafts'
+    const tags: ParsedDraftTags['tags'] = []
+    for (const tag of (unsafeTags as string[])) {
+      if(tag.startsWith(cacheTagPrefixes.published)) {
+        throw new TypeError('cannot mix published and drafts tags', {cause: {tag, unsafeTags}})
+      }
+      if(!(tag.startsWith(cacheTagPrefixes.drafts))) {
+        throw new TypeError('tag must start with a valid prefix', {cause: {tag}})
+      }
+      tags.push(tag as `${typeof cacheTagPrefixes.drafts}${SyncTag}`)
+    }
+    return {tags, prefix: cacheTagPrefixes.drafts, prefixType}
+  }
+
+  throw new Error('Failed to parse tags, no valid prefix found', {cause: {unsafeTags}})
+}
+
+const {tags, prefix, prefixType} = parseTags(['foo', 'bar'])
+if(prefixType === 'published') {
+  console.log(tags)
+} else if(prefixType === 'drafts') {
+  console.log(tags)
+} else {
+  throw new Error('Failed to parse tags, no valid prefix found', {cause: {prefixType}})
 }

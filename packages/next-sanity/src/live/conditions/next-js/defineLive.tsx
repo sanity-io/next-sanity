@@ -3,7 +3,7 @@ import {actionRefresh, actionUpdateTags} from 'next-sanity/live/server-actions'
 import {cacheLife, cacheTag} from 'next/cache'
 import {preconnect} from 'react-dom'
 
-import {DRAFT_SYNC_TAG_PREFIX, PUBLISHED_SYNC_TAG_PREFIX, revalidate} from '#live/constants'
+import {cacheTagPrefixes, revalidate} from '#live/constants'
 import type {DefinedFetchType, DefinedLiveProps, DefineLiveOptions} from '#live/types'
 
 export function defineLive(config: DefineLiveOptions): {
@@ -41,6 +41,7 @@ export function defineLive(config: DefineLiveOptions): {
   }) {
     const useCdn = perspective === 'published'
 
+    const cacheTagPrefix = perspective === 'published' ? cacheTagPrefixes.published : cacheTagPrefixes.drafts
     const {result, resultSourceMap, syncTags} = await client.fetch(query, await params, {
       filterResponse: false,
       returnQuery: false,
@@ -54,8 +55,7 @@ export function defineLive(config: DefineLiveOptions): {
     const tags = [
       ...customCacheTags,
       ...(syncTags || []).map(
-        (tag) =>
-          `${perspective === 'published' ? PUBLISHED_SYNC_TAG_PREFIX : DRAFT_SYNC_TAG_PREFIX}${tag}`,
+        (tag) => `${cacheTagPrefix}${tag}`,
       ),
     ]
     /**

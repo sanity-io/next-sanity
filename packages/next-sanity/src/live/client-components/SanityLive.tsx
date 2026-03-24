@@ -12,6 +12,7 @@ import type {
   SanityLiveOnRestart,
   SanityLiveOnWelcome,
 } from '#live/types'
+import { cacheTagPrefixes } from '#live/constants'
 
 const RefreshOnFocus = dynamic(() => import('./RefreshOnFocus'))
 const RefreshOnMount = dynamic(() => import('./RefreshOnMount'))
@@ -115,7 +116,7 @@ function SanityLive(props: SanityLiveProps): React.JSX.Element | null {
         break
       }
       case 'message': {
-        void action(event, actionContext)
+        void action(event.tags.map(tag => `${includeDrafts ? cacheTagPrefixes.drafts : cacheTagPrefixes.published}${tag}`), actionContext)
         break
       }
       case 'restart': {

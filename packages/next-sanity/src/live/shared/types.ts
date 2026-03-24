@@ -58,8 +58,7 @@ export interface SanityLiveActionContext {
  * Has a default implementation tailed the nextjs env and config
  */
 export type SanityLiveAction = (
-  event: Extract<LiveEvent, {type: 'message'}>,
-  context: SanityLiveActionContext,
+  unsafeTags: unknown,
 ) => Promise<void>
 /**
  * TODO: docs
@@ -196,3 +195,5 @@ export interface SanityClientConfig extends Pick<
   | 'token'
   | 'requestTagPrefix'
 > {}
+
+export type CacheTagPrefixes = Record<'published' | 'drafts', `${string}:`>
