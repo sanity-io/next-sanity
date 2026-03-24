@@ -39,7 +39,7 @@ async function resolvePerspective(): Promise<LivePerspective> {
 
 async function SanityLive() {
   const {isEnabled: isDraftMode} = await draftMode()
-  return <Live includeAllDocuments={isDraftMode} />
+  return <Live includeDrafts={isDraftMode} />
 }
 
 async function CachedIndexPage() {

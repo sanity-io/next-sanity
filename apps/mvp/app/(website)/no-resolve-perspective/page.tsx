@@ -72,7 +72,7 @@ export default async function IndexPage() {
           Open Studio
         </Link>
       </div>
-      <SanityLive includeAllDocuments={isDraftMode} />
+      <SanityLive includeDrafts={isDraftMode} />
     </>
   )
 }

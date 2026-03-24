@@ -104,12 +104,13 @@ import {VisualEditing} from 'next-sanity/visual-editing'
 import {SanityLive} from '@/sanity/lib/live'
 
 export default async function RootLayout({children}: {children: React.ReactNode}) {
+  const {isEnabled: isDraftMode} = await draftMode()
   return (
     <html lang="en">
       <body>
         {children}
         <SanityLive />
-        {(await draftMode()).isEnabled && <VisualEditing />}
+        {isDraftMode && <VisualEditing />}
       </body>
     </html>
   )
@@ -118,7 +119,7 @@ export default async function RootLayout({children}: {children: React.ReactNode}
 
 </details>
 
-When `cacheComponents: true` you need to toggle this behavior yourself. The recommended pattern is to keep the dynamic `draftMode()` call in the root layout (which is not cached), and pass the dynamic parts as props to a separate `CachedLayout` component that has `'use cache'`:
+When `cacheComponents: true` you need to toggle this behavior yourself by setting the `includeDrafts` prop. The recommended pattern is to keep the dynamic `draftMode()` call in the root layout (which is not cached), and pass the dynamic parts as props to a separate `CachedLayout` component that has `'use cache'`:
 
 ```tsx
 // src/app/layout.tsx
@@ -130,31 +131,11 @@ import {SanityLive} from '@/sanity/lib/live'
 export default async function RootLayout({children}: {children: React.ReactNode}) {
   const {isEnabled: isDraftMode} = await draftMode()
   return (
-    <CachedLayout
-      live={<SanityLive key="live" includeAllDocuments={isDraftMode} />}
-      visualEditing={isDraftMode && <VisualEditing key="visual-editing" />}
-    >
-      {children}
-    </CachedLayout>
-  )
-}
-
-async function CachedLayout({
-  children,
-  live,
-  visualEditing,
-}: {
-  children: React.ReactNode
-  live: React.ReactNode
-  visualEditing: React.ReactNode
-}) {
-  'use cache'
-  return (
     <html lang="en">
       <body>
         {children}
-        {live}
-        {visualEditing}
+        <SanityLive includeDrafts={isDraftMode} />
+        {isDraftMode && <VisualEditing />}
       </body>
     </html>
   )
@@ -187,6 +168,7 @@ Under the hood `sanityFetch` will automatically call [the `cacheTag()` API](http
 ```tsx
 // src/app/page.tsx
 
+import {draftMode} from 'next/headers'
 import {defineQuery} from 'next-sanity'
 import {getDynamicFetchOptions, sanityFetch, type DynamicFetchOptions} from '@/sanity/lib/live'
 import {Suspense} from 'react'
@@ -195,12 +177,16 @@ const PRODUCTS_QUERY = defineQuery(
   `*[_type == "product" && defined(slug.current)][0...$limit]{_id,slug,title}`,
 )
 
-export default function Page() {
-  return (
-    <Suspense fallback={<section>Loading&hellip;</section>}>
-      <DynamicProductsList />
-    </Suspense>
-  )
+export default async function Page() {
+  const {isEnabled: isDraftMode} = await draftMode()
+  if (isDraftMode) {
+    return (
+      <Suspense fallback={<section>Loading&hellip;</section>}>
+        <DynamicProductsList />
+      </Suspense>
+    )
+  }
+  return <CachedProductsList perspective="published" stega={false} />
 }
 
 async function DynamicProductsList() {
@@ -237,10 +223,15 @@ In Next.js 16+, `params` is a `Promise`. The dynamic layer unwraps both the para
 ```tsx
 // src/app/product/[slug]/page.tsx
 
+import {draftMode} from 'next/headers'
 import {defineQuery} from 'next-sanity'
 import {getDynamicFetchOptions, sanityFetch, type DynamicFetchOptions} from '@/sanity/lib/live'
+import {client} from '@/sanity/lib/client'
 import {Suspense} from 'react'
 
+const SLUGS_BY_TYPE_QUERY = defineQuery(`
+  *[_type == $type && defined(slug.current)]{"slug": slug.current}
+`)
 const PRODUCT_QUERY = defineQuery(
   `*[_type == "product" && slug.current == $slug][0]{_id,slug,title,description}`,
 )
@@ -249,12 +240,25 @@ type Props = {
   params: Promise<{slug: string}>
 }
 
-export default function ProductPage({params}: Props) {
-  return (
-    <Suspense fallback={<section>Loading product&hellip;</section>}>
-      <DynamicProductPage params={params} />
-    </Suspense>
+export async function generateStaticParams() {
+  return client.fetch(
+    SLUGS_BY_TYPE_QUERY,
+    {type: 'product'},
+    {perspective: 'published', stega: false},
   )
+}
+
+export default async function ProductPage({params}: Props) {
+  const {isEnabled: isDraftMode} = await draftMode()
+  if (isDraftMode) {
+    return (
+      <Suspense fallback={<section>Loading product&hellip;</section>}>
+        <DynamicProductPage params={params} />
+      </Suspense>
+    )
+  }
+  const {slug} = await params
+  return <CachedProductPage slug={slug} perspective="published" stega={false} />
 }
 
 async function DynamicProductPage({params}: Props) {

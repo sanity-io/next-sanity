@@ -16,15 +16,15 @@ export async function actionUpdateTags(
 ): Promise<void> {
   if (!Array.isArray(event.tags)) {
     console.warn(
-      `<SanityLive ${context.includeAllDocuments ? 'includeAllDocuments ' : ''}/> action called with non-array tags`,
+      `<SanityLive ${context.includeDrafts ? 'includeDrafts ' : ''}/> action called with non-array tags`,
       event,
     )
     return undefined
   }
 
-  if (context.includeAllDocuments) {
+  if (context.includeDrafts) {
     if (!(await draftMode()).isEnabled) {
-      console.warn('<SanityLive includeAllDocuments /> action called in non-draft mode, ignoring', {
+      console.warn('<SanityLive includeDrafts /> action called in non-draft mode, ignoring', {
         event,
         context,
       })
@@ -35,7 +35,7 @@ export async function actionUpdateTags(
       updateTag(tag)
     }
     // oxlint-disable-next-line no-console
-    console.log(`<SanityLive includeAllDocuments /> updated tags: ${tags.join(', ')}`)
+    console.log(`<SanityLive includeDrafts /> updated tags: ${tags.join(', ')}`)
   } else {
     revalidateTag('sanity:fetch-sync-tags', 'max')
     // oxlint-disable-next-line no-console

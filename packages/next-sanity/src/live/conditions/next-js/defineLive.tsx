@@ -73,7 +73,7 @@ export function defineLive(config: DefineLiveOptions): {
 
   const SanityLive: React.ComponentType<DefinedLiveProps> = function SanityLive(props) {
     const {
-      includeAllDocuments = false,
+      includeDrafts = false,
       action = actionUpdateTags,
       onReconnect = actionRefresh,
       onRestart = actionRefresh,
@@ -88,7 +88,7 @@ export function defineLive(config: DefineLiveOptions): {
       requestTag = 'next-loader.live.cache-components',
     } = props
 
-    const shouldIncludeDrafts = typeof browserToken === 'string' && includeAllDocuments
+    const shouldIncludeDrafts = typeof browserToken === 'string' && includeDrafts
 
     const {projectId, dataset, apiHost, apiVersion, useProjectHostname, requestTagPrefix} =
       client.config()
@@ -108,7 +108,7 @@ export function defineLive(config: DefineLiveOptions): {
           requestTagPrefix,
           token: shouldIncludeDrafts ? browserToken : undefined,
         }}
-        includeAllDocuments={shouldIncludeDrafts}
+        includeDrafts={shouldIncludeDrafts}
         action={action}
         onReconnect={onReconnect}
         onRestart={onRestart}

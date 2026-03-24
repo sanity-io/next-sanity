@@ -50,7 +50,7 @@ export type DefinedFetchType = <const QueryString extends string>(options: {
  * TODO: docs
  */
 export interface SanityLiveActionContext {
-  includeAllDocuments: boolean
+  includeDrafts: boolean
 }
 
 /**
@@ -113,7 +113,7 @@ export interface DefinedLiveProps {
   /**
    * TODO: docs, settings this to `true` enables live events for draft content and requires `browserToken` to be set.
    */
-  includeAllDocuments?: boolean
+  includeDrafts?: boolean
   /**
    * TODO: docs
    */

@@ -31,7 +31,7 @@ interface SanityClientConfig extends Pick<
 
 export interface SanityLiveProps {
   config: SanityClientConfig
-  includeAllDocuments?: boolean
+  includeDrafts?: boolean
   requestTag: string
 
   action: SanityLiveAction
@@ -49,7 +49,7 @@ export interface SanityLiveProps {
 function SanityLive(props: SanityLiveProps): React.JSX.Element | null {
   const {
     config,
-    includeAllDocuments = false,
+    includeDrafts = false,
     action,
     onError,
     onWelcome = handleWelcome,
@@ -63,7 +63,7 @@ function SanityLive(props: SanityLiveProps): React.JSX.Element | null {
   } = props
   const {projectId, dataset, apiHost, apiVersion, useProjectHostname, token, requestTagPrefix} =
     config
-  const actionContext = {includeAllDocuments} satisfies SanityLiveActionContext
+  const actionContext = {includeDrafts} satisfies SanityLiveActionContext
 
   const client = useMemo(
     () =>
@@ -110,12 +110,12 @@ function SanityLive(props: SanityLiveProps): React.JSX.Element | null {
         setRefreshOnInterval(false)
 
         if (onWelcome) {
-          onWelcome(event, actionContext)
+          void onWelcome(event, actionContext)
         }
         break
       }
       case 'message': {
-        action(event, actionContext)
+        void action(event, actionContext)
         break
       }
       case 'restart': {
@@ -123,7 +123,7 @@ function SanityLive(props: SanityLiveProps): React.JSX.Element | null {
         setRefreshOnInterval(false)
 
         if (onRestart) {
-          onRestart(event, actionContext)
+          void onRestart(event, actionContext)
         }
         break
       }
@@ -132,15 +132,13 @@ function SanityLive(props: SanityLiveProps): React.JSX.Element | null {
         setRefreshOnInterval(false)
 
         if (onReconnect) {
-          onReconnect(event, actionContext)
+          void onReconnect(event, actionContext)
         }
         break
       }
       case 'goaway': {
         if (onGoAway) {
-          onGoAway(event, actionContext, (interval) =>
-            setRefreshOnInterval(interval),
-          )
+          void onGoAway(event, actionContext, (interval) => setRefreshOnInterval(interval))
         } else if (!onGoAway) {
           handleError(
             new Error(
@@ -157,14 +155,9 @@ function SanityLive(props: SanityLiveProps): React.JSX.Element | null {
     }
   })
   useEffect(() => {
-    const subscription = client.live
-      .events({includeDrafts: includeAllDocuments, tag: requestTag})
-      .subscribe({
-        next: handleLiveEvent,
-        error: handleError,
-      })
+    const subscription = client.live.events({includeDrafts, tag: requestTag}).subscribe({next: handleLiveEvent,error: handleError,})
     return () => subscription.unsubscribe()
-  }, [client.live, requestTag, includeAllDocuments])
+  }, [client.live, requestTag, includeDrafts])
 
   return (
     <>
@@ -182,17 +175,17 @@ SanityLive.displayName = 'SanityLiveClientComponent'
 
 export default SanityLive
 
-const handleWelcome: SanityLiveOnWelcome = (_, {includeAllDocuments}) => {
+const handleWelcome: SanityLiveOnWelcome = (_, {includeDrafts}) => {
   // oxlint-disable-next-line no-console
   console.info(
-    `<SanityLive${includeAllDocuments ? ' includeAllDocuments' : ''}> is connected and listening for live events to ${includeAllDocuments ? 'all content including drafts and version documents in content releases' : 'published content'}`,
+    `<SanityLive${includeDrafts ? ' includeDrafts' : ''}> is connected and listening for live events to ${includeDrafts ? 'all content including drafts and version documents in content releases' : 'published content'}`,
   )
 }
 
-const handleGoaway: SanityLiveOnGoaway = (event, {includeAllDocuments}, setLongPollingInterval) => {
+const handleGoaway: SanityLiveOnGoaway = (event, {includeDrafts}, setLongPollingInterval) => {
   const interval = 30_000
   console.warn(
-    `<SanityLive${includeAllDocuments ? ' includeAllDocuments' : ''}> connection is closed after receiving a 'goaway' event, the server gave this reason:`,
+    `<SanityLive${includeDrafts ? ' includeDrafts' : ''}> connection is closed after receiving a 'goaway' event, the server gave this reason:`,
     event.reason,
     `Content will now be refreshed every ${interval / 1_000} seconds`,
   )

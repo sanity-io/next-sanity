@@ -71,7 +71,10 @@ export function defineLive(config: DefineLiveOptions): {
       perspective: perspective as ClientPerspective,
       stega: false,
       returnQuery: false,
-      next: {revalidate, tags: [...tags, 'fetch-sync-tags'].map((tag) => `${cacheTagPrefix}${tag}`)},
+      next: {
+        revalidate,
+        tags: [...tags, 'fetch-sync-tags'].map((tag) => `${cacheTagPrefix}${tag}`),
+      },
       useCdn,
       cacheMode: useCdn ? 'noStale' : undefined,
       tag: [requestTag, 'fetch-sync-tags'].filter(Boolean).join('.'),
@@ -94,7 +97,7 @@ export function defineLive(config: DefineLiveOptions): {
 
   const SanityLive: React.ComponentType<DefinedLiveProps> = async function SanityLive(props) {
     const {
-      includeAllDocuments = (await draftMode()).isEnabled,
+      includeDrafts = (await draftMode()).isEnabled,
       action = actionUpdateTags,
       onReconnect = actionRefresh,
       onRestart = actionRefresh,
@@ -110,7 +113,7 @@ export function defineLive(config: DefineLiveOptions): {
     } = props
     const {projectId, dataset, apiHost, apiVersion, useProjectHostname, requestTagPrefix} =
       client.config()
-    const shouldIncludeAllDocuments = typeof browserToken === 'string' && includeAllDocuments
+    const shouldIncludeDrafts = typeof browserToken === 'string' && includeDrafts
 
     // Preconnect to the Live Event API origin early, as the Sanity API is almost always on a different origin than the app
     const {origin} = new URL(client.getUrl('', false))
@@ -125,9 +128,9 @@ export function defineLive(config: DefineLiveOptions): {
           apiVersion,
           useProjectHostname,
           requestTagPrefix,
-          token: shouldIncludeAllDocuments ? browserToken : undefined,
+          token: shouldIncludeDrafts ? browserToken : undefined,
         }}
-        includeAllDocuments={shouldIncludeAllDocuments}
+        includeDrafts={shouldIncludeDrafts}
         action={action}
         onReconnect={onReconnect}
         onRestart={onRestart}

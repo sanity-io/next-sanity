@@ -16,14 +16,14 @@ export async function actionUpdateTags(
 ): Promise<void> {
   if (!Array.isArray(event.tags)) {
     console.warn(
-      `<SanityLive ${context.includeAllDocuments ? 'includeAllDocuments ' : ''}/> action called with non-array tags`,
+      `<SanityLive ${context.includeDrafts ? 'includeDrafts ' : ''}/> action called with non-array tags`,
       event,
     )
     return undefined
   }
   if ((await draftMode()).isEnabled) {
     console.warn(
-      `<SanityLive ${context.includeAllDocuments ? 'includeAllDocuments ' : ''}/> action called in draft mode, cache is bypassed in draft mode so the refresh() function is called instead of updateTag()`,
+      `<SanityLive ${context.includeDrafts ? 'includeDrafts ' : ''}/> action called in draft mode, cache is bypassed in draft mode so the refresh() function is called instead of updateTag()`,
       {event, context},
     )
     refresh()
@@ -36,7 +36,7 @@ export async function actionUpdateTags(
   }
   // oxlint-disable-next-line no-console
   console.log(
-    `<SanityLive ${context.includeAllDocuments ? 'includeAllDocuments ' : ''}/> updated tags: ${tags.join(', ')}`,
+    `<SanityLive ${context.includeDrafts ? 'includeDrafts ' : ''}/> updated tags: ${tags.join(', ')}`,
   )
 }
 
