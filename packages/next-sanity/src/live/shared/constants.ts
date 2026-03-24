@@ -7,5 +7,5 @@ export const revalidate = 31_536_000 // 365 days
 
 export const cacheTagPrefixes = {
   published: 'sanity:',
-  drafts: 'sanity:drafts:',
+  drafts: 'sanity-drafts:',
 } satisfies CacheTagPrefixes
