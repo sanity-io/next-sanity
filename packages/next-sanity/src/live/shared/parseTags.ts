@@ -2,7 +2,6 @@ import type {SyncTag} from '@sanity/client'
 
 import {cacheTagPrefixes} from './constants'
 
-
 interface ParsedPublishedTags {
   tags: `${typeof cacheTagPrefixes.published}${SyncTag}`[]
   prefix: typeof cacheTagPrefixes.published
@@ -36,55 +35,47 @@ type ParsedTags = ParsedPublishedTags | ParsedDraftTags
  * />
  * ```
  */
-export function parseTags(
-  unsafeTags: unknown,
-): ParsedTags {
+export function parseTags(unsafeTags: unknown): ParsedTags {
   if (!Array.isArray(unsafeTags)) {
     throw new TypeError('tags must be an array', {cause: {unsafeTags}})
   }
-  if(unsafeTags.length === 0) {
+  if (unsafeTags.length === 0) {
     throw new TypeError('tags must be an non-empty array', {cause: {unsafeTags}})
   }
-  if(unsafeTags.some(tag => typeof tag !== 'string')) {
+  if (unsafeTags.some((tag) => typeof tag !== 'string')) {
     throw new TypeError('tags must be an array of strings', {cause: {unsafeTags}})
   }
-  if(unsafeTags.some(tag => tag.startsWith(cacheTagPrefixes.published))) {
+  if (unsafeTags.some((tag) => tag.startsWith(cacheTagPrefixes.published))) {
     const prefixType = 'published'
     const tags: ParsedPublishedTags['tags'] = []
-    for (const tag of (unsafeTags as string[])) {
-      if(tag.startsWith(cacheTagPrefixes.drafts)) {
+    // oxlint-disable-next-line no-unsafe-type-assertion
+    for (const tag of unsafeTags as string[]) {
+      if (tag.startsWith(cacheTagPrefixes.drafts)) {
         throw new TypeError('cannot mix published and drafts tags', {cause: {tag, unsafeTags}})
       }
-      if(!(tag.startsWith(cacheTagPrefixes.published))) {
+      if (!tag.startsWith(cacheTagPrefixes.published)) {
         throw new TypeError('tag must start with a valid prefix', {cause: {tag}})
       }
+      // oxlint-disable-next-line no-unsafe-type-assertion
       tags.push(tag as `${typeof cacheTagPrefixes.published}${SyncTag}`)
     }
     return {tags, prefix: cacheTagPrefixes.published, prefixType}
-
-  } else if(unsafeTags.some(tag => tag.startsWith(cacheTagPrefixes.drafts))) {
+  } else if (unsafeTags.some((tag) => tag.startsWith(cacheTagPrefixes.drafts))) {
     const prefixType = 'drafts'
     const tags: ParsedDraftTags['tags'] = []
-    for (const tag of (unsafeTags as string[])) {
-      if(tag.startsWith(cacheTagPrefixes.published)) {
+    // oxlint-disable-next-line no-unsafe-type-assertion
+    for (const tag of unsafeTags as string[]) {
+      if (tag.startsWith(cacheTagPrefixes.published)) {
         throw new TypeError('cannot mix published and drafts tags', {cause: {tag, unsafeTags}})
       }
-      if(!(tag.startsWith(cacheTagPrefixes.drafts))) {
+      if (!tag.startsWith(cacheTagPrefixes.drafts)) {
         throw new TypeError('tag must start with a valid prefix', {cause: {tag}})
       }
+      // oxlint-disable-next-line no-unsafe-type-assertion
       tags.push(tag as `${typeof cacheTagPrefixes.drafts}${SyncTag}`)
     }
     return {tags, prefix: cacheTagPrefixes.drafts, prefixType}
   }
 
   throw new Error('Failed to parse tags, no valid prefix found', {cause: {unsafeTags}})
-}
-
-const {tags, prefix, prefixType} = parseTags(['foo', 'bar'])
-if(prefixType === 'published') {
-  console.log(tags)
-} else if(prefixType === 'drafts') {
-  console.log(tags)
-} else {
-  throw new Error('Failed to parse tags, no valid prefix found', {cause: {prefixType}})
 }

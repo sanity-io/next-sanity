@@ -57,9 +57,7 @@ export interface SanityLiveActionContext {
  * TODO: docs
  * Has a default implementation tailed the nextjs env and config
  */
-export type SanityLiveAction = (
-  unsafeTags: unknown,
-) => Promise<void>
+export type SanityLiveAction = (unsafeTags: unknown) => Promise<void>
 /**
  * TODO: docs
  * If not defined it'll throw the error during render instead, which will crash the react app

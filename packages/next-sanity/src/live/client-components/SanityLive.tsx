@@ -2,6 +2,7 @@ import {createClient, type InitializedClientConfig, type LiveEvent} from '@sanit
 import dynamic from 'next/dynamic'
 import {useEffect, useEffectEvent, useMemo, useState} from 'react'
 
+import {cacheTagPrefixes} from '#live/constants'
 import {isCorsOriginError} from '#live/isCorsOriginError'
 import type {
   SanityLiveAction,
@@ -12,7 +13,6 @@ import type {
   SanityLiveOnRestart,
   SanityLiveOnWelcome,
 } from '#live/types'
-import { cacheTagPrefixes } from '#live/constants'
 
 const RefreshOnFocus = dynamic(() => import('./RefreshOnFocus'))
 const RefreshOnMount = dynamic(() => import('./RefreshOnMount'))
@@ -116,7 +116,12 @@ function SanityLive(props: SanityLiveProps): React.JSX.Element | null {
         break
       }
       case 'message': {
-        void action(event.tags.map(tag => `${includeDrafts ? cacheTagPrefixes.drafts : cacheTagPrefixes.published}${tag}`), actionContext)
+        void action(
+          event.tags.map(
+            (tag) =>
+              `${includeDrafts ? cacheTagPrefixes.drafts : cacheTagPrefixes.published}${tag}`,
+          ),
+        )
         break
       }
       case 'restart': {
@@ -156,7 +161,9 @@ function SanityLive(props: SanityLiveProps): React.JSX.Element | null {
     }
   })
   useEffect(() => {
-    const subscription = client.live.events({includeDrafts, tag: requestTag}).subscribe({next: handleLiveEvent,error: handleError,})
+    const subscription = client.live
+      .events({includeDrafts, tag: requestTag})
+      .subscribe({next: handleLiveEvent, error: handleError})
     return () => subscription.unsubscribe()
   }, [client.live, requestTag, includeDrafts])
 

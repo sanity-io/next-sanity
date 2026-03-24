@@ -1,56 +1,35 @@
 'use server'
 
-import type {LiveEvent} from '@sanity/client'
 import {refresh, revalidateTag, updateTag} from 'next/cache'
 import {draftMode} from 'next/headers'
 
 import {parseTags} from '#live/parseTags'
-import type {SanityLiveActionContext} from '#live/types'
 
 /**
  * Used by `<SanityLive action={actionRevalidateTags} />`
  */
-export async function actionUpdateTags(
-  event: Extract<LiveEvent, {type: 'message'}>,
-  context: SanityLiveActionContext,
-): Promise<void> {
-  if (!Array.isArray(event.tags)) {
+export async function actionUpdateTags(unsafeTags: unknown): Promise<void> {
+  const {tags, prefixType} = parseTags(unsafeTags)
+  if ((await draftMode()).isEnabled) {
     console.warn(
-      `<SanityLive ${context.includeDrafts ? 'includeDrafts ' : ''}/> action called with non-array tags`,
-      event,
+      `<SanityLive ${prefixType === 'drafts' ? 'includeDrafts ' : ''}/> action called in draft mode, cache is bypassed in draft mode so the refresh() function is called instead of updateTag()`,
+      {tags},
     )
+    refresh()
     return undefined
   }
-
-  if (context.includeDrafts) {
-    if (!(await draftMode()).isEnabled) {
-      console.warn('<SanityLive includeDrafts /> action called in non-draft mode, ignoring', {
-        event,
-        context,
-      })
-      return undefined
-    }
-    const tags = parseTags(event.tags, context)
-    for (const tag of tags) {
-      updateTag(tag)
-    }
-    // oxlint-disable-next-line no-console
-    console.log(`<SanityLive includeDrafts /> updated tags: ${tags.join(', ')}`)
-  } else {
-    revalidateTag('sanity:fetch-sync-tags', 'max')
-    // oxlint-disable-next-line no-console
-    console.log(`<SanityLive /> revalidated tag: "sanity:fetch-sync-tags" with cache profile "max"`)
-    const tags = parseTags(event.tags, context)
-    for (const tag of tags) {
-      updateTag(tag)
-    }
-    // oxlint-disable-next-line no-console
-    console.log(`<SanityLive /> updated tags: ${tags.join(', ')}`)
+  for (const tag of tags) {
+    updateTag(tag)
   }
+  revalidateTag('sanity:fetch-sync-tags', 'max')
+  // oxlint-disable-next-line no-console
+  console.log(
+    `<SanityLive ${prefixType === 'drafts' ? 'includeDrafts ' : ''}/> updated tags: ${tags.join(', ')} and revalidated tag: "sanity:fetch-sync-tags" with cache profile "max"`,
+  )
 }
 
 /**
- * Used by `<SanityLive reconnectAction={actionRefresh} restartAction={actionRefresh} />`
+ * Used by `<SanityLive onReconnect={actionRefresh} onRestart={actionRefresh} />`
  */
 export async function actionRefresh(): Promise<void> {
   refresh()

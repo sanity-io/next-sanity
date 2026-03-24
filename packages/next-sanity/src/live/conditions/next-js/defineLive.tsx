@@ -41,7 +41,8 @@ export function defineLive(config: DefineLiveOptions): {
   }) {
     const useCdn = perspective === 'published'
 
-    const cacheTagPrefix = perspective === 'published' ? cacheTagPrefixes.published : cacheTagPrefixes.drafts
+    const cacheTagPrefix =
+      perspective === 'published' ? cacheTagPrefixes.published : cacheTagPrefixes.drafts
     const {result, resultSourceMap, syncTags} = await client.fetch(query, await params, {
       filterResponse: false,
       returnQuery: false,
@@ -52,12 +53,7 @@ export function defineLive(config: DefineLiveOptions): {
       tag: requestTag,
       token: perspective === 'published' ? originalToken : serverToken || originalToken, // @TODO can pass undefined instead of config.token here?
     })
-    const tags = [
-      ...customCacheTags,
-      ...(syncTags || []).map(
-        (tag) => `${cacheTagPrefix}${tag}`,
-      ),
-    ]
+    const tags = [...customCacheTags, ...(syncTags || []).map((tag) => `${cacheTagPrefix}${tag}`)]
     /**
      * The tags used here, are expired later on in the `expireTags` Server Action with the `expireTag` function from `next/cache`
      */
