@@ -1,5 +1,19 @@
 # next-sanity
 
+## 13.0.0-cache-components.31
+
+### Major Changes
+
+- [#3109](https://github.com/sanity-io/next-sanity/pull/3109) [`a03c286`](https://github.com/sanity-io/next-sanity/commit/a03c286a4bdf254611e5e2f2ab4f0f8c9bfb96b2) Thanks [@stipsan](https://github.com/stipsan)! - Refactor `parseTags` to take `event.tags` with prefixes as input
+
+- [#3109](https://github.com/sanity-io/next-sanity/pull/3109) [`6db515e`](https://github.com/sanity-io/next-sanity/commit/6db515e9ee0a9477017797a232c43f0555f3fa7b) Thanks [@stipsan](https://github.com/stipsan)! - Changed default prefixes from `sp:` to `sanity:` and `sd:` to `sanity:drafts:`
+
+- [#3109](https://github.com/sanity-io/next-sanity/pull/3109) [`30e6808`](https://github.com/sanity-io/next-sanity/commit/30e680856e451201d369407432c0a22a05d2f123) Thanks [@stipsan](https://github.com/stipsan)! - Rename `includeAllDocuments` to `includeDrafts` to match client.live.events({includeDrafts})
+
+### Patch Changes
+
+- [#3109](https://github.com/sanity-io/next-sanity/pull/3109) [`7e7c949`](https://github.com/sanity-io/next-sanity/commit/7e7c94904aa96414c363fd8b48b7478fd9f60d0f) Thanks [@stipsan](https://github.com/stipsan)! - Change the signature of `<SanityLive action={async (event, context)}>` to `<SanityLive action={async (unsafeTags)}>`
+
 ## 13.0.0-cache-components.30
 
 ### Patch Changes
