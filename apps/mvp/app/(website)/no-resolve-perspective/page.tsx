@@ -1,5 +1,3 @@
-'use cache'
-
 import {unstable__adapter, unstable__environment} from 'next-sanity'
 import {draftMode} from 'next/headers'
 import Link from 'next/link'

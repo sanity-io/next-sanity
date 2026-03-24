@@ -10,8 +10,6 @@ export default defineConfig({
     './src/draft-mode/index.ts',
     './src/hooks/index.ts',
     './src/image/index.ts',
-    './src/experimental/live.tsx',
-    './src/experimental/client-components/live.tsx',
     './src/index.ts',
     './src/live.ts',
     './src/live.server-only.ts',

@@ -1,6 +1,5 @@
 import {unstable__adapter, unstable__environment} from 'next-sanity'
-import {resolvePerspectiveFromCookies} from 'next-sanity/experimental/live'
-import {cookies, draftMode} from 'next/headers'
+import {draftMode} from 'next/headers'
 import Link from 'next/link'
 
 import PostsLayout, {postsQuery} from '@/app/(website)/PostsLayout'
@@ -9,13 +8,8 @@ import {sanityFetch} from './live'
 
 export default async function IndexPage() {
   const isDraftMode = (await draftMode()).isEnabled
-  const perspective = isDraftMode
-    ? await resolvePerspectiveFromCookies({cookies: await cookies()})
-    : 'published'
   const {data, tags} = await sanityFetch({
     query: postsQuery.query,
-    perspective,
-    stega: isDraftMode,
   })
 
   return (
@@ -27,7 +21,7 @@ export default async function IndexPage() {
       >
         <div className="relative mx-auto max-w-7xl">
           <PostsLayout data={data} draftMode={isDraftMode} />
-          <p>{JSON.stringify({perspective, tags: tags.toSorted()})}</p>
+          <p>{JSON.stringify({tags: tags.toSorted()})}</p>
         </div>
       </div>
       <div className="flex gap-2 text-center">
