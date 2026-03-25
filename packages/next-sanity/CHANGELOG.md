@@ -1,5 +1,11 @@
 # next-sanity
 
+## 13.0.0-cache-components.32
+
+### Patch Changes
+
+- [#3109](https://github.com/sanity-io/next-sanity/pull/3109) [`06054a3`](https://github.com/sanity-io/next-sanity/commit/06054a3e3a6de1d784908e4eea2c7c764f6ab500) Thanks [@stipsan](https://github.com/stipsan)! - Rename `sanity:drafts:` prefix to `sanity-drafts:`
+
 ## 13.0.0-cache-components.31
 
 ### Major Changes
