@@ -20,7 +20,7 @@ catalog:
   react-dom: ^19.2.4
   react-is: ^19.2.4
   sanity: 5.17.1
-  styled-components: ^6.3.12
+  styled-components: npm:@sanity/styled-components@6.1.23
   typescript: 5.9.3
 
 linkWorkspacePackages: deep
@@ -35,7 +35,8 @@ overrides:
   react-dom: 'catalog:'
   react-is: 'catalog:'
   sanity: 'catalog:'
-  styled-components: npm:@sanity/styled-components@6.1.23
+patchedDependencies:
+  follow-redirects@1.15.11: patches/follow-redirects@1.15.11.patch
 
 peerDependencyRules:
   allowAny:

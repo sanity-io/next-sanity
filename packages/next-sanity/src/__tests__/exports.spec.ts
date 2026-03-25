@@ -8,7 +8,6 @@ import {env} from '#env'
 
 vi.mock('react/jsx-dev-runtime', () => ({}))
 vi.mock('react-dom', () => ({preconnect: vi.fn(), preloadModule: vi.fn()}))
-vi.mock('server-only', () => ({}))
 
 test(`exports snapshot for the ${JSON.stringify(env)} condition`, {timeout: 15_000}, async () => {
   const manifest = await getPackageExportsManifest({
