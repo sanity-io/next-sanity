@@ -1,5 +1,3 @@
-'use cache'
-
 import {unstable__adapter, unstable__environment} from 'next-sanity'
 import Link from 'next/link'
 

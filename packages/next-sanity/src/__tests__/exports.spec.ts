@@ -33,11 +33,6 @@ test(`exports snapshot for the ${JSON.stringify(env)} condition`, {timeout: 15_0
         unstable__environment: string
       ./draft-mode:
         defineEnableDraftMode: function
-      ./experimental/client-components/live:
-        default: function
-      ./experimental/live:
-        defineLive: function
-        resolvePerspectiveFromCookies: function
       ./hooks:
         useDraftModeEnvironment: function
         useDraftModePerspective: function

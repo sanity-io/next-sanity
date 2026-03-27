@@ -75,8 +75,6 @@ export type DefinedSanityLiveStreamType = <const QueryString extends string>(pro
     sourceMap: ContentSourceMap | null
     tags: string[]
   }) => Promise<Awaited<React.ReactNode>>
-  // @TODO follow up on this after React 19: https://github.com/vercel/next.js/discussions/67365#discussioncomment-9935377
-  // }) => Promise<Awaited<React.ReactNode>>
 }) => React.ReactNode
 
 /**
@@ -163,6 +161,7 @@ export interface DefineSanityLiveOptions {
   browserToken?: string | false
   /**
    * Fetch options used by `sanityFetch`
+   * @deprecated this option is removed in the next major version, use `export const revalidate` on the `page.tsx` or `layout.tsx` instead
    */
   fetchOptions?: {
     /**
@@ -177,10 +176,6 @@ export interface DefineSanityLiveOptions {
    */
   stega?: boolean
 }
-
-// export type VerifyPreviewSecretType = (
-//   secret: string,
-// ) => Promise<{isValid: boolean; studioUrl: string | null}>
 
 /**
  * @public
@@ -200,7 +195,6 @@ export function defineLive(config: DefineSanityLiveOptions): {
    * @alpha experimental, it may change or even be removed at any time
    */
   SanityLiveStream: DefinedSanityLiveStreamType
-  // verifyPreviewSecret: VerifyPreviewSecretType
 } {
   const {
     client: _client,
@@ -259,7 +253,6 @@ export function defineLive(config: DefineSanityLiveOptions): {
           ? false
           : undefined
 
-    // fetch the tags first, with revalidate to 1s to ensure we get the latest tags, eventually
     const {syncTags} = await client.fetch(query, await params, {
       filterResponse: false,
       perspective: perspective as ClientPerspective,
@@ -288,7 +281,6 @@ export function defineLive(config: DefineSanityLiveOptions): {
 
   const SanityLive: React.ComponentType<DefinedSanityLiveProps> = async function SanityLive(props) {
     const {
-      // handleDraftModeAction = handleDraftModeActionMissing
       refreshOnMount,
       refreshOnFocus,
       refreshOnReconnect,
@@ -319,7 +311,6 @@ export function defineLive(config: DefineSanityLiveOptions): {
         requestTag={requestTag}
         token={typeof browserToken === 'string' && isDraftModeEnabled ? browserToken : undefined}
         draftModeEnabled={isDraftModeEnabled}
-        // handleDraftModeAction={handleDraftModeAction}
         draftModePerspective={await resolveCookiePerspective()}
         refreshOnMount={refreshOnMount}
         refreshOnFocus={refreshOnFocus}
@@ -382,40 +373,9 @@ export function defineLive(config: DefineSanityLiveOptions): {
     return children({data, sourceMap, tags: cacheTags})
   }
 
-  // const verifyPreviewSecret: VerifyPreviewSecretType = async (secret) => {
-  //   if (!serverToken) {
-  //     throw new Error(
-  //       '`serverToken` is required to verify a preview secrets and initiate draft mode',
-  //     )
-  //   }
-
-  //   if (typeof secret !== 'string') {
-  //     throw new TypeError('`secret` must be a string')
-  //   }
-  //   if (!secret.trim()) {
-  //     throw new Error('`secret` must not be an empty string')
-  //   }
-
-  //   const client = _client.withConfig({
-  //     // Use the token that is setup to query draft documents, it should also have permission to query for secrets
-  //     token: serverToken,
-  //     // Userland might be using an API version that's too old to use perspectives
-  //     apiVersion,
-  //     // We can't use the CDN, the secret is typically validated right after it's created
-  //     useCdn: false,
-  //     // Don't waste time returning a source map, we don't need it
-  //     resultSourceMap: false,
-  //     // Stega is not needed
-  //     stega: false,
-  //   })
-  //   const {isValid, studioUrl} = await validateSecret(client, secret, false)
-  //   return {isValid, studioUrl}
-  // }
-
   return {
     sanityFetch,
     SanityLive,
     SanityLiveStream,
-    // verifyPreviewSecret
   }
 }

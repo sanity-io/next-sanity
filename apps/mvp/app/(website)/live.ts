@@ -1,4 +1,4 @@
-import {defineLive} from 'next-sanity/experimental/live'
+import {defineLive} from 'next-sanity/live'
 
 import {client} from '@/app/sanity.client'
 
