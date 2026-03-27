@@ -2,6 +2,7 @@ import {type ClientPerspective, type QueryParams} from '@sanity/client'
 import {perspectiveCookieName} from '@sanity/preview-url-secret/constants'
 import {SanityLive as SanityLiveClientComponent} from 'next-sanity/live/client-components'
 import {actionRefresh, actionUpdateTags} from 'next-sanity/live/server-actions'
+import {PHASE_PRODUCTION_BUILD} from 'next/constants'
 import {cookies, draftMode} from 'next/headers'
 import {preconnect} from 'react-dom'
 
@@ -61,6 +62,8 @@ export function defineLive(config: DefineLiveOptions): {
         originalPerspective === 'raw' ? 'published' : originalPerspective,
       ))
     const useCdn = perspective === 'published'
+    const isBuildPhase = process.env['NEXT_PHASE'] === PHASE_PRODUCTION_BUILD
+    const cacheMode = useCdn && !isBuildPhase ? 'noStale' : undefined
     const revalidate = false
     const cacheTagPrefix =
       perspective === 'published' ? cacheTagPrefixes.published : cacheTagPrefixes.drafts
@@ -76,7 +79,7 @@ export function defineLive(config: DefineLiveOptions): {
         tags: [...tags, 'fetch-sync-tags'].map((tag) => `${cacheTagPrefix}${tag}`),
       },
       useCdn,
-      cacheMode: useCdn ? 'noStale' : undefined,
+      cacheMode,
       tag: [requestTag, 'fetch-sync-tags'].filter(Boolean).join('.'),
     })
 
@@ -89,7 +92,7 @@ export function defineLive(config: DefineLiveOptions): {
       token: perspective !== 'published' && serverToken ? serverToken : originalToken,
       next: {revalidate, tags: cacheTags},
       useCdn,
-      cacheMode: useCdn ? 'noStale' : undefined,
+      cacheMode,
       tag: requestTag,
     })
     return {data: result, sourceMap: resultSourceMap || null, tags: cacheTags}

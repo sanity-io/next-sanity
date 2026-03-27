@@ -1,6 +1,7 @@
 import {SanityLive as SanityLiveClientComponent} from 'next-sanity/live/client-components'
 import {actionRefresh, actionUpdateTags} from 'next-sanity/live/server-actions'
 import {cacheLife, cacheTag} from 'next/cache'
+import {PHASE_PRODUCTION_BUILD} from 'next/constants'
 import {preconnect} from 'react-dom'
 
 import {cacheTagPrefixes, revalidate} from '#live/constants'
@@ -40,6 +41,8 @@ export function defineLive(config: DefineLiveOptions): {
     requestTag = 'next-loader.fetch.cache-components',
   }) {
     const useCdn = perspective === 'published'
+    const isBuildPhase = process.env['NEXT_PHASE'] === PHASE_PRODUCTION_BUILD
+    const cacheMode = useCdn && !isBuildPhase ? 'noStale' : undefined
 
     const cacheTagPrefix =
       perspective === 'published' ? cacheTagPrefixes.published : cacheTagPrefixes.drafts
@@ -49,7 +52,7 @@ export function defineLive(config: DefineLiveOptions): {
       perspective,
       useCdn,
       stega,
-      cacheMode: useCdn ? 'noStale' : undefined,
+      cacheMode,
       tag: requestTag,
       token: perspective === 'published' ? originalToken : serverToken || originalToken, // @TODO can pass undefined instead of config.token here?
     })
