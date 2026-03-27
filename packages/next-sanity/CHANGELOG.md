@@ -1,5 +1,18 @@
 # next-sanity
 
+## 12.2.0
+
+### Minor Changes
+
+- [#3347](https://github.com/sanity-io/next-sanity/pull/3347) [`16c2e11`](https://github.com/sanity-io/next-sanity/commit/16c2e11b4a3579f348df7c2609f5b173f494f5c3) Thanks [@stipsan](https://github.com/stipsan)! - Remove experimental cache components implementation for `defineLive`
+
+  > [!WARNING]
+  > This is a breaking change if you were using this implementation. Upgrade to `next-sanity@cache-components` if you want to continue testing the cache components implementation or wait for the stable release.
+
+### Patch Changes
+
+- [#3351](https://github.com/sanity-io/next-sanity/pull/3351) [`97763ca`](https://github.com/sanity-io/next-sanity/commit/97763cae5c2b4dbde65b59e59e8af2facaa989dd) Thanks [@renovate](https://github.com/apps/renovate)! - fix(deps): update dependency @sanity/visual-editing to ^5.3.3
+
 ## 12.1.6
 
 ### Patch Changes
