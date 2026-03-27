@@ -1,5 +1,11 @@
 # next-sanity
 
+## 12.2.1
+
+### Patch Changes
+
+- [#3357](https://github.com/sanity-io/next-sanity/pull/3357) [`1aa38ca`](https://github.com/sanity-io/next-sanity/commit/1aa38ca4f9dcd3a393930a17ae357aa5b683d591) Thanks [@stipsan](https://github.com/stipsan)! - Reduce the risk of hitting API rate limits during `next build` on large build machines
+
 ## 12.2.0
 
 ### Minor Changes
