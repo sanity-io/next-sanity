@@ -9,6 +9,7 @@ import {
 } from '@sanity/client'
 import SanityLiveClientComponent from 'next-sanity/live/client-components/live'
 import SanityLiveStreamClientComponent from 'next-sanity/live/client-components/live-stream'
+import {PHASE_PRODUCTION_BUILD} from 'next/constants'
 import {draftMode} from 'next/headers'
 import {prefetchDNS, preconnect} from 'react-dom'
 
@@ -252,6 +253,8 @@ export function defineLive(config: DefineSanityLiveOptions): {
         : process.env.NODE_ENV === 'production'
           ? false
           : undefined
+    const isBuildPhase = process.env['NEXT_PHASE'] === PHASE_PRODUCTION_BUILD
+    const cacheMode = useCdn && !isBuildPhase ? 'noStale' : undefined
 
     const {syncTags} = await client.fetch(query, await params, {
       filterResponse: false,
@@ -260,7 +263,7 @@ export function defineLive(config: DefineSanityLiveOptions): {
       returnQuery: false,
       next: {revalidate, tags: [...tags, 'sanity:fetch-sync-tags']},
       useCdn,
-      cacheMode: useCdn ? 'noStale' : undefined,
+      cacheMode,
       tag: [requestTag, 'fetch-sync-tags'].filter(Boolean).join('.'),
     })
 
@@ -273,7 +276,7 @@ export function defineLive(config: DefineSanityLiveOptions): {
       token: perspective !== 'published' && serverToken ? serverToken : originalToken,
       next: {revalidate, tags: cacheTags},
       useCdn,
-      cacheMode: useCdn ? 'noStale' : undefined,
+      cacheMode,
       tag: requestTag,
     })
     return {data: result, sourceMap: resultSourceMap || null, tags: cacheTags}
