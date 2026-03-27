@@ -1,5 +1,11 @@
 # next-sanity
 
+## 13.0.0-cache-components.34
+
+### Patch Changes
+
+- [#3109](https://github.com/sanity-io/next-sanity/pull/3109) [`4a604c6`](https://github.com/sanity-io/next-sanity/commit/4a604c6b50025de3fb40f041468c43d2fe3d1f07) Thanks [@stipsan](https://github.com/stipsan)! - Reduce the risk of hitting API rate limits during `next build` on large build machines
+
 ## 13.0.0-cache-components.33
 
 ### Patch Changes
