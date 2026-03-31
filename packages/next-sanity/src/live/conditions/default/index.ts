@@ -5,7 +5,13 @@
 // trying to pull in something it shouldn't.
 
 import type {ResolvePerspectiveFromCookies} from '#live/resolvePerspectiveFromCookies'
-import type {DefinedFetchType, DefinedLiveProps, DefineLiveOptions} from '#live/types'
+import type {
+  DefinedFetchType,
+  DefinedLiveProps,
+  DefineLiveOptions,
+  StrictDefinedFetchType,
+  StrictDefinedLiveProps,
+} from '#live/types'
 
 export {isCorsOriginError} from '#live/isCorsOriginError'
 export {parseTags} from '#live/parseTags'
@@ -13,10 +19,15 @@ export {parseTags} from '#live/parseTags'
 /**
  * @public
  */
-export function defineLive(_config: DefineLiveOptions): {
+export function defineLive(config: DefineLiveOptions & {strict: true}): {
+  sanityFetch: StrictDefinedFetchType
+  SanityLive: React.ComponentType<StrictDefinedLiveProps>
+}
+export function defineLive(config: DefineLiveOptions & {strict?: false}): {
   sanityFetch: DefinedFetchType
   SanityLive: React.ComponentType<DefinedLiveProps>
-} {
+}
+export function defineLive(_config: DefineLiveOptions): never {
   throw new Error(`defineLive can't be imported by a client component`)
 }
 

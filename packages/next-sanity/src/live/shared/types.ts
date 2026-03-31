@@ -181,7 +181,38 @@ export interface DefineLiveOptions {
    *  @defaultValue `true`
    */
   stega?: boolean
+  /**
+   * When `true`, requires explicit `includeDrafts` on `<SanityLive>` and explicit `perspective`/`stega` on `sanityFetch`.
+   * Use this to prepare for migrating to `cacheComponents: true` while still using `cacheComponents: false`.
+   * @defaultValue `false`
+   */
+  strict?: boolean
 }
+
+/**
+ * Like {@link DefinedLiveProps} but with `includeDrafts` required.
+ * Returned by `defineLive({strict: true})`.
+ */
+export interface StrictDefinedLiveProps extends Omit<DefinedLiveProps, 'includeDrafts'> {
+  includeDrafts: boolean
+}
+
+/**
+ * Like {@link DefinedFetchType} but with `perspective` and `stega` required.
+ * Returned by `defineLive({strict: true})`.
+ */
+export type StrictDefinedFetchType = <const QueryString extends string>(options: {
+  query: QueryString
+  params?: QueryParams | Promise<QueryParams>
+  perspective: PerspectiveType
+  stega: boolean
+  tags?: string[]
+  requestTag?: string
+}) => Promise<{
+  data: ClientReturn<QueryString, unknown>
+  sourceMap: ContentSourceMap | null
+  tags: string[]
+}>
 
 export interface SanityClientConfig extends Pick<
   InitializedClientConfig,

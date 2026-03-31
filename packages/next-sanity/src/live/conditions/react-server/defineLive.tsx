@@ -8,13 +8,31 @@ import {preconnect} from 'react-dom'
 
 import {cacheTagPrefixes} from '#live/constants'
 import {sanitizePerspective} from '#live/sanitizePerspective'
-import type {DefinedFetchType, DefinedLiveProps, DefineLiveOptions} from '#live/types'
+import {validateStrictFetchOptions, validateStrictSanityLiveProps} from '#live/strictValidation'
+import type {
+  DefinedFetchType,
+  DefinedLiveProps,
+  DefineLiveOptions,
+  StrictDefinedFetchType,
+  StrictDefinedLiveProps,
+} from '#live/types'
 
-export function defineLive(config: DefineLiveOptions): {
+export function defineLive(config: DefineLiveOptions & {strict: true}): {
+  sanityFetch: StrictDefinedFetchType
+  SanityLive: React.ComponentType<StrictDefinedLiveProps>
+}
+export function defineLive(config: DefineLiveOptions & {strict?: false}): {
   sanityFetch: DefinedFetchType
   SanityLive: React.ComponentType<DefinedLiveProps>
-} {
-  const {client: _client, serverToken, browserToken, stega: stegaEnabled = true} = config
+}
+export function defineLive(config: DefineLiveOptions) {
+  const {
+    client: _client,
+    serverToken,
+    browserToken,
+    stega: stegaEnabled = true,
+    strict = false,
+  } = config
 
   if (!_client) {
     throw new Error('`client` is required for `defineLive` to function')
@@ -55,12 +73,18 @@ export function defineLive(config: DefineLiveOptions): {
     tag?: string
     requestTag?: string
   }) {
-    const stega = _stega ?? (stegaEnabled && studioUrlDefined && (await draftMode()).isEnabled)
-    const perspective =
-      _perspective ??
-      (await resolveCookiePerspective(
-        originalPerspective === 'raw' ? 'published' : originalPerspective,
-      ))
+    if (strict) {
+      validateStrictFetchOptions({perspective: _perspective, stega: _stega})
+    }
+    const stega = strict
+      ? _stega!
+      : (_stega ?? (stegaEnabled && studioUrlDefined && (await draftMode()).isEnabled))
+    const perspective = strict
+      ? _perspective!
+      : (_perspective ??
+        (await resolveCookiePerspective(
+          originalPerspective === 'raw' ? 'published' : originalPerspective,
+        )))
     const useCdn = perspective === 'published'
     const isBuildPhase = process.env['NEXT_PHASE'] === PHASE_PRODUCTION_BUILD
     const cacheMode = useCdn && !isBuildPhase ? 'noStale' : undefined
@@ -99,6 +123,9 @@ export function defineLive(config: DefineLiveOptions): {
   }
 
   const SanityLive: React.ComponentType<DefinedLiveProps> = async function SanityLive(props) {
+    if (strict) {
+      validateStrictSanityLiveProps(props)
+    }
     const {
       includeDrafts = (await draftMode()).isEnabled,
       action = actionUpdateTags,
