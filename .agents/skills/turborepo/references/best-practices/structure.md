@@ -95,7 +95,34 @@ Package tasks enable Turborepo to:
 
 ```json
 {
-  "$schema": "https://turborepo.dev/schema.v2.json",
+  "$schema": "https://v2-9-2-canary-2.turborepo.dev/schema.json",
+  "tasks": {
+    "build": {
+      "dependsOn": ["^build"],
+      "outputs": ["dist/**", ".next/**", "!.next/cache/**"]
+    },
+    "lint": {},
+    "test": {
+      "dependsOn": ["build"]
+    },
+    "dev": {
+      "cache": false,
+      "persistent": true
+    }
+  }
+}
+```
+
+With `futureFlags.globalConfiguration`, global settings move under a `global` key:
+
+```json
+{
+  "$schema": "https://v2-9-2-canary-2.turborepo.dev/schema.json",
+  "futureFlags": {"globalConfiguration": true},
+  "global": {
+    "inputs": ["tsconfig.json"],
+    "env": ["CI"]
+  },
   "tasks": {
     "build": {
       "dependsOn": ["^build"],
