@@ -1,5 +1,11 @@
 # next-sanity
 
+## 13.0.0-cache-components.35
+
+### Minor Changes
+
+- [#3109](https://github.com/sanity-io/next-sanity/pull/3109) [`e6b12bb`](https://github.com/sanity-io/next-sanity/commit/e6b12bba2b04d10253d3a74a28fe1580b211270e) Thanks [@stipsan](https://github.com/stipsan)! - Add `strict` option to `defineLive()` that requires explicit `includeDrafts` on `<SanityLive>` and explicit `perspective`/`stega` on `sanityFetch`, enforcing the same patterns needed for `cacheComponents: true` while still using `cacheComponents: false`
+
 ## 12.2.1
 
 ### Patch Changes
