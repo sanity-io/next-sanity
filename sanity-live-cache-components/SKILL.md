@@ -243,6 +243,7 @@ async function CachedPage({
 ### Rules
 
 - **Never** call `draftMode()`, `cookies()`, or `headers()` inside `'use cache'`
+- `notFound()` **can** be called inside `'use cache'` -- move it there and remove the old `if (!data && !isDraftMode) notFound()` guard. In draft mode the Suspense boundary handles the case where a document doesn't exist yet.
 - **Never** wrap cached components in `<Suspense>` outside draft mode -- unnecessary streaming boundaries shrink the static shell
 - **Always** pass plain values (`slug: string`) to cached components, not Promises
 - **Always** pass explicit `perspective="published"` and `stega={false}` in the non-draft path -- never omit these or make them optional. Every call to a cached component or `sanityFetch` must have explicit values so cache keys are consistent and stable in production. A mixture of `undefined` and `"published"` would create duplicate cache entries for the same content.
@@ -479,7 +480,7 @@ function Template({children}: {children: React.ReactNode}) {
 - `sanityFetch` calls `cacheTag()` and `cacheLife()` internally -- no manual cache tag management
 - Use `sanityFetchStaticParams` (or `client.fetch()` directly) for `generateStaticParams` -- not `sanityFetch`
 - Remove `export const dynamic = 'force-static'` -- not needed with cacheComponents
-- Remove `notFound()` in draft mode paths -- you may be previewing a not-yet-published document
+- Move `notFound()` inside the cached component -- remove old `if (!data && !isDraftMode) notFound()` guards. In draft mode the Suspense boundary handles documents that don't exist yet
 
 ---
 
