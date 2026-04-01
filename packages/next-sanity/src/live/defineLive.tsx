@@ -110,6 +110,12 @@ export interface DefinedSanityLiveProps {
   intervalOnGoAway?: number | false
 
   /**
+   * Delays events until after a Sanity Function has processed them and called the callback endpoint.
+   * When omitted, events are delivered immediately.
+   */
+  waitFor?: 'function'
+
+  /**
    * @deprecated use `requestTag` instead
    */
   tag?: never
@@ -293,6 +299,7 @@ export function defineLive(config: DefineSanityLiveOptions): {
       onGoAway,
       intervalOnGoAway,
       revalidateSyncTags,
+      waitFor,
     } = props
     const {projectId, dataset, apiHost, apiVersion, useProjectHostname, requestTagPrefix} =
       client.config()
@@ -322,6 +329,7 @@ export function defineLive(config: DefineSanityLiveOptions): {
         onGoAway={onGoAway}
         intervalOnGoAway={intervalOnGoAway}
         revalidateSyncTags={revalidateSyncTags}
+        waitFor={waitFor}
       />
     )
   }
