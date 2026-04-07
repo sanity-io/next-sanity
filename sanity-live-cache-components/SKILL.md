@@ -467,8 +467,12 @@ function Template({children}: {children: React.ReactNode}) {
 
 ## 13. Suspense Fallback Strategy
 
-- **Preferred**: meaningful loading UI using a sync `Template` component that mirrors the cached component's layout. Better experience in Presentation Tool during Visual Editing.
-- **Acceptable**: use `<CachedX perspective="published" stega={false} />` as the fallback -- users see stale published content while draft content streams in. Pragmatic when no skeleton exists.
+- **Preferred**: meaningful loading UI using a sync `Template` component that mirrors the cached component's layout. Better experience in Presentation Tool during Visual Editing. These fallbacks are **only visible in draft mode** (never in production), so they don't need high-quality designs or pixel-perfect skeletons -- a simple "Loading..." text inside the same layout shell is fine. CLS/web vitals are not affected since production never hits these Suspense boundaries.
+- **Discouraged**: using `<CachedX perspective="published" stega={false} />` as the Suspense fallback. While technically possible, this causes problems:
+  - Triggers warnings in `next dev`
+  - Shows published content briefly before draft content streams in -- confusing for editors who don't realize they're in a loading state
+  - Can cause layout shift when the draft content replaces the published content
+  - If no meaningful skeleton exists, use a simple placeholder (e.g. `<Template>Loading...</Template>`) or `fallback={null}` rather than stale content
 - **Extract a `Template` component** for the static HTML shell. Reuse in both the Suspense fallback and the cached component output.
 
 ---
