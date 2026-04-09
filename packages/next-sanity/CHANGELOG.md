@@ -1,5 +1,11 @@
 # next-sanity
 
+## 13.0.0-cache-components.36
+
+### Patch Changes
+
+- [#3109](https://github.com/sanity-io/next-sanity/pull/3109) [`a8385d9`](https://github.com/sanity-io/next-sanity/commit/a8385d94dd722392d373684cfd8209fb33bec816) Thanks [@stipsan](https://github.com/stipsan)! - Add back support for returning `refresh` to trigger `router.refresh()`
+
 ## 13.0.0-cache-components.35
 
 ### Minor Changes
