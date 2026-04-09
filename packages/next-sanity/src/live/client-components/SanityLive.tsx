@@ -1,6 +1,7 @@
 import {createClient, type InitializedClientConfig, type LiveEvent} from '@sanity/client'
 import dynamic from 'next/dynamic'
-import {useEffect, useEffectEvent, useMemo, useState} from 'react'
+import {useRouter} from 'next/navigation'
+import {startTransition, useEffect, useEffectEvent, useMemo, useState} from 'react'
 
 import {cacheTagPrefixes} from '#live/constants'
 import {isCorsOriginError} from '#live/isCorsOriginError'
@@ -104,47 +105,58 @@ function SanityLive(props: SanityLiveProps): React.JSX.Element | null {
     }
   })
 
+  const router = useRouter()
   const handleLiveEvent = useEffectEvent((event: LiveEvent) => {
     switch (event.type) {
       case 'welcome': {
         // Disable long polling when welcome event is received, this is a no-op if long polling is already disabled
-        setRefreshOnInterval(false)
+        startTransition(() => setRefreshOnInterval(false))
 
         if (onWelcome) {
-          void onWelcome(event, actionContext)
+          startTransition(() => onWelcome(event, actionContext))
         }
         break
       }
       case 'message': {
-        void action(
-          event.tags.map(
-            (tag) =>
-              `${includeDrafts ? cacheTagPrefixes.drafts : cacheTagPrefixes.published}${tag}`,
-          ),
+        startTransition(() =>
+          action(
+            event.tags.map(
+              (tag) =>
+                `${includeDrafts ? cacheTagPrefixes.drafts : cacheTagPrefixes.published}${tag}`,
+            ),
+          ).then((result) => {
+            if (result === 'refresh') {
+              startTransition(() => router.refresh())
+            }
+          }),
         )
         break
       }
       case 'restart': {
         // Disable long polling when restart event is received, this is a no-op if long polling is already disabled
-        setRefreshOnInterval(false)
+        startTransition(() => setRefreshOnInterval(false))
 
         if (onRestart) {
-          void onRestart(event, actionContext)
+          startTransition(() => onRestart(event, actionContext))
         }
         break
       }
       case 'reconnect': {
         // Disable long polling when reconnect event is received, this is a no-op if long polling is already disabled
-        setRefreshOnInterval(false)
+        startTransition(() => setRefreshOnInterval(false))
 
         if (onReconnect) {
-          void onReconnect(event, actionContext)
+          startTransition(() => onReconnect(event, actionContext))
         }
         break
       }
       case 'goaway': {
         if (onGoAway) {
-          void onGoAway(event, actionContext, (interval) => setRefreshOnInterval(interval))
+          startTransition(() =>
+            onGoAway(event, actionContext, (interval) =>
+              startTransition(() => setRefreshOnInterval(interval)),
+            ),
+          )
         } else if (!onGoAway) {
           handleError(
             new Error(

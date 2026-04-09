@@ -14,8 +14,10 @@ export default function RefreshOnMount(): null {
 
   useEffect(() => {
     if (!mounted) {
-      startTransition(() => mount())
-      router.refresh()
+      startTransition(() => {
+        mount()
+        router.refresh()
+      })
     }
   }, [mounted, router])
 

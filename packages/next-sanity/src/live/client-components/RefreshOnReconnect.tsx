@@ -1,5 +1,5 @@
 import {useRouter} from 'next/navigation'
-import {useEffect} from 'react'
+import {startTransition, useEffect} from 'react'
 
 export default function RefreshOnReconnect(): null {
   const router = useRouter()
@@ -7,7 +7,10 @@ export default function RefreshOnReconnect(): null {
   useEffect(() => {
     const controller = new AbortController()
     const {signal} = controller
-    window.addEventListener('online', () => router.refresh(), {passive: true, signal})
+    window.addEventListener('online', () => startTransition(() => router.refresh()), {
+      passive: true,
+      signal,
+    })
     return () => controller.abort()
   }, [router])
 
