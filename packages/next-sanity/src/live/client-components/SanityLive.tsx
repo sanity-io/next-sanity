@@ -137,7 +137,13 @@ function SanityLive(props: SanityLiveProps): React.JSX.Element | null {
         startTransition(() => setRefreshOnInterval(false))
 
         if (onRestart) {
-          startTransition(() => onRestart(event, actionContext))
+          startTransition(() =>
+            Promise.resolve(onRestart(event, actionContext)).then((result) => {
+              if (result === 'refresh') {
+                startTransition(() => router.refresh())
+              }
+            }),
+          )
         }
         break
       }
@@ -146,7 +152,13 @@ function SanityLive(props: SanityLiveProps): React.JSX.Element | null {
         startTransition(() => setRefreshOnInterval(false))
 
         if (onReconnect) {
-          startTransition(() => onReconnect(event, actionContext))
+          startTransition(() =>
+            Promise.resolve(onReconnect(event, actionContext)).then((result) => {
+              if (result === 'refresh') {
+                startTransition(() => router.refresh())
+              }
+            }),
+          )
         }
         break
       }
