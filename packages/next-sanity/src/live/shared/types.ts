@@ -81,14 +81,14 @@ export type SanityLiveOnWelcome = (
 export type SanityLiveOnReconnect = (
   event: Extract<LiveEvent, {type: 'reconnect'}>,
   context: SanityLiveActionContext,
-) => void | Promise<void>
+) => void | 'refresh' | Promise<void | 'refresh'>
 /**
  * TODO: docs
  */
 export type SanityLiveOnRestart = (
   event: Extract<LiveEvent, {type: 'restart'}>,
   context: SanityLiveActionContext,
-) => void | Promise<void>
+) => void | 'refresh' | Promise<void | 'refresh'>
 /**
  * TODO: docs
  * This event is fired when the API has hit the limit of concurrent connections, and the API will not deliver live events, in this case long polling intervals is a possible fallback strategy.

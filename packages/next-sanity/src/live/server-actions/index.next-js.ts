@@ -29,7 +29,11 @@ export async function actionUpdateTags(unsafeTags: unknown): Promise<void> {
 
 /**
  * Used by `<SanityLive onReconnect={actionRefresh} onRestart={actionRefresh} />`
+ *
+ * Returns `'refresh'` to signal the client component to call `router.refresh()`
+ * instead of triggering a server-side `refresh()`. This avoids a full page reload
+ * on dynamic catch-all routes where server-side `refresh()` causes a hard navigation.
  */
-export async function actionRefresh(): Promise<void> {
-  refresh()
+export async function actionRefresh(): Promise<'refresh'> {
+  return 'refresh'
 }
