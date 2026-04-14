@@ -1,128 +1,148 @@
 {
   "name": "next-sanity",
-  "version": "12.2.2",
+  "version": "11.6.12",
   "description": "Sanity.io toolkit for Next.js",
   "keywords": [
-    "live",
-    "next.js",
-    "preview",
     "sanity",
     "sanity.io",
+    "next.js",
     "studio",
-    "studio-v3"
+    "studio-v3",
+    "live",
+    "preview"
   ],
   "homepage": "https://github.com/sanity-io/next-sanity#readme",
   "bugs": {
     "url": "https://github.com/sanity-io/next-sanity/issues"
   },
-  "license": "MIT",
-  "author": "Sanity.io <hello@sanity.io>",
   "repository": {
     "type": "git",
     "url": "git+ssh://git@github.com/sanity-io/next-sanity.git",
     "directory": "packages/next-sanity"
   },
-  "files": [
-    "dist"
-  ],
-  "type": "module",
+  "license": "MIT",
+  "author": "Sanity.io <hello@sanity.io>",
   "sideEffects": false,
-  "types": "./dist/index.d.ts",
-  "imports": {
-    "#env": {
-      "next-js": "./src/_env/next-js.ts",
-      "react-server": "./src/_env/react-server.ts",
-      "default": "./src/_env/default.ts"
-    }
-  },
+  "type": "module",
   "exports": {
-    ".": "./src/index.ts",
-    "./draft-mode": "./src/draft-mode/index.ts",
-    "./hooks": "./src/hooks/index.ts",
-    "./image": "./src/image/index.ts",
+    ".": "./dist/index.js",
+    "./draft-mode": "./dist/draft-mode/index.js",
+    "./experimental/client-components/live": "./dist/experimental/client-components/live.js",
+    "./experimental/live": "./dist/experimental/live.js",
+    "./hooks": "./dist/hooks/index.js",
+    "./image": "./dist/image/index.js",
     "./live": {
-      "react-server": "./src/live.ts",
-      "default": "./src/live.server-only.ts"
+      "react-server": "./dist/live.js",
+      "default": "./dist/live.server-only.js"
     },
-    "./live/client-components/live": "./src/live/client-components/live/index.ts",
-    "./live/client-components/live-stream": "./src/live/client-components/live-stream/index.ts",
-    "./live/server-actions": "./src/live/server-actions/index.ts",
-    "./studio": "./src/studio/index.ts",
-    "./studio/client-component": "./src/studio/client-component/index.ts",
-    "./visual-editing": "./src/visual-editing/index.ts",
-    "./visual-editing/client-component": "./src/visual-editing/client-component/index.ts",
-    "./visual-editing/server-actions": "./src/visual-editing/server-actions/index.ts",
-    "./webhook": "./src/webhook/index.ts",
+    "./live/client-components/live": "./dist/live/client-components/live/index.js",
+    "./live/client-components/live-stream": "./dist/live/client-components/live-stream/index.js",
+    "./live/server-actions": "./dist/live/server-actions/index.js",
+    "./studio": "./dist/studio/index.js",
+    "./studio/client-component": "./dist/studio/client-component/index.js",
+    "./visual-editing": "./dist/visual-editing/index.js",
+    "./visual-editing/client-component": "./dist/visual-editing/client-component/index.js",
+    "./visual-editing/server-actions": "./dist/visual-editing/server-actions/index.js",
+    "./webhook": "./dist/webhook/index.js",
     "./package.json": "./package.json"
   },
-  "publishConfig": {
-    "exports": {
-      ".": "./dist/index.js",
-      "./draft-mode": "./dist/draft-mode/index.js",
-      "./hooks": "./dist/hooks/index.js",
-      "./image": "./dist/image/index.js",
-      "./live": {
-        "react-server": "./dist/live.js",
-        "default": "./dist/live.server-only.js"
-      },
-      "./live/client-components/live": "./dist/live/client-components/live/index.js",
-      "./live/client-components/live-stream": "./dist/live/client-components/live-stream/index.js",
-      "./live/server-actions": "./dist/live/server-actions/index.js",
-      "./studio": "./dist/studio/index.js",
-      "./studio/client-component": "./dist/studio/client-component/index.js",
-      "./visual-editing": "./dist/visual-editing/index.js",
-      "./visual-editing/client-component": "./dist/visual-editing/client-component/index.js",
-      "./visual-editing/server-actions": "./dist/visual-editing/server-actions/index.js",
-      "./webhook": "./dist/webhook/index.js",
-      "./package.json": "./package.json"
+  "main": "./dist/index.js",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "typesVersions": {
+    "*": {
+      "draft-mode": [
+        "./dist/draft-mode/index.d.ts"
+      ],
+      "hooks": [
+        "./dist/hooks/index.d.ts"
+      ],
+      "live": [
+        "./dist/live.d.ts"
+      ],
+      "experimental/live": [
+        "./dist/experimental/live.d.ts"
+      ],
+      "experimental/client-components/live": [
+        "./dist/experimental/client-components/live.d.ts"
+      ],
+      "image": [
+        "./dist/image/index.d.ts"
+      ],
+      "studio": [
+        "./dist/studio/index.d.ts"
+      ],
+      "studio/client-component": [
+        "./dist/studio/client-component/index.d.ts"
+      ],
+      "visual-editing": [
+        "./dist/visual-editing/index.d.ts"
+      ],
+      "visual-editing/client-component": [
+        "./dist/visual-editing/client-component/index.d.ts"
+      ],
+      "visual-editing/server-actions": [
+        "./dist/visual-editing/server-actions/index.d.ts"
+      ],
+      "webhook": [
+        "./dist/webhook/index.d.ts"
+      ]
     }
   },
+  "files": [
+    "dist",
+    "src",
+    "!src/**/test/**",
+    "!src/**/*.test.ts",
+    "!src/**/*.test.tsx",
+    "!src/**/*.test-d.ts"
+  ],
   "scripts": {
     "build": "tsdown --publint",
     "coverage": "npm test -- --coverage",
     "dev": "tsdown --watch",
-    "prepack": "tsdown",
+    "prepublishOnly": "tsdown",
     "test": "vitest",
-    "docs:generate": "typedoc"
+    "type-check": "tsc --noEmit"
   },
+  "browserslist": "extends @sanity/browserslist-config",
   "dependencies": {
-    "@portabletext/react": "^6.0.3",
-    "@sanity/client": "^7.20.0",
+    "@portabletext/react": "^6.0.0",
+    "@sanity/client": "^7.13.2",
     "@sanity/comlink": "^4.0.1",
     "@sanity/presentation-comlink": "^2.0.1",
-    "@sanity/preview-url-secret": "^4.0.4",
-    "@sanity/visual-editing": "^5.3.3",
-    "@sanity/webhook": "^4.0.4",
+    "@sanity/preview-url-secret": "^3.0.0",
+    "@sanity/visual-editing": "^4.0.3",
     "dequal": "^2.0.3",
-    "groq": "^5.20.0",
+    "groq": "^4.22.0",
     "history": "^5.3.0",
-    "server-only": "^0.0.1"
+    "server-only": "^0.0.1",
+    "use-effect-event": "^2.0.3"
   },
   "devDependencies": {
+    "@sanity/browserslist-config": "^1.0.5",
+    "@sanity/pkg-utils": "^10.2.1",
     "@sanity/tsconfig": "catalog:",
-    "@types/js-yaml": "^4.0.9",
+    "@sanity/types": "^4.22.0",
+    "@sanity/webhook": "4.0.4",
     "@types/node": "catalog:",
     "@types/react": "catalog:",
     "@types/react-dom": "catalog:",
-    "@vitejs/plugin-react": "^5.2.0",
-    "@vitest/coverage-v8": "^4.1.2",
-    "js-yaml": "^4.1.1",
+    "@vitest/coverage-v8": "^4.0.16",
     "next": "catalog:",
-    "publint": "^0.3.18",
+    "publint": "^0.3.16",
     "react": "catalog:",
     "react-dom": "catalog:",
     "styled-components": "catalog:",
-    "tsdown": "0.20.3",
-    "typedoc": "^0.28.18",
+    "tsdown": "0.18.0",
     "typescript": "catalog:",
-    "vitest": "^4.1.2",
-    "vitest-package-exports": "^1.2.0"
+    "vitest": "^4.0.16"
   },
   "peerDependencies": {
-    "@sanity/client": "^7.20.0",
-    "next": "^16.0.0-0",
-    "react": "^19.2.3",
-    "react-dom": "^19.2.3",
+    "@sanity/client": "^7.13.2",
+    "next": "^15.1.0-0 || ^16.0.0-0",
+    "react": "^18.3 || ^19",
+    "react-dom": "^18.3 || ^19",
     "sanity": "^4.22.0 || ^5",
     "styled-components": "^6.1"
   },
