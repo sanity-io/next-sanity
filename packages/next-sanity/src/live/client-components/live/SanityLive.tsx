@@ -48,6 +48,14 @@ export interface SanityLiveProps extends Pick<
   intervalOnGoAway?: number | false
   onGoAway?: (event: LiveEventGoAway, intervalOnGoAway: number | false) => void
   revalidateSyncTags?: (tags: SyncTag[]) => Promise<void | 'refresh'>
+  /**
+   * Delays events until after a configured Sanity Function has processed them and called the callback endpoint.
+   * When omitted, events are delivered immediately.
+   *
+   * @remarks
+   * When set, any custom `revalidateSyncTags` will not be called — revalidation is handled by the Function instead.
+   */
+  waitFor?: 'function'
 }
 
 function handleError(error: unknown) {
@@ -105,6 +113,7 @@ export function SanityLive(props: SanityLiveProps): React.JSX.Element | null {
     onError = handleError,
     onGoAway = handleOnGoAway,
     revalidateSyncTags = defaultRevalidateSyncTags,
+    waitFor,
   } = props
 
   const client = useMemo(
@@ -142,9 +151,14 @@ export function SanityLive(props: SanityLiveProps): React.JSX.Element | null {
       // Disable long polling when welcome event is received, this is a no-op if long polling is already disabled
       setLongPollingInterval(false)
     } else if (event.type === 'message') {
-      void revalidateSyncTags(event.tags).then((result) => {
-        if (result === 'refresh') router.refresh()
-      })
+      if (waitFor === 'function') {
+        // Cache is already revalidated by the Sanity Function, just refresh the router
+        router.refresh()
+      } else {
+        void revalidateSyncTags(event.tags).then((result) => {
+          if (result === 'refresh') router.refresh()
+        })
+      }
     } else if (event.type === 'restart' || event.type === 'reconnect') {
       router.refresh()
     } else if (event.type === 'goaway') {
@@ -153,7 +167,7 @@ export function SanityLive(props: SanityLiveProps): React.JSX.Element | null {
     }
   })
   useEffect(() => {
-    const subscription = client.live.events({includeDrafts: !!token, tag: requestTag}).subscribe({
+    const subscription = client.live.events({includeDrafts: !!token, tag: requestTag, waitFor}).subscribe({
       next: handleLiveEvent,
       error: (err: unknown) => {
         // console.error('What?', err)
@@ -161,7 +175,7 @@ export function SanityLive(props: SanityLiveProps): React.JSX.Element | null {
       },
     })
     return () => subscription.unsubscribe()
-  }, [client.live, onError, requestTag, token])
+  }, [client.live, onError, requestTag, token, waitFor])
 
   /**
    * 2. Notify what perspective we're in, when in Draft Mode
