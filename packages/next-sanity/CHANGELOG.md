@@ -1,5 +1,17 @@
 # next-sanity
 
+## 12.3.0
+
+### Minor Changes
+
+- [#3368](https://github.com/sanity-io/next-sanity/pull/3368) [`f2832eb`](https://github.com/sanity-io/next-sanity/commit/f2832eb981e5559f5abb47eff26534726d1b2300) Thanks [@adoprog](https://github.com/adoprog)! - feat(live): add `waitFor` option to `<SanityLive>` to defer events until a Sanity Function has processed them
+
+### Patch Changes
+
+- [#3385](https://github.com/sanity-io/next-sanity/pull/3385) [`2cb8697`](https://github.com/sanity-io/next-sanity/commit/2cb8697c19b295b4dc3dd785c7d2775c87956ec7) Thanks [@renovate](https://github.com/apps/renovate)! - fix(deps): update dependency @sanity/client to ^7.21.0
+
+- [#3389](https://github.com/sanity-io/next-sanity/pull/3389) [`2caa3a3`](https://github.com/sanity-io/next-sanity/commit/2caa3a34900d49f89cd46bce1dac799c2de532d9) Thanks [@renovate](https://github.com/apps/renovate)! - fix(deps): update dependency @sanity/preview-url-secret to ^4.0.5
+
 ## 12.2.2
 
 ### Patch Changes
