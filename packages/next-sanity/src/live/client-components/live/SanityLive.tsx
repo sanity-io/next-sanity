@@ -167,13 +167,15 @@ export function SanityLive(props: SanityLiveProps): React.JSX.Element | null {
     }
   })
   useEffect(() => {
-    const subscription = client.live.events({includeDrafts: !!token, tag: requestTag, waitFor}).subscribe({
-      next: handleLiveEvent,
-      error: (err: unknown) => {
-        // console.error('What?', err)
-        onError(err)
-      },
-    })
+    const subscription = client.live
+      .events({includeDrafts: !!token, tag: requestTag, waitFor})
+      .subscribe({
+        next: handleLiveEvent,
+        error: (err: unknown) => {
+          // console.error('What?', err)
+          onError(err)
+        },
+      })
     return () => subscription.unsubscribe()
   }, [client.live, onError, requestTag, token, waitFor])
 
