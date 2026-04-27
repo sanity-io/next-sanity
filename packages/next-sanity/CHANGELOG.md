@@ -1,5 +1,15 @@
 # next-sanity
 
+## 12.3.1
+
+### Patch Changes
+
+- [#3393](https://github.com/sanity-io/next-sanity/pull/3393) [`6474dda`](https://github.com/sanity-io/next-sanity/commit/6474dda2fd69e0eaac1e46cfcdf6d5dbe71ca43b) Thanks [@renovate](https://github.com/apps/renovate)! - fix(deps): update sanity monorepo to v5.22.0
+
+- [#3395](https://github.com/sanity-io/next-sanity/pull/3395) [`51a2f2a`](https://github.com/sanity-io/next-sanity/commit/51a2f2a0675b96362e73847f48927a81925d80c3) Thanks [@renovate](https://github.com/apps/renovate)! - fix(deps): update dependency @sanity/client to ^7.22.0
+
+- [#3400](https://github.com/sanity-io/next-sanity/pull/3400) [`f92a7a4`](https://github.com/sanity-io/next-sanity/commit/f92a7a4a41634620abfd6ee7f5e0ea8285cb0669) Thanks [@renovate](https://github.com/apps/renovate)! - fix(deps): update dependency @sanity/visual-editing to ^5.3.4
+
 ## 12.3.0
 
 ### Minor Changes
