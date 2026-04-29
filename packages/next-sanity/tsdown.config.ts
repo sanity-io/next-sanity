@@ -36,10 +36,11 @@ export default defineConfig({
       resolveId: {
         order: 'pre',
         handler(id, _importer, extraOptions) {
-          if (extraOptions.isEntry) return
-          if (/^next\//.test(id)) {
+          if (extraOptions.isEntry) return undefined
+          if (id.startsWith('next/')) {
             return {id, external: true}
           }
+          return undefined
         },
       },
     },
