@@ -1,4 +1,27 @@
+import type {Plugin} from 'rolldown'
 import {defineConfig} from 'tsdown'
+
+/**
+ * Workaround for https://github.com/rolldown/tsdown/issues/888
+ * tsdown's DepsPlugin rewrites bare import specifiers like `next/headers` to
+ * `next/headers.js` for packages without a `package.json` `exports` field.
+ * This breaks Turbopack's module resolution in Next.js app-route handlers.
+ * A pre-order resolveId hook preserves the original bare specifiers.
+ */
+function preserveBareImports(patterns: RegExp[]): Plugin {
+  return {
+    name: 'preserve-bare-imports',
+    resolveId: {
+      order: 'pre',
+      handler(id, _importer, extraOptions) {
+        if (extraOptions.isEntry) return
+        if (patterns.some((re) => re.test(id))) {
+          return {id, external: true}
+        }
+      },
+    },
+  }
+}
 
 /**
  * Testing out tsdown, if it works well we'll move it to `@sanity/pkg-utils`
@@ -23,6 +46,7 @@ export default defineConfig({
     './src/visual-editing/server-actions/index.ts',
     './src/webhook/index.ts',
   ],
+  plugins: [preserveBareImports([/^next\//])],
   external: [/^next-sanity(?:\/|$)/],
   sourcemap: true,
   hash: false,
