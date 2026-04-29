@@ -23,6 +23,28 @@ export default defineConfig({
     './src/visual-editing/server-actions/index.ts',
     './src/webhook/index.ts',
   ],
+  /**
+   * Workaround for https://github.com/rolldown/tsdown/issues/888
+   * tsdown's DepsPlugin rewrites bare import specifiers like `next/headers` to
+   * `next/headers.js` for packages without a `package.json` `exports` field.
+   * This breaks Turbopack's module resolution in Next.js app-route handlers.
+   * A pre-order resolveId hook preserves the original bare specifiers.
+   */
+  plugins: [
+    {
+      name: 'preserve-bare-imports',
+      resolveId: {
+        order: 'pre',
+        handler(id, _importer, extraOptions) {
+          if (extraOptions.isEntry) return undefined
+          if (id.startsWith('next/')) {
+            return {id, external: true}
+          }
+          return undefined
+        },
+      },
+    },
+  ],
   external: [/^next-sanity(?:\/|$)/],
   sourcemap: true,
   hash: false,
