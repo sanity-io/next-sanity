@@ -1,5 +1,13 @@
 # next-sanity
 
+## 12.3.2
+
+### Patch Changes
+
+- [#3415](https://github.com/sanity-io/next-sanity/pull/3415) [`fb456d0`](https://github.com/sanity-io/next-sanity/commit/fb456d0f0e3c75b806868782b9e4f5a842dc9dd5) Thanks [@renovate](https://github.com/apps/renovate)! - fix(deps): update sanity monorepo to v5.23.0
+
+- [#3414](https://github.com/sanity-io/next-sanity/pull/3414) [`ad68f4c`](https://github.com/sanity-io/next-sanity/commit/ad68f4cdeee6f737ccbd288b79cf1c56824647bb) Thanks [@copilot-swe-agent](https://github.com/apps/copilot-swe-agent)! - Fixed `.js`-suffixed bare imports (e.g. `next/headers.js`) in build output that broke Turbopack module resolution in app-route handlers
+
 ## 12.3.1
 
 ### Patch Changes
