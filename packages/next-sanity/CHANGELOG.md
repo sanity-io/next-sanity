@@ -1,5 +1,11 @@
 # next-sanity
 
+## 12.3.4
+
+### Patch Changes
+
+- [#3423](https://github.com/sanity-io/next-sanity/pull/3423) [`daf1dde`](https://github.com/sanity-io/next-sanity/commit/daf1dde820bbc9402ee073a99bfe69dbf46ee5d6) Thanks [@stipsan](https://github.com/stipsan)! - Remove unused `server-only` dependency
+
 ## 12.3.3
 
 ### Patch Changes
