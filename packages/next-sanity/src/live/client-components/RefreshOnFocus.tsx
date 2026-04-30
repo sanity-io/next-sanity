@@ -1,5 +1,5 @@
 import {useRouter} from 'next/navigation'
-import {useEffect} from 'react'
+import {startTransition, useEffect} from 'react'
 
 const focusThrottleInterval = 5_000
 
@@ -12,7 +12,7 @@ export default function RefreshOnFocus(): null {
     const callback = () => {
       const now = Date.now()
       if (now > nextFocusRevalidatedAt && document.visibilityState !== 'hidden') {
-        router.refresh()
+        startTransition(() => router.refresh())
         nextFocusRevalidatedAt = now + focusThrottleInterval
       }
     }

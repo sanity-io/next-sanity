@@ -11,7 +11,7 @@ import {perspectiveCookieName} from '@sanity/preview-url-secret/constants'
 import SanityLiveClientComponent from 'next-sanity/live/client-components'
 import {PHASE_PRODUCTION_BUILD} from 'next/constants'
 import {draftMode, cookies} from 'next/headers'
-import {prefetchDNS, preconnect} from 'react-dom'
+import {preconnect} from 'react-dom'
 
 import {sanitizePerspective} from '#live/sanitizePerspective'
 
@@ -269,10 +269,9 @@ export function defineLive(config: DefineSanityLiveOptions): {
       client.config()
     const {isEnabled: isDraftModeEnabled} = await draftMode()
 
-    // Preconnect to the Live Event API origin, or at least prefetch the DNS if preconenct is not supported
+    // Preconnect to the Live Event API origin early, as the Sanity API is almost always on a different origin than the app
     const {origin} = new URL(client.getUrl('', false))
     preconnect(origin)
-    prefetchDNS(origin)
 
     return (
       <SanityLiveClientComponent
