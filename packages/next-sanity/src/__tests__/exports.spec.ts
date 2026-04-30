@@ -8,7 +8,6 @@ import {env} from '#env'
 
 vi.mock('react/jsx-dev-runtime', () => ({}))
 vi.mock('react-dom', () => ({preconnect: vi.fn(), preloadModule: vi.fn()}))
-vi.mock('server-only', () => ({}))
 
 test(`exports snapshot for the ${JSON.stringify(env)} condition`, {timeout: 15_000}, async () => {
   const manifest = await getPackageExportsManifest({
@@ -47,7 +46,7 @@ test(`exports snapshot for the ${JSON.stringify(env)} condition`, {timeout: 15_0
       ./live:
         defineLive: function
         isCorsOriginError: function
-      ./live/client-components/live:
+      ./live/client-components:
         default: function
       ./live/server-actions:
         revalidateSyncTags: function
