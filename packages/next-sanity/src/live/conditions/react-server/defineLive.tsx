@@ -8,7 +8,7 @@ import {
   type SyncTag,
 } from '@sanity/client'
 import {perspectiveCookieName} from '@sanity/preview-url-secret/constants'
-import SanityLiveClientComponent from 'next-sanity/live/client-components'
+import {SanityLive as SanityLiveClientComponent} from 'next-sanity/live/client-components'
 import {PHASE_PRODUCTION_BUILD} from 'next/constants'
 import {draftMode, cookies} from 'next/headers'
 import {preconnect} from 'react-dom'

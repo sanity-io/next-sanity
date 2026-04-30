@@ -17,9 +17,9 @@ import {isCorsOriginError} from '#live/isCorsOriginError'
 import {setEnvironment, setPerspective} from '../hooks/context'
 
 const PresentationComlink = dynamic(() => import('./PresentationComlink'))
+const RefreshOnFocus = dynamic(() => import('./RefreshOnFocus'))
 const RefreshOnMount = dynamic(() => import('./RefreshOnMount'))
 const RefreshOnInterval = dynamic(() => import('./RefreshOnInterval'))
-const RefreshOnFocus = dynamic(() => import('./RefreshOnFocus'))
 const RefreshOnReconnect = dynamic(() => import('./RefreshOnReconnect'))
 
 /**
