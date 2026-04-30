@@ -1,5 +1,15 @@
 # next-sanity
 
+## 12.3.5
+
+### Patch Changes
+
+- [#3428](https://github.com/sanity-io/next-sanity/pull/3428) [`5d37ae2`](https://github.com/sanity-io/next-sanity/commit/5d37ae251f8099e393d69a7efa5866d2213e6aa9) Thanks [@stipsan](https://github.com/stipsan)! - Automatically disable long polling when <SanityLive> receives a `reconnect` or `restart` event
+
+- [#3428](https://github.com/sanity-io/next-sanity/pull/3428) [`5d37ae2`](https://github.com/sanity-io/next-sanity/commit/5d37ae251f8099e393d69a7efa5866d2213e6aa9) Thanks [@stipsan](https://github.com/stipsan)! - Stop calling `prefetchDNS` from 'react-dom' in `<SanityLive>`, calling `preconnect` is enough
+
+- [#3428](https://github.com/sanity-io/next-sanity/pull/3428) [`5d37ae2`](https://github.com/sanity-io/next-sanity/commit/5d37ae251f8099e393d69a7efa5866d2213e6aa9) Thanks [@stipsan](https://github.com/stipsan)! - Wrap `router.refresh()` in `startTransition`
+
 ## 12.3.4
 
 ### Patch Changes
