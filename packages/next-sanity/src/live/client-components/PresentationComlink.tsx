@@ -13,7 +13,7 @@ import {setPerspectiveCookie} from 'next-sanity/live/server-actions'
 import {useRouter} from 'next/navigation'
 import {useEffect, useEffectEvent} from 'react'
 
-import {setComlink, setComlinkClientConfig} from '../../hooks/context'
+import {setComlink, setComlinkClientConfig} from '../hooks/context'
 
 function PresentationComlink(props: {
   projectId: string

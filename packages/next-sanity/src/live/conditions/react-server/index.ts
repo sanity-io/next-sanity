@@ -3,5 +3,5 @@ export {
   type DefinedSanityFetchType,
   type DefinedSanityLiveProps,
   defineLive,
-} from './live/defineLive'
-export {isCorsOriginError} from './isCorsOriginError'
+} from './defineLive'
+export {isCorsOriginError} from '#live/isCorsOriginError'

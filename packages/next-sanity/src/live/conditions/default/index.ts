@@ -2,7 +2,7 @@ import type {
   DefineSanityLiveOptions,
   DefinedSanityFetchType,
   DefinedSanityLiveProps,
-} from './live/defineLive'
+} from '../react-server/defineLive'
 
 /**
  * @public
@@ -19,5 +19,4 @@ export function defineLive(_config: DefineSanityLiveOptions): {
  */
 export type {DefineSanityLiveOptions, DefinedSanityFetchType, DefinedSanityLiveProps}
 
-// @TODO deprecate, so that we can simplify this branching and just use `import 'server-only'` instead
-export {isCorsOriginError} from './isCorsOriginError'
+export {isCorsOriginError} from '#live/isCorsOriginError'
