@@ -17,11 +17,7 @@ export function defineLive(_config: DefineSanityLiveOptions): {
 /**
  * @public
  */
-export type {
-  DefineSanityLiveOptions,
-  DefinedSanityFetchType,
-  DefinedSanityLiveProps,
-}
+export type {DefineSanityLiveOptions, DefinedSanityFetchType, DefinedSanityLiveProps}
 
 // @TODO deprecate, so that we can simplify this branching and just use `import 'server-only'` instead
 export {isCorsOriginError} from './isCorsOriginError'
