@@ -88,10 +88,7 @@ function handleOnGoAway(event: LiveEventGoAway, intervalOnGoAway: number | false
   }
 }
 
-/**
- * @public
- */
-export function SanityLive(props: SanityLiveProps): React.JSX.Element | null {
+function SanityLive(props: SanityLiveProps): React.JSX.Element | null {
   const {
     projectId,
     dataset,
@@ -291,3 +288,5 @@ export function SanityLive(props: SanityLiveProps): React.JSX.Element | null {
 }
 
 SanityLive.displayName = 'SanityLiveClientComponent'
+
+export default SanityLive
