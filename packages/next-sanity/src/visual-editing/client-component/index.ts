@@ -1,4 +1,11 @@
 'use client'
 
-export type {VisualEditingProps} from './VisualEditing'
-export {VisualEditingLazyClientComponent as default} from './VisualEditingLazy'
+import dynamic from 'next/dynamic'
+
+import type {VisualEditingProps} from './VisualEditing'
+
+export const VisualEditing: React.ComponentType<VisualEditingProps> = dynamic(
+  () => import('./VisualEditing'),
+  {ssr: false},
+)
+export type {VisualEditingProps}

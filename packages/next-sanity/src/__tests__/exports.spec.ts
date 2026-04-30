@@ -47,7 +47,7 @@ test(`exports snapshot for the ${JSON.stringify(env)} condition`, {timeout: 15_0
         defineLive: function
         isCorsOriginError: function
       ./live/client-components:
-        default: function
+        SanityLive: function
       ./live/server-actions:
         revalidateSyncTags: function
         setPerspectiveCookie: function
@@ -62,9 +62,9 @@ test(`exports snapshot for the ${JSON.stringify(env)} condition`, {timeout: 15_0
       ./visual-editing:
         VisualEditing: function
       ./visual-editing/client-component:
-        default: function
+        VisualEditing: function
       ./visual-editing/server-actions:
-        revalidateRootLayout: function
+        actionPerspectiveChange: function
       ./webhook:
         parseBody: function
       "
