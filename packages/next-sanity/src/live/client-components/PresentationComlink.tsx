@@ -9,7 +9,7 @@ import {
   type LoaderControllerMsg,
   type LoaderNodeMsg,
 } from '@sanity/presentation-comlink'
-import {setPerspectiveCookie} from '../server-actions/index.default'
+import {setPerspectiveCookie} from 'next-sanity/live/server-actions'
 import {useRouter} from 'next/navigation'
 import {useEffect, useEffectEvent} from 'react'
 

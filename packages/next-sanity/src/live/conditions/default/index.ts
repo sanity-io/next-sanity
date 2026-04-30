@@ -19,5 +19,4 @@ export function defineLive(_config: DefineSanityLiveOptions): {
  */
 export type {DefineSanityLiveOptions, DefinedSanityFetchType, DefinedSanityLiveProps}
 
-
 export {isCorsOriginError} from '#live/isCorsOriginError'
