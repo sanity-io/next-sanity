@@ -11,7 +11,9 @@ export function defineLive(_config: DefineSanityLiveOptions): {
   sanityFetch: DefinedSanityFetchType
   SanityLive: React.ComponentType<DefinedSanityLiveProps>
 } {
-  throw new Error('defineLive does not yet support `cacheComponents: true`. Wait for the next major version of next-sanity, or use the prerelease with `pnpm install next-sanity@cache-components`')
+  throw new Error(
+    'defineLive does not yet support `cacheComponents: true`. Wait for the next major version of next-sanity, or use the prerelease with `pnpm install next-sanity@cache-components`',
+  )
 }
 
 /**
