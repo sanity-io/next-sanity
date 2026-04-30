@@ -1,5 +1,11 @@
 # next-sanity
 
+## 13.0.0-cache-components.37
+
+### Patch Changes
+
+- [#3109](https://github.com/sanity-io/next-sanity/pull/3109) [`a48d3d5`](https://github.com/sanity-io/next-sanity/commit/a48d3d59810ac52043e10163d06c990b58523224) Thanks [@stipsan](https://github.com/stipsan)! - Update deps
+
 ## 12.3.2
 
 ### Patch Changes
