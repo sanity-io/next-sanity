@@ -64,7 +64,7 @@ test(`exports snapshot for the ${JSON.stringify(env)} condition`, {timeout: 15_0
       ./visual-editing/client-component:
         VisualEditing: function
       ./visual-editing/server-actions:
-        revalidateRootLayout: function
+        actionPerspectiveChange: function
       ./webhook:
         parseBody: function
       "
