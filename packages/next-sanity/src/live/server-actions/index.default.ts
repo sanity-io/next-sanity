@@ -2,20 +2,33 @@
 
 import type {ClientPerspective, SyncTag} from '@sanity/client'
 import {perspectiveCookieName} from '@sanity/preview-url-secret/constants'
-import {revalidateTag} from 'next/cache'
+import {revalidateTag, updateTag} from 'next/cache'
 import {cookies, draftMode} from 'next/headers'
 
 import {sanitizePerspective} from '#live/sanitizePerspective'
 
 export async function revalidateSyncTags(tags: SyncTag[]): Promise<void> {
-  revalidateTag('sanity:fetch-sync-tags', 'max')
+  const {isEnabled: isDraftMode} = await draftMode()
 
+  if (!isDraftMode) {
+    revalidateTag('sanity:fetch-sync-tags', 'max')
+  }
+
+  const logTags: string[] = []
   for (const _tag of tags) {
     const tag = `sanity:${_tag}`
-    revalidateTag(tag, {expire: 0})
-    // oxlint-disable-next-line no-console
-    console.log(`<SanityLive /> revalidated tag: ${tag}`)
+    if (isDraftMode) {
+      revalidateTag(tag, 'max')
+    } else {
+      updateTag(tag)
+    }
+    logTags.push(tag)
   }
+
+  // oxlint-disable-next-line no-console
+  console.log(
+    `<SanityLive /> ${isDraftMode ? `revalidated tags: ${logTags.join(', ')} with cache profile "max" ` : `updated tags: ${logTags.join(', ')} and revalidated tag: "sanity:fetch-sync-tags" with cache profile "max"`}`,
+  )
 }
 
 export async function setPerspectiveCookie(perspective: ClientPerspective): Promise<void> {
