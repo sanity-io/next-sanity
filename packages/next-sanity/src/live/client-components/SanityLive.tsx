@@ -10,7 +10,7 @@ import {isMaybePresentation, isMaybePreviewWindow} from '@sanity/presentation-co
 import {revalidateSyncTags as defaultRevalidateSyncTags} from 'next-sanity/live/server-actions'
 import dynamic from 'next/dynamic'
 import {useRouter} from 'next/navigation'
-import {useEffect, useMemo, useRef, useState, useEffectEvent} from 'react'
+import {useEffect, useMemo, useRef, useState, useEffectEvent, startTransition} from 'react'
 
 import {isCorsOriginError} from '#live/isCorsOriginError'
 
@@ -157,11 +157,11 @@ export function SanityLive(props: SanityLiveProps): React.JSX.Element | null {
         router.refresh()
       } else {
         void revalidateSyncTags(event.tags).then((result) => {
-          if (result === 'refresh') router.refresh()
+          if (result === 'refresh') startTransition(() => router.refresh())
         })
       }
     } else if (event.type === 'restart' || event.type === 'reconnect') {
-      router.refresh()
+      startTransition(() => router.refresh())
     } else if (event.type === 'goaway') {
       onGoAway(event, intervalOnGoAway)
       setLongPollingInterval(intervalOnGoAway)
@@ -270,7 +270,7 @@ export function SanityLive(props: SanityLiveProps): React.JSX.Element | null {
    */
   useEffect(() => {
     if (!longPollingInterval) return
-    const interval = setInterval(() => router.refresh(), longPollingInterval)
+    const interval = setInterval(() => startTransition(() => router.refresh()), longPollingInterval)
     return () => clearInterval(interval)
   }, [longPollingInterval, router])
 

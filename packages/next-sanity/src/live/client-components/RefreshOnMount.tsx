@@ -6,7 +6,7 @@
  */
 
 import {useRouter} from 'next/navigation'
-import {useEffect, useReducer} from 'react'
+import {useEffect, useReducer, startTransition} from 'react'
 
 export default function RefreshOnMount(): null {
   const router = useRouter()
@@ -14,8 +14,10 @@ export default function RefreshOnMount(): null {
 
   useEffect(() => {
     if (!mounted) {
-      mount()
-      router.refresh()
+      startTransition(() => {
+        mount()
+        router.refresh()
+      })
     }
   }, [mounted, router])
 
