@@ -49,8 +49,6 @@ test(`exports snapshot for the ${JSON.stringify(env)} condition`, {timeout: 15_0
         isCorsOriginError: function
       ./live/client-components/live:
         default: function
-      ./live/client-components/live-stream:
-        default: function
       ./live/server-actions:
         revalidateSyncTags: function
         setPerspectiveCookie: function
