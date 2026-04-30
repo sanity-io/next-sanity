@@ -1,5 +1,11 @@
 # next-sanity
 
+## 12.3.3
+
+### Patch Changes
+
+- [#3419](https://github.com/sanity-io/next-sanity/pull/3419) [`b2f026b`](https://github.com/sanity-io/next-sanity/commit/b2f026ba54f83ab269727ade78e1ab47820e1b95) Thanks [@copilot-swe-agent](https://github.com/apps/copilot-swe-agent)! - Removed the experimental `SanityLiveStream` export from `defineLive`. While this is technically a breaking change, it does not follow semver as it was an experimental, undocumented API marked as `@alpha`. We will return with a different implementation in the future, once we've found an approach that works well with Next.js v16 and cache components.
+
 ## 12.3.2
 
 ### Patch Changes
