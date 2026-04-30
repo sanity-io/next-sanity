@@ -1,5 +1,103 @@
 # next-sanity
 
+## 12.4.0
+
+### Minor Changes
+
+- [#3430](https://github.com/sanity-io/next-sanity/pull/3430) [`aa519e0`](https://github.com/sanity-io/next-sanity/commit/aa519e05eabf7d8bc4ba8aeaf3970d88cd9f082a) Thanks [@stipsan](https://github.com/stipsan)! - Change `<VisualEditing>`'s default refresh behavior for document mutations to only call `router.refresh()`, and no longer call `revalidatePath('/', 'layout')` by default.
+
+  Technically this is a breaking change for apps relying on the previous default root layout revalidation. However, because of the Next.js regression reported by Sanity to Vercel in https://github.com/vercel/next.js/issues/93210, we feel strongly that the default behavior in `<VisualEditing>` on document mutations needs to avoid `revalidatePath('/', 'layout')`: calling it worsens the impact of the regression by causing many `CACHE: REVALIDATED` events, which can massively increase ISR Writes.
+
+  The previous behavior can be restored by providing a custom `refresh` prop to `<VisualEditing>` that calls `revalidatePath('/', 'layout')`:
+
+  ```tsx
+  import { draftMode } from "next/headers";
+  import { refresh, revalidatePath } from "next/cache";
+  import { VisualEditing } from "next-sanity/visual-editing";
+
+  export default async function RootLayout({
+    children,
+  }: {
+    children: React.ReactNode;
+  }) {
+    const { isEnabled: isDraftMode } = await draftMode();
+    return (
+      <html lang="en">
+        <body>
+          {children}
+          {isDraftMode && (
+            <VisualEditing
+              refresh={async function refreshVisualEditing(payload) {
+                "use server";
+                switch (payload.source) {
+                  // When clicking the refresh button manually in Presentation Tool we purge the cache
+                  case "manual":
+                    return revalidatePath("/", "layout");
+                  // When a document is edited we just refresh
+                  case "mutation":
+                    return refresh();
+                  default:
+                    throw new Error("Unknown refresh source", {
+                      cause: payload,
+                    });
+                }
+              }}
+            />
+          )}
+        </body>
+      </html>
+    );
+  }
+  ```
+
+- [#3432](https://github.com/sanity-io/next-sanity/pull/3432) [`45b164b`](https://github.com/sanity-io/next-sanity/commit/45b164bf037050af671c72b839171e4b75f76db2) Thanks [@stipsan](https://github.com/stipsan)! - Change `<SanityLive />`'s default `revalidateSyncTags` behavior so draft mode revalidates affected Sanity tags with `revalidateTag(tag, 'max')`, instead of expiring them immediately with `revalidateTag(tag, {expire: 0})`.
+
+  Technically this is a breaking change for apps relying on the previous immediate tag expiry behavior. However, because of the Next.js regression reported by Sanity to Vercel in https://github.com/vercel/next.js/issues/93210, we feel strongly that the default behavior in `<SanityLive />` needs to avoid `revalidateTag(tag, {expire: 0})` in draft mode: calling it worsens the impact of the regression by causing many `CACHE: REVALIDATED` events, which can massively increase ISR Writes.
+
+  The previous behavior can be restored by providing a custom `revalidateSyncTags` prop to `<SanityLive />`:
+
+  ```tsx
+  import type { SyncTag } from "@sanity/client";
+  import { revalidateTag } from "next/cache";
+
+  import { SanityLive } from "@/sanity/live";
+
+  async function revalidateSyncTags(tags: SyncTag[]): Promise<void> {
+    "use server";
+
+    revalidateTag("sanity:fetch-sync-tags", "max");
+
+    for (const _tag of tags) {
+      revalidateTag(`sanity:${_tag}`, { expire: 0 });
+    }
+  }
+
+  export default function RootLayout({
+    children,
+  }: {
+    children: React.ReactNode;
+  }) {
+    return (
+      <html lang="en">
+        <body>
+          {children}
+          <SanityLive revalidateSyncTags={revalidateSyncTags} />
+        </body>
+      </html>
+    );
+  }
+  ```
+
+- [#3433](https://github.com/sanity-io/next-sanity/pull/3433) [`df0eb01`](https://github.com/sanity-io/next-sanity/commit/df0eb01b6d8d93118270db0040ae760926c7c2af) Thanks [@stipsan](https://github.com/stipsan)! - Disallow using `defineLive` when `cacheComponents: true` is enabled.
+
+  Technically this is a breaking change for apps that currently combine `defineLive` with Next.js Cache Components. However, this configuration is not supported and can cause problems that are difficult to detect, so it is better to fail early until [#3109](https://github.com/sanity-io/next-sanity/issues/3109) lands.
+
+### Patch Changes
+
+- [#3430](https://github.com/sanity-io/next-sanity/pull/3430) [`aa519e0`](https://github.com/sanity-io/next-sanity/commit/aa519e05eabf7d8bc4ba8aeaf3970d88cd9f082a) Thanks [@stipsan](https://github.com/stipsan)! - Improve lazy loading of `<SanityLive>`, if not rendered it won't add `<SanityLiveClientComponent />` to the bundle`
+
+- [#3430](https://github.com/sanity-io/next-sanity/pull/3430) [`aa519e0`](https://github.com/sanity-io/next-sanity/commit/aa519e05eabf7d8bc4ba8aeaf3970d88cd9f082a) Thanks [@stipsan](https://github.com/stipsan)! - Improve lazy loading of `<VisualEditing>`, if not rendered it won't increase the browser bundle
+
 ## 12.3.5
 
 ### Patch Changes
