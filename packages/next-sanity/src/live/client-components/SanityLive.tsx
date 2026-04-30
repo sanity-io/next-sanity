@@ -16,10 +16,11 @@ import {isCorsOriginError} from '#live/isCorsOriginError'
 
 import {setEnvironment, setPerspective} from '../hooks/context'
 
-const PresentationComlink = dynamic(() => import('./PresentationComlink'), {ssr: false})
-const RefreshOnMount = dynamic(() => import('./RefreshOnMount'), {ssr: false})
-const RefreshOnFocus = dynamic(() => import('./RefreshOnFocus'), {ssr: false})
-const RefreshOnReconnect = dynamic(() => import('./RefreshOnReconnect'), {ssr: false})
+const PresentationComlink = dynamic(() => import('./PresentationComlink'))
+const RefreshOnMount = dynamic(() => import('./RefreshOnMount'))
+const RefreshOnInterval = dynamic(() => import('./RefreshOnInterval'))
+const RefreshOnFocus = dynamic(() => import('./RefreshOnFocus'))
+const RefreshOnReconnect = dynamic(() => import('./RefreshOnReconnect'))
 
 /**
  * @public
@@ -132,7 +133,7 @@ export function SanityLive(props: SanityLiveProps): React.JSX.Element | null {
       }),
     [apiHost, apiVersion, dataset, projectId, requestTagPrefix, token, useProjectHostname],
   )
-  const [longPollingInterval, setLongPollingInterval] = useState<number | false>(false)
+  const [refreshOnInterval, setRefreshOnInterval] = useState<number | false>(false)
 
   /**
    * 1. Handle Live Events and call revalidateTag or router.refresh when needed
@@ -150,7 +151,7 @@ export function SanityLive(props: SanityLiveProps): React.JSX.Element | null {
             : 'automatic revalidation of published content',
       )
       // Disable long polling when welcome event is received, this is a no-op if long polling is already disabled
-      setLongPollingInterval(false)
+      startTransition(() => setRefreshOnInterval(false))
     } else if (event.type === 'message') {
       if (waitFor === 'function') {
         // Cache is already revalidated by the Sanity Function, just refresh the router
@@ -161,10 +162,13 @@ export function SanityLive(props: SanityLiveProps): React.JSX.Element | null {
         })
       }
     } else if (event.type === 'restart' || event.type === 'reconnect') {
+      // Disable long polling when restart/reconnect event is received, this is a no-op if long polling is already disabled
+      startTransition(() => setRefreshOnInterval(false))
+      // @TODO add support for `onRestart` and `onReconnect` events so this can be customized
       startTransition(() => router.refresh())
     } else if (event.type === 'goaway') {
       onGoAway(event, intervalOnGoAway)
-      setLongPollingInterval(intervalOnGoAway)
+      startTransition(() => setRefreshOnInterval(intervalOnGoAway))
     }
   })
   useEffect(() => {
@@ -265,15 +269,6 @@ export function SanityLive(props: SanityLiveProps): React.JSX.Element | null {
     }
   }, [draftModeEnabled])
 
-  /**
-   * 6. Handle switching to long polling when needed
-   */
-  useEffect(() => {
-    if (!longPollingInterval) return
-    const interval = setInterval(() => startTransition(() => router.refresh()), longPollingInterval)
-    return () => clearInterval(interval)
-  }, [longPollingInterval, router])
-
   return (
     <>
       {draftModeEnabled && loadComlink && (
@@ -286,8 +281,13 @@ export function SanityLive(props: SanityLiveProps): React.JSX.Element | null {
         />
       )}
       {!draftModeEnabled && refreshOnMount && <RefreshOnMount />}
+      {refreshOnInterval && Number.isFinite(refreshOnInterval) && refreshOnInterval > 0 && (
+        <RefreshOnInterval interval={refreshOnInterval} />
+      )}
       {!draftModeEnabled && refreshOnFocus && <RefreshOnFocus />}
       {!draftModeEnabled && refreshOnReconnect && <RefreshOnReconnect />}
     </>
   )
 }
+
+SanityLive.displayName = 'SanityLiveClientComponent'
