@@ -152,7 +152,7 @@ function SanityLive(props: SanityLiveProps): React.JSX.Element | null {
     } else if (event.type === 'message') {
       if (waitFor === 'function') {
         // Cache is already revalidated by the Sanity Function, just refresh the router
-        router.refresh()
+        startTransition(() => router.refresh())
       } else {
         void revalidateSyncTags(event.tags).then((result) => {
           if (result === 'refresh') startTransition(() => router.refresh())
