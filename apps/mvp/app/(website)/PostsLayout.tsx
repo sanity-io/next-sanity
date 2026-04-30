@@ -44,6 +44,7 @@ export default async function Posts(props: PostsLayoutProps) {
 
   return (
     <>
+      <p className="mt-6">Random number: {random}</p>
       <div className={`mx-auto mt-12 grid max-w-lg gap-5 lg:max-w-none lg:grid-cols-3`}>
         {posts.map((post) => {
           const dataAttribute = createDataAttribute({
@@ -120,7 +121,6 @@ export default async function Posts(props: PostsLayoutProps) {
           )
         })}
       </div>
-      <p className="mt-6">Random number: {random}</p>
     </>
   )
 }

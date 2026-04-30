@@ -12,6 +12,8 @@
  * ---------------------------------------------------------------------------------
  */
 
+export declare const internalGroqTypeReferenceTo: unique symbol
+
 // Source: schema.json
 export type SanityImageAssetReference = {
   _ref: string
@@ -424,9 +426,7 @@ export type AllSanitySchemaTypes =
   | SanityImageAsset
   | Geopoint
 
-export declare const internalGroqTypeReferenceTo: unique symbol
-
-// Source: app/(website)/PostsTitle.tsx
+// Source: app/(website)/PostTitle.tsx
 // Variable: postTitleQuery
 // Query: *[_type == "post" && _id == $id][0].title
 export type PostTitleQueryResult = string | null
