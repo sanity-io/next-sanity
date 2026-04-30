@@ -42,6 +42,7 @@
     "./hooks": "./src/hooks/index.ts",
     "./image": "./src/image/index.ts",
     "./live": {
+      "next-js": "./src/live/conditions/next-js/index.ts",
       "react-server": "./src/live/conditions/react-server/index.ts",
       "default": "./src/live/conditions/default/index.ts"
     },
@@ -64,6 +65,7 @@
       "./hooks": "./dist/hooks/index.js",
       "./image": "./dist/image/index.js",
       "./live": {
+        "next-js": "./dist/live/conditions/next-js/index.js",
         "react-server": "./dist/live/conditions/react-server/index.js",
         "default": "./dist/live/conditions/default/index.js"
       },
