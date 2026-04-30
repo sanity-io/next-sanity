@@ -9,11 +9,11 @@ import {
   type LoaderControllerMsg,
   type LoaderNodeMsg,
 } from '@sanity/presentation-comlink'
-import {setPerspectiveCookie} from 'next-sanity/live/server-actions'
+import {setPerspectiveCookie} from '../server-actions/index.default'
 import {useRouter} from 'next/navigation'
 import {useEffect, useEffectEvent} from 'react'
 
-import {setComlink, setComlinkClientConfig} from '../../hooks/context'
+import {setComlink, setComlinkClientConfig} from '../hooks/context'
 
 function PresentationComlink(props: {
   projectId: string

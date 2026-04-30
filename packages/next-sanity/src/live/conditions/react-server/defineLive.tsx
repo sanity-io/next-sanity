@@ -7,12 +7,16 @@ import {
   type SanityClient,
   type SyncTag,
 } from '@sanity/client'
-import SanityLiveClientComponent from 'next-sanity/live/client-components/live'
+import SanityLiveClientComponent from '../../client-components'
 import {PHASE_PRODUCTION_BUILD} from 'next/constants'
-import {draftMode} from 'next/headers'
+import {draftMode, cookies} from 'next/headers'
 import {prefetchDNS, preconnect} from 'react-dom'
+import {perspectiveCookieName} from '@sanity/preview-url-secret/constants'
 
-import {resolveCookiePerspective} from './resolveCookiePerspective'
+import {sanitizePerspective} from '#live/sanitizePerspective'
+
+
+
 
 /**
  * @public
@@ -301,4 +305,14 @@ export function defineLive(config: DefineSanityLiveOptions): {
     sanityFetch,
     SanityLive,
   }
+}
+
+
+
+async function resolveCookiePerspective(): Promise<Exclude<ClientPerspective, 'raw'>> {
+  return (await draftMode()).isEnabled
+    ? (await cookies()).has(perspectiveCookieName)
+      ? sanitizePerspective((await cookies()).get(perspectiveCookieName)?.value, 'drafts')
+      : 'drafts'
+    : 'published'
 }

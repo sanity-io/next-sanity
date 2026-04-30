@@ -7,13 +7,13 @@ import {
   type SyncTag,
 } from '@sanity/client'
 import {isMaybePresentation, isMaybePreviewWindow} from '@sanity/presentation-comlink'
-import {revalidateSyncTags as defaultRevalidateSyncTags} from 'next-sanity/live/server-actions'
+import {revalidateSyncTags as defaultRevalidateSyncTags} from '../server-actions/index.default'
 import dynamic from 'next/dynamic'
 import {useRouter} from 'next/navigation'
 import {useEffect, useMemo, useRef, useState, useEffectEvent} from 'react'
 
-import {isCorsOriginError} from '../../../isCorsOriginError'
-import {setEnvironment, setPerspective} from '../../hooks/context'
+import {isCorsOriginError} from '#live/isCorsOriginError'
+import {setEnvironment, setPerspective} from '../hooks/context'
 
 const PresentationComlink = dynamic(() => import('./PresentationComlink'), {ssr: false})
 const RefreshOnMount = dynamic(() => import('./RefreshOnMount'), {ssr: false})
