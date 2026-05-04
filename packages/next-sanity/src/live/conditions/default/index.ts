@@ -40,9 +40,7 @@ export function defineLive(_config: DefineLiveOptions): never {
   throw new Error(`defineLive can't be imported by a client component`)
 }
 
-/**
- * @alias {@link resolvePerspectiveFromCookies}
- */
+
 export const resolvePerspectiveFromCookies: ResolvePerspectiveFromCookies = () => {
   throw new Error(`resolvePerspectiveFromCookies can't be imported by a client component`)
 }
