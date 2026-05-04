@@ -10,7 +10,7 @@ import {sanitizePerspective} from '#live/sanitizePerspective'
 /**
  * @internal CAUTION: this is an internal action and does not follow semver. Using it directly is at your own risk.
  */
-export async function actionPerspectiveChange(perspective: ClientPerspective): Promise<void> {
+export async function perspectiveChangeAction(perspective: ClientPerspective): Promise<void> {
   const sanitizedPerspective = sanitizePerspective(perspective, 'drafts')
   if (
     !sanitizedPerspective ||
@@ -28,7 +28,7 @@ export async function actionPerspectiveChange(perspective: ClientPerspective): P
     process.env.NODE_ENV !== 'production'
   ) {
     // oxlint-disable-next-line no-console
-    console.debug('actionPerspectiveChange', 'Perspective is the same, skipping', nextPerspective)
+    console.debug('perspectiveChangeAction', 'Perspective is the same, skipping', nextPerspective)
     return
   }
   jar.set(perspectiveCookieName, nextPerspective, {

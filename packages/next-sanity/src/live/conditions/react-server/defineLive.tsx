@@ -1,7 +1,7 @@
 import {type ClientPerspective, type QueryParams} from '@sanity/client'
 import {perspectiveCookieName} from '@sanity/preview-url-secret/constants'
 import {SanityLive as SanityLiveClientComponent} from 'next-sanity/live/client-components'
-import {actionRefresh, actionUpdateTags} from 'next-sanity/live/server-actions'
+import {refreshAction, revalidateSyncTagsAction} from 'next-sanity/live/server-actions'
 import {PHASE_PRODUCTION_BUILD} from 'next/constants'
 import {cookies, draftMode} from 'next/headers'
 import {preconnect} from 'react-dom'
@@ -88,20 +88,15 @@ export function defineLive(config: DefineLiveOptions) {
     const useCdn = perspective === 'published'
     const isBuildPhase = process.env['NEXT_PHASE'] === PHASE_PRODUCTION_BUILD
     const cacheMode = useCdn && !isBuildPhase ? 'noStale' : undefined
-    const revalidate = false
     const cacheTagPrefix =
       perspective === 'published' ? cacheTagPrefixes.published : cacheTagPrefixes.drafts
 
-    // fetch the tags first, with revalidate to 1s to ensure we get the latest tags, eventually
+    // 1. Fetch the tags first, with an uncached request, but that does not count towards the Sanity API quota
     const {syncTags} = await client.fetch(query, await params, {
       filterResponse: false,
       perspective: perspective as ClientPerspective,
       stega: false,
       returnQuery: false,
-      next: {
-        revalidate,
-        tags: [...tags, 'fetch-sync-tags'].map((tag) => `${cacheTagPrefix}${tag}`),
-      },
       useCdn,
       cacheMode,
       tag: [requestTag, 'fetch-sync-tags'].filter(Boolean).join('.'),
@@ -109,12 +104,13 @@ export function defineLive(config: DefineLiveOptions) {
 
     const cacheTags = [...tags, ...(syncTags?.map((tag) => `${cacheTagPrefix}${tag}`) || [])]
 
+    // 2. Then fetch the data, using the fetch cache with specified tags
     const {result, resultSourceMap} = await client.fetch(query, await params, {
       filterResponse: false,
       perspective: perspective as ClientPerspective,
       stega,
       token: perspective !== 'published' && serverToken ? serverToken : originalToken,
-      next: {revalidate, tags: cacheTags},
+      next: {revalidate: false, tags: cacheTags},
       useCdn,
       cacheMode,
       tag: requestTag,
@@ -128,9 +124,9 @@ export function defineLive(config: DefineLiveOptions) {
     }
     const {
       includeDrafts = (await draftMode()).isEnabled,
-      action = actionUpdateTags,
-      onReconnect = actionRefresh,
-      onRestart = actionRefresh,
+      action = revalidateSyncTagsAction,
+      onReconnect = refreshAction,
+      onRestart = refreshAction,
 
       onWelcome = false,
       onError = false,
