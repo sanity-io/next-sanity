@@ -1,5 +1,11 @@
 # next-sanity
 
+## 13.0.0-cache-components.42
+
+### Patch Changes
+
+- [#3109](https://github.com/sanity-io/next-sanity/pull/3109) [`655084c`](https://github.com/sanity-io/next-sanity/commit/655084c430ee0af3eed7ef0bda43fff30a0b81c7) Thanks [@stipsan](https://github.com/stipsan)! - Test removal of sanity:fetch-sync-tags revalidation workaround
+
 ## 13.0.0-cache-components.41
 
 ### Patch Changes
