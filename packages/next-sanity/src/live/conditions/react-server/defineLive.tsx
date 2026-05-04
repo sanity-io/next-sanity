@@ -296,11 +296,9 @@ export function defineLive(config: DefineSanityLiveOptions): {
       />
     )
   }
+  SanityLive.displayName = 'SanityLiveServerComponent'
 
-  return {
-    sanityFetch,
-    SanityLive,
-  }
+  return {sanityFetch, SanityLive}
 }
 
 async function resolveCookiePerspective(): Promise<Exclude<ClientPerspective, 'raw'>> {
