@@ -8,4 +8,4 @@ export {isCorsOriginError} from '#live/isCorsOriginError'
 export {parseTags} from '#live/parseTags'
 export {resolvePerspectiveFromCookies} from '#live/resolvePerspectiveFromCookies'
 
-export type {PerspectiveType as LivePerspective} from '#live/types'
+export type {LivePerspective} from '#live/types'

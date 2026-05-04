@@ -4,7 +4,7 @@
 // The implementation here though should all throw errors, as importing this file means userland made a mistake and somehow a client component is
 // trying to pull in something it shouldn't.
 
-import type {ResolvePerspectiveFromCookies} from '#live/resolvePerspectiveFromCookies'
+import type {resolvePerspectiveFromCookies as _resolvePerspectiveFromCookies} from '#live/resolvePerspectiveFromCookies'
 import type {
   DefinedFetchType,
   DefinedLiveProps,
@@ -23,6 +23,9 @@ export function defineLive(config: DefineLiveOptions & {strict: true}): {
   sanityFetch: StrictDefinedFetchType
   SanityLive: React.ComponentType<StrictDefinedLiveProps>
 }
+/**
+ * @public
+ */
 export function defineLive(config: DefineLiveOptions & {strict?: false}): {
   sanityFetch: DefinedFetchType
   SanityLive: React.ComponentType<DefinedLiveProps>
@@ -32,30 +35,35 @@ export function defineLive(_config: DefineLiveOptions): never {
 }
 
 /**
- * Reads the active draft-mode perspective from the cookie set by
- * {@link "next-sanity/draft-mode".defineEnableDraftMode | `defineEnableDraftMode`}, falling back to `'drafts'`
- * when the cookie is missing or contains an invalid value.
- *
  * This helper is intended for use with Next.js Cache Components (`cacheComponents: true`),
  * where `cookies()` and `draftMode()` cannot be called inside `'use cache'` boundaries.
  * Resolve the perspective once outside the cache boundary and pass it in as a prop / cache key.
  *
- * The caller is responsible for awaiting `cookies()` from `next/headers` and passing the
- * resulting cookie store as the `cookies` option — this keeps the helper free of dynamic APIs
- * so it can be invoked from anywhere a `ReadonlyRequestCookies` instance is available.
- *
  * @example
- * ```ts
- * import {cookies} from 'next/headers'
- * import {resolvePerspectiveFromCookies} from 'next-sanity/live'
+ * ```tsx
+ * import {cookies, draftMode} from 'next/headers'
+ * import {resolvePerspectiveFromCookies, type LivePerspective} from 'next-sanity/live'
+ * import {sanityFetch} from '#sanity/live'
  *
- * const perspective = await resolvePerspectiveFromCookies({cookies: await cookies()})
+ * function Page() {
+ *   const {isEnabled: isDraftMode} = await draftMode()
+ *   let perspective: LivePerspective = 'published'
+ *   if(isDraftMode) {
+ *     perspective = await resolvePerspectiveFromCookies({cookies: await cookies()})
+ *   }
+ *   const {data} = await cachedFetch({query, perspective, stega: isDraftMode})
+ * }
+ * function cachedFetch({query, params, perspective, stega}: {query: string, perspective: LivePerspective, stega: boolean}) {}) {
+ *   'use cache'
+ *   const {data} = await sanityFetch({query, params, perspective, stega})
+ *   return {data}
+ * }
  * ```
  *
  * @public
  */
-export const resolvePerspectiveFromCookies: ResolvePerspectiveFromCookies = () => {
+export const resolvePerspectiveFromCookies: typeof _resolvePerspectiveFromCookies = () => {
   throw new Error(`resolvePerspectiveFromCookies can't be imported by a client component`)
 }
 
-export type {PerspectiveType as LivePerspective} from '#live/types'
+export type {LivePerspective} from '#live/types'

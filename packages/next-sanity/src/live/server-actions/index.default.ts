@@ -1,14 +1,14 @@
 'use server'
 
-import {refresh, revalidateTag, updateTag} from 'next/cache'
+import {refresh, revalidateTag} from 'next/cache'
 import {draftMode} from 'next/headers'
 
 import {parseTags} from '#live/parseTags'
 
 /**
- * Used by `<SanityLive action={actionRevalidateTags} />`
+ * @alpha CAUTION: this is an internal action and does not follow semver. Using it directly is at your own risk.
  */
-export async function actionUpdateTags(unsafeTags: unknown): Promise<void> {
+export async function revalidateSyncTagsAction(unsafeTags: unknown): Promise<void> {
   const {tags, prefixType} = parseTags(unsafeTags)
   if ((await draftMode()).isEnabled) {
     console.warn(
@@ -18,19 +18,21 @@ export async function actionUpdateTags(unsafeTags: unknown): Promise<void> {
     refresh()
     return undefined
   }
+
   for (const tag of tags) {
-    updateTag(tag)
+    revalidateTag(tag, 'max')
   }
-  revalidateTag('sanity:fetch-sync-tags', 'max')
+
   // oxlint-disable-next-line no-console
   console.log(
-    `<SanityLive ${prefixType === 'drafts' ? 'includeDrafts ' : ''}/> updated tags: ${tags.join(', ')} and revalidated tag: "sanity:fetch-sync-tags" with cache profile "max"`,
+    `<SanityLive ${prefixType === 'drafts' ? 'includeDrafts ' : ''}/> revalidated tags: ${tags.join(', ')} with cache profile "max" `,
   )
 }
 
 /**
- * Used by `<SanityLive onReconnect={actionRefresh} onRestart={actionRefresh} />`
+ * Used by `<SanityLive onReconnect={refreshAction} onRestart={refreshAction} />`
+ * @deprecated - refactor `onReconnect` and `onRestart` to support `() => 'refresh'`
  */
-export async function actionRefresh(): Promise<void> {
+export async function refreshAction(): Promise<void> {
   refresh()
 }

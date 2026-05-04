@@ -1,5 +1,29 @@
 # next-sanity
 
+## 13.0.0-cache-components.42
+
+### Patch Changes
+
+- [#3109](https://github.com/sanity-io/next-sanity/pull/3109) [`655084c`](https://github.com/sanity-io/next-sanity/commit/655084c430ee0af3eed7ef0bda43fff30a0b81c7) Thanks [@stipsan](https://github.com/stipsan)! - Test removal of sanity:fetch-sync-tags revalidation workaround
+
+## 13.0.0-cache-components.41
+
+### Patch Changes
+
+- [#3109](https://github.com/sanity-io/next-sanity/pull/3109) [`a2242e4`](https://github.com/sanity-io/next-sanity/commit/a2242e4fcd946183eacd82c196e0619ff769fb04) Thanks [@stipsan](https://github.com/stipsan)! - Yet another tsdoc test
+
+## 13.0.0-cache-components.40
+
+### Patch Changes
+
+- [#3109](https://github.com/sanity-io/next-sanity/pull/3109) [`506bccb`](https://github.com/sanity-io/next-sanity/commit/506bccba143d8a0dd82adbc47c1fc9c095410969) Thanks [@stipsan](https://github.com/stipsan)! - Try a different approach
+
+## 13.0.0-cache-components.39
+
+### Patch Changes
+
+- [#3109](https://github.com/sanity-io/next-sanity/pull/3109) [`91f3deb`](https://github.com/sanity-io/next-sanity/commit/91f3deb1ba3cf8b3d924a799d744aa0dac0e1579) Thanks [@stipsan](https://github.com/stipsan)! - Test typedoc changes
+
 ## 12.4.0
 
 ### Minor Changes
