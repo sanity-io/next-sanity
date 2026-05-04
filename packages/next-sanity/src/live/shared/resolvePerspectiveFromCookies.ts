@@ -5,27 +5,6 @@ import type {cookies} from 'next/headers'
 import {sanitizePerspective} from '#live/sanitizePerspective'
 
 /**
- * @deprecated - refactor to exporting the same function instead
- */
-export type ResolvePerspectiveFromCookies = (options: {
-  /**
-   * You must await the cookies() function from next/headers
-   * and pass it here.
-   * Example:
-   * ```ts
-   * import { cookies } from 'next/headers'
-   *
-   * const perspective = await resolvePerspectiveFromCookies({cookies: await cookies()})
-   * ```
-   */
-  cookies: Awaited<ReturnType<typeof cookies>>
-}) => Promise<Exclude<ClientPerspective, 'raw'>>
-
-/**
- * Reads the active draft-mode perspective from the cookie set by
- * {@link "next-sanity/draft-mode".defineEnableDraftMode | `defineEnableDraftMode`}, falling back to `'drafts'`
- * when the cookie is missing or contains an invalid value.
- *
  * This helper is intended for use with Next.js Cache Components (`cacheComponents: true`),
  * where `cookies()` and `draftMode()` cannot be called inside `'use cache'` boundaries.
  * Resolve the perspective once outside the cache boundary and pass it in as a prop / cache key.
@@ -44,7 +23,11 @@ export type ResolvePerspectiveFromCookies = (options: {
  *
  * @public
  */
-export async function resolvePerspectiveFromCookies({
+export type ResolvePerspectiveFromCookies = (options: {
+  cookies: Awaited<ReturnType<typeof cookies>>
+}) => Promise<Exclude<ClientPerspective, 'raw'>>
+
+export const resolvePerspectiveFromCookies:ResolvePerspectiveFromCookies  = async function resolvePerspectiveFromCookies({
   cookies: jar,
 }: {
   cookies: Awaited<ReturnType<typeof cookies>>

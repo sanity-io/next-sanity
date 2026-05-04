@@ -12,7 +12,7 @@ import type {
  * Perspectives supported by Sanity Live.
  * Using the legacy `'raw'` perspective is not supported and leads to undefined behavior.
  */
-export type PerspectiveType = Exclude<ClientPerspective, 'raw'>
+export type LivePerspective = Exclude<ClientPerspective, 'raw'>
 
 /**
  * TODO: docs
@@ -23,7 +23,7 @@ export type DefinedFetchType = <const QueryString extends string>(options: {
   /**
    * @defaultValue 'published'
    */
-  perspective?: PerspectiveType
+  perspective?: LivePerspective
   /**
    * Enables stega encoding of the data, this is typically only used in draft mode in conjunction with `perspective: 'drafts'` and with `@sanity/visual-editing` setup.
    * @defaultValue `false`
@@ -204,7 +204,7 @@ export interface StrictDefinedLiveProps extends Omit<DefinedLiveProps, 'includeD
 export type StrictDefinedFetchType = <const QueryString extends string>(options: {
   query: QueryString
   params?: QueryParams | Promise<QueryParams>
-  perspective: PerspectiveType
+  perspective: LivePerspective
   stega: boolean
   tags?: string[]
   requestTag?: string
