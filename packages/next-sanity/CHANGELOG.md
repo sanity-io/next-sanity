@@ -1,5 +1,11 @@
 # next-sanity
 
+## 13.0.0-cache-components.40
+
+### Patch Changes
+
+- [#3109](https://github.com/sanity-io/next-sanity/pull/3109) [`506bccb`](https://github.com/sanity-io/next-sanity/commit/506bccba143d8a0dd82adbc47c1fc9c095410969) Thanks [@stipsan](https://github.com/stipsan)! - Try a different approach
+
 ## 13.0.0-cache-components.39
 
 ### Patch Changes
