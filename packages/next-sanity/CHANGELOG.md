@@ -1,5 +1,13 @@
 # next-sanity
 
+## 13.0.0-cache-components.43
+
+### Patch Changes
+
+- [#3109](https://github.com/sanity-io/next-sanity/pull/3109) [`cdf920a`](https://github.com/sanity-io/next-sanity/commit/cdf920afee10d6c1b86a591e05c511c4bc5faa03) Thanks [@stipsan](https://github.com/stipsan)! - Simplify revalidateSyncTagsAction
+
+- [#3109](https://github.com/sanity-io/next-sanity/pull/3109) [`478df57`](https://github.com/sanity-io/next-sanity/commit/478df57d9513f20183e9e95413ff7af152b20b5c) Thanks [@stipsan](https://github.com/stipsan)! - Improve type docs
+
 ## 13.0.0-cache-components.42
 
 ### Patch Changes
