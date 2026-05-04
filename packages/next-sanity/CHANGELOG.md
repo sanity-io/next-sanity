@@ -1,5 +1,11 @@
 # next-sanity
 
+## 13.0.0-cache-components.39
+
+### Patch Changes
+
+- [#3109](https://github.com/sanity-io/next-sanity/pull/3109) [`91f3deb`](https://github.com/sanity-io/next-sanity/commit/91f3deb1ba3cf8b3d924a799d744aa0dac0e1579) Thanks [@stipsan](https://github.com/stipsan)! - Test typedoc changes
+
 ## 12.4.0
 
 ### Minor Changes
