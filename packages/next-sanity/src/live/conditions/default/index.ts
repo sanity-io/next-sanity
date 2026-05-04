@@ -4,7 +4,7 @@
 // The implementation here though should all throw errors, as importing this file means userland made a mistake and somehow a client component is
 // trying to pull in something it shouldn't.
 
-import type {ResolvePerspectiveFromCookies} from '#live/resolvePerspectiveFromCookies'
+import type {resolvePerspectiveFromCookies as _resolvePerspectiveFromCookies} from '#live/resolvePerspectiveFromCookies'
 import type {
   DefinedFetchType,
   DefinedLiveProps,
@@ -41,8 +41,8 @@ export function defineLive(_config: DefineLiveOptions): never {
 }
 
 
-export const resolvePerspectiveFromCookies: ResolvePerspectiveFromCookies = () => {
+export const resolvePerspectiveFromCookies = (() => {
   throw new Error(`resolvePerspectiveFromCookies can't be imported by a client component`)
-}
+}) as typeof _resolvePerspectiveFromCookies
 
 export type {LivePerspective} from '#live/types'
