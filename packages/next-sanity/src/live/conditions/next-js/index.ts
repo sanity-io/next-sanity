@@ -6,4 +6,18 @@ export {isCorsOriginError} from '#live/isCorsOriginError'
 export {parseTags} from '#live/parseTags'
 export {resolvePerspectiveFromCookies} from '#live/resolvePerspectiveFromCookies'
 
-export type {LivePerspective} from '#live/types'
+export type {
+  DefinedFetchType,
+  DefinedLiveProps,
+  DefineLiveOptions,
+  LivePerspective,
+  SanityLiveAction,
+  SanityLiveActionContext,
+  SanityLiveOnError,
+  SanityLiveOnGoaway,
+  SanityLiveOnReconnect,
+  SanityLiveOnRestart,
+  SanityLiveOnWelcome,
+  StrictDefinedFetchType,
+  StrictDefinedLiveProps,
+} from '#live/types'

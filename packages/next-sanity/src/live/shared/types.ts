@@ -15,29 +15,47 @@ import type {
 export type LivePerspective = Exclude<ClientPerspective, 'raw'>
 
 /**
- * TODO: docs
+ * Fetches data through the configured Sanity client and returns the result
+ * together with the source map and cache tags that Sanity Live uses for
+ * targeted revalidation.
+ *
+ * Returned by `defineLive({strict: false})` and `defineLive({strict: undefined})`.
  */
 export type DefinedFetchType = <const QueryString extends string>(options: {
+  /**
+   * GROQ query to execute.
+   */
   query: QueryString
+  /**
+   * Parameters used by the GROQ query.
+   */
   params?: QueryParams | Promise<QueryParams>
   /**
-   * @defaultValue 'published'
+   * Content perspective used for the fetch.
+   *
+   * @defaultValue The configured client perspective, usually `'published'`.
    */
   perspective?: LivePerspective
   /**
-   * Enables stega encoding of the data, this is typically only used in draft mode in conjunction with `perspective: 'drafts'` and with `@sanity/visual-editing` setup.
+   * Enables stega encoding of the data. This is typically only used in draft
+   * mode with `perspective: 'drafts'` and `@sanity/visual-editing`.
+   *
    * @defaultValue `false`
    */
   stega?: boolean
   /**
-   * Custom cache tags that can be used with next's  `updateTag` functions for custom `read-your-write` server actions,
-   * for example a like button that uses client.mutate to update a document and then immediately shows the result.
+   * Additional cache tags to associate with this fetch.
+   *
+   * `sanityFetch` automatically adds Sanity Live sync tags for the query. Use
+   * this for custom tags that should also be invalidated by your own server
+   * actions, for example after a mutation that needs read-your-own-write UI.
    */
   tags?: string[]
   /**
-   * This request tag is used to identify the request when viewing request logs from your Sanity Content Lake.
+   * Request tag used to identify the request in Sanity Content Lake logs.
+   *
    * @see https://www.sanity.io/docs/reference-api-request-tags
-   * @defaultValue 'next-loader.fetch'
+   * @defaultValue `'next-loader.fetch'` or `'next-loader.fetch.cache-components'`
    */
   requestTag?: string
 }) => Promise<{
@@ -47,53 +65,72 @@ export type DefinedFetchType = <const QueryString extends string>(options: {
 }>
 
 /**
- * TODO: docs
+ * Context passed to Sanity Live event handlers.
  */
 export interface SanityLiveActionContext {
+  /**
+   * Whether the current `<SanityLive />` connection includes draft and content
+   * release version events.
+   */
   includeDrafts: boolean
 }
 
 /**
- * TODO: docs
- * Has a default implementation tailed the nextjs env and config
+ * Server action invoked when Sanity Live receives a content-change message.
+ *
+ * The argument is the list of cache tags derived from the Live Content API
+ * event. The default action revalidates those tags. Return `'refresh'` from a
+ * custom action to also call `router.refresh()` in the browser.
  */
 export type SanityLiveAction = (unsafeTags: unknown) => Promise<void | 'refresh'>
 /**
- * TODO: docs
- * If not defined it'll throw the error during render instead, which will crash the react app
- * unless there's an <ErrorBoundary> surrounding the <SanityLive> component
+ * Handles connection, parsing, and event-processing errors.
+ *
+ * If no handler is provided, the error is thrown during render so it can be
+ * caught by the nearest React error boundary.
  */
 export type SanityLiveOnError = (
   event: unknown,
   context: SanityLiveActionContext,
 ) => void | Promise<void>
 /**
- * TODO: docs
- * Optional, logs console.info by default
+ * Handles the Live Content API `welcome` event.
+ *
+ * This event fires when the EventSource connection is established. Some export
+ * conditions log a connection message by default; pass `false` to
+ * `<SanityLive onWelcome={false} />` to disable that behavior.
  */
 export type SanityLiveOnWelcome = (
   event: Extract<LiveEvent, {type: 'welcome'}>,
   context: SanityLiveActionContext,
 ) => void | Promise<void>
 /**
- * TODO: docs
+ * Handles the Live Content API `reconnect` event.
+ *
+ * The default behavior refreshes the route so Server Components can render with
+ * fresh data after reconnecting.
  */
 export type SanityLiveOnReconnect = (
   event: Extract<LiveEvent, {type: 'reconnect'}>,
   context: SanityLiveActionContext,
 ) => void | Promise<void>
 /**
- * TODO: docs
+ * Handles the Live Content API `restart` event.
+ *
+ * The default behavior refreshes the route so Server Components can render with
+ * fresh data after the Live Content API restarts.
  */
 export type SanityLiveOnRestart = (
   event: Extract<LiveEvent, {type: 'restart'}>,
   context: SanityLiveActionContext,
 ) => void | Promise<void>
 /**
- * TODO: docs
- * This event is fired when the API has hit the limit of concurrent connections, and the API will not deliver live events, in this case long polling intervals is a possible fallback strategy.
- * By default a message will be logged to the console, that creates a refresh interval of 30 seconds.
- * If you set your own event handler make sure you call `setPollingInterval` if you want to activate long-polling, otherwise content goes stale.
+ * Handles the Live Content API `goaway` event.
+ *
+ * This event means the API closed the live connection and will not deliver live
+ * events. This can happen when connection limits are reached. A polling refresh
+ * interval is the usual fallback; call `setPollingInterval()` from a custom
+ * handler to keep content fresh.
  */
 export type SanityLiveOnGoaway = (
   event: Extract<LiveEvent, {type: 'goaway'}>,
@@ -102,88 +139,120 @@ export type SanityLiveOnGoaway = (
 ) => void | Promise<void>
 
 /**
- * TODO: docs
+ * Console-compatible logger used by Sanity Live internals.
  */
 export type Logger = typeof console | Pick<typeof console, 'warn' | 'error' | 'log'>
 
 export interface DefinedLiveProps {
   /**
-   * TODO: docs, settings this to `true` enables live events for draft content and requires `browserToken` to be set.
+   * Include draft and content release version events in the live connection.
+   *
+   * Set this to `true` when draft mode is enabled. A `browserToken` must be
+   * configured in `defineLive()` for draft events to be included.
+   *
+   * @defaultValue `false`
    */
   includeDrafts?: boolean
   /**
-   * TODO: docs
+   * Server action called for each content-change message from the Live Content
+   * API.
+   *
+   * The default action revalidates the cache tags produced by `sanityFetch`.
    */
   action?: SanityLiveAction
   /**
-   * TODO: docs
+   * Custom error handler. Pass `false` to disable custom handling and throw
+   * errors to the nearest React error boundary.
    */
   onError?: SanityLiveOnError | false
   /**
-   * TODO: docs
+   * Custom handler for the `welcome` event. Pass `false` to disable the default
+   * connection log.
    */
   onWelcome?: SanityLiveOnWelcome | false
   /**
-   * TODO: docs
+   * Custom handler for the `reconnect` event. Pass `false` to disable the
+   * default refresh behavior.
    */
   onReconnect?: SanityLiveOnReconnect | false
   /**
-   * TODO: docs
+   * Custom handler for the `restart` event. Pass `false` to disable the default
+   * refresh behavior.
    */
   onRestart?: SanityLiveOnRestart | false
   /**
-   *
+   * Custom handler for the `goaway` event. Pass `false` to disable the default
+   * long-polling fallback.
    */
   onGoAway?: SanityLiveOnGoaway | false
 
   /**
-   * Automatic refresh of RSC when the component <SanityLive /> is mounted.
+   * Refresh Server Components once when `<SanityLive />` mounts.
+   *
+   * This can close the gap between the initial server render and the browser
+   * establishing the live EventSource connection.
+   *
    * @defaultValue `false`
    */
   refreshOnMount?: boolean
   /**
-   * Automatically refresh when window gets focused
+   * Refresh Server Components when the page becomes visible or the window
+   * regains focus.
+   *
    * @defaultValue `false`
    */
   refreshOnFocus?: boolean
   /**
-   * Automatically refresh when the browser regains a network connection (via navigator.onLine)
-   * @defaultValue `false`
+   * Refresh Server Components when the browser regains a network connection.
    */
   refreshOnReconnect?: boolean
 
   /**
-   * This request tag is used to identify the request when viewing request logs from your Sanity Content Lake.
+   * Request tag used to identify the live EventSource request in Sanity Content
+   * Lake logs.
+   *
    * @see https://www.sanity.io/docs/reference-api-request-tags
-   * @defaultValue 'next-loader.live'|'next-loader.live.cache-components'
+   * @defaultValue `'next-loader.live'` or `'next-loader.live.cache-components'`
    */
   requestTag?: string
 }
 
 export interface DefineLiveOptions {
   /**
-   * Required for `fetch()` and `<Live>` to work
+   * Sanity client used by `sanityFetch()` and `<SanityLive />`.
    */
   client: SanityClient
   /**
-   * Optional. If provided then the token needs to have permissions to query documents with `drafts.` prefixes in order for `perspective: 'drafts'` to work.
-   * This token is never shared with the browser, unless you reuse it in `browserToken`..
+   * Token used by the server to query drafts and content release versions.
+   *
+   * This token is never shared with the browser unless you also pass it as
+   * `browserToken`.
    */
   serverToken?: string | false
   /**
-   * Optional. This token is shared with the browser when `<Live>` is given a `perspective` prop other than `"published"`, and should only have access to query published documents.
-   * It is used to setup a `Live Draft Content` EventSource connection, and enables live previewing drafts stand-alone, outside of Presentation Tool.
+   * Token shared with the browser when `<SanityLive includeDrafts />` opens a
+   * draft-capable live connection.
+   *
+   * Use a browser-safe token with the minimum read permissions needed for live
+   * previewing drafts outside Presentation Tool.
    */
   browserToken?: string | false
   /**
-   * Optional. Include stega encoding when draft mode is enabled.
-   *  @deprecated This option is deprecated, as it does not have an effect when `cacheComponents: true`
-   *  @defaultValue `true`
+   * Include stega encoding automatically when draft mode is enabled.
+   *
+   * @deprecated This option does not affect the `next-js` export condition used
+   * with `cacheComponents: true`. Pass `stega` to `sanityFetch()` instead.
+   * @defaultValue `true`
    */
   stega?: boolean
   /**
-   * When `true`, requires explicit `includeDrafts` on `<SanityLive>` and explicit `perspective`/`stega` on `sanityFetch`.
-   * Use this to prepare for migrating to `cacheComponents: true` while still using `cacheComponents: false`.
+   * Require explicit live-content options at every call site.
+   *
+   * When `true`, `includeDrafts` is required on `<SanityLive />` and
+   * `perspective`/`stega` are required on `sanityFetch()`. This matches the
+   * explicit data flow needed inside Cache Components, where `draftMode()` and
+   * `cookies()` must be resolved outside `'use cache'` boundaries.
+   *
    * @defaultValue `false`
    */
   strict?: boolean
