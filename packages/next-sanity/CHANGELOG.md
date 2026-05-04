@@ -1,5 +1,11 @@
 # next-sanity
 
+## 13.0.0-cache-components.41
+
+### Patch Changes
+
+- [#3109](https://github.com/sanity-io/next-sanity/pull/3109) [`a2242e4`](https://github.com/sanity-io/next-sanity/commit/a2242e4fcd946183eacd82c196e0619ff769fb04) Thanks [@stipsan](https://github.com/stipsan)! - Yet another tsdoc test
+
 ## 13.0.0-cache-components.40
 
 ### Patch Changes
