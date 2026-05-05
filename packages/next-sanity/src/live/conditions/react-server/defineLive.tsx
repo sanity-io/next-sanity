@@ -189,9 +189,12 @@ export function defineLive(config: DefineLiveOptions & {strict: true}): {
  *   useCdn: true,
  *   perspective: 'published',
  * })
+ * const token = process.env.SANITY_API_READ_TOKEN
  *
  * export const {sanityFetch, SanityLive} = defineLive({
  *   client,
+ *   browserToken: token,
+ *   serverToken: token,
  * })
  * ```
  *
@@ -351,10 +354,12 @@ export function defineLive(config: DefineLiveOptions) {
     }
     const {
       includeDrafts = (await draftMode()).isEnabled,
-      action = revalidateSyncTagsAction,
+      waitFor,
+      requestTag = 'next-loader.live',
+
+      action = waitFor === 'function' ? refreshAction : revalidateSyncTagsAction,
       onReconnect = refreshAction,
       onRestart = refreshAction,
-
       onWelcome = false,
       onError = false,
       onGoAway = false,
@@ -362,7 +367,6 @@ export function defineLive(config: DefineLiveOptions) {
       refreshOnMount,
       refreshOnFocus,
       refreshOnReconnect,
-      requestTag = 'next-loader.live',
     } = props
     const {projectId, dataset, apiHost, apiVersion, useProjectHostname, requestTagPrefix} =
       client.config()
@@ -384,6 +388,7 @@ export function defineLive(config: DefineLiveOptions) {
           token: shouldIncludeDrafts ? browserToken : undefined,
         }}
         includeDrafts={shouldIncludeDrafts}
+        waitFor={waitFor}
         action={action}
         onReconnect={onReconnect}
         onRestart={onRestart}

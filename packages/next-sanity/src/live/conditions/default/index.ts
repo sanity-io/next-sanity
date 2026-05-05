@@ -188,9 +188,12 @@ export function defineLive(config: DefineLiveOptions & {strict: true}): {
  *   useCdn: true,
  *   perspective: 'published',
  * })
+ * const token = process.env.SANITY_API_READ_TOKEN
  *
  * export const {sanityFetch, SanityLive} = defineLive({
  *   client,
+ *   browserToken: token,
+ *   serverToken: token,
  * })
  * ```
  *

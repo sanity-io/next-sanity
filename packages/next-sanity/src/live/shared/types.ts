@@ -64,80 +64,6 @@ export type DefinedFetchType = <const QueryString extends string>(options: {
   tags: string[]
 }>
 
-/**
- * Context passed to Sanity Live event handlers.
- */
-export interface SanityLiveActionContext {
-  /**
-   * Whether the current `<SanityLive />` connection includes draft and content
-   * release version events.
-   */
-  includeDrafts: boolean
-}
-
-/**
- * Server action invoked when Sanity Live receives a content-change message.
- *
- * The argument is the list of cache tags derived from the Live Content API
- * event. The default action revalidates those tags. Return `'refresh'` from a
- * custom action to also call `router.refresh()` in the browser.
- */
-export type SanityLiveAction = (unsafeTags: unknown) => Promise<void | 'refresh'>
-/**
- * Handles connection, parsing, and event-processing errors.
- *
- * If no handler is provided, the error is thrown during render so it can be
- * caught by the nearest React error boundary.
- */
-export type SanityLiveOnError = (
-  event: unknown,
-  context: SanityLiveActionContext,
-) => void | Promise<void>
-/**
- * Handles the Live Content API `welcome` event.
- *
- * This event fires when the EventSource connection is established. Some export
- * conditions log a connection message by default; pass `false` to
- * `<SanityLive onWelcome={false} />` to disable that behavior.
- */
-export type SanityLiveOnWelcome = (
-  event: Extract<LiveEvent, {type: 'welcome'}>,
-  context: SanityLiveActionContext,
-) => void | Promise<void>
-/**
- * Handles the Live Content API `reconnect` event.
- *
- * The default behavior refreshes the route so Server Components can render with
- * fresh data after reconnecting.
- */
-export type SanityLiveOnReconnect = (
-  event: Extract<LiveEvent, {type: 'reconnect'}>,
-  context: SanityLiveActionContext,
-) => void | Promise<void>
-/**
- * Handles the Live Content API `restart` event.
- *
- * The default behavior refreshes the route so Server Components can render with
- * fresh data after the Live Content API restarts.
- */
-export type SanityLiveOnRestart = (
-  event: Extract<LiveEvent, {type: 'restart'}>,
-  context: SanityLiveActionContext,
-) => void | Promise<void>
-/**
- * Handles the Live Content API `goaway` event.
- *
- * This event means the API closed the live connection and will not deliver live
- * events. This can happen when connection limits are reached. A polling refresh
- * interval is the usual fallback; call `setPollingInterval()` from a custom
- * handler to keep content fresh.
- */
-export type SanityLiveOnGoaway = (
-  event: Extract<LiveEvent, {type: 'goaway'}>,
-  context: SanityLiveActionContext,
-  setPollingInterval: (interval: number) => void,
-) => void | Promise<void>
-
 export interface DefinedLiveProps {
   /**
    * Include draft and content release version events in the live connection.
@@ -148,6 +74,14 @@ export interface DefinedLiveProps {
    * @defaultValue `false`
    */
   includeDrafts?: boolean
+  /**
+   * Delays events until after a configured Sanity Function has processed them and called the callback endpoint.
+   * When omitted, events are delivered immediately.
+   *
+   * @remarks
+   * When set, any custom `revalidateSyncTags` will not be called — revalidation is handled by the Function instead.
+   */
+  waitFor?: 'function'
   /**
    * Server action called for each content-change message from the Live Content
    * API.
@@ -290,3 +224,77 @@ export interface SanityClientConfig extends Pick<
 > {}
 
 export type CacheTagPrefixes = Record<'published' | 'drafts', `${string}:`>
+
+/**
+ * Context passed to Sanity Live event handlers.
+ */
+export interface SanityLiveActionContext {
+  /**
+   * Whether the current `<SanityLive />` connection includes draft and content
+   * release version events.
+   */
+  includeDrafts: boolean
+}
+
+/**
+ * Server action invoked when Sanity Live receives a content-change message.
+ *
+ * The argument is the list of cache tags derived from the Live Content API
+ * event. The default action revalidates those tags. Return `'refresh'` from a
+ * custom action to also call `router.refresh()` in the browser.
+ */
+export type SanityLiveAction = (unsafeTags: unknown) => Promise<void | 'refresh'>
+/**
+ * Handles connection, parsing, and event-processing errors.
+ *
+ * If no handler is provided, the error is thrown during render so it can be
+ * caught by the nearest React error boundary.
+ */
+export type SanityLiveOnError = (
+  event: unknown,
+  context: SanityLiveActionContext,
+) => void | Promise<void>
+/**
+ * Handles the Live Content API `welcome` event.
+ *
+ * This event fires when the EventSource connection is established. Some export
+ * conditions log a connection message by default; pass `false` to
+ * `<SanityLive onWelcome={false} />` to disable that behavior.
+ */
+export type SanityLiveOnWelcome = (
+  event: Extract<LiveEvent, {type: 'welcome'}>,
+  context: SanityLiveActionContext,
+) => void | Promise<void>
+/**
+ * Handles the Live Content API `reconnect` event.
+ *
+ * The default behavior refreshes the route so Server Components can render with
+ * fresh data after reconnecting.
+ */
+export type SanityLiveOnReconnect = (
+  event: Extract<LiveEvent, {type: 'reconnect'}>,
+  context: SanityLiveActionContext,
+) => void | Promise<void>
+/**
+ * Handles the Live Content API `restart` event.
+ *
+ * The default behavior refreshes the route so Server Components can render with
+ * fresh data after the Live Content API restarts.
+ */
+export type SanityLiveOnRestart = (
+  event: Extract<LiveEvent, {type: 'restart'}>,
+  context: SanityLiveActionContext,
+) => void | Promise<void>
+/**
+ * Handles the Live Content API `goaway` event.
+ *
+ * This event means the API closed the live connection and will not deliver live
+ * events. This can happen when connection limits are reached. A polling refresh
+ * interval is the usual fallback; call `setPollingInterval()` from a custom
+ * handler to keep content fresh.
+ */
+export type SanityLiveOnGoaway = (
+  event: Extract<LiveEvent, {type: 'goaway'}>,
+  context: SanityLiveActionContext,
+  setPollingInterval: (interval: number) => void,
+) => void | Promise<void>

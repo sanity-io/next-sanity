@@ -1,7 +1,7 @@
 import {createClient, type LiveEvent} from '@sanity/client'
 import dynamic from 'next/dynamic'
 import {useRouter} from 'next/navigation'
-import {startTransition, useEffect, useEffectEvent, useMemo, useState} from 'react'
+import {useEffect, useMemo, useState, useEffectEvent, startTransition} from 'react'
 
 import {cacheTagPrefixes} from '#live/constants'
 import {isCorsOriginError} from '#live/isCorsOriginError'
@@ -23,8 +23,9 @@ const RefreshOnReconnect = dynamic(() => import('./RefreshOnReconnect'))
 
 export interface SanityLiveProps {
   config: SanityClientConfig
-  includeDrafts?: boolean
+  includeDrafts: boolean | undefined
   requestTag: string
+  waitFor: 'function' | undefined
 
   action: SanityLiveAction
   onError: SanityLiveOnError | false | undefined
@@ -33,25 +34,28 @@ export interface SanityLiveProps {
   onRestart: SanityLiveOnRestart | false | undefined
   onGoAway: SanityLiveOnGoaway | false | undefined
 
-  refreshOnMount?: boolean
-  refreshOnFocus?: boolean
-  refreshOnReconnect?: boolean
+  refreshOnMount: boolean | undefined
+  refreshOnFocus: boolean | undefined
+  refreshOnReconnect: boolean | undefined
 }
 
 function SanityLive(props: SanityLiveProps): React.JSX.Element | null {
   const {
     config,
     includeDrafts = false,
+    requestTag,
+    waitFor,
+
     action,
     onError,
     onWelcome = handleWelcome,
     onReconnect,
     onRestart,
     onGoAway = handleGoaway,
+
     refreshOnMount = false,
     refreshOnFocus = false,
     refreshOnReconnect = true,
-    requestTag,
   } = props
   const {projectId, dataset, apiHost, apiVersion, useProjectHostname, token, requestTagPrefix} =
     config
@@ -164,10 +168,10 @@ function SanityLive(props: SanityLiveProps): React.JSX.Element | null {
   })
   useEffect(() => {
     const subscription = client.live
-      .events({includeDrafts, tag: requestTag})
+      .events({includeDrafts, tag: requestTag, waitFor})
       .subscribe({next: handleLiveEvent, error: handleError})
     return () => subscription.unsubscribe()
-  }, [client.live, requestTag, includeDrafts])
+  }, [client.live, requestTag, includeDrafts, waitFor])
 
   return (
     <>

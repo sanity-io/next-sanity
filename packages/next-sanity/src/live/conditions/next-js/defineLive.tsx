@@ -186,9 +186,12 @@ export function defineLive(config: DefineLiveOptions & {strict: true}): {
  *   useCdn: true,
  *   perspective: 'published',
  * })
+ * const token = process.env.SANITY_API_READ_TOKEN
  *
  * export const {sanityFetch, SanityLive} = defineLive({
  *   client,
+ *   browserToken: token,
+ *   serverToken: token,
  * })
  * ```
  *
@@ -320,10 +323,12 @@ export function defineLive(config: DefineLiveOptions) {
     }
     const {
       includeDrafts = false,
-      action = revalidateSyncTagsAction,
+      waitFor,
+      requestTag = 'next-loader.live.cache-components',
+
+      action = waitFor === 'function' ? refreshAction : revalidateSyncTagsAction,
       onReconnect = refreshAction,
       onRestart = refreshAction,
-
       onWelcome,
       onError,
       onGoAway,
@@ -331,7 +336,6 @@ export function defineLive(config: DefineLiveOptions) {
       refreshOnMount = false,
       refreshOnFocus = false,
       refreshOnReconnect = false,
-      requestTag = 'next-loader.live.cache-components',
     } = props
 
     const shouldIncludeDrafts = typeof browserToken === 'string' && includeDrafts
@@ -355,6 +359,7 @@ export function defineLive(config: DefineLiveOptions) {
           token: shouldIncludeDrafts ? browserToken : undefined,
         }}
         includeDrafts={shouldIncludeDrafts}
+        waitFor={waitFor}
         action={action}
         onReconnect={onReconnect}
         onRestart={onRestart}
