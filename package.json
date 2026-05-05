@@ -9,7 +9,7 @@
     "dev": "turbo dev",
     "docs:generate": "pnpm --filter next-sanity run docs:generate",
     "format": "oxfmt && pnpm lint --fix",
-    "knip": "knip",
+    "knip": "knip --no-config-hints",
     "lint": "oxlint --type-check --type-aware --report-unused-disable-directives --deny-warnings",
     "prestart": "turbo build",
     "start": "turbo watch build start",
