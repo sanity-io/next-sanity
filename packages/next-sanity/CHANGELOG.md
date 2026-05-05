@@ -1,5 +1,11 @@
 # next-sanity
 
+## 12.4.1
+
+### Patch Changes
+
+- [#3449](https://github.com/sanity-io/next-sanity/pull/3449) [`f721d73`](https://github.com/sanity-io/next-sanity/commit/f721d733a257e53979ca5c39a300f90960dfb2ac) Thanks [@stipsan](https://github.com/stipsan)! - Improve dts output with better examples
+
 ## 12.4.0
 
 ### Minor Changes
