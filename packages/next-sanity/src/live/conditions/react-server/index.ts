@@ -1,7 +1,8 @@
-export {
-  type DefineSanityLiveOptions,
-  type DefinedSanityFetchType,
-  type DefinedSanityLiveProps,
-  defineLive,
-} from './defineLive'
+export {defineLive} from './defineLive'
+export type {
+  LivePerspective,
+  DefinedFetchType as DefinedSanityFetchType,
+  DefinedLiveProps as DefinedSanityLiveProps,
+  DefineLiveOptions as DefineSanityLiveOptions,
+} from '#live/types'
 export {isCorsOriginError} from '#live/isCorsOriginError'

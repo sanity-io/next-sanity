@@ -35,28 +35,16 @@ export interface SanityLiveProps extends Pick<
   | 'token'
   | 'requestTagPrefix'
 > {
-  // handleDraftModeAction: (secret: string) => Promise<void | string>
   draftModeEnabled: boolean
   draftModePerspective?: ClientPerspective
   refreshOnMount?: boolean
   refreshOnFocus?: boolean
   refreshOnReconnect?: boolean
   requestTag: string | undefined
-  /**
-   * Handle errors from the Live Events subscription.
-   * By default it's reported using `console.error`, you can override this prop to handle it in your own way.
-   */
   onError?: (error: unknown) => void
   intervalOnGoAway?: number | false
   onGoAway?: (event: LiveEventGoAway, intervalOnGoAway: number | false) => void
   revalidateSyncTags?: (tags: SyncTag[]) => Promise<void | 'refresh'>
-  /**
-   * Delays events until after a configured Sanity Function has processed them and called the callback endpoint.
-   * When omitted, events are delivered immediately.
-   *
-   * @remarks
-   * When set, any custom `revalidateSyncTags` will not be called — revalidation is handled by the Function instead.
-   */
   waitFor?: 'function'
 }
 
@@ -97,7 +85,6 @@ function SanityLive(props: SanityLiveProps): React.JSX.Element | null {
     useProjectHostname,
     token,
     requestTagPrefix,
-    // handleDraftModeAction,
     draftModeEnabled,
     draftModePerspective,
     refreshOnMount = false,
@@ -272,7 +259,6 @@ function SanityLive(props: SanityLiveProps): React.JSX.Element | null {
         <PresentationComlink
           projectId={projectId!}
           dataset={dataset!}
-          // handleDraftModeAction={handleDraftModeAction}
           draftModeEnabled={draftModeEnabled}
           draftModePerspective={draftModePerspective!}
         />

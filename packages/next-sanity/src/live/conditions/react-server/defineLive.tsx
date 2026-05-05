@@ -1,171 +1,97 @@
-import {
-  type ClientPerspective,
-  type ClientReturn,
-  type ContentSourceMap,
-  type LiveEventGoAway,
-  type QueryParams,
-  type SanityClient,
-  type SyncTag,
-} from '@sanity/client'
+import type {ClientPerspective, QueryParams} from '@sanity/client'
 import {perspectiveCookieName} from '@sanity/preview-url-secret/constants'
 import {SanityLive as SanityLiveClientComponent} from 'next-sanity/live/client-components'
 import {PHASE_PRODUCTION_BUILD} from 'next/constants'
-import {draftMode, cookies} from 'next/headers'
+import {cookies, draftMode} from 'next/headers'
 import {preconnect} from 'react-dom'
 
 import {sanitizePerspective} from '#live/sanitizePerspective'
+import type {DefinedFetchType, DefinedLiveProps, DefineLiveOptions} from '#live/types'
 
 /**
+ * Set up Sanity Live. `defineLive` returns `sanityFetch` and `<SanityLive />`,
+ * which connect your Sanity client to the Live Content API so pages can serve
+ * cached content and update in response to fine-grained content changes.
+ *
+ * @see [Live Content API](https://www.sanity.io/docs/content-lake/live-content-api)
+ * @see [Sanity Live](https://www.sanity.io/live)
+ *
+ * @example
+ * ```tsx
+ * import {createClient} from 'next-sanity'
+ * import {defineLive} from 'next-sanity/live'
+ *
+ * const client = createClient({
+ *   projectId: process.env.NEXT_PUBLIC_SANITY_PROJECT_ID,
+ *   dataset: process.env.NEXT_PUBLIC_SANITY_DATASET,
+ *   useCdn: true,
+ *   perspective: 'published',
+ * })
+ * const token = process.env.SANITY_API_READ_TOKEN
+ *
+ * export const {sanityFetch, SanityLive} = defineLive({
+ *   client,
+ *   browserToken: token,
+ *   serverToken: token,
+ * })
+ * ```
+ *
+ * @example
+ * ```tsx
+ * // app/layout.tsx
+ * import {SanityLive} from '@/sanity/live'
+ *
+ * export default function RootLayout({children}: {children: React.ReactNode}) {
+ *   return (
+ *     <html lang="en">
+ *       <body>
+ *         {children}
+ *         <SanityLive />
+ *       </body>
+ *     </html>
+ *   )
+ * }
+ * ```
+ *
+ * @example
+ * ```tsx
+ * // app/[slug]/page.tsx
+ * import {defineQuery} from 'next-sanity'
+ * import {sanityFetch} from '@/sanity/live'
+ *
+ * const POSTS_SLUGS_QUERY = defineQuery(`
+ *   *[_type == "post" && slug.current]{"slug": slug.current}
+ * `)
+ * const POST_QUERY = defineQuery(`
+ *   *[_type == "post" && slug.current == $slug][0]
+ * `)
+ *
+ * export async function generateStaticParams() {
+ *   const {data} = await sanityFetch({
+ *     query: POSTS_SLUGS_QUERY,
+ *     perspective: 'published',
+ *     stega: false,
+ *   })
+ *
+ *   return data
+ * }
+ *
+ * export default async function Page(props: PageProps<'/[slug]'>) {
+ *   const {slug} = await props.params
+ *   const {data} = await sanityFetch({
+ *     query: POST_QUERY,
+ *     params: {slug},
+ *   })
+ *
+ *   return <pre>{JSON.stringify(data, null, 2)}</pre>
+ * }
+ * ```
+ *
  * @public
  */
-export type DefinedSanityFetchType = <const QueryString extends string>(options: {
-  query: QueryString
-  params?: QueryParams | Promise<QueryParams>
-  /**
-   * Add custom `next.tags` to the underlying fetch request.
-   * @see https://nextjs.org/docs/app/api-reference/functions/fetch#optionsnexttags
-   * This can be used in conjunction with custom fallback revalidation strategies, as well as with custom Server Actions that mutate data and want to render with fresh data right away (faster than the Live Event latency).
-   * @defaultValue `['sanity']`
-   */
-  tags?: string[]
-  perspective?: Exclude<ClientPerspective, 'raw'>
-  stega?: boolean
-  /**
-   * @deprecated use `requestTag` instead
-   */
-  tag?: never
-  /**
-   * This request tag is used to identify the request when viewing request logs from your Sanity Content Lake.
-   * @see https://www.sanity.io/docs/reference-api-request-tags
-   * @defaultValue 'next-loader.fetch'
-   */
-  requestTag?: string
-}) => Promise<{
-  data: ClientReturn<QueryString>
-  sourceMap: ContentSourceMap | null
-  tags: string[]
-}>
-
-/**
- * @public
- */
-export interface DefinedSanityLiveProps {
-  /**
-   * Automatic refresh of RSC when the component <SanityLive /> is mounted.
-   * Note that this is different from revalidation, which is based on tags and causes `sanityFetch` calls to be re-fetched.
-   * @defaultValue `true`
-   */
-  refreshOnMount?: boolean
-  /**
-   * Automatically refresh when window gets focused
-   * Note that this is different from revalidation, which is based on tags and causes `sanityFetch` calls to be re-fetched.
-   * @defaultValue `false` if draftMode().isEnabled, otherwise `true` if not inside an iframe
-   */
-  refreshOnFocus?: boolean
-  /**
-   * Automatically refresh when the browser regains a network connection (via navigator.onLine)
-   * Note that this is different from revalidation, which is based on tags and causes `sanityFetch` calls to be re-fetched.
-   * @defaultValue `true`
-   */
-  refreshOnReconnect?: boolean
-  /**
-   * Automatically refresh on an interval when the Live Event API emits a `goaway` event, which indicates that the connection is rejected or closed.
-   * This typically happens if the connection limit is reached, or if the connection is idle for too long.
-   * To disable this long polling fallback behavior set `intervalOnGoAway` to `false` or `0`.
-   * You can also use `onGoAway` to handle the `goaway` event in your own way, and read the reason why the event was emitted.
-   * @defaultValue `30_000` 30 seconds interval
-   */
-  intervalOnGoAway?: number | false
-
-  /**
-   * Delays events until after a Sanity Function has processed them and called the callback endpoint.
-   * When omitted, events are delivered immediately.
-   */
-  waitFor?: 'function'
-
-  /**
-   * @deprecated use `requestTag` instead
-   */
-  tag?: never
-
-  /**
-   * This request tag is used to identify the request when viewing request logs from your Sanity Content Lake.
-   * @see https://www.sanity.io/docs/reference-api-request-tags
-   * @defaultValue 'next-loader.live'
-   */
-  requestTag?: string
-
-  /**
-   * Handle errors from the Live Events subscription.
-   * By default it's reported using `console.error`, you can override this prop to handle it in your own way.
-   */
-  onError?: (error: unknown) => void
-
-  /**
-   * Handle the `goaway` event if the connection is rejected/closed.
-   * `event.reason` will be a string of why the event was emitted, for example `'connection limit reached'`.
-   * When this happens the `<SanityLive />` will fallback to long polling with a default interval of 30 seconds, providing your own `onGoAway` handler does not change this behavior.
-   * If you want to disable long polling set `intervalOnGoAway` to `false` or `0`.
-   */
-  onGoAway?: (event: LiveEventGoAway, intervalOnGoAway: number | false) => void
-
-  /**
-   * Override how cache tags are invalidated, you need to pass a server action here.
-   * You can also pass a `use client` function here, and have `router.refresh()` be called if the promise resolves to `'refresh'`.
-   */
-  revalidateSyncTags?: (tags: SyncTag[]) => Promise<void | 'refresh'>
-}
-
-/**
- * @public
- */
-export interface DefineSanityLiveOptions {
-  /**
-   * Required for `sanityFetch` and `SanityLive` to work
-   */
-  client: SanityClient
-  /**
-   * Optional. If provided then the token needs to have permissions to query documents with `drafts.` prefixes in order for `perspective: 'drafts'` to work.
-   * This token is not shared with the browser.
-   */
-  serverToken?: string | false
-  /**
-   * Optional. This token is shared with the browser, and should only have access to query published documents.
-   * It is used to setup a `Live Draft Content` EventSource connection, and enables live previewing drafts stand-alone, outside of Presentation Tool.
-   */
-  browserToken?: string | false
-  /**
-   * Fetch options used by `sanityFetch`
-   * @deprecated this option is removed in the next major version, use `export const revalidate` on the `page.tsx` or `layout.tsx` instead
-   */
-  fetchOptions?: {
-    /**
-     * Optional, enables time based revalidation in addition to the EventSource connection.
-     * @defaultValue `false`
-     */
-    revalidate?: number | false
-  }
-  /**
-   * Optional. Include stega encoding when draft mode is enabled.
-   *  @defaultValue `true`
-   */
-  stega?: boolean
-}
-
-/**
- * @public
- */
-export function defineLive(config: DefineSanityLiveOptions): {
-  /**
-   * Use this function to fetch data from Sanity in your React Server Components.
-   * @public
-   */
-  sanityFetch: DefinedSanityFetchType
-  /**
-   * Render this in your root layout.tsx to make your page revalidate on new content live, automatically.
-   * @public
-   */
-  SanityLive: React.ComponentType<DefinedSanityLiveProps>
+export function defineLive(config: DefineLiveOptions): {
+  sanityFetch: DefinedFetchType
+  SanityLive: React.ComponentType<DefinedLiveProps>
 } {
   const {
     client: _client,
@@ -195,7 +121,7 @@ export function defineLive(config: DefineSanityLiveOptions): {
   const {token: originalToken} = client.config()
   const studioUrlDefined = typeof client.config().stega.studioUrl !== 'undefined'
 
-  const sanityFetch: DefinedSanityFetchType = async function sanityFetch<
+  const sanityFetch: DefinedFetchType = async function sanityFetch<
     const QueryString extends string,
   >({
     query,
@@ -252,7 +178,7 @@ export function defineLive(config: DefineSanityLiveOptions): {
     return {data: result, sourceMap: resultSourceMap || null, tags: cacheTags}
   }
 
-  const SanityLive: React.ComponentType<DefinedSanityLiveProps> = async function SanityLive(props) {
+  const SanityLive: React.ComponentType<DefinedLiveProps> = async function SanityLive(props) {
     const {
       refreshOnMount,
       refreshOnFocus,
