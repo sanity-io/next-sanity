@@ -1,5 +1,11 @@
 # next-sanity
 
+## 12.4.2
+
+### Patch Changes
+
+- [#3453](https://github.com/sanity-io/next-sanity/pull/3453) [`33340b0`](https://github.com/sanity-io/next-sanity/commit/33340b03bcc8d63fe9aeecad4eef852e41a424f3) Thanks [@renovate](https://github.com/apps/renovate)! - fix(deps): update dependency @portabletext/react to ^6.1.0
+
 ## 12.4.1
 
 ### Patch Changes
