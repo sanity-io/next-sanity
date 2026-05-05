@@ -9,6 +9,7 @@
     "dev": "turbo dev",
     "docs:generate": "pnpm --filter next-sanity run docs:generate",
     "format": "oxfmt && pnpm lint --fix",
+    "knip": "knip",
     "lint": "oxlint --type-check --type-aware --report-unused-disable-directives --deny-warnings",
     "prestart": "turbo build",
     "start": "turbo watch build start",
@@ -24,5 +25,8 @@
     "oxlint-tsgolint": "^0.22.1",
     "turbo": "^2.9.7"
   },
-  "packageManager": "pnpm@10.33.3"
+  "packageManager": "pnpm@10.33.3",
+  "devDependencies": {
+    "knip": "^6.11.0"
+  }
 }
