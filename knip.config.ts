@@ -6,6 +6,7 @@ const config: KnipConfig = {
     'packages/next-sanity': {
       entry: ['src/**/index.ts', 'src/**/index.default.ts'],
       project: ['src/**/*.{ts,tsx}'],
+      includeEntryExports: false,
       ignoreDependencies: [
         // Peer dependencies provided by consumers
         'styled-components',
@@ -16,6 +17,8 @@ const config: KnipConfig = {
       ignoreDependencies: [
         // Peer dependency listed as devDependency for type resolution
         'styled-components',
+        // Internal workspace config package used via tsconfig extends
+        '@repo/typescript-config',
       ],
     },
     'packages/typescript-config': {
@@ -29,6 +32,10 @@ const config: KnipConfig = {
         // Sanity Studio peer deps that are used at runtime
         '@sanity/vision',
         'styled-components',
+        // CSS framework referenced via PostCSS config
+        'tailwindcss',
+        // Internal workspace config package used via tsconfig extends
+        '@repo/typescript-config',
       ],
       paths: {'@/*': ['./*']},
     },
@@ -40,6 +47,10 @@ const config: KnipConfig = {
         // Sanity Studio peer deps that are used at runtime
         '@sanity/vision',
         'styled-components',
+        // CSS framework referenced via PostCSS config
+        'tailwindcss',
+        // Internal workspace config package used via tsconfig extends
+        '@repo/typescript-config',
       ],
       paths: {'@/*': ['./*']},
     },
