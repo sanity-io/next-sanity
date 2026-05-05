@@ -1,5 +1,13 @@
 # next-sanity
 
+## 13.0.0-cache-components.44
+
+### Patch Changes
+
+- [#3109](https://github.com/sanity-io/next-sanity/pull/3109) [`314223a`](https://github.com/sanity-io/next-sanity/commit/314223a6c02bed022e5d479c5210769b6b0ed4c3) Thanks [@stipsan](https://github.com/stipsan)! - Add support for `waitFor`
+
+- [#3109](https://github.com/sanity-io/next-sanity/pull/3109) [`2599b2f`](https://github.com/sanity-io/next-sanity/commit/2599b2f1ee80c72e4a93f8e8ec1af664b89197db) Thanks [@stipsan](https://github.com/stipsan)! - Remove unused deps
+
 ## 12.4.2
 
 ### Patch Changes
