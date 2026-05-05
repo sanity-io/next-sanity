@@ -138,11 +138,6 @@ export type SanityLiveOnGoaway = (
   setPollingInterval: (interval: number) => void,
 ) => void | Promise<void>
 
-/**
- * Console-compatible logger used by Sanity Live internals.
- */
-export type Logger = typeof console | Pick<typeof console, 'warn' | 'error' | 'log'>
-
 export interface DefinedLiveProps {
   /**
    * Include draft and content release version events in the live connection.
