@@ -6,7 +6,6 @@ const config: KnipConfig = {
     'packages/next-sanity': {
       entry: ['src/**/index.ts', 'src/**/index.default.ts'],
       project: ['src/**/*.{ts,tsx}'],
-      includeEntryExports: false,
       ignoreDependencies: [
         // Peer dependencies provided by consumers
         'styled-components',
