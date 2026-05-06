@@ -243,8 +243,8 @@ importers:
   packages/next-sanity:
     dependencies:
       '@portabletext/react':
-        specifier: ^6.1.0
-        version: 6.1.0(react@19.2.5)
+        specifier: ^6.2.0
+        version: 6.2.0(react@19.2.5)
       '@sanity/client':
         specifier: ^7.22.0
         version: 7.22.0
@@ -2669,6 +2669,12 @@ packages:
 
   '@portabletext/react@6.1.0':
     resolution: {integrity: sha512-qs87L87oxz4dIWXDCEW9nTxWtsN6zkJbpsIJ5izWfE6EpJDH1WZtfHrUZyR3Ot3jwlViHNu9b3qztxFvMM2Rzg==}
+    engines: {node: '>=20.19 <22 || >=22.12'}
+    peerDependencies:
+      react: ^19.2.5
+
+  '@portabletext/react@6.2.0':
+    resolution: {integrity: sha512-Z0J/AWrvg7GyDfEBQRRhi6ZpxLOsN4/QbU8KhTwfa6r2ELiRaMa4gkHE9wfs3V1ozNDrTG4IRr+8yBnHNDnAqA==}
     engines: {node: '>=20.19 <22 || >=22.12'}
     peerDependencies:
       react: ^19.2.5
@@ -8881,6 +8887,12 @@ snapshots:
       - '@types/react'
 
   '@portabletext/react@6.1.0(react@19.2.5)':
+    dependencies:
+      '@portabletext/toolkit': 5.0.2
+      '@portabletext/types': 4.0.2
+      react: 19.2.5
+
+  '@portabletext/react@6.2.0(react@19.2.5)':
     dependencies:
       '@portabletext/toolkit': 5.0.2
       '@portabletext/types': 4.0.2
