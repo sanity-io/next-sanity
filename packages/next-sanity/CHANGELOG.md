@@ -1,5 +1,11 @@
 # next-sanity
 
+## 12.4.4
+
+### Patch Changes
+
+- [#3467](https://github.com/sanity-io/next-sanity/pull/3467) [`8e9e032`](https://github.com/sanity-io/next-sanity/commit/8e9e032d97216d427b2c836776f704a2adc07c61) Thanks [@squiggler-app](https://github.com/apps/squiggler-app)! - fix(deps): update dependency @sanity/preview-url-secret to ^4.0.6
+
 ## 12.4.3
 
 ### Patch Changes
