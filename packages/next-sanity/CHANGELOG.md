@@ -1,5 +1,11 @@
 # next-sanity
 
+## 13.0.0-cache-components.47
+
+### Patch Changes
+
+- [#3109](https://github.com/sanity-io/next-sanity/pull/3109) [`99a98e4`](https://github.com/sanity-io/next-sanity/commit/99a98e4eab7fa31a6b67a1a46f3ec58e67a9e9ed) Thanks [@stipsan](https://github.com/stipsan)! - Throw errors as-is, do not wrap cors errors
+
 ## 13.0.0-cache-components.46
 
 ### Patch Changes
