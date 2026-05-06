@@ -4,7 +4,7 @@ on:
   push:
     branches:
       - main
-      - v11
+      - v12
       - cache-components
 
 concurrency: ${{ github.workflow }}-${{ github.ref }}
