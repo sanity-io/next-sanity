@@ -54,7 +54,7 @@ export type DefinedFetchType = <const QueryString extends string>(options: {
   tag?: never
   /**
    * This request tag is used to identify the request when viewing request logs from your Sanity Content Lake.
-   * @see https://www.sanity.io/docs/reference-api-request-tags
+   * @see https://www.sanity.io/docs/platform-management/reference-api-request-tags
    * @defaultValue 'next-loader.fetch'
    */
   requestTag?: string
@@ -106,13 +106,8 @@ export interface DefinedLiveProps {
   waitFor?: 'function'
 
   /**
-   * @deprecated use `requestTag` instead
-   */
-  tag?: never
-
-  /**
    * This request tag is used to identify the request when viewing request logs from your Sanity Content Lake.
-   * @see https://www.sanity.io/docs/reference-api-request-tags
+   * @see https://www.sanity.io/docs/platform-management/reference-api-request-tags
    * @defaultValue 'next-loader.live'
    */
   requestTag?: string

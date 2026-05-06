@@ -34,7 +34,7 @@ export interface SanityLiveProps extends Pick<
 > {
   draftModeEnabled: boolean
   draftModePerspective?: ClientPerspective
-  requestTag: string | undefined
+  requestTag: string
   waitFor?: 'function'
 
   revalidateSyncTags?: (tags: SyncTag[]) => Promise<void | 'refresh'>
@@ -58,7 +58,7 @@ function SanityLive(props: SanityLiveProps): React.JSX.Element | null {
     requestTagPrefix,
     draftModeEnabled,
     draftModePerspective,
-    requestTag = 'next-loader.live',
+    requestTag,
     waitFor,
 
     revalidateSyncTags = defaultRevalidateSyncTags,
