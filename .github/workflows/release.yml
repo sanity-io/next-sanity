@@ -3,9 +3,7 @@ name: Release
 on:
   push:
     branches:
-      - main
       - v12
-      - cache-components
 
 concurrency: ${{ github.workflow }}-${{ github.ref }}
 

@@ -5,7 +5,8 @@ on:
   pull_request:
     types: [opened, synchronize]
   push:
-    branches: [main, v12]
+    branches:
+      - v12
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.head_ref || github.run_id }}
