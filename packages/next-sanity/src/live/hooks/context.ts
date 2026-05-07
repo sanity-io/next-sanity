@@ -23,30 +23,6 @@ export function setPerspective(nextPerspective: DraftPerspective): void {
   }
 }
 
-/**
- *
- * @public
- */
-export type DraftEnvironment =
-  | 'checking'
-  | 'presentation-iframe'
-  | 'presentation-window'
-  | 'live'
-  | 'static'
-  | 'unknown'
-
-/** @internal */
-export const environmentListeners: Set<() => void> = new Set()
-/** @internal */
-export let environment: DraftEnvironment = 'checking'
-/** @internal */
-export function setEnvironment(nextEnvironment: DraftEnvironment): void {
-  environment = nextEnvironment
-  for (const onEnvironmentChange of environmentListeners) {
-    onEnvironmentChange()
-  }
-}
-
 /** @internal */
 export const comlinkListeners: Set<() => void> = new Set()
 /** @internal */

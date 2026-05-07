@@ -6,7 +6,7 @@ import {
   type LiveEventGoAway,
   type SyncTag,
 } from '@sanity/client'
-import {isMaybePresentation, isMaybePreviewWindow} from '@sanity/presentation-comlink'
+import {isMaybePresentation} from '@sanity/presentation-comlink'
 import {revalidateSyncTags as defaultRevalidateSyncTags} from 'next-sanity/live/server-actions'
 import dynamic from 'next/dynamic'
 import {useRouter} from 'next/navigation'
@@ -14,7 +14,7 @@ import {useEffect, useMemo, useRef, useState, useEffectEvent, startTransition} f
 
 import {isCorsOriginError} from '#live/isCorsOriginError'
 
-import {setEnvironment, setPerspective} from '../hooks/context'
+import {setPerspective} from '../hooks/context'
 
 const PresentationComlink = dynamic(() => import('./PresentationComlink'))
 const RefreshOnFocus = dynamic(() => import('./RefreshOnFocus'))
@@ -153,30 +153,6 @@ function SanityLive(props: SanityLiveProps): React.JSX.Element | null {
   }, [draftModeEnabled, draftModePerspective])
 
   const [loadComlink, setLoadComlink] = useState(false)
-  /**
-   * 3. Notify what environment we're in, when in Draft Mode
-   */
-  useEffect(() => {
-    // If we might be in Presentation Tool, then skip detecting here as it's handled later
-    if (isMaybePresentation()) return
-
-    // If we're definitely not in Presentation Tool, then we can set the environment as stand-alone live preview
-    // if we have both a browser token, and draft mode is enabled
-    if (draftModeEnabled && token) {
-      setEnvironment('live')
-      return
-    }
-    // If we're in draft mode, but don't have a browser token, then we're in static mode
-    // which means that published content is still live, but draft changes likely need manual refresh
-    if (draftModeEnabled) {
-      setEnvironment('static')
-      return
-    }
-
-    // Fallback to `unknown` otherwise, as we simply don't know how it's setup
-    setEnvironment('unknown')
-    return
-  }, [draftModeEnabled, token])
 
   /**
    * 4. If Presentation Tool is detected, load up the comlink and integrate with it
@@ -184,8 +160,6 @@ function SanityLive(props: SanityLiveProps): React.JSX.Element | null {
   useEffect(() => {
     if (!isMaybePresentation()) return
     const controller = new AbortController()
-    // Wait for a while to see if Presentation Tool is detected, before assuming the env to be stand-alone live preview
-    const timeout = setTimeout(() => setEnvironment('live'), 3_000)
     window.addEventListener(
       'message',
       ({data}: MessageEvent<unknown>) => {
@@ -197,8 +171,6 @@ function SanityLive(props: SanityLiveProps): React.JSX.Element | null {
           'from' in data &&
           data.from === 'presentation'
         ) {
-          clearTimeout(timeout)
-          setEnvironment(isMaybePreviewWindow() ? 'presentation-window' : 'presentation-iframe')
           setLoadComlink(true)
           controller.abort()
         }
@@ -206,7 +178,6 @@ function SanityLive(props: SanityLiveProps): React.JSX.Element | null {
       {signal: controller.signal},
     )
     return () => {
-      clearTimeout(timeout)
       controller.abort()
     }
   }, [])
