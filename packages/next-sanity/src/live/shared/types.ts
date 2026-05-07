@@ -64,6 +64,10 @@ export type DefinedFetchType = <const QueryString extends string>(options: {
   tags: string[]
 }>
 
+/**
+ * Render this in your root layout.tsx to make your page refresh, or revalidate, on new content live, automatically.
+ * @public
+ */
 export interface DefinedLiveProps {
   /**
    * Include draft and content release version events in the live connection.

@@ -1,9 +1,3 @@
-// This is the fallback export condition for `import 'next-sanity/live'`,
-// it should have the same type definitions as the other conditions so that userland don't have to worry about setting the right
-// `customCondition` in their `tsconfig.json` in order to get accurate typings.
-// The implementation here though should all throw errors, as importing this file means userland made a mistake and somehow a client component is
-// trying to pull in something it shouldn't.
-
 import type {resolvePerspectiveFromCookies as _resolvePerspectiveFromCookies} from '#live/resolvePerspectiveFromCookies'
 import type {
   DefinedFetchType,
@@ -12,9 +6,6 @@ import type {
   StrictDefinedFetchType,
   StrictDefinedLiveProps,
 } from '#live/types'
-
-export {isCorsOriginError} from '#live/isCorsOriginError'
-export {parseTags} from '#live/parseTags'
 
 /**
  * Set up Sanity Live for Cache Components. `defineLive` returns `sanityFetch`
@@ -258,6 +249,25 @@ export function defineLive(_config: DefineLiveOptions): never {
   throw new Error(`defineLive can't be imported by a client component`)
 }
 
+export type {
+  DefinedFetchType,
+  DefinedLiveProps,
+  DefineLiveOptions,
+  LivePerspective,
+  SanityLiveAction,
+  SanityLiveActionContext,
+  SanityLiveOnError,
+  SanityLiveOnGoaway,
+  SanityLiveOnReconnect,
+  SanityLiveOnRestart,
+  SanityLiveOnWelcome,
+  StrictDefinedFetchType,
+  StrictDefinedLiveProps,
+} from '#live/types'
+
+export {isCorsOriginError} from '#live/isCorsOriginError'
+export {parseTags} from '#live/parseTags'
+
 /**
  * This helper is intended for use with Next.js Cache Components (`cacheComponents: true`),
  * where `cookies()` and `draftMode()` cannot be called inside `'use cache'` boundaries.
@@ -289,19 +299,3 @@ export function defineLive(_config: DefineLiveOptions): never {
 export const resolvePerspectiveFromCookies: typeof _resolvePerspectiveFromCookies = () => {
   throw new Error(`resolvePerspectiveFromCookies can't be imported by a client component`)
 }
-
-export type {
-  DefinedFetchType,
-  DefinedLiveProps,
-  DefineLiveOptions,
-  LivePerspective,
-  SanityLiveAction,
-  SanityLiveActionContext,
-  SanityLiveOnError,
-  SanityLiveOnGoaway,
-  SanityLiveOnReconnect,
-  SanityLiveOnRestart,
-  SanityLiveOnWelcome,
-  StrictDefinedFetchType,
-  StrictDefinedLiveProps,
-} from '#live/types'
