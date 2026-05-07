@@ -5,7 +5,7 @@ const nextConfig: NextConfig = {
   // trailingSlash: true,
   experimental: {
     instantNavigationDevToolsToggle: true,
-    instantInsights: {validationLevel: 'warning'}
+    instantInsights: {validationLevel: 'warning'},
   },
   productionBrowserSourceMaps: true,
 }
