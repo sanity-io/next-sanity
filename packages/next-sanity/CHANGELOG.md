@@ -1,5 +1,11 @@
 # next-sanity
 
+## 13.0.0-cache-components.49
+
+### Patch Changes
+
+- [#3109](https://github.com/sanity-io/next-sanity/pull/3109) [`60ac0fd`](https://github.com/sanity-io/next-sanity/commit/60ac0fdb568999beee74a6b51e8dfbb582731e96) Thanks [@stipsan](https://github.com/stipsan)! - Improve typings of `resolvePerspectiveFromCookies`
+
 ## 12.4.3
 
 ### Patch Changes
