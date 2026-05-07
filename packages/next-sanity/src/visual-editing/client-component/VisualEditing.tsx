@@ -37,7 +37,15 @@ export interface VisualEditingProps extends Omit<VisualEditingOptions, 'history'
 }
 
 export default function VisualEditing(props: VisualEditingProps): React.JSX.Element | null {
-  const {basePath = '', plugins, components, refresh, trailingSlash = false, zIndex} = props
+  const {
+    basePath = '',
+    plugins,
+    components,
+    refresh,
+    trailingSlash = false,
+    zIndex,
+    onPerspectiveChange,
+  } = props
 
   const router = useRouter()
   const routerRef = useRef(router)
@@ -111,6 +119,7 @@ export default function VisualEditing(props: VisualEditingProps): React.JSX.Elem
       history={history}
       portal
       refresh={refresh ?? handleRefresh}
+      onPerspectiveChange={onPerspectiveChange}
       zIndex={zIndex}
     />
   )

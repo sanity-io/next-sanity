@@ -198,7 +198,6 @@ export function defineLive(config: DefineLiveOptions): {
         requestTag={requestTag}
         token={typeof browserToken === 'string' && isDraftModeEnabled ? browserToken : undefined}
         draftModeEnabled={isDraftModeEnabled}
-        draftModePerspective={await resolveCookiePerspective()}
         refreshOnMount={refreshOnMount}
         refreshOnFocus={refreshOnFocus}
         refreshOnReconnect={refreshOnReconnect}

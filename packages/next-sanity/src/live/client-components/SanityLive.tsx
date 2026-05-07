@@ -1,22 +1,17 @@
 import {
   createClient,
-  type ClientPerspective,
   type InitializedClientConfig,
   type LiveEvent,
   type LiveEventGoAway,
   type SyncTag,
 } from '@sanity/client'
-import {isMaybePresentation} from '@sanity/presentation-comlink'
 import {revalidateSyncTags as defaultRevalidateSyncTags} from 'next-sanity/live/server-actions'
 import dynamic from 'next/dynamic'
 import {useRouter} from 'next/navigation'
-import {useEffect, useMemo, useRef, useState, useEffectEvent, startTransition} from 'react'
+import {useEffect, useMemo, useState, useEffectEvent, startTransition} from 'react'
 
 import {isCorsOriginError} from '#live/isCorsOriginError'
 
-import {setPerspective} from '../hooks/context'
-
-const PresentationComlink = dynamic(() => import('./PresentationComlink'))
 const RefreshOnFocus = dynamic(() => import('./RefreshOnFocus'))
 const RefreshOnMount = dynamic(() => import('./RefreshOnMount'))
 const RefreshOnInterval = dynamic(() => import('./RefreshOnInterval'))
@@ -33,7 +28,6 @@ export interface SanityLiveProps extends Pick<
   | 'requestTagPrefix'
 > {
   draftModeEnabled: boolean
-  draftModePerspective?: ClientPerspective
   requestTag: string
   waitFor?: 'function'
 
@@ -57,7 +51,6 @@ function SanityLive(props: SanityLiveProps): React.JSX.Element | null {
     token,
     requestTagPrefix,
     draftModeEnabled,
-    draftModePerspective,
     requestTag,
     waitFor,
 
@@ -141,72 +134,8 @@ function SanityLive(props: SanityLiveProps): React.JSX.Element | null {
     return () => subscription.unsubscribe()
   }, [client.live, onError, requestTag, token, waitFor])
 
-  /**
-   * 2. Notify what perspective we're in, when in Draft Mode
-   */
-  useEffect(() => {
-    if (draftModeEnabled && draftModePerspective) {
-      setPerspective(draftModePerspective)
-    } else {
-      setPerspective('unknown')
-    }
-  }, [draftModeEnabled, draftModePerspective])
-
-  const [loadComlink, setLoadComlink] = useState(false)
-
-  /**
-   * 4. If Presentation Tool is detected, load up the comlink and integrate with it
-   */
-  useEffect(() => {
-    if (!isMaybePresentation()) return
-    const controller = new AbortController()
-    window.addEventListener(
-      'message',
-      ({data}: MessageEvent<unknown>) => {
-        if (
-          data &&
-          typeof data === 'object' &&
-          'domain' in data &&
-          data.domain === 'sanity/channels' &&
-          'from' in data &&
-          data.from === 'presentation'
-        ) {
-          setLoadComlink(true)
-          controller.abort()
-        }
-      },
-      {signal: controller.signal},
-    )
-    return () => {
-      controller.abort()
-    }
-  }, [])
-
-  /**
-   * 5. Warn if draft mode is being disabled
-   * @TODO move logic into PresentationComlink, or maybe VisualEditing?
-   */
-  const draftModeEnabledWarnRef = useRef<ReturnType<typeof setTimeout> | undefined>(undefined)
-  useEffect(() => {
-    if (!draftModeEnabled) return
-    clearTimeout(draftModeEnabledWarnRef.current)
-    return () => {
-      draftModeEnabledWarnRef.current = setTimeout(() => {
-        console.warn('Sanity Live: Draft mode was enabled, but is now being disabled')
-      })
-    }
-  }, [draftModeEnabled])
-
   return (
     <>
-      {draftModeEnabled && loadComlink && (
-        <PresentationComlink
-          projectId={projectId!}
-          dataset={dataset!}
-          draftModeEnabled={draftModeEnabled}
-          draftModePerspective={draftModePerspective!}
-        />
-      )}
       {!draftModeEnabled && refreshOnMount && <RefreshOnMount />}
       {refreshOnInterval && Number.isFinite(refreshOnInterval) && refreshOnInterval > 0 && (
         <RefreshOnInterval interval={refreshOnInterval} />

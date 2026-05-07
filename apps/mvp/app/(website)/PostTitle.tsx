@@ -2,6 +2,7 @@
 
 import {defineQuery} from 'next-sanity'
 import {usePresentationQuery} from 'next-sanity/hooks'
+import {useDeferredValue} from 'react'
 
 const postTitleQuery = defineQuery(`*[_type == "post" && _id == $id][0].title`)
 
@@ -14,5 +15,5 @@ export function PostTitle({id, title}: {id: string; title: string | null}) {
     presentationQuery,
   )
 
-  return presentationQuery.data ?? title
+  return useDeferredValue(presentationQuery.data ?? title, title)
 }

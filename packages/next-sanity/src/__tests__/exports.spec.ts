@@ -48,7 +48,6 @@ test(`exports snapshot for the ${JSON.stringify(env)} condition`, {timeout: 15_0
         SanityLive: function
       ./live/server-actions:
         revalidateSyncTags: function
-        setPerspectiveCookie: function
       ./studio:
         metadata: object
         NextStudio: function
