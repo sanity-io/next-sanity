@@ -10,7 +10,7 @@ import {sanitizePerspective} from '#live/sanitizePerspective'
 /**
  * @internal CAUTION: this is an internal action and does not follow semver. Using it directly is at your own risk.
  */
-export async function revalidateSyncTags(tags: SyncTag[]): Promise<void> {
+export async function revalidateSyncTags(tags: SyncTag[]): Promise<void | 'refresh'> {
   const {isEnabled: isDraftMode} = await draftMode()
 
   if (!isDraftMode) {
@@ -32,6 +32,10 @@ export async function revalidateSyncTags(tags: SyncTag[]): Promise<void> {
   console.log(
     `<SanityLive /> ${isDraftMode ? `revalidated tags: ${logTags.join(', ')} with cache profile "max" ` : `updated tags: ${logTags.join(', ')} and revalidated tag: "sanity:fetch-sync-tags" with cache profile "max"`}`,
   )
+
+  if (isDraftMode) {
+    return 'refresh'
+  }
 }
 
 /**

@@ -86,17 +86,13 @@ export default function VisualEditing(props: VisualEditingProps): React.JSX.Elem
     }
   }, [basePath, navigate, pathname, searchParams, trailingSlash])
 
-  const handleRefresh = useCallback((payload: HistoryRefresh): false => {
+  const handleRefresh = useCallback((payload: HistoryRefresh): false | Promise<void> => {
     switch (payload.source) {
       case 'manual':
         routerRef.current.refresh()
         break
       case 'mutation': {
         if (payload.livePreviewEnabled) {
-          // oxlint-disable-next-line no-console
-          console.debug(
-            'Live preview is setup, mutation is skipped assuming its handled by the live preview',
-          )
           return false
         }
         routerRef.current.refresh()
@@ -105,7 +101,7 @@ export default function VisualEditing(props: VisualEditingProps): React.JSX.Elem
       default:
         throw new Error('Unknown refresh source', {cause: payload})
     }
-    return false
+    return new Promise((resolve) => setTimeout(resolve, 1_000))
   }, [])
 
   return (
