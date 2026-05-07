@@ -1,4 +1,4 @@
-import type {ClientPerspective, QueryParams} from '@sanity/client'
+import type {ClientPerspective} from '@sanity/client'
 import {perspectiveCookieName} from '@sanity/preview-url-secret/constants'
 import {SanityLive as SanityLiveClientComponent} from 'next-sanity/live/client-components'
 import {PHASE_PRODUCTION_BUILD} from 'next/constants'
@@ -121,24 +121,13 @@ export function defineLive(config: DefineLiveOptions): {
   const {token: originalToken} = client.config()
   const studioUrlDefined = typeof client.config().stega.studioUrl !== 'undefined'
 
-  const sanityFetch: DefinedFetchType = async function sanityFetch<
-    const QueryString extends string,
-  >({
+  const sanityFetch: DefinedFetchType = async function sanityFetch({
     query,
     params = {},
     stega: _stega,
     tags = [],
     perspective: _perspective,
-    tag,
-    requestTag = tag ?? 'next-loader.fetch',
-  }: {
-    query: QueryString
-    params?: QueryParams | Promise<QueryParams>
-    stega?: boolean
-    tags?: string[]
-    perspective?: Exclude<ClientPerspective, 'raw'>
-    tag?: string
-    requestTag?: string
+    requestTag = 'next-loader.fetch',
   }) {
     const stega = _stega ?? (stegaEnabled && studioUrlDefined && (await draftMode()).isEnabled)
     const perspective = _perspective ?? (await resolveCookiePerspective())
