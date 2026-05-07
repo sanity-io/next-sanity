@@ -1,11 +1,11 @@
 'use client'
 
 import {useVisualEditingEnvironment} from 'next-sanity/hooks'
-import {createContext, use} from 'react'
+import {createContext} from 'react'
 
-const IsLivePreviewContext = createContext<boolean | null>(false)
+export const IsLivePreviewContext = createContext<boolean | null>(false)
 
-export function IsLivePreviewProvider({children}: {children: React.ReactNode}) {
+export function IsLivePreviewProviderClient({children}: {children: React.ReactNode}) {
   const environment = useVisualEditingEnvironment()
 
   return (
@@ -13,8 +13,4 @@ export function IsLivePreviewProvider({children}: {children: React.ReactNode}) {
       {children}
     </IsLivePreviewContext>
   )
-}
-
-export function useIsLivePreview() {
-  return use(IsLivePreviewContext)
 }

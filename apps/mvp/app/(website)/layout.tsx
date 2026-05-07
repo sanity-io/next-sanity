@@ -3,9 +3,9 @@ import {VisualEditing} from 'next-sanity/visual-editing'
 import {draftMode} from 'next/headers'
 
 import {DebugStatus} from './DebugStatus'
+import {DraftModePerspective} from './DraftModePerspectiveProvider'
 import {FormStatusLabel} from './FormStatus'
-import {IsLivePreviewProvider} from './IsLivePreviewContext'
-import {IsPresentationTool} from './IsPresentationTool'
+import {IsLivePreview} from './IsLivePreviewProvider'
 import {RefreshButton} from './RefreshButton'
 
 async function toggleDraftMode() {
@@ -28,12 +28,11 @@ export default async function RootLayout({children}: {children: React.ReactNode}
       <body className="px-8">
         <div className="mt-8 mb-4 border p-4">
           <p>Draft mode: {isDraftMode ? 'On' : 'Off'}</p>
-          <IsPresentationTool />
-          {isDraftMode && (
-            <IsLivePreviewProvider>
+          <DraftModePerspective>
+            <IsLivePreview>
               <DebugStatus />
-            </IsLivePreviewProvider>
-          )}
+            </IsLivePreview>
+          </DraftModePerspective>
           <form action={toggleDraftMode}>
             <button className="rounded bg-blue-500 px-2 py-1 font-medium text-white">
               <FormStatusLabel idle="Toggle" pending="Toggling..." />

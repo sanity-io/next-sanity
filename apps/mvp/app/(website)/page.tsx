@@ -1,6 +1,6 @@
 import {unstable__adapter, unstable__environment} from 'next-sanity'
-import {defineLive} from 'next-sanity/live'
-import {draftMode} from 'next/headers'
+import {defineLive, resolvePerspectiveFromCookies, type LivePerspective} from 'next-sanity/live'
+import {cookies, draftMode} from 'next/headers'
 import Link from 'next/link'
 import {Suspense} from 'react'
 
@@ -14,33 +14,40 @@ const {sanityFetch, SanityLive} = defineLive({
   browserToken: token,
 })
 
-async function getPosts() {
+async function getPosts(perspective: LivePerspective, stega: boolean) {
   const {data, tags} = await sanityFetch({
     query: postsQuery.query,
+    perspective,
+    stega,
   })
   return {data, tags}
 }
 
-async function CachedIndexPage() {
-  const {data, tags} = await getPosts()
+async function CachedIndexPage({
+  perspective,
+  stega,
+}: {
+  perspective: LivePerspective
+  stega: boolean
+}) {
+  const {data, tags} = await getPosts(perspective, stega)
 
   return (
     <>
-      <p>{JSON.stringify({tags: tags.toSorted()})}</p>
+      <p>{JSON.stringify({perspective, tags: tags.toSorted()})}</p>
       <PostsLayout data={data} draftMode={false} />
     </>
   )
 }
 
 async function DynamicIndexPage() {
-  const {data, tags} = await getPosts()
+  const {isEnabled: isDraftMode} = await draftMode()
+  const perspective = isDraftMode
+    ? await resolvePerspectiveFromCookies({cookies: await cookies()})
+    : 'published'
+  const stega = isDraftMode
 
-  return (
-    <>
-      <p>{JSON.stringify({tags: tags.toSorted()})}</p>
-      <PostsLayout data={data} draftMode={true} />
-    </>
-  )
+  return <CachedIndexPage perspective={perspective} stega={stega} />
 }
 
 export default async function IndexPage() {
@@ -54,14 +61,11 @@ export default async function IndexPage() {
       >
         <div className="relative mx-auto max-w-7xl">
           {isDraftMode ? (
-            <Suspense
-              // oxlint-disable-next-line jsx-no-jsx-as-prop
-              fallback={<CachedIndexPage />}
-            >
+            <Suspense>
               <DynamicIndexPage />
             </Suspense>
           ) : (
-            <CachedIndexPage />
+            <CachedIndexPage perspective="published" stega={false} />
           )}
         </div>
       </div>

@@ -6,29 +6,35 @@ import {
   useIsPresentationTool,
   useVisualEditingEnvironment,
 } from 'next-sanity/hooks'
+import {use} from 'react'
 
-import {useIsLivePreview} from './IsLivePreviewContext'
+import {DraftModePerspectiveContext} from './DraftModePerspectiveContext'
+import {IsLivePreviewContext} from './IsLivePreviewContext'
 
 export function DebugStatus() {
+  const isPresentationTool = useIsPresentationTool()
   const environmentDeprecated = useDraftModeEnvironment()
   const environment = useVisualEditingEnvironment()
-  const perspective = useDraftModePerspective()
-  const isLivePreview = useIsLivePreview()
-  const isPresentationTool = useIsPresentationTool()
+  const perspectiveLegacy = useDraftModePerspective()
+  const perspective = use(DraftModePerspectiveContext)
+  const isLivePreview = use(IsLivePreviewContext)
 
   // oxlint-disable-next-line no-console
   console.log({
+    isPresentationTool,
     'environment (deprecated)': environmentDeprecated,
     'environment (visual editing)': environment,
+    'perspective (deprecated)': perspectiveLegacy,
     perspective,
     isLivePreview,
-    isPresentationTool,
   })
 
   return (
     <>
+      <p>Is Presentation Tool: {JSON.stringify(isPresentationTool)}</p>
       <p>Environment (deprecated): {JSON.stringify(environmentDeprecated)}</p>
       <p>Environment (visual editing): {JSON.stringify(environment)}</p>
+      <p>Perspective (deprecated): {JSON.stringify(perspectiveLegacy)}</p>
       <p>Perspective: {JSON.stringify(perspective)}</p>
       <p>Is Live Preview: {isLivePreview === null ? 'Maybe' : isLivePreview ? 'Yes' : 'No'}</p>
     </>
