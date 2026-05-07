@@ -2,7 +2,6 @@
 
 import {
   useDraftModeEnvironment,
-  useDraftModePerspective,
   useIsPresentationTool,
   useVisualEditingEnvironment,
 } from 'next-sanity/hooks'
@@ -15,7 +14,6 @@ export function DebugStatus() {
   const isPresentationTool = useIsPresentationTool()
   const environmentDeprecated = useDraftModeEnvironment()
   const environment = useVisualEditingEnvironment()
-  const perspectiveLegacy = useDraftModePerspective()
   const perspective = use(DraftModePerspectiveContext)
   const isLivePreview = use(IsLivePreviewContext)
 
@@ -23,8 +21,7 @@ export function DebugStatus() {
   console.log({
     isPresentationTool,
     'environment (deprecated)': environmentDeprecated,
-    'environment (visual editing)': environment,
-    'perspective (deprecated)': perspectiveLegacy,
+    environment,
     perspective,
     isLivePreview,
   })
@@ -33,8 +30,7 @@ export function DebugStatus() {
     <>
       <p>Is Presentation Tool: {JSON.stringify(isPresentationTool)}</p>
       <p>Environment (deprecated): {JSON.stringify(environmentDeprecated)}</p>
-      <p>Environment (visual editing): {JSON.stringify(environment)}</p>
-      <p>Perspective (deprecated): {JSON.stringify(perspectiveLegacy)}</p>
+      <p>Environment: {JSON.stringify(environment)}</p>
       <p>Perspective: {JSON.stringify(perspective)}</p>
       <p>Is Live Preview: {isLivePreview === null ? 'Maybe' : isLivePreview ? 'Yes' : 'No'}</p>
     </>

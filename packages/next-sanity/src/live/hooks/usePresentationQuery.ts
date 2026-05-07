@@ -2,15 +2,25 @@ import type {ClientPerspective, ClientReturn, ContentSourceMap, QueryParams} fro
 import {stegaEncodeSourceMap} from '@sanity/client/stega'
 import type {LoaderControllerMsg} from '@sanity/presentation-comlink'
 import {dequal} from 'dequal/lite'
-import {useEffect, useMemo, useReducer, useSyncExternalStore, useEffectEvent} from 'react'
+import {
+  useEffect,
+  useMemo,
+  useReducer,
+  useSyncExternalStore,
+  useEffectEvent,
+  useDeferredValue,
+  useCallback,
+} from 'react'
 
 import {
   comlinkDataset,
   comlinkListeners,
   comlinkProjectId,
   comlink as comlinkSnapshot,
+  perspective,
+  perspectiveListeners,
+  type DraftPerspective,
 } from './context'
-import {useDraftModePerspective} from './useDraftMode'
 
 /** @alpha */
 export type UsePresentationQueryReturnsInactive = {
@@ -190,4 +200,20 @@ export function usePresentationQuery<const QueryString extends string>(props: {
     }
     return state
   }, [state, stega])
+}
+
+function useDraftModePerspective(): DraftPerspective {
+  const subscribe = useCallback((listener: () => void) => {
+    perspectiveListeners.add(listener)
+    return () => perspectiveListeners.delete(listener)
+  }, [])
+
+  return useDeferredValue(
+    useSyncExternalStore(
+      subscribe,
+      () => perspective,
+      () => 'checking',
+    ),
+    'checking',
+  )
 }

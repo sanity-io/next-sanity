@@ -1,13 +1,6 @@
 import {useCallback, useDeferredValue, useSyncExternalStore} from 'react'
 
-import {
-  environment,
-  environmentListeners,
-  perspective,
-  perspectiveListeners,
-  type DraftEnvironment,
-  type DraftPerspective,
-} from './context'
+import {environment, environmentListeners, type DraftEnvironment} from './context'
 
 /**
  * Reports the current draft mode environment.
@@ -30,29 +23,6 @@ export function useDraftModeEnvironment(): DraftEnvironment {
     useSyncExternalStore(
       subscribe,
       () => environment,
-      () => 'checking',
-    ),
-    'checking',
-  )
-}
-
-/**
- * Reports the Sanity Client perspective used to fetch data in `sanityFetch` used on the page.
- * If the hook is used outside Draft Mode it will resolve to `'unknown'`.
- * If the hook is used but the `<SanityLive />` component is not present then it'll stay in `'checking'` and console warn after a timeout that it seems like you're missing the component.
- * @public
- * @deprecated this hook will be removed in the next major version
- */
-export function useDraftModePerspective(): DraftPerspective {
-  const subscribe = useCallback((listener: () => void) => {
-    perspectiveListeners.add(listener)
-    return () => perspectiveListeners.delete(listener)
-  }, [])
-
-  return useDeferredValue(
-    useSyncExternalStore(
-      subscribe,
-      () => perspective,
       () => 'checking',
     ),
     'checking',

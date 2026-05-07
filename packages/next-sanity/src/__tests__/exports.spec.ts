@@ -34,7 +34,6 @@ test(`exports snapshot for the ${JSON.stringify(env)} condition`, {timeout: 15_0
         defineEnableDraftMode: function
       ./hooks:
         useDraftModeEnvironment: function
-        useDraftModePerspective: function
         useIsPresentationTool: function
         useOptimistic: function
         usePresentationQuery: function
