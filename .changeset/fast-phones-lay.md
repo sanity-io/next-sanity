@@ -128,6 +128,7 @@ import {DraftModePerspectiveContext} from './DraftModePerspectiveContext'
 export function DebugStatus() {
   const perspective = use(DraftModePerspectiveContext)
   return <p>Perspective: {JSON.stringify(perspective)}</p>
+}
 ```
 
 ```tsx
