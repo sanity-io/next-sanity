@@ -1,11 +1,14 @@
-import {useSyncExternalStore} from 'react'
+import {useDeferredValue, useSyncExternalStore} from 'react'
 
 /** @internal */
 export function useIsMounted(): boolean {
-  return useSyncExternalStore(
-    emptySubscribe,
-    () => true,
-    () => false,
+  return useDeferredValue(
+    useSyncExternalStore(
+      emptySubscribe,
+      () => true,
+      () => false,
+    ),
+    false,
   )
 }
 const emptySubscribe = () => () => {}

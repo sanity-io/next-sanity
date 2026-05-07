@@ -1,4 +1,4 @@
-import {useCallback, useSyncExternalStore} from 'react'
+import {useCallback, useDeferredValue, useSyncExternalStore} from 'react'
 
 import {
   environment,
@@ -26,10 +26,13 @@ export function useDraftModeEnvironment(): DraftEnvironment {
     return () => environmentListeners.delete(listener)
   }, [])
 
-  return useSyncExternalStore(
-    subscribe,
-    () => environment,
-    () => 'checking',
+  return useDeferredValue(
+    useSyncExternalStore(
+      subscribe,
+      () => environment,
+      () => 'checking',
+    ),
+    'checking',
   )
 }
 
@@ -46,9 +49,12 @@ export function useDraftModePerspective(): DraftPerspective {
     return () => perspectiveListeners.delete(listener)
   }, [])
 
-  return useSyncExternalStore(
-    subscribe,
-    () => perspective,
-    () => 'checking',
+  return useDeferredValue(
+    useSyncExternalStore(
+      subscribe,
+      () => perspective,
+      () => 'checking',
+    ),
+    'checking',
   )
 }

@@ -3,10 +3,11 @@
 import {
   useDraftModeEnvironment,
   useDraftModePerspective,
-  useIsLivePreview,
   useIsPresentationTool,
   useVisualEditingEnvironment,
 } from 'next-sanity/hooks'
+
+import {useIsLivePreview} from './IsLivePreviewContext'
 
 export function DebugStatus() {
   const environmentDeprecated = useDraftModeEnvironment()

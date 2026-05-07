@@ -4,6 +4,7 @@ import {draftMode} from 'next/headers'
 
 import {DebugStatus} from './DebugStatus'
 import {FormStatusLabel} from './FormStatus'
+import {IsLivePreviewProvider} from './IsLivePreviewContext'
 import {IsPresentationTool} from './IsPresentationTool'
 import {RefreshButton} from './RefreshButton'
 
@@ -28,7 +29,11 @@ export default async function RootLayout({children}: {children: React.ReactNode}
         <div className="mt-8 mb-4 border p-4">
           <p>Draft mode: {isDraftMode ? 'On' : 'Off'}</p>
           <IsPresentationTool />
-          {isDraftMode && <DebugStatus />}
+          {isDraftMode && (
+            <IsLivePreviewProvider>
+              <DebugStatus />
+            </IsLivePreviewProvider>
+          )}
           <form action={toggleDraftMode}>
             <button className="rounded bg-blue-500 px-2 py-1 font-medium text-white">
               <FormStatusLabel idle="Toggle" pending="Toggling..." />
