@@ -1,5 +1,11 @@
 # next-sanity
 
+## 13.0.0-cache-components.50
+
+### Patch Changes
+
+- [#3109](https://github.com/sanity-io/next-sanity/pull/3109) [`2f406da`](https://github.com/sanity-io/next-sanity/commit/2f406da0bdccf87b3572f7e88c10ea5df4544355) Thanks [@stipsan](https://github.com/stipsan)! - Fix a regression introduced in v12.4.0 ([#3430](https://github.com/sanity-io/next-sanity/issues/3430)) that lead to live preview sometimes failing to refresh and show draft content automatically
+
 ## 12.4.5
 
 ### Patch Changes
