@@ -4,7 +4,7 @@
 
 Remove the deprecated `useDraftModePerspective` hook
 
-When used on a an ap that has `<SanityLive />` and `<VisualEditing />` it would resolve to the `perspective` that is used by the `sanityFetch` calls on the page.
+When used on an app that has `<SanityLive />` and `<VisualEditing />`, it would resolve to the `perspective` that is used by the `sanityFetch` calls on the page.
 The `resolvePerspectiveFromCookies` server component helper can be used instead. Here's how you can create your own `useDraftModePerspective` hook that works the same way as the deprecated one:
 
 #### Before
@@ -37,6 +37,7 @@ import {useDraftModePerspective} from 'next-sanity/hooks'
 export function DebugStatus() {
   const perspective = useDraftModePerspective()
   return <p>Perspective: {JSON.stringify(perspective)}</p>
+}
 ```
 
 ```tsx
@@ -52,7 +53,7 @@ export default function Page() {
 }
 ```
 
-In this example the `DebugStatus` component will log `Perspective: "unknown"` in production, and when in draft mode it'll log `Perspective: '"drafts"'` or if a content release is previewed in Presentation Tool it could log `Perspective: '["rHFvpQcCq","r5RGhbQN9","drafts"]'`.
+In this example the `DebugStatus` component will log `Perspective: "unknown"` in production, and when in draft mode it'll log `Perspective: "drafts"` or if a content release is previewed in Presentation Tool it could log `Perspective: ["rHFvpQcCq","r5RGhbQN9","drafts"]`.
 
 #### After
 
