@@ -1,5 +1,11 @@
 # next-sanity
 
+## 13.0.0-cache-components.48
+
+### Patch Changes
+
+- [#3109](https://github.com/sanity-io/next-sanity/pull/3109) [`26f7871`](https://github.com/sanity-io/next-sanity/commit/26f78711e943990db602295fc7d679a0673740e7) Thanks [@stipsan](https://github.com/stipsan)! - Consistent types output
+
 ## 12.4.3
 
 ### Patch Changes
