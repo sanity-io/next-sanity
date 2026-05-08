@@ -6,7 +6,7 @@ import {PHASE_PRODUCTION_BUILD} from 'next/constants'
 import {cookies, draftMode} from 'next/headers'
 import {preconnect} from 'react-dom'
 
-import {cacheTagPrefixes} from '#live/constants'
+import {cacheTagPrefix} from '#live/constants'
 import {sanitizePerspective} from '#live/sanitizePerspective'
 import {validateStrictFetchOptions, validateStrictSanityLiveProps} from '#live/strictValidation'
 import type {
@@ -308,8 +308,6 @@ export function defineLive(config: DefineLiveOptions) {
     const useCdn = perspective === 'published'
     const isBuildPhase = process.env['NEXT_PHASE'] === PHASE_PRODUCTION_BUILD
     const cacheMode = useCdn && !isBuildPhase ? 'noStale' : undefined
-    const cacheTagPrefix =
-      perspective === 'published' ? cacheTagPrefixes.published : cacheTagPrefixes.drafts
 
     // 1. Fetch the tags first, with an uncached request, but that does not count towards the Sanity API quota
     const {syncTags} = await client.fetch(query, await params, {

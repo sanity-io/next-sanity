@@ -4,7 +4,7 @@ import {cacheLife, cacheTag} from 'next/cache'
 import {PHASE_PRODUCTION_BUILD} from 'next/constants'
 import {preconnect} from 'react-dom'
 
-import {cacheTagPrefixes, revalidate} from '#live/constants'
+import {cacheTagPrefix, revalidate} from '#live/constants'
 import {validateStrictFetchOptions, validateStrictSanityLiveProps} from '#live/strictValidation'
 import type {
   DefinedFetchType,
@@ -291,8 +291,6 @@ export function defineLive(config: DefineLiveOptions) {
     const isBuildPhase = process.env['NEXT_PHASE'] === PHASE_PRODUCTION_BUILD
     const cacheMode = useCdn && !isBuildPhase ? 'noStale' : undefined
 
-    const cacheTagPrefix =
-      perspective === 'published' ? cacheTagPrefixes.published : cacheTagPrefixes.drafts
     const {result, resultSourceMap, syncTags} = await client.fetch(query, await params, {
       filterResponse: false,
       returnQuery: false,

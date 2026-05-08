@@ -9,12 +9,13 @@ import {parseTags} from '#live/parseTags'
  * @internal CAUTION: this is an internal action and does not follow semver. Using it directly is at your own risk.
  */
 export async function revalidateSyncTagsAction(unsafeTags: unknown): Promise<void> {
-  const {tags, prefixType} = parseTags(unsafeTags)
+  const {tags} = parseTags(unsafeTags)
   if ((await draftMode()).isEnabled) {
     console.warn(
-      `<SanityLive ${prefixType === 'drafts' ? 'includeDrafts ' : ''}/> action called in draft mode, cache is bypassed in draft mode so the refresh() function is called instead of updateTag()`,
+      `<SanityLive /> action called in draft mode, cache is bypassed in draft mode so the refresh() function is called instead of updateTag()`,
       {tags},
     )
+    // @TODO this is a good fallback, but ideally the `revalidateSyncTags` action should not be passed to `<SanityLive>` when in draft mode, maybe the console log above should direct towards a pattern that saves us the server action POST and allow us to do a GET with router.refresh() instead
     refresh()
     return undefined
   }
@@ -25,7 +26,7 @@ export async function revalidateSyncTagsAction(unsafeTags: unknown): Promise<voi
 
   // oxlint-disable-next-line no-console
   console.log(
-    `<SanityLive ${prefixType === 'drafts' ? 'includeDrafts ' : ''}/> revalidated tags: ${tags.join(', ')} with cache profile "max" `,
+    `<SanityLive /> revalidated tags: ${tags.join(', ')} with cache profile "max" `,
   )
 }
 

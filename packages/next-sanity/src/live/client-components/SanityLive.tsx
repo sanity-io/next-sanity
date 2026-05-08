@@ -2,7 +2,7 @@ import {createClient, type LiveEvent} from '@sanity/client'
 import {useRouter} from 'next/navigation'
 import {useEffect, useMemo, useState, useEffectEvent, startTransition} from 'react'
 
-import {cacheTagPrefixes} from '#live/constants'
+import {cacheTagPrefix} from '#live/constants'
 import type {
   SanityClientConfig,
   SanityLiveAction,
@@ -95,10 +95,7 @@ function SanityLive(props: SanityLiveProps): React.JSX.Element | null {
       case 'message': {
         startTransition(() =>
           action(
-            event.tags.map(
-              (tag) =>
-                `${includeDrafts ? cacheTagPrefixes.drafts : cacheTagPrefixes.published}${tag}`,
-            ),
+            event.tags.map((tag) => `${cacheTagPrefix}${tag}`),
           ).then((result) => {
             if (result === 'refresh') {
               startTransition(() => router.refresh())

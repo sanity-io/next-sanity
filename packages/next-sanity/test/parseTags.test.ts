@@ -20,89 +20,35 @@ describe('input validation', () => {
   })
 })
 
-describe('published tags', () => {
-  test('parses a single published tag', () => {
+describe('prefixed tags', () => {
+  test('parses a single prefixed tag', () => {
     const result = parseTags(['sanity:s1:abc'])
     expect(result).toEqual({
       tags: ['sanity:s1:abc'],
+      tagsWithoutPrefix: ['s1:abc'],
       prefix: 'sanity:',
-      prefixType: 'published',
     })
   })
 
-  test('parses multiple published tags', () => {
+  test('parses multiple prefixed tags', () => {
     const result = parseTags(['sanity:s1:abc', 'sanity:s1:def', 'sanity:s1:ghi'])
     expect(result).toEqual({
       tags: ['sanity:s1:abc', 'sanity:s1:def', 'sanity:s1:ghi'],
+      tagsWithoutPrefix: ['s1:abc', 's1:def', 's1:ghi'],
       prefix: 'sanity:',
-      prefixType: 'published',
     })
-  })
-})
-
-describe('draft tags', () => {
-  test('parses a single drafts tag', () => {
-    const result = parseTags(['sanity-drafts:s1:abc'])
-    expect(result).toEqual({
-      tags: ['sanity-drafts:s1:abc'],
-      prefix: 'sanity-drafts:',
-      prefixType: 'drafts',
-    })
-  })
-
-  test('parses multiple drafts tags', () => {
-    const result = parseTags([
-      'sanity-drafts:s1:abc',
-      'sanity-drafts:s1:def',
-      'sanity-drafts:s1:ghi',
-    ])
-    expect(result).toEqual({
-      tags: ['sanity-drafts:s1:abc', 'sanity-drafts:s1:def', 'sanity-drafts:s1:ghi'],
-      prefix: 'sanity-drafts:',
-      prefixType: 'drafts',
-    })
-  })
-})
-
-describe('mixing prefixes', () => {
-  test('throws when a drafts tag appears among published tags', () => {
-    expect(() => parseTags(['sanity:s1:abc', 'sanity-drafts:s1:def'])).toThrow(
-      'cannot mix published and drafts tags',
-    )
-  })
-
-  test('throws when a published tag appears among drafts tags', () => {
-    expect(() => parseTags(['sanity-drafts:s1:abc', 'sanity:s1:def'])).toThrow(
-      'cannot mix published and drafts tags',
-    )
   })
 })
 
 describe('unprefixed / invalid tags', () => {
-  test('throws when tags have no recognized prefix', () => {
-    expect(() => parseTags(['unknown:s1:abc'])).toThrow('no valid prefix found')
+  test('throws when tags have unknown prefixes', () => {
+    expect(() => parseTags(['unknown:s1:abc'])).toThrow('tag must start with a valid prefix')
+    expect(() => parseTags(['sanity-drafts:s1:abc'])).toThrow('tag must start with a valid prefix')
   })
 
-  test('throws when an unprefixed tag appears among published tags', () => {
+  test('throws when an unprefixed tag appears among valid tags', () => {
     expect(() => parseTags(['sanity:s1:abc', 'no-prefix'])).toThrow(
       'tag must start with a valid prefix',
     )
-  })
-
-  test('throws when an unprefixed tag appears among drafts tags', () => {
-    expect(() => parseTags(['sanity-drafts:s1:abc', 'no-prefix'])).toThrow(
-      'tag must start with a valid prefix',
-    )
-  })
-})
-
-describe('prefix boundaries', () => {
-  test('does not confuse "sanity:" with "sanity-drafts:" prefix', () => {
-    const result = parseTags(['sanity-drafts:s1:abc'])
-    expect(result.prefixType).toBe('drafts')
-  })
-
-  test('does not treat "sanity:" as matching a "sanity-" string', () => {
-    expect(() => parseTags(['sanity-other:s1:abc'])).toThrow('no valid prefix found')
   })
 })
