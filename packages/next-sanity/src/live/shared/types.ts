@@ -205,8 +205,6 @@ export interface SanityClientConfig extends Pick<
   | 'requestTagPrefix'
 > {}
 
-export type CacheTagPrefixes = Record<'published' | 'drafts', `${string}:`>
-
 /**
  * Context passed to Sanity Live event handlers.
  */

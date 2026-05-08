@@ -94,9 +94,7 @@ function SanityLive(props: SanityLiveProps): React.JSX.Element | null {
       }
       case 'message': {
         startTransition(() =>
-          action(
-            event.tags.map((tag) => `${cacheTagPrefix}${tag}`),
-          ).then((result) => {
+          action(event.tags.map((tag) => `${cacheTagPrefix}${tag}`)).then((result) => {
             if (result === 'refresh') {
               startTransition(() => router.refresh())
             }

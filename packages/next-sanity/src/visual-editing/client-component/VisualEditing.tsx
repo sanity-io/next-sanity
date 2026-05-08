@@ -101,7 +101,9 @@ export default function VisualEditing(props: VisualEditingProps): React.JSX.Elem
         break
       case 'mutation': {
         // oxlint-disable-next-line no-console
-        console.info('<VisualEditing /> refresh called with source "mutation", if you want automatic refresh when this happens provide your own handler to the refresh prop')
+        console.debug(
+          '<VisualEditing /> refresh called with source "mutation", if you want automatic refresh when this happens, or silence this message, provide your own handler to the refresh prop',
+        )
         break
       }
       default:
