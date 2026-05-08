@@ -40,8 +40,8 @@ function SanityLive(props: SanityLiveProps): React.JSX.Element | null {
     action,
     onError,
     onWelcome = handleWelcome,
-    onReconnect,
-    onRestart,
+    onReconnect = 'refresh',
+    onRestart = 'refresh',
     onGoAway = handleGoaway,
   } = props
   const {projectId, dataset, apiHost, apiVersion, useProjectHostname, token, requestTagPrefix} =
@@ -94,11 +94,13 @@ function SanityLive(props: SanityLiveProps): React.JSX.Element | null {
       }
       case 'message': {
         startTransition(() =>
-          action(event.tags.map((tag) => `${cacheTagPrefix}${tag}`)).then((result) => {
-            if (result === 'refresh') {
-              startTransition(() => router.refresh())
-            }
-          }),
+          action === 'refresh'
+            ? router.refresh()
+            : action(event.tags.map((tag) => `${cacheTagPrefix}${tag}`)).then((result) => {
+                if (result === 'refresh') {
+                  startTransition(() => router.refresh())
+                }
+              }),
         )
         break
       }
@@ -107,7 +109,15 @@ function SanityLive(props: SanityLiveProps): React.JSX.Element | null {
         startTransition(() => setRefreshOnInterval(false))
 
         if (onRestart) {
-          startTransition(() => onRestart(event, actionContext))
+          startTransition(() =>
+            onRestart === 'refresh'
+              ? router.refresh()
+              : Promise.resolve(onRestart(event, actionContext)).then((result) => {
+                  if (result === 'refresh') {
+                    startTransition(() => router.refresh())
+                  }
+                }),
+          )
         }
         break
       }
@@ -116,7 +126,15 @@ function SanityLive(props: SanityLiveProps): React.JSX.Element | null {
         startTransition(() => setRefreshOnInterval(false))
 
         if (onReconnect) {
-          startTransition(() => onReconnect(event, actionContext))
+          startTransition(() =>
+            onReconnect === 'refresh'
+              ? router.refresh()
+              : Promise.resolve(onReconnect(event, actionContext)).then((result) => {
+                  if (result === 'refresh') {
+                    startTransition(() => router.refresh())
+                  }
+                }),
+          )
         }
         break
       }

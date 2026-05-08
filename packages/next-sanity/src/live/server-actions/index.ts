@@ -35,18 +35,3 @@ export async function revalidateSyncTagsAction(unsafeTags: unknown): Promise<voi
   // oxlint-disable-next-line no-console
   console.log(`<SanityLive /> revalidated tags: ${tags.join(', ')} with cache profile "max" `)
 }
-
-/**
- * @deprecated - TODO add first class support for passing the string 'refresh'
- */
-export async function temporaryRefreshAction(): Promise<'refresh'> {
-  return 'refresh'
-}
-
-/**
- * Used by `<SanityLive onReconnect={refreshAction} onRestart={refreshAction} />`
- * @deprecated - refactor `onReconnect` and `onRestart` to support `() => 'refresh'`
- */
-export async function refreshAction(): Promise<void> {
-  refresh()
-}

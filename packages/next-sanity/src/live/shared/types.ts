@@ -222,8 +222,15 @@ export interface SanityLiveActionContext {
  * The argument is the list of cache tags derived from the Live Content API
  * event. The default action revalidates those tags. Return `'refresh'` from a
  * custom action to also call `router.refresh()` in the browser.
+ *
+ * There's three types of values you can give `action`:
+ * - 'use server'; export async function action() {}
+ * - 'use client'; export async function action() {}
+ * - 'refresh'
+ *
+ * If you give the string 'refresh', it's the same as if the action just `async () => 'refresh'`, which leads to <SanityLive /> calling `router.refresh()` for you
  */
-export type SanityLiveAction = (unsafeTags: unknown) => Promise<void | 'refresh'>
+export type SanityLiveAction = ((unsafeTags: unknown) => Promise<void | 'refresh'>) | 'refresh'
 /**
  * Handles connection, parsing, and event-processing errors.
  *
@@ -251,20 +258,24 @@ export type SanityLiveOnWelcome = (
  * The default behavior refreshes the route so Server Components can render with
  * fresh data after reconnecting.
  */
-export type SanityLiveOnReconnect = (
-  event: Extract<LiveEvent, {type: 'reconnect'}>,
-  context: SanityLiveActionContext,
-) => void | Promise<void>
+export type SanityLiveOnReconnect =
+  | ((
+      event: Extract<LiveEvent, {type: 'reconnect'}>,
+      context: SanityLiveActionContext,
+    ) => void | Promise<void | 'refresh'>)
+  | 'refresh'
 /**
  * Handles the Live Content API `restart` event.
  *
  * The default behavior refreshes the route so Server Components can render with
  * fresh data after the Live Content API restarts.
  */
-export type SanityLiveOnRestart = (
-  event: Extract<LiveEvent, {type: 'restart'}>,
-  context: SanityLiveActionContext,
-) => void | Promise<void>
+export type SanityLiveOnRestart =
+  | ((
+      event: Extract<LiveEvent, {type: 'restart'}>,
+      context: SanityLiveActionContext,
+    ) => void | Promise<void | 'refresh'>)
+  | 'refresh'
 /**
  * Handles the Live Content API `goaway` event.
  *

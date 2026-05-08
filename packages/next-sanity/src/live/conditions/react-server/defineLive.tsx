@@ -1,11 +1,7 @@
 import {type ClientPerspective} from '@sanity/client'
 import {perspectiveCookieName} from '@sanity/preview-url-secret/constants'
 import {SanityLive as SanityLiveClientComponent} from 'next-sanity/live/client-components'
-import {
-  refreshAction,
-  revalidateSyncTagsAction,
-  temporaryRefreshAction,
-} from 'next-sanity/live/server-actions'
+import {revalidateSyncTagsAction} from 'next-sanity/live/server-actions'
 import {PHASE_PRODUCTION_BUILD} from 'next/constants'
 import {cookies, draftMode} from 'next/headers'
 import {preconnect} from 'react-dom'
@@ -350,8 +346,8 @@ export function defineLive(config: DefineLiveOptions) {
       requestTag = 'next-loader.live',
 
       action,
-      onReconnect = refreshAction,
-      onRestart = refreshAction,
+      onReconnect,
+      onRestart,
       onWelcome = false,
       onError = false,
       onGoAway = false,
@@ -381,10 +377,7 @@ export function defineLive(config: DefineLiveOptions) {
         includeDrafts={shouldIncludeDrafts ? true : undefined}
         requestTag={requestTag}
         waitFor={shouldWaitFor}
-        action={
-          action ??
-          (shouldWaitFor === 'function' ? temporaryRefreshAction : revalidateSyncTagsAction)
-        }
+        action={action ?? (shouldWaitFor === 'function' ? 'refresh' : revalidateSyncTagsAction)}
         onError={onError}
         onWelcome={onWelcome}
         onReconnect={onReconnect}

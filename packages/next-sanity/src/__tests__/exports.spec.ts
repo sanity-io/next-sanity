@@ -50,9 +50,7 @@ test(`exports snapshot for the ${JSON.stringify(env)} condition`, {timeout: 15_0
       ./live/client-components:
         SanityLive: function
       ./live/server-actions:
-        refreshAction: function
         revalidateSyncTagsAction: function
-        temporaryRefreshAction: function
       ./studio:
         metadata: object
         NextStudio: function

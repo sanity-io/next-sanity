@@ -1,9 +1,5 @@
 import {SanityLive as SanityLiveClientComponent} from 'next-sanity/live/client-components'
-import {
-  refreshAction,
-  revalidateSyncTagsAction,
-  temporaryRefreshAction,
-} from 'next-sanity/live/server-actions'
+import {revalidateSyncTagsAction} from 'next-sanity/live/server-actions'
 import {cacheLife, cacheTag} from 'next/cache'
 import {PHASE_PRODUCTION_BUILD} from 'next/constants'
 import {preconnect} from 'react-dom'
@@ -331,8 +327,8 @@ export function defineLive(config: DefineLiveOptions) {
       action,
       onError,
       onWelcome,
-      onReconnect = refreshAction,
-      onRestart = refreshAction,
+      onReconnect,
+      onRestart,
       onGoAway,
     } = props
     const {projectId, dataset, apiHost, apiVersion, useProjectHostname, requestTagPrefix} =
@@ -360,10 +356,7 @@ export function defineLive(config: DefineLiveOptions) {
         includeDrafts={shouldIncludeDrafts ? true : undefined}
         requestTag={requestTag}
         waitFor={shouldWaitFor}
-        action={
-          action ??
-          (shouldWaitFor === 'function' ? temporaryRefreshAction : revalidateSyncTagsAction)
-        }
+        action={action ?? (shouldWaitFor === 'function' ? 'refresh' : revalidateSyncTagsAction)}
         onError={onError}
         onWelcome={onWelcome}
         onReconnect={onReconnect}
