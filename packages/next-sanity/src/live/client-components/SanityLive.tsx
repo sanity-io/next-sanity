@@ -7,9 +7,9 @@ import {useEffect, useMemo, useState, useEffectEvent, startTransition} from 'rea
 import {isCorsOriginError} from '#live/isCorsOriginError'
 import type {SanityClientConfig} from '#live/types'
 
+import {RefreshOnInterval} from './RefreshOnInterval'
+
 const RefreshOnFocus = dynamic(() => import('./RefreshOnFocus'))
-const RefreshOnMount = dynamic(() => import('./RefreshOnMount'))
-const RefreshOnInterval = dynamic(() => import('./RefreshOnInterval'))
 const RefreshOnReconnect = dynamic(() => import('./RefreshOnReconnect'))
 
 export interface SanityLiveProps {
@@ -23,7 +23,6 @@ export interface SanityLiveProps {
   intervalOnGoAway?: number | false
   onGoAway?: (event: LiveEventGoAway, intervalOnGoAway: number | false) => void
 
-  refreshOnMount?: boolean
   refreshOnFocus?: boolean
   refreshOnReconnect?: boolean
 }
@@ -40,7 +39,6 @@ function SanityLive(props: SanityLiveProps): React.JSX.Element | null {
     intervalOnGoAway = 30_000,
     onGoAway = handleOnGoAway,
 
-    refreshOnMount = false,
     refreshOnFocus = includeDrafts
       ? false
       : typeof window === 'undefined'
@@ -67,6 +65,7 @@ function SanityLive(props: SanityLiveProps): React.JSX.Element | null {
     [apiHost, apiVersion, dataset, projectId, requestTagPrefix, token, useProjectHostname],
   )
 
+  // The interval is set in milliseconds, false means long polling is disabled
   const [refreshOnInterval, setRefreshOnInterval] = useState<number | false>(false)
 
   const router = useRouter()
@@ -116,7 +115,6 @@ function SanityLive(props: SanityLiveProps): React.JSX.Element | null {
 
   return (
     <>
-      {!includeDrafts && refreshOnMount && <RefreshOnMount />}
       {refreshOnInterval && Number.isFinite(refreshOnInterval) && refreshOnInterval > 0 && (
         <RefreshOnInterval interval={refreshOnInterval} />
       )}

@@ -17,9 +17,9 @@ For use case a) you can use the `useIsPresentationTool` hook instead. For use ca
 
 ```tsx
 // app/layout.tsx
-import {SanityLive} from 'next-sanity/live'
 import {VisualEditing} from 'next-sanity/visual-editing'
 import {draftMode} from 'next/headers'
+import {SanityLive} from '#sanity/live'
 
 import {DebugStatus} from './DebugStatus'
 
@@ -79,9 +79,9 @@ export function useIsLivePreview() {
 
 ```tsx
 // app/layout.tsx
-import {SanityLive} from 'next-sanity/live'
 import {VisualEditing} from 'next-sanity/visual-editing'
 import {draftMode} from 'next/headers'
+import {SanityLive} from '#sanity/live'
 
 import {DebugStatus} from './DebugStatus'
 import {IsLivePreviewProvider} from './IsLivePreviewContext'

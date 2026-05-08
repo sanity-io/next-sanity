@@ -178,7 +178,6 @@ export function defineLive(config: DefineLiveOptions): {
       intervalOnGoAway,
       onGoAway,
 
-      refreshOnMount,
       refreshOnFocus,
       refreshOnReconnect,
     } = props
@@ -209,7 +208,6 @@ export function defineLive(config: DefineLiveOptions): {
         onError={onError}
         intervalOnGoAway={intervalOnGoAway}
         onGoAway={onGoAway}
-        refreshOnMount={refreshOnMount}
         refreshOnFocus={refreshOnFocus}
         refreshOnReconnect={refreshOnReconnect}
       />

@@ -1,5 +1,5 @@
 ---
-"next-sanity": minor
+'next-sanity': minor
 ---
 
 Add `includeDrafts` prop to `<SanityLive />`
