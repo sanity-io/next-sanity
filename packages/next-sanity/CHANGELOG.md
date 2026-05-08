@@ -1,5 +1,15 @@
 # next-sanity
 
+## 13.0.0-cache-components.52
+
+### Patch Changes
+
+- [#3109](https://github.com/sanity-io/next-sanity/pull/3109) [`a4b1ede`](https://github.com/sanity-io/next-sanity/commit/a4b1ede11ac19fe03539ebe153a7feec35f37c0c) Thanks [@stipsan](https://github.com/stipsan)! - Simplify Sanity Live cache tag handling to use a single `cacheTagPrefix` across published and draft flows.
+
+  `parseTags()` now follows the single-prefix model and includes `tagsWithoutPrefix` as a convenience in the parsed result.
+
+- [#3109](https://github.com/sanity-io/next-sanity/pull/3109) [`fbdeeef`](https://github.com/sanity-io/next-sanity/commit/fbdeeefc9390679b9413b8320796d05c88afc7e7) Thanks [@stipsan](https://github.com/stipsan)! - No longer auto refresh in <VisualEditing /> when editing documents
+
 ## 13.0.0-cache-components.51
 
 ### Major Changes
