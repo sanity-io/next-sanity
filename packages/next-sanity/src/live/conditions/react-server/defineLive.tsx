@@ -179,7 +179,6 @@ export function defineLive(config: DefineLiveOptions): {
       onGoAway,
 
       refreshOnFocus,
-      refreshOnReconnect,
     } = props
     const {projectId, dataset, apiHost, apiVersion, useProjectHostname, requestTagPrefix} =
       client.config()
@@ -209,7 +208,6 @@ export function defineLive(config: DefineLiveOptions): {
         intervalOnGoAway={intervalOnGoAway}
         onGoAway={onGoAway}
         refreshOnFocus={refreshOnFocus}
-        refreshOnReconnect={refreshOnReconnect}
       />
     )
   }

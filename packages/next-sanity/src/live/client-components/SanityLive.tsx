@@ -10,7 +10,6 @@ import type {SanityClientConfig} from '#live/types'
 import {RefreshOnInterval} from './RefreshOnInterval'
 
 const RefreshOnFocus = dynamic(() => import('./RefreshOnFocus'))
-const RefreshOnReconnect = dynamic(() => import('./RefreshOnReconnect'))
 
 export interface SanityLiveProps {
   config: SanityClientConfig
@@ -24,7 +23,6 @@ export interface SanityLiveProps {
   onGoAway?: (event: LiveEventGoAway, intervalOnGoAway: number | false) => void
 
   refreshOnFocus?: boolean
-  refreshOnReconnect?: boolean
 }
 
 function SanityLive(props: SanityLiveProps): React.JSX.Element | null {
@@ -44,7 +42,6 @@ function SanityLive(props: SanityLiveProps): React.JSX.Element | null {
       : typeof window === 'undefined'
         ? true
         : window.self === window.top,
-    refreshOnReconnect = true,
   } = props
   const {projectId, dataset, apiHost, apiVersion, useProjectHostname, token, requestTagPrefix} =
     config
@@ -119,7 +116,6 @@ function SanityLive(props: SanityLiveProps): React.JSX.Element | null {
         <RefreshOnInterval interval={refreshOnInterval} />
       )}
       {!includeDrafts && refreshOnFocus && <RefreshOnFocus />}
-      {!includeDrafts && refreshOnReconnect && <RefreshOnReconnect />}
     </>
   )
 }

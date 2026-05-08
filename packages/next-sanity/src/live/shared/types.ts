@@ -121,12 +121,6 @@ export interface DefinedLiveProps {
    * @defaultValue `false` if draftMode().isEnabled, otherwise `true` if not inside an iframe
    */
   refreshOnFocus?: boolean
-  /**
-   * Automatically refresh when the browser regains a network connection (via navigator.onLine)
-   * Note that this is different from revalidation, which is based on tags and causes `sanityFetch` calls to be re-fetched.
-   * @defaultValue `true`
-   */
-  refreshOnReconnect?: boolean
 }
 
 /**
