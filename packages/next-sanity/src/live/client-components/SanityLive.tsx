@@ -1,33 +1,20 @@
-import {
-  createClient,
-  type InitializedClientConfig,
-  type LiveEvent,
-  type LiveEventGoAway,
-  type SyncTag,
-} from '@sanity/client'
+import {createClient, type LiveEvent, type LiveEventGoAway, type SyncTag} from '@sanity/client'
 import {revalidateSyncTags as defaultRevalidateSyncTags} from 'next-sanity/live/server-actions'
 import dynamic from 'next/dynamic'
 import {useRouter} from 'next/navigation'
 import {useEffect, useMemo, useState, useEffectEvent, startTransition} from 'react'
 
 import {isCorsOriginError} from '#live/isCorsOriginError'
+import type {SanityClientConfig} from '#live/types'
 
 const RefreshOnFocus = dynamic(() => import('./RefreshOnFocus'))
 const RefreshOnMount = dynamic(() => import('./RefreshOnMount'))
 const RefreshOnInterval = dynamic(() => import('./RefreshOnInterval'))
 const RefreshOnReconnect = dynamic(() => import('./RefreshOnReconnect'))
 
-export interface SanityLiveProps extends Pick<
-  InitializedClientConfig,
-  | 'projectId'
-  | 'dataset'
-  | 'apiHost'
-  | 'apiVersion'
-  | 'useProjectHostname'
-  | 'token'
-  | 'requestTagPrefix'
-> {
-  draftModeEnabled: boolean
+export interface SanityLiveProps {
+  config: SanityClientConfig
+  includeDrafts: boolean | undefined
   requestTag: string
   waitFor?: 'function'
 
@@ -43,14 +30,8 @@ export interface SanityLiveProps extends Pick<
 
 function SanityLive(props: SanityLiveProps): React.JSX.Element | null {
   const {
-    projectId,
-    dataset,
-    apiHost,
-    apiVersion,
-    useProjectHostname,
-    token,
-    requestTagPrefix,
-    draftModeEnabled,
+    config,
+    includeDrafts = false,
     requestTag,
     waitFor,
 
@@ -60,13 +41,15 @@ function SanityLive(props: SanityLiveProps): React.JSX.Element | null {
     onGoAway = handleOnGoAway,
 
     refreshOnMount = false,
-    refreshOnFocus = draftModeEnabled
+    refreshOnFocus = includeDrafts
       ? false
       : typeof window === 'undefined'
         ? true
         : window.self === window.top,
     refreshOnReconnect = true,
   } = props
+  const {projectId, dataset, apiHost, apiVersion, useProjectHostname, token, requestTagPrefix} =
+    config
 
   const client = useMemo(
     () =>
@@ -86,9 +69,6 @@ function SanityLive(props: SanityLiveProps): React.JSX.Element | null {
 
   const [refreshOnInterval, setRefreshOnInterval] = useState<number | false>(false)
 
-  /**
-   * 1. Handle Live Events and call revalidateTag or router.refresh when needed
-   */
   const router = useRouter()
   const handleLiveEvent = useEffectEvent((event: LiveEvent) => {
     if (process.env.NODE_ENV !== 'production' && event.type === 'welcome') {
@@ -97,7 +77,7 @@ function SanityLive(props: SanityLiveProps): React.JSX.Element | null {
         'Sanity is live with',
         token
           ? 'automatic revalidation for draft content changes as well as published content'
-          : draftModeEnabled
+          : includeDrafts
             ? 'automatic revalidation for only published content. Provide a `browserToken` to `defineLive` to support draft content outside of Presentation Tool.'
             : 'automatic revalidation of published content',
       )
@@ -136,12 +116,12 @@ function SanityLive(props: SanityLiveProps): React.JSX.Element | null {
 
   return (
     <>
-      {!draftModeEnabled && refreshOnMount && <RefreshOnMount />}
+      {!includeDrafts && refreshOnMount && <RefreshOnMount />}
       {refreshOnInterval && Number.isFinite(refreshOnInterval) && refreshOnInterval > 0 && (
         <RefreshOnInterval interval={refreshOnInterval} />
       )}
-      {!draftModeEnabled && refreshOnFocus && <RefreshOnFocus />}
-      {!draftModeEnabled && refreshOnReconnect && <RefreshOnReconnect />}
+      {!includeDrafts && refreshOnFocus && <RefreshOnFocus />}
+      {!includeDrafts && refreshOnReconnect && <RefreshOnReconnect />}
     </>
   )
 }

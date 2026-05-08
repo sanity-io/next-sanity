@@ -169,19 +169,23 @@ export function defineLive(config: DefineLiveOptions): {
 
   const SanityLive: React.ComponentType<DefinedLiveProps> = async function SanityLive(props) {
     const {
+      includeDrafts = (await draftMode()).isEnabled,
+      requestTag = 'next-loader.live',
+      waitFor,
+
+      revalidateSyncTags,
+      onError,
+      intervalOnGoAway,
+      onGoAway,
+
       refreshOnMount,
       refreshOnFocus,
       refreshOnReconnect,
-      requestTag = 'next-loader.live',
-      onError,
-      onGoAway,
-      intervalOnGoAway,
-      revalidateSyncTags,
-      waitFor,
     } = props
     const {projectId, dataset, apiHost, apiVersion, useProjectHostname, requestTagPrefix} =
       client.config()
-    const {isEnabled: isDraftModeEnabled} = await draftMode()
+    const shouldIncludeDrafts = typeof browserToken === 'string' && includeDrafts
+    const shouldWaitFor = waitFor === 'function' && !shouldIncludeDrafts ? waitFor : undefined
 
     // Preconnect to the Live Event API origin early, as the Sanity API is almost always on a different origin than the app
     const {origin} = new URL(client.getUrl('', false))
@@ -189,23 +193,25 @@ export function defineLive(config: DefineLiveOptions): {
 
     return (
       <SanityLiveClientComponent
-        projectId={projectId}
-        dataset={dataset}
-        apiHost={apiHost}
-        apiVersion={apiVersion}
-        useProjectHostname={useProjectHostname}
-        requestTagPrefix={requestTagPrefix}
+        config={{
+          projectId,
+          dataset,
+          apiHost,
+          apiVersion,
+          useProjectHostname,
+          requestTagPrefix,
+          token: shouldIncludeDrafts ? browserToken : undefined,
+        }}
+        includeDrafts={shouldIncludeDrafts}
         requestTag={requestTag}
-        token={typeof browserToken === 'string' && isDraftModeEnabled ? browserToken : undefined}
-        draftModeEnabled={isDraftModeEnabled}
+        waitFor={shouldWaitFor}
+        revalidateSyncTags={revalidateSyncTags}
+        onError={onError}
+        intervalOnGoAway={intervalOnGoAway}
+        onGoAway={onGoAway}
         refreshOnMount={refreshOnMount}
         refreshOnFocus={refreshOnFocus}
         refreshOnReconnect={refreshOnReconnect}
-        onError={onError}
-        onGoAway={onGoAway}
-        intervalOnGoAway={intervalOnGoAway}
-        revalidateSyncTags={revalidateSyncTags}
-        waitFor={waitFor}
       />
     )
   }

@@ -6,6 +6,7 @@ import type {
   QueryParams,
   SanityClient,
   SyncTag,
+  InitializedClientConfig,
 } from 'next-sanity'
 
 /**
@@ -61,10 +62,59 @@ export type DefinedFetchType = <const QueryString extends string>(options: {
 }>
 
 /**
- * Render this in your root layout.tsx to make your page revalidate on new content live, automatically.
+ * Render this in your root layout.tsx to make your page refresh, or revalidate, on new content live, automatically.
  * @public
  */
 export interface DefinedLiveProps {
+  /**
+   * Include draft and content release version events in the live connection, instead of only published documents.
+   *
+   * A `browserToken` must be configured in `defineLive()` for draft events to be included.
+   *
+   * @defaultValue `(await draftMode()).isEnabled`
+   */
+  includeDrafts?: boolean
+  /**
+   * This request tag is used to identify the request when viewing request logs from your Sanity Content Lake.
+   * @see https://www.sanity.io/docs/platform-management/reference-api-request-tags
+   * @defaultValue 'next-loader.live'
+   */
+  requestTag?: string
+  /**
+   * Delays events until after a configured Sanity Function has processed them and called the callback endpoint.
+   * When omitted, events are delivered immediately.
+   *
+   * @remarks
+   * When set, any custom `revalidateSyncTags` will not be called — revalidation is handled by the Function instead.
+   */
+  waitFor?: 'function'
+
+  /**
+   * Override how cache tags are invalidated, you need to pass a server action here.
+   * You can also pass a `use client` function here, and have `router.refresh()` be called if the promise resolves to `'refresh'`.
+   */
+  revalidateSyncTags?: (tags: SyncTag[]) => Promise<void | 'refresh'>
+  /**
+   * Handle errors from the Live Events subscription.
+   * By default it's reported using `console.error`, you can override this prop to handle it in your own way.
+   */
+  onError?: (error: unknown) => void
+  /**
+   * Automatically refresh on an interval when the Live Event API emits a `goaway` event, which indicates that the connection is rejected or closed.
+   * This typically happens if the connection limit is reached, or if the connection is idle for too long.
+   * To disable this long polling fallback behavior set `intervalOnGoAway` to `false` or `0`.
+   * You can also use `onGoAway` to handle the `goaway` event in your own way, and read the reason why the event was emitted.
+   * @defaultValue `30_000` 30 seconds interval
+   */
+  intervalOnGoAway?: number | false
+  /**
+   * Handle the `goaway` event if the connection is rejected/closed.
+   * `event.reason` will be a string of why the event was emitted, for example `'connection limit reached'`.
+   * When this happens the `<SanityLive />` will fallback to long polling with a default interval of 30 seconds, providing your own `onGoAway` handler does not change this behavior.
+   * If you want to disable long polling set `intervalOnGoAway` to `false` or `0`.
+   */
+  onGoAway?: (event: LiveEventGoAway, intervalOnGoAway: number | false) => void
+
   /**
    * Automatic refresh of RSC when the component <SanityLive /> is mounted.
    * Note that this is different from revalidation, which is based on tags and causes `sanityFetch` calls to be re-fetched.
@@ -83,50 +133,6 @@ export interface DefinedLiveProps {
    * @defaultValue `true`
    */
   refreshOnReconnect?: boolean
-  /**
-   * Automatically refresh on an interval when the Live Event API emits a `goaway` event, which indicates that the connection is rejected or closed.
-   * This typically happens if the connection limit is reached, or if the connection is idle for too long.
-   * To disable this long polling fallback behavior set `intervalOnGoAway` to `false` or `0`.
-   * You can also use `onGoAway` to handle the `goaway` event in your own way, and read the reason why the event was emitted.
-   * @defaultValue `30_000` 30 seconds interval
-   */
-  intervalOnGoAway?: number | false
-
-  /**
-   * Delays events until after a configured Sanity Function has processed them and called the callback endpoint.
-   * When omitted, events are delivered immediately.
-   *
-   * @remarks
-   * When set, any custom `revalidateSyncTags` will not be called — revalidation is handled by the Function instead.
-   */
-  waitFor?: 'function'
-
-  /**
-   * This request tag is used to identify the request when viewing request logs from your Sanity Content Lake.
-   * @see https://www.sanity.io/docs/platform-management/reference-api-request-tags
-   * @defaultValue 'next-loader.live'
-   */
-  requestTag?: string
-
-  /**
-   * Handle errors from the Live Events subscription.
-   * By default it's reported using `console.error`, you can override this prop to handle it in your own way.
-   */
-  onError?: (error: unknown) => void
-
-  /**
-   * Handle the `goaway` event if the connection is rejected/closed.
-   * `event.reason` will be a string of why the event was emitted, for example `'connection limit reached'`.
-   * When this happens the `<SanityLive />` will fallback to long polling with a default interval of 30 seconds, providing your own `onGoAway` handler does not change this behavior.
-   * If you want to disable long polling set `intervalOnGoAway` to `false` or `0`.
-   */
-  onGoAway?: (event: LiveEventGoAway, intervalOnGoAway: number | false) => void
-
-  /**
-   * Override how cache tags are invalidated, you need to pass a server action here.
-   * You can also pass a `use client` function here, and have `router.refresh()` be called if the promise resolves to `'refresh'`.
-   */
-  revalidateSyncTags?: (tags: SyncTag[]) => Promise<void | 'refresh'>
 }
 
 /**
@@ -134,17 +140,22 @@ export interface DefinedLiveProps {
  */
 export interface DefineLiveOptions {
   /**
-   * Required for `sanityFetch` and `SanityLive` to work
+   * Sanity client used by `sanityFetch()` and `<SanityLive />`.
    */
   client: SanityClient
   /**
-   * Optional. If provided then the token needs to have permissions to query documents with `drafts.` prefixes in order for `perspective: 'drafts'` to work.
-   * This token is not shared with the browser.
+   * Token used by the server to query drafts and content release versions.
+   *
+   * This token is never shared with the browser unless you also pass it as
+   * `browserToken`.
    */
   serverToken?: string | false
   /**
-   * Optional. This token is shared with the browser, and should only have access to query published documents.
-   * It is used to setup a `Live Draft Content` EventSource connection, and enables live previewing drafts stand-alone, outside of Presentation Tool.
+   * Token shared with the browser when `<SanityLive includeDrafts />` opens a
+   * draft-capable live connection.
+   *
+   * Use a browser-safe token with the minimum read permissions needed for live
+   * previewing drafts outside Presentation Tool.
    */
   browserToken?: string | false
   /**
@@ -164,3 +175,14 @@ export interface DefineLiveOptions {
    */
   stega?: boolean
 }
+
+export interface SanityClientConfig extends Pick<
+  InitializedClientConfig,
+  | 'projectId'
+  | 'dataset'
+  | 'apiHost'
+  | 'apiVersion'
+  | 'useProjectHostname'
+  | 'token'
+  | 'requestTagPrefix'
+> {}
