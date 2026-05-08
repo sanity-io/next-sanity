@@ -339,6 +339,7 @@ export function defineLive(config: DefineLiveOptions) {
 
     // Preconnect to the Live Event API origin early, as the Sanity API is almost always on a different origin than the app
     const {origin} = new URL(client.getUrl('', false))
+    // On Safari preconnect happens multiple times, even when router.refresh() is called, should we render a <link rel="preconnect"> instead?
     preconnect(origin)
 
     return (

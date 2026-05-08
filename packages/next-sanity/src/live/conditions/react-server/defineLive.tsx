@@ -1,7 +1,7 @@
 import {type ClientPerspective} from '@sanity/client'
 import {perspectiveCookieName} from '@sanity/preview-url-secret/constants'
 import {SanityLive as SanityLiveClientComponent} from 'next-sanity/live/client-components'
-import {refreshAction, revalidateSyncTagsAction} from 'next-sanity/live/server-actions'
+import {refreshAction, revalidateSyncTagsAction, temporaryRefreshAction} from 'next-sanity/live/server-actions'
 import {PHASE_PRODUCTION_BUILD} from 'next/constants'
 import {cookies, draftMode} from 'next/headers'
 import {preconnect} from 'react-dom'
@@ -360,6 +360,7 @@ export function defineLive(config: DefineLiveOptions) {
 
     // Preconnect to the Live Event API origin early, as the Sanity API is almost always on a different origin than the app
     const {origin} = new URL(client.getUrl('', false))
+    // On Safari preconnect happens multiple times, even when router.refresh() is called, should we render a <link rel="preconnect"> instead?
     preconnect(origin)
 
     return (
@@ -376,7 +377,7 @@ export function defineLive(config: DefineLiveOptions) {
         includeDrafts={shouldIncludeDrafts ? true : undefined}
         requestTag={requestTag}
         waitFor={shouldWaitFor}
-        action={action ?? (shouldWaitFor === 'function' ? refreshAction : revalidateSyncTagsAction)}
+        action={action ?? (shouldWaitFor === 'function' ? temporaryRefreshAction : revalidateSyncTagsAction)}
         onError={onError}
         onWelcome={onWelcome}
         onReconnect={onReconnect}
