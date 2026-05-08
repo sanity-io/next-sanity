@@ -1,5 +1,13 @@
 # next-sanity
 
+## 13.0.0-cache-components.53
+
+### Patch Changes
+
+- [#3109](https://github.com/sanity-io/next-sanity/pull/3109) [`f3c82bd`](https://github.com/sanity-io/next-sanity/commit/f3c82bd970d99b89f26d7d0771122e0d40821cdf) Thanks [@stipsan](https://github.com/stipsan)! - Improve dev mode behavior
+
+- [#3109](https://github.com/sanity-io/next-sanity/pull/3109) [`3ac8c8d`](https://github.com/sanity-io/next-sanity/commit/3ac8c8d948e016ab9745d4e059236cd3a8f71ccc) Thanks [@stipsan](https://github.com/stipsan)! - better default waitFor handling
+
 ## 13.0.0-cache-components.52
 
 ### Patch Changes
