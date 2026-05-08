@@ -114,13 +114,6 @@ export interface DefinedLiveProps {
    * If you want to disable long polling set `intervalOnGoAway` to `false` or `0`.
    */
   onGoAway?: (event: LiveEventGoAway, intervalOnGoAway: number | false) => void
-
-  /**
-   * Automatically refresh when window gets focused
-   * Note that this is different from revalidation, which is based on tags and causes `sanityFetch` calls to be re-fetched.
-   * @defaultValue `false` if draftMode().isEnabled, otherwise `true` if not inside an iframe
-   */
-  refreshOnFocus?: boolean
 }
 
 /**

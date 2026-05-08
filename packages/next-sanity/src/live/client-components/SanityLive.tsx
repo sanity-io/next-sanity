@@ -1,6 +1,5 @@
 import {createClient, type LiveEvent, type LiveEventGoAway, type SyncTag} from '@sanity/client'
 import {revalidateSyncTags as defaultRevalidateSyncTags} from 'next-sanity/live/server-actions'
-import dynamic from 'next/dynamic'
 import {useRouter} from 'next/navigation'
 import {useEffect, useMemo, useState, useEffectEvent, startTransition} from 'react'
 
@@ -8,8 +7,6 @@ import {isCorsOriginError} from '#live/isCorsOriginError'
 import type {SanityClientConfig} from '#live/types'
 
 import {RefreshOnInterval} from './RefreshOnInterval'
-
-const RefreshOnFocus = dynamic(() => import('./RefreshOnFocus'))
 
 export interface SanityLiveProps {
   config: SanityClientConfig
@@ -21,8 +18,6 @@ export interface SanityLiveProps {
   onError?: (error: unknown) => void
   intervalOnGoAway?: number | false
   onGoAway?: (event: LiveEventGoAway, intervalOnGoAway: number | false) => void
-
-  refreshOnFocus?: boolean
 }
 
 function SanityLive(props: SanityLiveProps): React.JSX.Element | null {
@@ -36,12 +31,6 @@ function SanityLive(props: SanityLiveProps): React.JSX.Element | null {
     onError = handleError,
     intervalOnGoAway = 30_000,
     onGoAway = handleOnGoAway,
-
-    refreshOnFocus = includeDrafts
-      ? false
-      : typeof window === 'undefined'
-        ? true
-        : window.self === window.top,
   } = props
   const {projectId, dataset, apiHost, apiVersion, useProjectHostname, token, requestTagPrefix} =
     config
@@ -110,14 +99,10 @@ function SanityLive(props: SanityLiveProps): React.JSX.Element | null {
     return () => subscription.unsubscribe()
   }, [client.live, onError, requestTag, token, waitFor])
 
-  return (
-    <>
-      {refreshOnInterval && Number.isFinite(refreshOnInterval) && refreshOnInterval > 0 && (
-        <RefreshOnInterval interval={refreshOnInterval} />
-      )}
-      {!includeDrafts && refreshOnFocus && <RefreshOnFocus />}
-    </>
-  )
+  if (refreshOnInterval && Number.isFinite(refreshOnInterval) && refreshOnInterval > 0) {
+    return <RefreshOnInterval interval={refreshOnInterval} />
+  }
+  return null
 }
 
 SanityLive.displayName = 'SanityLiveClientComponent'
