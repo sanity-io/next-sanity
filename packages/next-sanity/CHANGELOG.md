@@ -1,5 +1,11 @@
 # next-sanity
 
+## 13.0.0-cache-components.54
+
+### Patch Changes
+
+- [#3109](https://github.com/sanity-io/next-sanity/pull/3109) [`2453ed2`](https://github.com/sanity-io/next-sanity/commit/2453ed2fabdcb6c270ce20b9f9b7d32fcfa10bc8) Thanks [@stipsan](https://github.com/stipsan)! - Massively improve refresh handling
+
 ## 13.0.0-cache-components.53
 
 ### Patch Changes
