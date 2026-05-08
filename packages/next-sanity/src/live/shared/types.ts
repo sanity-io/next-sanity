@@ -280,3 +280,5 @@ export type SanityLiveOnGoaway = (
   context: SanityLiveActionContext,
   setPollingInterval: (interval: number) => void,
 ) => void | Promise<void>
+
+export type CacheTagPrefix = `${string}:`
