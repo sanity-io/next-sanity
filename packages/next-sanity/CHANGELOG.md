@@ -1,5 +1,191 @@
 # next-sanity
 
+## 13.0.0-cache-components.51
+
+### Major Changes
+
+- [#3493](https://github.com/sanity-io/next-sanity/pull/3493) [`0f1d162`](https://github.com/sanity-io/next-sanity/commit/0f1d162c2b72dc6207af3be5b37313de94700278) Thanks [@stipsan](https://github.com/stipsan)! - Remove `refreshOnMount` prop from `<SanityLive>`
+
+  This prop was `false` by default, so if you weren't using it you won't be affected by this change.
+
+  If you were using it, here's how you can add back the same functionality:
+
+  Create a new `RefreshOnMount` component:
+
+  ```tsx
+  // app/RefreshOnMount.tsx
+  import { useRouter } from "next/navigation";
+  import { useEffect, useReducer, startTransition } from "react";
+
+  /**
+   * Handles refreshing the page when the page is mounted,
+   * in case the content changes at a high enough frequency that by
+   * the time the page started streaming, and the <SanityLive> component sets
+   * up the EventSource connection, content might have changed.
+   */
+  export function RefreshOnMount() {
+    const router = useRouter();
+    const [mounted, mount] = useReducer(() => true, false);
+
+    useEffect(() => {
+      if (!mounted) {
+        startTransition(() => {
+          mount();
+          router.refresh();
+        });
+      }
+    }, [mounted, router]);
+
+    return null;
+  }
+  ```
+
+  Then update your layout to include it:
+
+  ```diff
+  // app/layout.tsx
+  import {SanityLive} from '#sanity/live'
+  +import {DebugStatus} from './RefreshOnMount'
+
+  export default function Layout({children}: {children: React.ReactNode}) {
+    return (
+      <>
+        {children}
+  -      <SanityLive refreshOnMount />
+  +      <SanityLive />
+  +      <RefreshOnMount />
+      </>
+    )
+  }
+  ```
+
+- [#3495](https://github.com/sanity-io/next-sanity/pull/3495) [`4630270`](https://github.com/sanity-io/next-sanity/commit/4630270d5aadc59b20860b34782976176fe90944) Thanks [@stipsan](https://github.com/stipsan)! - Remove `refreshOnFocus` prop from `<SanityLive>`
+
+  This prop was enabled by default for published content in top-level windows, so if you relied on it you can add it back like this:
+
+  Create a new `RefreshOnFocus` component:
+
+  ```tsx
+  // app/RefreshOnFocus.tsx
+  "use client";
+
+  import { useRouter } from "next/navigation";
+  import { startTransition, useEffect } from "react";
+
+  const focusThrottleInterval = 5_000;
+
+  export function RefreshOnFocus() {
+    const router = useRouter();
+
+    useEffect(() => {
+      // If inside an iframe then don't refresh on focus
+      if (window.self !== window.top) return;
+
+      const controller = new AbortController();
+      let nextFocusRevalidatedAt = 0;
+      const callback = () => {
+        const now = Date.now();
+        if (
+          now > nextFocusRevalidatedAt &&
+          document.visibilityState !== "hidden"
+        ) {
+          startTransition(() => router.refresh());
+          nextFocusRevalidatedAt = now + focusThrottleInterval;
+        }
+      };
+
+      const { signal } = controller;
+      document.addEventListener("visibilitychange", callback, {
+        passive: true,
+        signal,
+      });
+      window.addEventListener("focus", callback, { passive: true, signal });
+
+      return () => controller.abort();
+    }, [router]);
+
+    return null;
+  }
+  ```
+
+  Then update your layout to include it:
+
+  ```diff
+  // app/layout.tsx
+  import {SanityLive} from '#sanity/live'
+  +import {RefreshOnFocus} from './RefreshOnFocus'
+
+  export default function Layout({children}: {children: React.ReactNode}) {
+    return (
+      <>
+        {children}
+        <SanityLive />
+  +      <RefreshOnFocus />
+      </>
+    )
+  }
+  ```
+
+  The motivation for removing this feature is that most users saw this as unexpected behavior, especially since when using browser debug tools window focus events trigger often and [paired with how v16 behaves differently with link prefetching and the `router.refresh()` call it's bedt to remove it.](https://github.com/vercel/next.js/issues/93210)
+
+- [#3494](https://github.com/sanity-io/next-sanity/pull/3494) [`3ad0422`](https://github.com/sanity-io/next-sanity/commit/3ad04225ed3a25a821108300527ec29d8d40487a) Thanks [@stipsan](https://github.com/stipsan)! - Remove `refreshOnReconnect` prop from `<SanityLive>`
+
+  It was removed as Next.js itself is working [first class support for handling network connectivity changes](https://github.com/vercel/next.js/pull/92011), it can already be tested using `experimental.useOffline`, and so it no longer makes sense for us to implement it ourselves.
+
+  This prop was `true` by default, and only used when not in draft mode, so if you relied on this behavior you can add it back like this:
+
+  Create a new `RefreshOnReconnect` component:
+
+  ```tsx
+  // app/RefreshOnReconnect.tsx
+  "use client";
+
+  import { useRouter } from "next/navigation";
+  import { startTransition, useEffect } from "react";
+
+  export function RefreshOnReconnect() {
+    const router = useRouter();
+
+    useEffect(() => {
+      const controller = new AbortController();
+      const { signal } = controller;
+
+      window.addEventListener(
+        "online",
+        () => startTransition(() => router.refresh()),
+        {
+          passive: true,
+          signal,
+        }
+      );
+
+      return () => controller.abort();
+    }, [router]);
+
+    return null;
+  }
+  ```
+
+  Then update your layout to include it:
+
+  ```diff
+  // app/layout.tsx
+  import {SanityLive} from '#sanity/live'
+  +import {RefreshOnReconnect} from './RefreshOnReconnect'
+
+  export default async function Layout({children}: {children: React.ReactNode}) {
+    const isDraftMode = (await draftMode()).isEnabled
+
+    return (
+      <>
+        {children}
+        <SanityLive includeDrafts={isDraftMode} />
+  +      {!isDraftMode && <RefreshOnReconnect />}
+      </>
+    )
+  }
+  ```
+
 # 12.4.5
 
 ### Patch Changes
