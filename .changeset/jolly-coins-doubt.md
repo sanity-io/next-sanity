@@ -1,5 +1,5 @@
 ---
-"next-sanity": patch
+'next-sanity': patch
 ---
 
 better default waitFor handling
