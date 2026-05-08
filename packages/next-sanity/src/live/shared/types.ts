@@ -79,6 +79,14 @@ export interface DefinedLiveProps {
    */
   includeDrafts?: boolean
   /**
+   * Request tag used to identify the live EventSource request in Sanity Content
+   * Lake logs.
+   *
+   * @see https://www.sanity.io/docs/reference-api-request-tags
+   * @defaultValue `'next-loader.live'` or `'next-loader.live.cache-components'`
+   */
+  requestTag?: string
+  /**
    * Delays events until after a configured Sanity Function has processed them and called the callback endpoint.
    * When omitted, events are delivered immediately.
    *
@@ -118,15 +126,6 @@ export interface DefinedLiveProps {
    * long-polling fallback.
    */
   onGoAway?: SanityLiveOnGoaway | false
-
-  /**
-   * Request tag used to identify the live EventSource request in Sanity Content
-   * Lake logs.
-   *
-   * @see https://www.sanity.io/docs/reference-api-request-tags
-   * @defaultValue `'next-loader.live'` or `'next-loader.live.cache-components'`
-   */
-  requestTag?: string
 }
 
 export interface DefineLiveOptions {

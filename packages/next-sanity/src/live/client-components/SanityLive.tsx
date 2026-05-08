@@ -18,7 +18,7 @@ import {RefreshOnInterval} from './RefreshOnInterval'
 
 export interface SanityLiveProps {
   config: SanityClientConfig
-  includeDrafts: false | undefined
+  includeDrafts: true | undefined
   requestTag: string
   waitFor: 'function' | undefined
 
@@ -64,7 +64,7 @@ function SanityLive(props: SanityLiveProps): React.JSX.Element | null {
     [apiHost, apiVersion, dataset, projectId, requestTagPrefix, token, useProjectHostname],
   )
 
-   // The interval is set in milliseconds, false means long polling is disabled
+  // The interval is set in milliseconds, false means long polling is disabled
   const [refreshOnInterval, setRefreshOnInterval] = useState<number | false>(false)
 
   const [error, setError] = useState<unknown>(null)

@@ -356,6 +356,7 @@ export function defineLive(config: DefineLiveOptions) {
     } = props
     const {projectId, dataset, apiHost, apiVersion, useProjectHostname, requestTagPrefix} =
       client.config()
+
     const shouldIncludeDrafts = typeof browserToken === 'string' && includeDrafts
     const shouldWaitFor = waitFor === 'function' && !shouldIncludeDrafts ? waitFor : undefined
 
@@ -374,15 +375,15 @@ export function defineLive(config: DefineLiveOptions) {
           requestTagPrefix,
           token: shouldIncludeDrafts ? browserToken : undefined,
         }}
-        includeDrafts={shouldIncludeDrafts}
+        includeDrafts={shouldIncludeDrafts ? true : undefined}
+        requestTag={requestTag}
         waitFor={shouldWaitFor}
         action={action ?? (shouldWaitFor === 'function' ? refreshAction : revalidateSyncTagsAction)}
+        onError={onError}
+        onWelcome={onWelcome}
         onReconnect={onReconnect}
         onRestart={onRestart}
-        onWelcome={onWelcome}
-        onError={onError}
         onGoAway={onGoAway}
-        requestTag={requestTag}
       />
     )
   }

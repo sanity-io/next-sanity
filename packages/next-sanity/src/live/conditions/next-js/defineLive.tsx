@@ -323,22 +323,21 @@ export function defineLive(config: DefineLiveOptions) {
     }
     const {
       includeDrafts = false,
-      waitFor,
       requestTag = 'next-loader.live.cache-components',
+      waitFor,
 
       action,
+      onError,
+      onWelcome,
       onReconnect = refreshAction,
       onRestart = refreshAction,
-      onWelcome,
-      onError,
       onGoAway,
     } = props
+    const {projectId, dataset, apiHost, apiVersion, useProjectHostname, requestTagPrefix} =
+      client.config()
 
     const shouldIncludeDrafts = typeof browserToken === 'string' && includeDrafts
     const shouldWaitFor = waitFor === 'function' && !shouldIncludeDrafts ? waitFor : undefined
-
-    const {projectId, dataset, apiHost, apiVersion, useProjectHostname, requestTagPrefix} =
-      client.config()
 
     // Preconnect to the Live Event API origin early, as the Sanity API is almost always on a different origin than the app
     const {origin} = new URL(client.getUrl('', false))
@@ -355,15 +354,15 @@ export function defineLive(config: DefineLiveOptions) {
           requestTagPrefix,
           token: shouldIncludeDrafts ? browserToken : undefined,
         }}
-        includeDrafts={shouldIncludeDrafts}
+        includeDrafts={shouldIncludeDrafts ? true : undefined}
+        requestTag={requestTag}
         waitFor={shouldWaitFor}
         action={action ?? (shouldWaitFor === 'function' ? refreshAction : revalidateSyncTagsAction)}
+        onError={onError}
+        onWelcome={onWelcome}
         onReconnect={onReconnect}
         onRestart={onRestart}
-        onWelcome={onWelcome}
-        onError={onError}
         onGoAway={onGoAway}
-        requestTag={requestTag}
       />
     )
   }
