@@ -18,7 +18,7 @@ import type {LiveEventGoAway} from '@sanity/client'
 export function onGoAway(event: LiveEventGoAway, intervalOnGoAway: number | false) {
   if (intervalOnGoAway) {
     console.warn(
-      'Sanity Live connection closed, switching to long polling set to a interval of',
+      'Sanity Live connection closed, switching to long polling set to an interval of',
       intervalOnGoAway / 1000,
       'seconds and the server gave this reason:',
       event.reason,
