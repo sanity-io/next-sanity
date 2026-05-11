@@ -1,13 +1,17 @@
 import type {ClientPerspective} from '@sanity/client'
-import {perspectiveCookieName} from '@sanity/preview-url-secret/constants'
 import {SanityLive as SanityLiveClientComponent} from 'next-sanity/live/client-components'
 import {PHASE_PRODUCTION_BUILD} from 'next/constants'
 import {cookies, draftMode} from 'next/headers'
 import {preconnect} from 'react-dom'
 
 import {cacheTagPrefix} from '#live/constants'
-import {sanitizePerspective} from '#live/sanitizePerspective'
-import type {DefinedFetchType, DefinedLiveProps, DefineLiveOptions} from '#live/types'
+import {resolvePerspectiveFromCookies} from '#live/resolvePerspectiveFromCookies'
+import type {
+  DefinedFetchType,
+  DefinedLiveProps,
+  DefineLiveOptions,
+  LivePerspective,
+} from '#live/types'
 
 /**
  * Set up Sanity Live. `defineLive` returns `sanityFetch` and `<SanityLive />`,
@@ -176,6 +180,7 @@ export function defineLive(config: DefineLiveOptions): {
 
       revalidateSyncTags,
       onError,
+      onWelcome,
       onReconnect,
       onRestart,
       onGoAway,
@@ -206,6 +211,7 @@ export function defineLive(config: DefineLiveOptions): {
         waitFor={shouldWaitFor}
         revalidateSyncTags={revalidateSyncTags}
         onError={onError}
+        onWelcome={onWelcome}
         onReconnect={onReconnect}
         onRestart={onRestart}
         onGoAway={onGoAway}
@@ -217,10 +223,8 @@ export function defineLive(config: DefineLiveOptions): {
   return {sanityFetch, SanityLive}
 }
 
-async function resolveCookiePerspective(): Promise<Exclude<ClientPerspective, 'raw'>> {
+async function resolveCookiePerspective(): Promise<LivePerspective> {
   return (await draftMode()).isEnabled
-    ? (await cookies()).has(perspectiveCookieName)
-      ? sanitizePerspective((await cookies()).get(perspectiveCookieName)?.value, 'drafts')
-      : 'drafts'
+    ? await resolvePerspectiveFromCookies({cookies: await cookies()})
     : 'published'
 }

@@ -10,6 +10,7 @@ import type {
   SanityLiveOnGoaway,
   SanityLiveOnReconnect,
   SanityLiveOnRestart,
+  SanityLiveOnWelcome,
 } from '#live/types'
 
 import {RefreshOnInterval} from './RefreshOnInterval'
@@ -22,6 +23,7 @@ export interface SanityLiveProps {
 
   revalidateSyncTags?: (tags: SyncTag[]) => Promise<void | 'refresh'>
   onError?: (error: unknown) => void
+  onWelcome: SanityLiveOnWelcome | false | undefined
   onReconnect: SanityLiveOnReconnect | false | undefined
   onRestart: SanityLiveOnRestart | false | undefined
   onGoAway: SanityLiveOnGoaway | false | undefined
@@ -36,6 +38,7 @@ function SanityLive(props: SanityLiveProps): React.JSX.Element | null {
 
     revalidateSyncTags = defaultRevalidateSyncTags,
     onError = handleError,
+    onWelcome = handleWelcome,
     onReconnect = 'refresh',
     onRestart = 'refresh',
     onGoAway = handleGoaway,
@@ -67,19 +70,12 @@ function SanityLive(props: SanityLiveProps): React.JSX.Element | null {
   const handleLiveEvent = useEffectEvent((event: LiveEvent) => {
     switch (event.type) {
       case 'welcome': {
-        if (process.env.NODE_ENV !== 'production') {
-          // oxlint-disable-next-line no-console
-          console.info(
-            'Sanity is live with',
-            token
-              ? 'automatic revalidation for draft content changes as well as published content'
-              : includeDrafts
-                ? 'automatic revalidation for only published content. Provide a `browserToken` to `defineLive` to support draft content outside of Presentation Tool.'
-                : 'automatic revalidation of published content',
-          )
-        }
         // Disable long polling when welcome event is received, this is a no-op if long polling is already disabled
         startTransition(() => setRefreshOnInterval(false))
+
+        if (onWelcome) {
+          startTransition(() => onWelcome(event, actionContext))
+        }
         break
       }
       case 'message': {
@@ -176,6 +172,13 @@ function handleError(error: unknown) {
   } else {
     console.error(error)
   }
+}
+
+const handleWelcome: SanityLiveOnWelcome = (_, {includeDrafts, waitFor}) => {
+  // oxlint-disable-next-line no-console
+  console.info(
+    `<SanityLive${includeDrafts ? ' includeDrafts' : ''}> is connected and listening for live events to ${includeDrafts ? 'all content including drafts and version documents in content releases' : 'published content'}.${waitFor === 'function' ? ' Events will be delayed until after a Sanity Function has processed them.' : ''}`,
+  )
 }
 
 const handleGoaway: SanityLiveOnGoaway = (event, {includeDrafts}, setLongPollingInterval) => {

@@ -1,9 +1,11 @@
-import {validateApiPerspective, type ClientPerspective} from '@sanity/client'
+import {validateApiPerspective} from '@sanity/client'
+
+import type {LivePerspective} from '#live/types'
 
 export function sanitizePerspective(
   _perspective: unknown,
   fallback: 'drafts' | 'published',
-): Exclude<ClientPerspective, 'raw'> {
+): LivePerspective {
   const perspective =
     typeof _perspective === 'string' && _perspective.includes(',')
       ? _perspective.split(',')

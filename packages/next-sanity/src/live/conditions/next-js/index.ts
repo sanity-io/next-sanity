@@ -99,6 +99,7 @@ export type {
   SanityLiveOnGoaway,
   SanityLiveOnReconnect,
   SanityLiveOnRestart,
+  SanityLiveOnWelcome,
 } from '#live/types'
 
 export {isCorsOriginError} from '#live/isCorsOriginError'

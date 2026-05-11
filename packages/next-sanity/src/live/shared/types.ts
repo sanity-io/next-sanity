@@ -19,7 +19,6 @@ export type LivePerspective = Exclude<ClientPerspective, 'raw'>
  * Use this function to fetch data from Sanity in your React Server Components.
  * When used within a `generateMetadata` or `generateViewport` function, make sure you set `stega: false`.
  * When used within a `generateStaticParams` function, make sure you set `stega: false` and `perspective: 'published'`.
- * @public
  */
 export type DefinedFetchType = <const QueryString extends string>(options: {
   /**
@@ -88,7 +87,6 @@ export interface DefinedLiveProps {
    * When set, any custom `revalidateSyncTags` will not be called — revalidation is handled by the Function instead.
    */
   waitFor?: 'function'
-
   /**
    * Override how cache tags are invalidated, you need to pass a server action here.
    * You can also pass a `use client` function here, and have `router.refresh()` be called if the promise resolves to `'refresh'`.
@@ -99,6 +97,11 @@ export interface DefinedLiveProps {
    * By default it's reported using `console.error`, you can override this prop to handle it in your own way.
    */
   onError?: (error: unknown) => void
+  /**
+   * Custom handler for the `welcome` event. Pass `false` to disable the default
+   * connection log.
+   */
+  onWelcome?: SanityLiveOnWelcome | false
   /**
    * Custom handler for the `reconnect` event. Pass `false` to disable the
    * default refresh behavior.
@@ -116,9 +119,6 @@ export interface DefinedLiveProps {
   onGoAway?: SanityLiveOnGoaway | false
 }
 
-/**
- * @public
- */
 export interface DefineLiveOptions {
   /**
    * Sanity client used by `sanityFetch()` and `<SanityLive />`.
@@ -183,6 +183,17 @@ export interface SanityLiveContext {
   waitFor: 'function' | undefined
 }
 
+/**
+ * Handles the Live Content API `welcome` event.
+ *
+ * This event fires when the EventSource connection is established. 
+ * The default event handler logs a message that adapts the message based on wether `includeDrafts` is set, and if `waitFor="function"` is set.
+ * Set `<SanityLive onWelcome={false} />` to disable the default behavior.
+ */
+export type SanityLiveOnWelcome = (
+  event: Extract<LiveEvent, {type: 'welcome'}>,
+  context: SanityLiveContext,
+) => void | Promise<void>
 /**
  * Handles the Live Content API `reconnect` event.
  *
