@@ -2,11 +2,11 @@ import type {
   ClientPerspective,
   ClientReturn,
   ContentSourceMap,
-  LiveEventGoAway,
   QueryParams,
   SanityClient,
   SyncTag,
   InitializedClientConfig,
+  LiveEvent,
 } from 'next-sanity'
 
 /**
@@ -100,20 +100,10 @@ export interface DefinedLiveProps {
    */
   onError?: (error: unknown) => void
   /**
-   * Automatically refresh on an interval when the Live Event API emits a `goaway` event, which indicates that the connection is rejected or closed.
-   * This typically happens if the connection limit is reached, or if the connection is idle for too long.
-   * To disable this long polling fallback behavior set `intervalOnGoAway` to `false` or `0`.
-   * You can also use `onGoAway` to handle the `goaway` event in your own way, and read the reason why the event was emitted.
-   * @defaultValue `30_000` 30 seconds interval
+   * Custom handler for the `goaway` event. Pass `false` to disable the default
+   * long-polling fallback.
    */
-  intervalOnGoAway?: number | false
-  /**
-   * Handle the `goaway` event if the connection is rejected/closed.
-   * `event.reason` will be a string of why the event was emitted, for example `'connection limit reached'`.
-   * When this happens the `<SanityLive />` will fallback to long polling with a default interval of 30 seconds, providing your own `onGoAway` handler does not change this behavior.
-   * If you want to disable long polling set `intervalOnGoAway` to `false` or `0`.
-   */
-  onGoAway?: (event: LiveEventGoAway, intervalOnGoAway: number | false) => void
+  onGoAway?: SanityLiveOnGoaway | false
 }
 
 /**
@@ -167,3 +157,34 @@ export interface SanityClientConfig extends Pick<
   | 'token'
   | 'requestTagPrefix'
 > {}
+
+/**
+ * Context passed to Sanity Live event handlers.
+ */
+export interface SanityLiveContext {
+  /**
+   * Whether the current `<SanityLive />` connection includes draft and content
+   * release version events.
+   */
+  includeDrafts: boolean
+  /**
+   * Whether the current `<SanityLive />` connection is waiting for a Sanity Function to process the live events.
+   */
+  waitFor: 'function' | undefined
+}
+
+/**
+ * Handles the Live Content API `goaway` event.
+ *
+ * This event means the API closed the live connection and will not deliver live
+ * events. This can happen when connection limits are reached. A polling refresh
+ * interval is the usual fallback; call `setPollingInterval()` from a custom
+ * handler to keep content fresh.
+ */
+export type SanityLiveOnGoaway = (
+  event: Extract<LiveEvent, {type: 'goaway'}>,
+  context: SanityLiveContext,
+  setPollingInterval: (interval: number) => void,
+) => void | Promise<void>
+
+export type CacheTagPrefix = `${string}:`

@@ -5,6 +5,7 @@ import {PHASE_PRODUCTION_BUILD} from 'next/constants'
 import {cookies, draftMode} from 'next/headers'
 import {preconnect} from 'react-dom'
 
+import {cacheTagPrefix} from '#live/constants'
 import {sanitizePerspective} from '#live/sanitizePerspective'
 import type {DefinedFetchType, DefinedLiveProps, DefineLiveOptions} from '#live/types'
 
@@ -146,13 +147,13 @@ export function defineLive(config: DefineLiveOptions): {
       perspective: perspective as ClientPerspective,
       stega: false,
       returnQuery: false,
-      next: {revalidate, tags: [...tags, 'sanity:fetch-sync-tags']},
+      next: {revalidate, tags: [...tags, `${cacheTagPrefix}fetch-sync-tags`]},
       useCdn,
       cacheMode,
       tag: [requestTag, 'fetch-sync-tags'].filter(Boolean).join('.'),
     })
 
-    const cacheTags = [...tags, ...(syncTags?.map((tag) => `sanity:${tag}`) || [])]
+    const cacheTags = [...tags, ...(syncTags?.map((tag) => `${cacheTagPrefix}${tag}`) || [])]
 
     const {result, resultSourceMap} = await client.fetch(query, await params, {
       filterResponse: false,
@@ -175,11 +176,11 @@ export function defineLive(config: DefineLiveOptions): {
 
       revalidateSyncTags,
       onError,
-      intervalOnGoAway,
       onGoAway,
     } = props
     const {projectId, dataset, apiHost, apiVersion, useProjectHostname, requestTagPrefix} =
       client.config()
+
     const shouldIncludeDrafts = typeof browserToken === 'string' && includeDrafts
     const shouldWaitFor = waitFor === 'function' && !shouldIncludeDrafts ? waitFor : undefined
 
@@ -203,7 +204,6 @@ export function defineLive(config: DefineLiveOptions): {
         waitFor={shouldWaitFor}
         revalidateSyncTags={revalidateSyncTags}
         onError={onError}
-        intervalOnGoAway={intervalOnGoAway}
         onGoAway={onGoAway}
       />
     )

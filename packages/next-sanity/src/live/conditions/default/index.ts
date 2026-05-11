@@ -94,6 +94,8 @@ export type {
   DefinedLiveProps as DefinedSanityLiveProps,
   DefineLiveOptions as DefineSanityLiveOptions,
   LivePerspective,
+  SanityLiveContext,
+  SanityLiveOnGoaway,
 } from '#live/types'
 
 export {isCorsOriginError} from '#live/isCorsOriginError'

@@ -6,7 +6,7 @@ import {
   type VisualEditingOptions,
 } from '@sanity/visual-editing/react'
 import {usePathname, useRouter, useSearchParams} from 'next/navigation'
-import {useCallback, useEffect, useMemo, useRef, useState} from 'react'
+import {useCallback, useEffect, useMemo, useState} from 'react'
 
 import {addPathPrefix, normalizePathTrailingSlash, removePathPrefix} from './utils'
 
@@ -48,12 +48,7 @@ export default function VisualEditing(props: VisualEditingProps): React.JSX.Elem
   } = props
 
   const router = useRouter()
-  const routerRef = useRef(router)
   const [navigate, setNavigate] = useState<HistoryAdapterNavigate | undefined>()
-
-  useEffect(() => {
-    routerRef.current = router
-  }, [router])
 
   const history = useMemo<HistoryAdapter>(
     () => ({
@@ -64,17 +59,17 @@ export default function VisualEditing(props: VisualEditingProps): React.JSX.Elem
       update: (update) => {
         switch (update.type) {
           case 'push':
-            return routerRef.current.push(removePathPrefix(update.url, basePath))
+            return router.push(removePathPrefix(update.url, basePath))
           case 'pop':
-            return routerRef.current.back()
+            return router.back()
           case 'replace':
-            return routerRef.current.replace(removePathPrefix(update.url, basePath))
+            return router.replace(removePathPrefix(update.url, basePath))
           default:
             throw new Error(`Unknown update type`, {cause: update})
         }
       },
     }),
-    [basePath],
+    [basePath, router],
   )
 
   const pathname = usePathname()
@@ -94,23 +89,26 @@ export default function VisualEditing(props: VisualEditingProps): React.JSX.Elem
     }
   }, [basePath, navigate, pathname, searchParams, trailingSlash])
 
-  const handleRefresh = useCallback((payload: HistoryRefresh): false | Promise<void> => {
-    switch (payload.source) {
-      case 'manual':
-        routerRef.current.refresh()
-        break
-      case 'mutation': {
-        // oxlint-disable-next-line no-console
-        console.debug(
-          '<VisualEditing /> refresh called with source "mutation", if you want automatic refresh when this happens, or silence this message, provide your own handler to the refresh prop',
-        )
-        break
+  const handleRefresh = useCallback(
+    (payload: HistoryRefresh): false | Promise<void> => {
+      switch (payload.source) {
+        case 'manual':
+          router.refresh()
+          break
+        case 'mutation': {
+          // oxlint-disable-next-line no-console
+          console.debug(
+            '<VisualEditing /> refresh called with source "mutation", if you want automatic refresh when this happens, or silence this message, provide your own handler to the refresh prop',
+          )
+          break
+        }
+        default:
+          throw new Error('Unknown refresh source', {cause: payload})
       }
-      default:
-        throw new Error('Unknown refresh source', {cause: payload})
-    }
-    return new Promise((resolve) => setTimeout(resolve, 1_000))
-  }, [])
+      return new Promise((resolve) => setTimeout(resolve, 1_000))
+    },
+    [router],
+  )
 
   return (
     <VisualEditingComponent

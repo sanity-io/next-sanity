@@ -1,10 +1,10 @@
-import {createClient, type LiveEvent, type LiveEventGoAway, type SyncTag} from '@sanity/client'
+import {createClient, type LiveEvent, type SyncTag} from '@sanity/client'
 import {revalidateSyncTags as defaultRevalidateSyncTags} from 'next-sanity/live/server-actions'
 import {useRouter} from 'next/navigation'
 import {useEffect, useMemo, useState, useEffectEvent, startTransition} from 'react'
 
 import {isCorsOriginError} from '#live/isCorsOriginError'
-import type {SanityClientConfig} from '#live/types'
+import type {SanityClientConfig, SanityLiveContext, SanityLiveOnGoaway} from '#live/types'
 
 import {RefreshOnInterval} from './RefreshOnInterval'
 
@@ -12,12 +12,11 @@ export interface SanityLiveProps {
   config: SanityClientConfig
   includeDrafts: true | undefined
   requestTag: string
-  waitFor?: 'function'
+  waitFor: 'function' | undefined
 
   revalidateSyncTags?: (tags: SyncTag[]) => Promise<void | 'refresh'>
   onError?: (error: unknown) => void
-  intervalOnGoAway?: number | false
-  onGoAway?: (event: LiveEventGoAway, intervalOnGoAway: number | false) => void
+  onGoAway: SanityLiveOnGoaway | false | undefined
 }
 
 function SanityLive(props: SanityLiveProps): React.JSX.Element | null {
@@ -29,11 +28,11 @@ function SanityLive(props: SanityLiveProps): React.JSX.Element | null {
 
     revalidateSyncTags = defaultRevalidateSyncTags,
     onError = handleError,
-    intervalOnGoAway = 30_000,
-    onGoAway = handleOnGoAway,
+    onGoAway = handleGoaway,
   } = props
   const {projectId, dataset, apiHost, apiVersion, useProjectHostname, token, requestTagPrefix} =
     config
+  const actionContext = {includeDrafts, waitFor} satisfies SanityLiveContext
 
   const client = useMemo(
     () =>
@@ -56,48 +55,70 @@ function SanityLive(props: SanityLiveProps): React.JSX.Element | null {
 
   const router = useRouter()
   const handleLiveEvent = useEffectEvent((event: LiveEvent) => {
-    if (process.env.NODE_ENV !== 'production' && event.type === 'welcome') {
-      // oxlint-disable-next-line no-console
-      console.info(
-        'Sanity is live with',
-        token
-          ? 'automatic revalidation for draft content changes as well as published content'
-          : includeDrafts
-            ? 'automatic revalidation for only published content. Provide a `browserToken` to `defineLive` to support draft content outside of Presentation Tool.'
-            : 'automatic revalidation of published content',
-      )
-      // Disable long polling when welcome event is received, this is a no-op if long polling is already disabled
-      startTransition(() => setRefreshOnInterval(false))
-    } else if (event.type === 'message') {
-      if (waitFor === 'function') {
-        // Cache is already revalidated by the Sanity Function, just refresh the router
-        startTransition(() => router.refresh())
-      } else {
-        void revalidateSyncTags(event.tags).then((result) => {
-          if (result === 'refresh') startTransition(() => router.refresh())
-        })
+    switch (event.type) {
+      case 'welcome': {
+        if (process.env.NODE_ENV !== 'production') {
+          // oxlint-disable-next-line no-console
+          console.info(
+            'Sanity is live with',
+            token
+              ? 'automatic revalidation for draft content changes as well as published content'
+              : includeDrafts
+                ? 'automatic revalidation for only published content. Provide a `browserToken` to `defineLive` to support draft content outside of Presentation Tool.'
+                : 'automatic revalidation of published content',
+          )
+        }
+        // Disable long polling when welcome event is received, this is a no-op if long polling is already disabled
+        startTransition(() => setRefreshOnInterval(false))
+        break
       }
-    } else if (event.type === 'restart' || event.type === 'reconnect') {
-      // Disable long polling when restart/reconnect event is received, this is a no-op if long polling is already disabled
-      startTransition(() => setRefreshOnInterval(false))
-      // @TODO add support for `onRestart` and `onReconnect` events so this can be customized
-      startTransition(() => router.refresh())
-    } else if (event.type === 'goaway') {
-      onGoAway(event, intervalOnGoAway)
-      startTransition(() => setRefreshOnInterval(intervalOnGoAway))
+      case 'message': {
+        if (waitFor === 'function') {
+          // Cache is already revalidated by the Sanity Function, just refresh the router
+          startTransition(() => router.refresh())
+        } else {
+          void revalidateSyncTags(event.tags).then((result) => {
+            if (result === 'refresh') startTransition(() => router.refresh())
+          })
+        }
+        break
+      }
+      case 'restart':
+      case 'reconnect': {
+        // Disable long polling when restart/reconnect event is received, this is a no-op if long polling is already disabled
+        startTransition(() => setRefreshOnInterval(false))
+        // @TODO add support for `onRestart` and `onReconnect` events so this can be customized
+        startTransition(() => router.refresh())
+        break
+      }
+      case 'goaway': {
+        if (onGoAway) {
+          startTransition(() =>
+            onGoAway(event, actionContext, (interval) =>
+              startTransition(() => setRefreshOnInterval(interval)),
+            ),
+          )
+        } else if (!onGoAway) {
+          handleError(
+            new Error(
+              `Sanity Live connection closed, automatic revalidation is disabled, the server gave this reason: ${event.reason}`,
+              {cause: event},
+            ),
+          )
+        }
+        break
+      }
     }
   })
   useEffect(() => {
-    const subscription = client.live
-      .events({includeDrafts: !!token, tag: requestTag, waitFor})
-      .subscribe({
-        next: handleLiveEvent,
-        error: (err: unknown) => {
-          onError(err)
-        },
-      })
+    const subscription = client.live.events({includeDrafts, tag: requestTag, waitFor}).subscribe({
+      next: handleLiveEvent,
+      error: (err: unknown) => {
+        onError(err)
+      },
+    })
     return () => subscription.unsubscribe()
-  }, [client.live, onError, requestTag, token, waitFor])
+  }, [client.live, onError, requestTag, includeDrafts, waitFor])
 
   if (refreshOnInterval && Number.isFinite(refreshOnInterval) && refreshOnInterval > 0) {
     return <RefreshOnInterval interval={refreshOnInterval} />
@@ -121,18 +142,12 @@ function handleError(error: unknown) {
   }
 }
 
-function handleOnGoAway(event: LiveEventGoAway, intervalOnGoAway: number | false) {
-  if (intervalOnGoAway) {
-    console.warn(
-      'Sanity Live connection closed, switching to long polling set to a interval of',
-      intervalOnGoAway / 1000,
-      'seconds and the server gave this reason:',
-      event.reason,
-    )
-  } else {
-    console.error(
-      'Sanity Live connection closed, automatic revalidation is disabled, the server gave this reason:',
-      event.reason,
-    )
-  }
+const handleGoaway: SanityLiveOnGoaway = (event, {includeDrafts}, setLongPollingInterval) => {
+  const interval = 30_000
+  console.warn(
+    `<SanityLive${includeDrafts ? ' includeDrafts' : ''}> connection is closed after receiving a 'goaway' event, the server gave this reason:`,
+    JSON.stringify(event.reason),
+    `Content will now be refreshed every ${interval / 1_000} seconds`,
+  )
+  setLongPollingInterval(interval)
 }
