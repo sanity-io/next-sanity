@@ -186,7 +186,7 @@ export interface SanityLiveContext {
 /**
  * Handles the Live Content API `welcome` event.
  *
- * This event fires when the EventSource connection is established. 
+ * This event fires when the EventSource connection is established.
  * The default event handler logs a message that adapts the message based on wether `includeDrafts` is set, and if `waitFor="function"` is set.
  * Set `<SanityLive onWelcome={false} />` to disable the default behavior.
  */
