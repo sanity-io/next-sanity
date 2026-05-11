@@ -96,6 +96,8 @@ export type {
   LivePerspective,
   SanityLiveContext,
   SanityLiveOnGoaway,
+  SanityLiveOnReconnect,
+  SanityLiveOnRestart,
 } from '#live/types'
 
 export {isCorsOriginError} from '#live/isCorsOriginError'

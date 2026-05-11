@@ -100,6 +100,16 @@ export interface DefinedLiveProps {
    */
   onError?: (error: unknown) => void
   /**
+   * Custom handler for the `reconnect` event. Pass `false` to disable the
+   * default refresh behavior.
+   */
+  onReconnect?: SanityLiveOnReconnect | false
+  /**
+   * Custom handler for the `restart` event. Pass `false` to disable the default
+   * refresh behavior.
+   */
+  onRestart?: SanityLiveOnRestart | false
+  /**
    * Custom handler for the `goaway` event. Pass `false` to disable the default
    * long-polling fallback.
    */
@@ -173,6 +183,30 @@ export interface SanityLiveContext {
   waitFor: 'function' | undefined
 }
 
+/**
+ * Handles the Live Content API `reconnect` event.
+ *
+ * The default behavior refreshes the route so Server Components can render with
+ * fresh data after reconnecting.
+ */
+export type SanityLiveOnReconnect =
+  | ((
+      event: Extract<LiveEvent, {type: 'reconnect'}>,
+      context: SanityLiveContext,
+    ) => void | Promise<void | 'refresh'>)
+  | 'refresh'
+/**
+ * Handles the Live Content API `restart` event.
+ *
+ * The default behavior refreshes the route so Server Components can render with
+ * fresh data after the Live Content API restarts.
+ */
+export type SanityLiveOnRestart =
+  | ((
+      event: Extract<LiveEvent, {type: 'restart'}>,
+      context: SanityLiveContext,
+    ) => void | Promise<void | 'refresh'>)
+  | 'refresh'
 /**
  * Handles the Live Content API `goaway` event.
  *

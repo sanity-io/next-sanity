@@ -176,6 +176,8 @@ export function defineLive(config: DefineLiveOptions): {
 
       revalidateSyncTags,
       onError,
+      onReconnect,
+      onRestart,
       onGoAway,
     } = props
     const {projectId, dataset, apiHost, apiVersion, useProjectHostname, requestTagPrefix} =
@@ -204,6 +206,8 @@ export function defineLive(config: DefineLiveOptions): {
         waitFor={shouldWaitFor}
         revalidateSyncTags={revalidateSyncTags}
         onError={onError}
+        onReconnect={onReconnect}
+        onRestart={onRestart}
         onGoAway={onGoAway}
       />
     )

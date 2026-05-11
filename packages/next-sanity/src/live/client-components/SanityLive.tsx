@@ -4,7 +4,13 @@ import {useRouter} from 'next/navigation'
 import {useEffect, useMemo, useState, useEffectEvent, startTransition} from 'react'
 
 import {isCorsOriginError} from '#live/isCorsOriginError'
-import type {SanityClientConfig, SanityLiveContext, SanityLiveOnGoaway} from '#live/types'
+import type {
+  SanityClientConfig,
+  SanityLiveContext,
+  SanityLiveOnGoaway,
+  SanityLiveOnReconnect,
+  SanityLiveOnRestart,
+} from '#live/types'
 
 import {RefreshOnInterval} from './RefreshOnInterval'
 
@@ -16,6 +22,8 @@ export interface SanityLiveProps {
 
   revalidateSyncTags?: (tags: SyncTag[]) => Promise<void | 'refresh'>
   onError?: (error: unknown) => void
+  onReconnect: SanityLiveOnReconnect | false | undefined
+  onRestart: SanityLiveOnRestart | false | undefined
   onGoAway: SanityLiveOnGoaway | false | undefined
 }
 
@@ -28,6 +36,8 @@ function SanityLive(props: SanityLiveProps): React.JSX.Element | null {
 
     revalidateSyncTags = defaultRevalidateSyncTags,
     onError = handleError,
+    onReconnect = 'refresh',
+    onRestart = 'refresh',
     onGoAway = handleGoaway,
   } = props
   const {projectId, dataset, apiHost, apiVersion, useProjectHostname, token, requestTagPrefix} =
@@ -83,12 +93,38 @@ function SanityLive(props: SanityLiveProps): React.JSX.Element | null {
         }
         break
       }
-      case 'restart':
       case 'reconnect': {
-        // Disable long polling when restart/reconnect event is received, this is a no-op if long polling is already disabled
+        // Disable long polling when reconnect event is received, this is a no-op if long polling is already disabled
         startTransition(() => setRefreshOnInterval(false))
-        // @TODO add support for `onRestart` and `onReconnect` events so this can be customized
-        startTransition(() => router.refresh())
+
+        if (onReconnect) {
+          startTransition(() =>
+            onReconnect === 'refresh'
+              ? router.refresh()
+              : Promise.resolve(onReconnect(event, actionContext)).then((result) => {
+                  if (result === 'refresh') {
+                    startTransition(() => router.refresh())
+                  }
+                }),
+          )
+        }
+        break
+      }
+      case 'restart': {
+        // Disable long polling when restart event is received, this is a no-op if long polling is already disabled
+        startTransition(() => setRefreshOnInterval(false))
+
+        if (onRestart) {
+          startTransition(() =>
+            onRestart === 'refresh'
+              ? router.refresh()
+              : Promise.resolve(onRestart(event, actionContext)).then((result) => {
+                  if (result === 'refresh') {
+                    startTransition(() => router.refresh())
+                  }
+                }),
+          )
+        }
         break
       }
       case 'goaway': {
