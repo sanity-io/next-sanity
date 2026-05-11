@@ -1,6 +1,7 @@
 import '../globals.css'
 import {VisualEditing} from 'next-sanity/visual-editing'
 import {draftMode} from 'next/headers'
+import {Toaster} from 'sonner'
 
 import {DebugStatus} from './DebugStatus'
 import {DraftModePerspective} from './DraftModePerspectiveProvider'
@@ -42,6 +43,7 @@ export default async function RootLayout({children}: {children: React.ReactNode}
         {children}
         <RefreshButton />
         {isDraftMode && <VisualEditing />}
+        <Toaster />
       </body>
     </html>
   )

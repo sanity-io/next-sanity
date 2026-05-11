@@ -93,10 +93,9 @@ export interface DefinedLiveProps {
    */
   revalidateSyncTags?: (tags: SyncTag[]) => Promise<void | 'refresh'>
   /**
-   * Handle errors from the Live Events subscription.
-   * By default it's reported using `console.error`, you can override this prop to handle it in your own way.
+   * Custom error handler. If none is provided the error will be thrown during render and caught by the nearest React error boundary.
    */
-  onError?: (error: unknown) => void
+  onError?: SanityLiveOnError
   /**
    * Custom handler for the `welcome` event. Pass `false` to disable the default
    * connection log.
@@ -183,6 +182,13 @@ export interface SanityLiveContext {
   waitFor: 'function' | undefined
 }
 
+/**
+ * Handles connection, parsing, and event-processing errors.
+ *
+ * If no handler is provided, the error is thrown during render so it can be
+ * caught by the nearest React error boundary.
+ */
+export type SanityLiveOnError = (error: unknown, context: SanityLiveContext) => void
 /**
  * Handles the Live Content API `welcome` event.
  *

@@ -7,6 +7,8 @@ import {Suspense} from 'react'
 import PostsLayout, {postsQuery} from '@/app/(website)/PostsLayout'
 import {client} from '@/app/sanity.client'
 
+import SanityLiveErrorBoundary from './SanityLiveErrorBoundary'
+
 const token = process.env.SANITY_API_READ_TOKEN!
 const {sanityFetch, SanityLive} = defineLive({
   client,
@@ -98,7 +100,9 @@ export default async function IndexPage() {
           Open Studio
         </Link>
       </div>
-      <SanityLive />
+      <SanityLiveErrorBoundary>
+        <SanityLive />
+      </SanityLiveErrorBoundary>
     </>
   )
 }

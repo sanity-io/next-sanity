@@ -90,11 +90,12 @@ export function defineLive(_config: DefineLiveOptions): {
 }
 
 export type {
-  DefinedFetchType as DefinedSanityFetchType,
-  DefinedLiveProps as DefinedSanityLiveProps,
-  DefineLiveOptions as DefineSanityLiveOptions,
+  DefinedFetchType,
+  DefinedLiveProps,
+  DefineLiveOptions,
   LivePerspective,
   SanityLiveContext,
+  SanityLiveOnError,
   SanityLiveOnGoaway,
   SanityLiveOnReconnect,
   SanityLiveOnRestart,

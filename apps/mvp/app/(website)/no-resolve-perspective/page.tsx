@@ -6,6 +6,8 @@ import Link from 'next/link'
 import PostsLayout, {postsQuery} from '@/app/(website)/PostsLayout'
 import {client} from '@/app/sanity.client'
 
+import {onError} from './client-functions'
+
 const token = process.env.SANITY_API_READ_TOKEN!
 const {sanityFetch, SanityLive} = defineLive({client, serverToken: token, browserToken: token})
 
@@ -67,7 +69,7 @@ export default async function IndexPage() {
           Open Studio
         </Link>
       </div>
-      <SanityLive />
+      <SanityLive onError={onError} />
     </>
   )
 }
