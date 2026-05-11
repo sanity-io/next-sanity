@@ -1,5 +1,58 @@
 # next-sanity
 
+## 13.0.0-cache-components.55
+
+### Minor Changes
+
+- [#3511](https://github.com/sanity-io/next-sanity/pull/3511) [`e05f69d`](https://github.com/sanity-io/next-sanity/commit/e05f69d6b6ae16eef7f2f8b4198f2b1e2992a1b1) Thanks [@stipsan](https://github.com/stipsan)! - Add `onReconnect` & `onRestart` props on `<SanityLive>`, by default they call `router.refresh()`
+
+- [#3515](https://github.com/sanity-io/next-sanity/pull/3515) [`2096572`](https://github.com/sanity-io/next-sanity/commit/2096572c6341c877addb005cf37178392a10d6df) Thanks [@stipsan](https://github.com/stipsan)! - Add `onWelcome` prop to `<SanityLive>`
+
+  The default behavior is to log a welcome message to the console, here's how to customize it:
+
+  ```tsx
+  // app/client-functions.ts
+  "use client";
+
+  import type { SanityLiveOnWelcome } from "next-sanity/live";
+
+  export const onWelcome: SanityLiveOnWelcome = (
+    event,
+    { includeDrafts, waitFor }
+  ) => {
+    console.info(
+      `<SanityLive${
+        includeDrafts ? " includeDrafts" : ""
+      }> is connected and listening for live events to ${
+        includeDrafts
+          ? "all content including drafts and version documents in content releases"
+          : "published content"
+      }.${
+        waitFor === "function"
+          ? " Events will be delayed until after a Sanity Function has processed them."
+          : ""
+      }`
+    );
+  };
+  ```
+
+  ```tsx
+  // app/layout.tsx
+  import { onWelcome } from "./client-functions";
+  import { SanityLive } from "#sanity/live";
+
+  export default function Layout({ children }: { children: React.ReactNode }) {
+    return (
+      <>
+        {children}
+        <SanityLive onWelcome={onWelcome} />
+      </>
+    );
+  }
+  ```
+
+  To disable default welcome message, pass `onWelcome={false}`.
+
 # 12.4.5
 
 ### Patch Changes
