@@ -8,7 +8,7 @@ When the `client` given to `defineLive` has a `stega.studioUrl` configured, and 
 
 To opt-out of `stega` being set by default in draft mode, you have 3 options:
 
-1. Do not define `stega.studioUrl` in the `client` config`
+1. Do not define `stega.studioUrl` in the `client` config
 2. Set `stega: false` in the `sanityFetch` call itself
 3. Set `stega: false` in the `defineLive` call.
 
