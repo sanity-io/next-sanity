@@ -139,17 +139,6 @@ export interface DefineLiveOptions {
    */
   browserToken?: string | false
   /**
-   * Fetch options used by `sanityFetch`
-   * @deprecated this option is removed in the next major version, use `export const revalidate` on the `page.tsx` or `layout.tsx` instead
-   */
-  fetchOptions?: {
-    /**
-     * Optional, enables time based revalidation in addition to the EventSource connection.
-     * @defaultValue `false`
-     */
-    revalidate?: number | false
-  }
-  /**
    * Optional. Include stega encoding when draft mode is enabled.
    *  @defaultValue `true`
    */

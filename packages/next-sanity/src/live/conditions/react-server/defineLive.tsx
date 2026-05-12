@@ -1,4 +1,3 @@
-import type {ClientPerspective} from '@sanity/client'
 import {SanityLive as SanityLiveClientComponent} from 'next-sanity/live/client-components'
 import {PHASE_PRODUCTION_BUILD} from 'next/constants'
 import {cookies, draftMode} from 'next/headers'
@@ -98,13 +97,7 @@ export function defineLive(config: DefineLiveOptions): {
   sanityFetch: DefinedFetchType
   SanityLive: React.ComponentType<DefinedLiveProps>
 } {
-  const {
-    client: _client,
-    serverToken,
-    browserToken,
-    fetchOptions,
-    stega: stegaEnabled = true,
-  } = config
+  const {client: _client, serverToken, browserToken, stega: stegaEnabled = true} = config
 
   if (!_client) {
     throw new Error('`client` is required for `defineLive` to function')
@@ -137,18 +130,13 @@ export function defineLive(config: DefineLiveOptions): {
     const stega = _stega ?? (stegaEnabled && studioUrlDefined && (await draftMode()).isEnabled)
     const perspective = _perspective ?? (await resolveCookiePerspective())
     const useCdn = perspective === 'published'
-    const revalidate =
-      fetchOptions?.revalidate !== undefined
-        ? fetchOptions.revalidate
-        : process.env.NODE_ENV === 'production'
-          ? false
-          : undefined
+    const revalidate = false
     const isBuildPhase = process.env['NEXT_PHASE'] === PHASE_PRODUCTION_BUILD
     const cacheMode = useCdn && !isBuildPhase ? 'noStale' : undefined
 
     const {syncTags} = await client.fetch(query, await params, {
       filterResponse: false,
-      perspective: perspective as ClientPerspective,
+      perspective,
       stega: false,
       returnQuery: false,
       next: {revalidate, tags: [...tags, `${cacheTagPrefix}fetch-sync-tags`]},
@@ -161,7 +149,7 @@ export function defineLive(config: DefineLiveOptions): {
 
     const {result, resultSourceMap} = await client.fetch(query, await params, {
       filterResponse: false,
-      perspective: perspective as ClientPerspective,
+      perspective,
       stega,
       token: perspective !== 'published' && serverToken ? serverToken : originalToken,
       next: {revalidate, tags: cacheTags},
