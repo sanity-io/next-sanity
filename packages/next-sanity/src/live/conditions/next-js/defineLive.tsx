@@ -271,35 +271,36 @@ export function defineLive(config: DefineLiveOptions) {
     )
   }
 
-  const client = _client.withConfig({allowReconfigure: false, useCdn: true})
-  const {token: originalToken, perspective: originalPerspective = 'published'} = client.config()
+  const client = _client.withConfig({
+    allowReconfigure: false,
+    useCdn: true,
+    perspective: 'published',
+    stega: false,
+  })
 
   const sanityFetch: DefinedFetchType = async function sanityFetch({
     query,
     params = {},
-    perspective: _perspective,
-    stega: _stega,
+    perspective,
+    stega,
     tags: customCacheTags = [],
     requestTag = 'next-loader.fetch.cache-components',
   }) {
     if (strict) {
-      validateStrictFetchOptions({perspective: _perspective, stega: _stega})
+      validateStrictFetchOptions({perspective, stega})
     }
-    const perspective = _perspective ?? originalPerspective
-    const stega = _stega ?? false
-    const useCdn = perspective === 'published'
+
     const isBuildPhase = process.env['NEXT_PHASE'] === PHASE_PRODUCTION_BUILD
-    const cacheMode = useCdn && !isBuildPhase ? 'noStale' : undefined
+    const cacheMode = !isBuildPhase ? 'noStale' : undefined
 
     const {result, resultSourceMap, syncTags} = await client.fetch(query, await params, {
       filterResponse: false,
       returnQuery: false,
       perspective,
-      useCdn,
       stega,
       cacheMode,
       tag: requestTag,
-      token: perspective === 'published' ? originalToken : serverToken || originalToken, // @TODO can pass undefined instead of config.token here?
+      token: perspective && perspective !== 'published' && serverToken ? serverToken : undefined,
     })
     const tags = [...customCacheTags, ...(syncTags || []).map((tag) => `${cacheTagPrefix}${tag}`)]
     /**

@@ -12,6 +12,12 @@ const nextConfig: NextConfig = {
     instantInsights: {validationLevel: 'warning'},
   },
   productionBrowserSourceMaps: true,
+  logging: {
+    fetches: {
+      fullUrl: true,
+      hmrRefreshes: true,
+    },
+  },
 }
 
 export default nextConfig

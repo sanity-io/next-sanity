@@ -6,7 +6,6 @@ export const client = createClient({
   apiVersion: '2025-03-04',
   useCdn: false,
   perspective: 'published',
-  resultSourceMap: 'withKeyArraySelector',
   stega: {
     enabled: true,
     studioUrl: '/studio/#',

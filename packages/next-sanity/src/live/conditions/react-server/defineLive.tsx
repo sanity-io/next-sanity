@@ -273,16 +273,20 @@ export function defineLive(config: DefineLiveOptions) {
     )
   }
 
-  const client = _client.withConfig({allowReconfigure: false, useCdn: false})
-  const {token: originalToken, perspective: originalPerspective = 'published'} = client.config()
+  const client = _client.withConfig({
+    allowReconfigure: false,
+    useCdn: true,
+    perspective: 'published',
+    stega: false,
+  })
   const studioUrlDefined = typeof client.config().stega.studioUrl !== 'undefined'
 
   const sanityFetch: DefinedFetchType = async function sanityFetch({
     query,
     params = {},
+    perspective: _perspective,
     stega: _stega,
     tags = [],
-    perspective: _perspective,
     requestTag = 'next-loader.fetch',
   }) {
     if (strict) {
@@ -291,23 +295,22 @@ export function defineLive(config: DefineLiveOptions) {
     const stega = strict ? _stega! : (_stega ?? (studioUrlDefined && (await draftMode()).isEnabled))
     const perspective = strict
       ? _perspective!
-      : (_perspective ??
-        (await resolveCookiePerspective(
-          originalPerspective === 'raw' ? 'published' : originalPerspective,
-        )))
-    const useCdn = perspective === 'published'
+      : (_perspective ?? (await resolveCookiePerspective()))
     const isBuildPhase = process.env['NEXT_PHASE'] === PHASE_PRODUCTION_BUILD
-    const cacheMode = useCdn && !isBuildPhase ? 'noStale' : undefined
+    const cacheMode = !isBuildPhase ? 'noStale' : undefined
+    const token =
+      perspective && perspective !== 'published' && serverToken ? serverToken : undefined
 
     // 1. Fetch the tags first, with an uncached request, but that does not count towards the Sanity API quota
     const {syncTags} = await client.fetch(query, await params, {
       filterResponse: false,
       perspective,
       stega: false,
+      resultSourceMap: false,
       returnQuery: false,
-      useCdn,
       cacheMode,
       tag: [requestTag, 'fetch-sync-tags'].filter(Boolean).join('.'),
+      token,
     })
 
     const cacheTags = [...tags, ...(syncTags?.map((tag) => `${cacheTagPrefix}${tag}`) || [])]
@@ -317,11 +320,10 @@ export function defineLive(config: DefineLiveOptions) {
       filterResponse: false,
       perspective,
       stega,
-      token: perspective !== 'published' && serverToken ? serverToken : originalToken,
       next: {revalidate: false, tags: cacheTags},
-      useCdn,
       cacheMode,
       tag: requestTag,
+      token,
     })
     return {data: result, sourceMap: resultSourceMap || null, tags: cacheTags}
   }
@@ -380,8 +382,8 @@ export function defineLive(config: DefineLiveOptions) {
   return {sanityFetch, SanityLive}
 }
 
-async function resolveCookiePerspective(fallback: LivePerspective): Promise<LivePerspective> {
+async function resolveCookiePerspective(): Promise<LivePerspective | undefined> {
   return (await draftMode()).isEnabled
     ? await resolvePerspectiveFromCookies({cookies: await cookies()})
-    : fallback
+    : undefined
 }
