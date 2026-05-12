@@ -97,7 +97,7 @@ export function defineLive(config: DefineLiveOptions): {
   sanityFetch: DefinedFetchType
   SanityLive: React.ComponentType<DefinedLiveProps>
 } {
-  const {client: _client, serverToken, browserToken, stega: stegaEnabled = true} = config
+  const {client: _client, serverToken, browserToken} = config
 
   if (!_client) {
     throw new Error('`client` is required for `defineLive` to function')
@@ -127,7 +127,7 @@ export function defineLive(config: DefineLiveOptions): {
     perspective: _perspective,
     requestTag = 'next-loader.fetch',
   }) {
-    const stega = _stega ?? (stegaEnabled && studioUrlDefined && (await draftMode()).isEnabled)
+    const stega = _stega ?? (studioUrlDefined && (await draftMode()).isEnabled)
     const perspective = _perspective ?? (await resolveCookiePerspective())
     const useCdn = perspective === 'published'
     const revalidate = false

@@ -138,11 +138,6 @@ export interface DefineLiveOptions {
    * previewing drafts outside Presentation Tool.
    */
   browserToken?: string | false
-  /**
-   * Optional. Include stega encoding when draft mode is enabled.
-   *  @defaultValue `true`
-   */
-  stega?: boolean
 }
 
 export interface SanityClientConfig extends Pick<
