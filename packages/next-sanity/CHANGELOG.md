@@ -1,5 +1,28 @@
 # next-sanity
 
+## 13.0.0-cache-components.57
+
+### Major Changes
+
+- [#3527](https://github.com/sanity-io/next-sanity/pull/3527) [`3572c9a`](https://github.com/sanity-io/next-sanity/commit/3572c9a0be159d0b705873b3063a23b6ca356255) Thanks [@stipsan](https://github.com/stipsan)! - Remove the `stega` option from `defineLive`
+
+  When the `client` given to `defineLive` has a `stega.studioUrl` configured, and `draftMode().isEnabled` is `true`, then `sanityFetch` calls would use `true` as the default value for its `stega` option.
+
+  To opt-out of `stega` being set by default in draft mode, you have 3 options:
+
+  1. Do not define `stega.studioUrl` in the `client` config
+  2. Set `stega: false` in the `sanityFetch` call itself
+  3. Set `stega: false` in the `defineLive` call.
+
+  With this change you no longer have option 3, and you have to use option 2 or 1.
+
+- [#3526](https://github.com/sanity-io/next-sanity/pull/3526) [`4ea57cb`](https://github.com/sanity-io/next-sanity/commit/4ea57cb306a927c0cf934082c8136e7b313bb9bf) Thanks [@stipsan](https://github.com/stipsan)! - Remove the deprecated `fetchOptions` option from `defineLive`
+
+  This option was used to set a [time-based revalidation](https://nextjs.org/docs/app/guides/caching-without-cache-components#time-based-revalidation) as a fallback strategy for when content might change in the dataset without an active browser session connected to `<SanityLive>`, thus making the cached content stale.
+  The downside to this approach was that time-based revalidation ended up causing many unnecessary ISR writes, since they trigger based on a fixed interval rather than on the actual content changes.
+
+  Now that we have [Invalidate Sync Tags support in Sanity Functions](https://www.sanity.io/docs/functions/sync-tag-function-quickstart), the preferred fallback approach is to use it to call a `/api/revalidate-tags` endpoint in your app so that the content is eventually fresh even if the content change happened without an active browser session connected to `<SanityLive>`.
+
 # 12.4.5
 
 ### Patch Changes
