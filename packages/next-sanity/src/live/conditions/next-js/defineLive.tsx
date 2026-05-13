@@ -300,7 +300,10 @@ export function defineLive(config: DefineLiveOptions) {
       stega,
       cacheMode,
       tag: requestTag,
-      token: perspective && perspective !== 'published' && serverToken ? serverToken : undefined,
+      token:
+        ((perspective && perspective !== 'published') || stega) && serverToken
+          ? serverToken
+          : undefined,
     })
     const tags = [...customCacheTags, ...(syncTags || []).map((tag) => `${cacheTagPrefix}${tag}`)]
     /**

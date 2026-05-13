@@ -292,14 +292,18 @@ export function defineLive(config: DefineLiveOptions) {
     if (strict) {
       validateStrictFetchOptions({perspective: _perspective, stega: _stega})
     }
-    const stega = strict ? _stega! : (_stega ?? (studioUrlDefined && (await draftMode()).isEnabled))
+    const stega = strict
+      ? _stega!
+      : (_stega ?? (serverToken && studioUrlDefined ? (await draftMode()).isEnabled : false))
     const perspective = strict
       ? _perspective!
-      : (_perspective ?? (await resolveCookiePerspective()))
+      : (_perspective ?? (serverToken ? await resolveCookiePerspective() : undefined))
     const isBuildPhase = process.env['NEXT_PHASE'] === PHASE_PRODUCTION_BUILD
     const cacheMode = !isBuildPhase ? 'noStale' : undefined
     const token =
-      perspective && perspective !== 'published' && serverToken ? serverToken : undefined
+      ((perspective && perspective !== 'published') || stega) && serverToken
+        ? serverToken
+        : undefined
 
     // 1. Fetch the tags first, with an uncached request, but that does not count towards the Sanity API quota
     const {syncTags} = await client.fetch(query, await params, {

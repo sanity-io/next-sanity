@@ -1,7 +1,8 @@
 import {perspectiveCookieName} from '@sanity/preview-url-secret/constants'
+import {vercelStegaDecodeAll} from '@vercel/stega'
 import {createClient} from 'next-sanity'
 import {PHASE_PRODUCTION_BUILD} from 'next/constants'
-import {afterAll, afterEach, describe, expect, test, vi} from 'vitest'
+import {afterEach, describe, expect, test, vi} from 'vitest'
 
 import type {LivePerspective} from '#live/types'
 
@@ -14,20 +15,24 @@ vi.mock(import('next/headers'), async (importOriginal) => {
   const originalModule = await importOriginal()
   return {
     ...originalModule,
-    cookies: vi.fn(async () => ({
-      has: vi.fn((key) => {
-        if (key === perspectiveCookieName) {
-          return perspectiveCookieValue !== null
-        }
-        return false
-      }),
-      get: vi.fn((key) => {
-        if (key === perspectiveCookieName) {
-          return {value: perspectiveCookieValue}
-        }
-        return null
-      }),
-    }) as unknown as ReturnType<typeof originalModule['cookies']>),
+    cookies: vi.fn(
+      async () =>
+        // oxlint-disable-next-line no-unsafe-type-assertion
+        ({
+          has: vi.fn((key) => {
+            if (key === perspectiveCookieName) {
+              return perspectiveCookieValue !== null
+            }
+            return false
+          }),
+          get: vi.fn((key) => {
+            if (key === perspectiveCookieName) {
+              return {value: perspectiveCookieValue}
+            }
+            return null
+          }),
+        }) as unknown as ReturnType<(typeof originalModule)['cookies']>,
+    ),
     draftMode: vi.fn(async () => {
       isDraftModeCalled = true
       return {
@@ -157,20 +162,93 @@ describe.each([{cacheComponents: true, b: 1}, {cacheComponents: false}])(
         dataset,
         apiVersion,
         useCdn: true,
-        stega: {enabled: true,studioUrl: '/studio'},
+        stega: {enabled: true, studioUrl: '/studio'},
         token,
       })
       const serverToken = 'sk456'
       const {sanityFetch} = defineLive({client, serverToken})
+      const decodedStega = [
+        {
+          href: '/studio/intent/edit/mode=presentation;id=test;type=test;path=title?baseUrl=%2Fstudio&id=test&type=test&path=title&perspective=published',
+          origin: 'sanity.io',
+        },
+      ]
 
-      test.todo('stega is disabled by default')
-      test.todo('stega can be enabled if client config has token')
-      test.todo('stega can be enabled if serverToken is provided')
-      test.todo('stega can be enabled if studioUrl is set')
-      test.todo('stega requires stega.studioUrl to be set')
-      test.runIf(!cacheComponents).todo('stega is enabled by default when in draft mode')
-      test.runIf(!cacheComponents).todo('does not check draftMode if no stega.studioUrl is set')
-      test.runIf(!cacheComponents).todo('does not check draftMode if serverToken is not provided')
+      test('stega is disabled by default', async () => {
+        const {query, params} = getSanityFetchMock('{"stega": $stega}', {stega: true})
+
+        // When using client.fetch directly it returns stega, as we set it to true
+        const reference = await client.fetch(query, params, {stega: true})
+        expect(vercelStegaDecodeAll(JSON.stringify(reference))).toEqual(decodedStega)
+
+        // Not setting `stega: true` on `sanityFetch` should not return stega
+        const {data} = await sanityFetch({query, params})
+        expect(vercelStegaDecodeAll(JSON.stringify(data))).not.toEqual(decodedStega)
+      })
+      test('stega can be enabled if client config has token', async () => {
+        const {sanityFetch} = defineLive({client, serverToken: false})
+        const {query, params} = getSanityFetchMock('{"stega": $stega}', {stega: true})
+
+        // When using client.fetch directly it returns stega
+        const reference = await client.fetch(query, params, {stega: true})
+        expect(vercelStegaDecodeAll(JSON.stringify(reference))).toEqual(decodedStega)
+
+        const {data} = await sanityFetch({query, params, stega: true})
+        expect(vercelStegaDecodeAll(JSON.stringify(data))).toEqual(decodedStega)
+      })
+      test('stega can be enabled if serverToken is provided', async () => {
+        const client = createClient({
+          projectId,
+          dataset,
+          apiVersion,
+          useCdn: true,
+          stega: {studioUrl: '/studio'},
+        })
+        const {sanityFetch} = defineLive({client, serverToken})
+        const {query, params} = getSanityFetchMock('{"stega": $stega}', {stega: true})
+
+        // When using client.fetch directly it returns stega
+        const reference = await client.fetch(query, params, {stega: true, token: serverToken})
+        expect(vercelStegaDecodeAll(JSON.stringify(reference))).toEqual(decodedStega)
+
+        const {data} = await sanityFetch({query, params, stega: true})
+        expect(vercelStegaDecodeAll(JSON.stringify(data))).toEqual(decodedStega)
+      })
+      test.runIf(!cacheComponents)('stega is enabled by default when in draft mode', async () => {
+        const {query, params} = getSanityFetchMock('{"stega": $stega}', {stega: true})
+
+        isDraftMode = true
+
+        // Not setting `stega: true` on `sanityFetch` should still return stega as draft mode is enabled
+        const {data} = await sanityFetch({query, params})
+        expect(vercelStegaDecodeAll(JSON.stringify(data))).toEqual(decodedStega)
+      })
+      test.runIf(!cacheComponents)(
+        'does not check draftMode if no stega.studioUrl is set',
+        async () => {
+          const client = createClient({
+            projectId,
+            dataset,
+            apiVersion,
+            useCdn: true,
+          })
+          const {sanityFetch} = defineLive({client, serverToken})
+          const {query, params} = getSanityFetchMock('{"stega": $stega}', {stega: true})
+
+          await sanityFetch({query, params, perspective: 'published'})
+          expect(isDraftModeCalled).not.toBe(true)
+        },
+      )
+      test.runIf(!cacheComponents)(
+        'does not check draftMode if serverToken is not provided',
+        async () => {
+          const {sanityFetch} = defineLive({client, serverToken: false})
+          const {query, params} = getSanityFetchMock('{"stega": $stega}', {stega: true})
+
+          await sanityFetch({query, params, perspective: 'published'})
+          expect(isDraftModeCalled).not.toBe(true)
+        },
+      )
     })
 
     describe('perspective', () => {
@@ -193,38 +271,48 @@ describe.each([{cacheComponents: true, b: 1}, {cacheComponents: false}])(
         const {data} = await sanityFetch({query, params})
         expect(data).toEqual(params)
       })
-      test.runIf(!cacheComponents)('is set to "drafts" by default when draft mode is enabled and no preview cookie exists', async () => {
-        const {query, params} = getSanityFetchMock(
-          '{"perspective": $perspective, "token": $token}',
-          {perspective: 'drafts', token: `Bearer ${serverToken}`},
-        )
-        isDraftMode = true
+      test.runIf(!cacheComponents)(
+        'is set to "drafts" by default when draft mode is enabled and no preview cookie exists',
+        async () => {
+          const {query, params} = getSanityFetchMock(
+            '{"perspective": $perspective, "token": $token}',
+            {perspective: 'drafts', token: `Bearer ${serverToken}`},
+          )
+          isDraftMode = true
 
-        // When using client.fetch directly it respects the `perspective` and `token` settings
-        await expect(
-          client.fetch(query, params, {perspective: 'drafts', token: serverToken}),
-        ).resolves.toEqual(params)
+          // When using client.fetch directly it respects the `perspective` and `token` settings
+          await expect(
+            client.fetch(query, params, {perspective: 'drafts', token: serverToken}),
+          ).resolves.toEqual(params)
 
-        // Then prove that the sanityFetch wrapper works correctly
-        const {data} = await sanityFetch({query, params})
-        expect(data).toEqual(params)
-      })
-      test.runIf(!cacheComponents)('is resolved from cookies by default when draft mode is enabled',async () => {
-        isDraftMode = true
-        perspectiveCookieValue = ['drafts', 'r5RGhbQN9']
-        const {query, params} = getSanityFetchMock(
-          '{"perspective": $perspective, "token": $token}',
-          {perspective: perspectiveCookieValue, token: `Bearer ${serverToken}`},
-        )
-        // When using client.fetch directly it respects the `perspective` and `token` settings
-        await expect(
-          client.fetch(query, params, {perspective: perspectiveCookieValue, token: serverToken, useCdn: false}),
-        ).resolves.toEqual(params)
+          // Then prove that the sanityFetch wrapper works correctly
+          const {data} = await sanityFetch({query, params})
+          expect(data).toEqual(params)
+        },
+      )
+      test.runIf(!cacheComponents)(
+        'is resolved from cookies by default when draft mode is enabled',
+        async () => {
+          isDraftMode = true
+          perspectiveCookieValue = ['drafts', 'r5RGhbQN9']
+          const {query, params} = getSanityFetchMock(
+            '{"perspective": $perspective, "token": $token}',
+            {perspective: perspectiveCookieValue, token: `Bearer ${serverToken}`},
+          )
+          // When using client.fetch directly it respects the `perspective` and `token` settings
+          await expect(
+            client.fetch(query, params, {
+              perspective: perspectiveCookieValue,
+              token: serverToken,
+              useCdn: false,
+            }),
+          ).resolves.toEqual(params)
 
-        // Then prove that the sanityFetch wrapper works correctly
-        const {data} = await sanityFetch({query, params})
-        expect(data).toEqual(params)
-      })
+          // Then prove that the sanityFetch wrapper works correctly
+          const {data} = await sanityFetch({query, params})
+          expect(data).toEqual(params)
+        },
+      )
       test('does not call draftMode() if no serverToken is provided', async () => {
         const {sanityFetch} = defineLive({client, serverToken: false})
         const {query, params} = getSanityFetchMock(

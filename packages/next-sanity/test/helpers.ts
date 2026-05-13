@@ -1,6 +1,7 @@
-import type { LivePerspective } from '#live/types';
 import type {QueryParams} from '@sanity/client'
 import {prerender} from 'react-dom/static'
+
+import type {LivePerspective} from '#live/types'
 
 export const projectId = 'pv8y60vp'
 export const dataset = 'production'
@@ -27,7 +28,11 @@ interface SanityFetchMocks {
   '{"perspective": $perspective, "useCdn": $useCdn}': {useCdn: boolean; perspective: string}
   '{"resultSourceMap": $resultSourceMap}': {resultSourceMap: boolean | 'withKeyArraySelector'}
   '{"cacheMode": $cacheMode}': {cacheMode: 'noStale' | undefined}
-  '{"perspective": $perspective, "token": $token}': {perspective: LivePerspective; token: string | null}
+  '{"perspective": $perspective, "token": $token}': {
+    perspective: LivePerspective
+    token: string | null
+  }
+  '{"stega": $stega}': {stega: boolean}
 }
 export const getSanityFetchMock = <Query extends keyof SanityFetchMocks>(
   query: Query,

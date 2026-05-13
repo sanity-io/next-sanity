@@ -1,3 +1,4 @@
+import type {ContentSourceMap} from '@sanity/client'
 import {http, HttpResponse, passthrough} from 'msw'
 import {setupServer} from 'msw/node'
 import {afterAll, afterEach, beforeAll} from 'vitest'
@@ -33,7 +34,33 @@ function validateQuery(
     }
     case '{"perspective": $perspective, "token": $token}': {
       const perspective = searchParams.get('perspective')
-      return mockResponse({perspective: perspective?.includes(',') ? perspective.split(',') : perspective, token})
+      return mockResponse({
+        perspective: perspective?.includes(',') ? perspective.split(',') : perspective,
+        token,
+      })
+    }
+    case '{"stega": $stega}': {
+      const resultSourceMap = searchParams.get('resultSourceMap')
+      const stega = resultSourceMap === 'withKeyArraySelector' && !!token
+      return mockResponse(
+        {stega: JSON.stringify(stega)},
+        stega
+          ? {
+              documents: [{_id: 'test', _type: 'test'}],
+              paths: ["$['title']"],
+              mappings: {
+                "$['stega']": {
+                  source: {
+                    document: 0,
+                    path: 0,
+                    type: 'documentValue',
+                  },
+                  type: 'value',
+                },
+              },
+            }
+          : undefined,
+      )
     }
     default: {
       const exhaustiveCheck: never = query
@@ -43,8 +70,8 @@ function validateQuery(
   }
 }
 
-function mockResponse(data: unknown) {
-  return HttpResponse.json({result: data, resultSourceMap: null, syncTags: ['A']})
+function mockResponse(data: unknown, resultSourceMap?: ContentSourceMap) {
+  return HttpResponse.json({result: data, resultSourceMap, syncTags: ['A']})
 }
 function mockErrorResponse(description: string) {
   return HttpResponse.json({error: {description, type: 'httpBadRequest'}}, {status: 400})
