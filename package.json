@@ -14,6 +14,7 @@
     "prestart": "turbo build",
     "start": "turbo watch build start",
     "test": "turbo test",
+    "test:e2e": "pnpm --filter next-sanity test:e2e",
     "release": "changeset publish",
     "typegen": "turbo typegen"
   },

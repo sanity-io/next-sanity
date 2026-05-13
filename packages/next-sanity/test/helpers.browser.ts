@@ -7,7 +7,7 @@ export const test = testBase.extend({
     // oxlint-disable-next-line no-empty-pattern
     async ({}, next) => {
       // Start the worker before the test.
-      await worker.start()
+      await worker.start({onUnhandledRequest: 'error', quiet: true})
 
       // Expose the worker object on the test's context.
       await next(worker)
