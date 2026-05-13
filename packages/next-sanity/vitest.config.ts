@@ -1,37 +1,33 @@
 import react from '@vitejs/plugin-react'
+import {playwright} from '@vitest/browser-playwright'
 import {defineConfig, defaultExclude} from 'vitest/config'
-import { playwright } from '@vitest/browser-playwright'
 
+const browserTestFiles = 'test/**/*.browser.{test,spec}.tsx'
 
 export default defineConfig({
   plugins: [react({})],
   test: {
-    
     projects: [
       {
         test: {
-          exclude: [...defaultExclude,'test/**/*.browser.{test,spec}.tsx',],
+          exclude: [...defaultExclude, browserTestFiles],
           setupFiles: ['./test/setupMocks.ts'],
-    server: {deps: {inline: ['vitest-package-exports']}},
+          server: {deps: {inline: ['vitest-package-exports']}},
           name: 'unit',
           environment: 'node',
-        }
+        },
       },
       {
         test: {
-          include: [
-            'test/**/*.browser.{test,spec}.tsx',
-          ],
+          include: [browserTestFiles],
           name: 'browser',
           browser: {
             enabled: true,
             provider: playwright(),
-            instances: [
-              { browser: 'chromium' },
-            ],
+            instances: [{browser: 'chromium'}],
           },
         },
       },
-    ]
+    ],
   },
 })

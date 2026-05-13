@@ -63,23 +63,19 @@ describe.each([{cacheComponents: true, b: 1}, {cacheComponents: false}])(
       : await import('../src/live/conditions/react-server')
 
     describe('sets perspective: "published"', () => {
-
-    
-    test.each([
-      [{useCdn: true, perspective: undefined}, true],
-      [{useCdn: false, perspective: undefined}, true],
-      [{useCdn: true, perspective: 'raw' as const}, true],
-      [{useCdn: false, perspective: 'raw' as const}, true],
-      [{useCdn: true, perspective: 'published' as const}, false],
-      [{useCdn: false, perspective: 'published' as const}, true],
-      [{useCdn: false, perspective: ['published']}, true],
-      // TODO: the @sanity/client should handle using apicdn if the perspective is ["published"] just as it does if it's "published", but it doesn't yet
-      // [{useCdn: true, perspective: ['published']}, false],
-      [{useCdn: false, perspective: ['published', 'r5RGhbQN9']}, true],
-      [{useCdn: false, perspective: ['r5RGhbQN9', 'drafts']}, true],
-    ])(
-      'when client config is %j',
-      async (overrides, shouldNotEqual) => {
+      test.each([
+        [{useCdn: true, perspective: undefined}, true],
+        [{useCdn: false, perspective: undefined}, true],
+        [{useCdn: true, perspective: 'raw' as const}, true],
+        [{useCdn: false, perspective: 'raw' as const}, true],
+        [{useCdn: true, perspective: 'published' as const}, false],
+        [{useCdn: false, perspective: 'published' as const}, true],
+        [{useCdn: false, perspective: ['published']}, true],
+        // TODO: the @sanity/client should handle using apicdn if the perspective is ["published"] just as it does if it's "published", but it doesn't yet
+        // [{useCdn: true, perspective: ['published']}, false],
+        [{useCdn: false, perspective: ['published', 'r5RGhbQN9']}, true],
+        [{useCdn: false, perspective: ['r5RGhbQN9', 'drafts']}, true],
+      ])('when client config is %j', async (overrides, shouldNotEqual) => {
         const client = createClient({projectId, dataset, apiVersion, ...overrides})
         const {sanityFetch} = defineLive({client, browserToken: false, serverToken: false})
         const {query, params} = getSanityFetchMock(
@@ -102,9 +98,8 @@ describe.each([{cacheComponents: true, b: 1}, {cacheComponents: false}])(
         expect(tags.length).toBe(1)
         expect(sourceMap).toBeNull()
         expect(data).toEqual(params)
-      },
-    )
-  })
+      })
+    })
 
     describe('cacheMode', () => {
       afterEach(() => {
