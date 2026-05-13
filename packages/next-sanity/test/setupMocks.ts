@@ -2,16 +2,18 @@ import {http, HttpResponse, passthrough} from 'msw'
 import {setupServer} from 'msw/node'
 import {afterAll, afterEach, beforeAll} from 'vitest'
 
+import type {SanityMockQueries} from './helpers'
+
 function validateQuery(
   searchParams: URLSearchParams,
   useCdn: boolean,
 ): HttpResponse<any> | undefined {
-  switch (searchParams.get('query')) {
+  // oxlint-disable-next-line no-unsafe-type-assertion
+  switch (searchParams.get('query') as SanityMockQueries) {
     case '{"perspective": $perspective, "useCdn": $useCdn}': {
       return mockResponse({useCdn, perspective: searchParams.get('perspective')})
     }
   }
-  return undefined
 }
 
 function mockResponse(data: unknown) {

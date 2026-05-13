@@ -2,7 +2,7 @@ import {createClient} from 'next-sanity'
 import {afterEach, describe, expect, test, vi} from 'vitest'
 
 import {defineLive} from '../src/live/conditions/react-server'
-import {apiVersion, dataset, projectId} from './helpers'
+import {apiVersion, dataset, getSanityFetchMock, projectId} from './helpers'
 
 let isDraftMode = false
 vi.mock(import('next/headers'), async (importOriginal) => {
@@ -41,8 +41,10 @@ describe.concurrent('sanityFetch when cacheComponents is false', () => {
     const client = createClient({projectId, dataset, apiVersion, ...overrides})
 
     const {sanityFetch} = defineLive({client, browserToken: false, serverToken: false})
-    const query = '{"perspective": $perspective, "useCdn": $useCdn}'
-    const params = {['perspective' as string]: 'published', ['useCdn' as string]: true}
+    const {query, params} = getSanityFetchMock('{"perspective": $perspective, "useCdn": $useCdn}', {
+      perspective: 'published',
+      useCdn: true,
+    })
 
     // First prove that the mock server throws if it's expected to, or resolves
     if (shouldThrow) {
@@ -55,7 +57,7 @@ describe.concurrent('sanityFetch when cacheComponents is false', () => {
     const {data, sourceMap, tags} = await sanityFetch({query, params})
     expect(tags.length).toBe(1)
     expect(sourceMap).toBeNull()
-    expect(data).toEqual({perspective: 'published', useCdn: true})
+    expect(data).toEqual(params)
   })
 
   describe('handles client config edge cases', () => {
