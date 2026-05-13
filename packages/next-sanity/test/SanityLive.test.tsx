@@ -1,14 +1,40 @@
 import {createClient} from 'next-sanity'
 import {SanityLive as SanityLiveClientComponent} from 'next-sanity/live/client-components'
-import {beforeAll, describe, expect, test, vi} from 'vitest'
+import {afterEach, beforeAll, describe, expect, test, vi} from 'vitest'
 
-import {defineLive} from '../src/live/conditions/next-js'
 import {apiVersion, dataset, projectId, renderToString} from './helpers'
+
+let isDraftMode = false
+let isDraftModeCalled = false
+vi.mock(import('next/headers'), async (importOriginal) => {
+  const originalModule = await importOriginal()
+  return {
+    ...originalModule,
+    draftMode: vi.fn(async () => {
+      isDraftModeCalled = true
+      return {
+        isEnabled: isDraftMode,
+        enable: vi.fn(() => {
+          isDraftMode = true
+        }),
+        disable: vi.fn(() => {
+          isDraftMode = false
+        }),
+      }
+    }),
+  }
+})
+afterEach(() => {
+  isDraftMode = false
+  isDraftModeCalled = false
+})
 
 vi.mock('next-sanity/live/client-components', {spy: true})
 
-describe('SanityLive when cacheComponents is false', () => {
+describe.each([{cacheComponents: true, b: 1}, {cacheComponents: false}])('SanityLive when %o', async ({cacheComponents}) => {
+  const {defineLive} = cacheComponents ? (await import ('../src/live/conditions/next-js')) : (await import ('../src/live/conditions/react-server'))
   const browserToken = 'sk123'
+  
   describe('minimum required config', () => {
     let html: string
     beforeAll(async () => {
@@ -94,9 +120,25 @@ describe('SanityLive when cacheComponents is false', () => {
         undefined,
       )
     })
+    test.runIf(!cacheComponents)('includeDrafts is true by default if draftMode is enabled', async () => {
+      const client = createClient({projectId, dataset, apiVersion, useCdn: true})
+      const {SanityLive} = defineLive({client, browserToken})
+      isDraftMode = true
+      await renderToString(<SanityLive />)
+      expect(SanityLiveClientComponent).toHaveBeenLastCalledWith(
+        expect.objectContaining({
+          config: expect.objectContaining({
+            token: browserToken,
+          }),
+          includeDrafts: true,
+        }),
+        undefined,
+      )
+    })
     test('includeDrafts is never true if browserToken is not set', async () => {
       const client = createClient({projectId, dataset, apiVersion, useCdn: true})
       const {SanityLive} = defineLive({client})
+      isDraftMode = true
       await renderToString(<SanityLive includeDrafts />)
       expect(SanityLiveClientComponent).toHaveBeenLastCalledWith(
         expect.objectContaining({
@@ -107,6 +149,21 @@ describe('SanityLive when cacheComponents is false', () => {
         }),
         undefined,
       )
+    })
+    test(`if no browserToken is provided then draftMode isn't checked`, async () => {
+      const client = createClient({projectId, dataset, apiVersion, useCdn: true})
+      const {SanityLive} = defineLive({client})
+      await renderToString(<SanityLive />)
+      expect(SanityLiveClientComponent).toHaveBeenLastCalledWith(
+        expect.objectContaining({
+          config: expect.objectContaining({
+            token: undefined,
+          }),
+          includeDrafts: undefined,
+        }),
+        undefined,
+      )
+      expect(isDraftModeCalled).not.toBe(true)
     })
     test('never forwards token from client config', async () => {
       const client = createClient({
@@ -131,6 +188,7 @@ describe('SanityLive when cacheComponents is false', () => {
     test('does not forward browserToken if includeDrafts is false', async () => {
       const client = createClient({projectId, dataset, apiVersion, useCdn: true})
       const {SanityLive} = defineLive({client, browserToken})
+      isDraftMode = true
       await renderToString(<SanityLive includeDrafts={false} />)
       expect(SanityLiveClientComponent).toHaveBeenLastCalledWith(
         expect.objectContaining({
