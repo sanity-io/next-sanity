@@ -1,12 +1,8 @@
 import {createClient} from 'next-sanity'
-import {describe, expect, test, vi} from 'vitest'
+import {afterEach, describe, expect, test, vi} from 'vitest'
 
 import {defineLive} from '../src/live/conditions/react-server'
-
-const projectId = 'pv8y60vp'
-const dataset = 'production'
-const apiVersion = '2026-05-12'
-// const stega = {studioUrl: '/studio'}
+import {apiVersion, dataset, projectId} from './helpers'
 
 let isDraftMode = false
 vi.mock(import('next/headers'), async (importOriginal) => {
@@ -24,6 +20,9 @@ vi.mock(import('next/headers'), async (importOriginal) => {
     })),
   }
 })
+afterEach(() => {
+  isDraftMode = false
+})
 
 describe.concurrent('sanityFetch when cacheComponents is false', () => {
   test.each([
@@ -39,12 +38,7 @@ describe.concurrent('sanityFetch when cacheComponents is false', () => {
     [{useCdn: false, perspective: ['published', 'r5RGhbQN9']}, true],
     [{useCdn: false, perspective: ['r5RGhbQN9', 'drafts']}, true],
   ])('sets perspective: "published" when client config is %j', async (overrides, shouldThrow) => {
-    const client = createClient({
-      projectId,
-      dataset,
-      apiVersion,
-      ...overrides,
-    })
+    const client = createClient({projectId, dataset, apiVersion, ...overrides})
 
     const {sanityFetch} = defineLive({client, browserToken: false, serverToken: false})
     const query = '{"perspective": $perspective, "useCdn": $useCdn}'
