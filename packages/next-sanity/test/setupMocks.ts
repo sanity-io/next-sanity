@@ -6,7 +6,7 @@ import type {SanityMockQueries} from './helpers'
 
 function validateQuery(
   searchParams: URLSearchParams,
-  useCdn: boolean,
+  {useCdn, token}: {useCdn: boolean; token: string | null},
 ): HttpResponse<any> | undefined {
   if (searchParams.get('tag')?.endsWith('fetch-sync-tags')) {
     if (searchParams.get('returnQuery') !== 'false') {
@@ -27,6 +27,14 @@ function validateQuery(
       const resultSourceMap = searchParams.get('resultSourceMap')
       return mockResponse({resultSourceMap: resultSourceMap === 'true' ? true : resultSourceMap})
     }
+    case '{"cacheMode": $cacheMode}': {
+      const cacheMode = searchParams.get('cacheMode')
+      return mockResponse({cacheMode: cacheMode === 'noStale' ? 'noStale' : undefined})
+    }
+    case '{"perspective": $perspective, "token": $token}': {
+      const perspective = searchParams.get('perspective')
+      return mockResponse({perspective: perspective?.includes(',') ? perspective.split(',') : perspective, token})
+    }
     default: {
       const exhaustiveCheck: never = query
       // oxlint-disable-next-line no-unsafe-type-assertion
@@ -46,8 +54,9 @@ export const restHandlers = [
   // useCdn: true
   http.get('https://pv8y60vp.apicdn.sanity.io/:apiVersion/data/query/:dataset', ({request}) => {
     const {searchParams} = new URL(request.url)
+    const token = request.headers.get('authorization')
 
-    const returns = validateQuery(searchParams, true)
+    const returns = validateQuery(searchParams, {useCdn: true, token})
     if (returns) return returns
 
     return passthrough()
@@ -55,8 +64,9 @@ export const restHandlers = [
   // useCdn: false
   http.get('https://pv8y60vp.api.sanity.io/:apiVersion/data/query/:dataset', ({request}) => {
     const {searchParams} = new URL(request.url)
+    const token = request.headers.get('authorization')
 
-    const returns = validateQuery(searchParams, false)
+    const returns = validateQuery(searchParams, {useCdn: false, token})
     if (returns) return returns
 
     return passthrough()
