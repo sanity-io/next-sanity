@@ -6,7 +6,7 @@ on:
     types: [opened, synchronize]
   push:
     branches:
-      - cache-components
+      - main
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.head_ref || github.run_id }}
