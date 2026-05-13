@@ -298,6 +298,7 @@ export function defineLive(config: DefineLiveOptions) {
       returnQuery: false,
       perspective,
       stega,
+      useCdn: perspective ? perspective === 'published' : undefined,
       cacheMode,
       tag: requestTag,
       token:

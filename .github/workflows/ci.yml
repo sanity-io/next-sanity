@@ -36,7 +36,7 @@ jobs:
       - run: pnpm knip --reporter github-actions
 
   test:
-    needs: build
+    # needs: build
     timeout-minutes: 15
     strategy:
       # A test failing on windows doesn't mean it'll fail on macos. It's useful to let all tests run to its completion to get the full picture
@@ -72,4 +72,5 @@ jobs:
         with:
           node-version: ${{ matrix.node }}
       - run: pnpm install --loglevel=error --ignore-scripts
+      - run: pnpm playwright install --with-deps
       - run: pnpm test

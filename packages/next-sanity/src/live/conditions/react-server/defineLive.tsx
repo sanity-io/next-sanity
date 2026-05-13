@@ -304,6 +304,7 @@ export function defineLive(config: DefineLiveOptions) {
       ((perspective && perspective !== 'published') || stega) && serverToken
         ? serverToken
         : undefined
+    const useCdn = perspective ? perspective === 'published' : undefined
 
     // 1. Fetch the tags first, with an uncached request, but that does not count towards the Sanity API quota
     const {syncTags} = await client.fetch(query, await params, {
@@ -312,6 +313,7 @@ export function defineLive(config: DefineLiveOptions) {
       stega: false,
       resultSourceMap: false,
       returnQuery: false,
+      useCdn,
       cacheMode,
       tag: [requestTag, 'fetch-sync-tags'].filter(Boolean).join('.'),
       token,
@@ -325,6 +327,7 @@ export function defineLive(config: DefineLiveOptions) {
       perspective,
       stega,
       next: {revalidate: false, tags: cacheTags},
+      useCdn,
       cacheMode,
       tag: requestTag,
       token,

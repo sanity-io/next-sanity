@@ -62,6 +62,9 @@ describe.each([{cacheComponents: true, b: 1}, {cacheComponents: false}])(
       ? await import('../src/live/conditions/next-js')
       : await import('../src/live/conditions/react-server')
 
+    describe('sets perspective: "published"', () => {
+
+    
     test.each([
       [{useCdn: true, perspective: undefined}, true],
       [{useCdn: false, perspective: undefined}, true],
@@ -75,7 +78,7 @@ describe.each([{cacheComponents: true, b: 1}, {cacheComponents: false}])(
       [{useCdn: false, perspective: ['published', 'r5RGhbQN9']}, true],
       [{useCdn: false, perspective: ['r5RGhbQN9', 'drafts']}, true],
     ])(
-      'sets perspective: "published" when client config is %j',
+      'when client config is %j',
       async (overrides, shouldNotEqual) => {
         const client = createClient({projectId, dataset, apiVersion, ...overrides})
         const {sanityFetch} = defineLive({client, browserToken: false, serverToken: false})
@@ -101,6 +104,7 @@ describe.each([{cacheComponents: true, b: 1}, {cacheComponents: false}])(
         expect(data).toEqual(params)
       },
     )
+  })
 
     describe('cacheMode', () => {
       afterEach(() => {
@@ -282,7 +286,7 @@ describe.each([{cacheComponents: true, b: 1}, {cacheComponents: false}])(
 
           // When using client.fetch directly it respects the `perspective` and `token` settings
           await expect(
-            client.fetch(query, params, {perspective: 'drafts', token: serverToken}),
+            client.fetch(query, params, {perspective: 'drafts', token: serverToken, useCdn: false}),
           ).resolves.toEqual(params)
 
           // Then prove that the sanityFetch wrapper works correctly
