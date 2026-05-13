@@ -8,6 +8,8 @@ export const dataset = 'production'
 export const apiVersion = '2026-05-12'
 export const stega = {studioUrl: '/studio'}
 
+export type SseMockTags = 'mock.sends-live-event'
+
 export async function renderToString(app: React.JSX.Element) {
   const {prelude} = await prerender(app)
 

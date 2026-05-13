@@ -5,9 +5,8 @@ import {render} from 'vitest-browser-react'
 import SanityLiveClientComponent, {
   type SanityLiveProps,
 } from '../src/live/client-components/SanityLive'
-import {apiVersion, dataset, projectId} from './helpers'
+import {apiVersion, dataset, projectId, type SseMockTags} from './helpers'
 import {test} from './helpers.browser'
-import type {SseMockTags} from './mocks/browser'
 
 // @ts-expect-error - fix later
 vi.mock(import('next/navigation'), async (importOriginal) => {
@@ -41,7 +40,7 @@ async function renderMock(
       onGoAway={undefined}
       onReconnect={undefined}
       onRestart={undefined}
-      onWelcome={undefined}
+      onWelcome={false} // do not spam test logs with welcome logs
       requestTag="next-loader.live"
       waitFor={undefined}
       {...overrides}

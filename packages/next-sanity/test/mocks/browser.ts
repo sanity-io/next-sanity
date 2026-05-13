@@ -2,6 +2,8 @@ import {http, HttpResponse} from 'msw'
 import {sse} from 'msw'
 import {setupWorker} from 'msw/browser'
 
+import type {SseMockTags} from '../helpers'
+
 const accessControlExposeHeaders =
   'ETag, X-Sanity-Deprecated, X-Sanity-Warning, X-Sanity-Shard, traceparent'
 const accessControlMaxAge = '600'
@@ -11,10 +13,6 @@ const getEventId = () => {
   id++
   return `M${id}`
 }
-
-// This file sets up the worker, and all the happy path handlers as well as special cases that trigger based on specific request tags
-
-export type SseMockTags = 'mock.sends-live-event'
 
 export const worker = setupWorker(
   http.options(
