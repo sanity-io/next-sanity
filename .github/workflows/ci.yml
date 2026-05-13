@@ -89,5 +89,5 @@ jobs:
           node-version: lts/*
       - run: pnpm install --loglevel=error --ignore-scripts
       - run: pnpm playwright install --with-deps
-      - run: vitest --project browser
+      - run: pnpm vitest --project browser
         working-directory: packages/next-sanity
