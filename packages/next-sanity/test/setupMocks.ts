@@ -8,16 +8,38 @@ function validateQuery(
   searchParams: URLSearchParams,
   useCdn: boolean,
 ): HttpResponse<any> | undefined {
+  if (searchParams.get('tag')?.endsWith('fetch-sync-tags')) {
+    if (searchParams.get('returnQuery') !== 'false') {
+      return mockErrorResponse('returnQuery must be false for fetch-sync-tags requests')
+    }
+    if (searchParams.has('resultSourceMap')) {
+      return mockErrorResponse('resultSourceMap should never be set for fetch-sync-tags requests')
+    }
+  }
+
   // oxlint-disable-next-line no-unsafe-type-assertion
-  switch (searchParams.get('query') as SanityMockQueries) {
+  const query = searchParams.get('query') as SanityMockQueries
+  switch (query) {
     case '{"perspective": $perspective, "useCdn": $useCdn}': {
       return mockResponse({useCdn, perspective: searchParams.get('perspective')})
+    }
+    case '{"resultSourceMap": $resultSourceMap}': {
+      const resultSourceMap = searchParams.get('resultSourceMap')
+      return mockResponse({resultSourceMap: resultSourceMap === 'true' ? true : resultSourceMap})
+    }
+    default: {
+      const exhaustiveCheck: never = query
+      // oxlint-disable-next-line no-unsafe-type-assertion
+      return mockErrorResponse(`Unhandled query: ${exhaustiveCheck as any}`)
     }
   }
 }
 
 function mockResponse(data: unknown) {
   return HttpResponse.json({result: data, resultSourceMap: null, syncTags: ['A']})
+}
+function mockErrorResponse(description: string) {
+  return HttpResponse.json({error: {description, type: 'httpBadRequest'}}, {status: 400})
 }
 
 export const restHandlers = [
