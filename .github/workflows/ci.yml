@@ -72,5 +72,22 @@ jobs:
         with:
           node-version: ${{ matrix.node }}
       - run: pnpm install --loglevel=error --ignore-scripts
-      - run: pnpm playwright install --with-deps
       - run: pnpm test
+
+  e2e:
+    # needs: build
+    timeout-minutes: 15
+    runs-on: ubuntu-latest
+    env:
+      TURBO_TOKEN: ${{ secrets.TURBO_TOKEN }}
+      TURBO_TEAM: ${{ vars.TURBO_TEAM }}
+    steps:
+      - uses: actions/checkout@v6
+      - uses: pnpm/action-setup@v6
+      - uses: actions/setup-node@v6
+        with:
+          node-version: lts/*
+      - run: pnpm install --loglevel=error --ignore-scripts
+      - run: pnpm playwright install --with-deps
+      - run: vitest --project browser
+        working-directory: packages/next-sanity
