@@ -1,5 +1,13 @@
 # next-sanity
 
+## 13.0.0-cache-components.58
+
+### Patch Changes
+
+- [#3109](https://github.com/sanity-io/next-sanity/pull/3109) [`4aed684`](https://github.com/sanity-io/next-sanity/commit/4aed684a07e6ab5c0c1373c8a86578fc13d3fcd6) Thanks [@stipsan](https://github.com/stipsan)! - Don't call `draftMode()` if no `browserToken` is set
+
+- [#3109](https://github.com/sanity-io/next-sanity/pull/3109) [`9e2650f`](https://github.com/sanity-io/next-sanity/commit/9e2650fa1e5bd63802624b9cfe0c5099283d47d4) Thanks [@stipsan](https://github.com/stipsan)! - Do not router.refresh() on reconnect events
+
 ## 13.0.0-cache-components.57
 
 ### Major Changes
