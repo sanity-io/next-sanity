@@ -1,5 +1,4 @@
 import {createClient, type LiveEvent, type SyncTag} from '@sanity/client'
-import {revalidateSyncTags as defaultRevalidateSyncTags} from 'next-sanity/live/server-actions'
 import {useRouter} from 'next/navigation'
 import {useEffect, useMemo, useState, useEffectEvent, startTransition} from 'react'
 
@@ -24,7 +23,6 @@ export interface SanityLiveProps {
   waitFor: 'function' | undefined
 
   action: SanityLiveAction
-  revalidateSyncTags?: (tags: SyncTag[]) => Promise<void | 'refresh'>
   onError: SanityLiveOnError | undefined
   onWelcome: SanityLiveOnWelcome | false | undefined
   onReconnect: SanityLiveOnReconnect | false | undefined
@@ -40,7 +38,6 @@ function SanityLive(props: SanityLiveProps): React.JSX.Element | null {
     waitFor,
 
     action,
-    revalidateSyncTags = defaultRevalidateSyncTags,
     onError,
     onWelcome = handleWelcome,
     onReconnect = 'refresh',
@@ -105,14 +102,6 @@ function SanityLive(props: SanityLiveProps): React.JSX.Element | null {
                 }
               }),
         )
-        if (waitFor === 'function') {
-          // Cache is already revalidated by the Sanity Function, just refresh the router
-          startTransition(() => router.refresh())
-        } else {
-          void revalidateSyncTags(event.tags).then((result) => {
-            if (result === 'refresh') startTransition(() => router.refresh())
-          })
-        }
         break
       }
       case 'reconnect': {

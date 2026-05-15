@@ -176,7 +176,6 @@ export function defineLive(config: DefineLiveOptions): {
       waitFor,
 
       action,
-      revalidateSyncTags,
       onError,
       onWelcome,
       onReconnect,
@@ -208,7 +207,6 @@ export function defineLive(config: DefineLiveOptions): {
         requestTag={requestTag}
         waitFor={shouldWaitFor}
         action={action ?? (shouldWaitFor === 'function' ? 'refresh' : revalidateSyncTagsAction)}
-        revalidateSyncTags={revalidateSyncTags}
         onError={onError}
         onWelcome={onWelcome}
         onReconnect={onReconnect}

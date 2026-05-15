@@ -82,9 +82,6 @@ export interface DefinedLiveProps {
   /**
    * Delays events until after a configured Sanity Function has processed them and called the callback endpoint.
    * When omitted, events are delivered immediately.
-   *
-   * @remarks
-   * When set, any custom `revalidateSyncTags` will not be called — revalidation is handled by the Function instead.
    */
   waitFor?: 'function'
   /**
@@ -94,11 +91,6 @@ export interface DefinedLiveProps {
    * The default action revalidates the cache tags produced by `sanityFetch`.
    */
   action?: SanityLiveAction
-  /**
-   * Override how cache tags are invalidated, you need to pass a server action here.
-   * You can also pass a `use client` function here, and have `router.refresh()` be called if the promise resolves to `'refresh'`.
-   */
-  revalidateSyncTags?: (tags: SyncTag[]) => Promise<void | 'refresh'>
   /**
    * Custom error handler. If none is provided the error will be thrown during render and caught by the nearest React error boundary.
    */

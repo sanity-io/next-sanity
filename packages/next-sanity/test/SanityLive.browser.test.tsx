@@ -17,7 +17,7 @@ import {test} from './helpers.browser'
 type OnRestartFn = Exclude<SanityLiveOnRestart, 'refresh'>
 type OnReconnectFn = Exclude<SanityLiveOnReconnect, 'refresh'>
 
-vi.mock('next-sanity/live/server-actions', () => ({revalidateSyncTags: vi.fn()}))
+
 
 // A stable spy that every `useRouter()` call shares so tests can assert  `router.refresh()` was invoked
 const refresh = vi.fn()
@@ -70,7 +70,6 @@ function defineSanityLiveClientComponent(
   return (
     <SanityLiveClientComponent
       action="refresh"
-      revalidateSyncTags={async () => 'refresh'}
       config={{
         projectId,
         dataset,
@@ -151,30 +150,7 @@ describe('SanityLiveClientComponent', () => {
     })
   })
 
-  describe('revalidateSyncTags', () => {
-    const requestTag = 'mock.sends-live-event' satisfies SseMockTags
-
-    test(`revalidateSyncTags={async () => 'refresh'} triggers router.refresh()`, async () => {
-      await renderMock({revalidateSyncTags: async () => 'refresh', requestTag})
-      await vi.waitFor(() => expect(refresh).toHaveBeenCalled())
-    })
-
-    test('revalidateSyncTags={fn} is called with unprefixed tags', async () => {
-      const revalidateSyncTags = vi.fn(async () => {})
-      await renderMock({revalidateSyncTags, requestTag})
-      await vi.waitFor(() => expect(revalidateSyncTags).toHaveBeenCalled())
-      expect(revalidateSyncTags.mock.lastCall).toMatchInlineSnapshot(`
-        [
-          [
-            "s1:01cWIQ",
-            "s1:57Y4Uw",
-            "s1:EiHmwQ",
-          ],
-        ]
-      `)
-      expect(refresh).not.toHaveBeenCalled()
-    })
-  })
+  
 
   describe('onRestart', () => {
     const requestTag = 'mock.sends-restart-event' satisfies SseMockTags
