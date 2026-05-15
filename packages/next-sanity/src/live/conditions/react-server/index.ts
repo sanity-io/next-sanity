@@ -5,6 +5,7 @@ export type {
   DefinedLiveProps,
   DefineLiveOptions,
   LivePerspective,
+  SanityLiveAction,
   SanityLiveContext,
   SanityLiveOnError,
   SanityLiveOnGoaway,

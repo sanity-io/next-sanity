@@ -1,4 +1,5 @@
 import {SanityLive as SanityLiveClientComponent} from 'next-sanity/live/client-components'
+import {revalidateSyncTagsAction} from 'next-sanity/live/server-actions'
 import {PHASE_PRODUCTION_BUILD} from 'next/constants'
 import {cookies, draftMode} from 'next/headers'
 import {preconnect} from 'react-dom'
@@ -174,6 +175,7 @@ export function defineLive(config: DefineLiveOptions): {
       requestTag = 'next-loader.live',
       waitFor,
 
+      action,
       revalidateSyncTags,
       onError,
       onWelcome,
@@ -205,6 +207,7 @@ export function defineLive(config: DefineLiveOptions): {
         includeDrafts={shouldIncludeDrafts ? true : undefined}
         requestTag={requestTag}
         waitFor={shouldWaitFor}
+        action={action ?? (shouldWaitFor === 'function' ? 'refresh' : revalidateSyncTagsAction)}
         revalidateSyncTags={revalidateSyncTags}
         onError={onError}
         onWelcome={onWelcome}

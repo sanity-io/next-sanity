@@ -50,6 +50,7 @@ describe.each([/*{cacheComponents: true},*/ {cacheComponents: false}])(
       test('renders SanityLiveClientComponent with minimal props', () => {
         expect(SanityLiveClientComponent).toHaveBeenLastCalledWith(
           expect.objectContaining({
+            action: expect.any(Function),
             config: expect.objectContaining({
               projectId,
               dataset,
@@ -87,6 +88,7 @@ describe.each([/*{cacheComponents: true},*/ {cacheComponents: false}])(
       test('renders SanityLiveClientComponent with minimal props', () => {
         expect(SanityLiveClientComponent).toHaveBeenLastCalledWith(
           expect.objectContaining({
+            action: expect.any(Function),
             config: expect.objectContaining({
               apiHost,
               dataset,
@@ -223,6 +225,27 @@ describe.each([/*{cacheComponents: true},*/ {cacheComponents: false}])(
         expect(SanityLiveClientComponent).toHaveBeenLastCalledWith(
           expect.objectContaining({
             waitFor: undefined,
+          }),
+          undefined,
+        )
+      })
+      test(`the default action is 'refresh' if waitFor="function"`, async () => {
+        await renderToString(<SanityLive waitFor="function" />)
+        expect(SanityLiveClientComponent).toHaveBeenLastCalledWith(
+          expect.objectContaining({
+            action: 'refresh',
+            waitFor: 'function',
+          }),
+          undefined,
+        )
+      })
+      test(`a provided action is still allowed when waitFor="function"`, async () => {
+        const action = vi.fn()
+        await renderToString(<SanityLive action={action} waitFor="function" />)
+        expect(SanityLiveClientComponent).toHaveBeenLastCalledWith(
+          expect.objectContaining({
+            action,
+            waitFor: 'function',
           }),
           undefined,
         )

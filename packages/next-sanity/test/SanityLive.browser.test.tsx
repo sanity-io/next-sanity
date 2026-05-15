@@ -69,6 +69,7 @@ function defineSanityLiveClientComponent(
   const {apiHost, useProjectHostname, requestTagPrefix} = client.config()
   return (
     <SanityLiveClientComponent
+      action="refresh"
       revalidateSyncTags={async () => 'refresh'}
       config={{
         projectId,
@@ -116,6 +117,38 @@ describe('SanityLiveClientComponent', () => {
     await vi.waitUntil(() => onWelcome.mock.calls.length > 0 || onError.mock.calls.length > 0)
     expect(onError).not.toHaveBeenCalled()
     expect(onWelcome).toHaveBeenCalled()
+  })
+
+  describe('action', () => {
+    const requestTag = 'mock.sends-live-event' satisfies SseMockTags
+
+    test(`action='refresh' triggers router.refresh()`, async () => {
+      await renderMock({action: 'refresh', requestTag})
+      await vi.waitFor(() => expect(refresh).toHaveBeenCalled())
+    })
+
+    test('action={fn} is called with prefixed tags', async () => {
+      const action = vi.fn(async () => {})
+      await renderMock({action, requestTag})
+      await vi.waitFor(() => expect(action).toHaveBeenCalled())
+      expect(action.mock.lastCall).toMatchInlineSnapshot(`
+        [
+          [
+            "sanity:s1:01cWIQ",
+            "sanity:s1:57Y4Uw",
+            "sanity:s1:EiHmwQ",
+          ],
+        ]
+      `)
+      expect(refresh).not.toHaveBeenCalled()
+    })
+
+    test(`action returning 'refresh' triggers router.refresh()`, async () => {
+      const action = vi.fn(async () => 'refresh' as const)
+      await renderMock({action, requestTag})
+      await vi.waitFor(() => expect(action).toHaveBeenCalled())
+      await vi.waitFor(() => expect(refresh).toHaveBeenCalled())
+    })
   })
 
   describe('revalidateSyncTags', () => {

@@ -88,6 +88,13 @@ export interface DefinedLiveProps {
    */
   waitFor?: 'function'
   /**
+   * Server action called for each content-change message from the Live Content
+   * API.
+   *
+   * The default action revalidates the cache tags produced by `sanityFetch`.
+   */
+  action?: SanityLiveAction
+  /**
    * Override how cache tags are invalidated, you need to pass a server action here.
    * You can also pass a `use client` function here, and have `router.refresh()` be called if the promise resolves to `'refresh'`.
    */
@@ -166,6 +173,21 @@ export interface SanityLiveContext {
   waitFor: 'function' | undefined
 }
 
+/**
+ * Server action invoked when Sanity Live receives a content-change message.
+ *
+ * The argument is the list of cache tags derived from the Live Content API
+ * event. The default action revalidates those tags. Return `'refresh'` from a
+ * custom action to also call `router.refresh()` in the browser.
+ *
+ * There's three types of values you can give `action`:
+ * - 'use server'; export async function action() {}
+ * - 'use client'; export async function action() {}
+ * - 'refresh'
+ *
+ * If you give the string 'refresh', it's the same as if the action just `async () => 'refresh'`, which leads to <SanityLive /> calling `router.refresh()` for you
+ */
+export type SanityLiveAction = ((unsafeTags: unknown) => Promise<void | 'refresh'>) | 'refresh'
 /**
  * Handles connection, parsing, and event-processing errors.
  *
