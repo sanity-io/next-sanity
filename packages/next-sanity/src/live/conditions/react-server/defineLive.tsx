@@ -168,7 +168,9 @@ export function defineLive(config: DefineLiveOptions): {
 
   const SanityLive: React.ComponentType<DefinedLiveProps> = async function SanityLive(props) {
     const {
-      includeDrafts = (typeof browserToken === 'string' && !!browserToken) ? (await draftMode()).isEnabled : false,
+      includeDrafts = typeof browserToken === 'string' && !!browserToken
+        ? (await draftMode()).isEnabled
+        : false,
       requestTag = 'next-loader.live',
       waitFor,
 
