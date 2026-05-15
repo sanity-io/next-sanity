@@ -103,13 +103,13 @@ export function defineLive(config: DefineLiveOptions): {
     throw new Error('`client` is required for `defineLive` to function')
   }
 
-  if (process.env.NODE_ENV !== 'production' && !serverToken && serverToken !== false) {
+  if (process.env.NODE_ENV === 'development' && !serverToken && serverToken !== false) {
     console.warn(
       'No `serverToken` provided to `defineLive`. This means that only published content will be fetched and respond to live events. You can silence this warning by setting `serverToken: false`.',
     )
   }
 
-  if (process.env.NODE_ENV !== 'production' && !browserToken && browserToken !== false) {
+  if (process.env.NODE_ENV === 'development' && !browserToken && browserToken !== false) {
     console.warn(
       'No `browserToken` provided to `defineLive`. This means that live previewing drafts will only work when using the Presentation Tool in your Sanity Studio. To support live previewing drafts stand-alone, provide a `browserToken`. It is shared with the browser so it should only have Viewer rights or lower. You can silence this warning by setting `browserToken: false`.',
     )
@@ -168,7 +168,7 @@ export function defineLive(config: DefineLiveOptions): {
 
   const SanityLive: React.ComponentType<DefinedLiveProps> = async function SanityLive(props) {
     const {
-      includeDrafts = (await draftMode()).isEnabled,
+      includeDrafts = (typeof browserToken === 'string' && !!browserToken) ? (await draftMode()).isEnabled : false,
       requestTag = 'next-loader.live',
       waitFor,
 
