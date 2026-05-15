@@ -133,16 +133,19 @@ export function defineLive(config: DefineLiveOptions): {
     const revalidate = false
     const isBuildPhase = process.env['NEXT_PHASE'] === PHASE_PRODUCTION_BUILD
     const cacheMode = useCdn && !isBuildPhase ? 'noStale' : undefined
+    const token = perspective !== 'published' && serverToken ? serverToken : originalToken
 
     const {syncTags} = await client.fetch(query, await params, {
       filterResponse: false,
       perspective,
       stega: false,
+      resultSourceMap: false,
       returnQuery: false,
       next: {revalidate, tags: [...tags, `${cacheTagPrefix}fetch-sync-tags`]},
       useCdn,
       cacheMode,
       tag: [requestTag, 'fetch-sync-tags'].filter(Boolean).join('.'),
+      token,
     })
 
     const cacheTags = [...tags, ...(syncTags?.map((tag) => `${cacheTagPrefix}${tag}`) || [])]
@@ -151,11 +154,11 @@ export function defineLive(config: DefineLiveOptions): {
       filterResponse: false,
       perspective,
       stega,
-      token: perspective !== 'published' && serverToken ? serverToken : originalToken,
       next: {revalidate, tags: cacheTags},
       useCdn,
       cacheMode,
       tag: requestTag,
+      token,
     })
     return {data: result, sourceMap: resultSourceMap || null, tags: cacheTags}
   }
