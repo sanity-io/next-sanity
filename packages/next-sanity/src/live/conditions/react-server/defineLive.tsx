@@ -127,13 +127,16 @@ export function defineLive(config: DefineLiveOptions): {
     perspective: _perspective,
     requestTag = 'next-loader.fetch',
   }) {
-    const stega = _stega ?? ((serverToken && studioUrlDefined) && (await draftMode()).isEnabled)
-    const perspective = _perspective ?? (serverToken ? (await resolveCookiePerspective()) : 'published')
+    const stega =
+      _stega ?? (serverToken && studioUrlDefined ? (await draftMode()).isEnabled : false)
+    const perspective =
+      _perspective ?? (serverToken ? await resolveCookiePerspective() : 'published')
     const useCdn = perspective === 'published'
     const revalidate = false
     const isBuildPhase = process.env['NEXT_PHASE'] === PHASE_PRODUCTION_BUILD
     const cacheMode = useCdn && !isBuildPhase ? 'noStale' : undefined
-    const token = perspective !== 'published' && serverToken ? serverToken : originalToken
+    const token =
+      (perspective !== 'published' || stega) && serverToken ? serverToken : originalToken
 
     const {syncTags} = await client.fetch(query, await params, {
       filterResponse: false,
