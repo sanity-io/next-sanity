@@ -133,9 +133,9 @@ describe('SanityLiveClientComponent', () => {
       expect(revalidateSyncTags.mock.lastCall).toMatchInlineSnapshot(`
         [
           [
-            "sanity:s1:01cWIQ",
-            "sanity:s1:57Y4Uw",
-            "sanity:s1:EiHmwQ",
+            "s1:01cWIQ",
+            "s1:57Y4Uw",
+            "s1:EiHmwQ",
           ],
         ]
       `)
