@@ -7,6 +7,8 @@ import {Suspense} from 'react'
 import PostsLayout, {postsQuery} from '@/app/(website)/PostsLayout'
 import {client} from '@/app/sanity.client'
 
+import {ContentSourceMapDebug} from '../ContentSourceMapDebug'
+
 const token = process.env.SANITY_API_READ_TOKEN!
 const {sanityFetch} = defineLive({
   client,
@@ -21,7 +23,7 @@ async function CachedIndexPage({
   perspective: LivePerspective
   stega: boolean
 }) {
-  const {data, tags} = await sanityFetch({
+  const {data, sourceMap, tags} = await sanityFetch({
     query: postsQuery.query,
     perspective,
     stega,
@@ -29,6 +31,7 @@ async function CachedIndexPage({
 
   return (
     <>
+      <ContentSourceMapDebug sourceMap={sourceMap} />
       <p>{JSON.stringify({perspective, tags: tags.toSorted()})}</p>
       <PostsLayout data={data} draftMode={false} />
     </>

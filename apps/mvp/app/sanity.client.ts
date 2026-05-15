@@ -8,9 +8,7 @@ export const client = createClient({
   perspective: 'published',
   resultSourceMap: 'withKeyArraySelector',
   stega: {
-    enabled: true,
     studioUrl: `${process.env.NEXT_PUBLIC_TEST_BASE_PATH || ''}/studio#`,
-    // logger: console,
   },
 })
 

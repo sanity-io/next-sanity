@@ -42,8 +42,6 @@ async function RandomNumber() {
 
 export default function Posts(props: PostsLayoutProps) {
   const posts = postsQuery.parse(props.data)
-  // oxlint-disable-next-line no-console
-  console.log('PostsLayout', {posts})
 
   return (
     <>

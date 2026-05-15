@@ -6,27 +6,29 @@ import Link from 'next/link'
 import PostsLayout, {postsQuery} from '@/app/(website)/PostsLayout'
 import {client} from '@/app/sanity.client'
 
+import {ContentSourceMapDebug} from '../ContentSourceMapDebug'
 import {onError} from './client-functions'
 
 const token = process.env.SANITY_API_READ_TOKEN!
 const {sanityFetch, SanityLive} = defineLive({client, serverToken: token, browserToken: token})
 
 async function getPosts(perspective: 'drafts' | 'published') {
-  const {data} = await sanityFetch({
+  const {data, sourceMap} = await sanityFetch({
     query: postsQuery.query,
     perspective,
     stega: perspective !== 'published',
   })
-  return data
+  return {data, sourceMap}
 }
 
 export default async function IndexPage() {
   const isDraftMode = (await draftMode()).isEnabled
   const perspective = isDraftMode ? 'drafts' : 'published'
-  const data = await getPosts(perspective)
+  const {data, sourceMap} = await getPosts(perspective)
 
   return (
     <>
+      <ContentSourceMapDebug sourceMap={sourceMap} />
       <div
         className="relative bg-gray-50 px-4 pt-16 pb-20 sm:px-6 lg:px-8 lg:pt-24 lg:pb-28"
         data-adapter={unstable__adapter}
