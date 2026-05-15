@@ -17,8 +17,6 @@ import {test} from './helpers.browser'
 type OnRestartFn = Exclude<SanityLiveOnRestart, 'refresh'>
 type OnReconnectFn = Exclude<SanityLiveOnReconnect, 'refresh'>
 
-
-
 // A stable spy that every `useRouter()` call shares so tests can assert  `router.refresh()` was invoked
 const refresh = vi.fn()
 const router = {
@@ -149,8 +147,6 @@ describe('SanityLiveClientComponent', () => {
       await vi.waitFor(() => expect(refresh).toHaveBeenCalled())
     })
   })
-
-  
 
   describe('onRestart', () => {
     const requestTag = 'mock.sends-restart-event' satisfies SseMockTags

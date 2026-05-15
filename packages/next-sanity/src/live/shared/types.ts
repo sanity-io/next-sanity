@@ -4,7 +4,6 @@ import type {
   ContentSourceMap,
   QueryParams,
   SanityClient,
-  SyncTag,
   InitializedClientConfig,
   LiveEvent,
 } from 'next-sanity'

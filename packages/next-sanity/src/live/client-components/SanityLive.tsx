@@ -1,4 +1,4 @@
-import {createClient, type LiveEvent, type SyncTag} from '@sanity/client'
+import {createClient, type LiveEvent} from '@sanity/client'
 import {useRouter} from 'next/navigation'
 import {useEffect, useMemo, useState, useEffectEvent, startTransition} from 'react'
 
