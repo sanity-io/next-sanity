@@ -1,18 +1,16 @@
 ---
-'next-sanity': major
+'next-sanity': minor
 ---
 
-Throw errors during render if `onError` is not defined on `<SanityLive>`
+Add `onError="throw"` opt-in for `<SanityLive>`
 
-If you were already handling errors in your own `onError` callback, then this is not a breaking change for you.
+The default behavior remains to log errors with `console.error` (CORS errors are logged with `console.warn` including the blocked origin). This matches the `next-sanity@12` behavior.
 
-The new behavior is to avoid silent failures and instead throw errors during render so they can be caught by the nearest React error boundary.
+You can now pass `onError="throw"` to throw errors during render so they can be caught by the [unstable_catchError API](https://nextjs.org/docs/app/api-reference/functions/catchError) which supports `unstable_retry` for retrying the render.
 
-#### Restore previous behavior
+#### Custom error handler
 
-The previous behavior would `console.warn` or `console.error` the error, and continue rendering the component. If you prefer this behavior you can restore it this way:
-
-Create a `client-functions.ts` file with `'use client'` and export a `onError` function like so:
+You can still pass a custom error handler function:
 
 ```ts
 // app/client-functions.ts
@@ -123,7 +121,7 @@ export default function Layout({children}: {children: React.ReactNode}) {
     <>
       {children}
       <SanityLiveErrorBoundary>
-        <SanityLive />
+        <SanityLive onError="throw" />
       </SanityLiveErrorBoundary>
     </>
   )

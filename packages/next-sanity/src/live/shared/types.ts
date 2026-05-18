@@ -93,7 +93,9 @@ export interface DefinedLiveProps {
    */
   action?: SanityLiveAction
   /**
-   * Custom error handler. If none is provided the error will be thrown during render and caught by the nearest React error boundary.
+   * Custom error handler. If none is provided, errors are logged with `console.error`.
+   * Pass `'throw'` to throw errors during render so they can be caught by the
+   * {@link https://nextjs.org/docs/app/api-reference/functions/catchError | unstable_catchError API}.
    */
   onError?: SanityLiveOnError
   /**
@@ -220,10 +222,14 @@ export type SanityLiveAction = ((unsafeTags: unknown) => Promise<void | 'refresh
 /**
  * Handles connection, parsing, and event-processing errors.
  *
- * If no handler is provided, the error is thrown during render so it can be
- * caught by the nearest React error boundary.
+ * If no handler is provided, the error is logged with `console.error`.
+ * Pass `'throw'` to throw errors during render so they can be caught by the
+ * {@link https://nextjs.org/docs/app/api-reference/functions/catchError | unstable_catchError API}
+ * which supports `unstable_retry` for retrying the render.
  */
-export type SanityLiveOnError = (error: unknown, context: SanityLiveContext) => void
+export type SanityLiveOnError =
+  | ((error: unknown, context: SanityLiveContext) => void)
+  | 'throw'
 /**
  * Handles the Live Content API `welcome` event.
  *

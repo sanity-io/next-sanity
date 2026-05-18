@@ -3,6 +3,7 @@ import {useRouter} from 'next/navigation'
 import {useEffect, useMemo, useState, useEffectEvent, startTransition} from 'react'
 
 import {cacheTagPrefix} from '#live/constants'
+import {isCorsOriginError} from '#live/isCorsOriginError'
 import type {
   SanityClientConfig,
   SanityLiveAction,
@@ -38,7 +39,7 @@ function SanityLive(props: SanityLiveProps): React.JSX.Element | null {
     waitFor,
 
     action,
-    onError,
+    onError = defaultHandleError,
     onWelcome = handleWelcome,
     onReconnect = handleReconnect,
     onRestart = 'refresh',
@@ -69,14 +70,14 @@ function SanityLive(props: SanityLiveProps): React.JSX.Element | null {
 
   const [error, setError] = useState<unknown>()
   if (error !== undefined) {
-    // Throw during render to bubble up to the nearest <ErrorBoundary>, if `onError` is provided we won't rethrow
+    // Throw during render to bubble up to the nearest <ErrorBoundary>, only when `onError="throw"` is set
     throw error
   }
   const handleError = useEffectEvent((error: unknown) => {
-    if (onError) {
-      onError(error, actionContext)
-    } else {
+    if (onError === 'throw') {
       setError(error)
+    } else {
+      onError(error, actionContext)
     }
   })
 
@@ -185,4 +186,16 @@ const handleGoaway: SanityLiveOnGoaway = (event, {includeDrafts}, setLongPolling
     `Content will now be refreshed every ${interval / 1_000} seconds`,
   )
   setLongPollingInterval(interval)
+}
+
+const defaultHandleError: Exclude<SanityLiveOnError, 'throw'> = (error, _context) => {
+  if (isCorsOriginError(error)) {
+    console.warn(
+      `Sanity Live is unable to connect to the Sanity API as the current origin - ${window.origin} - is not in the list of allowed CORS origins for this Sanity Project.`,
+      error.addOriginUrl && `Add it here:`,
+      error.addOriginUrl?.toString(),
+    )
+  } else {
+    console.error(error)
+  }
 }
