@@ -104,7 +104,7 @@ export default async function IndexPage() {
         </Link>
       </div>
       <SanityLiveErrorBoundary>
-        <SanityLive includeDrafts={isDraftMode} />
+        <SanityLive includeDrafts={isDraftMode} onError="throw" />
       </SanityLiveErrorBoundary>
     </>
   )

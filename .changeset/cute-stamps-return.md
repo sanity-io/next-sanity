@@ -2,17 +2,38 @@
 'next-sanity': major
 ---
 
-Throw errors during render if `onError` is not defined on `<SanityLive>`
+Default `<SanityLive>` error handling now logs to `console.error` instead of throwing during render
 
-If you were already handling errors in your own `onError` callback, then this is not a breaking change for you.
+Previously, if `onError` was not provided, errors would throw during render and crash the app unless caught by a React error boundary. This was annoying and led to unexpected crashes.
 
-The new behavior is to avoid silent failures and instead throw errors during render so they can be caught by the nearest React error boundary.
+Now, the default behavior is to log errors with `console.error`, similar to how `onWelcome` logs a message by default.
 
-#### Restore previous behavior
+#### Opt-in to throw during render
 
-The previous behavior would `console.warn` or `console.error` the error, and continue rendering the component. If you prefer this behavior you can restore it this way:
+If you want errors to throw during render (e.g. to be caught by a React error boundary), you can opt-in with `onError="throw"`:
 
-Create a `client-functions.ts` file with `'use client'` and export a `onError` function like so:
+```tsx
+// app/layout.tsx
+import SanityLiveErrorBoundary from './SanityLiveErrorBoundary'
+import {SanityLive} from '#sanity/live'
+
+export default function Layout({children}: {children: React.ReactNode}) {
+  return (
+    <>
+      {children}
+      <SanityLiveErrorBoundary>
+        <SanityLive onError="throw" />
+      </SanityLiveErrorBoundary>
+    </>
+  )
+}
+```
+
+This is similar to how `action="refresh"` and `onRestart="refresh"` work as shorthand string values.
+
+#### Custom error handler
+
+You can still pass a custom error handler function:
 
 ```ts
 // app/client-functions.ts
@@ -45,86 +66,6 @@ export default function Layout({children}: {children: React.ReactNode}) {
     <>
       {children}
       <SanityLive onError={onError} />
-    </>
-  )
-}
-```
-
-#### Customize the error boundary
-
-Using the [unstable_catchError API](https://nextjs.org/docs/app/api-reference/functions/catchError) you can create an error boundary that can handle errors and offer retry logic. Here's an example that uses the `sonner` library to show error toasts that adapt to the error type:
-
-```tsx
-// app/SanityLiveErrorBoundary.tsx
-'use client'
-
-import {isCorsOriginError} from 'next-sanity/live'
-import {unstable_catchError, type ErrorInfo} from 'next/error'
-import {useEffect} from 'react'
-import {toast} from 'sonner'
-
-function SanityLiveErrorBoundary(_props: {}, {error, unstable_retry}: ErrorInfo) {
-  useEffect(() => {
-    let toastId: string | number | undefined
-    if (isCorsOriginError(error)) {
-      const {addOriginUrl} = error
-      toastId = toast.warning(`Sanity Live couldn't connect`, {
-        description: `${new URL(window.origin).host} is blocked by CORS policy`,
-        richColors: true,
-        duration: Infinity,
-        action: addOriginUrl
-          ? {
-              label: 'Manage',
-              onClick: (event) => {
-                event.preventDefault()
-                window.open(addOriginUrl.toString(), '_blank')
-              },
-            }
-          : {label: 'Retry', onClick: () => unstable_retry()},
-        cancel: addOriginUrl ? {label: 'Retry', onClick: () => unstable_retry()} : undefined,
-      })
-    } else if (error instanceof Error) {
-      console.error(error)
-      toastId = toast.error(error.message, {
-        richColors: true,
-        duration: Infinity,
-        action: {label: 'Retry', onClick: () => unstable_retry()},
-      })
-    } else {
-      console.error(error)
-      toastId = toast.error('Unknown error', {
-        description: 'Check the console for more details',
-        richColors: true,
-        duration: Infinity,
-        action: {label: 'Retry', onClick: () => unstable_retry()},
-      })
-    }
-
-    return () => {
-      toast.dismiss(toastId)
-    }
-  }, [error, unstable_retry])
-
-  return null
-}
-
-export default unstable_catchError(SanityLiveErrorBoundary)
-```
-
-Then in your `layout.tsx` file wrap the `SanityLive` component in the error boundary:
-
-```tsx
-// app/layout.tsx
-import SanityLiveErrorBoundary from './SanityLiveErrorBoundary'
-import {SanityLive} from '#sanity/live'
-
-export default function Layout({children}: {children: React.ReactNode}) {
-  return (
-    <>
-      {children}
-      <SanityLiveErrorBoundary>
-        <SanityLive />
-      </SanityLiveErrorBoundary>
     </>
   )
 }

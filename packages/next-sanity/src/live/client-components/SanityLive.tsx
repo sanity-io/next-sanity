@@ -69,14 +69,17 @@ function SanityLive(props: SanityLiveProps): React.JSX.Element | null {
 
   const [error, setError] = useState<unknown>()
   if (error !== undefined) {
-    // Throw during render to bubble up to the nearest <ErrorBoundary>, if `onError` is provided we won't rethrow
+    // Throw during render to bubble up to the nearest <ErrorBoundary>, only when `onError="throw"` is set
     throw error
   }
   const handleError = useEffectEvent((error: unknown) => {
-    if (onError) {
+    if (onError === 'throw') {
+      setError(error)
+    } else if (onError) {
       onError(error, actionContext)
     } else {
-      setError(error)
+      // Default behavior: log errors to console
+      console.error('<SanityLive> encountered an error:', error)
     }
   })
 
