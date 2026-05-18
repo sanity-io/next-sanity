@@ -1,5 +1,11 @@
 # next-sanity
 
+## 13.0.0-cache-components.62
+
+### Patch Changes
+
+- [#3109](https://github.com/sanity-io/next-sanity/pull/3109) [`e92b145`](https://github.com/sanity-io/next-sanity/commit/e92b14551335ed1bc0ad39fff9780ed3d5c16d41) Thanks [@stipsan](https://github.com/stipsan)! - browserToken must be set for includeDrafts to be allowed true on <SanityLive />
+
 # 12.4.5
 
 ### Patch Changes
