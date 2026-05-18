@@ -199,5 +199,3 @@ const handleGoaway: SanityLiveOnGoaway = (event, {includeDrafts}, setLongPolling
   )
   setLongPollingInterval(interval)
 }
-
-

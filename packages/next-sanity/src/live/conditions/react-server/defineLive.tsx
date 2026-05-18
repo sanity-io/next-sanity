@@ -306,7 +306,7 @@ export function defineLive(config: DefineLiveOptions) {
         ? serverToken
         : undefined
 
-        // 1. Fetch the tags first, with an uncached request, but that does not count towards the Sanity API quota
+    // 1. Fetch the tags first, with an uncached request, but that does not count towards the Sanity API quota
     const {syncTags} = await client.fetch(query, await params, {
       filterResponse: false,
       perspective,
@@ -321,7 +321,7 @@ export function defineLive(config: DefineLiveOptions) {
 
     const cacheTags = [...tags, ...(syncTags?.map((tag) => `${cacheTagPrefix}${tag}`) || [])]
 
-     // 2. Then fetch the data, using the fetch cache with specified tags
+    // 2. Then fetch the data, using the fetch cache with specified tags
     const {result, resultSourceMap} = await client.fetch(query, await params, {
       filterResponse: false,
       perspective,

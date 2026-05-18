@@ -1,5 +1,5 @@
 ---
-"next-sanity": major
+'next-sanity': major
 ---
 
 Change `sanityFetch` in `cacheComponents: false` mode to stop caching the internal sync-tag lookup request.
