@@ -190,26 +190,10 @@ describe('SanityLiveClientComponent', () => {
     {requestTag: 'mock.closes-after-welcome' satisfies SseMockTags},
     {requestTag: 'mock.fails-with-500' satisfies SseMockTags},
   ])('onReconnect (via $requestTag)', ({requestTag}) => {
-    test(`onReconnect='refresh' triggers router.refresh()`, async () => {
-      await renderMock({onReconnect: 'refresh', requestTag})
-      await vi.waitFor(() => expect(refresh).toHaveBeenCalled())
-    })
-
-    test(`onReconnect returning 'refresh' triggers router.refresh()`, async () => {
-      const onReconnect = vi.fn<OnReconnectFn>(async () => 'refresh' as const)
+    test(`custom handler is called`, async () => {
+      const onReconnect = vi.fn<OnReconnectFn>(() => {})
       await renderMock({onReconnect, requestTag})
       await vi.waitFor(() => expect(onReconnect).toHaveBeenCalled())
-      await vi.waitFor(() => expect(refresh).toHaveBeenCalled())
-      const [event, context] = onReconnect.mock.lastCall!
-      expect(event.type).toBe('reconnect')
-      expect(context).toEqual({includeDrafts: false, waitFor: undefined})
-    })
-
-    test('onReconnect returning void does not trigger router.refresh()', async () => {
-      const onReconnect = vi.fn<OnReconnectFn>(async () => {})
-      await renderMock({onReconnect, requestTag})
-      await vi.waitFor(() => expect(onReconnect).toHaveBeenCalled())
-      expect(refresh).not.toHaveBeenCalled()
     })
 
     test('onReconnect={false} does not trigger router.refresh()', async () => {

@@ -40,7 +40,7 @@ function SanityLive(props: SanityLiveProps): React.JSX.Element | null {
     action,
     onError,
     onWelcome = handleWelcome,
-    onReconnect = 'refresh',
+    onReconnect = handleReconnect,
     onRestart = 'refresh',
     onGoAway = handleGoaway,
   } = props
@@ -105,19 +105,8 @@ function SanityLive(props: SanityLiveProps): React.JSX.Element | null {
         break
       }
       case 'reconnect': {
-        // Disable long polling when reconnect event is received, this is a no-op if long polling is already disabled
-        startTransition(() => setRefreshOnInterval(false))
-
         if (onReconnect) {
-          startTransition(() =>
-            onReconnect === 'refresh'
-              ? router.refresh()
-              : Promise.resolve(onReconnect(event, actionContext)).then((result) => {
-                  if (result === 'refresh') {
-                    startTransition(() => router.refresh())
-                  }
-                }),
-          )
+          startTransition(() => onReconnect(event, actionContext))
         }
         break
       }
@@ -182,6 +171,10 @@ const handleWelcome: SanityLiveOnWelcome = (_, {includeDrafts, waitFor}) => {
   console.info(
     `<SanityLive${includeDrafts ? ' includeDrafts' : ''}> is connected and listening for live events to ${includeDrafts ? 'all content including drafts and version documents in content releases' : 'published content'}.${waitFor === 'function' ? ' Events will be delayed until after a Sanity Function has processed them.' : ''}`,
   )
+}
+
+const handleReconnect: SanityLiveOnReconnect = (_, {includeDrafts}) => {
+  console.error(`<SanityLive${includeDrafts ? ' includeDrafts' : ''}> is attempting to reconnect`)
 }
 
 const handleGoaway: SanityLiveOnGoaway = (event, {includeDrafts}, setLongPollingInterval) => {

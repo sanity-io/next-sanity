@@ -2,4 +2,4 @@
 'next-sanity': minor
 ---
 
-Add `onReconnect` & `onRestart` props on `<SanityLive>`, by default they call `router.refresh()`
+Add `onRestart` prop on `<SanityLive>`, by default it calls `router.refresh()`. You can set `<SanityLive onRestart={false} />` to disable the default behavior.
