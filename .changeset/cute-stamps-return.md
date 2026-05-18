@@ -2,11 +2,9 @@
 'next-sanity': major
 ---
 
-Default `<SanityLive>` error handling now logs to `console.error` instead of throwing during render
+Add `onError="throw"` opt-in for `<SanityLive>` to throw errors during render
 
-Previously, if `onError` was not provided, errors would throw during render and crash the app unless caught by a React error boundary. This was annoying and led to unexpected crashes.
-
-Now, the default behavior is to log errors with `console.error`, similar to how `onWelcome` logs a message by default.
+The previous default behavior logged errors to the console (CORS errors as `console.warn`, other errors as `console.error`). An unreleased change made the default throw during render, which was disruptive. This reverts the default to the v12 logging behavior and adds `onError="throw"` as an explicit opt-in for throw-during-render.
 
 #### Opt-in to throw during render
 

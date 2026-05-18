@@ -3,6 +3,7 @@ import {useRouter} from 'next/navigation'
 import {useEffect, useMemo, useState, useEffectEvent, startTransition} from 'react'
 
 import {cacheTagPrefix} from '#live/constants'
+import {isCorsOriginError} from '#live/isCorsOriginError'
 import type {
   SanityClientConfig,
   SanityLiveAction,
@@ -78,8 +79,16 @@ function SanityLive(props: SanityLiveProps): React.JSX.Element | null {
     } else if (onError) {
       onError(error, actionContext)
     } else {
-      // Default behavior: log errors to console
-      console.error('<SanityLive> encountered an error:', error)
+      // Default behavior: log errors to console, matching v12 behavior
+      if (isCorsOriginError(error)) {
+        console.warn(
+          `Sanity Live is unable to connect to the Sanity API as the current origin - ${window.origin} - is not in the list of allowed CORS origins for this Sanity Project.`,
+          error.addOriginUrl && `Add it here:`,
+          error.addOriginUrl?.toString(),
+        )
+      } else {
+        console.error(error)
+      }
     }
   })
 
