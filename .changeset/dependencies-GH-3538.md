@@ -1,5 +1,5 @@
 ---
-"next-sanity": patch
+'next-sanity': patch
 ---
 
 fix(deps): update dependency @sanity/visual-editing to ^5.3.6
