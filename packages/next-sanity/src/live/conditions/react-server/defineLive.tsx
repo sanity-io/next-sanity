@@ -11,9 +11,9 @@ import type {
   DefinedFetchType,
   DefinedLiveProps,
   DefineLiveOptions,
+  LivePerspective,
   StrictDefinedFetchType,
   StrictDefinedLiveProps,
-  LivePerspective,
 } from '#live/types'
 
 /**
@@ -299,7 +299,6 @@ export function defineLive(config: DefineLiveOptions) {
       ? _perspective
       : (_perspective ?? (serverToken ? await resolveCookiePerspective() : undefined))
     const useCdn = perspective ? perspective === 'published' : undefined
-    const revalidate = false
     const isBuildPhase = process.env['NEXT_PHASE'] === PHASE_PRODUCTION_BUILD
     const cacheMode = useCdn !== false && !isBuildPhase ? 'noStale' : undefined
     const token =
@@ -307,13 +306,13 @@ export function defineLive(config: DefineLiveOptions) {
         ? serverToken
         : undefined
 
+    // 1. Fetch the tags first, with an uncached request, but that does not count towards the Sanity API quota
     const {syncTags} = await client.fetch(query, await params, {
       filterResponse: false,
       perspective,
       stega: false,
       resultSourceMap: false,
       returnQuery: false,
-      next: {revalidate, tags: [...tags, `${cacheTagPrefix}fetch-sync-tags`]},
       useCdn,
       cacheMode,
       tag: [requestTag, 'fetch-sync-tags'].filter(Boolean).join('.'),
@@ -322,11 +321,12 @@ export function defineLive(config: DefineLiveOptions) {
 
     const cacheTags = [...tags, ...(syncTags?.map((tag) => `${cacheTagPrefix}${tag}`) || [])]
 
+    // 2. Then fetch the data, using the fetch cache with specified tags
     const {result, resultSourceMap} = await client.fetch(query, await params, {
       filterResponse: false,
       perspective,
       stega,
-      next: {revalidate, tags: cacheTags},
+      next: {revalidate: false, tags: cacheTags},
       useCdn,
       cacheMode,
       tag: requestTag,

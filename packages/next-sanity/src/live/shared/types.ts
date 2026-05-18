@@ -227,9 +227,7 @@ export type SanityLiveAction = ((unsafeTags: unknown) => Promise<void | 'refresh
  * {@link https://nextjs.org/docs/app/api-reference/functions/catchError | unstable_catchError API}
  * which supports `unstable_retry` for retrying the render.
  */
-export type SanityLiveOnError =
-  | ((error: unknown, context: SanityLiveContext) => void)
-  | 'throw'
+export type SanityLiveOnError = ((error: unknown, context: SanityLiveContext) => void) | 'throw'
 /**
  * Handles the Live Content API `welcome` event.
  *
