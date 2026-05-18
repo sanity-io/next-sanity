@@ -103,7 +103,7 @@ export interface DefinedLiveProps {
   onWelcome?: SanityLiveOnWelcome | false
   /**
    * Custom handler for the `reconnect` event. Pass `false` to disable the
-   * default refresh behavior.
+   * default log behavior.
    */
   onReconnect?: SanityLiveOnReconnect | false
   /**
@@ -238,15 +238,13 @@ export type SanityLiveOnWelcome = (
 /**
  * Handles the Live Content API `reconnect` event.
  *
- * The default behavior refreshes the route so Server Components can render with
- * fresh data after reconnecting.
+ * The default behavior just logs the event, as it will eventually result in a `welcome` or `error` event.
  */
-export type SanityLiveOnReconnect =
-  | ((
-      event: Extract<LiveEvent, {type: 'reconnect'}>,
-      context: SanityLiveContext,
-    ) => void | Promise<void | 'refresh'>)
-  | 'refresh'
+export type SanityLiveOnReconnect = (
+  event: Extract<LiveEvent, {type: 'reconnect'}>,
+  context: SanityLiveContext,
+) => void | Promise<void>
+
 /**
  * Handles the Live Content API `restart` event.
  *
