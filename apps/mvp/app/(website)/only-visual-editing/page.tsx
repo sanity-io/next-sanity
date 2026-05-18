@@ -14,6 +14,7 @@ const {sanityFetch} = defineLive({
   client,
   serverToken: token,
   browserToken: token,
+  strict: true,
 })
 
 async function CachedIndexPage({
