@@ -188,7 +188,7 @@ const handleGoaway: SanityLiveOnGoaway = (event, {includeDrafts}, setLongPolling
   setLongPollingInterval(interval)
 }
 
-const defaultHandleError: Exclude<SanityLiveOnError, 'throw'> = (error) => {
+const defaultHandleError: Exclude<SanityLiveOnError, 'throw'> = (error, _context) => {
   if (isCorsOriginError(error)) {
     console.warn(
       `Sanity Live is unable to connect to the Sanity API as the current origin - ${window.origin} - is not in the list of allowed CORS origins for this Sanity Project.`,
