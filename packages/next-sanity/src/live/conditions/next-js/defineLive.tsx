@@ -1,4 +1,3 @@
-import type {resolvePerspectiveFromCookies as _resolvePerspectiveFromCookies} from '#live/resolvePerspectiveFromCookies'
 import type {
   DefinedFetchType,
   DefinedLiveProps,
