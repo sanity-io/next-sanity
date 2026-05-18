@@ -34,4 +34,5 @@ export async function revalidateSyncTagsAction(unsafeTags: unknown): Promise<voi
   }
   // oxlint-disable-next-line no-console
   console.log(`<SanityLive /> revalidated tags: ${tags.join(', ')} with cache profile "max" `)
+  refresh()
 }
