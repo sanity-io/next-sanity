@@ -39,7 +39,7 @@ function SanityLive(props: SanityLiveProps): React.JSX.Element | null {
     waitFor,
 
     action,
-    onError = defaultHandleError,
+    onError = handleError,
     onWelcome = handleWelcome,
     onReconnect = handleReconnect,
     onRestart = 'refresh',
@@ -73,7 +73,7 @@ function SanityLive(props: SanityLiveProps): React.JSX.Element | null {
     // Throw during render to bubble up to the nearest <ErrorBoundary>, only when `onError="throw"` is set
     throw error
   }
-  const handleError = useEffectEvent((error: unknown) => {
+  const handleErrorEvent = useEffectEvent((error: unknown) => {
     if (onError === 'throw') {
       setError(error)
     } else {
@@ -136,7 +136,7 @@ function SanityLive(props: SanityLiveProps): React.JSX.Element | null {
             ),
           )
         } else if (!onGoAway) {
-          handleError(
+          handleErrorEvent(
             new Error(
               `Sanity Live connection closed, automatic revalidation is disabled, the server gave this reason: ${event.reason}`,
               {cause: event},
@@ -146,14 +146,14 @@ function SanityLive(props: SanityLiveProps): React.JSX.Element | null {
         break
       }
       default:
-        handleError(new Error('Unknown live event type', {cause: event}))
+        handleErrorEvent(new Error('Unknown live event type', {cause: event}))
         break
     }
   })
   useEffect(() => {
     const subscription = client.live
       .events({includeDrafts, tag: requestTag, waitFor})
-      .subscribe({next: handleLiveEvent, error: handleError})
+      .subscribe({next: handleLiveEvent, error: handleErrorEvent})
     return () => subscription.unsubscribe()
   }, [client.live, requestTag, includeDrafts, waitFor])
 
@@ -166,6 +166,18 @@ function SanityLive(props: SanityLiveProps): React.JSX.Element | null {
 SanityLive.displayName = 'SanityLiveClientComponent'
 
 export default SanityLive
+
+const handleError: Exclude<SanityLiveOnError, 'throw'> = (error, _context) => {
+  if (isCorsOriginError(error)) {
+    console.warn(
+      `Sanity Live is unable to connect to the Sanity API as the current origin - ${window.origin} - is not in the list of allowed CORS origins for this Sanity Project.`,
+      error.addOriginUrl && `Add it here:`,
+      error.addOriginUrl?.toString(),
+    )
+  } else {
+    console.error(error)
+  }
+}
 
 const handleWelcome: SanityLiveOnWelcome = (_, {includeDrafts, waitFor}) => {
   // oxlint-disable-next-line no-console
@@ -188,14 +200,4 @@ const handleGoaway: SanityLiveOnGoaway = (event, {includeDrafts}, setLongPolling
   setLongPollingInterval(interval)
 }
 
-const defaultHandleError: Exclude<SanityLiveOnError, 'throw'> = (error, _context) => {
-  if (isCorsOriginError(error)) {
-    console.warn(
-      `Sanity Live is unable to connect to the Sanity API as the current origin - ${window.origin} - is not in the list of allowed CORS origins for this Sanity Project.`,
-      error.addOriginUrl && `Add it here:`,
-      error.addOriginUrl?.toString(),
-    )
-  } else {
-    console.error(error)
-  }
-}
+
