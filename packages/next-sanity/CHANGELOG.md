@@ -1,5 +1,20 @@
 # next-sanity
 
+## 13.0.0-cache-components.60
+
+### Minor Changes
+
+- [#3552](https://github.com/sanity-io/next-sanity/pull/3552) [`4ae3002`](https://github.com/sanity-io/next-sanity/commit/4ae3002633fcf91f5cd7c57a05ac10b1e6f2647a) Thanks [@stipsan](https://github.com/stipsan)! - Add opt-in `strict` mode to `defineLive` to ease cache components adoption by splitting the migration into two PRs:
+
+  1. Enable `strict: true` and update `sanityFetch` and `<SanityLive>` call sites to satisfy the stricter requirements.
+  2. Enable `cacheComponents: true` in `next.config.ts` and add `'use cache'` to functions that call `sanityFetch`.
+
+  You only need strict mode if you're migrating to cache components and use Visual Editing or Presentation Tool.
+
+### Patch Changes
+
+- [#3538](https://github.com/sanity-io/next-sanity/pull/3538) [`c49c7d0`](https://github.com/sanity-io/next-sanity/commit/c49c7d02c74703545373948fe91773b9de150077) Thanks [@renovate](https://github.com/apps/renovate)! - fix(deps): update dependency @sanity/visual-editing to ^5.3.6
+
 # 12.4.5
 
 ### Patch Changes
