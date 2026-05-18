@@ -15,9 +15,11 @@ import type {
 export type LivePerspective = Exclude<ClientPerspective, 'raw'>
 
 /**
- * Use this function to fetch data from Sanity in your React Server Components.
- * When used within a `generateMetadata` or `generateViewport` function, make sure you set `stega: false`.
- * When used within a `generateStaticParams` function, make sure you set `stega: false` and `perspective: 'published'`.
+ * Fetches data through the configured Sanity client and returns the result
+ * together with the source map and cache tags that Sanity Live uses for
+ * targeted revalidation.
+ *
+ * Returned by `defineLive({strict: false})` and `defineLive({strict: undefined})`.
  */
 export type DefinedFetchType = <const QueryString extends string>(options: {
   /**
@@ -136,7 +138,43 @@ export interface DefineLiveOptions {
    * previewing drafts outside Presentation Tool.
    */
   browserToken?: string | false
+  /**
+   * Require explicit live-content options at every call site.
+   *
+   * When `true`, `includeDrafts` is required on `<SanityLive />` and
+   * `perspective`/`stega` are required on `sanityFetch()`. This matches the
+   * explicit data flow needed inside Cache Components, where `draftMode()` and
+   * `cookies()` must be resolved outside `'use cache'` boundaries.
+   *
+   * @defaultValue `false`
+   */
+  strict?: boolean
 }
+
+/**
+ * Like {@link DefinedLiveProps} but with `includeDrafts` required.
+ * Returned by `defineLive({strict: true})`.
+ */
+export interface StrictDefinedLiveProps extends Omit<DefinedLiveProps, 'includeDrafts'> {
+  includeDrafts: boolean
+}
+
+/**
+ * Like {@link DefinedFetchType} but with `perspective` and `stega` required.
+ * Returned by `defineLive({strict: true})`.
+ */
+export type StrictDefinedFetchType = <const QueryString extends string>(options: {
+  query: QueryString
+  params?: QueryParams | Promise<QueryParams>
+  perspective: LivePerspective
+  stega: boolean
+  tags?: string[]
+  requestTag?: string
+}) => Promise<{
+  data: ClientReturn<QueryString, unknown>
+  sourceMap: ContentSourceMap | null
+  tags: string[]
+}>
 
 export interface SanityClientConfig extends Pick<
   InitializedClientConfig,

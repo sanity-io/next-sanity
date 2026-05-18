@@ -258,10 +258,7 @@ describe.each([/*{cacheComponents: true},*/ {cacheComponents: false}])(
       test('is set to "published" by default', async () => {
         const {query, params} = getSanityFetchMock(
           '{"perspective": $perspective, "token": $token}',
-          {
-            perspective: 'published',
-            token: `Bearer ${token}`,
-          },
+          {perspective: 'published', token: `Bearer ${token}`},
         )
 
         // When using client.fetch directly it respects the `perspective` and `token` settings
@@ -329,10 +326,7 @@ describe.each([/*{cacheComponents: true},*/ {cacheComponents: false}])(
         const perspective = ['drafts', 'r5RGhbQN9']
         const {query, params} = getSanityFetchMock(
           '{"perspective": $perspective, "token": $token}',
-          {
-            perspective,
-            token: `Bearer ${token}`,
-          },
+          {perspective, token: `Bearer ${token}`},
         )
         // When using client.fetch directly it respects the `perspective` and `token` settings
         await expect(
@@ -373,6 +367,64 @@ describe.each([/*{cacheComponents: true},*/ {cacheComponents: false}])(
           expect(data).toEqual(params)
         },
       )
+    })
+
+    describe('strict mode', () => {
+      const serverToken = 'sk456'
+      const client = createClient({
+        projectId,
+        dataset,
+        apiVersion,
+        useCdn: true,
+        // studioUrl ensures non-strict mode would otherwise call draftMode() to derive `stega`
+        stega: {studioUrl: '/studio'},
+      })
+
+      test('throws when perspective is omitted', async () => {
+        const {sanityFetch} = defineLive({client, serverToken, browserToken: false, strict: true})
+        await expect(
+          // @ts-expect-error -- intentionally omitting `perspective` to assert strict validation
+          sanityFetch({query: '{"perspective": $perspective, "useCdn": $useCdn}', stega: false}),
+        ).rejects.toThrow(/requires an explicit `perspective` option/)
+      })
+
+      test('throws when stega is omitted', async () => {
+        const {sanityFetch} = defineLive({client, serverToken, browserToken: false, strict: true})
+        await expect(
+          // @ts-expect-error -- intentionally omitting `stega` to assert strict validation
+          sanityFetch({
+            query: '{"perspective": $perspective, "useCdn": $useCdn}',
+            perspective: 'published',
+          }),
+        ).rejects.toThrow(/requires an explicit `stega` option/)
+      })
+
+      test('does not call draftMode() when perspective and stega are provided', async () => {
+        const {sanityFetch} = defineLive({client, serverToken, browserToken: false, strict: true})
+        isDraftMode = true
+        const {query, params} = getSanityFetchMock(
+          '{"perspective": $perspective, "useCdn": $useCdn}',
+          {perspective: 'published', useCdn: true},
+        )
+
+        const {data} = await sanityFetch({query, params, perspective: 'published', stega: false})
+        expect(data).toEqual(params)
+        expect(isDraftModeCalled).not.toBe(true)
+      })
+
+      test('uses the explicit perspective instead of the cookie', async () => {
+        const {sanityFetch} = defineLive({client, serverToken, browserToken: false, strict: true})
+        isDraftMode = true
+        perspectiveCookieValue = ['drafts', 'r5RGhbQN9']
+        const {query, params} = getSanityFetchMock(
+          '{"perspective": $perspective, "useCdn": $useCdn}',
+          {perspective: 'published', useCdn: true},
+        )
+
+        const {data} = await sanityFetch({query, params, perspective: 'published', stega: false})
+        expect(data).toEqual(params)
+        expect(isDraftModeCalled).not.toBe(true)
+      })
     })
   },
 )

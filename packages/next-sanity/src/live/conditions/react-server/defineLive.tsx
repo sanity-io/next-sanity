@@ -6,13 +6,169 @@ import {preconnect} from 'react-dom'
 
 import {cacheTagPrefix} from '#live/constants'
 import {resolvePerspectiveFromCookies} from '#live/resolvePerspectiveFromCookies'
+import {validateStrictFetchOptions, validateStrictSanityLiveProps} from '#live/strictValidation'
 import type {
   DefinedFetchType,
   DefinedLiveProps,
   DefineLiveOptions,
+  StrictDefinedFetchType,
+  StrictDefinedLiveProps,
   LivePerspective,
 } from '#live/types'
 
+/**
+ * Set up Sanity Live for Cache Components. `defineLive` returns `sanityFetch`
+ * and `<SanityLive />`, which connect your Sanity client to the Live Content API
+ * so cached pages can update in response to fine-grained content changes.
+ *
+ * With `strict: true`, `perspective` and `stega` become required
+ * `sanityFetch` options, and `includeDrafts` becomes required on
+ * `<SanityLive />`. Resolve dynamic values from `draftMode()` and `cookies()`
+ * outside `'use cache'` boundaries, then pass them into cached components.
+ *
+ * @see [Live Content API](https://www.sanity.io/docs/content-lake/live-content-api)
+ * @see [Sanity Live](https://www.sanity.io/live)
+ *
+ * @example
+ * ```tsx
+ * // sanity/live.ts
+ * import {cookies, draftMode} from 'next/headers'
+ * import {createClient} from 'next-sanity'
+ * import {
+ *   defineLive,
+ *   resolvePerspectiveFromCookies,
+ *   type LivePerspective,
+ * } from 'next-sanity/live'
+ *
+ * const client = createClient({
+ *   projectId: process.env.NEXT_PUBLIC_SANITY_PROJECT_ID,
+ *   dataset: process.env.NEXT_PUBLIC_SANITY_DATASET,
+ *   useCdn: true,
+ *   perspective: 'published',
+ * })
+ * const token = process.env.SANITY_API_READ_TOKEN
+ *
+ * export const {sanityFetch, SanityLive} = defineLive({
+ *   client,
+ *   browserToken: token,
+ *   serverToken: token,
+ *   strict: true,
+ * })
+ *
+ * export interface DynamicFetchOptions {
+ *   perspective: LivePerspective
+ *   stega: boolean
+ * }
+ *
+ * // Resolve dynamic values outside 'use cache' boundaries.
+ * export async function getDynamicFetchOptions(): Promise<DynamicFetchOptions> {
+ *   const {isEnabled: isDraftMode} = await draftMode()
+ *   if (!isDraftMode) {
+ *     return {perspective: 'published', stega: false}
+ *   }
+ *
+ *   const jar = await cookies()
+ *   const perspective = await resolvePerspectiveFromCookies({cookies: jar})
+ *   return {perspective: perspective ?? 'drafts', stega: true}
+ * }
+ * ```
+ *
+ * @example
+ * ```tsx
+ * // app/layout.tsx
+ * import {draftMode} from 'next/headers'
+ *
+ * import {SanityLive} from '@/sanity/live'
+ *
+ * export default async function RootLayout({children}: {children: React.ReactNode}) {
+ *   const {isEnabled: isDraftMode} = await draftMode()
+ *
+ *   return (
+ *     <html lang="en">
+ *       <body>
+ *         {children}
+ *         <SanityLive includeDrafts={isDraftMode} />
+ *       </body>
+ *     </html>
+ *   )
+ * }
+ * ```
+ *
+ * @example
+ * ```tsx
+ * // app/[slug]/page.tsx
+ * import {draftMode} from 'next/headers'
+ * import {Suspense} from 'react'
+ * import {defineQuery} from 'next-sanity'
+ *
+ * import {
+ *   getDynamicFetchOptions,
+ *   sanityFetch,
+ *   type DynamicFetchOptions,
+ * } from '@/sanity/live'
+ *
+ * const POSTS_SLUGS_QUERY = defineQuery(`
+ *   *[_type == "post" && slug.current]{"slug": slug.current}
+ * `)
+ * const POST_QUERY = defineQuery(`
+ *   *[_type == "post" && slug.current == $slug][0]
+ * `)
+ *
+ * export async function generateStaticParams() {
+ *   const {data} = await sanityFetch({
+ *     query: POSTS_SLUGS_QUERY,
+ *     perspective: 'published',
+ *     stega: false,
+ *   })
+ *
+ *   return data
+ * }
+ *
+ * export default async function Page(props: PageProps<'/[slug]'>) {
+ *   const {isEnabled: isDraftMode} = await draftMode()
+ *   if (isDraftMode) {
+ *     return (
+ *       <Suspense fallback={<div>Loading...</div>}>
+ *         <DynamicPage params={props.params} />
+ *       </Suspense>
+ *     )
+ *   }
+ *
+ *   const {slug} = await props.params
+ *   return <CachedPage slug={slug} perspective="published" stega={false} />
+ * }
+ *
+ * async function DynamicPage(props: Pick<PageProps<'/[slug]'>, 'params'>) {
+ *   const {slug} = await props.params
+ *   const {perspective, stega} = await getDynamicFetchOptions()
+ *
+ *   return <CachedPage slug={slug} perspective={perspective} stega={stega} />
+ * }
+ *
+ * async function CachedPage({
+ *   slug,
+ *   perspective,
+ *   stega,
+ * }: {slug: string} & DynamicFetchOptions) {
+ *   'use cache'
+ *
+ *   const {data} = await sanityFetch({
+ *     query: POST_QUERY,
+ *     params: {slug},
+ *     perspective,
+ *     stega,
+ *   })
+ *
+ *   return <pre>{JSON.stringify(data, null, 2)}</pre>
+ * }
+ * ```
+ *
+ * @public
+ */
+export function defineLive(config: DefineLiveOptions & {strict: true}): {
+  sanityFetch: StrictDefinedFetchType
+  SanityLive: React.ComponentType<StrictDefinedLiveProps>
+}
 /**
  * Set up Sanity Live. `defineLive` returns `sanityFetch` and `<SanityLive />`,
  * which connect your Sanity client to the Live Content API so pages can serve
@@ -94,11 +250,12 @@ import type {
  *
  * @public
  */
-export function defineLive(config: DefineLiveOptions): {
+export function defineLive(config: DefineLiveOptions & {strict?: false}): {
   sanityFetch: DefinedFetchType
   SanityLive: React.ComponentType<DefinedLiveProps>
-} {
-  const {client: _client, serverToken, browserToken} = config
+}
+export function defineLive(config: DefineLiveOptions) {
+  const {client: _client, serverToken, browserToken, strict = false} = config
 
   if (!_client) {
     throw new Error('`client` is required for `defineLive` to function')
@@ -116,28 +273,39 @@ export function defineLive(config: DefineLiveOptions): {
     )
   }
 
-  const client = _client.withConfig({allowReconfigure: false, useCdn: false})
-  const {token: originalToken} = client.config()
+  const client = _client.withConfig({
+    allowReconfigure: false,
+    useCdn: true,
+    perspective: 'published',
+    stega: false,
+  })
   const studioUrlDefined = typeof client.config().stega.studioUrl !== 'undefined'
 
   const sanityFetch: DefinedFetchType = async function sanityFetch({
     query,
     params = {},
+    perspective: _perspective,
     stega: _stega,
     tags = [],
-    perspective: _perspective,
     requestTag = 'next-loader.fetch',
   }) {
-    const stega =
-      _stega ?? (serverToken && studioUrlDefined ? (await draftMode()).isEnabled : false)
-    const perspective =
-      _perspective ?? (serverToken ? await resolveCookiePerspective() : 'published')
-    const useCdn = perspective === 'published'
+    if (strict) {
+      validateStrictFetchOptions({perspective: _perspective, stega: _stega})
+    }
+    const stega = strict
+      ? _stega
+      : (_stega ?? (serverToken && studioUrlDefined ? (await draftMode()).isEnabled : false))
+    const perspective = strict
+      ? _perspective
+      : (_perspective ?? (serverToken ? await resolveCookiePerspective() : undefined))
+    const useCdn = perspective ? perspective === 'published' : undefined
     const revalidate = false
     const isBuildPhase = process.env['NEXT_PHASE'] === PHASE_PRODUCTION_BUILD
-    const cacheMode = useCdn && !isBuildPhase ? 'noStale' : undefined
+    const cacheMode = useCdn !== false && !isBuildPhase ? 'noStale' : undefined
     const token =
-      (perspective !== 'published' || stega) && serverToken ? serverToken : originalToken
+      ((perspective && perspective !== 'published') || stega) && serverToken
+        ? serverToken
+        : undefined
 
     const {syncTags} = await client.fetch(query, await params, {
       filterResponse: false,
@@ -168,10 +336,11 @@ export function defineLive(config: DefineLiveOptions): {
   }
 
   const SanityLive: React.ComponentType<DefinedLiveProps> = async function SanityLive(props) {
+    if (strict) {
+      validateStrictSanityLiveProps(props)
+    }
     const {
-      includeDrafts = typeof browserToken === 'string' && !!browserToken
-        ? (await draftMode()).isEnabled
-        : false,
+      includeDrafts: _includeDrafts,
       requestTag = 'next-loader.live',
       waitFor,
 
@@ -185,8 +354,11 @@ export function defineLive(config: DefineLiveOptions): {
     const {projectId, dataset, apiHost, apiVersion, useProjectHostname, requestTagPrefix} =
       client.config()
 
-    const shouldIncludeDrafts = typeof browserToken === 'string' && includeDrafts
-    const shouldWaitFor = waitFor === 'function' && !shouldIncludeDrafts ? waitFor : undefined
+    const includeDrafts =
+      typeof browserToken === 'string' &&
+      !!browserToken &&
+      (_includeDrafts ?? (await draftMode()).isEnabled)
+    const shouldWaitFor = waitFor === 'function' && !includeDrafts ? waitFor : undefined
 
     // Preconnect to the Live Event API origin early, as the Sanity API is almost always on a different origin than the app
     const {origin} = new URL(client.getUrl('', false))
@@ -201,9 +373,9 @@ export function defineLive(config: DefineLiveOptions): {
           apiVersion,
           useProjectHostname,
           requestTagPrefix,
-          token: shouldIncludeDrafts ? browserToken : undefined,
+          token: includeDrafts ? browserToken : undefined,
         }}
-        includeDrafts={shouldIncludeDrafts ? true : undefined}
+        includeDrafts={includeDrafts ? true : undefined}
         requestTag={requestTag}
         waitFor={shouldWaitFor}
         action={action ?? (shouldWaitFor === 'function' ? 'refresh' : revalidateSyncTagsAction)}
@@ -220,8 +392,8 @@ export function defineLive(config: DefineLiveOptions): {
   return {sanityFetch, SanityLive}
 }
 
-async function resolveCookiePerspective(): Promise<LivePerspective> {
+async function resolveCookiePerspective(): Promise<LivePerspective | undefined> {
   return (await draftMode()).isEnabled
     ? await resolvePerspectiveFromCookies({cookies: await cookies()})
-    : 'published'
+    : undefined
 }
