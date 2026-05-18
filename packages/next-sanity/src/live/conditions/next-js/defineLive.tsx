@@ -290,21 +290,23 @@ export function defineLive(config: DefineLiveOptions) {
       validateStrictFetchOptions({perspective, stega})
     }
 
+    const useCdn = perspective ? perspective === 'published' : undefined
     const isBuildPhase = process.env['NEXT_PHASE'] === PHASE_PRODUCTION_BUILD
-    const cacheMode = !isBuildPhase ? 'noStale' : undefined
+    const cacheMode = useCdn !== false && !isBuildPhase ? 'noStale' : undefined
+    const token =
+      ((perspective && perspective !== 'published') || stega) && serverToken
+        ? serverToken
+        : undefined
 
     const {result, resultSourceMap, syncTags} = await client.fetch(query, await params, {
       filterResponse: false,
-      returnQuery: false,
       perspective,
       stega,
-      useCdn: perspective ? perspective === 'published' : undefined,
+      returnQuery: false,
+      useCdn,
       cacheMode,
       tag: requestTag,
-      token:
-        ((perspective && perspective !== 'published') || stega) && serverToken
-          ? serverToken
-          : undefined,
+      token,
     })
     const tags = [...customCacheTags, ...(syncTags || []).map((tag) => `${cacheTagPrefix}${tag}`)]
     /**
