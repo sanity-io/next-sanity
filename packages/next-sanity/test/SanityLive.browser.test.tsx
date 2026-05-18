@@ -26,9 +26,10 @@ const router = {
   push: vi.fn(),
   replace: vi.fn(),
   prefetch: vi.fn(),
+  bfcacheId: 'test-bfcache-id',
 } satisfies ReturnType<typeof import('next/navigation').useRouter>
-vi.mock(import('next/navigation'), async (importOriginal) => {
-  const originalModule = await importOriginal()
+vi.mock('next/navigation', async (importOriginal) => {
+  const originalModule = await importOriginal<typeof import('next/navigation')>()
   return {
     ...originalModule,
     useRouter: vi.fn(() => router),
