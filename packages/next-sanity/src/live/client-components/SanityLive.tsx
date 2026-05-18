@@ -39,7 +39,7 @@ function SanityLive(props: SanityLiveProps): React.JSX.Element | null {
     waitFor,
 
     action,
-    onError,
+    onError = defaultHandleError,
     onWelcome = handleWelcome,
     onReconnect = handleReconnect,
     onRestart = 'refresh',
@@ -76,19 +76,8 @@ function SanityLive(props: SanityLiveProps): React.JSX.Element | null {
   const handleError = useEffectEvent((error: unknown) => {
     if (onError === 'throw') {
       setError(error)
-    } else if (onError) {
-      onError(error, actionContext)
     } else {
-      // Default behavior: log errors to console, matching v12 behavior
-      if (isCorsOriginError(error)) {
-        console.warn(
-          `Sanity Live is unable to connect to the Sanity API as the current origin - ${window.origin} - is not in the list of allowed CORS origins for this Sanity Project.`,
-          error.addOriginUrl && `Add it here:`,
-          error.addOriginUrl?.toString(),
-        )
-      } else {
-        console.error(error)
-      }
+      onError(error, actionContext)
     }
   })
 
@@ -197,4 +186,16 @@ const handleGoaway: SanityLiveOnGoaway = (event, {includeDrafts}, setLongPolling
     `Content will now be refreshed every ${interval / 1_000} seconds`,
   )
   setLongPollingInterval(interval)
+}
+
+const defaultHandleError: Exclude<SanityLiveOnError, 'throw'> = (error) => {
+  if (isCorsOriginError(error)) {
+    console.warn(
+      `Sanity Live is unable to connect to the Sanity API as the current origin - ${window.origin} - is not in the list of allowed CORS origins for this Sanity Project.`,
+      error.addOriginUrl && `Add it here:`,
+      error.addOriginUrl?.toString(),
+    )
+  } else {
+    console.error(error)
+  }
 }

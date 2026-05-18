@@ -236,9 +236,26 @@ describe('SanityLiveClientComponent', () => {
       expect(context).toEqual({includeDrafts: false, waitFor: undefined})
     })
 
-    test('onGoAway={false} without onError throws to the nearest ErrorBoundary', async () => {
+    test('onGoAway={false} without onError logs the error (does not throw)', async () => {
+      const consoleSpy = vi.spyOn(console, 'error').mockImplementation(() => {})
+      try {
+        const onWelcome = vi.fn()
+        await renderMock({onGoAway: false, onWelcome, requestTag})
+        await vi.waitFor(() => expect(consoleSpy).toHaveBeenCalled())
+        const [loggedError] = consoleSpy.mock.lastCall!
+        expect(loggedError).toBeInstanceOf(Error)
+        expect(loggedError).toMatchObject({
+          message: expect.stringContaining('Sanity Live connection closed'),
+          cause: {type: 'goaway'},
+        })
+      } finally {
+        consoleSpy.mockRestore()
+      }
+    })
+
+    test('onGoAway={false} with onError="throw" throws to the nearest ErrorBoundary', async () => {
       const boundaryOnError = vi.fn()
-      await renderMockInBoundary(boundaryOnError, {onGoAway: false, requestTag})
+      await renderMockInBoundary(boundaryOnError, {onGoAway: false, onError: 'throw', requestTag})
       await vi.waitFor(() => expect(boundaryOnError).toHaveBeenCalled())
       const [caught] = boundaryOnError.mock.lastCall!
       expect(caught).toBeInstanceOf(Error)
@@ -275,9 +292,22 @@ describe('SanityLiveClientComponent', () => {
       expect(context).toEqual({includeDrafts: false, waitFor: undefined})
     })
 
-    test('without onError the server-sent error throws to the nearest ErrorBoundary', async () => {
+    test('without onError the server-sent error logs (does not throw)', async () => {
+      const consoleSpy = vi.spyOn(console, 'error').mockImplementation(() => {})
+      try {
+        await renderMock({requestTag})
+        await vi.waitFor(() => expect(consoleSpy).toHaveBeenCalled())
+        const [loggedError] = consoleSpy.mock.lastCall!
+        expect(loggedError).toBeInstanceOf(Error)
+        expect(loggedError).toMatchObject({message: 'Unfortunate error'})
+      } finally {
+        consoleSpy.mockRestore()
+      }
+    })
+
+    test('with onError="throw" the server-sent error throws to the nearest ErrorBoundary', async () => {
       const boundaryOnError = vi.fn()
-      await renderMockInBoundary(boundaryOnError, {requestTag})
+      await renderMockInBoundary(boundaryOnError, {onError: 'throw', requestTag})
       await vi.waitFor(() => expect(boundaryOnError).toHaveBeenCalled())
       const [caught] = boundaryOnError.mock.lastCall!
       expect(caught).toBeInstanceOf(Error)
