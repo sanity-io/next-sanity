@@ -2,9 +2,9 @@ import {SanityLive as SanityLiveClientComponent} from 'next-sanity/live/client-c
 import {revalidateSyncTagsAction} from 'next-sanity/live/server-actions'
 import {cacheLife, cacheTag} from 'next/cache'
 import {PHASE_PRODUCTION_BUILD} from 'next/constants'
-import {preconnect} from 'react-dom'
 
 import {cacheTagPrefix, revalidate} from '#live/constants'
+import {preconnect} from '#live/preconnect'
 import {validateStrictFetchOptions, validateStrictSanityLiveProps} from '#live/strictValidation'
 import type {
   DefinedFetchType,
@@ -325,7 +325,7 @@ export function defineLive(config: DefineLiveOptions) {
       validateStrictSanityLiveProps(props)
     }
     const {
-      includeDrafts = false,
+      includeDrafts: _includeDrafts = false,
       requestTag = 'next-loader.live.cache-components',
       waitFor,
 
@@ -339,12 +339,11 @@ export function defineLive(config: DefineLiveOptions) {
     const {projectId, dataset, apiHost, apiVersion, useProjectHostname, requestTagPrefix} =
       client.config()
 
-    const shouldIncludeDrafts = typeof browserToken === 'string' && includeDrafts
-    const shouldWaitFor = waitFor === 'function' && !shouldIncludeDrafts ? waitFor : undefined
+    const includeDrafts = typeof browserToken === 'string' && !!browserToken && _includeDrafts
+    const shouldWaitFor = waitFor === 'function' && !includeDrafts ? waitFor : undefined
 
     // Preconnect to the Live Event API origin early, as the Sanity API is almost always on a different origin than the app
-    const {origin} = new URL(client.getUrl('', false))
-    preconnect(origin)
+    preconnect(client)
 
     return (
       <SanityLiveClientComponent
@@ -355,9 +354,9 @@ export function defineLive(config: DefineLiveOptions) {
           apiVersion,
           useProjectHostname,
           requestTagPrefix,
-          token: shouldIncludeDrafts ? browserToken : undefined,
+          token: includeDrafts ? browserToken : undefined,
         }}
-        includeDrafts={shouldIncludeDrafts ? true : undefined}
+        includeDrafts={includeDrafts ? true : undefined}
         requestTag={requestTag}
         waitFor={shouldWaitFor}
         action={action ?? (shouldWaitFor === 'function' ? 'refresh' : revalidateSyncTagsAction)}
