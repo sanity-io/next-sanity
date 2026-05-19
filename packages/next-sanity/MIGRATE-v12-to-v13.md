@@ -141,6 +141,7 @@ export function RefreshOnFocus() {
   const router = useRouter()
 
   useEffect(() => {
+    // If inside an iframe then don't refresh on focus
     if (window.self !== window.top) return
 
     const controller = new AbortController()
