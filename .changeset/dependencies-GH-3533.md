@@ -2,4 +2,4 @@
 'next-sanity': patch
 ---
 
-fix(deps): update sanity monorepo to v5.25.1
+fix(deps): update sanity monorepo to v5.26.0
