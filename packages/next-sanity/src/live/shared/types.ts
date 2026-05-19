@@ -33,26 +33,59 @@ export type DefinedFetchType = <const QueryString extends string>(options: {
   /**
    * Content perspective used for the fetch.
    *
-   * @defaultValue 'published' or when in draft mode it's 'drafts' or the value of a cookie named 'sanity-preview-perspective' that is set by `defineEnableDraftMode`.
+   * @remarks
+   * Requires `serverToken` to be configured in `defineLive()`
+   *
+   * @defaultValue
+   * The default is `'published'` unless
+   *  - `Cache Components` are disabled
+   *  - `defineLive()` was given a `serverToken`
+   *  - `defineLive()` is not set to `strict: true`
+   *  - `draftMode()` is enabled
+   *
+   * If all of the above conditions are met, then the default value will be resolved from attempting to read the `'sanity-preview-perspective'` cookie and fall back to `'drafts'` if not set
    */
   perspective?: LivePerspective
   /**
    * Enables stega encoding of the data. This is typically only used in draft
    * mode with `perspective: 'drafts'` and `@sanity/visual-editing`.
    *
-   * @defaultValue `false` or when in draft mode it's `true`
+   * @remarks
+   * Requires `serverToken` to be configured in `defineLive()`
+   *
+   * @defaultValue
+   * The default is `false` unless
+   *  - `Cache Components` are disabled
+   *  - `defineLive()` was given a `serverToken`
+   *  - `defineLive()` is not set to `strict: true`
+   *  - `defineLive()` was given a `client` that defines `stega.studioUrl`
+   *  - `draftMode()` is enabled
+   *
+   * If all of the above conditions are met, then the default value will be `true`
    */
   stega?: boolean
   /**
-   * Add custom `next.tags` to the underlying fetch request.
+   * Additional cache tags to associate with this fetch.
+   *
+   * @remarks
+   * The default behavior will always add cache tags automatically for the query based on the `syncTags` response returned by Content Lake.
+   * You only need to define custom tags if you also mutate content in a server action and need to implement read-your-own-write UI.
+   * @see https://nextjs.org/docs/app/api-reference/functions/updateTag#server-action-with-read-your-own-writes
+   *
+   * When `cacheComponents: false` your custom tags are appended to the underlying `next.tags` array on the `fetch` request and are subject to the tag length and max tag items limits of Next.js.
    * @see https://nextjs.org/docs/app/api-reference/functions/fetch#optionsnexttags
-   * This can be used in conjunction with custom fallback revalidation strategies, as well as with custom Server Actions that mutate data and want to render with fresh data right away (faster than the Live Event latency).
+   * When `cacheComponents: true` your custom tags are appended to the underlying `cacheTag()` call and are subject to the tag length and max tag items limits of Next.js.
+   * @see https://nextjs.org/docs/app/api-reference/functions/cacheTag#good-to-know
    */
   tags?: string[]
   /**
-   * This request tag is used to identify the request when viewing request logs from your Sanity Content Lake.
-   * @see https://www.sanity.io/docs/platform-management/reference-api-request-tags
-   * @defaultValue 'next-loader.fetch'
+   * Request tag used to identify the request in Sanity Content Lake logs.
+   *
+   * @see https://www.sanity.io/docs/reference-api-request-tags
+   *
+   * @defaultValue
+   * If `cacheComponents: true` then the default value is `'next-loader.fetch.cache-components'`
+   * otherwise it's `'next-loader.fetch'`
    */
   requestTag?: string
 }) => Promise<{
@@ -67,17 +100,29 @@ export type DefinedFetchType = <const QueryString extends string>(options: {
  */
 export interface DefinedLiveProps {
   /**
-   * Include draft and content release version events in the live connection, instead of only published documents.
+   * Include draft and content release version events in the live connection. Otherwise only events for published content are included.
    *
-   * A `browserToken` must be configured in `defineLive()` for draft events to be included.
+   * @remarks
+   * Requires `browserToken` to be configured in `defineLive()`
    *
-   * @defaultValue `(await draftMode()).isEnabled`
+   * @defaultValue
+   * The default is `false` unless
+   *  - `Cache Components` are disabled
+   *  - `defineLive()` was given a `browserToken`
+   *  - `defineLive()` is not set to `strict: true`
+   *  - `draftMode()` is enabled
+   *
+   * If all of the above conditions are met, then the default value will be `true`
    */
   includeDrafts?: boolean
   /**
-   * This request tag is used to identify the request when viewing request logs from your Sanity Content Lake.
-   * @see https://www.sanity.io/docs/platform-management/reference-api-request-tags
-   * @defaultValue 'next-loader.live'
+   * Request tag used to identify the live EventSource request in Sanity Content Lake logs.
+   *
+   * @see https://www.sanity.io/docs/reference-api-request-tags
+   *
+   * @defaultValue
+   * If `cacheComponents: true` then the default value is `'next-loader.live.cache-components'`
+   * otherwise it's `'next-loader.live'`
    */
   requestTag?: string
   /**

@@ -1,3 +1,12 @@
+import {sanity as sanityCacheLife} from 'next-sanity/live/cache-life'
+import {SanityLive as SanityLiveClientComponent} from 'next-sanity/live/client-components'
+import {revalidateSyncTagsAction} from 'next-sanity/live/server-actions'
+import {cacheLife, cacheTag} from 'next/cache'
+import {PHASE_PRODUCTION_BUILD} from 'next/constants'
+
+import {cacheTagPrefix} from '#live/constants'
+import {preconnect} from '#live/preconnect'
+import {validateStrictFetchOptions, validateStrictSanityLiveProps} from '#live/strictValidation'
 import type {
   DefinedFetchType,
   DefinedLiveProps,
@@ -244,8 +253,126 @@ export function defineLive(config: DefineLiveOptions & {strict?: false}): {
   sanityFetch: DefinedFetchType
   SanityLive: React.ComponentType<DefinedLiveProps>
 }
-export function defineLive(_config: DefineLiveOptions): never {
-  throw new Error(
-    'defineLive does not yet support `cacheComponents: true`. Wait for the next major version of next-sanity, or use the prerelease with `pnpm install next-sanity@cache-components`',
-  )
+export function defineLive(config: DefineLiveOptions) {
+  const {client: _client, serverToken, browserToken, strict = false} = config
+
+  if (!_client) {
+    throw new Error('`client` is required for `defineLive` to function')
+  }
+
+  if (process.env.NODE_ENV === 'development' && !serverToken && serverToken !== false) {
+    console.warn(
+      'No `serverToken` provided to `defineLive`. This means that only published content will be fetched and respond to live events. You can silence this warning by setting `serverToken: false`.',
+    )
+  }
+
+  if (process.env.NODE_ENV === 'development' && !browserToken && browserToken !== false) {
+    console.warn(
+      'No `browserToken` provided to `defineLive`. This means that live previewing drafts will only work when using the Presentation Tool in your Sanity Studio. To support live previewing drafts stand-alone, provide a `browserToken`. It is shared with the browser so it should only have Viewer rights or lower. You can silence this warning by setting `browserToken: false`.',
+    )
+  }
+
+  const client = _client.withConfig({
+    allowReconfigure: false,
+    useCdn: true,
+    perspective: 'published',
+    stega: false,
+  })
+
+  const sanityFetch: DefinedFetchType = async function sanityFetch({
+    query,
+    params = {},
+    perspective,
+    stega,
+    tags: customCacheTags = [],
+    requestTag = 'next-loader.fetch.cache-components',
+  }) {
+    if (strict) {
+      validateStrictFetchOptions({perspective, stega})
+    }
+
+    const useCdn = perspective ? perspective === 'published' : undefined
+    const isBuildPhase = process.env['NEXT_PHASE'] === PHASE_PRODUCTION_BUILD
+    const cacheMode = useCdn !== false && !isBuildPhase ? 'noStale' : undefined
+    const token =
+      ((perspective && perspective !== 'published') || stega) && serverToken
+        ? serverToken
+        : undefined
+
+    const {result, resultSourceMap, syncTags} = await client.fetch(query, await params, {
+      filterResponse: false,
+      perspective,
+      stega,
+      returnQuery: false,
+      useCdn,
+      cacheMode,
+      tag: requestTag,
+      token,
+    })
+    const tags = [...customCacheTags, ...(syncTags || []).map((tag) => `${cacheTagPrefix}${tag}`)]
+    /**
+     * The tags used here, are expired later on in the `action` Server Action given to `<SanityLive />` with the `revalidateTag` function from `next/cache`,
+     * or by a route handler that userland sets up.
+     */
+    cacheTag(...tags)
+    /**
+     * Sanity Live handles on-demand revalidation, so the default 15min time-based revalidation is too short,
+     * userland can still set a shorter revalidate time by calling `cacheLife` themselves.
+     */
+    cacheLife(sanityCacheLife)
+
+    return {data: result, sourceMap: resultSourceMap || null, tags}
+  }
+
+  const SanityLive: React.ComponentType<DefinedLiveProps> = function SanityLive(props) {
+    if (strict) {
+      validateStrictSanityLiveProps(props)
+    }
+    const {
+      includeDrafts: _includeDrafts = false,
+      requestTag = 'next-loader.live.cache-components',
+      waitFor,
+
+      action,
+      onError,
+      onWelcome,
+      onReconnect,
+      onRestart,
+      onGoAway,
+    } = props
+    const {projectId, dataset, apiHost, apiVersion, useProjectHostname, requestTagPrefix} =
+      client.config()
+
+    const includeDrafts = typeof browserToken === 'string' && !!browserToken && _includeDrafts
+    const shouldWaitFor = waitFor === 'function' && !includeDrafts ? waitFor : undefined
+
+    // Preconnect to the Live Event API origin early, as the Sanity API is almost always on a different origin than the app
+    preconnect(client)
+
+    return (
+      <SanityLiveClientComponent
+        config={{
+          projectId,
+          dataset,
+          apiHost,
+          apiVersion,
+          useProjectHostname,
+          requestTagPrefix,
+          token: includeDrafts ? browserToken : undefined,
+        }}
+        includeDrafts={includeDrafts ? true : undefined}
+        requestTag={requestTag}
+        waitFor={shouldWaitFor}
+        action={action ?? (shouldWaitFor === 'function' ? 'refresh' : revalidateSyncTagsAction)}
+        onError={onError}
+        onWelcome={onWelcome}
+        onReconnect={onReconnect}
+        onRestart={onRestart}
+        onGoAway={onGoAway}
+      />
+    )
+  }
+  SanityLive.displayName = 'SanityLiveServerComponent'
+
+  return {sanityFetch, SanityLive}
 }

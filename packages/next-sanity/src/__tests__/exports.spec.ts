@@ -45,6 +45,8 @@ test(`exports snapshot for the ${JSON.stringify(env)} condition`, {timeout: 15_0
         isCorsOriginError: function
         parseTags: function
         resolvePerspectiveFromCookies: function
+      ./live/cache-life:
+        sanity: object
       ./live/client-components:
         SanityLive: function
       ./live/server-actions:

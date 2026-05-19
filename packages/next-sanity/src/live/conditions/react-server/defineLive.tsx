@@ -2,9 +2,9 @@ import {SanityLive as SanityLiveClientComponent} from 'next-sanity/live/client-c
 import {revalidateSyncTagsAction} from 'next-sanity/live/server-actions'
 import {PHASE_PRODUCTION_BUILD} from 'next/constants'
 import {cookies, draftMode} from 'next/headers'
-import {preconnect} from 'react-dom'
 
 import {cacheTagPrefix} from '#live/constants'
+import {preconnect} from '#live/preconnect'
 import {resolvePerspectiveFromCookies} from '#live/resolvePerspectiveFromCookies'
 import {validateStrictFetchOptions, validateStrictSanityLiveProps} from '#live/strictValidation'
 import type {
@@ -361,8 +361,7 @@ export function defineLive(config: DefineLiveOptions) {
     const shouldWaitFor = waitFor === 'function' && !includeDrafts ? waitFor : undefined
 
     // Preconnect to the Live Event API origin early, as the Sanity API is almost always on a different origin than the app
-    const {origin} = new URL(client.getUrl('', false))
-    preconnect(origin)
+    preconnect(client)
 
     return (
       <SanityLiveClientComponent
