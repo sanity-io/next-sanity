@@ -64,7 +64,7 @@ export const client = createClient({
   projectId: process.env.NEXT_PUBLIC_SANITY_PROJECT_ID!,
   dataset: process.env.NEXT_PUBLIC_SANITY_DATASET!,
   useCdn: true,
-  apiVersion: 'v2026-05-19',
+  apiVersion: '2026-05-19',
   perspective: 'published',
   stega: {studioUrl: process.env.NEXT_PUBLIC_SANITY_STUDIO_URL || 'http://localhost:3333'},
 })
