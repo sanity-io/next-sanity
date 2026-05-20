@@ -35,7 +35,7 @@ The default behavior that you might have relied on is that when a live event was
 - if `draftMode.isEnabled` is false then the cache tags [were invalidated with `updateTag`](https://nextjs.org/docs/app/api-reference/functions/updateTag)
 - if `draftMode.isEnabled` is true then the cache tags [were invalidated with `revalidateTag`](https://nextjs.org/docs/app/api-reference/functions/revalidateTag) with the `max` cache profile
 
-In practice this meant that if you published a change to your nextjs app while at least one visitor was connected to `<SanityLive>` and not in draft mode, then they would be guaranteed to see the change within a few seconds.
+In practice this meant that if you published a change to your Next.js app while at least one visitor was connected to `<SanityLive>` and not in draft mode, then they would be guaranteed to see the change within a few seconds.
 If you were in Presentation Tool or otherwise in draft mode, and nobody else observed the change, then they would eventually see the change if they manually refresh the page a couple of times, or something else triggered a `refresh()` event after the cache is updated. This is a side-effect of using `revalidateTag` with the `max` cache profile instead of `updateTag`, and was a change we made in https://github.com/sanity-io/next-sanity/pull/3432 to avoid the impact of the Next.js regression reported by Sanity to Vercel in https://github.com/vercel/next.js/issues/93210 as `draftMode` generally implies that `<SanityLive>` will enable `includeDrafts` and thus see live events for draft content, and not just published content, and thus receive far more events than if you were not in draft mode.
 
 The new behavior further mitigates the impact we've seen in https://github.com/vercel/next.js/issues/93210 by:
@@ -43,19 +43,21 @@ The new behavior further mitigates the impact we've seen in https://github.com/v
 - using `revalidateTag` with the `max` cache profile instead of `updateTag`
 - when in draft mode, we don't `updateTag` nor `revalidateTag` at all, we just call [`refresh()`](https://nextjs.org/docs/app/api-reference/functions/refresh)
 
-In practice this means that by default content changes are no longer guaranteed to be seen by all visitors within a few seconds, they may need to refresh, or trigger a navigation event, before the new content is visible. This makes the default experience "less live", and is a trade-off we're making until nextjs addresses the regression reported in https://github.com/vercel/next.js/issues/93210 and gives us a path to guaranteed live content updates pushed to all visitors that is also cost efficient.
+In practice this means that by default content changes are no longer guaranteed to be seen by all visitors within a few seconds, they may need to refresh, or trigger a navigation event, before the new content is visible. This makes the default experience "less live", and is a trade-off we're making until Next.js addresses the regression reported in https://github.com/vercel/next.js/issues/93210 and gives us a path to guaranteed live content updates pushed to all visitors that is also cost efficient.
 
 #### Opting in to guaranteed live content updates
 
-The recommended way to opt in to guaranteed live content updates is to implement a [Invalidate Sync Tags Function](https://www.sanity.io/docs/changelog/7a491dd1-67e8-41e0-9a89-eb9704055dc6) ([example](https://github.com/sanity-io/lcapi-examples/blob/9f40340b4d147a6a6bcf26e10045388b951d3212/studio/functions/cache-invalidate/index.ts)) that calls a `/api/revalidate-tags` endpoint in your app ([example](https://github.com/sanity-io/lcapi-examples/blob/9f40340b4d147a6a6bcf26e10045388b951d3212/next-enterprise/src/app/api/expire-tags/route.ts)).
+The recommended way to opt in to guaranteed live content updates is to implement an [Invalidate Sync Tags Function](https://www.sanity.io/docs/changelog/7a491dd1-67e8-41e0-9a89-eb9704055dc6) ([example](https://github.com/sanity-io/lcapi-examples/blob/9f40340b4d147a6a6bcf26e10045388b951d3212/studio/functions/cache-invalidate/index.ts)) that calls a `/api/revalidate-tags` endpoint in your app ([example](https://github.com/sanity-io/lcapi-examples/blob/9f40340b4d147a6a6bcf26e10045388b951d3212/next-enterprise/src/app/api/expire-tags/route.ts)).
 
-We recommend using `revalidateTag` with the `max` cache profile to invalidate the cache tags, and use dedicated client components if you want to drive specific experiences that have to be real-time ([example](https://github.com/sanity-io/lcapi-examples/blob/9f40340b4d147a6a6bcf26e10045388b951d3212/next-enterprise/src/app/Reactions.tsx#L35-L67)), but if you want to have the same instant experience as `next-sanity@12` you can set `{expire: 0}` in your route handler:
+We recommend using `revalidateTag` with the `max` cache profile to invalidate the cache tags, and using dedicated client components if you want to drive specific experiences that have to be real-time ([example](https://github.com/sanity-io/lcapi-examples/blob/9f40340b4d147a6a6bcf26e10045388b951d3212/next-enterprise/src/app/Reactions.tsx#L35-L67)), but if you want to have the same instant experience as `next-sanity@12` you can set `{expire: 0}` in your route handler:
 
 ```ts
+import {revalidateTag} from 'next/cache'
+
 export async function POST(request: Request) {
   const {tags} = (await request.json()) as {tags?: string[]}
 
-  if (!Array.isArray(tags)) {
+  if (!Array.isArray(tags) || !tags.every((tag) => typeof tag === 'string')) {
     return Response.json({error: '`tags` must be an array of strings'}, {status: 400})
   }
 
@@ -85,7 +87,7 @@ export default function RootLayout({children}: {children: React.ReactNode}) {
 
 #### Restore the previous default behavior
 
-If you want to restore the previous default behavior without implementing an [Invalidate Sync Tags Function](https://www.sanity.io/docs/changelog/7a491dd1-67e8-41e0-9a89-eb9704055dc6), you may do so by setting a custom `action` prop to `<SanityLive>`:
+If you want to restore the previous default behavior without implementing an [Invalidate Sync Tags Function](https://www.sanity.io/docs/changelog/7a491dd1-67e8-41e0-9a89-eb9704055dc6), you may do so by setting a custom `action` prop on `<SanityLive>`:
 
 ```tsx
 import {revalidateTag, updateTag} from 'next/cache'
@@ -266,7 +268,7 @@ The motivation for removing this feature is that most users saw this as unexpect
 
 ### `refreshOnReconnect` prop removed from `<SanityLive>`
 
-It was removed as Next.js itself is working [first class support for handling network connectivity changes](https://github.com/vercel/next.js/pull/92011), it can already be tested using `experimental.useOffline`, and so it no longer makes sense for us to implement it ourselves.
+It was removed because Next.js itself is working on [first-class support for handling network connectivity changes](https://github.com/vercel/next.js/pull/92011), which can already be tested using `experimental.useOffline`, so it no longer makes sense for us to implement it ourselves.
 
 This prop was `true` by default, and only used when not in draft mode, so if you relied on this behavior you can add it back like this:
 
@@ -377,11 +379,11 @@ export default function Layout({children}: {children: React.ReactNode}) {
 
 ### `intervalOnGoAway` removed and `onGoAway` signature changed on `<SanityLive>`
 
-If you customized `intervalOnGoAway`, `onGoAway`, or your own `internalOnGoAway` behavior, move that logic into the new `onGoAway` callback and call the provided `setPollingInterval()` helper.
+If you customized `intervalOnGoAway` or `onGoAway`, move that logic into the new `onGoAway` callback and call the provided `setPollingInterval()` helper.
 
 #### Before
 
-`onGoAway` received `(event, intervalOnGoAway)`, and polling interval was configured separately:
+`onGoAway` received `(event, intervalOnGoAway)`, and the polling interval was configured separately:
 
 ```tsx
 // app/client-functions.ts
@@ -470,17 +472,17 @@ Now that we have [Invalidate Sync Tags support in Sanity Functions](https://www.
 
 When the `client` given to `defineLive` has a `stega.studioUrl` configured, and `draftMode().isEnabled` is `true`, then `sanityFetch` calls would use `true` as the default value for its `stega` option.
 
-To opt-out of `stega` being set by default in draft mode, you have 3 options:
+To opt out of `stega` being set by default in draft mode, you have 3 options:
 
 1. Do not define `stega.studioUrl` in the `client` config
 2. Set `stega: false` in the `sanityFetch` call itself
-3. Set `stega: false` in the `defineLive` call.
+3. Set `stega: false` in the `defineLive` call
 
 With this change you no longer have option 3, and you have to use option 2 or 1.
 
 ### `useDraftModePerspective` hook removed
 
-When used on an app that has `<SanityLive />` and `<VisualEditing />`, it would resolve to the `perspective` that is used by the `sanityFetch` calls on the page.
+When used in an app that has `<SanityLive />` and `<VisualEditing />`, it would resolve to the `perspective` that is used by the `sanityFetch` calls on the page.
 The `resolvePerspectiveFromCookies` server component helper can be used instead. Here's how you can create your own `useDraftModePerspective` hook that works the same way as the deprecated one:
 
 #### Before
@@ -627,7 +629,7 @@ The `useIsLivePreview` hook would return `true` in two cases:
 - a) If the app is detected as rendered within an iframe, or a new window, where the parent window is a Sanity Studio running Presentation Tool.
 - b) `<SanityLive />` is rendered on the page with `browserToken` in `defineLive` given a value, and draft mode is enabled.
 
-For use case a) you can use the `useIsPresentationTool` hook instead. For use case b) things started getting a bit tricky when desiring to add support for multiple instances of `<SanityLive />` on the same page that connect to different datasets or even different projects, as well as giving userland control over when `<SanityLive />` sets the `includeDrafts` option, instead of relying on the v12 behavior of always setting it to `true` when `draftMode().isEnabled`, with no way to opt-out when in draft mode, nor to opt-in when not in draft mode.
+For use case a) you can use the `useIsPresentationTool` hook instead. For use case b) things started getting a bit tricky when desiring to add support for multiple instances of `<SanityLive />` on the same page that connect to different datasets or even different projects, as well as giving userland control over when `<SanityLive />` sets the `includeDrafts` option, instead of relying on the v12 behavior of always setting it to `true` when `draftMode().isEnabled`, with no way to opt out when in draft mode, nor to opt in when not in draft mode.
 
 #### Before
 
