@@ -53,16 +53,23 @@ We recommend using `revalidateTag` with the `max` cache profile to invalidate th
 
 ```ts
 import {revalidateTag} from 'next/cache'
+import {timingSafeEqual} from 'node:crypto'
 
 export async function POST(request: Request) {
   const expectedSecret = process.env.SANITY_REVALIDATE_TAGS_SECRET
   const secret = new URL(request.url).searchParams.get('secret')
 
   if (!expectedSecret) {
-    return Response.json({error: 'Missing SANITY_REVALIDATE_TAGS_SECRET environment variable'}, {status: 500})
+    return Response.json({error: 'Server configuration error'}, {status: 500})
   }
 
-  if (secret !== expectedSecret) {
+  const expectedSecretBuffer = Buffer.from(expectedSecret)
+  const secretBuffer = Buffer.from(secret ?? '')
+
+  if (
+    expectedSecretBuffer.length !== secretBuffer.length ||
+    !timingSafeEqual(expectedSecretBuffer, secretBuffer)
+  ) {
     return Response.json({error: 'Unauthorized'}, {status: 401})
   }
 
