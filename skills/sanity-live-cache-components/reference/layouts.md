@@ -11,7 +11,7 @@ When `sanityFetch` runs inside a `layout.tsx`, the goal is to keep `children` st
 
 ## Rules
 
-- The top-level `layout.tsx` component must not `await` dynamic APIs or fetch data. Either reduces the static shell or slows draft-mode streaming.
+- The top-level `layout.tsx` component must not `await` dynamic APIs (other than `draftMode()`) or fetch data. `draftMode()` is the lone exception because Next.js bypasses caching when it's enabled and a `draftMode()`-only top-level component still prerenders into the static shell. Anything else (`cookies()`, `headers()`, `await params`, `await searchParams`, `sanityFetch`) reduces the static shell or slows draft-mode streaming.
 - Push [dynamic API calls](https://nextjs.org/docs/app/guides/streaming#push-dynamic-access-down) down to the leaf that needs them.
 - Extract shared data fetching into a reusable async `'use cache'` helper so two components that need the same data don't both wait independently.
 

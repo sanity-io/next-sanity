@@ -18,7 +18,18 @@ This scales to thousands of pages without ballooning `next build` and without co
   - If prerendering finished in time → serves instantly, no loading state.
   - If not → instantly shows the cached `loading.tsx` fallback.
 
-Add a sibling `src/app/[slug]/loading.tsx` that renders the same skeleton you would otherwise pass to `<Suspense>`.
+Add a sibling `src/app/[slug]/loading.tsx` that renders the same skeleton you would otherwise pass to `<Suspense>`. Keep it cheap and free of layout shift:
+
+```tsx
+// src/app/[slug]/loading.tsx
+export default function Loading() {
+  return (
+    <article aria-busy>
+      <p>Loading…</p>
+    </article>
+  )
+}
+```
 
 ```tsx
 // src/app/[slug]/page.tsx

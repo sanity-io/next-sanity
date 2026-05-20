@@ -13,12 +13,13 @@ This skill assumes familiarity with the `next-cache-components` skill — it cov
 
 ## Prerequisites
 
-- Next.js 16.2+ (`pnpm view next version` or `npm view next version` to check).
+- Next.js 16.2+ installed in the project (check `package.json` or run `pnpm list next` / `npm ls next` — don't use `pnpm view next version`, that reports the registry's latest, not what's installed).
 - `AGENTS.md` exists, or [follow the guide](https://nextjs.org/docs/app/guides/ai-agents#existing-projects).
 - These environment variables are set:
   - `NEXT_PUBLIC_SANITY_PROJECT_ID`
   - `NEXT_PUBLIC_SANITY_DATASET`
   - `SANITY_API_READ_TOKEN`
+- Embedded Sanity Studio configuration (`sanity.config.ts`, `sanity.cli.ts`, anything under `sanity/`) needs no changes — this skill only touches the Next.js app surface.
 
 ## Reference files
 
@@ -105,6 +106,9 @@ The helpers exported from `live.ts`:
 
 `<SanityLive>` and `<VisualEditing>` both belong in a `layout.tsx`, never a `page.tsx`. Both must be rendered at most once across the whole tree — duplicate renders are undefined behavior.
 
+- `includeDrafts` is **required** when `defineLive` is configured with `strict: true` (the recommended setup). TypeScript will surface the error if it's missing; pass `includeDrafts={isDraftMode}` so live revalidation includes drafts only in draft mode.
+- Preserve any existing optional callback props on `<SanityLive>` when migrating: `onError`, `onWelcome`, `onReconnect`. They are commonly wired to a toast/notification helper and silently dropping them regresses UX.
+
 ```tsx
 // src/app/layout.tsx
 import {SanityLive} from '@/sanity/lib/live'
@@ -142,6 +146,8 @@ Page/Layout (Layer 1: draftMode branch)
                       <DynamicX params={params} />  (Layer 2: awaits dynamic APIs)
                         └── <CachedX perspective={p} stega={s} />  (Layer 3: 'use cache')
 ```
+
+**Critical rule**: Only Layer 3 carries `'use cache'`. The top-level `Page` / `Layout` must **not** have `'use cache'` — it awaits `params`, `searchParams`, or `cookies()` (via `getDynamicFetchOptions`), and those dynamic APIs are forbidden inside `'use cache'`. Layer 3 carrying `'use cache'` is enough for the whole route to prerender into the static shell. Adding `'use cache'` to the top-level function is the most common failure mode — TypeScript and the runtime will both complain.
 
 Pick the right reference for the file you're editing:
 

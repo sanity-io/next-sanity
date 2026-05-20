@@ -12,7 +12,9 @@
 
 ## `client.ts`
 
-Projects typically have a `src/sanity/lib/client.ts` that exports a `createClient` instance:
+Projects typically have a `src/sanity/lib/client.ts` that exports a `createClient` instance.
+
+**If no `client.ts` exists yet**, use this shape as a starting point:
 
 ```ts
 // src/sanity/lib/client.ts
@@ -28,14 +30,18 @@ export const client = createClient({
 })
 ```
 
+**If `client.ts` already exists**, leave its structure alone. Templates often centralize env-var reads in a separate `sanity/lib/api.ts` with an `assertValue` helper — keep that. Append only what's missing.
+
 - Use a modern `apiVersion` (e.g. today's date as a hardcoded string).
 - `stega.studioUrl` enables stega encoding. It can be a relative string when an embedded Studio is mounted via `NextStudio` from `next-sanity/studio`, otherwise an absolute URL (typically env-driven).
-- If `client.ts` already exists, **append** missing options rather than overwriting. Changing `apiVersion` or removing existing `stega.*` options can break callers.
+- Changing `apiVersion` or removing existing `stega.*` options can break callers.
 - Never remove an existing `token` from `createClient`. Private datasets require a client token even for published-content fetches.
 
 ## `live.ts`
 
 Create `src/sanity/lib/live.ts` alongside `client.ts`. If it already exists, append only what's missing.
+
+`SANITY_API_READ_TOKEN` must never reach the client bundle. If the project already keeps it in a dedicated server-only module (commonly `src/sanity/lib/token.ts` with `import 'server-only'` at the top), import the token from there instead of inlining the `process.env` read. The example below inlines it for brevity — swap in the existing module if there is one.
 
 ```ts
 // src/sanity/lib/live.ts
