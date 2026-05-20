@@ -51,6 +51,11 @@ export default nextConfig
 
 ## 3. Configure `defineLive` and export `sanityFetch`, `<SanityLive>`, and other helpers
 
+> **What dynamic APIs are allowed inside `'use cache'`?**
+>
+> - **Allowed (sole exception):** `await draftMode()` — you can read `isEnabled` inside a `'use cache'` boundary. Next.js automatically bypasses caching when Draft Mode is enabled, so draft content stays fresh. See the [official `use cache` reference](https://nextjs.org/docs/app/api-reference/directives/use-cache#draft-mode).
+> - **Not allowed:** `await cookies()`, `await headers()`, `await props.params`, `await props.searchParams`, and any other request-bound dynamic API. These must be awaited outside the `'use cache'` boundary (typically in a `Dynamic*` wrapper) and passed in as plain serializable props.
+
 ### `client.ts`
 
 Projects typically have a `src/sanity/lib/client.ts` file that exports a `const client = createClient({})`,
@@ -438,7 +443,7 @@ export default async function Page({params}: PageProps<'/[slug]'>) {
 }
 ```
 
-- `Page` should not have a `'use cache'` directive. Doing so will cause a crash because `Page` calls `draftMode()`, which is a dynamic API that is not allowed inside `'use cache'` boundaries. It's enough for `CachedPage` to have `'use cache'` for `Page` to also be prerendered and part of the static shell.
+- `Page` should not have a `'use cache'` directive. `draftMode()` itself is allowed inside `'use cache'`, but `Page` also awaits `params` and (in routes that need it, such as Case 1 in section 7) calls `getDynamicFetchOptions()`, which calls `cookies()` whenever `draftMode().isEnabled`. `cookies()`, `headers()`, `await params`, and `await searchParams` are not allowed inside `'use cache'` (even when draft mode is active and the cache layer is bypassed). It's enough for `<CachedPage>` (Layer 3) to carry `'use cache'` for `Page` to also be prerendered as part of the static shell.
 - Requires `generateStaticParams` if `params` is used as input to `sanityFetch`
 - **Not in draft mode**: no `<Suspense>` boundary, maximizes static shell
 - **In draft mode**: render `<DynamicPage />` in a `<Suspense>` boundary, preferably with a good fallback skeleton as it'll suspend twice:
@@ -471,7 +476,7 @@ export default function Page({params}: PageProps<'/[slug]'>) {
 
 ### Layer 2: Dynamic Component
 
-Since `<CachedPage>` has `'use cache'` it's not allowed to call `cookies()` or `await props.params`, so `<DynamicPage>` must await them and pass them as props.
+Since `<CachedPage>` has `'use cache'` it's not allowed to call `cookies()`, `headers()`, `await props.params`, or `await props.searchParams` — these must be resolved in `<DynamicPage>` and passed as plain props. `draftMode()` is the one exception and can be read directly inside `<CachedPage>`, but in this pattern it's not needed there because `perspective` and `stega` already encode the draft state via `getDynamicFetchOptions()`.
 
 ```tsx
 // src/app/[slug]/page.tsx (continued)
