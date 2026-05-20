@@ -32,18 +32,18 @@ This API change is only a breaking change for you if you either:
 
 The default behavior that you might have relied on is that when a live event was received:
 
-- if `draftMode.isEnabled` is false then the cache tags [were invalidated with `updateTag`](https://nextjs.org/docs/app/api-reference/functions/updateTag)
-- if `draftMode.isEnabled` is true then the cache tags [were invalidated with `revalidateTag`](https://nextjs.org/docs/app/api-reference/functions/revalidateTag) with the `max` cache profile
+- if `draftMode.isEnabled` is false, the cache tags [were invalidated with `updateTag`](https://nextjs.org/docs/app/api-reference/functions/updateTag)
+- if `draftMode.isEnabled` is true, the cache tags [were invalidated with `revalidateTag`](https://nextjs.org/docs/app/api-reference/functions/revalidateTag) with the `max` cache profile
 
 In practice this meant that if you published a change to your Next.js app while at least one visitor was connected to `<SanityLive>` and not in draft mode, then they would be guaranteed to see the change within a few seconds.
-If you were in Presentation Tool or otherwise in draft mode, and nobody else observed the change, then they would eventually see the change if they manually refresh the page a couple of times, or something else triggered a `refresh()` event after the cache is updated. This is a side-effect of using `revalidateTag` with the `max` cache profile instead of `updateTag`, and was a change we made in https://github.com/sanity-io/next-sanity/pull/3432 to avoid the impact of the Next.js regression reported by Sanity to Vercel in https://github.com/vercel/next.js/issues/93210 as `draftMode` generally implies that `<SanityLive>` will enable `includeDrafts` and thus see live events for draft content, and not just published content, and thus receive far more events than if you were not in draft mode.
+If you were in Presentation Tool or otherwise in draft mode, and nobody else observed the change, then they would eventually see the change if they manually refresh the page a couple of times, or something else triggered a `refresh()` event after the cache is updated. This is a side-effect of using `revalidateTag` with the `max` cache profile instead of `updateTag`, and was a change we made in https://github.com/sanity-io/next-sanity/pull/3432 to avoid the impact of the Next.js regression reported by Sanity to Vercel in https://github.com/vercel/next.js/issues/93210. We made that change because `draftMode` typically causes `<SanityLive>` to enable `includeDrafts`, which produces far more live events than published-only mode.
 
 The new behavior further mitigates the impact we've seen in https://github.com/vercel/next.js/issues/93210 by:
 
 - using `revalidateTag` with the `max` cache profile instead of `updateTag`
-- when in draft mode, we don't `updateTag` nor `revalidateTag` at all, we just call [`refresh()`](https://nextjs.org/docs/app/api-reference/functions/refresh)
+- when in draft mode, we don't call `updateTag` or `revalidateTag` at all; we just call [`refresh()`](https://nextjs.org/docs/app/api-reference/functions/refresh)
 
-In practice this means that by default content changes are no longer guaranteed to be seen by all visitors within a few seconds, they may need to refresh, or trigger a navigation event, before the new content is visible. This makes the default experience "less live", and is a trade-off we're making until Next.js addresses the regression reported in https://github.com/vercel/next.js/issues/93210 and gives us a path to guaranteed live content updates pushed to all visitors that is also cost efficient.
+In practice this means that, by default, content changes are no longer guaranteed to be seen by all visitors within a few seconds; they may need to refresh, or trigger a navigation event, before the new content is visible. This makes the default experience "less live". It's a trade-off we're making until Next.js addresses the regression reported in https://github.com/vercel/next.js/issues/93210 and gives us a path to guaranteed live content updates pushed to all visitors that is also cost-efficient.
 
 #### Opting in to guaranteed live content updates
 
@@ -88,7 +88,7 @@ export async function POST(request: Request) {
 }
 ```
 
-You then set `waitFor="function"` on your `<SanityLive>` component, when you are on a deployment that also handles incoming events to `/api/revalidate-tags`:
+You then set `waitFor="function"` on your `<SanityLive>` component when you deploy somewhere that also handles incoming events to `/api/revalidate-tags`:
 
 ```tsx
 export default function RootLayout({children}: {children: React.ReactNode}) {
@@ -150,7 +150,7 @@ export default function RootLayout({children}: {children: React.ReactNode}) {
 
 #### waitFor="function" no longer ignores custom actions
 
-Previously setting `waitFor="function"` would ignore any custom `revalidateSyncTags` function and always call `router.refresh()` internally.
+Previously, setting `waitFor="function"` would ignore any custom `revalidateSyncTags` function and always call `router.refresh()` internally.
 That's not the case with `action` anymore, so if your implementation looks like this today:
 
 ```tsx
@@ -268,7 +268,7 @@ Then update your layout to include it:
 
 ```diff
 // app/layout.tsx
-import {SanityLive} from '#sanity/live'
+import {SanityLive} from '@/sanity/lib/live'
 +import {RefreshOnFocus} from './RefreshOnFocus'
 
 export default function Layout({children}: {children: React.ReactNode}) {
@@ -322,7 +322,7 @@ Then update your layout to include it:
 
 ```diff
 // app/layout.tsx
-import {SanityLive} from '#sanity/live'
+import {SanityLive} from '@/sanity/lib/live'
 +import {RefreshOnReconnect} from './RefreshOnReconnect'
 
 export default async function Layout({children}: {children: React.ReactNode}) {
@@ -380,7 +380,7 @@ Then update your layout to include it:
 
 ```diff
 // app/layout.tsx
-import {SanityLive} from '#sanity/live'
+import {SanityLive} from '@/sanity/lib/live'
 +import {RefreshOnMount} from './RefreshOnMount'
 
 export default function Layout({children}: {children: React.ReactNode}) {
@@ -428,7 +428,7 @@ export function onGoAway(event: LiveEventGoAway, intervalOnGoAway: number | fals
 ```tsx
 // app/layout.tsx
 import {onGoAway} from './client-functions'
-import {SanityLive} from '#sanity/live'
+import {SanityLive} from '@/sanity/lib/live'
 
 export default function Layout({children}: {children: React.ReactNode}) {
   return (
@@ -465,7 +465,7 @@ export const onGoAway: SanityLiveOnGoaway = (event, {includeDrafts}, setPollingI
 ```tsx
 // app/layout.tsx
 import {onGoAway} from './client-functions'
-import {SanityLive} from '#sanity/live'
+import {SanityLive} from '@/sanity/lib/live'
 
 export default function Layout({children}: {children: React.ReactNode}) {
   return (
@@ -484,11 +484,11 @@ To disable fallback polling entirely, pass `onGoAway={false}`.
 This option was used to set a [time-based revalidation](https://nextjs.org/docs/app/guides/caching-without-cache-components#time-based-revalidation) as a fallback strategy for when content might change in the dataset without an active browser session connected to `<SanityLive>`, thus making the cached content stale.
 The downside to this approach was that time-based revalidation ended up causing many unnecessary ISR writes, since they trigger based on a fixed interval rather than on the actual content changes.
 
-Now that we have [Invalidate Sync Tags support in Sanity Functions](https://www.sanity.io/docs/functions/sync-tag-function-quickstart), the preferred fallback approach is to use it to call a `/api/revalidate-tags` endpoint in your app so that the content is eventually fresh even if the content change happened without an active browser session connected to `<SanityLive>`.
+[Invalidate Sync Tags support in Sanity Functions](https://www.sanity.io/docs/functions/sync-tag-function-quickstart) is now the preferred fallback. Use it to call a `/api/revalidate-tags` endpoint in your app so that content eventually becomes fresh, even when the change happened without an active browser session connected to `<SanityLive>`.
 
 ### `stega` option removed from `defineLive`
 
-When the `client` given to `defineLive` has a `stega.studioUrl` configured, and `draftMode().isEnabled` is `true`, then `sanityFetch` calls would use `true` as the default value for its `stega` option.
+When the `client` given to `defineLive` has a `stega.studioUrl` configured, and `draftMode().isEnabled` is `true`, `sanityFetch` used `true` as the default value for its `stega` option.
 
 To opt out of `stega` being set by default in draft mode, you have 3 options:
 
@@ -496,12 +496,12 @@ To opt out of `stega` being set by default in draft mode, you have 3 options:
 2. Set `stega: false` in the `sanityFetch` call itself
 3. Set `stega: false` in the `defineLive` call
 
-With this change you no longer have option 3, and you have to use option 2 or 1.
+With this change you no longer have option 3, and you have to use option 1 or 2.
 
 ### `useDraftModePerspective` hook removed
 
-When used in an app that has `<SanityLive />` and `<VisualEditing />`, it would resolve to the `perspective` that is used by the `sanityFetch` calls on the page.
-The `resolvePerspectiveFromCookies` server component helper can be used instead. Here's how you can create your own `useDraftModePerspective` hook that works the same way as the deprecated one:
+When used in an app that has `<SanityLive />` and `<VisualEditing />`, it resolved to the `perspective` used by `sanityFetch` on the page.
+Use the `resolvePerspectiveFromCookies` server-component helper instead. Here's how to reproduce the deprecated hook:
 
 #### Before
 
@@ -509,7 +509,7 @@ The `resolvePerspectiveFromCookies` server component helper can be used instead.
 // app/layout.tsx
 import {draftMode} from 'next/headers'
 import {VisualEditing} from 'next-sanity/visual-editing'
-import {SanityLive} from '#sanity/live'
+import {SanityLive} from '@/sanity/lib/live'
 
 export default async function RootLayout({children}: {children: React.ReactNode}) {
   const {isEnabled: isDraftMode} = await draftMode()
@@ -557,7 +557,7 @@ In this example the `DebugStatus` component will log `Perspective: "unknown"` in
 // app/layout.tsx
 import {draftMode} from 'next/headers'
 import {VisualEditing} from 'next-sanity/visual-editing'
-import {SanityLive} from '#sanity/live'
+import {SanityLive} from '@/sanity/lib/live'
 import {DraftModePerspective} from './DraftModePerspectiveProvider'
 
 export default async function RootLayout({children}: {children: React.ReactNode}) {
@@ -657,7 +657,7 @@ For use case a) you can use the `useIsPresentationTool` hook instead. For use ca
 // app/layout.tsx
 import {VisualEditing} from 'next-sanity/visual-editing'
 import {draftMode} from 'next/headers'
-import {SanityLive} from '#sanity/live'
+import {SanityLive} from '@/sanity/lib/live'
 
 import {DebugStatus} from './DebugStatus'
 
@@ -719,7 +719,7 @@ export function useIsLivePreview() {
 // app/layout.tsx
 import {VisualEditing} from 'next-sanity/visual-editing'
 import {draftMode} from 'next/headers'
-import {SanityLive} from '#sanity/live'
+import {SanityLive} from '@/sanity/lib/live'
 
 import {DebugStatus} from './DebugStatus'
 import {IsLivePreviewProvider} from './IsLivePreviewContext'
