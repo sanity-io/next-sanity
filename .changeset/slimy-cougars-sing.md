@@ -13,5 +13,5 @@ npx skills add https://github.com/sanity-io/next-sanity --skill sanity-live-cach
 Suggested prompt:
 
 ```txt
-Use the /sanity-live-cache-components skill to migrate this app to use cache components. When verifying with `next dev`, test both draft mode enabled and draft mode disabled because each mode has different rendering rules. `next build --debug-prerender` is not sufficient to verify that draft mode works correctly.
+Use the /sanity-live-cache-components skill to migrate this app to use Cache Components. When verifying with `next dev`, test both draft mode enabled and draft mode disabled because each mode has different rendering rules. `next build --debug-prerender` is not sufficient to verify that draft mode works correctly.
 ```
