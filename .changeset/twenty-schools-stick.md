@@ -4,7 +4,7 @@
 
 Add `onWelcome` prop to `<SanityLive>`
 
-The default behavior is to log a welcome message to the console, here's how to customize it:
+The default behavior is to log a welcome message to the console. Here's how to customize it:
 
 ```tsx
 // app/client-functions.ts
@@ -22,7 +22,7 @@ export const onWelcome: SanityLiveOnWelcome = (event, {includeDrafts, waitFor}) 
 ```tsx
 // app/layout.tsx
 import {onWelcome} from './client-functions'
-import {SanityLive} from '#sanity/live'
+import {SanityLive} from '@/sanity/lib/live'
 
 export default function Layout({children}: {children: React.ReactNode}) {
   return (
@@ -34,4 +34,4 @@ export default function Layout({children}: {children: React.ReactNode}) {
 }
 ```
 
-To disable default welcome message, pass `onWelcome={false}`.
+To disable the default welcome message, pass `onWelcome={false}`.
