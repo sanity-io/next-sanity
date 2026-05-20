@@ -1,6 +1,6 @@
 ## Migrate
 
-## Table of contents<!-- omit in toc -->
+### Table of contents<!-- omit in toc -->
 
 - [Replace the `revalidateSyncTags` prop on `<SanityLive>` with `action`](#replace-the-revalidatesynctags-prop-on-sanitylive-with-action)
   - [Opting in to guaranteed live content updates](#opting-in-to-guaranteed-live-content-updates)
