@@ -59,7 +59,7 @@ export async function POST(request: Request) {
   const secret = new URL(request.url).searchParams.get('secret')
 
   if (!expectedSecret) {
-    return Response.json({error: 'Server misconfiguration'}, {status: 500})
+    return Response.json({error: 'Missing SANITY_REVALIDATE_TAGS_SECRET environment variable'}, {status: 500})
   }
 
   if (secret !== expectedSecret) {
