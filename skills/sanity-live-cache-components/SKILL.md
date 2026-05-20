@@ -75,6 +75,7 @@ The `client.ts` file should use a modern `apiVersion` (for example today's date 
 
 If the `client.ts` file already exists then don't overwrite it, extend it with options that are missing (append only from the above reference).
 Giving `apiVersion` a new value, or removing other `stega.*` options can lead to breakage.
+Never remove an existing `token` from `createClient`. Private datasets require a client token even for published-content fetches.
 
 ### `live.ts`
 
