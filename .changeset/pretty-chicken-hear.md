@@ -2,4 +2,4 @@
 'next-sanity': minor
 ---
 
-Add `onReconnect` prop on `<SanityLive>`, by default it logs an error to the console. You can set `<SanityLive onReconnect={false} />` to disable the default behavior.
+Add `onReconnect` prop to `<SanityLive>`. By default it logs an error to the console; pass `onReconnect={false}` to disable.

@@ -4,15 +4,14 @@
 
 Add `resolvePerspectiveFromCookies` utility
 
-When `cacheComponents: false` the `sanityFetch` function returned by `defineLive` will automatically resolve the `perspective` when in [draft mode](https://nextjs.org/docs/app/guides/draft-mode).
-The way it resolves it is by reading a cookie that is set by the `defineEnableDraftMode` function, and updated by `Presentation Tool` when the user switches perspectives in the Studio.
+When `cacheComponents: false`, `sanityFetch` automatically resolves the `perspective` in [draft mode](https://nextjs.org/docs/app/guides/draft-mode) by reading a cookie that `defineEnableDraftMode` sets and that Presentation Tool updates when the user switches perspectives in the Studio.
 
-The `resolvePerspectiveFromCookies` utility allows you to resolve the `perspective` in the same way so you can:
+The new `resolvePerspectiveFromCookies` utility exposes that resolution directly, so you can:
 
-- Instrument draft mode with a custom toolbar that lists which perspectives are currently used to fetch data on the page.
-- Resolve `perspective` the same way in `cacheComponents: true` components, providing it as input to `'use cache'` boundaries that call `sanityFetch`.
+- Instrument draft mode with a custom toolbar that lists the perspectives currently used to fetch data on the page.
+- Resolve `perspective` in `cacheComponents: true` components and pass it into `'use cache'` boundaries that call `sanityFetch`.
 
-Here's how to call it the same way that `sanityFetch` does:
+Here's how `sanityFetch` resolves it internally — wrap it in a helper to do the same:
 
 ```tsx
 import {cookies, draftMode} from 'next/headers'

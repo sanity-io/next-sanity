@@ -2,4 +2,4 @@
 'next-sanity': minor
 ---
 
-Add `onRestart` prop on `<SanityLive>`, by default it calls `router.refresh()`. You can set `<SanityLive onRestart={false} />` to disable the default behavior.
+Add `onRestart` prop to `<SanityLive>`. By default it calls `router.refresh()`; pass `onRestart={false}` to disable.
