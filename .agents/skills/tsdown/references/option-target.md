@@ -36,10 +36,12 @@ export default defineConfig({
 ```
 
 **Result:**
+
 - No JavaScript downleveling
 - Modern features preserved (optional chaining `?.`, nullish coalescing `??`, etc.)
 
 **Use when:**
+
 - Targeting modern environments
 - Handling transformations elsewhere
 - Building libraries for further processing
@@ -120,7 +122,7 @@ export default defineConfig({
 export default defineConfig({
   entry: ['src/index.ts'],
   format: ['esm'],
-  target: 'es2015',  // Maximum compatibility
+  target: 'es2015', // Maximum compatibility
 })
 ```
 
@@ -168,7 +170,7 @@ See [oxc issue #9170](https://github.com/oxc-project/oxc/issues/9170).
 export default defineConfig({
   entry: ['src/index.ts'],
   format: ['esm', 'cjs'],
-  target: 'es2020',  // Wide compatibility
+  target: 'es2020', // Wide compatibility
 })
 ```
 
@@ -178,7 +180,7 @@ export default defineConfig({
 export default defineConfig({
   entry: ['src/index.ts'],
   format: ['esm'],
-  target: false,  // No transformations
+  target: false, // No transformations
 })
 ```
 
@@ -199,7 +201,7 @@ When `@tsdown/css` is installed and a browser target is set, CSS syntax is also 
 
 ```ts
 export default defineConfig({
-  target: 'chrome108',  // CSS nesting will be flattened
+  target: 'chrome108', // CSS nesting will be flattened
 })
 ```
 

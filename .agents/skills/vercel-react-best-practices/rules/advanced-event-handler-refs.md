@@ -40,7 +40,7 @@ function useWindowEvent(event: string, handler: (e) => void) {
 **Alternative: use `useEffectEvent` if you're on latest React:**
 
 ```tsx
-import { useEffectEvent } from 'react'
+import {useEffectEvent} from 'react'
 
 function useWindowEvent(event: string, handler: (e) => void) {
   const onEvent = useEffectEvent(handler)

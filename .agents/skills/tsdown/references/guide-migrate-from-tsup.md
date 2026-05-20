@@ -35,12 +35,12 @@ npx tsdown-migrate packages/foo packages/bar
 
 ### Default Values
 
-| Option | tsup | tsdown |
-|--------|------|--------|
-| `format` | `['cjs']` | `['esm']` |
-| `clean` | `false` | `true` |
-| `dts` | `false` | Auto-enabled if `types`/`typings` in package.json |
-| `target` | Manual | Auto-read from `engines.node` in package.json |
+| Option   | tsup      | tsdown                                            |
+| -------- | --------- | ------------------------------------------------- |
+| `format` | `['cjs']` | `['esm']`                                         |
+| `clean`  | `false`   | `true`                                            |
+| `dts`    | `false`   | Auto-enabled if `types`/`typings` in package.json |
+| `target` | Manual    | Auto-read from `engines.node` in package.json     |
 
 ### New Features in tsdown
 
@@ -48,9 +48,9 @@ npx tsdown-migrate packages/foo packages/bar
 
 ```ts
 export default defineConfig({
-  nodeProtocol: true,      // Add node: prefix (fs → node:fs)
-  nodeProtocol: 'strip',   // Remove node: prefix (node:fs → fs)
-  nodeProtocol: false,     // Keep as-is (default)
+  nodeProtocol: true, // Add node: prefix (fs → node:fs)
+  nodeProtocol: 'strip', // Remove node: prefix (node:fs → fs)
+  nodeProtocol: false, // Keep as-is (default)
 })
 ```
 
@@ -58,7 +58,7 @@ export default defineConfig({
 
 ```ts
 export default defineConfig({
-  workspace: 'packages/*',  // Build all packages
+  workspace: 'packages/*', // Build all packages
 })
 ```
 
@@ -76,6 +76,7 @@ export default defineConfig({
 ### Basic Library
 
 **Before (tsup):**
+
 ```ts
 export default defineConfig({
   entry: ['src/index.ts'],
@@ -85,18 +86,20 @@ export default defineConfig({
 ```
 
 **After (tsdown):**
+
 ```ts
 export default defineConfig({
   entry: ['src/index.ts'],
-  format: ['esm', 'cjs'],  // ESM now default
+  format: ['esm', 'cjs'], // ESM now default
   dts: true,
-  clean: true,  // Now enabled by default
+  clean: true, // Now enabled by default
 })
 ```
 
 ### With Custom Target
 
 **Before (tsup):**
+
 ```ts
 export default defineConfig({
   entry: ['src/index.ts'],
@@ -105,6 +108,7 @@ export default defineConfig({
 ```
 
 **After (tsdown):**
+
 ```ts
 export default defineConfig({
   entry: ['src/index.ts'],
@@ -117,6 +121,7 @@ export default defineConfig({
 ### CLI Scripts
 
 **Before (package.json):**
+
 ```json
 {
   "scripts": {
@@ -127,6 +132,7 @@ export default defineConfig({
 ```
 
 **After (package.json):**
+
 ```json
 {
   "scripts": {
@@ -141,6 +147,7 @@ export default defineConfig({
 ### Supported tsup Features
 
 Most tsup features are supported:
+
 - ✅ Multiple entry points
 - ✅ Multiple formats (ESM, CJS, IIFE, UMD)
 - ✅ TypeScript declarations
@@ -174,6 +181,7 @@ Some tsup features are not yet available. Check [GitHub issues](https://github.c
 ### Performance Issues
 
 tsdown should be faster than tsup. If not:
+
 1. Enable `isolatedDeclarations` for faster DTS generation
 2. Check for large dependencies being bundled
 3. Use `skipNodeModulesBundle` if needed

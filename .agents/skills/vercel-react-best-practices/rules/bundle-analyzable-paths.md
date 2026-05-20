@@ -12,6 +12,7 @@ Build tools work best when import and file-system paths are obvious at build tim
 Prefer explicit maps or literal paths so the set of reachable files stays narrow and predictable. This is the same rule whether you are choosing modules with `import()` or reading files in server/build code.
 
 When analysis becomes too broad, the cost is real:
+
 - Larger server bundles
 - Slower builds
 - Worse cold starts

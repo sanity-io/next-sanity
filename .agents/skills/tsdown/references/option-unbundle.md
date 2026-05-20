@@ -40,6 +40,7 @@ src/
 ### With Unbundle
 
 **Config:**
+
 ```ts
 export default defineConfig({
   entry: ['src/index.ts'],
@@ -48,6 +49,7 @@ export default defineConfig({
 ```
 
 **Output:**
+
 ```
 dist/
 ├── index.mjs
@@ -63,6 +65,7 @@ All imported files are output individually, preserving structure.
 ### Without Unbundle (Default)
 
 **Output:**
+
 ```
 dist/
 └── index.mjs  (all code bundled together)
@@ -101,15 +104,17 @@ export default defineConfig({
 ```
 
 **Benefits:**
+
 - Users import only what they need
 - Tree shaking still works at user's build
 - Clear module boundaries
 
 **Usage:**
+
 ```ts
 // Users can import specific utilities
-import { helper } from 'my-lib/utils/helper'
-import { Button } from 'my-lib/components/button'
+import {helper} from 'my-lib/utils/helper'
+import {Button} from 'my-lib/components/button'
 ```
 
 ### Monorepo Shared Package
@@ -143,7 +148,7 @@ Pure TypeScript to JavaScript transformation.
 ```ts
 export default defineConfig((options) => ({
   entry: ['src/**/*.ts'],
-  unbundle: options.watch,  // Unbundle in dev only
+  unbundle: options.watch, // Unbundle in dev only
   minify: !options.watch,
 }))
 ```
@@ -156,12 +161,7 @@ Fast rebuilds during development, optimized for production.
 
 ```ts
 export default defineConfig({
-  entry: [
-    'src/**/*.ts',
-    '!**/*.test.ts',
-    '!**/*.spec.ts',
-    '!**/fixtures/**',
-  ],
+  entry: ['src/**/*.ts', '!**/*.test.ts', '!**/*.spec.ts', '!**/fixtures/**'],
   unbundle: true,
 })
 ```
@@ -188,7 +188,7 @@ Both entry files and all imports preserved.
 export default defineConfig({
   entry: ['src/**/*.ts'],
   unbundle: true,
-  outExtensions: () => ({ js: '.js' }),
+  outExtensions: () => ({js: '.js'}),
 })
 ```
 
@@ -203,6 +203,7 @@ export default defineConfig({
 ```
 
 **Output:**
+
 ```
 lib/
 ├── index.js
@@ -233,21 +234,22 @@ Or use `exports: true` to auto-generate.
 
 ## Comparison
 
-| Feature | Bundled | Unbundled |
-|---------|---------|-----------|
-| Output files | Few | Many |
-| File size | Smaller | Larger |
-| Build speed | Slower | Faster |
-| Tree shaking | Build time | User's build |
-| Source mapping | Complex | Simple |
-| Module imports | Entry only | Any module |
-| Dev rebuilds | Slower | Faster |
+| Feature        | Bundled    | Unbundled    |
+| -------------- | ---------- | ------------ |
+| Output files   | Few        | Many         |
+| File size      | Smaller    | Larger       |
+| Build speed    | Slower     | Faster       |
+| Tree shaking   | Build time | User's build |
+| Source mapping | Complex    | Simple       |
+| Module imports | Entry only | Any module   |
+| Dev rebuilds   | Slower     | Faster       |
 
 ## Performance
 
 ### Build Speed
 
 Unbundle is typically faster:
+
 - No bundling overhead
 - Parallel file processing
 - Incremental builds possible
@@ -255,6 +257,7 @@ Unbundle is typically faster:
 ### Bundle Size
 
 Unbundle produces larger output:
+
 - Each file has its own overhead
 - No cross-module optimizations
 - User's bundler handles final optimization

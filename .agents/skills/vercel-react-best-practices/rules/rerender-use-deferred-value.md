@@ -12,13 +12,13 @@ When user input triggers expensive computations or renders, use `useDeferredValu
 **Incorrect (input feels laggy while filtering):**
 
 ```tsx
-function Search({ items }: { items: Item[] }) {
+function Search({items}: {items: Item[]}) {
   const [query, setQuery] = useState('')
-  const filtered = items.filter(item => fuzzyMatch(item, query))
+  const filtered = items.filter((item) => fuzzyMatch(item, query))
 
   return (
     <>
-      <input value={query} onChange={e => setQuery(e.target.value)} />
+      <input value={query} onChange={(e) => setQuery(e.target.value)} />
       <ResultsList results={filtered} />
     </>
   )
@@ -28,19 +28,19 @@ function Search({ items }: { items: Item[] }) {
 **Correct (input stays snappy, results render when ready):**
 
 ```tsx
-function Search({ items }: { items: Item[] }) {
+function Search({items}: {items: Item[]}) {
   const [query, setQuery] = useState('')
   const deferredQuery = useDeferredValue(query)
   const filtered = useMemo(
-    () => items.filter(item => fuzzyMatch(item, deferredQuery)),
-    [items, deferredQuery]
+    () => items.filter((item) => fuzzyMatch(item, deferredQuery)),
+    [items, deferredQuery],
   )
   const isStale = query !== deferredQuery
 
   return (
     <>
-      <input value={query} onChange={e => setQuery(e.target.value)} />
-      <div style={{ opacity: isStale ? 0.7 : 1 }}>
+      <input value={query} onChange={(e) => setQuery(e.target.value)} />
+      <div style={{opacity: isStale ? 0.7 : 1}}>
         <ResultsList results={filtered} />
       </div>
     </>

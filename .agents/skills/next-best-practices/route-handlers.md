@@ -14,7 +14,7 @@ export async function GET() {
 export async function POST(request: Request) {
   const body = await request.json()
   const user = await createUser(body)
-  return Response.json(user, { status: 201 })
+  return Response.json(user, {status: 201})
 }
 ```
 
@@ -60,10 +60,10 @@ Route handlers run in a **Server Component-like environment**:
 
 ```tsx
 // Bad: This won't work - no React DOM in route handlers
-import { renderToString } from 'react-dom/server'
+import {renderToString} from 'react-dom/server'
 
 export async function GET() {
-  const html = renderToString(<Component />)  // Error!
+  const html = renderToString(<Component />) // Error!
   return new Response(html)
 }
 ```
@@ -72,15 +72,12 @@ export async function GET() {
 
 ```tsx
 // app/api/users/[id]/route.ts
-export async function GET(
-  request: Request,
-  { params }: { params: Promise<{ id: string }> }
-) {
-  const { id } = await params
+export async function GET(request: Request, {params}: {params: Promise<{id: string}>}) {
+  const {id} = await params
   const user = await getUser(id)
 
   if (!user) {
-    return Response.json({ error: 'Not found' }, { status: 404 })
+    return Response.json({error: 'Not found'}, {status: 404})
   }
 
   return Response.json(user)
@@ -92,7 +89,7 @@ export async function GET(
 ```tsx
 export async function GET(request: Request) {
   // URL and search params
-  const { searchParams } = new URL(request.url)
+  const {searchParams} = new URL(request.url)
   const query = searchParams.get('q')
 
   // Headers
@@ -102,7 +99,7 @@ export async function GET(request: Request) {
   const cookieStore = await cookies()
   const token = cookieStore.get('token')
 
-  return Response.json({ query, token })
+  return Response.json({query, token})
 }
 ```
 
@@ -110,10 +107,10 @@ export async function GET(request: Request) {
 
 ```tsx
 // JSON response
-return Response.json({ data })
+return Response.json({data})
 
 // With status
-return Response.json({ error: 'Not found' }, { status: 404 })
+return Response.json({error: 'Not found'}, {status: 404})
 
 // With headers
 return Response.json(data, {
@@ -127,20 +124,20 @@ return Response.redirect(new URL('/login', request.url))
 
 // Stream
 return new Response(stream, {
-  headers: { 'Content-Type': 'text/event-stream' },
+  headers: {'Content-Type': 'text/event-stream'},
 })
 ```
 
 ## When to Use Route Handlers vs Server Actions
 
-| Use Case | Route Handlers | Server Actions |
-|----------|----------------|----------------|
-| Form submissions | No | Yes |
-| Data mutations from UI | No | Yes |
-| Third-party webhooks | Yes | No |
-| External API consumption | Yes | No |
-| Public REST API | Yes | No |
-| File uploads | Both work | Both work |
+| Use Case                 | Route Handlers | Server Actions |
+| ------------------------ | -------------- | -------------- |
+| Form submissions         | No             | Yes            |
+| Data mutations from UI   | No             | Yes            |
+| Third-party webhooks     | Yes            | No             |
+| External API consumption | Yes            | No             |
+| Public REST API          | Yes            | No             |
+| File uploads             | Both work      | Both work      |
 
 **Prefer Server Actions** for mutations triggered from your UI.
 **Use Route Handlers** for external integrations and public APIs.

@@ -89,7 +89,7 @@ When the `globalConfiguration` future flag is enabled, global environment keys m
 
 ```json
 {
-  "futureFlags": { "globalConfiguration": true },
+  "futureFlags": {"globalConfiguration": true},
   "global": {
     "env": ["CI", "NODE_ENV"],
     "passThroughEnv": ["GITHUB_TOKEN", "NPM_TOKEN"]

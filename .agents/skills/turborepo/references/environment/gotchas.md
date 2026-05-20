@@ -147,7 +147,7 @@ The same config using the `global` key. The `.env` files move to `global.inputs`
 ```json
 {
   "$schema": "https://v2-9-15-canary-3.turborepo.dev/schema.json",
-  "futureFlags": { "globalConfiguration": true },
+  "futureFlags": {"globalConfiguration": true},
   "global": {
     "env": ["CI", "NODE_ENV", "VERCEL"],
     "passThroughEnv": ["GITHUB_TOKEN", "VERCEL_URL"],

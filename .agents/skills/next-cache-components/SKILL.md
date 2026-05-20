@@ -11,7 +11,7 @@ Cache Components enable Partial Prerendering (PPR) - mix static, cached, and dyn
 
 ```ts
 // next.config.ts
-import type { NextConfig } from 'next'
+import type {NextConfig} from 'next'
 
 const nextConfig: NextConfig = {
   cacheComponents: true,
@@ -36,7 +36,7 @@ Synchronous code, imports, pure computations - prerendered at build time:
 export default function Page() {
   return (
     <header>
-      <h1>Our Blog</h1>  {/* Static - instant */}
+      <h1>Our Blog</h1> {/* Static - instant */}
       <nav>...</nav>
     </header>
   )
@@ -62,15 +62,14 @@ async function BlogPosts() {
 Runtime data that must be fresh - wrap in Suspense:
 
 ```tsx
-import { Suspense } from 'react'
+import {Suspense} from 'react'
 
 export default function Page() {
   return (
     <>
-      <BlogPosts />  {/* Cached */}
-
+      <BlogPosts /> {/* Cached */}
       <Suspense fallback={<p>Loading...</p>}>
-        <UserPreferences />  {/* Dynamic - streams in */}
+        <UserPreferences /> {/* Dynamic - streams in */}
       </Suspense>
     </>
   )
@@ -124,25 +123,25 @@ export async function getData() {
 ### Built-in Profiles
 
 ```tsx
-'use cache'                    // Default: 5m stale, 15m revalidate
+'use cache' // Default: 5m stale, 15m revalidate
 ```
 
 ```tsx
-'use cache: remote'           // Platform-provided cache (Redis, KV)
+'use cache: remote' // Platform-provided cache (Redis, KV)
 ```
 
 ```tsx
-'use cache: private'          // For compliance, allows runtime APIs
+'use cache: private' // For compliance, allows runtime APIs
 ```
 
 ### `cacheLife()` - Custom Lifetime
 
 ```tsx
-import { cacheLife } from 'next/cache'
+import {cacheLife} from 'next/cache'
 
 async function getData() {
   'use cache'
-  cacheLife('hours')  // Built-in profile
+  cacheLife('hours') // Built-in profile
   return fetch('/api/data')
 }
 ```
@@ -155,9 +154,9 @@ Built-in profiles: `'default'`, `'minutes'`, `'hours'`, `'days'`, `'weeks'`, `'m
 async function getData() {
   'use cache'
   cacheLife({
-    stale: 3600,      // 1 hour - serve stale while revalidating
+    stale: 3600, // 1 hour - serve stale while revalidating
     revalidate: 7200, // 2 hours - background revalidation interval
-    expire: 86400,    // 1 day - hard expiration
+    expire: 86400, // 1 day - hard expiration
   })
   return fetch('/api/data')
 }
@@ -170,7 +169,7 @@ async function getData() {
 ### `cacheTag()` - Tag Cached Content
 
 ```tsx
-import { cacheTag } from 'next/cache'
+import {cacheTag} from 'next/cache'
 
 async function getProducts() {
   'use cache'
@@ -181,7 +180,7 @@ async function getProducts() {
 async function getProduct(id: string) {
   'use cache'
   cacheTag('products', `product-${id}`)
-  return db.products.findUnique({ where: { id } })
+  return db.products.findUnique({where: {id}})
 }
 ```
 
@@ -192,11 +191,11 @@ Use when you need the cache refreshed within the same request:
 ```tsx
 'use server'
 
-import { updateTag } from 'next/cache'
+import {updateTag} from 'next/cache'
 
 export async function updateProduct(id: string, data: FormData) {
-  await db.products.update({ where: { id }, data })
-  updateTag(`product-${id}`)  // Immediate - same request sees fresh data
+  await db.products.update({where: {id}, data})
+  updateTag(`product-${id}`) // Immediate - same request sees fresh data
 }
 ```
 
@@ -207,11 +206,11 @@ Use for stale-while-revalidate behavior:
 ```tsx
 'use server'
 
-import { revalidateTag } from 'next/cache'
+import {revalidateTag} from 'next/cache'
 
 export async function createPost(data: FormData) {
-  await db.posts.create({ data })
-  revalidateTag('posts')  // Background - next request sees fresh data
+  await db.posts.create({data})
+  revalidateTag('posts') // Background - next request sees fresh data
 }
 ```
 
@@ -227,7 +226,7 @@ export async function createPost(data: FormData) {
 // Wrong - runtime API inside use cache
 async function CachedProfile() {
   'use cache'
-  const session = (await cookies()).get('session')?.value  // Error!
+  const session = (await cookies()).get('session')?.value // Error!
   return <div>{session}</div>
 }
 
@@ -237,7 +236,7 @@ async function ProfilePage() {
   return <CachedProfile sessionId={session} />
 }
 
-async function CachedProfile({ sessionId }: { sessionId: string }) {
+async function CachedProfile({sessionId}: {sessionId: string}) {
   'use cache'
   // sessionId becomes part of cache key automatically
   const data = await fetchUserData(sessionId)
@@ -252,7 +251,7 @@ For compliance requirements when you can't refactor:
 ```tsx
 async function getData() {
   'use cache: private'
-  const session = (await cookies()).get('session')?.value  // Allowed
+  const session = (await cookies()).get('session')?.value // Allowed
   return fetchData(session)
 }
 ```
@@ -262,13 +261,14 @@ async function getData() {
 ## Cache Key Generation
 
 Cache keys are automatic based on:
+
 - **Build ID** - invalidates all caches on deploy
 - **Function ID** - hash of function location
 - **Serializable arguments** - props become part of key
 - **Closure variables** - outer scope values included
 
 ```tsx
-async function Component({ userId }: { userId: string }) {
+async function Component({userId}: {userId: string}) {
   const getData = async (filter: string) => {
     'use cache'
     // Cache key = userId (closure) + filter (argument)
@@ -283,15 +283,17 @@ async function Component({ userId }: { userId: string }) {
 ## Complete Example
 
 ```tsx
-import { Suspense } from 'react'
-import { cookies } from 'next/headers'
-import { cacheLife, cacheTag } from 'next/cache'
+import {Suspense} from 'react'
+import {cookies} from 'next/headers'
+import {cacheLife, cacheTag} from 'next/cache'
 
 export default function DashboardPage() {
   return (
     <>
       {/* Static shell - instant from CDN */}
-      <header><h1>Dashboard</h1></header>
+      <header>
+        <h1>Dashboard</h1>
+      </header>
       <nav>...</nav>
 
       {/* Cached - fast, revalidates hourly */}
@@ -317,7 +319,7 @@ async function Stats() {
 async function Notifications() {
   const userId = (await cookies()).get('userId')?.value
   const notifications = await db.notifications.findMany({
-    where: { userId, read: false }
+    where: {userId, read: false},
   })
   return <NotificationList items={notifications} />
 }
@@ -327,13 +329,13 @@ async function Notifications() {
 
 ## Migration from Previous Versions
 
-| Old Config | Replacement |
-|-----------|-------------|
-| `experimental.ppr` | `cacheComponents: true` |
-| `dynamic = 'force-dynamic'` | Remove (default behavior) |
-| `dynamic = 'force-static'` | `'use cache'` + `cacheLife('max')` |
-| `revalidate = N` | `cacheLife({ revalidate: N })` |
-| `unstable_cache()` | `'use cache'` directive |
+| Old Config                  | Replacement                        |
+| --------------------------- | ---------------------------------- |
+| `experimental.ppr`          | `cacheComponents: true`            |
+| `dynamic = 'force-dynamic'` | Remove (default behavior)          |
+| `dynamic = 'force-static'`  | `'use cache'` + `cacheLife('max')` |
+| `revalidate = N`            | `cacheLife({ revalidate: N })`     |
+| `unstable_cache()`          | `'use cache'` directive            |
 
 ### Migrating `unstable_cache` to `use cache`
 
@@ -342,19 +344,15 @@ async function Notifications() {
 **Before (`unstable_cache`):**
 
 ```tsx
-import { unstable_cache } from 'next/cache'
+import {unstable_cache} from 'next/cache'
 
-const getCachedUser = unstable_cache(
-  async (id) => getUser(id),
-  ['my-app-user'],
-  {
-    tags: ['users'],
-    revalidate: 60,
-  }
-)
+const getCachedUser = unstable_cache(async (id) => getUser(id), ['my-app-user'], {
+  tags: ['users'],
+  revalidate: 60,
+})
 
-export default async function Page({ params }: { params: Promise<{ id: string }> }) {
-  const { id } = await params
+export default async function Page({params}: {params: Promise<{id: string}>}) {
+  const {id} = await params
   const user = await getCachedUser(id)
   return <div>{user.name}</div>
 }
@@ -363,23 +361,24 @@ export default async function Page({ params }: { params: Promise<{ id: string }>
 **After (`use cache`):**
 
 ```tsx
-import { cacheLife, cacheTag } from 'next/cache'
+import {cacheLife, cacheTag} from 'next/cache'
 
 async function getCachedUser(id: string) {
   'use cache'
   cacheTag('users')
-  cacheLife({ revalidate: 60 })
+  cacheLife({revalidate: 60})
   return getUser(id)
 }
 
-export default async function Page({ params }: { params: Promise<{ id: string }> }) {
-  const { id } = await params
+export default async function Page({params}: {params: Promise<{id: string}>}) {
+  const {id} = await params
   const user = await getCachedUser(id)
   return <div>{user.name}</div>
 }
 ```
 
 Key differences:
+
 - **No manual cache keys** - `use cache` generates keys automatically from function arguments and closures. The `keyParts` array from `unstable_cache` is no longer needed.
 - **Tags** - Replace `options.tags` with `cacheTag()` calls inside the function.
 - **Revalidation** - Replace `options.revalidate` with `cacheLife({ revalidate: N })` or a built-in profile like `cacheLife('minutes')`.
@@ -396,16 +395,17 @@ Key differences:
 For request-time randomness outside cache:
 
 ```tsx
-import { connection } from 'next/server'
+import {connection} from 'next/server'
 
 async function DynamicContent() {
-  await connection()  // Defer to request time
-  const id = crypto.randomUUID()  // Different per request
+  await connection() // Defer to request time
+  const id = crypto.randomUUID() // Different per request
   return <div>{id}</div>
 }
 ```
 
 Sources:
+
 - [Cache Components Guide](https://nextjs.org/docs/app/getting-started/cache-components)
 - [use cache Directive](https://nextjs.org/docs/app/api-reference/directives/use-cache)
 - [unstable_cache (legacy)](https://nextjs.org/docs/app/api-reference/functions/unstable_cache)

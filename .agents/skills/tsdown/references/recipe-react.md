@@ -46,7 +46,7 @@ interface MyButtonProps {
   onClick?: () => void
 }
 
-export const MyButton: React.FC<MyButtonProps> = ({ type = 'primary', onClick }) => {
+export const MyButton: React.FC<MyButtonProps> = ({type = 'primary', onClick}) => {
   return (
     <button className={`btn btn-${type}`} onClick={onClick}>
       Click me
@@ -57,7 +57,7 @@ export const MyButton: React.FC<MyButtonProps> = ({ type = 'primary', onClick })
 
 ```ts
 // src/index.ts
-export { MyButton } from './MyButton'
+export {MyButton} from './MyButton'
 ```
 
 ## JSX Transform
@@ -74,6 +74,7 @@ export default defineConfig({
 ```
 
 **Characteristics:**
+
 - No `import React` needed
 - Smaller bundle size
 - React 17+ required
@@ -87,13 +88,14 @@ export default defineConfig({
   entry: ['src/index.tsx'],
   inputOptions: {
     transform: {
-      jsx: 'react',  // Classic transform
+      jsx: 'react', // Classic transform
     },
   },
 })
 ```
 
 **Characteristics:**
+
 - Requires `import React from 'react'`
 - Compatible with older React versions
 
@@ -146,7 +148,7 @@ export default defineConfig({
     neverBundle: [
       'react',
       'react-dom',
-      /^react\//,  // react/jsx-runtime, etc.
+      /^react\//, // react/jsx-runtime, etc.
     ],
   },
   dts: true,
@@ -180,7 +182,7 @@ export default defineConfig({
   format: ['esm', 'cjs'],
   platform: 'neutral',
   deps: {
-    neverBundle: ['react'],  // Only React needed
+    neverBundle: ['react'], // Only React needed
   },
   dts: true,
   treeshake: true,
@@ -198,7 +200,7 @@ export default defineConfig({
     neverBundle: [
       'react',
       'react-dom',
-      /^@mycompany\//,  // Other workspace packages
+      /^@mycompany\//, // Other workspace packages
     ],
   },
   dts: true,
@@ -215,11 +217,11 @@ export default defineConfig({
     "target": "ES2020",
     "module": "ESNext",
     "lib": ["ES2020", "DOM", "DOM.Iterable"],
-    "jsx": "react-jsx",  // or "react" for classic
+    "jsx": "react-jsx", // or "react" for classic
     "moduleResolution": "bundler",
     "allowImportingTsExtensions": true,
     "strict": true,
-    "isolatedDeclarations": true,  // Fast DTS generation
+    "isolatedDeclarations": true, // Fast DTS generation
     "skipLibCheck": true
   },
   "include": ["src"]
@@ -275,7 +277,7 @@ export default defineConfig((options) => ({
   plugins: options.watch
     ? [
         // @ts-expect-error Vite plugin
-        react({ fastRefresh: true }),
+        react({fastRefresh: true}),
       ]
     : [],
 }))
@@ -310,7 +312,7 @@ Check `tsconfig.json`:
 ```json
 {
   "compilerOptions": {
-    "jsx": "react-jsx"  // or "react"
+    "jsx": "react-jsx" // or "react"
   }
 }
 ```

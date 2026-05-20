@@ -36,7 +36,7 @@ export default async function Page() {
   return <Dashboard user={user} />
 }
 
-function Dashboard({ user }: { user: User | null }) {
+function Dashboard({user}: {user: User | null}) {
   return <div>{user?.name}</div>
 }
 ```

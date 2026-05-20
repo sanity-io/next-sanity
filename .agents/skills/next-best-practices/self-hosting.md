@@ -10,7 +10,7 @@ For Docker or any containerized deployment, use standalone output:
 // next.config.js
 module.exports = {
   output: 'standalone',
-};
+}
 ```
 
 This creates a minimal `standalone` folder with only production dependencies:
@@ -77,12 +77,12 @@ services:
   web:
     build: .
     ports:
-      - "3000:3000"
+      - '3000:3000'
     environment:
       - NODE_ENV=production
     restart: unless-stopped
     healthcheck:
-      test: ["CMD", "wget", "-q", "--spider", "http://localhost:3000/api/health"]
+      test: ['CMD', 'wget', '-q', '--spider', 'http://localhost:3000/api/health']
       interval: 30s
       timeout: 10s
       retries: 3
@@ -95,17 +95,19 @@ For traditional server deployments:
 ```js
 // ecosystem.config.js
 module.exports = {
-  apps: [{
-    name: 'nextjs',
-    script: '.next/standalone/server.js',
-    instances: 'max',
-    exec_mode: 'cluster',
-    env: {
-      NODE_ENV: 'production',
-      PORT: 3000,
+  apps: [
+    {
+      name: 'nextjs',
+      script: '.next/standalone/server.js',
+      instances: 'max',
+      exec_mode: 'cluster',
+      env: {
+        NODE_ENV: 'production',
+        PORT: 3000,
+      },
     },
-  }],
-};
+  ],
+}
 ```
 
 ```bash
@@ -132,49 +134,45 @@ Next.js 14+ supports custom cache handlers for shared storage:
 module.exports = {
   cacheHandler: require.resolve('./cache-handler.js'),
   cacheMaxMemorySize: 0, // Disable in-memory cache
-};
+}
 ```
 
 #### Redis Cache Handler Example
 
 ```js
 // cache-handler.js
-const Redis = require('ioredis');
+const Redis = require('ioredis')
 
-const redis = new Redis(process.env.REDIS_URL);
-const CACHE_PREFIX = 'nextjs:';
+const redis = new Redis(process.env.REDIS_URL)
+const CACHE_PREFIX = 'nextjs:'
 
 module.exports = class CacheHandler {
   constructor(options) {
-    this.options = options;
+    this.options = options
   }
 
   async get(key) {
-    const data = await redis.get(CACHE_PREFIX + key);
-    if (!data) return null;
+    const data = await redis.get(CACHE_PREFIX + key)
+    if (!data) return null
 
-    const parsed = JSON.parse(data);
+    const parsed = JSON.parse(data)
     return {
       value: parsed.value,
       lastModified: parsed.lastModified,
-    };
+    }
   }
 
   async set(key, data, ctx) {
     const cacheData = {
       value: data,
       lastModified: Date.now(),
-    };
+    }
 
     // Set TTL based on revalidate option
     if (ctx?.revalidate) {
-      await redis.setex(
-        CACHE_PREFIX + key,
-        ctx.revalidate,
-        JSON.stringify(cacheData)
-      );
+      await redis.setex(CACHE_PREFIX + key, ctx.revalidate, JSON.stringify(cacheData))
     } else {
-      await redis.set(CACHE_PREFIX + key, JSON.stringify(cacheData));
+      await redis.set(CACHE_PREFIX + key, JSON.stringify(cacheData))
     }
   }
 
@@ -182,60 +180,64 @@ module.exports = class CacheHandler {
     // Implement tag-based invalidation
     // This requires tracking which keys have which tags
   }
-};
+}
 ```
 
 #### S3 Cache Handler Example
 
 ```js
 // cache-handler.js
-const { S3Client, GetObjectCommand, PutObjectCommand } = require('@aws-sdk/client-s3');
+const {S3Client, GetObjectCommand, PutObjectCommand} = require('@aws-sdk/client-s3')
 
-const s3 = new S3Client({ region: process.env.AWS_REGION });
-const BUCKET = process.env.CACHE_BUCKET;
+const s3 = new S3Client({region: process.env.AWS_REGION})
+const BUCKET = process.env.CACHE_BUCKET
 
 module.exports = class CacheHandler {
   async get(key) {
     try {
-      const response = await s3.send(new GetObjectCommand({
-        Bucket: BUCKET,
-        Key: `cache/${key}`,
-      }));
-      const body = await response.Body.transformToString();
-      return JSON.parse(body);
+      const response = await s3.send(
+        new GetObjectCommand({
+          Bucket: BUCKET,
+          Key: `cache/${key}`,
+        }),
+      )
+      const body = await response.Body.transformToString()
+      return JSON.parse(body)
     } catch (err) {
-      if (err.name === 'NoSuchKey') return null;
-      throw err;
+      if (err.name === 'NoSuchKey') return null
+      throw err
     }
   }
 
   async set(key, data, ctx) {
-    await s3.send(new PutObjectCommand({
-      Bucket: BUCKET,
-      Key: `cache/${key}`,
-      Body: JSON.stringify({
-        value: data,
-        lastModified: Date.now(),
+    await s3.send(
+      new PutObjectCommand({
+        Bucket: BUCKET,
+        Key: `cache/${key}`,
+        Body: JSON.stringify({
+          value: data,
+          lastModified: Date.now(),
+        }),
+        ContentType: 'application/json',
       }),
-      ContentType: 'application/json',
-    }));
+    )
   }
-};
+}
 ```
 
 ## What Works vs What Needs Setup
 
-| Feature | Single Instance | Multi-Instance | Notes |
-|---------|----------------|----------------|-------|
-| SSR | Yes | Yes | No special setup |
-| SSG | Yes | Yes | Built at deploy time |
-| ISR | Yes | Needs cache handler | Filesystem cache breaks |
-| Image Optimization | Yes | Yes | CPU-intensive, consider CDN |
-| Middleware | Yes | Yes | Runs on Node.js |
-| Edge Runtime | Limited | Limited | Some features Node-only |
-| `revalidatePath/Tag` | Yes | Needs cache handler | Must share cache |
-| `next/font` | Yes | Yes | Fonts bundled at build |
-| Draft Mode | Yes | Yes | Cookie-based |
+| Feature              | Single Instance | Multi-Instance      | Notes                       |
+| -------------------- | --------------- | ------------------- | --------------------------- |
+| SSR                  | Yes             | Yes                 | No special setup            |
+| SSG                  | Yes             | Yes                 | Built at deploy time        |
+| ISR                  | Yes             | Needs cache handler | Filesystem cache breaks     |
+| Image Optimization   | Yes             | Yes                 | CPU-intensive, consider CDN |
+| Middleware           | Yes             | Yes                 | Runs on Node.js             |
+| Edge Runtime         | Limited         | Limited             | Some features Node-only     |
+| `revalidatePath/Tag` | Yes             | Needs cache handler | Must share cache            |
+| `next/font`          | Yes             | Yes                 | Fonts bundled at build      |
+| Draft Mode           | Yes             | Yes                 | Cookie-based                |
 
 ## Image Optimization
 
@@ -244,6 +246,7 @@ Next.js Image Optimization works out of the box but is CPU-intensive.
 ### Option 1: Built-in (Simple)
 
 Works automatically, but consider:
+
 - Set `deviceSizes` and `imageSizes` in config to limit variants
 - Use `minimumCacheTTL` to reduce regeneration
 
@@ -254,7 +257,7 @@ module.exports = {
     minimumCacheTTL: 60 * 60 * 24, // 24 hours
     deviceSizes: [640, 750, 1080, 1920], // Limit sizes
   },
-};
+}
 ```
 
 ### Option 2: External Loader (Recommended for Scale)
@@ -268,14 +271,14 @@ module.exports = {
     loader: 'custom',
     loaderFile: './lib/image-loader.js',
   },
-};
+}
 ```
 
 ```js
 // lib/image-loader.js
-export default function cloudinaryLoader({ src, width, quality }) {
-  const params = ['f_auto', 'c_limit', `w_${width}`, `q_${quality || 'auto'}`];
-  return `https://res.cloudinary.com/demo/image/upload/${params.join(',')}${src}`;
+export default function cloudinaryLoader({src, width, quality}) {
+  const params = ['f_auto', 'c_limit', `w_${width}`, `q_${quality || 'auto'}`]
+  return `https://res.cloudinary.com/demo/image/upload/${params.join(',')}${src}`
 }
 ```
 
@@ -302,7 +305,7 @@ export async function GET() {
   return Response.json({
     apiUrl: process.env.API_URL,
     features: process.env.FEATURES?.split(','),
-  });
+  })
 }
 ```
 
@@ -317,6 +320,7 @@ npx @opennextjs/aws build
 ```
 
 Supports:
+
 - AWS Lambda + CloudFront
 - Cloudflare Workers
 - Netlify Functions
@@ -333,9 +337,9 @@ export async function GET() {
     // Optional: check database connection
     // await db.$queryRaw`SELECT 1`;
 
-    return Response.json({ status: 'healthy' }, { status: 200 });
+    return Response.json({status: 'healthy'}, {status: 200})
   } catch (error) {
-    return Response.json({ status: 'unhealthy' }, { status: 503 });
+    return Response.json({status: 'unhealthy'}, {status: 503})
   }
 }
 ```

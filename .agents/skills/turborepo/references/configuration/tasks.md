@@ -35,9 +35,9 @@ For tasks like `lint` and `check-types` that can run in parallel but need depend
 ```json
 {
   "tasks": {
-    "transit": { "dependsOn": ["^transit"] },
-    "lint": { "dependsOn": ["transit"] },
-    "check-types": { "dependsOn": ["transit"] }
+    "transit": {"dependsOn": ["^transit"]},
+    "lint": {"dependsOn": ["transit"]},
+    "check-types": {"dependsOn": ["transit"]}
   }
 }
 ```
@@ -104,11 +104,7 @@ Files considered when calculating task hash. Defaults to all tracked files in pa
 {
   "tasks": {
     "build": {
-      "inputs": [
-        "$TURBO_DEFAULT$",
-        "!README.md",
-        "$TURBO_ROOT$/tsconfig.base.json"
-      ]
+      "inputs": ["$TURBO_DEFAULT$", "!README.md", "$TURBO_ROOT$/tsconfig.base.json"]
     }
   }
 }
@@ -134,7 +130,7 @@ This is different from `globalDependencies`, where files were hashed into the **
 
 ```json
 {
-  "futureFlags": { "globalConfiguration": true },
+  "futureFlags": {"globalConfiguration": true},
   "global": {
     "inputs": ["tsconfig.json", ".env"]
   },
@@ -181,8 +177,8 @@ Enable/disable caching for a task. Default: `true`.
 ```json
 {
   "tasks": {
-    "dev": { "cache": false },
-    "deploy": { "cache": false }
+    "dev": {"cache": false},
+    "deploy": {"cache": false}
   }
 }
 ```

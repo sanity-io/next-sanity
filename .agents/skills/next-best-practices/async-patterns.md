@@ -9,21 +9,18 @@ Always type them as `Promise<...>` and await them.
 ### Pages and Layouts
 
 ```tsx
-type Props = { params: Promise<{ slug: string }> }
+type Props = {params: Promise<{slug: string}>}
 
-export default async function Page({ params }: Props) {
-  const { slug } = await params
+export default async function Page({params}: Props) {
+  const {slug} = await params
 }
 ```
 
 ### Route Handlers
 
 ```tsx
-export async function GET(
-  request: Request,
-  { params }: { params: Promise<{ id: string }> }
-) {
-  const { id } = await params
+export async function GET(request: Request, {params}: {params: Promise<{id: string}>}) {
+  const {id} = await params
 }
 ```
 
@@ -31,13 +28,13 @@ export async function GET(
 
 ```tsx
 type Props = {
-  params: Promise<{ slug: string }>
-  searchParams: Promise<{ query?: string }>
+  params: Promise<{slug: string}>
+  searchParams: Promise<{query?: string}>
 }
 
-export default async function Page({ params, searchParams }: Props) {
-  const { slug } = await params
-  const { query } = await searchParams
+export default async function Page({params, searchParams}: Props) {
+  const {slug} = await params
+  const {query} = await searchParams
 }
 ```
 
@@ -46,30 +43,30 @@ export default async function Page({ params, searchParams }: Props) {
 Use `React.use()` for non-async components:
 
 ```tsx
-import { use } from 'react'
+import {use} from 'react'
 
-type Props = { params: Promise<{ slug: string }> }
+type Props = {params: Promise<{slug: string}>}
 
-export default function Page({ params }: Props) {
-  const { slug } = use(params)
+export default function Page({params}: Props) {
+  const {slug} = use(params)
 }
 ```
 
 ### generateMetadata
 
 ```tsx
-type Props = { params: Promise<{ slug: string }> }
+type Props = {params: Promise<{slug: string}>}
 
-export async function generateMetadata({ params }: Props): Promise<Metadata> {
-  const { slug } = await params
-  return { title: slug }
+export async function generateMetadata({params}: Props): Promise<Metadata> {
+  const {slug} = await params
+  return {title: slug}
 }
 ```
 
 ## Async Cookies and Headers
 
 ```tsx
-import { cookies, headers } from 'next/headers'
+import {cookies, headers} from 'next/headers'
 
 export default async function Page() {
   const cookieStore = await cookies()

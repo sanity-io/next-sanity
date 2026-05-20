@@ -43,12 +43,12 @@ export default defineConfig({
 
 ## Available Levels
 
-| Level | Shows | Use Case |
-|-------|-------|----------|
-| `silent` | Nothing | CI/CD pipelines, scripting |
-| `error` | Errors only | Minimal output |
-| `warn` | Warnings + errors | Standard CI/CD |
-| `info` | All messages | Development (default) |
+| Level    | Shows             | Use Case                   |
+| -------- | ----------------- | -------------------------- |
+| `silent` | Nothing           | CI/CD pipelines, scripting |
+| `error`  | Errors only       | Minimal output             |
+| `warn`   | Warnings + errors | Standard CI/CD             |
+| `info`   | All messages      | Development (default)      |
 
 ## Common Patterns
 
@@ -57,7 +57,7 @@ export default defineConfig({
 ```ts
 export default defineConfig({
   entry: ['src/index.ts'],
-  logLevel: 'error',  // Only show errors in CI
+  logLevel: 'error', // Only show errors in CI
 })
 ```
 
@@ -66,7 +66,7 @@ export default defineConfig({
 ```ts
 export default defineConfig({
   entry: ['src/index.ts'],
-  logLevel: 'silent',  // No output for automation
+  logLevel: 'silent', // No output for automation
 })
 ```
 
@@ -76,7 +76,7 @@ The `failOnWarn` option controls whether warnings cause the build to exit with a
 
 ```ts
 export default defineConfig({
-  failOnWarn: false,     // Default: never fail on warnings
+  failOnWarn: false, // Default: never fail on warnings
   // failOnWarn: true,   // Always fail on warnings
   // failOnWarn: 'ci-only', // Fail on warnings only in CI
 })

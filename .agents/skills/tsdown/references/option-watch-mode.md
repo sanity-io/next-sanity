@@ -74,6 +74,7 @@ export default defineConfig({
 ### Default Watch Targets
 
 By default, tsdown watches:
+
 - All entry files
 - All imported files
 - Config file (triggers restart)
@@ -87,6 +88,7 @@ By default, tsdown watches:
 ### Keyboard Shortcuts
 
 During watch mode:
+
 - `r` - Manual rebuild
 - `q` - Quit watch mode
 
@@ -123,7 +125,7 @@ export default defineConfig({
     cli: 'src/cli.ts',
   },
   watch: true,
-  clean: false,  // Don't clean on each rebuild
+  clean: false, // Don't clean on each rebuild
 })
 ```
 
@@ -174,7 +176,7 @@ export default defineConfig((options) => {
   return {
     entry: ['src/index.ts'],
     format: ['esm'],
-    dts: !isDev,        // Skip DTS in watch mode
+    dts: !isDev, // Skip DTS in watch mode
     sourcemap: isDev,
     clean: !isDev,
   }
@@ -230,12 +232,7 @@ Add ignore patterns:
 ```ts
 export default defineConfig({
   watch: {
-    exclude: [
-      '**/node_modules/**',
-      '**/.git/**',
-      '**/dist/**',
-      '**/*.test.ts',
-    ],
+    exclude: ['**/node_modules/**', '**/.git/**', '**/dist/**', '**/*.test.ts'],
   },
 })
 ```

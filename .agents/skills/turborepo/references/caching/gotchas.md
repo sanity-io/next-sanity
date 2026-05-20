@@ -91,7 +91,7 @@ With `futureFlags.globalConfiguration`, use `global.inputs` instead. The key dif
 
 ```json
 {
-  "futureFlags": { "globalConfiguration": true },
+  "futureFlags": {"globalConfiguration": true},
   "global": {
     "inputs": [".env"]
   }
@@ -120,7 +120,7 @@ Task uses an env var not listed in `env`:
 
 ```javascript
 // build.js
-const apiUrl = process.env.API_URL; // not tracked!
+const apiUrl = process.env.API_URL // not tracked!
 ```
 
 Fix: add to task config:

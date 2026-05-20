@@ -28,6 +28,7 @@ pnpm install --prefer-offline
 ```
 
 Or configure globally:
+
 ```ini
 # .npmrc
 prefer-offline=true
@@ -95,6 +96,7 @@ store-dir=~/.pnpm-store
 ```
 
 Benefits:
+
 - Packages downloaded once for all projects
 - Hard links save disk space
 - Faster installs from cache
@@ -122,6 +124,7 @@ pnpm -r --parallel run build
 ```
 
 Control concurrency:
+
 ```ini
 # .npmrc
 workspace-concurrency=8
@@ -154,6 +157,7 @@ pnpm -r run build
 ```
 
 For explicit sequential builds:
+
 ```bash
 pnpm -r --workspace-concurrency=1 run build
 ```
@@ -201,6 +205,7 @@ shared-workspace-lockfile=true
 ```
 
 Benefits:
+
 - Single source of truth
 - Faster resolution
 - Consistent versions across workspace
@@ -251,7 +256,7 @@ Optimized `.npmrc` for performance:
 prefer-offline=true
 auto-install-peers=true
 
-# Build optimization  
+# Build optimization
 side-effects-cache=true
 # Only build what's necessary
 onlyBuiltDependencies[]=esbuild
@@ -267,16 +272,16 @@ workspace-concurrency=4
 
 ## Quick Reference
 
-| Scenario | Command/Setting |
-|----------|-----------------|
-| CI installs | `pnpm install --frozen-lockfile` |
-| Offline development | `--prefer-offline` |
-| Skip native builds | `neverBuiltDependencies` |
-| Parallel workspace | `pnpm -r --parallel run build` |
-| Build changed only | `pnpm --filter "...[origin/main]" build` |
-| Clean store | `pnpm store prune` |
+| Scenario            | Command/Setting                          |
+| ------------------- | ---------------------------------------- |
+| CI installs         | `pnpm install --frozen-lockfile`         |
+| Offline development | `--prefer-offline`                       |
+| Skip native builds  | `neverBuiltDependencies`                 |
+| Parallel workspace  | `pnpm -r --parallel run build`           |
+| Build changed only  | `pnpm --filter "...[origin/main]" build` |
+| Clean store         | `pnpm store prune`                       |
 
-<!-- 
+<!--
 Source references:
 - https://pnpm.io/npmrc
 - https://pnpm.io/cli/install

@@ -8,11 +8,11 @@ Platform determines the runtime environment and affects module resolution, built
 
 ## Available Platforms
 
-| Platform | Runtime | Built-ins | Use Case |
-|----------|---------|-----------|----------|
-| `node` | Node.js (default) | Resolved automatically | Server-side, CLIs, tooling |
-| `browser` | Web browsers | Warning if used | Front-end applications |
-| `neutral` | Platform-agnostic | No assumptions | Universal libraries |
+| Platform  | Runtime           | Built-ins              | Use Case                   |
+| --------- | ----------------- | ---------------------- | -------------------------- |
+| `node`    | Node.js (default) | Resolved automatically | Server-side, CLIs, tooling |
+| `browser` | Web browsers      | Warning if used        | Front-end applications     |
+| `neutral` | Platform-agnostic | No assumptions         | Universal libraries        |
 
 ## Usage
 
@@ -47,6 +47,7 @@ export default defineConfig({
 ```
 
 **Characteristics:**
+
 - Node.js built-ins (fs, path, etc.) resolved automatically
 - Optimized for Node.js runtime
 - Compatible with Deno and Bun
@@ -65,6 +66,7 @@ export default defineConfig({
 ```
 
 **Characteristics:**
+
 - Warnings if Node.js built-ins are used
 - May require polyfills for Node APIs
 - Optimized for browser environments
@@ -83,6 +85,7 @@ export default defineConfig({
 ```
 
 **Characteristics:**
+
 - No runtime assumptions
 - No automatic built-in resolution
 - Relies on `exports` field only
@@ -97,7 +100,7 @@ export default defineConfig({
 export default defineConfig({
   entry: ['src/index.ts'],
   format: ['cjs'],
-  platform: 'browser',  // Ignored for CJS
+  platform: 'browser', // Ignored for CJS
 })
 ```
 
@@ -109,11 +112,11 @@ See [rolldown PR #4693](https://github.com/rolldown/rolldown/pull/4693#issuecomm
 
 Different platforms check different `package.json` fields:
 
-| Platform | mainFields | Priority |
-|----------|------------|----------|
-| `node` | `['main', 'module']` | main → module |
+| Platform  | mainFields                      | Priority                |
+| --------- | ------------------------------- | ----------------------- |
+| `node`    | `['main', 'module']`            | main → module           |
 | `browser` | `['browser', 'module', 'main']` | browser → module → main |
-| `neutral` | `[]` | Only `exports` field |
+| `neutral` | `[]`                            | Only `exports` field    |
 
 ### Neutral Platform Resolution
 
@@ -218,6 +221,7 @@ Warning: Module "fs" has been externalized for browser compatibility
 ```
 
 **Solutions:**
+
 1. Use platform: 'node' if not browser-only
 2. Add polyfills for Node APIs
 3. Avoid Node.js built-ins in browser code

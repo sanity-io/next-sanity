@@ -52,6 +52,7 @@ export default defineConfig({
 ```
 
 Output files will match the keys:
+
 - `dist/main.mjs`
 - `dist/utils.mjs`
 - `dist/cli.mjs`
@@ -124,12 +125,7 @@ Mix strings, glob patterns, and object entries in an array:
 
 ```ts
 export default defineConfig({
-  entry: [
-    'src/*',
-    '!src/foo.ts',
-    { main: 'index.ts' },
-    { 'lib/*': ['src/*.ts', '!src/bar.ts'] },
-  ],
+  entry: ['src/*', '!src/foo.ts', {main: 'index.ts'}, {'lib/*': ['src/*.ts', '!src/bar.ts']}],
 })
 ```
 
@@ -199,6 +195,7 @@ export default defineConfig({
 ```
 
 This will output files matching the source structure:
+
 - `src/index.ts` → `dist/index.mjs`
 - `src/utils/helper.ts` → `dist/utils/helper.mjs`
 

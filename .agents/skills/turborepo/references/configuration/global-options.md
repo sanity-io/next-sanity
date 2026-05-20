@@ -157,7 +157,7 @@ When enabled:
 
 ```json
 {
-  "futureFlags": { "globalConfiguration": true },
+  "futureFlags": {"globalConfiguration": true},
   "global": {
     "inputs": ["tsconfig.json", ".env"],
     "env": ["CI", "NODE_ENV"],
@@ -165,7 +165,7 @@ When enabled:
     "ui": "tui",
     "envMode": "strict",
     "cacheDir": ".turbo/cache",
-    "remoteCache": { "enabled": true },
+    "remoteCache": {"enabled": true},
     "concurrency": "50%"
   },
   "tasks": {

@@ -16,7 +16,7 @@ defineConfig({
     projects: [
       // Glob patterns for config files
       'packages/*',
-      
+
       // Inline config
       {
         test: {
@@ -56,7 +56,7 @@ Package config:
 
 ```ts
 // packages/core/vitest.config.ts
-import { defineConfig } from 'vitest/config'
+import {defineConfig} from 'vitest/config'
 
 export default defineConfig({
   test: {
@@ -135,7 +135,7 @@ export const sharedConfig = {
 }
 
 // vitest.config.ts
-import { sharedConfig } from './vitest.shared'
+import {sharedConfig} from './vitest.shared'
 
 defineConfig({
   test: {
@@ -228,7 +228,7 @@ defineConfig({
 })
 
 // In tests, use inject
-import { inject } from 'vitest'
+import {inject} from 'vitest'
 
 test('uses correct api', () => {
   const url = inject('apiUrl')
@@ -240,10 +240,10 @@ test('uses correct api', () => {
 
 ```ts
 const test = base.extend({
-  apiUrl: ['/default', { injected: true }],
+  apiUrl: ['/default', {injected: true}],
 })
 
-test('uses injected url', ({ apiUrl }) => {
+test('uses injected url', ({apiUrl}) => {
   // apiUrl comes from project's provide config
 })
 ```
@@ -294,7 +294,7 @@ defineConfig({
 - Use `provide` to inject config values into tests
 - Projects inherit from root config unless overridden
 
-<!-- 
+<!--
 Source references:
 - https://vitest.dev/guide/projects.html
 -->

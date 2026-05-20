@@ -7,6 +7,7 @@ Generate `.d.ts` type declaration files for your library.
 tsdown uses [rolldown-plugin-dts](https://github.com/sxzz/rolldown-plugin-dts) to generate and bundle TypeScript declaration files.
 
 **Requirements:**
+
 - TypeScript must be installed in your project
 
 ## Enabling DTS Generation
@@ -14,6 +15,7 @@ tsdown uses [rolldown-plugin-dts](https://github.com/sxzz/rolldown-plugin-dts) t
 ### Auto-Enabled
 
 DTS generation is **automatically enabled** if `package.json` contains:
+
 - `types` field, or
 - `typings` field
 
@@ -110,6 +112,7 @@ export default defineConfig({
 ```
 
 Output:
+
 - `dist/index.mjs`
 - `dist/index.cjs`
 - `dist/index.d.ts`
@@ -128,6 +131,7 @@ export default defineConfig({
 ```
 
 Output:
+
 - `dist/index.mjs`, `dist/index.cjs`, `dist/index.d.ts`
 - `dist/utils.mjs`, `dist/utils.cjs`, `dist/utils.d.ts`
 
@@ -206,7 +210,7 @@ Control Oxc usage for declaration generation:
 ```ts
 export default defineConfig({
   dts: {
-    oxc: true,  // Use oxc-transform (fast, requires isolatedDeclarations)
+    oxc: true, // Use oxc-transform (fast, requires isolatedDeclarations)
   },
 })
 ```
@@ -225,16 +229,16 @@ export default defineConfig({
 
 ## Available DTS Options
 
-| Option | Type | Description |
-|--------|------|-------------|
-| `sourcemap` | `boolean` | Generate declaration source maps |
-| `compilerOptions` | `object` | Override TypeScript compiler options |
-| `vue` | `boolean` | Enable Vue type generation (requires vue-tsc) |
-| `oxc` | `boolean` | Use oxc-transform for fast generation |
-| `tsconfig` | `string` | Path to tsconfig file |
-| `resolver` | `'oxc' \| 'tsc'` | Module resolver: `'oxc'` (default, fast) or `'tsc'` (more compatible) |
-| `cjsDefault` | `boolean` | CJS default export handling |
-| `sideEffects` | `boolean` | Preserve side effects in declarations |
+| Option            | Type             | Description                                                           |
+| ----------------- | ---------------- | --------------------------------------------------------------------- |
+| `sourcemap`       | `boolean`        | Generate declaration source maps                                      |
+| `compilerOptions` | `object`         | Override TypeScript compiler options                                  |
+| `vue`             | `boolean`        | Enable Vue type generation (requires vue-tsc)                         |
+| `oxc`             | `boolean`        | Use oxc-transform for fast generation                                 |
+| `tsconfig`        | `string`         | Path to tsconfig file                                                 |
+| `resolver`        | `'oxc' \| 'tsc'` | Module resolver: `'oxc'` (default, fast) or `'tsc'` (more compatible) |
+| `cjsDefault`      | `boolean`        | CJS default export handling                                           |
+| `sideEffects`     | `boolean`        | Preserve side effects in declarations                                 |
 
 ## Tips
 

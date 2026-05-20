@@ -26,8 +26,8 @@ export default async function Page() {
 }
 
 // UserProfile.tsx (client component)
-'use client'
-export function UserProfile({ user }: { user: User }) {
+;('use client')
+export function UserProfile({user}: {user: User}) {
   return <div>{user.name}</div>
 }
 ```
@@ -48,6 +48,7 @@ const Dashboard = async () => {
 Props passed from Server → Client must be JSON-serializable.
 
 **Detect:** Server component passes these to a client component:
+
 - Functions (except Server Actions with `'use server'`)
 - `Date` objects
 - `Map`, `Set`, `WeakMap`, `WeakSet`
@@ -65,7 +66,7 @@ export default function Page() {
 
 // Good: Define function inside client component
 // ClientButton.tsx
-'use client'
+;('use client')
 export function ClientButton() {
   const handleClick = () => console.log('clicked')
   return <button onClick={handleClick}>Click</button>
@@ -81,8 +82,8 @@ export default async function Page() {
 }
 
 // PostCard.tsx (client) - will crash on .getFullYear()
-'use client'
-export function PostCard({ createdAt }: { createdAt: Date }) {
+;('use client')
+export function PostCard({createdAt}: {createdAt: Date}) {
   return <span>{createdAt.getFullYear()}</span> // Runtime error!
 }
 
@@ -94,8 +95,8 @@ export default async function Page() {
 }
 
 // PostCard.tsx (client)
-'use client'
-export function PostCard({ createdAt }: { createdAt: string }) {
+;('use client')
+export function PostCard({createdAt}: {createdAt: string}) {
   const date = new Date(createdAt)
   return <span>{date.getFullYear()}</span>
 }
@@ -133,27 +134,27 @@ export async function submitForm(formData: FormData) {
 }
 
 // page.tsx (server)
-import { submitForm } from './actions'
+import {submitForm} from './actions'
 export default function Page() {
   return <ClientForm onSubmit={submitForm} /> // OK!
 }
 
 // ClientForm.tsx (client)
-'use client'
-export function ClientForm({ onSubmit }: { onSubmit: (data: FormData) => Promise<void> }) {
+;('use client')
+export function ClientForm({onSubmit}: {onSubmit: (data: FormData) => Promise<void>}) {
   return <form action={onSubmit}>...</form>
 }
 ```
 
 ## Quick Reference
 
-| Pattern | Valid? | Fix |
-|---------|--------|-----|
-| `'use client'` + `async function` | No | Fetch in server parent, pass data |
-| Pass `() => {}` to client | No | Define in client or use server action |
-| Pass `new Date()` to client | No | Use `.toISOString()` |
-| Pass `new Map()` to client | No | Convert to object/array |
-| Pass class instance to client | No | Pass plain object |
-| Pass server action to client | Yes | - |
-| Pass `string/number/boolean` | Yes | - |
-| Pass plain object/array | Yes | - |
+| Pattern                           | Valid? | Fix                                   |
+| --------------------------------- | ------ | ------------------------------------- |
+| `'use client'` + `async function` | No     | Fetch in server parent, pass data     |
+| Pass `() => {}` to client         | No     | Define in client or use server action |
+| Pass `new Date()` to client       | No     | Use `.toISOString()`                  |
+| Pass `new Map()` to client        | No     | Convert to object/array               |
+| Pass class instance to client     | No     | Pass plain object                     |
+| Pass server action to client      | Yes    | -                                     |
+| Pass `string/number/boolean`      | Yes    | -                                     |
+| Pass plain object/array           | Yes    | -                                     |

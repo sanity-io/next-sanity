@@ -19,7 +19,7 @@ function handleSearch(query: string) {
   setResults(results)
 
   // These block the main thread immediately
-  analytics.track('search', { query })
+  analytics.track('search', {query})
   saveToRecentSearches(query)
   prefetchTopResults(results.slice(0, 3))
 }
@@ -34,7 +34,7 @@ function handleSearch(query: string) {
 
   // Defer non-critical work to idle periods
   requestIdleCallback(() => {
-    analytics.track('search', { query })
+    analytics.track('search', {query})
   })
 
   requestIdleCallback(() => {
@@ -51,10 +51,7 @@ function handleSearch(query: string) {
 
 ```typescript
 // Ensure analytics fires within 2 seconds even if browser stays busy
-requestIdleCallback(
-  () => analytics.track('page_view', { path: location.pathname }),
-  { timeout: 2000 }
-)
+requestIdleCallback(() => analytics.track('page_view', {path: location.pathname}), {timeout: 2000})
 ```
 
 **Chunking large tasks:**
