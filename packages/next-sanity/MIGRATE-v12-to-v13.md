@@ -264,7 +264,7 @@ export default function Layout({children}: {children: React.ReactNode}) {
 }
 ```
 
-The motivation for removing this feature is that most users saw this as unexpected behavior, especially since window focus events often trigger when using browser debug tools. [Paired with how v16 behaves differently with link prefetching and the `router.refresh()` call, it's best to remove it.](https://github.com/vercel/next.js/issues/93210)
+The motivation for removing this feature is that most users saw this as unexpected behavior, especially since window focus events often trigger when using browser debug tools. [Paired with how Next.js v16 behaves differently with link prefetching and the `router.refresh()` call, it's best to remove it.](https://github.com/vercel/next.js/issues/93210)
 
 ### `refreshOnReconnect` prop removed from `<SanityLive>`
 
