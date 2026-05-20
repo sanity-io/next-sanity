@@ -190,7 +190,9 @@ export default function RootLayout({children}: {children: React.ReactNode}) {
               : async (unsafeTags) => {
                   'use server'
                   const {tagsWithoutPrefix} = parseTags(unsafeTags)
-                  console.log('this only logs if `isProduction` is false', {tags: tagsWithoutPrefix})
+                  console.log('this only logs if `isProduction` is false', {
+                    tags: tagsWithoutPrefix,
+                  })
                 }
           }
           waitFor={isProduction ? 'function' : undefined}
