@@ -1,5 +1,25 @@
 ## Migrate
 
+## Table of contents<!-- omit in toc -->
+
+- [Replace the `revalidateSyncTags` prop on `<SanityLive>` with `action`](#replace-the-revalidatesynctags-prop-on-sanitylive-with-action)
+  - [Opting in to guaranteed live content updates](#opting-in-to-guaranteed-live-content-updates)
+  - [Restore the previous default behavior](#restore-the-previous-default-behavior)
+  - [`waitFor="function"` no longer ignores custom actions](#waitforfunction-no-longer-ignores-custom-actions)
+- [`sanityFetch` in `cacheComponents: false` mode no longer caches the internal sync-tag lookup request](#sanityfetch-in-cachecomponents-false-mode-no-longer-caches-the-internal-sync-tag-lookup-request)
+- [`refreshOnFocus` prop removed from `<SanityLive>`](#refreshonfocus-prop-removed-from-sanitylive)
+- [`refreshOnReconnect` prop removed from `<SanityLive>`](#refreshonreconnect-prop-removed-from-sanitylive)
+- [`refreshOnMount` prop removed from `<SanityLive>`](#refreshonmount-prop-removed-from-sanitylive)
+- [`intervalOnGoAway` removed and `onGoAway` signature changed on `<SanityLive>`](#intervalongoaway-removed-and-ongoaway-signature-changed-on-sanitylive)
+- [`fetchOptions` removed from `defineLive`](#fetchoptions-removed-from-definelive)
+- [`stega` option removed from `defineLive`](#stega-option-removed-from-definelive)
+- [`useDraftModePerspective` hook removed](#usedraftmodeperspective-hook-removed)
+- [`useIsLivePreview` hook removed](#useislivepreview-hook-removed)
+- [`useDraftModeEnvironment` hook removed](#usedraftmodeenvironment-hook-removed)
+- [`tag` option on `sanityFetch` removed, use `requestTag`](#tag-option-on-sanityfetch-removed-use-requesttag)
+- [`tag` prop on `<SanityLive>` removed, use `requestTag`](#tag-prop-on-sanitylive-removed-use-requesttag)
+- [Renamed type exports on `next-sanity/live`](#renamed-type-exports-on-next-sanitylive)
+
 ### Replace the `revalidateSyncTags` prop on `<SanityLive>` with `action`
 
 The prop was initially introduced to allow overriding the default cache invalidation behavior when a live event was received. Back then the [`revalidateTag` function did not have a second argument that allows configuring the revalidation behavior](https://nextjs.org/docs/app/api-reference/functions/revalidateTag#revalidation-behavior), and we did not have support for [Invalidate Sync Tags Functions](https://www.sanity.io/docs/changelog/7a491dd1-67e8-41e0-9a89-eb9704055dc6).
@@ -34,6 +54,10 @@ We recommend using `revalidateTag` with the `max` cache profile to invalidate th
 ```ts
 export async function POST(request: Request) {
   const {tags} = (await request.json()) as {tags?: string[]}
+
+  if (!Array.isArray(tags)) {
+    return Response.json({error: '`tags` must be an array of strings'}, {status: 400})
+  }
 
   for (const tag of tags) {
     // `sanityFetch` returned by `defineLive` from `next-sanity/live` prefixes its `cacheTag` calls with `sanity:`, so we need to add the same prefix here
@@ -146,7 +170,7 @@ export default function RootLayout({children}: {children: React.ReactNode}) {
               : async (unsafeTags) => {
                   'use server'
                   const {tagsWithoutPrefix} = parseTags(unsafeTags)
-                  console.log('this only logs if `waitFor` is not set to `function`', {tags})
+                  console.log('this only logs if `isProduction` is false', {tags: tagsWithoutPrefix})
                 }
           }
           waitFor={isProduction ? 'function' : undefined}
@@ -337,7 +361,7 @@ Then update your layout to include it:
 ```diff
 // app/layout.tsx
 import {SanityLive} from '#sanity/live'
-+import {DebugStatus} from './RefreshOnMount'
++import {RefreshOnMount} from './RefreshOnMount'
 
 export default function Layout({children}: {children: React.ReactNode}) {
   return (
