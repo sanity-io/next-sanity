@@ -55,6 +55,17 @@ We recommend using `revalidateTag` with the `max` cache profile to invalidate th
 import {revalidateTag} from 'next/cache'
 
 export async function POST(request: Request) {
+  const expectedSecret = process.env.SANITY_REVALIDATE_TAGS_SECRET
+  const secret = new URL(request.url).searchParams.get('secret')
+
+  if (!expectedSecret) {
+    return Response.json({error: 'Server misconfiguration'}, {status: 500})
+  }
+
+  if (secret !== expectedSecret) {
+    return Response.json({error: 'Unauthorized'}, {status: 401})
+  }
+
   const {tags} = (await request.json()) as {tags?: string[]}
 
   if (!Array.isArray(tags) || !tags.every((tag) => typeof tag === 'string')) {
