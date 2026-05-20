@@ -102,7 +102,7 @@ MIT-licensed. See [LICENSE][LICENSE].
 [migrate-v9-to-v10]: https://github.com/sanity-io/next-sanity/blob/main/packages/next-sanity/MIGRATE-v9-to-v10.md
 [migrate-v10-to-v11]: https://github.com/sanity-io/next-sanity/blob/main/packages/next-sanity/MIGRATE-v10-to-v11.md
 [migrate-v11-to-v12]: https://github.com/sanity-io/next-sanity/blob/main/packages/next-sanity/MIGRATE-v11-to-v12.md
-[migrate-v12-to-v13]: https://github.com/sanity-io/next-sanity/blob/main/packages/next-sanity/CHANGELOG.md#1300
+[migrate-v12-to-v13]: https://github.com/sanity-io/next-sanity/blob/main/packages/next-sanity/MIGRATE-v12-to-v13.md
 [next-docs]: https://nextjs.org/docs
 [sanity]: https://www.sanity.io?utm_source=github&utm_medium=readme&utm_campaign=next-sanity
 [sanity-next-clean-starter]: https://www.sanity.io/templates/nextjs-sanity-clean
