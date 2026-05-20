@@ -16,7 +16,8 @@ You will be integrating Sanity Live into your Next.js app, so that data is fetch
 - You have a working Next.js 16+ app with the following environment variables set up already:
   - `NEXT_PUBLIC_SANITY_PROJECT_ID`
   - `NEXT_PUBLIC_SANITY_DATASET`
-  - `SANITY_API_READ_TOKEN`
+  - `SANITY_API_READ_TOKEN` (used by `serverToken`/`browserToken` in `defineLive`)
+  - `SANITY_API_CLIENT_TOKEN` (optional, for `createClient` when the dataset is private)
 
 ---
 
@@ -63,6 +64,7 @@ import {createClient} from 'next-sanity'
 export const client = createClient({
   projectId: process.env.NEXT_PUBLIC_SANITY_PROJECT_ID!,
   dataset: process.env.NEXT_PUBLIC_SANITY_DATASET!,
+  token: process.env.SANITY_API_CLIENT_TOKEN,
   useCdn: true,
   apiVersion: '2026-05-19',
   perspective: 'published',
@@ -75,6 +77,8 @@ The `client.ts` file should use a modern `apiVersion` (for example today's date 
 
 If the `client.ts` file already exists then don't overwrite it, extend it with options that are missing (append only from the above reference).
 Giving `apiVersion` a new value, or removing other `stega.*` options can lead to breakage.
+Never remove an existing `token` from `createClient`. Private datasets require a client token even for published-content fetches.
+Keep this `createClient` token env var separate from the token env var used for `serverToken`/`browserToken` in `defineLive`.
 
 ### `live.ts`
 
@@ -87,15 +91,15 @@ import {defineLive, resolvePerspectiveFromCookies, type LivePerspective} from 'n
 import {cookies, draftMode} from 'next/headers'
 import {client} from './client'
 
-const token = process.env.SANITY_API_READ_TOKEN
-if (!token) {
+const liveToken = process.env.SANITY_API_READ_TOKEN
+if (!liveToken) {
   throw new Error('Missing SANITY_API_READ_TOKEN')
 }
 
 export const {SanityLive, sanityFetch} = defineLive({
   client,
-  serverToken: token,
-  browserToken: token,
+  serverToken: liveToken,
+  browserToken: liveToken,
   strict: true,
 })
 
