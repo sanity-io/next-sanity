@@ -38,7 +38,7 @@ npx tsdown-migrate
 ## Basic Configuration
 
 ```ts
-import {defineConfig} from 'tsdown'
+import { defineConfig } from 'tsdown'
 
 export default defineConfig({
   entry: ['./src/index.ts'],
@@ -50,68 +50,68 @@ export default defineConfig({
 
 ## Core References
 
-| Topic              | Description                                       | Reference                                                            |
-| ------------------ | ------------------------------------------------- | -------------------------------------------------------------------- |
-| Getting Started    | Installation, first bundle, CLI basics            | [guide-getting-started](references/guide-getting-started.md)         |
-| Configuration File | Config file formats, multiple configs, workspace  | [option-config-file](references/option-config-file.md)               |
-| CLI Reference      | All CLI commands and options                      | [reference-cli](references/reference-cli.md)                         |
-| Migrate from tsup  | Migration guide and compatibility notes           | [guide-migrate-from-tsup](references/guide-migrate-from-tsup.md)     |
-| Plugins            | Rolldown, Rollup, Unplugin support                | [advanced-plugins](references/advanced-plugins.md)                   |
-| Hooks              | Lifecycle hooks for custom logic                  | [advanced-hooks](references/advanced-hooks.md)                       |
-| Programmatic API   | Build from Node.js scripts                        | [advanced-programmatic](references/advanced-programmatic.md)         |
-| Rolldown Options   | Pass options directly to Rolldown                 | [advanced-rolldown-options](references/advanced-rolldown-options.md) |
-| CI Environment     | CI detection, `'ci-only'` / `'local-only'` values | [advanced-ci](references/advanced-ci.md)                             |
+| Topic | Description | Reference |
+|-------|-------------|-----------|
+| Getting Started | Installation, first bundle, CLI basics | [guide-getting-started](references/guide-getting-started.md) |
+| Configuration File | Config file formats, multiple configs, workspace | [option-config-file](references/option-config-file.md) |
+| CLI Reference | All CLI commands and options | [reference-cli](references/reference-cli.md) |
+| Migrate from tsup | Migration guide and compatibility notes | [guide-migrate-from-tsup](references/guide-migrate-from-tsup.md) |
+| Plugins | Rolldown, Rollup, Unplugin support | [advanced-plugins](references/advanced-plugins.md) |
+| Hooks | Lifecycle hooks for custom logic | [advanced-hooks](references/advanced-hooks.md) |
+| Programmatic API | Build from Node.js scripts | [advanced-programmatic](references/advanced-programmatic.md) |
+| Rolldown Options | Pass options directly to Rolldown | [advanced-rolldown-options](references/advanced-rolldown-options.md) |
+| CI Environment | CI detection, `'ci-only'` / `'local-only'` values | [advanced-ci](references/advanced-ci.md) |
 
 ## Build Options
 
-| Option             | Usage                                                   | Reference                                                        |
-| ------------------ | ------------------------------------------------------- | ---------------------------------------------------------------- |
-| Entry points       | `entry: ['src/*.ts', '!**/*.test.ts']`                  | [option-entry](references/option-entry.md)                       |
-| Output formats     | `format: ['esm', 'cjs', 'iife', 'umd']`                 | [option-output-format](references/option-output-format.md)       |
-| Output directory   | `outDir: 'dist'`, `outExtensions`                       | [option-output-directory](references/option-output-directory.md) |
-| Type declarations  | `dts: true`, `dts: { sourcemap, compilerOptions, vue }` | [option-dts](references/option-dts.md)                           |
-| Target environment | `target: 'es2020'`, `target: 'esnext'`                  | [option-target](references/option-target.md)                     |
-| Platform           | `platform: 'node'`, `platform: 'browser'`               | [option-platform](references/option-platform.md)                 |
-| Tree shaking       | `treeshake: true`, custom options                       | [option-tree-shaking](references/option-tree-shaking.md)         |
-| Minification       | `minify: true`, `minify: 'dce-only'`                    | [option-minification](references/option-minification.md)         |
-| Source maps        | `sourcemap: true`, `'inline'`, `'hidden'`               | [option-sourcemap](references/option-sourcemap.md)               |
-| Watch mode         | `watch: true`, watch options                            | [option-watch-mode](references/option-watch-mode.md)             |
-| Cleaning           | `clean: true`, clean patterns                           | [option-cleaning](references/option-cleaning.md)                 |
-| Log level          | `logLevel: 'silent'`, `failOnWarn: false`               | [option-log-level](references/option-log-level.md)               |
+| Option | Usage | Reference |
+|--------|-------|-----------|
+| Entry points | `entry: ['src/*.ts', '!**/*.test.ts']` | [option-entry](references/option-entry.md) |
+| Output formats | `format: ['esm', 'cjs', 'iife', 'umd']` | [option-output-format](references/option-output-format.md) |
+| Output directory | `outDir: 'dist'`, `outExtensions` | [option-output-directory](references/option-output-directory.md) |
+| Type declarations | `dts: true`, `dts: { sourcemap, compilerOptions, vue }` | [option-dts](references/option-dts.md) |
+| Target environment | `target: 'es2020'`, `target: 'esnext'` | [option-target](references/option-target.md) |
+| Platform | `platform: 'node'`, `platform: 'browser'` | [option-platform](references/option-platform.md) |
+| Tree shaking | `treeshake: true`, custom options | [option-tree-shaking](references/option-tree-shaking.md) |
+| Minification | `minify: true`, `minify: 'dce-only'` | [option-minification](references/option-minification.md) |
+| Source maps | `sourcemap: true`, `'inline'`, `'hidden'` | [option-sourcemap](references/option-sourcemap.md) |
+| Watch mode | `watch: true`, watch options | [option-watch-mode](references/option-watch-mode.md) |
+| Cleaning | `clean: true`, clean patterns | [option-cleaning](references/option-cleaning.md) |
+| Log level | `logLevel: 'silent'`, `failOnWarn: false` | [option-log-level](references/option-log-level.md) |
 
 ## Dependency Handling
 
-| Feature           | Usage                                                | Reference                                                |
-| ----------------- | ---------------------------------------------------- | -------------------------------------------------------- |
-| Never bundle      | `deps: { neverBundle: ['react', /^@myorg\//] }`      | [option-dependencies](references/option-dependencies.md) |
-| Always bundle     | `deps: { alwaysBundle: ['dep-to-bundle'] }`          | [option-dependencies](references/option-dependencies.md) |
-| Only bundle       | `deps: { onlyBundle: ['cac', 'bumpp'] }` - Whitelist | [option-dependencies](references/option-dependencies.md) |
-| Skip node_modules | `deps: { skipNodeModulesBundle: true }`              | [option-dependencies](references/option-dependencies.md) |
-| Auto external     | Automatic peer/dependency externalization            | [option-dependencies](references/option-dependencies.md) |
+| Feature | Usage | Reference |
+|---------|-------|-----------|
+| Never bundle | `deps: { neverBundle: ['react', /^@myorg\//] }` | [option-dependencies](references/option-dependencies.md) |
+| Always bundle | `deps: { alwaysBundle: ['dep-to-bundle'] }` | [option-dependencies](references/option-dependencies.md) |
+| Only bundle | `deps: { onlyBundle: ['cac', 'bumpp'] }` - Whitelist | [option-dependencies](references/option-dependencies.md) |
+| Skip node_modules | `deps: { skipNodeModulesBundle: true }` | [option-dependencies](references/option-dependencies.md) |
+| Auto external | Automatic peer/dependency externalization | [option-dependencies](references/option-dependencies.md) |
 
 ## Output Enhancement
 
-| Feature            | Usage                                                                                                                                | Reference                                                      |
-| ------------------ | ------------------------------------------------------------------------------------------------------------------------------------ | -------------------------------------------------------------- |
-| Shims              | `shims: true` - Add ESM/CJS compatibility                                                                                            | [option-shims](references/option-shims.md)                     |
-| CJS default        | `cjsDefault: true` (default) / `false`                                                                                               | [option-cjs-default](references/option-cjs-default.md)         |
-| Package exports    | `exports: true` - Auto-generate exports field                                                                                        | [option-package-exports](references/option-package-exports.md) |
-| CSS handling       | **[experimental]** `css: { ... }` — full pipeline with preprocessors, Lightning CSS, PostCSS, code splitting; requires `@tsdown/css` | [option-css](references/option-css.md)                         |
-| CSS inject         | `css: { inject: true }` — preserve CSS imports in JS output                                                                          | [option-css](references/option-css.md)                         |
-| Unbundle mode      | `unbundle: true` - Preserve directory structure                                                                                      | [option-unbundle](references/option-unbundle.md)               |
-| Root directory     | `root: 'src'` - Control output directory mapping                                                                                     | [option-root](references/option-root.md)                       |
-| Executable         | **[experimental]** `exe: true` - Bundle as standalone executable, cross-platform via `@tsdown/exe`                                   | [option-exe](references/option-exe.md)                         |
-| Package validation | `publint: true`, `attw: true` - Validate package                                                                                     | [option-lint](references/option-lint.md)                       |
+| Feature | Usage | Reference |
+|---------|-------|-----------|
+| Shims | `shims: true` - Add ESM/CJS compatibility | [option-shims](references/option-shims.md) |
+| CJS default | `cjsDefault: true` (default) / `false` | [option-cjs-default](references/option-cjs-default.md) |
+| Package exports | `exports: true` - Auto-generate exports field | [option-package-exports](references/option-package-exports.md) |
+| CSS handling | **[experimental]** `css: { ... }` — full pipeline with preprocessors, Lightning CSS, PostCSS, code splitting; requires `@tsdown/css` | [option-css](references/option-css.md) |
+| CSS inject | `css: { inject: true }` — preserve CSS imports in JS output | [option-css](references/option-css.md) |
+| Unbundle mode | `unbundle: true` - Preserve directory structure | [option-unbundle](references/option-unbundle.md) |
+| Root directory | `root: 'src'` - Control output directory mapping | [option-root](references/option-root.md) |
+| Executable | **[experimental]** `exe: true` - Bundle as standalone executable, cross-platform via `@tsdown/exe` | [option-exe](references/option-exe.md) |
+| Package validation | `publint: true`, `attw: true` - Validate package | [option-lint](references/option-lint.md) |
 
 ## Framework & Runtime Support
 
-| Framework | Guide                                                        | Reference                                    |
-| --------- | ------------------------------------------------------------ | -------------------------------------------- |
-| React     | JSX transform, React Compiler                                | [recipe-react](references/recipe-react.md)   |
-| Vue       | SFC support, JSX                                             | [recipe-vue](references/recipe-vue.md)       |
-| Solid     | SolidJS JSX transform                                        | [recipe-solid](references/recipe-solid.md)   |
-| Svelte    | Svelte component libraries (source distribution recommended) | [recipe-svelte](references/recipe-svelte.md) |
-| WASM      | WebAssembly modules via `rolldown-plugin-wasm`               | [recipe-wasm](references/recipe-wasm.md)     |
+| Framework | Guide | Reference |
+|-----------|-------|-----------|
+| React | JSX transform, React Compiler | [recipe-react](references/recipe-react.md) |
+| Vue | SFC support, JSX | [recipe-vue](references/recipe-vue.md) |
+| Solid | SolidJS JSX transform | [recipe-solid](references/recipe-solid.md) |
+| Svelte | Svelte component libraries (source distribution recommended) | [recipe-svelte](references/recipe-svelte.md) |
+| WASM | WebAssembly modules via `rolldown-plugin-wasm` | [recipe-wasm](references/recipe-wasm.md) |
 
 ## Common Patterns
 
@@ -163,7 +163,7 @@ export default defineConfig({
     neverBundle: ['react', 'react-dom'],
   },
   inputOptions: {
-    jsx: {runtime: 'automatic'},
+    jsx: { runtime: 'automatic' },
   },
 })
 ```
@@ -186,7 +186,7 @@ export default defineConfig({
   entry: ['src/index.ts'],
   format: ['esm', 'cjs'],
   dts: true,
-  failOnWarn: 'ci-only', // opt-in: fail on warnings in CI
+  failOnWarn: 'ci-only',  // opt-in: fail on warnings in CI
   publint: 'ci-only',
   attw: 'ci-only',
 })
@@ -195,8 +195,8 @@ export default defineConfig({
 ### WASM Support
 
 ```ts
-import {wasm} from 'rolldown-plugin-wasm'
-import {defineConfig} from 'tsdown'
+import { wasm } from 'rolldown-plugin-wasm'
+import { defineConfig } from 'tsdown'
 
 export default defineConfig({
   entry: ['src/index.ts'],
@@ -238,9 +238,9 @@ export default defineConfig({
   entry: ['src/cli.ts'],
   exe: {
     targets: [
-      {platform: 'linux', arch: 'x64', nodeVersion: '25.7.0'},
-      {platform: 'darwin', arch: 'arm64', nodeVersion: '25.7.0'},
-      {platform: 'win', arch: 'x64', nodeVersion: '25.7.0'},
+      { platform: 'linux', arch: 'x64', nodeVersion: '25.7.0' },
+      { platform: 'darwin', arch: 'arm64', nodeVersion: '25.7.0' },
+      { platform: 'win', arch: 'x64', nodeVersion: '25.7.0' },
     ],
   },
 })
@@ -352,67 +352,43 @@ tsdown --tsconfig tsconfig.build.json  # Custom tsconfig
 ## Best Practices
 
 1. **Always generate type declarations** for TypeScript libraries:
-
    ```ts
-   {
-     dts: true
-   }
+   { dts: true }
    ```
 
 2. **Externalize dependencies** to avoid bundling unnecessary code:
-
    ```ts
-   {
-     deps: {
-       neverBundle: [/^react/, /^@myorg\//]
-     }
-   }
+   { deps: { neverBundle: [/^react/, /^@myorg\//] } }
    ```
 
 3. **Use tree shaking** for optimal bundle size:
-
    ```ts
-   {
-     treeshake: true
-   }
+   { treeshake: true }
    ```
 
 4. **Enable minification** for production builds:
-
    ```ts
-   {
-     minify: true
-   }
+   { minify: true }
    ```
 
 5. **Add shims** for better ESM/CJS compatibility:
-
    ```ts
-   {
-     shims: true
-   } // Adds __dirname, __filename, etc.
+   { shims: true }  // Adds __dirname, __filename, etc.
    ```
 
 6. **Auto-generate package.json exports**:
-
    ```ts
-   {
-     exports: true
-   } // Creates proper exports field
+   { exports: true }  // Creates proper exports field
    ```
 
 7. **Use watch mode** during development:
-
    ```bash
    tsdown --watch
    ```
 
 8. **Preserve structure** for utilities with many files:
-
    ```ts
-   {
-     unbundle: true
-   } // Keep directory structure
+   { unbundle: true }  // Keep directory structure
    ```
 
 9. **Validate packages** in CI before publishing:

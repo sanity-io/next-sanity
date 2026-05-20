@@ -79,7 +79,7 @@ task cache key = hash(global hash, task hash)
 
 ```json
 {
-  "futureFlags": {"globalConfiguration": true},
+  "futureFlags": { "globalConfiguration": true },
   "global": {
     "inputs": ["tsconfig.json", ".env"]
   },

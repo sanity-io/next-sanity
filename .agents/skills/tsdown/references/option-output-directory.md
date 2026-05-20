@@ -36,13 +36,12 @@ export default defineConfig({
 export default defineConfig({
   entry: ['src/index.ts'],
   format: ['esm', 'cjs'],
-  outDir: 'dist', // Default
+  outDir: 'dist',  // Default
   dts: true,
 })
 ```
 
 **Output:**
-
 ```
 dist/
 ├── index.mjs
@@ -68,7 +67,6 @@ export default defineConfig([
 ```
 
 **Output:**
-
 ```
 dist/
 ├── esm/
@@ -82,7 +80,7 @@ dist/
 ```ts
 export default defineConfig({
   entry: ['src/index.ts'],
-  outDir: 'lib', // Custom directory
+  outDir: 'lib',  // Custom directory
   clean: true,
 })
 ```
@@ -92,8 +90,8 @@ export default defineConfig({
 ```ts
 export default defineConfig({
   entry: ['src/index.ts'],
-  outDir: '.', // Output to project root (not recommended)
-  clean: false, // Don't clean root!
+  outDir: '.',  // Output to project root (not recommended)
+  clean: false,  // Don't clean root!
 })
 ```
 
@@ -110,7 +108,7 @@ export default defineConfig({
   entry: ['src/index.ts'],
   format: ['esm', 'cjs'],
   outDir: 'dist',
-  outExtensions({format}) {
+  outExtensions({ format }) {
     return {
       js: format === 'esm' ? '.mjs' : '.cjs',
     }
@@ -121,11 +119,11 @@ export default defineConfig({
 ### Default Extensions
 
 | Format | Default Extension | With `type: "module"` |
-| ------ | ----------------- | --------------------- |
-| `esm`  | `.mjs`            | `.js`                 |
-| `cjs`  | `.cjs`            | `.js`                 |
-| `iife` | `.global.js`      | `.global.js`          |
-| `umd`  | `.umd.js`         | `.umd.js`             |
+|--------|-------------------|----------------------|
+| `esm` | `.mjs` | `.js` |
+| `cjs` | `.cjs` | `.js` |
+| `iife` | `.global.js` | `.global.js` |
+| `umd` | `.umd.js` | `.umd.js` |
 
 ### ESM with .js Extension
 
@@ -133,7 +131,7 @@ export default defineConfig({
 export default defineConfig({
   entry: ['src/index.ts'],
   format: ['esm'],
-  outExtensions: () => ({js: '.js'}),
+  outExtensions: () => ({ js: '.js' }),
 })
 ```
 
@@ -156,7 +154,6 @@ export default defineConfig({
 ```
 
 **Output:**
-
 ```
 dist/
 ├── index.mjs
@@ -169,12 +166,11 @@ dist/
 export default defineConfig({
   entry: ['src/**/*.ts', '!**/*.test.ts'],
   outDir: 'dist',
-  unbundle: true, // Preserve structure
+  unbundle: true,  // Preserve structure
 })
 ```
 
 **Output:**
-
 ```
 dist/
 ├── index.mjs
@@ -193,12 +189,12 @@ export default defineConfig([
   {
     entry: ['src/index.ts'],
     outDir: 'dist',
-    clean: true, // Clean first
+    clean: true,  // Clean first
   },
   {
     entry: ['src/cli.ts'],
     outDir: 'dist',
-    clean: false, // Don't clean again
+    clean: false,  // Don't clean again
   },
 ])
 ```

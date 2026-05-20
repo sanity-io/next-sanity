@@ -34,10 +34,9 @@ export default defineConfig({
 })
 ```
 
-**Compatibility:** ✅ Most unplugin-\* plugins work
+**Compatibility:** ✅ Most unplugin-* plugins work
 
 **Examples:**
-
 - `unplugin-vue-components`
 - `unplugin-auto-import`
 - `unplugin-icons`
@@ -95,7 +94,7 @@ export default defineConfig({
 ### Basic Plugin Usage
 
 ```ts
-import {defineConfig} from 'tsdown'
+import { defineConfig } from 'tsdown'
 import SomePlugin from 'some-plugin'
 
 export default defineConfig({
@@ -113,7 +112,11 @@ import PluginC from 'plugin-c'
 
 export default defineConfig({
   entry: ['src/index.ts'],
-  plugins: [PluginA(), PluginB({option: true}), PluginC()],
+  plugins: [
+    PluginA(),
+    PluginB({ option: true }),
+    PluginC(),
+  ],
 })
 ```
 
@@ -122,9 +125,11 @@ export default defineConfig({
 ```ts
 export default defineConfig((options) => ({
   entry: ['src/index.ts'],
-  plugins: [SomePlugin(), options.watch && DevPlugin(), !options.watch && ProdPlugin()].filter(
-    Boolean,
-  ),
+  plugins: [
+    SomePlugin(),
+    options.watch && DevPlugin(),
+    !options.watch && ProdPlugin(),
+  ].filter(Boolean),
 }))
 ```
 
@@ -143,7 +148,7 @@ export default defineConfig({
 ### Node Resolve
 
 ```ts
-import {nodeResolve} from '@rollup/plugin-node-resolve'
+import { nodeResolve } from '@rollup/plugin-node-resolve'
 
 export default defineConfig({
   plugins: [nodeResolve()],
@@ -169,7 +174,7 @@ export default defineConfig({
   plugins: [
     replace({
       'process.env.NODE_ENV': JSON.stringify('production'),
-      '__VERSION__': JSON.stringify('1.0.0'),
+      __VERSION__: JSON.stringify('1.0.0'),
     }),
   ],
 })
@@ -251,7 +256,7 @@ export default defineConfig({
 ### Svelte
 
 ```ts
-import {svelte} from '@sveltejs/vite-plugin-svelte'
+import { svelte } from '@sveltejs/vite-plugin-svelte'
 
 export default defineConfig({
   entry: ['src/index.ts'],
@@ -269,7 +274,7 @@ Follow Rolldown's plugin development guide:
 ### Basic Plugin Structure
 
 ```ts
-import type {Plugin} from 'rolldown'
+import type { Plugin } from 'rolldown'
 
 function myPlugin(): Plugin {
   return {
@@ -293,7 +298,7 @@ function myPlugin(): Plugin {
 ### Using Custom Plugin
 
 ```ts
-import {myPlugin} from './my-plugin'
+import { myPlugin } from './my-plugin'
 
 export default defineConfig({
   plugins: [myPlugin()],
@@ -313,9 +318,9 @@ Plugins run in the order they're defined:
 ```ts
 export default defineConfig({
   plugins: [
-    PluginA(), // Runs first
-    PluginB(), // Runs second
-    PluginC(), // Runs last
+    PluginA(),  // Runs first
+    PluginB(),  // Runs second
+    PluginC(),  // Runs last
   ],
 })
 ```

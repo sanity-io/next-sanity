@@ -10,7 +10,7 @@ Always requires Suspense boundary in static routes. Without it, the entire page 
 // Bad: Entire page becomes CSR
 'use client'
 
-import {useSearchParams} from 'next/navigation'
+import { useSearchParams } from 'next/navigation'
 
 export default function SearchBar() {
   const searchParams = useSearchParams()
@@ -20,7 +20,7 @@ export default function SearchBar() {
 
 ```tsx
 // Good: Wrap in Suspense
-import {Suspense} from 'react'
+import { Suspense } from 'react'
 import SearchBar from './search-bar'
 
 export default function Page() {
@@ -40,7 +40,7 @@ Requires Suspense boundary when route has dynamic parameters.
 // In dynamic route [slug]
 // Bad: No Suspense
 'use client'
-import {usePathname} from 'next/navigation'
+import { usePathname } from 'next/navigation'
 
 export function Breadcrumb() {
   const pathname = usePathname()
@@ -59,9 +59,9 @@ If you use `generateStaticParams`, Suspense is optional.
 
 ## Quick Reference
 
-| Hook                | Suspense Required    |
-| ------------------- | -------------------- |
-| `useSearchParams()` | Yes                  |
-| `usePathname()`     | Yes (dynamic routes) |
-| `useParams()`       | No                   |
-| `useRouter()`       | No                   |
+| Hook | Suspense Required |
+|------|-------------------|
+| `useSearchParams()` | Yes |
+| `usePathname()` | Yes (dynamic routes) |
+| `useParams()` | No |
+| `useRouter()` | No |

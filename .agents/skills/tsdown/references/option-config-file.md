@@ -9,7 +9,6 @@ tsdown searches for config files automatically in the current directory and pare
 ## Supported File Names
 
 tsdown looks for these files (in order):
-
 - `tsdown.config.ts`
 - `tsdown.config.mts`
 - `tsdown.config.cts`
@@ -26,7 +25,7 @@ tsdown looks for these files (in order):
 
 ```ts
 // tsdown.config.ts
-import {defineConfig} from 'tsdown'
+import { defineConfig } from 'tsdown'
 
 export default defineConfig({
   entry: ['src/index.ts'],
@@ -115,7 +114,6 @@ export default defineConfig((options) => {
 ```
 
 Available options:
-
 - `watch` - Whether watch mode is enabled
 - Other CLI flags passed to config
 

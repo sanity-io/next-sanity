@@ -52,7 +52,6 @@ Called before the build process starts.
 **When:** Once per build session
 
 **Context:**
-
 ```ts
 {
   options: ResolvedConfig,
@@ -61,13 +60,11 @@ Called before the build process starts.
 ```
 
 **Use cases:**
-
 - Setup tasks
 - Validation
 - Environment preparation
 
 **Example:**
-
 ```ts
 hooks: {
   'build:prepare': async (context) => {
@@ -84,7 +81,6 @@ Called before each Rolldown build.
 **When:** Once per format (ESM, CJS, etc.)
 
 **Context:**
-
 ```ts
 {
   options: ResolvedConfig,
@@ -94,13 +90,11 @@ Called before each Rolldown build.
 ```
 
 **Use cases:**
-
 - Modify build options per format
 - Inject plugins dynamically
 - Format-specific setup
 
 **Example:**
-
 ```ts
 hooks: {
   'build:before': async (context) => {
@@ -121,7 +115,6 @@ Called after the build completes.
 **When:** Once per build session
 
 **Context:**
-
 ```ts
 {
   options: ResolvedConfig,
@@ -131,14 +124,12 @@ Called after the build completes.
 ```
 
 **Use cases:**
-
 - Post-processing
 - Asset copying
 - Notifications
 - Deployment
 
 **Example:**
-
 ```ts
 hooks: {
   'build:done': async (context) => {
@@ -189,7 +180,7 @@ export default defineConfig({
 ### Custom File Copy
 
 ```ts
-import {copyFile} from 'fs/promises'
+import { copyFile } from 'fs/promises'
 
 export default defineConfig({
   hooks: {

@@ -9,7 +9,6 @@ All CLI flags can also be set in the config file. CLI flags override config file
 ## Flag Patterns
 
 CLI flag mapping rules:
-
 - `--foo` sets `foo: true`
 - `--no-foo` sets `foo: false`
 - `--foo.bar` sets `foo: { bar: true }`
@@ -266,7 +265,6 @@ tsdown --exe
 ```
 
 When enabled:
-
 - Default format changes to `cjs` (unless Node.js >= 25.7.0)
 - Declaration file generation (`dts`) is disabled by default
 - Code splitting is disabled

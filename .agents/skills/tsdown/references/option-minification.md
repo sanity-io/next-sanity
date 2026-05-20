@@ -73,11 +73,7 @@ hello(x)
 
 ```js
 // dist/index.mjs
-const e = 1
-function t(e) {
-  ;(console.log(`Hello World`), console.log(e))
-}
-t(e)
+const e=1;function t(e){console.log(`Hello World`),console.log(e)}t(e);
 ```
 
 ## Common Patterns
@@ -99,7 +95,7 @@ export default defineConfig({
 export default defineConfig((options) => ({
   entry: ['src/index.ts'],
   format: ['esm'],
-  minify: !options.watch, // Only minify in production
+  minify: !options.watch,  // Only minify in production
 }))
 ```
 

@@ -8,12 +8,12 @@ tsdown can generate bundles in multiple formats. Default is ESM.
 
 ## Available Formats
 
-| Format | Description                             | Use Case                       |
-| ------ | --------------------------------------- | ------------------------------ |
-| `esm`  | ECMAScript Module (default)             | Modern Node.js, browsers, Deno |
-| `cjs`  | CommonJS                                | Legacy Node.js, require()      |
-| `iife` | Immediately Invoked Function Expression | Browser `<script>` tags        |
-| `umd`  | Universal Module Definition             | AMD, CommonJS, and globals     |
+| Format | Description | Use Case |
+|--------|-------------|----------|
+| `esm` | ECMAScript Module (default) | Modern Node.js, browsers, Deno |
+| `cjs` | CommonJS | Legacy Node.js, require() |
+| `iife` | Immediately Invoked Function Expression | Browser `<script>` tags |
+| `umd` | Universal Module Definition | AMD, CommonJS, and globals |
 
 ## Usage
 
@@ -83,7 +83,6 @@ export default defineConfig({
 ```
 
 Output:
-
 - `dist/index.mjs` (ESM)
 - `dist/index.cjs` (CJS)
 - `dist/index.d.ts` (Types)
@@ -144,12 +143,12 @@ export default defineConfig({
 
 ### File Extensions
 
-| Format | Extension                                    |
-| ------ | -------------------------------------------- |
-| ESM    | `.mjs` or `.js` (with `"type": "module"`)    |
-| CJS    | `.cjs` or `.js` (without `"type": "module"`) |
-| IIFE   | `.global.js`                                 |
-| UMD    | `.umd.js`                                    |
+| Format | Extension |
+|--------|-----------|
+| ESM | `.mjs` or `.js` (with `"type": "module"`) |
+| CJS | `.cjs` or `.js` (without `"type": "module"`) |
+| IIFE | `.global.js` |
+| UMD | `.umd.js` |
 
 ### Customize Extensions
 
@@ -159,7 +158,7 @@ Use `outExtensions` to override:
 export default defineConfig({
   entry: ['src/index.ts'],
   format: ['esm', 'cjs'],
-  outExtensions: ({format}) => ({
+  outExtensions: ({ format }) => ({
     js: format === 'esm' ? '.js' : '.cjs',
   }),
 })

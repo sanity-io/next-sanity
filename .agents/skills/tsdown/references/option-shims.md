@@ -52,17 +52,15 @@ export default defineConfig({
 ### ESM with Shims
 
 **Source:**
-
 ```ts
 console.log(__dirname)
 console.log(__filename)
 ```
 
 **Output (shims: true):**
-
 ```js
-import {fileURLToPath} from 'node:url'
-import {dirname} from 'node:path'
+import { fileURLToPath } from 'node:url'
+import { dirname } from 'node:path'
 
 const __filename = fileURLToPath(import.meta.url)
 const __dirname = dirname(__filename)
@@ -74,15 +72,13 @@ console.log(__filename)
 ### ESM with require
 
 **Source:**
-
 ```ts
 const mod = require('some-module')
 ```
 
 **Output (automatic on Node.js):**
-
 ```js
-import {createRequire} from 'node:module'
+import { createRequire } from 'node:module'
 const require = createRequire(import.meta.url)
 
 const mod = require('some-module')
@@ -91,19 +87,17 @@ const mod = require('some-module')
 ### CJS with import.meta
 
 **Source:**
-
 ```ts
 console.log(import.meta.url)
 console.log(import.meta.dirname)
 ```
 
 **Output (automatic):**
-
 ```js
 const import_meta = {
   url: require('url').pathToFileURL(__filename).toString(),
   dirname: __dirname,
-  filename: __filename,
+  filename: __filename
 }
 
 console.log(import_meta.url)
@@ -119,7 +113,7 @@ export default defineConfig({
   entry: ['src/cli.ts'],
   format: ['esm'],
   platform: 'node',
-  shims: true, // Add __dirname, __filename
+  shims: true,  // Add __dirname, __filename
 })
 ```
 
@@ -130,8 +124,8 @@ export default defineConfig({
   entry: ['src/index.ts'],
   format: ['esm', 'cjs'],
   platform: 'node',
-  shims: true, // ESM gets __dirname/__filename
-  // CJS gets import.meta.* (automatic)
+  shims: true,  // ESM gets __dirname/__filename
+                // CJS gets import.meta.* (automatic)
 })
 ```
 
@@ -144,7 +138,7 @@ export default defineConfig({
   platform: 'node',
   shims: true,
   deps: {
-    neverBundle: [/.*/], // External all deps
+    neverBundle: [/.*/],  // External all deps
   },
 })
 ```
@@ -153,8 +147,8 @@ export default defineConfig({
 
 ```ts
 // Source code
-import {readFileSync} from 'fs'
-import {join} from 'path'
+import { readFileSync } from 'fs'
+import { join } from 'path'
 
 // Read file relative to current module
 const content = readFileSync(join(__dirname, 'data.json'), 'utf-8')
@@ -165,7 +159,7 @@ const content = readFileSync(join(__dirname, 'data.json'), 'utf-8')
 export default defineConfig({
   entry: ['src/index.ts'],
   format: ['esm'],
-  shims: true, // Enables __dirname
+  shims: true,  // Enables __dirname
 })
 ```
 
@@ -194,8 +188,8 @@ Shims add minimal runtime overhead:
 
 ```js
 // Added to output when shims enabled
-import {fileURLToPath} from 'node:url'
-import {dirname} from 'node:path'
+import { fileURLToPath } from 'node:url'
+import { dirname } from 'node:path'
 
 const __filename = fileURLToPath(import.meta.url)
 const __dirname = dirname(__filename)
@@ -213,7 +207,7 @@ If `__dirname` or `__filename` are not used, they're automatically removed durin
 export default defineConfig({
   platform: 'node',
   format: ['esm'],
-  shims: true, // Recommended for Node.js
+  shims: true,  // Recommended for Node.js
 })
 ```
 
@@ -226,7 +220,7 @@ export default defineConfig({
 export default defineConfig({
   platform: 'browser',
   format: ['esm'],
-  shims: false, // Not needed for browser
+  shims: false,  // Not needed for browser
 })
 ```
 
@@ -239,7 +233,7 @@ export default defineConfig({
 export default defineConfig({
   platform: 'neutral',
   format: ['esm'],
-  shims: false, // Avoid platform-specific code
+  shims: false,  // Avoid platform-specific code
 })
 ```
 
@@ -276,7 +270,7 @@ Automatic on Node.js platform. If not working:
 
 ```ts
 export default defineConfig({
-  platform: 'node', // Ensure Node.js platform
+  platform: 'node',  // Ensure Node.js platform
 })
 ```
 
@@ -286,7 +280,7 @@ Automatic - no configuration needed. If still failing, check output format:
 
 ```ts
 export default defineConfig({
-  format: ['cjs'], // Shims added automatically
+  format: ['cjs'],  // Shims added automatically
 })
 ```
 

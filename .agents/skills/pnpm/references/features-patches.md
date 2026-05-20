@@ -100,12 +100,11 @@ pnpm patch-commit <path>
 ```bash
 pnpm patch-remove <pkg>@<version>
 
-# Example
+# Example  
 pnpm patch-remove express@4.18.2
 ```
 
 Or manually:
-
 1. Delete the patch file from `patches/`
 2. Remove entry from `patchedDependencies` in `package.json`
 3. Run `pnpm install`
@@ -160,7 +159,6 @@ All workspace packages using `express@4.18.2` will have the patch applied.
 1. **Version specificity**: Patches are tied to exact versions. Update patches when upgrading dependencies.
 
 2. **Document patches**: Add comments explaining why the patch exists:
-
    ```bash
    # In patches/README.md
    ## express@4.18.2.patch
@@ -182,7 +180,6 @@ ERR_PNPM_PATCH_FAILED  Cannot apply patch
 ```
 
 The package version changed. Recreate the patch:
-
 ```bash
 pnpm patch-remove express@4.18.2
 pnpm patch express@4.18.2
@@ -193,11 +190,10 @@ pnpm patch-commit <path>
 ### Patch not applied
 
 Ensure:
-
 1. Version in `patchedDependencies` matches installed version exactly
 2. Run `pnpm install` after adding patch configuration
 
-<!--
+<!-- 
 Source references:
 - https://pnpm.io/cli/patch
 - https://pnpm.io/cli/patch-commit

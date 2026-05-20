@@ -25,7 +25,7 @@ tsdown --no-treeshake
 ```ts
 export default defineConfig({
   entry: ['src/index.ts'],
-  treeshake: true, // Default
+  treeshake: true,  // Default
 })
 ```
 
@@ -34,7 +34,6 @@ export default defineConfig({
 ### With Tree Shaking
 
 **Source:**
-
 ```ts
 // src/util.ts
 export function unused() {
@@ -46,12 +45,11 @@ export function hello(x: number) {
 }
 
 // src/index.ts
-import {hello} from './util'
+import { hello } from './util'
 hello(1)
 ```
 
 **Output:**
-
 ```js
 // dist/index.mjs
 function hello(x) {
@@ -65,7 +63,6 @@ hello(1)
 ### Without Tree Shaking
 
 **Output:**
-
 ```js
 // dist/index.mjs
 function unused() {
@@ -165,7 +162,7 @@ export default defineConfig({
 ```ts
 export default defineConfig((options) => ({
   entry: ['src/index.ts'],
-  treeshake: !options.watch, // Disable in dev
+  treeshake: !options.watch,  // Disable in dev
 }))
 ```
 
@@ -176,7 +173,11 @@ export default defineConfig({
   entry: ['src/index.ts'],
   treeshake: {
     moduleSideEffects: (id) => {
-      return id.includes('.css') || id.includes('polyfill') || id.includes('side-effect')
+      return (
+        id.includes('.css') ||
+        id.includes('polyfill') ||
+        id.includes('side-effect')
+      )
     },
   },
 })
@@ -194,9 +195,8 @@ export default defineConfig({
 ```
 
 Users can import only what they need:
-
 ```ts
-import {onlyWhatINeed} from 'my-utils'
+import { onlyWhatINeed } from 'my-utils'
 ```
 
 ## Benefits
@@ -305,7 +305,7 @@ export function multiply(a, b) {
 }
 
 // Only 'add' imported = only 'add' bundled
-import {add} from './utils'
+import { add } from './utils'
 ```
 
 ### With Side Effects
@@ -313,7 +313,7 @@ import {add} from './utils'
 ```ts
 // polyfill.ts - has side effects
 if (!Array.prototype.at) {
-  Array.prototype.at = function (index) {
+  Array.prototype.at = function(index) {
     // polyfill implementation
   }
 }

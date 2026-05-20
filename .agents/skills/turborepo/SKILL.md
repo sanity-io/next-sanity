@@ -9,7 +9,7 @@ description: |
   monorepo, shares code between apps, runs changed/affected packages, debugs cache,
   or has apps/packages directories.
 metadata:
-  version: 2.9.2-canary.2
+  version: 2.9.15-canary.3
 ---
 
 # Turborepo Skill
@@ -18,15 +18,15 @@ Build system for JavaScript/TypeScript monorepos. Turborepo caches task outputs 
 
 ## IMPORTANT: Package Tasks, Not Root Tasks
 
-**DO NOT create Root Tasks. ALWAYS create package tasks.**
+**Prefer package tasks over Root Tasks.**
 
-When creating tasks/scripts/pipelines, you MUST:
+When creating tasks/scripts/pipelines, you MUST default to package tasks:
 
 1. Add the script to each relevant package's `package.json`
 2. Register the task in root `turbo.json`
 3. Root `package.json` only delegates via `turbo run <task>`
 
-**DO NOT** put task logic in root `package.json`. This defeats Turborepo's parallelization.
+**DO NOT** put task logic in root `package.json` when it can live in packages. This defeats Turborepo's parallelization.
 
 ```json
 // DO THIS: Scripts in each package
@@ -44,9 +44,9 @@ When creating tasks/scripts/pipelines, you MUST:
 // turbo.json - register tasks
 {
   "tasks": {
-    "build": {"dependsOn": ["^build"], "outputs": ["dist/**"]},
+    "build": { "dependsOn": ["^build"], "outputs": ["dist/**"] },
     "lint": {},
-    "test": {"dependsOn": ["build"]}
+    "test": { "dependsOn": ["build"] }
   }
 }
 ```
@@ -74,7 +74,7 @@ When creating tasks/scripts/pipelines, you MUST:
 }
 ```
 
-Root Tasks (`//#taskname`) are ONLY for tasks that truly cannot exist in packages (rare).
+Root Tasks (`//#taskname`) are ONLY for tasks that truly cannot exist in packages, such as Vitest Projects' `//#test`, repo-wide release scripts, or tooling that does not invoke `turbo` itself.
 
 ## Secondary Rule: `turbo run` vs `turbo`
 
@@ -363,12 +363,12 @@ With `futureFlags.globalConfiguration`, this problem is reduced because `global.
 ```json
 // BEST - global.inputs with per-task exclusion
 {
-  "futureFlags": {"globalConfiguration": true},
+  "futureFlags": { "globalConfiguration": true },
   "global": {
     "inputs": [".env"]
   },
   "tasks": {
-    "build": {"outputs": ["dist/**"]},
+    "build": { "outputs": ["dist/**"] },
     "lint": {
       "inputs": ["$TURBO_DEFAULT$", "!$TURBO_ROOT$/.env"]
     }
@@ -709,10 +709,10 @@ packages/
 
 ```typescript
 // WRONG: Reaching into another package's internals
-import {Button} from '../../packages/ui/src/button'
+import { Button } from "../../packages/ui/src/button";
 
 // CORRECT: Install and import properly
-import {Button} from '@repo/ui/button'
+import { Button } from "@repo/ui/button";
 ```
 
 ### Too Many Root Dependencies
@@ -740,7 +740,7 @@ import {Button} from '@repo/ui/button'
 
 ```json
 {
-  "$schema": "https://v2-9-2-canary-2.turborepo.dev/schema.json",
+  "$schema": "https://v2-9-15-canary-3.turborepo.dev/schema.json",
   "tasks": {
     "build": {
       "dependsOn": ["^build"],
@@ -827,8 +827,8 @@ Some tasks can run in parallel (don't need built output from dependencies) but m
 ```json
 {
   "tasks": {
-    "transit": {"dependsOn": ["^transit"]},
-    "my-task": {"dependsOn": ["transit"]}
+    "transit": { "dependsOn": ["^transit"] },
+    "my-task": { "dependsOn": ["transit"] }
   }
 }
 ```
@@ -857,7 +857,7 @@ With `futureFlags.globalConfiguration`, the same config moves global settings un
 
 ```json
 {
-  "futureFlags": {"globalConfiguration": true},
+  "futureFlags": { "globalConfiguration": true },
   "global": {
     "env": ["NODE_ENV"],
     "inputs": [".env"]
