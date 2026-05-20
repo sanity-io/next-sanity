@@ -47,7 +47,7 @@ In practice this means that by default content changes are no longer guaranteed 
 
 #### Opting in to guaranteed live content updates
 
-The recommended way to opt in to guaranteed live content updates is to implement an [Invalidate Sync Tags Function](https://www.sanity.io/docs/changelog/7a491dd1-67e8-41e0-9a89-eb9704055dc6) ([example](https://github.com/sanity-io/lcapi-examples/blob/9f40340b4d147a6a6bcf26e10045388b951d3212/studio/functions/cache-invalidate/index.ts)) that calls a `/api/revalidate-tags` endpoint in your app ([example](https://github.com/sanity-io/lcapi-examples/blob/9f40340b4d147a6a6bcf26e10045388b951d3212/next-enterprise/src/app/api/expire-tags/route.ts)).
+The recommended way to opt in to guaranteed live content updates is to implement an [Invalidate Sync Tags Function](https://www.sanity.io/docs/changelog/7a491dd1-67e8-41e0-9a89-eb9704055dc6) ([example](https://github.com/sanity-io/lcapi-examples/blob/3a093ebe95572ca910c81084bb57ce9049d1aae0/studio/functions/cache-invalidate/index.ts)) that calls a `/api/revalidate-tags` endpoint in your app ([example](https://github.com/sanity-io/lcapi-examples/blob/3a093ebe95572ca910c81084bb57ce9049d1aae0/next-enterprise/src/app/api/revalidate-tags/route.ts)).
 
 We recommend using `revalidateTag` with the `max` cache profile to invalidate the cache tags, and using dedicated client components if you want to drive specific experiences that have to be real-time ([example](https://github.com/sanity-io/lcapi-examples/blob/9f40340b4d147a6a6bcf26e10045388b951d3212/next-enterprise/src/app/Reactions.tsx#L35-L67)), but if you want to have the same instant experience as `next-sanity@12` you can set `{expire: 0}` in your route handler:
 
