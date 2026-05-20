@@ -2,7 +2,7 @@
 
 ### Replace the `revalidateSyncTags` prop on `<SanityLive>` with `action`
 
-The prop was initially introduced to allow overriding the default cache invalidation behavior when a live event was received. Back then the [`revalidateTag` function did not have an second argument that allows configuring the revalidatino behavior](https://nextjs.org/docs/app/api-reference/functions/revalidateTag#revalidation-behavior), and we did not have support for [Invalidate Sync Tags Functions](https://www.sanity.io/docs/changelog/7a491dd1-67e8-41e0-9a89-eb9704055dc6).
+The prop was initially introduced to allow overriding the default cache invalidation behavior when a live event was received. Back then the [`revalidateTag` function did not have a second argument that allows configuring the revalidation behavior](https://nextjs.org/docs/app/api-reference/functions/revalidateTag#revalidation-behavior), and we did not have support for [Invalidate Sync Tags Functions](https://www.sanity.io/docs/changelog/7a491dd1-67e8-41e0-9a89-eb9704055dc6).
 Both platforms have evolved, and the name `revalidateSyncTags` is no longer accurate, and its default behavior is not ideal.
 
 This API change is only a breaking change for you if you either:
@@ -18,7 +18,7 @@ The default behavior that you might have relied on is that when a live event was
 In practice this meant that if you published a change to your nextjs app while at least one visitor was connected to `<SanityLive>` and not in draft mode, then they would be guaranteed to see the change within a few seconds.
 If you were in Presentation Tool or otherwise in draft mode, and nobody else observed the change, then they would eventually see the change if they manually refresh the page a couple of times, or something else triggered a `refresh()` event after the cache is updated. This is a side-effect of using `revalidateTag` with the `max` cache profile instead of `updateTag`, and was a change we made in https://github.com/sanity-io/next-sanity/pull/3432 to avoid the impact of the Next.js regression reported by Sanity to Vercel in https://github.com/vercel/next.js/issues/93210 as `draftMode` generally implies that `<SanityLive>` will enable `includeDrafts` and thus see live events for draft content, and not just published content, and thus receive far more events than if you were not in draft mode.
 
-The new behavior further mitiates the impact we've seen in https://github.com/vercel/next.js/issues/93210 by:
+The new behavior further mitigates the impact we've seen in https://github.com/vercel/next.js/issues/93210 by:
 
 - using `revalidateTag` with the `max` cache profile instead of `updateTag`
 - when in draft mode, we don't `updateTag` nor `revalidateTag` at all, we just call [`refresh()`](https://nextjs.org/docs/app/api-reference/functions/refresh)
@@ -90,7 +90,7 @@ export default function RootLayout({children}: {children: React.ReactNode}) {
             }
 
             console.log(
-              `<SanityLive /> ${isDraftMode ? `revalidated tags: ${logTags.join(', ')} with cache profile "max" ` : `updated tags: ${logTags.join(', ')} and revalidated tag: "sanity:fetch-sync-tags" with cache profile "max"`}`,
+              `<SanityLive /> ${isDraftMode ? `revalidated tags: ${logTags.join(', ')} with cache profile "max" ` : `updated tags: ${logTags.join(', ')}`}`,
             )
 
             if (isDraftMode) {
@@ -238,7 +238,7 @@ export default function Layout({children}: {children: React.ReactNode}) {
 }
 ```
 
-The motivation for removing this feature is that most users saw this as unexpected behavior, especially since when using browser debug tools window focus events trigger often and [paired with how v16 behaves differently with link prefetching and the `router.refresh()` call it's bedt to remove it.](https://github.com/vercel/next.js/issues/93210)
+The motivation for removing this feature is that most users saw this as unexpected behavior, especially since window focus events often trigger when using browser debug tools. [Paired with how v16 behaves differently with link prefetching and the `router.refresh()` call, it's best to remove it.](https://github.com/vercel/next.js/issues/93210)
 
 ### `refreshOnReconnect` prop removed from `<SanityLive>`
 
@@ -304,6 +304,8 @@ Create a new `RefreshOnMount` component:
 
 ```tsx
 // app/RefreshOnMount.tsx
+'use client'
+
 import {useRouter} from 'next/navigation'
 import {useEffect, useReducer, startTransition} from 'react'
 
