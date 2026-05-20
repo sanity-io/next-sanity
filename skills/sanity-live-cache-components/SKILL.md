@@ -23,12 +23,12 @@ This skill assumes familiarity with the `next-cache-components` skill — it cov
 
 ## Reference files
 
-| File                                                          | When to read                                                                          |
-| ------------------------------------------------------------- | ------------------------------------------------------------------------------------- |
-| [reference/live-helpers.md](reference/live-helpers.md)        | Full `client.ts` / `live.ts`, `sanityFetch*` and `getDynamicFetchOptions` details     |
-| [reference/three-layer-pattern.md](reference/three-layer-pattern.md) | The Page → Dynamic → Cached pattern for `page.tsx`, including the `searchParams` variant |
-| [reference/layouts.md](reference/layouts.md)                  | Non-blocking data fetching inside `layout.tsx` with a shared `'use cache'` helper     |
-| [reference/dynamic-segments.md](reference/dynamic-segments.md) | High-performance `[slug]` routes: `loading.tsx` + partial `generateStaticParams`, or non-blocking dynamic `params` in a layout |
+| File                                                                 | When to read                                                                                                                   |
+| -------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------ |
+| [reference/live-helpers.md](reference/live-helpers.md)               | Full `client.ts` / `live.ts`, `sanityFetch*` and `getDynamicFetchOptions` details                                              |
+| [reference/three-layer-pattern.md](reference/three-layer-pattern.md) | The Page → Dynamic → Cached pattern for `page.tsx`, including the `searchParams` variant                                       |
+| [reference/layouts.md](reference/layouts.md)                         | Non-blocking data fetching inside `layout.tsx` with a shared `'use cache'` helper                                              |
+| [reference/dynamic-segments.md](reference/dynamic-segments.md)       | High-performance `[slug]` routes: `loading.tsx` + partial `generateStaticParams`, or non-blocking dynamic `params` in a layout |
 
 ---
 
@@ -92,13 +92,13 @@ Full file contents (including `client.ts`, `getDynamicFetchOptions`, `sanityFetc
 
 The helpers exported from `live.ts`:
 
-| Helper                     | Used in                                                              |
-| -------------------------- | -------------------------------------------------------------------- |
-| `sanityFetch`              | `'use cache'` components rendered from `page.tsx` / `layout.tsx`     |
-| `sanityFetchMetadata`      | `generateMetadata`, `generateViewport`, `sitemap.ts`, `robots.ts`, `opengraph-image.tsx`, etc. |
-| `sanityFetchStaticParams`  | `generateStaticParams` only                                          |
-| `getDynamicFetchOptions`   | Resolving `perspective`/`stega` outside any `'use cache'` boundary   |
-| `SanityLive`               | Rendered once in a root layout                                       |
+| Helper                    | Used in                                                                                        |
+| ------------------------- | ---------------------------------------------------------------------------------------------- |
+| `sanityFetch`             | `'use cache'` components rendered from `page.tsx` / `layout.tsx`                               |
+| `sanityFetchMetadata`     | `generateMetadata`, `generateViewport`, `sitemap.ts`, `robots.ts`, `opengraph-image.tsx`, etc. |
+| `sanityFetchStaticParams` | `generateStaticParams` only                                                                    |
+| `getDynamicFetchOptions`  | Resolving `perspective`/`stega` outside any `'use cache'` boundary                             |
+| `SanityLive`              | Rendered once in a root layout                                                                 |
 
 ---
 
