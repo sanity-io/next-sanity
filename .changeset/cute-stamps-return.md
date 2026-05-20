@@ -4,7 +4,7 @@
 
 Add `onError="throw"` opt-in for `<SanityLive>`
 
-The default still logs errors with `console.error` (CORS errors use `console.warn` and include the blocked origin), matching `next-sanity@12`.
+The default behavior still logs errors with `console.error` (CORS errors use `console.warn` and include the blocked origin), matching `next-sanity@12`.
 
 Pass `onError="throw"` to throw errors during render so they can be caught by the [unstable_catchError API](https://nextjs.org/docs/app/api-reference/functions/catchError), which supports `unstable_retry` for retrying the render.
 
