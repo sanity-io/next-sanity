@@ -124,15 +124,15 @@ export function proxy(request: NextRequest) {
   return NextResponse.next()
 }
 
-export const proxyConfig = {
+export const config = {
   matcher: ['/dashboard/:path*', '/api/:path*'],
 }
 ```
 
-| Version | File            | Export         | Config        |
-| ------- | --------------- | -------------- | ------------- |
-| v14-15  | `middleware.ts` | `middleware()` | `config`      |
-| v16+    | `proxy.ts`      | `proxy()`      | `proxyConfig` |
+| Version | File            | Export         | Config   |
+| ------- | --------------- | -------------- | -------- |
+| v14-15  | `middleware.ts` | `middleware()` | `config` |
+| v16+    | `proxy.ts`      | `proxy()`      | `config` |
 
 **Migration**: Run `npx @next/codemod@latest upgrade` to auto-rename.
 

@@ -58,6 +58,7 @@ Use `next/link` for internal navigation instead of `<a>` tags.
 
 // Good: Next.js Link
 import Link from 'next/link'
+
 ;<Link href="/about">About</Link>
 ```
 
