@@ -38,8 +38,6 @@ This skill assumes familiarity with the `next-cache-components` skill — it cov
 npm install next-sanity@^13 --save-exact
 ```
 
-If `next-sanity@latest` isn't v13 yet, use `next-sanity@cache-components` instead. Check with `npm dist-tag ls next-sanity`.
-
 ### Migrating an existing Sanity Live setup
 
 If the app is already using `defineLive`, this skill is a refactor, not a rewrite. The 5-step sequence below still applies, but watch for these specific differences:
