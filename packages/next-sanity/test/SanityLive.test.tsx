@@ -107,7 +107,7 @@ describe.each([{cacheComponents: true}, {cacheComponents: false}])(
         html = await renderToString(<SanityLive />)
       })
 
-      test('renders SanityLiveClientComponent with custom apiHost and useProjectHostname', () => {
+      test('forwards non-default apiHost and useProjectHostname to config', () => {
         expect(SanityLiveClientComponent).toHaveBeenLastCalledWith(
           expect.objectContaining({
             action: expect.any(Function),
