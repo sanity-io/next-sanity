@@ -370,7 +370,7 @@ export function defineLive(config: DefineLiveOptions) {
           dataset,
           apiHost: apiHost === defaultApiHost ? undefined : apiHost,
           apiVersion,
-          useProjectHostname: useProjectHostname === true ? undefined : useProjectHostname,
+          useProjectHostname: useProjectHostname ? undefined : useProjectHostname,
           requestTagPrefix,
           token: includeDrafts ? browserToken : undefined,
         }}
