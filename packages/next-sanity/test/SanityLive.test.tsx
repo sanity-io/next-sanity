@@ -62,6 +62,28 @@ describe.each([{cacheComponents: true}, {cacheComponents: false}])(
         )
       })
 
+      test('omits default apiHost from config to reduce RSC payload', () => {
+        expect(SanityLiveClientComponent).toHaveBeenLastCalledWith(
+          expect.objectContaining({
+            config: expect.objectContaining({
+              apiHost: undefined,
+            }),
+          }),
+          undefined,
+        )
+      })
+
+      test('omits default useProjectHostname from config to reduce RSC payload', () => {
+        expect(SanityLiveClientComponent).toHaveBeenLastCalledWith(
+          expect.objectContaining({
+            config: expect.objectContaining({
+              useProjectHostname: undefined,
+            }),
+          }),
+          undefined,
+        )
+      })
+
       test('preconnects to API origin', async () => {
         expect(html).toContain('preconnect')
         expect(html).not.toContain('apicdn')
@@ -85,7 +107,7 @@ describe.each([{cacheComponents: true}, {cacheComponents: false}])(
         html = await renderToString(<SanityLive />)
       })
 
-      test('renders SanityLiveClientComponent with minimal props', () => {
+      test('renders SanityLiveClientComponent with custom apiHost and useProjectHostname', () => {
         expect(SanityLiveClientComponent).toHaveBeenLastCalledWith(
           expect.objectContaining({
             action: expect.any(Function),

@@ -368,9 +368,9 @@ export function defineLive(config: DefineLiveOptions) {
         config={{
           projectId,
           dataset,
-          apiHost,
+          apiHost: apiHost === 'https://api.sanity.io' ? undefined : apiHost,
           apiVersion,
-          useProjectHostname,
+          useProjectHostname: useProjectHostname === true ? undefined : useProjectHostname,
           requestTagPrefix,
           token: includeDrafts ? browserToken : undefined,
         }}
