@@ -2,7 +2,7 @@ import {createClient, type LiveEvent} from '@sanity/client'
 import {useRouter} from 'next/navigation'
 import {useEffect, useMemo, useState, useEffectEvent, startTransition} from 'react'
 
-import {cacheTagPrefix} from '#live/constants'
+import {cacheTagPrefix, defaultApiHost} from '#live/constants'
 import {isCorsOriginError} from '#live/isCorsOriginError'
 import type {
   SanityClientConfig,
@@ -45,7 +45,7 @@ function SanityLive(props: SanityLiveProps): React.JSX.Element | null {
     onRestart = 'refresh',
     onGoAway = handleGoaway,
   } = props
-  const {projectId, dataset, apiHost, apiVersion, useProjectHostname, token, requestTagPrefix} =
+  const {projectId, dataset, apiHost = defaultApiHost, apiVersion, useProjectHostname = true, token, requestTagPrefix} =
     config
   const actionContext = {includeDrafts, waitFor} satisfies SanityLiveContext
 
