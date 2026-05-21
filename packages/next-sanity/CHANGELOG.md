@@ -819,7 +819,7 @@
 - [#3347](https://github.com/sanity-io/next-sanity/pull/3347) [`16c2e11`](https://github.com/sanity-io/next-sanity/commit/16c2e11b4a3579f348df7c2609f5b173f494f5c3) Thanks [@stipsan](https://github.com/stipsan)! - Remove experimental cache components implementation for `defineLive`
 
 > [!WARNING]
-> This is a breaking change if you were using this implementation. Upgrade to `next-sanity@latest` (v13) for the stable cache components implementation. See the [v13 changelog](https://www.sanity.io/changelog/1b810aef-7d2e-4422-bece-dc317bbd2995) for details.
+> This is a breaking change if you were using this implementation. Upgrade to `next-sanity@^13` for the stable cache components implementation. See the [v13 changelog](https://www.sanity.io/changelog/1b810aef-7d2e-4422-bece-dc317bbd2995) for details.
 
 ### Patch Changes
 

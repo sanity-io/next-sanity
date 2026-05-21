@@ -1,5 +1,5 @@
 > [!NOTE]
-> Cache components support is now stable in `next-sanity@latest` (v13). See the [v13 changelog](https://www.sanity.io/changelog/1b810aef-7d2e-4422-bece-dc317bbd2995) for details.
+> Cache components support is now stable in `next-sanity` v13+ (currently `latest`). See the [v13 changelog](https://www.sanity.io/changelog/1b810aef-7d2e-4422-bece-dc317bbd2995) for details.
 > It requires `cacheComponents` to be enabled in your `next.config.ts`, and this guide assumes `next@16.2.x` or later.
 
 # Sanity Live with Next.js Cache Components
