@@ -1,5 +1,17 @@
 # next-sanity
 
+## 13.0.2
+
+### Patch Changes
+
+- [`a2d9f99`](https://github.com/sanity-io/next-sanity/commit/a2d9f99642a1e5bd7db4c940ad00ff16d7ac1d4a) Thanks [@stipsan](https://github.com/stipsan)! - Do not show a refresh spinner in Presentation Tool for document edits by default
+
+- [#3593](https://github.com/sanity-io/next-sanity/pull/3593) [`1912b1b`](https://github.com/sanity-io/next-sanity/commit/1912b1b13192a033e9a3fb12e41ea91aa701f22b) Thanks [@copilot-swe-agent](https://github.com/apps/copilot-swe-agent)! - Default `action` to `'refresh'` when `<SanityLive>` is given `includeDrafts`
+
+  When `includeDrafts` is enabled, using `revalidateSyncTagsAction` requires an unnecessary server round trip since draft content bypasses the cache anyway. This change makes the action default to `'refresh'` (a client-side `router.refresh()`) when `includeDrafts` is set, matching the existing behavior for `waitFor="function"`.
+
+  A custom `action` prop still takes precedence when provided.
+
 ## 13.0.1
 
 ### Patch Changes
