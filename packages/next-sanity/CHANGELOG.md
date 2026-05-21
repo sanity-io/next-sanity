@@ -1,5 +1,300 @@
 # next-sanity
 
+## 13.0.0
+
+### Major Changes
+
+- [#3573](https://github.com/sanity-io/next-sanity/pull/3573) [`8010e36`](https://github.com/sanity-io/next-sanity/commit/8010e365304f5d8340dcf9a24555fc50766ea529) Thanks [@stipsan](https://github.com/stipsan)! - See the [v12 -> v13 migration guide](https://github.com/sanity-io/next-sanity/blob/main/packages/next-sanity/MIGRATE-v12-to-v13.md) for full details and code snippets.
+
+  - Default cache-invalidation behavior changed: `revalidateSyncTags` on `<SanityLive>` is replaced by `action`, and `sanityFetch` no longer caches the internal sync-tag lookup when `cacheComponents: false`.
+  - Removed `<SanityLive>` props that were on by default: `refreshOnFocus`, `refreshOnReconnect`.
+  - Removed opt-in `<SanityLive>` / `defineLive` props: `refreshOnMount`, `intervalOnGoAway` (and `onGoAway` signature changed), `fetchOptions`, `stega`.
+  - Removed deprecated hooks: `useDraftModePerspective`, `useIsLivePreview`, `useDraftModeEnvironment`.
+  - Removed deprecated `tag` option on `sanityFetch` and `tag` prop on `<SanityLive>` (use `requestTag`).
+  - Renamed `next-sanity/live` type exports: `DefinedSanityFetchType` -> `DefinedFetchType`, `DefinedSanityLiveProps` -> `DefinedLiveProps`, `DefineSanityLiveOptions` -> `DefineLiveOptions`.
+
+### Minor Changes
+
+- [#3511](https://github.com/sanity-io/next-sanity/pull/3511) [`e05f69d`](https://github.com/sanity-io/next-sanity/commit/e05f69d6b6ae16eef7f2f8b4198f2b1e2992a1b1) Thanks [@stipsan](https://github.com/stipsan)! - Add `onRestart` prop to `<SanityLive>`. By default it calls `router.refresh()`; pass `onRestart={false}` to disable.
+
+- [#3518](https://github.com/sanity-io/next-sanity/pull/3518) [`ee00392`](https://github.com/sanity-io/next-sanity/commit/ee003926449b1161b72c91ec883cb378e044f814) Thanks [@stipsan](https://github.com/stipsan)! - Add `onError="throw"` opt-in for `<SanityLive>`
+
+  The default behavior still logs errors with `console.error` (CORS errors use `console.warn` and include the blocked origin), matching `next-sanity@12`.
+
+  Pass `onError="throw"` to throw errors during render so they can be caught by the [unstable_catchError API](https://nextjs.org/docs/app/api-reference/functions/catchError), which supports `unstable_retry` for retrying the render.
+
+  #### Custom error handler
+
+  You can still pass a custom error handler function:
+
+  ```ts
+  // app/client-functions.ts
+  "use client";
+
+  import { isCorsOriginError, type SanityLiveOnError } from "next-sanity/live";
+
+  export const onError: SanityLiveOnError = (
+    error,
+    { includeDrafts, waitFor }
+  ) => {
+    if (isCorsOriginError(error)) {
+      console.warn(
+        `Sanity Live is unable to connect to the Sanity API as the current origin - ${window.origin} - is not in the list of allowed CORS origins for this Sanity Project.`,
+        error.addOriginUrl && `Add it here:`,
+        error.addOriginUrl?.toString()
+      );
+    } else {
+      console.error("Sanity Live encountered an error:", error, {
+        includeDrafts,
+        waitFor,
+      });
+    }
+  };
+  ```
+
+  Then in your `layout.tsx` file, import the `onError` function and pass it to `<SanityLive>`:
+
+  ```tsx
+  // app/layout.tsx
+  import { onError } from "./client-functions";
+  import { SanityLive } from "@/sanity/lib/live";
+
+  export default function Layout({ children }: { children: React.ReactNode }) {
+    return (
+      <>
+        {children}
+        <SanityLive onError={onError} />
+      </>
+    );
+  }
+  ```
+
+  #### Customize the error boundary
+
+  Using the [unstable_catchError API](https://nextjs.org/docs/app/api-reference/functions/catchError), you can create an error boundary that handles errors and offers retry logic. Here's an example that uses the `sonner` library to show error toasts that adapt to the error type:
+
+  ```tsx
+  // app/SanityLiveErrorBoundary.tsx
+  "use client";
+
+  import { isCorsOriginError } from "next-sanity/live";
+  import { unstable_catchError, type ErrorInfo } from "next/error";
+  import { useEffect } from "react";
+  import { toast } from "sonner";
+
+  function SanityLiveErrorBoundary(
+    _props: {},
+    { error, unstable_retry }: ErrorInfo
+  ) {
+    useEffect(() => {
+      let toastId: string | number | undefined;
+      if (isCorsOriginError(error)) {
+        const { addOriginUrl } = error;
+        toastId = toast.warning(`Sanity Live couldn't connect`, {
+          description: `${
+            new URL(window.origin).host
+          } is blocked by CORS policy`,
+          richColors: true,
+          duration: Infinity,
+          action: addOriginUrl
+            ? {
+                label: "Manage",
+                onClick: (event) => {
+                  event.preventDefault();
+                  window.open(addOriginUrl.toString(), "_blank");
+                },
+              }
+            : { label: "Retry", onClick: () => unstable_retry() },
+          cancel: addOriginUrl
+            ? { label: "Retry", onClick: () => unstable_retry() }
+            : undefined,
+        });
+      } else if (error instanceof Error) {
+        console.error(error);
+        toastId = toast.error(error.message, {
+          richColors: true,
+          duration: Infinity,
+          action: { label: "Retry", onClick: () => unstable_retry() },
+        });
+      } else {
+        console.error(error);
+        toastId = toast.error("Unknown error", {
+          description: "Check the console for more details",
+          richColors: true,
+          duration: Infinity,
+          action: { label: "Retry", onClick: () => unstable_retry() },
+        });
+      }
+
+      return () => {
+        toast.dismiss(toastId);
+      };
+    }, [error, unstable_retry]);
+
+    return null;
+  }
+
+  export default unstable_catchError(SanityLiveErrorBoundary);
+  ```
+
+  Then in your `layout.tsx` file, wrap the `SanityLive` component in the error boundary:
+
+  ```tsx
+  // app/layout.tsx
+  import SanityLiveErrorBoundary from "./SanityLiveErrorBoundary";
+  import { SanityLive } from "@/sanity/lib/live";
+
+  export default function Layout({ children }: { children: React.ReactNode }) {
+    return (
+      <>
+        {children}
+        <SanityLiveErrorBoundary>
+          <SanityLive onError="throw" />
+        </SanityLiveErrorBoundary>
+      </>
+    );
+  }
+  ```
+
+- [#3553](https://github.com/sanity-io/next-sanity/pull/3553) [`b3300b8`](https://github.com/sanity-io/next-sanity/commit/b3300b85c8076f1b2f2395dde35159a1750c820b) Thanks [@stipsan](https://github.com/stipsan)! - Add `onReconnect` prop to `<SanityLive>`. By default it logs an error to the console; pass `onReconnect={false}` to disable.
+
+- [#3479](https://github.com/sanity-io/next-sanity/pull/3479) [`abbaf4b`](https://github.com/sanity-io/next-sanity/commit/abbaf4b9df6a7f03572af0a6d09ccbd4f03817b2) Thanks [@stipsan](https://github.com/stipsan)! - Add `resolvePerspectiveFromCookies` utility
+
+  When `cacheComponents: false`, `sanityFetch` automatically resolves the `perspective` in [draft mode](https://nextjs.org/docs/app/guides/draft-mode) by reading a cookie that `defineEnableDraftMode` sets and that Presentation Tool updates when the user switches perspectives in the Studio.
+
+  The new `resolvePerspectiveFromCookies` utility exposes that resolution directly, so you can:
+
+  - Instrument draft mode with a custom toolbar that lists the perspectives currently used to fetch data on the page.
+  - Resolve `perspective` in `cacheComponents: true` components and pass it into `'use cache'` boundaries that call `sanityFetch`.
+
+  Here's how `sanityFetch` resolves it internally — wrap it in a helper to do the same:
+
+  ```tsx
+  import { cookies, draftMode } from "next/headers";
+  import {
+    resolvePerspectiveFromCookies,
+    type LivePerspective,
+  } from "next-sanity/live";
+
+  export async function resolvePerspective(): Promise<LivePerspective> {
+    const { isEnabled: isDraftMode } = await draftMode();
+    if (isDraftMode) {
+      return await resolvePerspectiveFromCookies({ cookies: await cookies() });
+    }
+    return "published";
+  }
+  ```
+
+- [#3486](https://github.com/sanity-io/next-sanity/pull/3486) [`994556a`](https://github.com/sanity-io/next-sanity/commit/994556a5bee038c6905a19f20f9e491532556626) Thanks [@stipsan](https://github.com/stipsan)! - Refactor `usePresentationQuery` to use `<VisualEditing />` as the provider instead of `<SanityLive />`
+
+  `usePresentationQuery` now only requires `<VisualEditing />`; `<SanityLive />` is no longer needed on the page.
+
+- [#3491](https://github.com/sanity-io/next-sanity/pull/3491) [`5ba7a0f`](https://github.com/sanity-io/next-sanity/commit/5ba7a0f25d7e26f06adb612de488d368bc063cc7) Thanks [@stipsan](https://github.com/stipsan)! - Add `includeDrafts` prop to `<SanityLive />`
+
+  When you pass `browserToken` to `defineLive`, `<SanityLive />` automatically sets [`client.live.events` `includeDrafts`](https://www.sanity.io/docs/apis-and-sdks/js-client-realtime#ccdcec9ba7c4) based on whether draft mode is enabled. The new `includeDrafts` prop lets you override that.
+
+- [#3109](https://github.com/sanity-io/next-sanity/pull/3109) [`5f38fb5`](https://github.com/sanity-io/next-sanity/commit/5f38fb5ff74e1be6143e65982827b712620d705c) Thanks [@stipsan](https://github.com/stipsan)! - Add support for `cacheComponents: true` with `defineLive`
+
+  The `sanity-live-cache-components` skill can drive the migration with an agent. For best results, set up [`AGENTS.md`](https://nextjs.org/docs/app/guides/ai-agents#existing-projects) first.
+
+  ```bash
+  npx skills add https://github.com/sanity-io/next-sanity --skill sanity-live-cache-components
+  ```
+
+  Suggested prompt:
+
+  ```txt
+  Use the /sanity-live-cache-components skill to migrate this app to use Cache Components. When verifying with `next dev`, test both draft mode enabled and draft mode disabled because each mode has different rendering rules. `next build --debug-prerender` is not sufficient to verify that draft mode works correctly.
+  ```
+
+- [#3552](https://github.com/sanity-io/next-sanity/pull/3552) [`4ae3002`](https://github.com/sanity-io/next-sanity/commit/4ae3002633fcf91f5cd7c57a05ac10b1e6f2647a) Thanks [@stipsan](https://github.com/stipsan)! - Add opt-in `strict` mode to `defineLive` so [Cache Components](https://nextjs.org/docs/app/api-reference/config/next-config-js/cacheComponents) migrations can be split across two PRs:
+
+  1. Enable `strict: true`, then update `sanityFetch` and `<SanityLive>` call sites to satisfy the new requirements.
+  2. Enable `cacheComponents: true` in `next.config.ts` and add `'use cache'` to functions that call `sanityFetch`.
+
+  Strict mode is only needed when migrating to [Cache Components](https://nextjs.org/docs/app/api-reference/config/next-config-js/cacheComponents) alongside Visual Editing or Presentation Tool.
+
+- [#3515](https://github.com/sanity-io/next-sanity/pull/3515) [`2096572`](https://github.com/sanity-io/next-sanity/commit/2096572c6341c877addb005cf37178392a10d6df) Thanks [@stipsan](https://github.com/stipsan)! - Add `onWelcome` prop to `<SanityLive>`
+
+  The default behavior is to log a welcome message to the console. Here's how to customize it:
+
+  ```tsx
+  // app/client-functions.ts
+  "use client";
+
+  import type { SanityLiveOnWelcome } from "next-sanity/live";
+
+  export const onWelcome: SanityLiveOnWelcome = (
+    event,
+    { includeDrafts, waitFor }
+  ) => {
+    console.info(
+      `<SanityLive${
+        includeDrafts ? " includeDrafts" : ""
+      }> is connected and listening for live events to ${
+        includeDrafts
+          ? "all content including drafts and version documents in content releases"
+          : "published content"
+      }.${
+        waitFor === "function"
+          ? " Events will be delayed until after a Sanity Function has processed them."
+          : ""
+      }`
+    );
+  };
+  ```
+
+  ```tsx
+  // app/layout.tsx
+  import { onWelcome } from "./client-functions";
+  import { SanityLive } from "@/sanity/lib/live";
+
+  export default function Layout({ children }: { children: React.ReactNode }) {
+    return (
+      <>
+        {children}
+        <SanityLive onWelcome={onWelcome} />
+      </>
+    );
+  }
+  ```
+
+  To disable the default welcome message, pass `onWelcome={false}`.
+
+### Patch Changes
+
+- [#3535](https://github.com/sanity-io/next-sanity/pull/3535) [`c90a84c`](https://github.com/sanity-io/next-sanity/commit/c90a84cd5953d532d0c27e2e5dc11a90bac8aefc) Thanks [@stipsan](https://github.com/stipsan)! - Allow enabling `stega: true` on `sanityFetch` if `serverToken` is provided
+
+  Previously, if you tried to enable stega on `perspective: 'published'` it would not work:
+
+  ```ts
+  const { data } = await sanityFetch({
+    query,
+    params,
+    perspective: "published",
+    stega: true,
+  });
+  // data has no stega
+  ```
+
+  Now it does, allowing you to show Visual Editing overlays on published content. This is especially useful when using features like [Vercel's Content Link](https://vercel.com/docs/edit-mode#content-link).
+
+- [#3533](https://github.com/sanity-io/next-sanity/pull/3533) [`adccd46`](https://github.com/sanity-io/next-sanity/commit/adccd4673808ad34f9f1eeb12a9b4773205eb743) Thanks [@renovate](https://github.com/apps/renovate)! - fix(deps): update sanity monorepo to v5.26.0
+
+- [#3538](https://github.com/sanity-io/next-sanity/pull/3538) [`c49c7d0`](https://github.com/sanity-io/next-sanity/commit/c49c7d02c74703545373948fe91773b9de150077) Thanks [@renovate](https://github.com/apps/renovate)! - fix(deps): update dependency @sanity/visual-editing to ^5.3.6
+
+- [#3535](https://github.com/sanity-io/next-sanity/pull/3535) [`c90a84c`](https://github.com/sanity-io/next-sanity/commit/c90a84cd5953d532d0c27e2e5dc11a90bac8aefc) Thanks [@stipsan](https://github.com/stipsan)! - Don't call `draftMode()` in `<SanityLive>` if no `browserToken` is set
+
+  Without a `browserToken`, `includeDrafts` has no effect, so there's no reason to call `draftMode()`.
+
+- [#3535](https://github.com/sanity-io/next-sanity/pull/3535) [`c90a84c`](https://github.com/sanity-io/next-sanity/commit/c90a84cd5953d532d0c27e2e5dc11a90bac8aefc) Thanks [@stipsan](https://github.com/stipsan)! - `sanityFetch` no longer calls `draftMode()` unless a `serverToken` is provided.
+
+  Without a `serverToken`, `perspective` and `stega` aren't adjusted for draft mode, so the `draftMode()` call is unnecessary and can cause issues in certain environments.
+
+- [#3535](https://github.com/sanity-io/next-sanity/pull/3535) [`c90a84c`](https://github.com/sanity-io/next-sanity/commit/c90a84cd5953d532d0c27e2e5dc11a90bac8aefc) Thanks [@stipsan](https://github.com/stipsan)! - Never set `resultSourceMap` for `fetch-sync-tags` requests in `sanityFetch`
+
+  Previously, if the `client` had `resultSourceMap` set to `'withKeyArraySelector'` or `true`, both `client.fetch()` calls inside `sanityFetch()` would request content source maps. The first call (a `fetch-sync-tags` request) never returns them, so it now omits the option.
+
 # 12.4.5
 
 ### Patch Changes
