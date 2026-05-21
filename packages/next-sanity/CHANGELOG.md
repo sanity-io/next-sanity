@@ -1,5 +1,11 @@
 # next-sanity
 
+## 13.0.3
+
+### Patch Changes
+
+- [#3597](https://github.com/sanity-io/next-sanity/pull/3597) [`e8943b9`](https://github.com/sanity-io/next-sanity/commit/e8943b9feb459ef14d9cd322dff3129b2ce81e81) Thanks [@copilot-swe-agent](https://github.com/apps/copilot-swe-agent)! - Reduce the RSC payload for faster page loads by omitting `apiHost` and `useProjectHostname` from the client component props when they are set to their default values (`"https://api.sanity.io"` and `true`, respectively).
+
 ## 13.0.2
 
 ### Patch Changes
