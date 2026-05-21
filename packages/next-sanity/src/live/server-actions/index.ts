@@ -1,6 +1,6 @@
 'use server'
 
-import {refresh, revalidateTag, updateTag} from 'next/cache'
+import {revalidateTag, updateTag} from 'next/cache'
 import {draftMode} from 'next/headers'
 
 import {parseTags} from '#live/parseTags'
@@ -11,9 +11,9 @@ import {parseTags} from '#live/parseTags'
 export async function revalidateSyncTagsAction(unsafeTags: unknown): Promise<void | 'refresh'> {
   if ((await draftMode()).isEnabled) {
     console.warn(
-      `<SanityLive /> action called in draft mode, cache is bypassed in draft mode so the refresh() function is called instead of revalidating tags`,
+      `<SanityLive /> action called in draft mode, cache is bypassed in draft mode so the router.refresh() function is called instead of revalidating tags`,
     )
-    return refresh()
+    return 'refresh'
   }
 
   const {tags} = parseTags(unsafeTags)

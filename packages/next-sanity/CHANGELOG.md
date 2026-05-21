@@ -1,5 +1,11 @@
 # next-sanity
 
+## 13.0.1
+
+### Patch Changes
+
+- [`c5139ab`](https://github.com/sanity-io/next-sanity/commit/c5139ab9655475ac0059971e8b15d16be1104d65) Thanks [@stipsan](https://github.com/stipsan)! - Call `router.refresh()` client side instead of `refresh()` in the server action in draft mode
+
 ## 13.0.0
 
 ### Major Changes
