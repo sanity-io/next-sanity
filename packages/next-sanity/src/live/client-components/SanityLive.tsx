@@ -45,8 +45,15 @@ function SanityLive(props: SanityLiveProps): React.JSX.Element | null {
     onRestart = 'refresh',
     onGoAway = handleGoaway,
   } = props
-  const {projectId, dataset, apiHost = defaultApiHost, apiVersion, useProjectHostname = true, token, requestTagPrefix} =
-    config
+  const {
+    projectId,
+    dataset,
+    apiHost = defaultApiHost,
+    apiVersion,
+    useProjectHostname = true,
+    token,
+    requestTagPrefix,
+  } = config
   const actionContext = {includeDrafts, waitFor} satisfies SanityLiveContext
 
   const client = useMemo(
