@@ -377,7 +377,10 @@ export function defineLive(config: DefineLiveOptions) {
         includeDrafts={includeDrafts ? true : undefined}
         requestTag={requestTag}
         waitFor={shouldWaitFor}
-        action={action ?? (shouldWaitFor === 'function' || includeDrafts ? 'refresh' : revalidateSyncTagsAction)}
+        action={
+          action ??
+          (shouldWaitFor === 'function' || includeDrafts ? 'refresh' : revalidateSyncTagsAction)
+        }
         onError={onError}
         onWelcome={onWelcome}
         onReconnect={onReconnect}
