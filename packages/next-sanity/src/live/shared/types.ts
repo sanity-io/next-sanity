@@ -225,10 +225,12 @@ export type StrictDefinedFetchType = <const QueryString extends string>(options:
 
 export interface SanityClientConfig
   extends Pick<
-      InitializedClientConfig,
-      'projectId' | 'dataset' | 'apiVersion' | 'token' | 'requestTagPrefix'
-    >,
-    Partial<Pick<InitializedClientConfig, 'apiHost' | 'useProjectHostname'>> {}
+    InitializedClientConfig,
+    'projectId' | 'dataset' | 'apiVersion' | 'token' | 'requestTagPrefix'
+  > {
+  apiHost: string | undefined
+  useProjectHostname: boolean | undefined
+}
 
 /**
  * Context passed to Sanity Live event handlers.
