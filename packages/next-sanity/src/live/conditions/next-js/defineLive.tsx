@@ -4,7 +4,7 @@ import {revalidateSyncTagsAction} from 'next-sanity/live/server-actions'
 import {cacheLife, cacheTag} from 'next/cache'
 import {PHASE_PRODUCTION_BUILD} from 'next/constants'
 
-import {cacheTagPrefix} from '#live/constants'
+import {cacheTagPrefix, defaultApiHost} from '#live/constants'
 import {preconnect} from '#live/preconnect'
 import {validateStrictFetchOptions, validateStrictSanityLiveProps} from '#live/strictValidation'
 import type {
@@ -354,9 +354,9 @@ export function defineLive(config: DefineLiveOptions) {
         config={{
           projectId,
           dataset,
-          apiHost,
+          apiHost: apiHost === defaultApiHost ? undefined : apiHost,
           apiVersion,
-          useProjectHostname,
+          useProjectHostname: useProjectHostname ? undefined : useProjectHostname,
           requestTagPrefix,
           token: includeDrafts ? browserToken : undefined,
         }}
