@@ -3,7 +3,7 @@ import {revalidateSyncTagsAction} from 'next-sanity/live/server-actions'
 import {PHASE_PRODUCTION_BUILD} from 'next/constants'
 import {cookies, draftMode} from 'next/headers'
 
-import {cacheTagPrefix} from '#live/constants'
+import {cacheTagPrefix, defaultApiHost} from '#live/constants'
 import {preconnect} from '#live/preconnect'
 import {resolvePerspectiveFromCookies} from '#live/resolvePerspectiveFromCookies'
 import {validateStrictFetchOptions, validateStrictSanityLiveProps} from '#live/strictValidation'
@@ -368,7 +368,7 @@ export function defineLive(config: DefineLiveOptions) {
         config={{
           projectId,
           dataset,
-          apiHost: apiHost === 'https://api.sanity.io' ? undefined : apiHost,
+          apiHost: apiHost === defaultApiHost ? undefined : apiHost,
           apiVersion,
           useProjectHostname: useProjectHostname === true ? undefined : useProjectHostname,
           requestTagPrefix,
