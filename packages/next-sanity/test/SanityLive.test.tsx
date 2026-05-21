@@ -239,6 +239,27 @@ describe.each([{cacheComponents: true}, {cacheComponents: false}])(
           undefined,
         )
       })
+      test(`the default action is 'refresh' if includeDrafts is true`, async () => {
+        await renderToString(<SanityLive includeDrafts />)
+        expect(SanityLiveClientComponent).toHaveBeenLastCalledWith(
+          expect.objectContaining({
+            action: 'refresh',
+            includeDrafts: true,
+          }),
+          undefined,
+        )
+      })
+      test(`a provided action is still allowed when includeDrafts is true`, async () => {
+        const action = vi.fn()
+        await renderToString(<SanityLive action={action} includeDrafts />)
+        expect(SanityLiveClientComponent).toHaveBeenLastCalledWith(
+          expect.objectContaining({
+            action,
+            includeDrafts: true,
+          }),
+          undefined,
+        )
+      })
       test(`a provided action is still allowed when waitFor="function"`, async () => {
         const action = vi.fn()
         await renderToString(<SanityLive action={action} waitFor="function" />)
