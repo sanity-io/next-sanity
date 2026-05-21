@@ -100,7 +100,7 @@ export default function VisualEditing(props: VisualEditingProps): React.JSX.Elem
           console.debug(
             '<VisualEditing /> refresh called with source "mutation", if you want automatic refresh when this happens, or silence this message, provide your own handler to the refresh prop',
           )
-          break
+          return false
         }
         default:
           throw new Error('Unknown refresh source', {cause: payload})
