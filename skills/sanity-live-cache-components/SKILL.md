@@ -38,7 +38,7 @@ This skill assumes familiarity with the `next-cache-components` skill — it cov
 npm install next-sanity@^13 --save-exact
 ```
 
-If `next-sanity@latest` isn't v13 yet, use `next-sanity@cache-components` instead. Check with `npm dist-tag ls next-sanity`.
+See the [v13 changelog](https://www.sanity.io/changelog/1b810aef-7d2e-4422-bece-dc317bbd2995) for details on what's new.
 
 ### Migrating an existing Sanity Live setup
 

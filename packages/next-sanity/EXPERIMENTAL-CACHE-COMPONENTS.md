@@ -1,5 +1,5 @@
-> [!CAUTION]
-> The experimental `next-sanity@cache-components` canary release is not yet stable and could have breaking changes in `minor`, and `patch`, releases.
+> [!NOTE]
+> Cache components support is now stable in `next-sanity@latest` (v13). See the [v13 changelog](https://www.sanity.io/changelog/1b810aef-7d2e-4422-bece-dc317bbd2995) for details.
 > It requires `cacheComponents` to be enabled in your `next.config.ts`, and this guide assumes `next@16.2.x` or later.
 
 # Sanity Live with Next.js Cache Components
@@ -32,16 +32,10 @@ See the personal website template for a complete working example:
 
 # Setup
 
-Install `next-sanity@13` when available. If v13 has not been promoted to `latest` yet, install the tagged prerelease:
+Install `next-sanity@latest` (v13+):
 
 ```bash
-npm view next-sanity dist-tags --json
-```
-
-```bash
-npm install next-sanity@^13 --save-exact
-# or, if v13 is not latest yet:
-npm install next-sanity@cache-components --save-exact
+npm install next-sanity@latest
 ```
 
 ## 1. Configure `next.config.ts`
