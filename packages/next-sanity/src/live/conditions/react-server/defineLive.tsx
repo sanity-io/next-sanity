@@ -3,6 +3,7 @@ import {revalidateSyncTagsAction} from 'next-sanity/live/server-actions'
 import {PHASE_PRODUCTION_BUILD} from 'next/constants'
 import {cookies, draftMode} from 'next/headers'
 
+import {attachSanityFetchDebugInfo} from '#live/attachDebugInfo'
 import {cacheTagPrefix} from '#live/constants'
 import {preconnect} from '#live/preconnect'
 import {resolvePerspectiveFromCookies} from '#live/resolvePerspectiveFromCookies'
@@ -281,7 +282,7 @@ export function defineLive(config: DefineLiveOptions) {
   })
   const studioUrlDefined = typeof client.config().stega.studioUrl !== 'undefined'
 
-  const sanityFetch: DefinedFetchType = async function sanityFetch({
+  const sanityFetch: DefinedFetchType = function sanityFetch({
     query,
     params = {},
     perspective: _perspective,
@@ -289,50 +290,57 @@ export function defineLive(config: DefineLiveOptions) {
     tags = [],
     requestTag = 'next-loader.fetch',
   }) {
-    if (strict) {
-      validateStrictFetchOptions({perspective: _perspective, stega: _stega})
-    }
-    const stega = strict
-      ? _stega
-      : (_stega ?? (serverToken && studioUrlDefined ? (await draftMode()).isEnabled : false))
-    const perspective = strict
-      ? _perspective
-      : (_perspective ?? (serverToken ? await resolveCookiePerspective() : undefined))
-    const useCdn = perspective ? perspective === 'published' : undefined
-    const isBuildPhase = process.env['NEXT_PHASE'] === PHASE_PRODUCTION_BUILD
-    const cacheMode = useCdn !== false && !isBuildPhase ? 'noStale' : undefined
-    const token =
-      ((perspective && perspective !== 'published') || stega) && serverToken
-        ? serverToken
-        : undefined
+    // The body is wrapped in an inner async IIFE so we can hold a reference to
+    // the outermost Promise we return. `attachSanityFetchDebugInfo` then tags it
+    // with `displayName` and `_debugInfo` so React DevTools attributes the
+    // await to Sanity. See `#live/attachDebugInfo` for details.
+    const promise = (async () => {
+      if (strict) {
+        validateStrictFetchOptions({perspective: _perspective, stega: _stega})
+      }
+      const stega = strict
+        ? _stega
+        : (_stega ?? (serverToken && studioUrlDefined ? (await draftMode()).isEnabled : false))
+      const perspective = strict
+        ? _perspective
+        : (_perspective ?? (serverToken ? await resolveCookiePerspective() : undefined))
+      const useCdn = perspective ? perspective === 'published' : undefined
+      const isBuildPhase = process.env['NEXT_PHASE'] === PHASE_PRODUCTION_BUILD
+      const cacheMode = useCdn !== false && !isBuildPhase ? 'noStale' : undefined
+      const token =
+        ((perspective && perspective !== 'published') || stega) && serverToken
+          ? serverToken
+          : undefined
 
-    // 1. Fetch the tags first, with an uncached request, but that does not count towards the Sanity API quota
-    const {syncTags} = await client.fetch(query, await params, {
-      filterResponse: false,
-      perspective,
-      stega: false,
-      resultSourceMap: false,
-      returnQuery: false,
-      useCdn,
-      cacheMode,
-      tag: [requestTag, 'fetch-sync-tags'].filter(Boolean).join('.'),
-      token,
-    })
+      // 1. Fetch the tags first, with an uncached request, but that does not count towards the Sanity API quota
+      const {syncTags} = await client.fetch(query, await params, {
+        filterResponse: false,
+        perspective,
+        stega: false,
+        resultSourceMap: false,
+        returnQuery: false,
+        useCdn,
+        cacheMode,
+        tag: [requestTag, 'fetch-sync-tags'].filter(Boolean).join('.'),
+        token,
+      })
 
-    const cacheTags = [...tags, ...(syncTags?.map((tag) => `${cacheTagPrefix}${tag}`) || [])]
+      const cacheTags = [...tags, ...(syncTags?.map((tag) => `${cacheTagPrefix}${tag}`) || [])]
 
-    // 2. Then fetch the data, using the fetch cache with specified tags
-    const {result, resultSourceMap} = await client.fetch(query, await params, {
-      filterResponse: false,
-      perspective,
-      stega,
-      next: {revalidate: false, tags: cacheTags},
-      useCdn,
-      cacheMode,
-      tag: requestTag,
-      token,
-    })
-    return {data: result, sourceMap: resultSourceMap || null, tags: cacheTags}
+      // 2. Then fetch the data, using the fetch cache with specified tags
+      const {result, resultSourceMap} = await client.fetch(query, await params, {
+        filterResponse: false,
+        perspective,
+        stega,
+        next: {revalidate: false, tags: cacheTags},
+        useCdn,
+        cacheMode,
+        tag: requestTag,
+        token,
+      })
+      return {data: result, sourceMap: resultSourceMap || null, tags: cacheTags}
+    })()
+    return attachSanityFetchDebugInfo(promise)
   }
 
   const SanityLive: React.ComponentType<DefinedLiveProps> = async function SanityLive(props) {

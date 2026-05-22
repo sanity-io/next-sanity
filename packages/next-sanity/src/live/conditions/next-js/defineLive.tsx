@@ -4,6 +4,7 @@ import {revalidateSyncTagsAction} from 'next-sanity/live/server-actions'
 import {cacheLife, cacheTag} from 'next/cache'
 import {PHASE_PRODUCTION_BUILD} from 'next/constants'
 
+import {attachSanityFetchDebugInfo} from '#live/attachDebugInfo'
 import {cacheTagPrefix} from '#live/constants'
 import {preconnect} from '#live/preconnect'
 import {validateStrictFetchOptions, validateStrictSanityLiveProps} from '#live/strictValidation'
@@ -279,7 +280,7 @@ export function defineLive(config: DefineLiveOptions) {
     stega: false,
   })
 
-  const sanityFetch: DefinedFetchType = async function sanityFetch({
+  const sanityFetch: DefinedFetchType = function sanityFetch({
     query,
     params = {},
     perspective,
@@ -287,41 +288,49 @@ export function defineLive(config: DefineLiveOptions) {
     tags: customCacheTags = [],
     requestTag = 'next-loader.fetch.cache-components',
   }) {
-    if (strict) {
-      validateStrictFetchOptions({perspective, stega})
-    }
+    // The body is wrapped in an inner async IIFE so we can hold a reference to
+    // the outermost Promise we return. `attachSanityFetchDebugInfo` then tags it
+    // with `displayName` and `_debugInfo` so React DevTools attributes the
+    // await to Sanity. `cacheTag`/`cacheLife` must still run inside the IIFE
+    // so they execute in the React cache context after `syncTags` resolve.
+    const promise = (async () => {
+      if (strict) {
+        validateStrictFetchOptions({perspective, stega})
+      }
 
-    const useCdn = perspective ? perspective === 'published' : undefined
-    const isBuildPhase = process.env['NEXT_PHASE'] === PHASE_PRODUCTION_BUILD
-    const cacheMode = useCdn !== false && !isBuildPhase ? 'noStale' : undefined
-    const token =
-      ((perspective && perspective !== 'published') || stega) && serverToken
-        ? serverToken
-        : undefined
+      const useCdn = perspective ? perspective === 'published' : undefined
+      const isBuildPhase = process.env['NEXT_PHASE'] === PHASE_PRODUCTION_BUILD
+      const cacheMode = useCdn !== false && !isBuildPhase ? 'noStale' : undefined
+      const token =
+        ((perspective && perspective !== 'published') || stega) && serverToken
+          ? serverToken
+          : undefined
 
-    const {result, resultSourceMap, syncTags} = await client.fetch(query, await params, {
-      filterResponse: false,
-      perspective,
-      stega,
-      returnQuery: false,
-      useCdn,
-      cacheMode,
-      tag: requestTag,
-      token,
-    })
-    const tags = [...customCacheTags, ...(syncTags || []).map((tag) => `${cacheTagPrefix}${tag}`)]
-    /**
-     * The tags used here, are expired later on in the `action` Server Action given to `<SanityLive />` with the `revalidateTag` function from `next/cache`,
-     * or by a route handler that userland sets up.
-     */
-    cacheTag(...tags)
-    /**
-     * Sanity Live handles on-demand revalidation, so the default 15min time-based revalidation is too short,
-     * userland can still set a shorter revalidate time by calling `cacheLife` themselves.
-     */
-    cacheLife(sanityCacheLife)
+      const {result, resultSourceMap, syncTags} = await client.fetch(query, await params, {
+        filterResponse: false,
+        perspective,
+        stega,
+        returnQuery: false,
+        useCdn,
+        cacheMode,
+        tag: requestTag,
+        token,
+      })
+      const tags = [...customCacheTags, ...(syncTags || []).map((tag) => `${cacheTagPrefix}${tag}`)]
+      /**
+       * The tags used here, are expired later on in the `action` Server Action given to `<SanityLive />` with the `revalidateTag` function from `next/cache`,
+       * or by a route handler that userland sets up.
+       */
+      cacheTag(...tags)
+      /**
+       * Sanity Live handles on-demand revalidation, so the default 15min time-based revalidation is too short,
+       * userland can still set a shorter revalidate time by calling `cacheLife` themselves.
+       */
+      cacheLife(sanityCacheLife)
 
-    return {data: result, sourceMap: resultSourceMap || null, tags}
+      return {data: result, sourceMap: resultSourceMap || null, tags}
+    })()
+    return attachSanityFetchDebugInfo(promise)
   }
 
   const SanityLive: React.ComponentType<DefinedLiveProps> = function SanityLive(props) {

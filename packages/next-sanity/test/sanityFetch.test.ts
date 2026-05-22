@@ -369,6 +369,64 @@ describe.each([{cacheComponents: true}, {cacheComponents: false}])(
       )
     })
 
+    describe('React DevTools attribution', () => {
+      const client = createClient({projectId, dataset, apiVersion, useCdn: true})
+      const {sanityFetch} = defineLive({client, browserToken: false, serverToken: false})
+      const {query, params} = getSanityFetchMock(
+        '{"perspective": $perspective, "useCdn": $useCdn}',
+        {perspective: 'published', useCdn: true},
+      )
+      type AnnotatedPromise = Promise<unknown> & {
+        displayName?: string
+        _debugInfo?: ReadonlyArray<{
+          awaited: {name: string; env?: string; value?: unknown}
+          env?: string
+        }>
+      }
+
+      test('attaches displayName="sanityFetch" to the returned Promise', async () => {
+        const promise: AnnotatedPromise = sanityFetch({query, params})
+        expect(promise.displayName).toBe('sanityFetch')
+        await promise
+      })
+
+      test('attaches a _debugInfo ReactAsyncInfo entry to the returned Promise', async () => {
+        const promise: AnnotatedPromise = sanityFetch({query, params})
+        const debugInfo = promise._debugInfo
+        expect(debugInfo).toBeInstanceOf(Array)
+        expect(debugInfo).toHaveLength(1)
+        const [asyncInfo] = debugInfo!
+        expect(asyncInfo.env).toBe('Sanity')
+        expect(asyncInfo.awaited.name).toBe('sanityFetch')
+        expect(asyncInfo.awaited.env).toBe('Sanity')
+        // `value: promise` lets DevTools display the resolved {data, sourceMap, tags}
+        // when the "Suspended by" entry is clicked.
+        expect(asyncInfo.awaited.value).toBe(promise)
+        await promise
+      })
+
+      test('keeps the debug properties non-enumerable so they do not leak into snapshots', async () => {
+        const promise = sanityFetch({query, params})
+        expect(Object.keys(promise)).not.toContain('displayName')
+        expect(Object.keys(promise)).not.toContain('_debugInfo')
+        expect(Object.propertyIsEnumerable.call(promise, 'displayName')).toBe(false)
+        expect(Object.propertyIsEnumerable.call(promise, '_debugInfo')).toBe(false)
+        await promise
+      })
+
+      test('does not attach debug properties when NODE_ENV is "production"', async () => {
+        vi.stubEnv('NODE_ENV', 'production')
+        try {
+          const promise: AnnotatedPromise = sanityFetch({query, params})
+          expect(promise.displayName).toBeUndefined()
+          expect(promise._debugInfo).toBeUndefined()
+          await promise
+        } finally {
+          vi.unstubAllEnvs()
+        }
+      })
+    })
+
     describe('strict mode', () => {
       const serverToken = 'sk456'
       const client = createClient({
