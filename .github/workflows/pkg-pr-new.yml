@@ -9,6 +9,7 @@ concurrency:
 
 permissions:
   contents: read
+  issues: write
   pull-requests: write
 
 jobs:
@@ -65,11 +66,11 @@ jobs:
               return pkgs
                 .map(
                   (pkg) =>
-                    `##### :package: \`${pkg.name}\`
-            ${BACKTICKS}sh
-            ${pkgManager.installCommand} ${pkg.url}
-            ${BACKTICKS}
-            `,
+`##### :package: \`${pkg.name}\`
+${BACKTICKS}sh
+${pkgManager.installCommand} ${pkg.url}
+${BACKTICKS}
+`,
                 )
                 .join('\n')
             }
@@ -77,13 +78,13 @@ jobs:
             function renderInstallInstructions() {
               return PACKAGE_MANAGERS.map(
                 (pkgManager) =>
-                  `<details${pkgManager.name === 'pnpm' ? ' open' : ''}>
-            <summary><img height="16" align="center" alt="${pkgManager.name} logo" src="${pkgManager.logoUrl}" /> <b>Using ${pkgManager.name}</b></summary>
+`<details${pkgManager.name === 'pnpm' ? ' open' : ''}>
+<summary><img height="16" align="center" alt="${pkgManager.name} logo" src="${pkgManager.logoUrl}" /> <b>Using ${pkgManager.name}</b></summary>
 
-            ${renderPackages(pkgManager, output.packages)}
+${renderPackages(pkgManager, output.packages)}
 
-            </details>
-            `,
+</details>
+`,
               ).join('\n')
             }
 
@@ -91,12 +92,12 @@ jobs:
 
             const body = `## Preview this PR with [pkg.pr.new](https://pkg.pr.new)
 
-            ${renderInstallInstructions()}
+${renderInstallInstructions()}
 
-            [View Commit](${`https://github.com/${context.repo.owner}/${context.repo.repo}/commit/${sha}`}) (${sha})
+[View Commit](${`https://github.com/${context.repo.owner}/${context.repo.repo}/commit/${sha}`}) (${sha})
 
-            ${BOT_COMMENT_IDENTIFIER}
-            `
+${BOT_COMMENT_IDENTIFIER}
+`
 
             async function findBotComment(issueNumber) {
               if (!issueNumber) return null
