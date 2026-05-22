@@ -36,7 +36,7 @@ jobs:
         run: pnpm build --filter=./packages/*
 
       - name: Publish preview packages
-        run: pnpm dlx pkg-pr-new publish ./packages/next-sanity --pnpm --no-template --comment=off --json output.json
+        run: pnpm exec pkg-pr-new publish ./packages/next-sanity --pnpm --no-template --comment=off --json output.json
 
       - name: Post or update comment
         uses: actions/github-script@v9
