@@ -6,6 +6,7 @@ const nextConfig: NextConfig = {
   // trailingSlash: true,
   cacheComponents: true,
   cacheLife: {default: sanity},
+  reactCompiler: true,
   experimental: {
     instantNavigationDevToolsToggle: true,
     instantInsights: {validationLevel: 'warning'},

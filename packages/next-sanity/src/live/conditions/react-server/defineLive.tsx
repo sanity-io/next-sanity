@@ -3,6 +3,7 @@ import {revalidateSyncTagsAction} from 'next-sanity/live/server-actions'
 import {PHASE_PRODUCTION_BUILD} from 'next/constants'
 import {cookies, draftMode} from 'next/headers'
 
+import {attachSanityFetchDebugInfo, isThenable, shouldAttachDebugInfo} from '#live/attachDebugInfo'
 import {cacheTagPrefix, defaultApiHost} from '#live/constants'
 import {preconnect} from '#live/preconnect'
 import {resolvePerspectiveFromCookies} from '#live/resolvePerspectiveFromCookies'
@@ -283,7 +284,7 @@ export function defineLive(config: DefineLiveOptions) {
 
   const sanityFetch: DefinedFetchType = async function sanityFetch({
     query,
-    params = {},
+    params: _params = {},
     perspective: _perspective,
     stega: _stega,
     tags = [],
@@ -306,32 +307,47 @@ export function defineLive(config: DefineLiveOptions) {
         ? serverToken
         : undefined
 
+    let params = _params
+    if (isThenable(_params)) {
+      if (shouldAttachDebugInfo) {
+        params = await attachSanityFetchDebugInfo('sanityFetch => await params', () => _params)
+      } else {
+        params = await _params
+      }
+    }
+
     // 1. Fetch the tags first, with an uncached request, but that does not count towards the Sanity API quota
-    const {syncTags} = await client.fetch(query, await params, {
-      filterResponse: false,
-      perspective,
-      stega: false,
-      resultSourceMap: false,
-      returnQuery: false,
-      useCdn,
-      cacheMode,
-      tag: [requestTag, 'fetch-sync-tags'].filter(Boolean).join('.'),
-      token,
-    })
+    const {syncTags} = await attachSanityFetchDebugInfo('sanityFetch => fetch-sync-tags', () =>
+      client.fetch(query, params, {
+        filterResponse: false,
+        perspective,
+        stega: false,
+        resultSourceMap: false,
+        returnQuery: false,
+        useCdn,
+        cacheMode,
+        tag: [requestTag, 'fetch-sync-tags'].filter(Boolean).join('.'),
+        token,
+      }),
+    )
 
     const cacheTags = [...tags, ...(syncTags?.map((tag) => `${cacheTagPrefix}${tag}`) || [])]
 
     // 2. Then fetch the data, using the fetch cache with specified tags
-    const {result, resultSourceMap} = await client.fetch(query, await params, {
-      filterResponse: false,
-      perspective,
-      stega,
-      next: {revalidate: false, tags: cacheTags},
-      useCdn,
-      cacheMode,
-      tag: requestTag,
-      token,
-    })
+    const {result, resultSourceMap} = await attachSanityFetchDebugInfo(
+      'sanityFetch => client.fetch',
+      () =>
+        client.fetch(query, params, {
+          filterResponse: false,
+          perspective,
+          stega,
+          next: {revalidate: false, tags: cacheTags},
+          useCdn,
+          cacheMode,
+          tag: requestTag,
+          token,
+        }),
+    )
     return {data: result, sourceMap: resultSourceMap || null, tags: cacheTags}
   }
 
@@ -391,7 +407,15 @@ export function defineLive(config: DefineLiveOptions) {
   }
   SanityLive.displayName = 'SanityLiveServerComponent'
 
-  return {sanityFetch, SanityLive}
+  return {
+    sanityFetch: shouldAttachDebugInfo
+      ? (((options) =>
+          attachSanityFetchDebugInfo('sanityFetch', () =>
+            sanityFetch(options),
+          )) satisfies typeof sanityFetch)
+      : sanityFetch,
+    SanityLive,
+  }
 }
 
 async function resolveCookiePerspective(): Promise<LivePerspective | undefined> {

@@ -3,6 +3,7 @@ import {VisualEditing} from 'next-sanity/visual-editing'
 import {draftMode} from 'next/headers'
 import {Toaster} from 'sonner'
 
+// import {DebugPreviewPerspectiveCookie} from './DebugPreviewPerspectiveCookie'
 import {DebugStatus} from './DebugStatus'
 import {DraftModePerspective} from './DraftModePerspectiveProvider'
 import {FormStatusLabel} from './FormStatus'
@@ -34,6 +35,7 @@ export default async function RootLayout({children}: {children: React.ReactNode}
               <DebugStatus />
             </IsLivePreview>
           </DraftModePerspective>
+          {/* <DebugPreviewPerspectiveCookie /> */}
           <form action={toggleDraftMode}>
             <button className="rounded bg-blue-500 px-2 py-1 font-medium text-white">
               <FormStatusLabel idle="Toggle" pending="Toggling..." />
