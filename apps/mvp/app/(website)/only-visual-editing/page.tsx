@@ -13,7 +13,7 @@ const token = process.env.SANITY_API_READ_TOKEN!
 const {sanityFetch} = defineLive({
   client,
   serverToken: token,
-  browserToken: token,
+  browserToken: process.env.NEXT_PUBLIC_SANITY_API_BROWSER_TOKEN || token,
   strict: true,
 })
 
