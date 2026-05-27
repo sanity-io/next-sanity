@@ -3,7 +3,7 @@ import {createDataAttribute} from 'next-sanity'
 import {q} from '#groqd'
 
 import {Image} from './Image'
-import {PostTitle} from './PostTitle'
+// import {PostTitle} from './PostTitle'
 
 export const postsQuery = q.star
   .filterByType('post')
@@ -76,7 +76,8 @@ export default function Posts(props: PostsLayoutProps) {
                 <div className="flex-1">
                   <a className="mt-2 block">
                     <p className="text-xl font-semibold text-gray-900">
-                      <PostTitle id={post._id} title={post.title} />
+                      {/* <PostTitle id={post._id} title={post.title} /> */}
+                      {post.title}
                     </p>
                   </a>
                 </div>
