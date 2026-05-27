@@ -352,8 +352,8 @@ importers:
   packages/sanity-config:
     dependencies:
       '@sanity/assist':
-        specifier: ^6.0.6
-        version: 6.0.6(@emotion/is-prop-valid@1.4.0)(@sanity/mutator@5.27.0(@types/react@19.2.15))(@sanity/styled-components@6.1.24(react-dom@19.2.6(react@19.2.6))(react@19.2.6))(react-dom@19.2.6(react@19.2.6))(react-is@19.2.6)(react@19.2.6)(sanity@5.27.0(@emotion/is-prop-valid@1.4.0)(@noble/hashes@2.2.0)(@oclif/core@4.11.4)(@sanity/cli-core@1.3.2(@noble/hashes@2.2.0)(@types/node@24.12.4)(lightningcss@1.32.0)(yaml@2.9.0))(@sanity/styled-components@6.1.24(react-dom@19.2.6(react@19.2.6))(react@19.2.6))(@types/node@24.12.4)(@types/react@19.2.15)(jiti@2.7.0)(lightningcss@1.32.0)(oxfmt@0.52.0)(react-dom@19.2.6(react@19.2.6))(react@19.2.6)(typescript@5.9.3))
+        specifier: ^6.0.7
+        version: 6.0.7(@emotion/is-prop-valid@1.4.0)(@sanity/mutator@5.27.0(@types/react@19.2.15))(@sanity/styled-components@6.1.24(react-dom@19.2.6(react@19.2.6))(react@19.2.6))(react-dom@19.2.6(react@19.2.6))(react-is@19.2.6)(react@19.2.6)(sanity@5.27.0(@emotion/is-prop-valid@1.4.0)(@noble/hashes@2.2.0)(@oclif/core@4.11.4)(@sanity/cli-core@1.3.2(@noble/hashes@2.2.0)(@types/node@24.12.4)(lightningcss@1.32.0)(yaml@2.9.0))(@sanity/styled-components@6.1.24(react-dom@19.2.6(react@19.2.6))(react@19.2.6))(@types/node@24.12.4)(@types/react@19.2.15)(jiti@2.7.0)(lightningcss@1.32.0)(oxfmt@0.52.0)(react-dom@19.2.6(react@19.2.6))(react@19.2.6)(typescript@5.9.3))
       styled-components:
         specifier: npm:@sanity/styled-components@6.1.24
         version: '@sanity/styled-components@6.1.24(react-dom@19.2.6(react@19.2.6))(react@19.2.6)'
@@ -3160,11 +3160,11 @@ packages:
     resolution: {integrity: sha512-dlEmALjQ5iyQG0O8ZVmkkE3wUYCKfRmiyMvuuGN5SF9buAHxmseBOKJ/Iy2DU/8ef70mtUXlzeCRSlTN/nmZsg==}
     engines: {node: '>=18'}
 
-  '@sanity/assist@6.0.6':
-    resolution: {integrity: sha512-jiT49lHTunlDVEHyDyR/7cbQpZozW8QKMGU0Ahhtj8YW1tDux3pSKCLpahrhEDd00kkmkpVyjKtqfjMhoNIscA==}
+  '@sanity/assist@6.0.7':
+    resolution: {integrity: sha512-kNTh8iWGtMcNhvFnflJ/0yUZD0lcyumhWYIuxCQ6kZcE9F8B2rG47IYnt36gM85qSKnKylGzjeBPZ1zIO+VgSg==}
     engines: {node: '>=20.19 <22 || >=22.12'}
     peerDependencies:
-      '@sanity/mutator': ^5
+      '@sanity/mutator': ^5 || ^6.0.0-0
       react: ^19.2.6
       react-dom: ^19.2.6
       sanity: 5.27.0
@@ -9524,7 +9524,7 @@ snapshots:
 
   '@sanity/asset-utils@2.3.0': {}
 
-  '@sanity/assist@6.0.6(@emotion/is-prop-valid@1.4.0)(@sanity/mutator@5.27.0(@types/react@19.2.15))(@sanity/styled-components@6.1.24(react-dom@19.2.6(react@19.2.6))(react@19.2.6))(react-dom@19.2.6(react@19.2.6))(react-is@19.2.6)(react@19.2.6)(sanity@5.27.0(@emotion/is-prop-valid@1.4.0)(@noble/hashes@2.2.0)(@oclif/core@4.11.4)(@sanity/cli-core@1.3.2(@noble/hashes@2.2.0)(@types/node@24.12.4)(lightningcss@1.32.0)(yaml@2.9.0))(@sanity/styled-components@6.1.24(react-dom@19.2.6(react@19.2.6))(react@19.2.6))(@types/node@24.12.4)(@types/react@19.2.15)(jiti@2.7.0)(lightningcss@1.32.0)(oxfmt@0.52.0)(react-dom@19.2.6(react@19.2.6))(react@19.2.6)(typescript@5.9.3))':
+  '@sanity/assist@6.0.7(@emotion/is-prop-valid@1.4.0)(@sanity/mutator@5.27.0(@types/react@19.2.15))(@sanity/styled-components@6.1.24(react-dom@19.2.6(react@19.2.6))(react@19.2.6))(react-dom@19.2.6(react@19.2.6))(react-is@19.2.6)(react@19.2.6)(sanity@5.27.0(@emotion/is-prop-valid@1.4.0)(@noble/hashes@2.2.0)(@oclif/core@4.11.4)(@sanity/cli-core@1.3.2(@noble/hashes@2.2.0)(@types/node@24.12.4)(lightningcss@1.32.0)(yaml@2.9.0))(@sanity/styled-components@6.1.24(react-dom@19.2.6(react@19.2.6))(react@19.2.6))(@types/node@24.12.4)(@types/react@19.2.15)(jiti@2.7.0)(lightningcss@1.32.0)(oxfmt@0.52.0)(react-dom@19.2.6(react@19.2.6))(react@19.2.6)(typescript@5.9.3))':
     dependencies:
       '@portabletext/types': 4.0.2
       '@sanity/client': 7.22.0
