@@ -1,5 +1,11 @@
 # next-sanity
 
+## 13.0.7
+
+### Patch Changes
+
+- [#3640](https://github.com/sanity-io/next-sanity/pull/3640) [`1ed40ca`](https://github.com/sanity-io/next-sanity/commit/1ed40ca536c85e2e8958a16819324d61ef6948f3) Thanks [@renovate](https://github.com/apps/renovate)! - fix(deps): update sanity monorepo to v5.28.0
+
 ## 13.0.6
 
 ### Patch Changes
