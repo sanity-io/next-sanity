@@ -4,6 +4,7 @@ import {revalidateSyncTagsAction} from 'next-sanity/live/server-actions'
 import {cacheLife, cacheTag} from 'next/cache'
 import {PHASE_PRODUCTION_BUILD} from 'next/constants'
 
+import {attachSanityFetchDebugInfo, isThenable, shouldAttachDebugInfo} from '#live/attachDebugInfo'
 import {cacheTagPrefix, defaultApiHost} from '#live/constants'
 import {preconnect} from '#live/preconnect'
 import {validateStrictFetchOptions, validateStrictSanityLiveProps} from '#live/strictValidation'
@@ -281,7 +282,7 @@ export function defineLive(config: DefineLiveOptions) {
 
   const sanityFetch: DefinedFetchType = async function sanityFetch({
     query,
-    params = {},
+    params: _params = {},
     perspective,
     stega,
     tags: customCacheTags = [],
@@ -299,16 +300,30 @@ export function defineLive(config: DefineLiveOptions) {
         ? serverToken
         : undefined
 
-    const {result, resultSourceMap, syncTags} = await client.fetch(query, await params, {
-      filterResponse: false,
-      perspective,
-      stega,
-      returnQuery: false,
-      useCdn,
-      cacheMode,
-      tag: requestTag,
-      token,
-    })
+    let params = _params
+    if (isThenable(_params)) {
+      if (shouldAttachDebugInfo) {
+        params = await attachSanityFetchDebugInfo('sanityFetch => await params', () => _params)
+      } else {
+        params = await _params
+      }
+    }
+
+    const {result, resultSourceMap, syncTags} = await attachSanityFetchDebugInfo(
+      'sanityFetch => client.fetch',
+      () =>
+        client.fetch(query, params, {
+          filterResponse: false,
+          perspective,
+          stega,
+          returnQuery: false,
+          useCdn,
+          cacheMode,
+          tag: requestTag,
+          token,
+        }),
+    )
+
     const tags = [...customCacheTags, ...(syncTags || []).map((tag) => `${cacheTagPrefix}${tag}`)]
     /**
      * The tags used here, are expired later on in the `action` Server Action given to `<SanityLive />` with the `revalidateTag` function from `next/cache`,
@@ -377,5 +392,13 @@ export function defineLive(config: DefineLiveOptions) {
   }
   SanityLive.displayName = 'SanityLiveServerComponent'
 
-  return {sanityFetch, SanityLive}
+  return {
+    sanityFetch: shouldAttachDebugInfo
+      ? (((options) =>
+          attachSanityFetchDebugInfo('sanityFetch', () =>
+            sanityFetch(options),
+          )) satisfies typeof sanityFetch)
+      : sanityFetch,
+    SanityLive,
+  }
 }
