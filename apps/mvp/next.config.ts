@@ -6,9 +6,6 @@ const nextConfig: NextConfig = {
   // trailingSlash: true,
   cacheComponents: true,
   cacheLife: {default: sanity},
-  experimental: {
-    instantInsights: {validationLevel: 'warning'},
-  },
   productionBrowserSourceMaps: true,
   logging: {
     fetches: {
