@@ -7,7 +7,6 @@ const nextConfig: NextConfig = {
   cacheComponents: true,
   cacheLife: {default: sanity},
   experimental: {
-    instantNavigationDevToolsToggle: true,
     instantInsights: {validationLevel: 'warning'},
   },
   productionBrowserSourceMaps: true,
