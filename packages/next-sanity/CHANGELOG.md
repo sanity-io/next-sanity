@@ -1,5 +1,11 @@
 # next-sanity
 
+## 13.0.10
+
+### Patch Changes
+
+- [#3660](https://github.com/sanity-io/next-sanity/pull/3660) [`a56aa2c`](https://github.com/sanity-io/next-sanity/commit/a56aa2c125a045e380fca7e3738990ade6bfd94f) Thanks [@copilot-swe-agent](https://github.com/apps/copilot-swe-agent)! - Widen the `sanity` peer dependency range to include `^6.0.0`.
+
 ## 13.0.9
 
 ### Patch Changes
