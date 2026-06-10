@@ -1,11 +1,11 @@
 'use client'
 
 import {isCorsOriginError} from 'next-sanity/live'
-import {unstable_catchError, type ErrorInfo} from 'next/error'
+import {catchError, type ErrorInfo} from 'next/error'
 import {useEffect} from 'react'
 import {toast} from 'sonner'
 
-function SanityLiveErrorBoundary(_props: {}, {error, unstable_retry}: ErrorInfo) {
+function SanityLiveErrorBoundary(_props: {}, {error, retry}: ErrorInfo) {
   useEffect(() => {
     let toastId: string | number | undefined
     if (isCorsOriginError(error)) {
@@ -22,15 +22,15 @@ function SanityLiveErrorBoundary(_props: {}, {error, unstable_retry}: ErrorInfo)
                 window.open(addOriginUrl.toString(), '_blank')
               },
             }
-          : {label: 'Retry', onClick: () => unstable_retry()},
-        cancel: addOriginUrl ? {label: 'Retry', onClick: () => unstable_retry()} : undefined,
+          : {label: 'Retry', onClick: () => retry()},
+        cancel: addOriginUrl ? {label: 'Retry', onClick: () => retry()} : undefined,
       })
     } else if (error instanceof Error) {
       console.error(error)
       toastId = toast.error(error.message, {
         richColors: true,
         duration: Infinity,
-        action: {label: 'Retry', onClick: () => unstable_retry()},
+        action: {label: 'Retry', onClick: () => retry()},
       })
     } else {
       console.error(error)
@@ -38,16 +38,16 @@ function SanityLiveErrorBoundary(_props: {}, {error, unstable_retry}: ErrorInfo)
         description: 'Check the console for more details',
         richColors: true,
         duration: Infinity,
-        action: {label: 'Retry', onClick: () => unstable_retry()},
+        action: {label: 'Retry', onClick: () => retry()},
       })
     }
 
     return () => {
       toast.dismiss(toastId)
     }
-  }, [error, unstable_retry])
+  }, [error, retry])
 
   return null
 }
 
-export default unstable_catchError(SanityLiveErrorBoundary)
+export default catchError(SanityLiveErrorBoundary)
