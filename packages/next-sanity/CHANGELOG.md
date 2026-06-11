@@ -1,5 +1,11 @@
 # next-sanity
 
+## 13.1.0
+
+### Minor Changes
+
+- [#3692](https://github.com/sanity-io/next-sanity/pull/3692) [`ea39ee8`](https://github.com/sanity-io/next-sanity/commit/ea39ee8bd091c123d8744eb86e4bd89c709c67ae) Thanks [@renovate](https://github.com/apps/renovate)! - update sanity monorepo to v6
+
 ## 13.0.12
 
 ### Patch Changes
