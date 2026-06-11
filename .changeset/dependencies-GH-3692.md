@@ -1,5 +1,5 @@
 ---
-"next-sanity": patch
+'next-sanity': minor
 ---
 
-fix(deps): update sanity monorepo to v6
+update sanity monorepo to v6
