@@ -7,6 +7,8 @@ const nextConfig: NextConfig = {
   cacheComponents: true,
   cacheLife: {default: sanity},
   productionBrowserSourceMaps: true,
+  reactCompiler: true,
+  experimental: {turbopackRustReactCompiler: true},
   logging: {
     fetches: {
       fullUrl: true,
