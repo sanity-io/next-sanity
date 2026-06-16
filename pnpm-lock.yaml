@@ -352,8 +352,8 @@ importers:
   packages/sanity-config:
     dependencies:
       '@sanity/assist':
-        specifier: ^6.1.0
-        version: 6.1.0(@emotion/is-prop-valid@1.4.0)(@sanity/mutator@6.0.0(@types/react@19.2.17))(@sanity/styled-components@6.1.24(react-dom@19.2.7(react@19.2.7))(react@19.2.7))(react-dom@19.2.7(react@19.2.7))(react-is@19.2.7)(react@19.2.7)(sanity@6.0.0(@babel/core@7.29.7)(@babel/runtime@7.29.7)(@emotion/is-prop-valid@1.4.0)(@noble/hashes@2.2.0)(@oclif/core@4.11.4)(@sanity/cli-core@2.0.1(@noble/hashes@2.2.0)(@types/node@24.13.2)(esbuild@0.28.0)(yaml@2.9.0))(@sanity/styled-components@6.1.24(react-dom@19.2.7(react@19.2.7))(react@19.2.7))(@types/node@24.13.2)(@types/react@19.2.17)(esbuild@0.28.0)(jiti@2.7.0)(oxfmt@0.54.0)(react-dom@19.2.7(react@19.2.7))(react@19.2.7)(rolldown@1.1.0)(typescript@5.9.3))
+        specifier: ^6.1.2
+        version: 6.1.2(@emotion/is-prop-valid@1.4.0)(@sanity/styled-components@6.1.24(react-dom@19.2.7(react@19.2.7))(react@19.2.7))(@types/react@19.2.17)(react-dom@19.2.7(react@19.2.7))(react-is@19.2.7)(react@19.2.7)(sanity@6.0.0(@babel/core@7.29.7)(@babel/runtime@7.29.7)(@emotion/is-prop-valid@1.4.0)(@noble/hashes@2.2.0)(@oclif/core@4.11.4)(@sanity/cli-core@2.0.1(@noble/hashes@2.2.0)(@types/node@24.13.2)(esbuild@0.28.0)(yaml@2.9.0))(@sanity/styled-components@6.1.24(react-dom@19.2.7(react@19.2.7))(react@19.2.7))(@types/node@24.13.2)(@types/react@19.2.17)(esbuild@0.28.0)(jiti@2.7.0)(oxfmt@0.54.0)(react-dom@19.2.7(react@19.2.7))(react@19.2.7)(rolldown@1.1.0)(typescript@5.9.3))
       styled-components:
         specifier: npm:@sanity/styled-components@6.1.24
         version: '@sanity/styled-components@6.1.24(react-dom@19.2.7(react@19.2.7))(react@19.2.7)'
@@ -2956,11 +2956,10 @@ packages:
     resolution: {integrity: sha512-dlEmALjQ5iyQG0O8ZVmkkE3wUYCKfRmiyMvuuGN5SF9buAHxmseBOKJ/Iy2DU/8ef70mtUXlzeCRSlTN/nmZsg==}
     engines: {node: '>=18'}
 
-  '@sanity/assist@6.1.0':
-    resolution: {integrity: sha512-1GxyRwCiCH53doeaEGX2VR7Dc19hS3iTKel+GgEftDYY4Oof1VIi5/K+ZpcFKDgRGK2bsnyi2weVOf+IHKQP1A==}
+  '@sanity/assist@6.1.2':
+    resolution: {integrity: sha512-7vCHJXLWIMqCvanP8FwblIXzuOMBFKHiKswifJus6stFTW/QSedaWSXFFG3XAFVZPEzSCOEFfi19bJV2qkuEsw==}
     engines: {node: '>=20.19 <22 || >=22.12'}
     peerDependencies:
-      '@sanity/mutator': ^5 || ^6.0.0-0
       react: ^19.2.7
       react-dom: ^19.2.7
       sanity: 6.0.0
@@ -9137,7 +9136,7 @@ snapshots:
 
   '@sanity/asset-utils@2.3.0': {}
 
-  '@sanity/assist@6.1.0(@emotion/is-prop-valid@1.4.0)(@sanity/mutator@6.0.0(@types/react@19.2.17))(@sanity/styled-components@6.1.24(react-dom@19.2.7(react@19.2.7))(react@19.2.7))(react-dom@19.2.7(react@19.2.7))(react-is@19.2.7)(react@19.2.7)(sanity@6.0.0(@babel/core@7.29.7)(@babel/runtime@7.29.7)(@emotion/is-prop-valid@1.4.0)(@noble/hashes@2.2.0)(@oclif/core@4.11.4)(@sanity/cli-core@2.0.1(@noble/hashes@2.2.0)(@types/node@24.13.2)(esbuild@0.28.0)(yaml@2.9.0))(@sanity/styled-components@6.1.24(react-dom@19.2.7(react@19.2.7))(react@19.2.7))(@types/node@24.13.2)(@types/react@19.2.17)(esbuild@0.28.0)(jiti@2.7.0)(oxfmt@0.54.0)(react-dom@19.2.7(react@19.2.7))(react@19.2.7)(rolldown@1.1.0)(typescript@5.9.3))':
+  '@sanity/assist@6.1.2(@emotion/is-prop-valid@1.4.0)(@sanity/styled-components@6.1.24(react-dom@19.2.7(react@19.2.7))(react@19.2.7))(@types/react@19.2.17)(react-dom@19.2.7(react@19.2.7))(react-is@19.2.7)(react@19.2.7)(sanity@6.0.0(@babel/core@7.29.7)(@babel/runtime@7.29.7)(@emotion/is-prop-valid@1.4.0)(@noble/hashes@2.2.0)(@oclif/core@4.11.4)(@sanity/cli-core@2.0.1(@noble/hashes@2.2.0)(@types/node@24.13.2)(esbuild@0.28.0)(yaml@2.9.0))(@sanity/styled-components@6.1.24(react-dom@19.2.7(react@19.2.7))(react@19.2.7))(@types/node@24.13.2)(@types/react@19.2.17)(esbuild@0.28.0)(jiti@2.7.0)(oxfmt@0.54.0)(react-dom@19.2.7(react@19.2.7))(react@19.2.7)(rolldown@1.1.0)(typescript@5.9.3))':
     dependencies:
       '@portabletext/types': 4.0.2
       '@sanity/client': 7.22.1
@@ -9156,7 +9155,9 @@ snapshots:
       styled-components: '@sanity/styled-components@6.1.24(react-dom@19.2.7(react@19.2.7))(react@19.2.7)'
     transitivePeerDependencies:
       - '@emotion/is-prop-valid'
+      - '@types/react'
       - react-is
+      - supports-color
 
   '@sanity/bifur-client@1.0.0':
     dependencies:
