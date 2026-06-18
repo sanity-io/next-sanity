@@ -265,8 +265,8 @@ importers:
         specifier: ^4.0.7
         version: 4.0.7(@sanity/client@7.22.1)
       '@sanity/visual-editing':
-        specifier: ^5.4.3
-        version: 5.4.3(@emotion/is-prop-valid@1.4.0)(@sanity/client@7.22.1)(@sanity/styled-components@6.1.24)(@sanity/types@6.1.0)(next@16.3.0-canary.56)(react-dom@19.2.7)(react-is@19.2.7)(react@19.2.7)(typescript@5.9.3)
+        specifier: ^5.4.4
+        version: 5.4.4(@emotion/is-prop-valid@1.4.0)(@sanity/client@7.22.1)(@sanity/styled-components@6.1.24)(@sanity/types@6.1.0)(next@16.3.0-canary.56)(react-dom@19.2.7)(react-is@19.2.7)(react@19.2.7)(typescript@5.9.3)
       '@sanity/webhook':
         specifier: ^4.0.4
         version: 4.0.4
@@ -3118,14 +3118,6 @@ packages:
       '@oclif/core': ^4.10.5
       '@sanity/cli-core': ^2
 
-  '@sanity/mutate@0.18.0':
-    resolution: {integrity: sha512-P77Pw6csAJqzNJzZJaluy/t9jpWS5bcCiBrn6tDY4Fz5ZQSKWwIG8lcku5P/bcULqfCLirf5uH7+V0oEaCshaw==}
-    peerDependencies:
-      xstate: ^5.19.0
-    peerDependenciesMeta:
-      xstate:
-        optional: true
-
   '@sanity/mutate@0.18.1':
     resolution: {integrity: sha512-28iICKl33s9yr8XtgpoCHOb+l5kKVbd6CpFYi4Vx0fHNZcFiKDGdY+RzZrC34GWqb6M16wkxwtHSVbEmXbfTpw==}
     peerDependencies:
@@ -3247,8 +3239,8 @@ packages:
       '@sanity/types':
         optional: true
 
-  '@sanity/visual-editing@5.4.3':
-    resolution: {integrity: sha512-rHKwHLQglV2z5VU5gZychHzi/9f/MFZQjyZNI3DAhnjPhS/NzbU9sKMitlPbUpGzzRY9a8tlbl92AHYXfanvQA==}
+  '@sanity/visual-editing@5.4.4':
+    resolution: {integrity: sha512-AiC8QU+CYhY4aWw53QqP8sef7KwlBX0U4AkOvy6fdmaXwKEFBamyzOmnxPKv86pW7LPEMMRYsIKtFXYueGJtng==}
     engines: {node: '>=20.19'}
     peerDependencies:
       '@sanity/client': ^7.22.1
@@ -9526,20 +9518,6 @@ snapshots:
       - supports-color
       - xstate
 
-  '@sanity/mutate@0.18.0(xstate@5.32.0)':
-    dependencies:
-      '@isaacs/ttlcache': 2.1.5
-      '@sanity/client': 7.22.1
-      '@sanity/diff-match-patch': 3.2.0
-      '@sanity/uuid': 3.0.2
-      hotscript: 1.0.13
-      lodash: 4.18.1
-      mendoza: 3.0.8
-      nanoid: 5.1.11
-      rxjs: 7.8.2
-    optionalDependencies:
-      xstate: 5.32.0
-
   '@sanity/mutate@0.18.1(xstate@5.32.0)':
     dependencies:
       '@isaacs/ttlcache': 2.1.5
@@ -9794,12 +9772,12 @@ snapshots:
     optionalDependencies:
       '@sanity/types': 6.1.0(@types/react@19.2.17)
 
-  '@sanity/visual-editing@5.4.3(@emotion/is-prop-valid@1.4.0)(@sanity/client@7.22.1)(@sanity/styled-components@6.1.24)(@sanity/types@6.1.0)(next@16.3.0-canary.56)(react-dom@19.2.7)(react-is@19.2.7)(react@19.2.7)(typescript@5.9.3)':
+  '@sanity/visual-editing@5.4.4(@emotion/is-prop-valid@1.4.0)(@sanity/client@7.22.1)(@sanity/styled-components@6.1.24)(@sanity/types@6.1.0)(next@16.3.0-canary.56)(react-dom@19.2.7)(react-is@19.2.7)(react@19.2.7)(typescript@5.9.3)':
     dependencies:
       '@sanity/comlink': 4.0.1
       '@sanity/icons': 3.7.4(react@19.2.7)
       '@sanity/insert-menu': 3.0.8(@emotion/is-prop-valid@1.4.0)(@sanity/styled-components@6.1.24)(@sanity/types@6.1.0)(react-dom@19.2.7)(react@19.2.7)
-      '@sanity/mutate': 0.18.0(xstate@5.32.0)
+      '@sanity/mutate': 0.18.1(xstate@5.32.0)
       '@sanity/presentation-comlink': 2.1.0(@sanity/client@7.22.1)(@sanity/types@6.1.0)
       '@sanity/preview-url-secret': 4.0.7(@sanity/client@7.22.1)
       '@sanity/ui': 3.2.0(@emotion/is-prop-valid@1.4.0)(@sanity/styled-components@6.1.24)(react-dom@19.2.7)(react-is@19.2.7)(react@19.2.7)
