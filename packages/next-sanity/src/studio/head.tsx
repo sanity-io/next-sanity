@@ -23,7 +23,7 @@ export const viewport = {
   initialScale: 1 as const,
   // Studio implements display cutouts CSS (The iPhone Notch ™ ) and needs `viewport-fit=covered` for it to work correctly
   viewportFit: 'cover',
-} satisfies Viewport
+} as const satisfies Viewport
 
 /**
  * In router segments (`/app/studio/[[...index]]/page.tsx`):
