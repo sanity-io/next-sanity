@@ -18,11 +18,15 @@ import type {Metadata, Viewport} from 'next'
  * ```
  * @public
  */
-export const viewport = {
+export const viewport: {
+  width: 'device-width';
+  initialScale: 1;
+  viewportFit: 'cover';
+} = {
   width: 'device-width' as const,
   initialScale: 1 as const,
   // Studio implements display cutouts CSS (The iPhone Notch ™ ) and needs `viewport-fit=covered` for it to work correctly
-  viewportFit: 'cover',
+  viewportFit: 'cover' as const,
 } as const satisfies Viewport
 
 /**
@@ -43,7 +47,10 @@ export const viewport = {
  * ```
  * @public
  */
-export const metadata = {
+export const metadata: {
+  referrer: 'same-origin';
+  robots: 'noindex';
+} = {
   referrer: 'same-origin' as const,
   robots: 'noindex' as const,
 } satisfies Metadata
