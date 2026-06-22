@@ -19,9 +19,9 @@ import type {Metadata, Viewport} from 'next'
  * @public
  */
 export const viewport: {
-  width: 'device-width';
-  initialScale: 1;
-  viewportFit: 'cover';
+  width: 'device-width'
+  initialScale: 1
+  viewportFit: 'cover'
 } = {
   width: 'device-width' as const,
   initialScale: 1 as const,
@@ -48,8 +48,8 @@ export const viewport: {
  * @public
  */
 export const metadata: {
-  referrer: 'same-origin';
-  robots: 'noindex';
+  referrer: 'same-origin'
+  robots: 'noindex'
 } = {
   referrer: 'same-origin' as const,
   robots: 'noindex' as const,
