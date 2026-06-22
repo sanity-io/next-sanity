@@ -47,7 +47,7 @@ export default defineConfig({
     },
   ],
   deps: {
-    neverBundle: [/^next-sanity(?:\/|$)/]
+    neverBundle: [/^next-sanity(?:\/|$)/],
   },
   sourcemap: true,
   hash: false,

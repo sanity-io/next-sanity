@@ -17,7 +17,7 @@
  * ```
  */
 export const sanity: {
-  readonly revalidate: 31_536_000;
+  readonly revalidate: 31_536_000
 } = {
   /**
    * Sanity Live handles on-demand revalidation, so the default 15min time-based revalidation is too short
