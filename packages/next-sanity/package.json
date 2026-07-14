@@ -84,11 +84,11 @@
     "build": "tsdown --publint",
     "coverage": "npm test -- --coverage",
     "dev": "tsdown --watch",
+    "docs:generate": "typedoc",
     "prepack": "tsdown",
     "test": "vitest --project unit",
-    "test:e2e": "vitest --project browser",
     "test:coverage": "vitest --coverage run",
-    "docs:generate": "typedoc"
+    "test:e2e": "vitest --project browser"
   },
   "dependencies": {
     "@portabletext/react": "^6.2.0",
