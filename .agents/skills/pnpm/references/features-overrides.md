@@ -80,13 +80,13 @@ Override cookie only when it's a dependency of express.
 ```yaml
 overrides:
   # Replace underscore with lodash
-  "underscore": "npm:lodash@^4.17.21"
+  'underscore': 'npm:lodash@^4.17.21'
 
   # Use local file
-  "some-pkg": "file:./local-pkg"
+  'some-pkg': 'file:./local-pkg'
 
   # Use git
-  "some-pkg": "github:user/repo#commit"
+  'some-pkg': 'github:user/repo#commit'
 ```
 
 ### Remove a dependency
