@@ -17,27 +17,26 @@ import {test} from './helpers.browser'
 type OnRestartFn = Exclude<SanityLiveOnRestart, 'refresh'>
 type OnReconnectFn = Exclude<SanityLiveOnReconnect, 'refresh'>
 
-// A stable spy that every `useRouter()` call shares so tests can assert  `router.refresh()` was invoked
-const refresh = vi.fn()
-const router = {
-  refresh,
-  back: vi.fn(),
-  forward: vi.fn(),
-  push: vi.fn(),
-  replace: vi.fn(),
-  prefetch: vi.fn(),
-  bfcacheId: 'test-bfcache-id',
-} satisfies ReturnType<typeof import('next/navigation').useRouter>
-vi.mock('next/navigation', async (importOriginal) => {
-  const originalModule = await importOriginal<typeof import('next/navigation')>()
-  return {
-    ...originalModule,
-    useRouter: vi.fn(() => router),
-  }
+// A stable spy that every `useRouter()` call shares so tests can assert `router.refresh()` was invoked.
+const {refresh, router, useRouterMock} = vi.hoisted(() => {
+  const refresh = vi.fn()
+  const router = {
+    refresh,
+    back: vi.fn(),
+    forward: vi.fn(),
+    push: vi.fn(),
+    replace: vi.fn(),
+    prefetch: vi.fn(),
+    bfcacheId: 'test-bfcache-id',
+  } satisfies ReturnType<(typeof import('next/navigation'))['useRouter']>
+  const useRouterMock = vi.fn(() => router)
+  return {refresh, router, useRouterMock}
 })
+vi.mock('next/navigation', () => ({useRouter: useRouterMock}))
 
 beforeEach(() => {
   refresh.mockClear()
+  useRouterMock.mockImplementation(() => router)
 })
 
 interface TestErrorBoundaryProps {
