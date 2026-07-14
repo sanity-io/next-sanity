@@ -76,9 +76,7 @@ const config = defineConfig({
   deps: {
     neverBundle: ['react', 'react-dom'],
   },
-  plugins: [
-    /* plugins */
-  ],
+  plugins: [/* plugins */],
   hooks: {
     'build:done': async () => {
       console.log('Build complete!')
