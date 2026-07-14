@@ -45,6 +45,8 @@ export default function VisualEditing(props: VisualEditingProps): React.JSX.Elem
     trailingSlash = false,
     zIndex,
     onPerspectiveChange,
+    keepStegaOnCopy,
+    onSuspiciousStega,
   } = props
 
   const router = useRouter()
@@ -118,6 +120,8 @@ export default function VisualEditing(props: VisualEditingProps): React.JSX.Elem
       portal
       refresh={refresh ?? handleRefresh}
       onPerspectiveChange={onPerspectiveChange}
+      keepStegaOnCopy={keepStegaOnCopy}
+      onSuspiciousStega={onSuspiciousStega}
       zIndex={zIndex}
     />
   )
