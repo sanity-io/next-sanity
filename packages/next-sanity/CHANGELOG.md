@@ -1,5 +1,17 @@
 # next-sanity
 
+## 13.1.2
+
+### Patch Changes
+
+- [#3727](https://github.com/sanity-io/next-sanity/pull/3727) [`806a2e0`](https://github.com/sanity-io/next-sanity/commit/806a2e0d98b4be266206c02e65cd52910bacba51) Thanks [@renovate](https://github.com/apps/renovate)! - fix(deps): update sanity monorepo to v6.2.0
+
+- [#3733](https://github.com/sanity-io/next-sanity/pull/3733) [`4c58f97`](https://github.com/sanity-io/next-sanity/commit/4c58f9705b0e453173331989bbf6a25324e431cf) Thanks [@renovate](https://github.com/apps/renovate)! - fix(deps): update dependency styled-components to ^6.4.3
+
+- [#3742](https://github.com/sanity-io/next-sanity/pull/3742) [`02da1d3`](https://github.com/sanity-io/next-sanity/commit/02da1d3595ba445e7e5057f44f29e1ca63a86b83) Thanks [@renovate](https://github.com/apps/renovate)! - fix(deps): update dependency typescript to v6
+
+- [#3751](https://github.com/sanity-io/next-sanity/pull/3751) [`3c9b116`](https://github.com/sanity-io/next-sanity/commit/3c9b116fb5b8d001c8d59100381e2b28207a784b) Thanks [@renovate](https://github.com/apps/renovate)! - fix(deps): update dependency @sanity/visual-editing to ^5.4.5
+
 ## 13.1.1
 
 ### Patch Changes
