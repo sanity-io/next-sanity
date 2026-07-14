@@ -5,7 +5,16 @@
   "singleQuote": true,
   "bracketSpacing": false,
   "quoteProps": "consistent",
-  "experimentalSortImports": {},
-  "experimentalTailwindcss": {},
-  "ignorePatterns": ["dist/**", "pnpm-lock.yaml", "CHANGELOG.md"]
+  "sortImports": true,
+  "sortPackageJson": {"sortScripts": true},
+   "sortTailwindcss": {
+    "stylesheet": "./apps/static/app/globals.css"
+  }
+  "ignorePatterns": ["dist/**", "pnpm-lock.yaml", "CHANGELOG.md"],
+  "overrides": [
+    {
+      "files": [".changeset/*.md"],
+      "options": {"singleQuote": false}
+    }
+  ]
 }
