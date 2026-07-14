@@ -94,8 +94,7 @@ export function defineEnableDraftMode(options: DefineEnableDraftModeOptions): En
         })
       }
 
-      // the `redirect` function throws, and eventually returns a Promise<Response>. TSC doesn't "see" that so we have to tell it
-      return redirect(redirectTo) as Promise<Response>
+      return redirect(redirectTo)
     },
   }
 }
