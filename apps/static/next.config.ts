@@ -7,6 +7,9 @@ const nextConfig: NextConfig = {
       fullUrl: false,
     },
   },
+  experimental: {
+    useTypeScriptCli: true,
+  },
   productionBrowserSourceMaps: true,
 }
 
