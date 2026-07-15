@@ -26,7 +26,7 @@ jobs:
     steps:
       - uses: actions/checkout@v7
       - uses: pnpm/action-setup@v6
-      - uses: actions/setup-node@v6
+      - uses: actions/setup-node@v7
         with:
           node-version: lts/*
       - run: pnpm install --ignore-scripts
@@ -68,7 +68,7 @@ jobs:
           git config --global core.eol lf
       - uses: actions/checkout@v7
       - uses: pnpm/action-setup@v6
-      - uses: actions/setup-node@v6
+      - uses: actions/setup-node@v7
         with:
           node-version: ${{ matrix.node }}
       - run: pnpm install --loglevel=error --ignore-scripts
@@ -84,7 +84,7 @@ jobs:
     steps:
       - uses: actions/checkout@v7
       - uses: pnpm/action-setup@v6
-      - uses: actions/setup-node@v6
+      - uses: actions/setup-node@v7
         with:
           node-version: lts/*
       - run: pnpm install --loglevel=error --ignore-scripts
