@@ -1,5 +1,15 @@
 # next-sanity
 
+## 13.1.3
+
+### Patch Changes
+
+- [#3741](https://github.com/sanity-io/next-sanity/pull/3741) [`706a51f`](https://github.com/sanity-io/next-sanity/commit/706a51f4f6fcf67ea6f8048b5d9941c3287dc36b) Thanks [@renovate](https://github.com/apps/renovate)! - fix(deps): update sanity monorepo to v6.5.0
+
+- [#3750](https://github.com/sanity-io/next-sanity/pull/3750) [`c30728a`](https://github.com/sanity-io/next-sanity/commit/c30728afb1c688e61951d49e0d37995026ab8689) Thanks [@renovate](https://github.com/apps/renovate)! - fix(deps): update dependency @sanity/preview-url-secret to ^4.0.8
+
+- [#3760](https://github.com/sanity-io/next-sanity/pull/3760) [`caf5b9a`](https://github.com/sanity-io/next-sanity/commit/caf5b9a67208be842065cac301d98ca6e855d5cb) Thanks [@renovate](https://github.com/apps/renovate)! - fix(deps): update dependency @sanity/client to ^7.23.1
+
 ## 13.1.2
 
 ### Patch Changes
