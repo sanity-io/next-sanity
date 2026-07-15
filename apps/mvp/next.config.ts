@@ -8,7 +8,10 @@ const nextConfig: NextConfig = {
   cacheLife: {default: sanity},
   productionBrowserSourceMaps: true,
   reactCompiler: true,
-  experimental: {turbopackRustReactCompiler: true},
+  experimental: {
+    turbopackRustReactCompiler: true,
+    useTypeScriptCli: true,
+  },
   logging: {
     fetches: {
       fullUrl: true,
