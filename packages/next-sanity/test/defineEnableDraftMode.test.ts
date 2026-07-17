@@ -22,11 +22,15 @@ vi.mock(import('next/headers'), async (importOriginal) => {
   const originalModule = await importOriginal()
   return {
     ...originalModule,
-    cookies: vi.fn(async () => ({
-      has: cookieHas,
-      get: cookieGet,
-      set: cookieSet,
-    })),
+    cookies: vi.fn(
+      async () =>
+        // oxlint-disable-next-line no-unsafe-type-assertion
+        ({
+          has: cookieHas,
+          get: cookieGet,
+          set: cookieSet,
+        }) as unknown as Awaited<ReturnType<(typeof originalModule)['cookies']>>,
+    ),
     draftMode: vi.fn(async () => ({
       get isEnabled() {
         return isDraftMode
@@ -88,8 +92,6 @@ cookieGet.mockImplementation((key: string) => {
   return undefined
 })
 
-const originalNodeEnv = process.env.NODE_ENV
-
 beforeEach(() => {
   isDraftMode = false
   perspectiveCookieValue = null
@@ -110,7 +112,7 @@ beforeEach(() => {
 })
 
 afterEach(() => {
-  process.env.NODE_ENV = originalNodeEnv
+  vi.unstubAllEnvs()
   vi.resetModules()
 })
 
@@ -122,7 +124,7 @@ function createRequest(headers?: Record<string, string>) {
 
 describe('defineEnableDraftMode', () => {
   test('sets Partitioned cookies and flag cookie for cross-site iframe in production', async () => {
-    process.env.NODE_ENV = 'production'
+    vi.stubEnv('NODE_ENV', 'production')
     const {defineEnableDraftMode} = await import('../src/draft-mode/define-enable-draft-mode')
     const {GET} = defineEnableDraftMode({
       // oxlint-disable-next-line no-unsafe-type-assertion
@@ -169,7 +171,7 @@ describe('defineEnableDraftMode', () => {
   })
 
   test('does not partition cookies for top-level document requests', async () => {
-    process.env.NODE_ENV = 'production'
+    vi.stubEnv('NODE_ENV', 'production')
     const {defineEnableDraftMode} = await import('../src/draft-mode/define-enable-draft-mode')
     const {GET} = defineEnableDraftMode({
       // oxlint-disable-next-line no-unsafe-type-assertion
@@ -203,13 +205,11 @@ describe('defineEnableDraftMode', () => {
       sameSite: 'none',
       partitioned: false,
     })
-    expect(
-      cookieSet.mock.calls.some((call) => call[0]?.name === partitionedCookieName),
-    ).toBe(false)
+    expect(cookieSet.mock.calls.some((call) => call[0]?.name === partitionedCookieName)).toBe(false)
   })
 
   test('does not partition cookies when Sec-Fetch headers are missing', async () => {
-    process.env.NODE_ENV = 'production'
+    vi.stubEnv('NODE_ENV', 'production')
     const {defineEnableDraftMode} = await import('../src/draft-mode/define-enable-draft-mode')
     const {GET} = defineEnableDraftMode({
       // oxlint-disable-next-line no-unsafe-type-assertion
@@ -224,13 +224,11 @@ describe('defineEnableDraftMode', () => {
         partitioned: false,
       }),
     )
-    expect(
-      cookieSet.mock.calls.some((call) => call[0]?.name === partitionedCookieName),
-    ).toBe(false)
+    expect(cookieSet.mock.calls.some((call) => call[0]?.name === partitionedCookieName)).toBe(false)
   })
 
   test('uses SameSite=Lax without Partitioned in insecure development', async () => {
-    process.env.NODE_ENV = 'development'
+    vi.stubEnv('NODE_ENV', 'development')
     const {defineEnableDraftMode} = await import('../src/draft-mode/define-enable-draft-mode')
     const {GET} = defineEnableDraftMode({
       // oxlint-disable-next-line no-unsafe-type-assertion
@@ -255,13 +253,11 @@ describe('defineEnableDraftMode', () => {
       sameSite: 'lax',
       partitioned: false,
     })
-    expect(
-      cookieSet.mock.calls.some((call) => call[0]?.name === partitionedCookieName),
-    ).toBe(false)
+    expect(cookieSet.mock.calls.some((call) => call[0]?.name === partitionedCookieName)).toBe(false)
   })
 
   test('secureDevMode enables secure partitioned cookies in development', async () => {
-    process.env.NODE_ENV = 'development'
+    vi.stubEnv('NODE_ENV', 'development')
     const {defineEnableDraftMode} = await import('../src/draft-mode/define-enable-draft-mode')
     const {GET} = defineEnableDraftMode({
       // oxlint-disable-next-line no-unsafe-type-assertion
@@ -299,7 +295,7 @@ describe('defineEnableDraftMode', () => {
   })
 
   test('returns 401 when the preview secret is invalid', async () => {
-    process.env.NODE_ENV = 'production'
+    vi.stubEnv('NODE_ENV', 'production')
     validatePreviewUrl.mockResolvedValue({isValid: false})
     const {defineEnableDraftMode} = await import('../src/draft-mode/define-enable-draft-mode')
     const {GET} = defineEnableDraftMode({
@@ -316,7 +312,7 @@ describe('defineEnableDraftMode', () => {
 
 describe('perspectiveChangeAction', () => {
   test('sets Partitioned on the perspective cookie when the flag cookie is present', async () => {
-    process.env.NODE_ENV = 'production'
+    vi.stubEnv('NODE_ENV', 'production')
     hasPartitionedFlag = true
     const {perspectiveChangeAction} = await import('../src/visual-editing/server-actions')
 
@@ -333,7 +329,7 @@ describe('perspectiveChangeAction', () => {
   })
 
   test('keeps the perspective cookie unpartitioned when the flag cookie is absent', async () => {
-    process.env.NODE_ENV = 'production'
+    vi.stubEnv('NODE_ENV', 'production')
     hasPartitionedFlag = false
     const {perspectiveChangeAction} = await import('../src/visual-editing/server-actions')
 
