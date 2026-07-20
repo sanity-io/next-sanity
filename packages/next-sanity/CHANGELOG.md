@@ -1,5 +1,15 @@
 # next-sanity
 
+## 13.1.4
+
+### Patch Changes
+
+- [#3762](https://github.com/sanity-io/next-sanity/pull/3762) [`a4c4f8e`](https://github.com/sanity-io/next-sanity/commit/a4c4f8e326eadd2e51c997693360be67d1044963) Thanks [@renovate](https://github.com/apps/renovate)! - fix(deps): update dependency typescript to v7
+
+- [#3797](https://github.com/sanity-io/next-sanity/pull/3797) [`b4ed9e0`](https://github.com/sanity-io/next-sanity/commit/b4ed9e0e337b37765494b19d0c790144f94c1eb1) Thanks [@renovate](https://github.com/apps/renovate)! - fix(deps): update dependency @sanity/client to ^7.24.0
+
+- [#3780](https://github.com/sanity-io/next-sanity/pull/3780) [`85894eb`](https://github.com/sanity-io/next-sanity/commit/85894eb326df4bf655f18279fd110a54d6d4cedd) Thanks [@stipsan](https://github.com/stipsan)! - fix: set CHIPS `Partitioned` draft-mode cookies in cross-site Presentation iframes so Safari can enable visual editing
+
 ## 13.1.3
 
 ### Patch Changes
