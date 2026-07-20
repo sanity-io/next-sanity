@@ -4,6 +4,8 @@ import {perspectiveCookieName} from '@sanity/preview-url-secret/constants'
 import {cookies, draftMode} from 'next/headers'
 import {redirect} from 'next/navigation'
 
+import {partitionedCookieName} from '#live/constants'
+
 /**
  * @public
  */
@@ -28,6 +30,14 @@ export interface EnableDraftMode {
 /**
  * Sets up an API route for enabling draft mode, can be paired with the `previewUrl.previewMode.enable` in `sanity/presentation`.
  * Can also be used with `sanity-plugin-iframe-pane`.
+ *
+ * When the preview loads in a cross-site iframe (Presentation Tool), draft-mode
+ * cookies are set with the CHIPS `Partitioned` attribute so Safari 18.4+ stores
+ * them despite third-party cookie blocking. Top-level / same-site requests keep
+ * unpartitioned cookies so `draftMode().disable()` continues to work.
+ *
+ * @see https://github.com/sanity-io/sanity/issues/12806
+ *
  * @example
  * ```ts
  * // src/app/api/draft-mode/enable/route.ts
@@ -70,6 +80,16 @@ export function defineEnableDraftMode(options: DefineEnableDraftModeOptions): En
       // so we need an explicit option
       const isSecure = isProduction || (options.secureDevMode ?? false)
 
+      // Safari blocks unpartitioned third-party cookies. When the enable route is
+      // hit from a cross-site iframe (Presentation), opt into CHIPS so the cookies
+      // are stored under the studio's partition. Skip partitioning for top-level /
+      // same-site requests so draftMode().disable() can still clear them.
+      // https://github.com/sanity-io/sanity/issues/12806
+      const partitioned =
+        isSecure &&
+        request.headers.get('sec-fetch-dest') === 'iframe' &&
+        request.headers.get('sec-fetch-site') === 'cross-site'
+
       // Override cookie header for draft mode for usage in live-preview
       // https://github.com/vercel/next.js/issues/49927
       const cookieStore = await cookies()
@@ -81,6 +101,7 @@ export function defineEnableDraftMode(options: DefineEnableDraftModeOptions): En
         path: '/',
         secure: isSecure,
         sameSite: isSecure ? 'none' : 'lax',
+        partitioned,
       })
 
       if (studioPreviewPerspective) {
@@ -91,6 +112,22 @@ export function defineEnableDraftMode(options: DefineEnableDraftModeOptions): En
           path: '/',
           secure: isSecure,
           sameSite: isSecure ? 'none' : 'lax',
+          partitioned,
+        })
+      }
+
+      // Persist the partitioning decision for later writes (server actions have no
+      // Sec-Fetch iframe signal). The flag cookie is itself partitioned, so it is
+      // only visible inside the same cross-site iframe context.
+      if (partitioned) {
+        cookieStore.set({
+          name: partitionedCookieName,
+          value: '1',
+          httpOnly: true,
+          path: '/',
+          secure: true,
+          sameSite: 'none',
+          partitioned: true,
         })
       }
 
