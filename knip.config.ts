@@ -23,6 +23,12 @@ const config: KnipConfig = {
     'packages/typescript-config': {
       entry: ['base.json'],
     },
+    'packages/typedoc': {
+      ignoreDependencies: [
+        // Used by the typedoc CLI, pinned to 6.x since typedoc doesn't support TypeScript 7 yet
+        'typescript',
+      ],
+    },
     'apps/mvp': {
       entry: ['app/**/*.{ts,tsx}'],
       project: ['**/*.{ts,tsx}'],
