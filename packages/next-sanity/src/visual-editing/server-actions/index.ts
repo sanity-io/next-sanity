@@ -5,6 +5,7 @@ import {perspectiveCookieName} from '@sanity/preview-url-secret/constants'
 import {refresh} from 'next/cache'
 import {cookies} from 'next/headers'
 
+import {partitionedCookieName} from '#live/constants'
 import {sanitizePerspective} from '#live/sanitizePerspective'
 
 /**
@@ -31,11 +32,16 @@ export async function perspectiveChangeAction(perspective: ClientPerspective): P
     console.debug('perspectiveChangeAction', 'Perspective is the same, skipping', nextPerspective)
     return
   }
+  // Mirror the CHIPS partitioning decision from defineEnableDraftMode. Server
+  // actions do not receive Sec-Fetch iframe headers, so we rely on the companion
+  // flag cookie set during enable.
+  // https://github.com/sanity-io/sanity/issues/12806
   jar.set(perspectiveCookieName, nextPerspective, {
     httpOnly: true,
     path: '/',
     secure: true,
     sameSite: 'none',
+    partitioned: jar.has(partitionedCookieName),
   })
 
   refresh()
