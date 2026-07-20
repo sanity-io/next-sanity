@@ -8,7 +8,7 @@ on:
   pull_request:
     paths:
       - 'packages/next-sanity/src/**'
-      - 'packages/next-sanity/typedoc.json'
+      - 'packages/typedoc/**'
       - '.github/workflows/upload-docs.yml'
   # Manual trigger
   workflow_dispatch:
