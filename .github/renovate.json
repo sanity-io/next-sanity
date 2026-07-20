@@ -29,6 +29,13 @@
       "groupName": "next-canary"
     },
     {
+      "description": "typedoc doesn't support TypeScript 7 yet, keep the docs workspace on TypeScript 6",
+      "matchFileNames": ["packages/typedoc/package.json"],
+      "matchPackageNames": ["typescript"],
+      "matchUpdateTypes": ["major"],
+      "enabled": false
+    },
+    {
       "matchPackageNames": [
         "@sanity/client",
         "@sanity/comlink",
