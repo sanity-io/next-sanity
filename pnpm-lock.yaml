@@ -262,8 +262,8 @@ importers:
         specifier: ^4.0.0
         version: 4.0.0
       '@sanity/preview-url-secret':
-        specifier: ^4.0.8
-        version: 4.0.8(@sanity/client@7.24.0)
+        specifier: ^4.1.0
+        version: 4.1.0(@sanity/client@7.24.0)
       '@sanity/visual-editing':
         specifier: ^5.5.0
         version: 5.5.0(@emotion/is-prop-valid@1.4.0)(@sanity/client@7.24.0)(@types/react@19.2.17)(next@16.3.0-canary.90)(react-dom@19.2.7)(react@19.2.7)(styled-components@6.4.4)(typescript@7.0.2)
@@ -3147,11 +3147,11 @@ packages:
     resolution: {integrity: sha512-uHiiJNWER36S/M2R9B7iwf+R2GMV267kQCfIpQiGX+2C3aHwjFHjaEiPBF0aPOyBkHV2OfB3l7XSzyLIXYuQHQ==}
     engines: {node: '>=20.19 <22 || >=22.12'}
 
-  '@sanity/preview-url-secret@4.0.8':
-    resolution: {integrity: sha512-n2ulvDpA8z9UOhnyMPB4WC2w3e/noqL2+gE1f+WQyAE2v0OJsYOkTQzNCe9FU0UaVtbuBTNZI5xj+ei6Qxql/Q==}
+  '@sanity/preview-url-secret@4.1.0':
+    resolution: {integrity: sha512-Zha42V94Q7vnSHOyCHtSihChX7asoVrDq7BCQ6xyAzoGZKdbP7FIOiSahfIN9Z1ZUEe5PJh6/HGx9+6e/y50NA==}
     engines: {node: '>=20.19 <22 || >=22.12'}
     peerDependencies:
-      '@sanity/client': ^7.23.0
+      '@sanity/client': ^7.23.2
 
   '@sanity/preview-url-secret@4.1.0':
     resolution: {integrity: sha512-Zha42V94Q7vnSHOyCHtSihChX7asoVrDq7BCQ6xyAzoGZKdbP7FIOiSahfIN9Z1ZUEe5PJh6/HGx9+6e/y50NA==}
@@ -3227,9 +3227,6 @@ packages:
   '@sanity/util@6.6.0-next.86':
     resolution: {integrity: sha512-hcNjzYDo/dZY0p2FZE8y1q4/APUldSUS7JjoVt6tioqYa+H9fJPMA82fZdpiw6ayfqaTifQY5AtEpa/sqSmIzg==}
     engines: {node: '>=22.12'}
-
-  '@sanity/uuid@3.0.2':
-    resolution: {integrity: sha512-vzdhqOrX7JGbMyK40KuIwwyXHm7GMLOGuYgn3xlC09e4ZVNofUO5mgezQqnRv0JAMthIRhofqs9f6ufUjMKOvw==}
 
   '@sanity/uuid@3.0.3':
     resolution: {integrity: sha512-aJvKuFwzcZKRwuIjrRPfXfXKpSdnLF4CnedV5WcX1n5SzhufvRNHIot5lkx1+Y1DwiMVQOZ5gDSPJH+P6Ao70A==}
@@ -3574,9 +3571,6 @@ packages:
 
   '@types/unist@3.0.3':
     resolution: {integrity: sha512-ko/gIFJRv177XgZsZcBwnqJN5x/Gien8qNOn0D5bQU/zAzVf9Zt3BlcUiLqhV9y4ARk0GbT3tnUiPNgnTXzc/Q==}
-
-  '@types/uuid@8.3.4':
-    resolution: {integrity: sha512-c/I8ZRb51j+pYGAu5CrFMRxqZ2ke4y2grEBO5AUjgSkSk+qT2Ea+OdWElz/OiMf5MNpn2b17kuVBwZLQJXzihw==}
 
   '@typescript/typescript-aix-ppc64@7.0.2':
     resolution: {integrity: sha512-MTKKkWB7p/0E9xi1d1tHtZ5PiLkGEMIq88pK2CubZjOsLtYTLqhgIgi6zepFa+9GHZ6h05NMCkQxGKiPXMxXtQ==}
@@ -6654,11 +6648,6 @@ packages:
 
   uuid@14.0.1:
     resolution: {integrity: sha512-6ZxzVpzDXDa3bJWaHilVayA+BH/1zmxCJoVgvmqJnid/gPoKHxUrS/aC/T6LGQtNHT+XHG9fXPJB4d+IrU30Ew==}
-    hasBin: true
-
-  uuid@8.3.2:
-    resolution: {integrity: sha512-+NYs2QeMWy+GWFOEm9xnn6HCDp0l7QBD7ml8zLUmJ+93Q5NF0NocErnwkTkXVFNiX3/fpC6afS8Dhb/gz7R7eg==}
-    deprecated: uuid@10 and below is no longer supported.  For ESM codebases, update to uuid@latest.  For CommonJS codebases, use uuid@11 (but be aware this version will likely be deprecated in 2028).
     hasBin: true
 
   uuidv7@0.4.4:
@@ -9910,10 +9899,10 @@ snapshots:
       - '@sanity/client'
       - '@sanity/types'
 
-  '@sanity/preview-url-secret@4.0.8(@sanity/client@7.24.0)':
+  '@sanity/preview-url-secret@4.1.0(@sanity/client@7.24.0)':
     dependencies:
       '@sanity/client': 7.24.0
-      '@sanity/uuid': 3.0.2
+      '@sanity/uuid': 3.0.3
 
   '@sanity/preview-url-secret@4.1.0(@sanity/client@7.24.0)':
     dependencies:
@@ -10096,11 +10085,6 @@ snapshots:
     transitivePeerDependencies:
       - '@types/react'
 
-  '@sanity/uuid@3.0.2':
-    dependencies:
-      '@types/uuid': 8.3.4
-      uuid: 8.3.2
-
   '@sanity/uuid@3.0.3':
     dependencies:
       uuid: 11.1.1
@@ -10176,7 +10160,7 @@ snapshots:
       '@sanity/icons': 5.1.0(react@19.2.7)
       '@sanity/mutate': 0.18.1(xstate@5.32.5)
       '@sanity/presentation-comlink': 2.2.0(@sanity/client@7.24.0)(@sanity/types@6.5.0)
-      '@sanity/preview-url-secret': 4.0.8(@sanity/client@7.24.0)
+      '@sanity/preview-url-secret': 4.1.0(@sanity/client@7.24.0)
       '@sanity/types': 6.5.0(@types/react@19.2.17)
       '@sanity/ui': 3.3.5(@emotion/is-prop-valid@1.4.0)(react-dom@19.2.7)(react-is@19.2.7)(react@19.2.7)(styled-components@6.4.4)
       '@sanity/visual-editing-csm': 3.0.11(@sanity/client@7.24.0)(@sanity/types@6.5.0)(typescript@7.0.2)
@@ -10482,8 +10466,6 @@ snapshots:
   '@types/unist@2.0.11': {}
 
   '@types/unist@3.0.3': {}
-
-  '@types/uuid@8.3.4': {}
 
   '@typescript/typescript-aix-ppc64@7.0.2':
     optional: true
@@ -13542,8 +13524,6 @@ snapshots:
   uuid@13.0.2: {}
 
   uuid@14.0.1: {}
-
-  uuid@8.3.2: {}
 
   uuidv7@0.4.4: {}
 
