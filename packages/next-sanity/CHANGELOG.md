@@ -1,5 +1,13 @@
 # next-sanity
 
+## 13.1.5
+
+### Patch Changes
+
+- [#3801](https://github.com/sanity-io/next-sanity/pull/3801) [`fa11ba1`](https://github.com/sanity-io/next-sanity/commit/fa11ba1d4e93a9927871c8a9d3ef6434a18ae96a) Thanks [@renovate](https://github.com/apps/renovate)! - fix(deps): update dependency @sanity/preview-url-secret to ^4.1.0
+
+- [`8ba2020`](https://github.com/sanity-io/next-sanity/commit/8ba2020cb4cda47006ae529a2f5f41bdf7009bde) Thanks [@stipsan](https://github.com/stipsan)! - fix(deps): update dependency @sanity/visual-editing to ^5.6.0
+
 ## 13.1.4
 
 ### Patch Changes
