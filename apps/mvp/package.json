@@ -11,7 +11,7 @@
     "dev": "next dev",
     "start": "next start",
     "type-check": "next typegen && tsc --noEmit",
-    "typegen": "sanity schema extract && sanity typegen generate"
+    "typegen": "sanity schema extract --force && sanity typegen generate"
   },
   "dependencies": {
     "@repo/sanity-config": "workspace:*",
