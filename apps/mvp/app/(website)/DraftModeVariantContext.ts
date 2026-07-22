@@ -3,5 +3,5 @@
 import {createContext} from 'react'
 
 export const DraftModeVariantContext = createContext<
-  'checking' | 'unknown' | string | undefined
+  'checking' | 'unknown' | string | null
 >('unknown')

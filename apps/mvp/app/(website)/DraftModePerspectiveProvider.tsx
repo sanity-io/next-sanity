@@ -13,7 +13,7 @@ async function DraftModePerspectiveProvider({children}: {children: React.ReactNo
   const variant = await resolveVariantFromCookies({cookies: jar})
   return (
     <DraftModePerspectiveContext value={perspective}>
-      <DraftModeVariantContext value={variant}>{children}</DraftModeVariantContext>
+      <DraftModeVariantContext value={variant ?? null}>{children}</DraftModeVariantContext>
     </DraftModePerspectiveContext>
   )
 }
