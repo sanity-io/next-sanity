@@ -28,12 +28,7 @@ export function DebugStatus() {
       <p>Is Presentation Tool: {JSON.stringify(isPresentationTool)}</p>
       <p>Environment: {JSON.stringify(environment)}</p>
       <p>Perspective: {JSON.stringify(perspective)}</p>
-      <p>
-        Variant:{' '}
-        {JSON.stringify(
-          variant === 'checking' || variant === 'unknown' ? variant : (variant ?? null),
-        )}
-      </p>
+      <p>Variant: {JSON.stringify(variant)}</p>
       <p>Is Live Preview: {isLivePreview === null ? 'Maybe' : isLivePreview ? 'Yes' : 'No'}</p>
     </>
   )
