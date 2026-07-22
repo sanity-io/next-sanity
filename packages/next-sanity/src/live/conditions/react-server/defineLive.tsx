@@ -6,6 +6,7 @@ import {cookies, draftMode} from 'next/headers'
 import {cacheTagPrefix, defaultApiHost} from '#live/constants'
 import {preconnect} from '#live/preconnect'
 import {resolvePerspectiveFromCookies} from '#live/resolvePerspectiveFromCookies'
+import {resolveVariantFromCookies} from '#live/resolveVariantFromCookies'
 import {validateStrictFetchOptions, validateStrictSanityLiveProps} from '#live/strictValidation'
 import type {
   DefinedFetchType,
@@ -37,6 +38,7 @@ import type {
  * import {
  *   defineLive,
  *   resolvePerspectiveFromCookies,
+ *   resolveVariantFromCookies,
  *   type LivePerspective,
  * } from 'next-sanity/live'
  *
@@ -57,6 +59,7 @@ import type {
  *
  * export interface DynamicFetchOptions {
  *   perspective: LivePerspective
+ *   variant?: string
  *   stega: boolean
  * }
  *
@@ -69,7 +72,8 @@ import type {
  *
  *   const jar = await cookies()
  *   const perspective = await resolvePerspectiveFromCookies({cookies: jar})
- *   return {perspective: perspective ?? 'drafts', stega: true}
+ *   const variant = await resolveVariantFromCookies({cookies: jar})
+ *   return {perspective: perspective ?? 'drafts', variant, stega: true}
  * }
  * ```
  *
@@ -140,14 +144,15 @@ import type {
  *
  * async function DynamicPage(props: Pick<PageProps<'/[slug]'>, 'params'>) {
  *   const {slug} = await props.params
- *   const {perspective, stega} = await getDynamicFetchOptions()
+ *   const {perspective, variant, stega} = await getDynamicFetchOptions()
  *
- *   return <CachedPage slug={slug} perspective={perspective} stega={stega} />
+ *   return <CachedPage slug={slug} perspective={perspective} variant={variant} stega={stega} />
  * }
  *
  * async function CachedPage({
  *   slug,
  *   perspective,
+ *   variant,
  *   stega,
  * }: {slug: string} & DynamicFetchOptions) {
  *   'use cache'
@@ -156,6 +161,7 @@ import type {
  *     query: POST_QUERY,
  *     params: {slug},
  *     perspective,
+ *     variant,
  *     stega,
  *   })
  *
@@ -285,6 +291,7 @@ export function defineLive(config: DefineLiveOptions) {
     query,
     params = {},
     perspective: _perspective,
+    variant: _variant,
     stega: _stega,
     tags = [],
     requestTag = 'next-loader.fetch',
@@ -298,6 +305,15 @@ export function defineLive(config: DefineLiveOptions) {
     const perspective = strict
       ? _perspective
       : (_perspective ?? (serverToken ? await resolveCookiePerspective() : undefined))
+    // The variant cookie is only auto-resolved when the perspective is too:
+    // an explicit `perspective` opts out of cookie resolution entirely, which
+    // keeps fetches with explicit options free of dynamic API calls.
+    const variant = strict
+      ? _variant
+      : (_variant ??
+        (serverToken && typeof _perspective === 'undefined'
+          ? await resolveCookieVariant()
+          : undefined))
     const useCdn = perspective ? perspective === 'published' : undefined
     const isBuildPhase = process.env['NEXT_PHASE'] === PHASE_PRODUCTION_BUILD
     const cacheMode = useCdn !== false && !isBuildPhase ? 'noStale' : undefined
@@ -310,6 +326,7 @@ export function defineLive(config: DefineLiveOptions) {
     const {syncTags} = await client.fetch(query, await params, {
       filterResponse: false,
       perspective,
+      variant,
       stega: false,
       resultSourceMap: false,
       returnQuery: false,
@@ -325,6 +342,7 @@ export function defineLive(config: DefineLiveOptions) {
     const {result, resultSourceMap} = await client.fetch(query, await params, {
       filterResponse: false,
       perspective,
+      variant,
       stega,
       next: {revalidate: false, tags: cacheTags},
       useCdn,
@@ -397,5 +415,11 @@ export function defineLive(config: DefineLiveOptions) {
 async function resolveCookiePerspective(): Promise<LivePerspective | undefined> {
   return (await draftMode()).isEnabled
     ? await resolvePerspectiveFromCookies({cookies: await cookies()})
+    : undefined
+}
+
+async function resolveCookieVariant(): Promise<string | undefined> {
+  return (await draftMode()).isEnabled
+    ? await resolveVariantFromCookies({cookies: await cookies()})
     : undefined
 }

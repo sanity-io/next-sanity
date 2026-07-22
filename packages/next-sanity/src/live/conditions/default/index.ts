@@ -1,4 +1,5 @@
 import type {resolvePerspectiveFromCookies as _resolvePerspectiveFromCookies} from '#live/resolvePerspectiveFromCookies'
+import type {resolveVariantFromCookies as _resolveVariantFromCookies} from '#live/resolveVariantFromCookies'
 import type {
   DefinedFetchType,
   DefinedLiveProps,
@@ -28,6 +29,7 @@ import type {
  * import {
  *   defineLive,
  *   resolvePerspectiveFromCookies,
+ *   resolveVariantFromCookies,
  *   type LivePerspective,
  * } from 'next-sanity/live'
  *
@@ -48,6 +50,7 @@ import type {
  *
  * export interface DynamicFetchOptions {
  *   perspective: LivePerspective
+ *   variant?: string
  *   stega: boolean
  * }
  *
@@ -60,7 +63,8 @@ import type {
  *
  *   const jar = await cookies()
  *   const perspective = await resolvePerspectiveFromCookies({cookies: jar})
- *   return {perspective: perspective ?? 'drafts', stega: true}
+ *   const variant = await resolveVariantFromCookies({cookies: jar})
+ *   return {perspective: perspective ?? 'drafts', variant, stega: true}
  * }
  * ```
  *
@@ -131,14 +135,15 @@ import type {
  *
  * async function DynamicPage(props: Pick<PageProps<'/[slug]'>, 'params'>) {
  *   const {slug} = await props.params
- *   const {perspective, stega} = await getDynamicFetchOptions()
+ *   const {perspective, variant, stega} = await getDynamicFetchOptions()
  *
- *   return <CachedPage slug={slug} perspective={perspective} stega={stega} />
+ *   return <CachedPage slug={slug} perspective={perspective} variant={variant} stega={stega} />
  * }
  *
  * async function CachedPage({
  *   slug,
  *   perspective,
+ *   variant,
  *   stega,
  * }: {slug: string} & DynamicFetchOptions) {
  *   'use cache'
@@ -147,6 +152,7 @@ import type {
  *     query: POST_QUERY,
  *     params: {slug},
  *     perspective,
+ *     variant,
  *     stega,
  *   })
  *
@@ -329,4 +335,74 @@ export {parseTags} from '#live/parseTags'
  */
 export const resolvePerspectiveFromCookies: typeof _resolvePerspectiveFromCookies = () => {
   throw new Error(`resolvePerspectiveFromCookies can't be imported by a client component`)
+}
+
+/**
+ * This helper is intended for use with Next.js Cache Components (`cacheComponents: true`),
+ * where `cookies()` and `draftMode()` cannot be called inside `'use cache'` boundaries.
+ * Resolve the variant once outside the cache boundary and pass it in as a prop / cache key.
+ *
+ * Unlike `resolvePerspectiveFromCookies` there is no fallback value: when no
+ * variant cookie is set (or its value is invalid) it resolves to `undefined`,
+ * meaning "no variant selected" and queries return base content.
+ *
+ * @example
+ * ```tsx
+ * import {cookies, draftMode} from 'next/headers'
+ * import {defineQuery} from 'next-sanity'
+ * import {
+ *   resolvePerspectiveFromCookies,
+ *   resolveVariantFromCookies,
+ *   type LivePerspective,
+ * } from 'next-sanity/live'
+ * import {sanityFetch} from '#sanity/live'
+ *
+ * export default async function Page({params}: PageProps<'/[slug]'>) {
+ *   const {isEnabled: isDraftMode} = await draftMode()
+ *
+ *   if (isDraftMode) {
+ *     return (
+ *       <Suspense>
+ *         <DynamicPage params={params} />
+ *       </Suspense>
+ *     )
+ *   }
+ *
+ *   const {slug} = await params
+ *
+ *   return <CachedPage slug={slug} perspective="published" stega={false} />
+ * }
+ *
+ * async function DynamicPage({params}: Pick<PageProps<'/[slug]'>, 'params'>) {
+ *   const {slug} = await params
+ *   const jar = await cookies()
+ *   const perspective = await resolvePerspectiveFromCookies({cookies: jar})
+ *   const variant = await resolveVariantFromCookies({cookies: jar})
+ *
+ *   return <CachedPage slug={slug} perspective={perspective} variant={variant} stega />
+ * }
+ *
+ * async function CachedPage({
+ *   slug,
+ *   perspective,
+ *   variant,
+ *   stega,
+ * }: Awaited<PageProps<'/[slug]'>['params']> & {
+ *   perspective: LivePerspective
+ *   variant: string | undefined
+ *   stega: boolean
+ * }) {
+ *   'use cache'
+ *
+ *   const query = defineQuery(`*[_type == "page" && slug.current == $slug][0]`)
+ *   const {data} = await sanityFetch({query, params: {slug}, perspective, variant, stega})
+ *
+ *   return <article>...</article>
+ * }
+ * ```
+ *
+ * @public
+ */
+export const resolveVariantFromCookies: typeof _resolveVariantFromCookies = () => {
+  throw new Error(`resolveVariantFromCookies can't be imported by a client component`)
 }
