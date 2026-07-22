@@ -1,5 +1,10 @@
 import {unstable__adapter, unstable__environment} from 'next-sanity'
-import {defineLive, resolvePerspectiveFromCookies, type LivePerspective} from 'next-sanity/live'
+import {
+  defineLive,
+  resolvePerspectiveFromCookies,
+  resolveVariantFromCookies,
+  type LivePerspective,
+} from 'next-sanity/live'
 import {cookies, draftMode} from 'next/headers'
 import Link from 'next/link'
 import {Suspense} from 'react'
@@ -19,22 +24,25 @@ const {sanityFetch} = defineLive({
 
 async function CachedIndexPage({
   perspective,
+  variant,
   stega,
 }: {
   perspective: LivePerspective
+  variant?: string
   stega: boolean
 }) {
   'use cache'
   const {data, sourceMap, tags} = await sanityFetch({
     query: postsQuery.query,
     perspective,
+    variant,
     stega,
   })
 
   return (
     <>
       <ContentSourceMapDebug sourceMap={sourceMap} />
-      <p>{JSON.stringify({perspective, tags: tags.toSorted()})}</p>
+      <p>{JSON.stringify({perspective, variant, tags: tags.toSorted()})}</p>
       <PostsLayout data={data} draftMode={false} />
     </>
   )
@@ -42,12 +50,12 @@ async function CachedIndexPage({
 
 async function DynamicIndexPage() {
   const {isEnabled: isDraftMode} = await draftMode()
-  const perspective = isDraftMode
-    ? await resolvePerspectiveFromCookies({cookies: await cookies()})
-    : 'published'
+  const jar = isDraftMode ? await cookies() : null
+  const perspective = jar ? await resolvePerspectiveFromCookies({cookies: jar}) : 'published'
+  const variant = jar ? await resolveVariantFromCookies({cookies: jar}) : undefined
   const stega = isDraftMode
 
-  return <CachedIndexPage perspective={perspective} stega={stega} />
+  return <CachedIndexPage perspective={perspective} variant={variant} stega={stega} />
 }
 
 export default async function IndexPage() {

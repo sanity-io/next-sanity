@@ -36,6 +36,7 @@ import type {
  * import {
  *   defineLive,
  *   resolvePerspectiveFromCookies,
+ *   resolveVariantFromCookies,
  *   type LivePerspective,
  * } from 'next-sanity/live'
  *
@@ -56,6 +57,7 @@ import type {
  *
  * export interface DynamicFetchOptions {
  *   perspective: LivePerspective
+ *   variant?: string
  *   stega: boolean
  * }
  *
@@ -68,7 +70,8 @@ import type {
  *
  *   const jar = await cookies()
  *   const perspective = await resolvePerspectiveFromCookies({cookies: jar})
- *   return {perspective: perspective ?? 'drafts', stega: true}
+ *   const variant = await resolveVariantFromCookies({cookies: jar})
+ *   return {perspective: perspective ?? 'drafts', variant, stega: true}
  * }
  * ```
  *
@@ -139,14 +142,15 @@ import type {
  *
  * async function DynamicPage(props: Pick<PageProps<'/[slug]'>, 'params'>) {
  *   const {slug} = await props.params
- *   const {perspective, stega} = await getDynamicFetchOptions()
+ *   const {perspective, variant, stega} = await getDynamicFetchOptions()
  *
- *   return <CachedPage slug={slug} perspective={perspective} stega={stega} />
+ *   return <CachedPage slug={slug} perspective={perspective} variant={variant} stega={stega} />
  * }
  *
  * async function CachedPage({
  *   slug,
  *   perspective,
+ *   variant,
  *   stega,
  * }: {slug: string} & DynamicFetchOptions) {
  *   'use cache'
@@ -155,6 +159,7 @@ import type {
  *     query: POST_QUERY,
  *     params: {slug},
  *     perspective,
+ *     variant,
  *     stega,
  *   })
  *
@@ -283,6 +288,7 @@ export function defineLive(config: DefineLiveOptions) {
     query,
     params = {},
     perspective,
+    variant,
     stega,
     tags: customCacheTags = [],
     requestTag = 'next-loader.fetch.cache-components',
@@ -302,6 +308,7 @@ export function defineLive(config: DefineLiveOptions) {
     const {result, resultSourceMap, syncTags} = await client.fetch(query, await params, {
       filterResponse: false,
       perspective,
+      variant,
       stega,
       returnQuery: false,
       useCdn,

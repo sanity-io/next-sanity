@@ -1,4 +1,4 @@
-import {perspectiveCookieName} from '@sanity/preview-url-secret/constants'
+import {perspectiveCookieName, variantCookieName} from '@sanity/preview-url-secret/constants'
 import {vercelStegaDecodeAll} from '@vercel/stega'
 import {createClient} from 'next-sanity'
 import {PHASE_PRODUCTION_BUILD} from 'next/constants'
@@ -11,6 +11,7 @@ import {apiVersion, dataset, getSanityFetchMock, projectId} from './helpers'
 let isDraftMode = false
 let isDraftModeCalled = false
 let perspectiveCookieValue: LivePerspective | null = null
+let variantCookieValue: string | null = null
 vi.mock(import('next/headers'), async (importOriginal) => {
   const originalModule = await importOriginal()
   return {
@@ -23,11 +24,17 @@ vi.mock(import('next/headers'), async (importOriginal) => {
             if (key === perspectiveCookieName) {
               return perspectiveCookieValue !== null
             }
+            if (key === variantCookieName) {
+              return variantCookieValue !== null
+            }
             return false
           }),
           get: vi.fn((key) => {
             if (key === perspectiveCookieName) {
               return {value: perspectiveCookieValue}
+            }
+            if (key === variantCookieName) {
+              return {value: variantCookieValue}
             }
             return null
           }),
@@ -51,6 +58,7 @@ afterEach(() => {
   isDraftMode = false
   isDraftModeCalled = false
   perspectiveCookieValue = null
+  variantCookieValue = null
 })
 
 vi.mock('next/cache')
@@ -339,6 +347,130 @@ describe.each([{cacheComponents: true}, {cacheComponents: false}])(
       })
     })
 
+    describe('variant', () => {
+      const token = 'sk123'
+      const serverToken = 'sk456'
+      const client = createClient({projectId, dataset, apiVersion, useCdn: true, token})
+      const {sanityFetch} = defineLive({client, serverToken})
+
+      test('is not set by default', async () => {
+        const {query, params} = getSanityFetchMock('{"variant": $variant, "token": $token}', {
+          variant: null,
+          token: `Bearer ${token}`,
+        })
+
+        // When using client.fetch directly without a variant, no `variant` search param is sent
+        await expect(client.fetch(query, params, {token})).resolves.toEqual(params)
+
+        // Then prove that the sanityFetch wrapper works correctly
+        const {data} = await sanityFetch({query, params})
+        expect(data).toEqual(params)
+      })
+
+      test('is forwarded to the query string when set explicitly', async () => {
+        const {query, params} = getSanityFetchMock('{"variant": $variant, "token": $token}', {
+          variant: 'Ab12cd34',
+          token: `Bearer ${token}`,
+        })
+
+        // When using client.fetch directly it respects the `variant` setting
+        await expect(client.fetch(query, params, {variant: 'Ab12cd34', token})).resolves.toEqual(
+          params,
+        )
+
+        // Then prove that the sanityFetch wrapper works correctly
+        const {data} = await sanityFetch({query, params, variant: 'Ab12cd34'})
+        expect(data).toEqual(params)
+      })
+
+      test.runIf(!cacheComponents)(
+        'is resolved from cookies by default when draft mode is enabled',
+        async () => {
+          isDraftMode = true
+          variantCookieValue = 'Ab12cd34'
+          const {query, params} = getSanityFetchMock('{"variant": $variant, "token": $token}', {
+            variant: 'Ab12cd34',
+            token: `Bearer ${serverToken}`,
+          })
+
+          // When using client.fetch directly it respects the `variant` and `token` settings
+          await expect(
+            client.fetch(query, params, {variant: 'Ab12cd34', token: serverToken, useCdn: false}),
+          ).resolves.toEqual(params)
+
+          // Then prove that the sanityFetch wrapper works correctly
+          const {data} = await sanityFetch({query, params})
+          expect(data).toEqual(params)
+        },
+      )
+
+      test.runIf(!cacheComponents)('uses the explicit variant instead of the cookie', async () => {
+        isDraftMode = true
+        variantCookieValue = 'cookieVariant'
+        const {query, params} = getSanityFetchMock('{"variant": $variant, "token": $token}', {
+          variant: 'explicitVariant',
+          token: `Bearer ${serverToken}`,
+        })
+
+        const {data} = await sanityFetch({query, params, variant: 'explicitVariant'})
+        expect(data).toEqual(params)
+      })
+
+      test.runIf(!cacheComponents)(
+        'is not resolved from cookies when draft mode is disabled',
+        async () => {
+          variantCookieValue = 'Ab12cd34'
+          const {query, params} = getSanityFetchMock('{"variant": $variant, "token": $token}', {
+            variant: null,
+            token: `Bearer ${token}`,
+          })
+
+          const {data} = await sanityFetch({query, params})
+          expect(data).toEqual(params)
+        },
+      )
+
+      test.runIf(!cacheComponents)('ignores invalid cookie values', async () => {
+        isDraftMode = true
+        variantCookieValue = 'not a valid variant!'
+        const {query, params} = getSanityFetchMock('{"variant": $variant, "token": $token}', {
+          variant: null,
+          token: `Bearer ${serverToken}`,
+        })
+
+        const {data} = await sanityFetch({query, params})
+        expect(data).toEqual(params)
+      })
+
+      test('does not resolve the cookie variant if no serverToken is provided', async () => {
+        const {sanityFetch} = defineLive({client, serverToken: false})
+        isDraftMode = true
+        variantCookieValue = 'Ab12cd34'
+        const {query, params} = getSanityFetchMock('{"variant": $variant, "token": $token}', {
+          variant: null,
+          token: `Bearer ${token}`,
+        })
+
+        const {data} = await sanityFetch({query, params})
+        expect(data).toEqual(params)
+      })
+
+      test('does not resolve the cookie variant if perspective is explicit', async () => {
+        isDraftMode = true
+        variantCookieValue = 'Ab12cd34'
+        const {query, params} = getSanityFetchMock('{"variant": $variant, "token": $token}', {
+          variant: null,
+          token: `Bearer ${serverToken}`,
+        })
+
+        // An explicit `perspective` opts out of cookie resolution entirely,
+        // keeping fetches with explicit options free of dynamic API calls
+        const {data} = await sanityFetch({query, params, perspective: 'drafts'})
+        expect(data).toEqual(params)
+        expect(isDraftModeCalled).not.toBe(true)
+      })
+    })
+
     describe('handles client config edge cases', () => {
       test.each([{resultSourceMap: true}, {resultSourceMap: 'withKeyArraySelector' as const}])(
         'handles %o',
@@ -422,6 +554,40 @@ describe.each([{cacheComponents: true}, {cacheComponents: false}])(
         )
 
         const {data} = await sanityFetch({query, params, perspective: 'published', stega: false})
+        expect(data).toEqual(params)
+        expect(isDraftModeCalled).not.toBe(true)
+      })
+
+      test('uses the explicit variant instead of the cookie', async () => {
+        const {sanityFetch} = defineLive({client, serverToken, browserToken: false, strict: true})
+        isDraftMode = true
+        variantCookieValue = 'cookieVariant'
+        const {query, params} = getSanityFetchMock('{"variant": $variant, "token": $token}', {
+          variant: 'explicitVariant',
+          token: `Bearer ${serverToken}`,
+        })
+
+        const {data} = await sanityFetch({
+          query,
+          params,
+          perspective: 'drafts',
+          variant: 'explicitVariant',
+          stega: false,
+        })
+        expect(data).toEqual(params)
+        expect(isDraftModeCalled).not.toBe(true)
+      })
+
+      test('ignores the cookie when variant is omitted', async () => {
+        const {sanityFetch} = defineLive({client, serverToken, browserToken: false, strict: true})
+        isDraftMode = true
+        variantCookieValue = 'cookieVariant'
+        const {query, params} = getSanityFetchMock('{"variant": $variant, "token": $token}', {
+          variant: null,
+          token: `Bearer ${serverToken}`,
+        })
+
+        const {data} = await sanityFetch({query, params, perspective: 'drafts', stega: false})
         expect(data).toEqual(params)
         expect(isDraftModeCalled).not.toBe(true)
       })

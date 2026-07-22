@@ -39,6 +39,9 @@ function validateQuery(
         token,
       })
     }
+    case '{"variant": $variant, "token": $token}': {
+      return mockResponse({variant: searchParams.get('variant'), token})
+    }
     case '{"stega": $stega}': {
       const resultSourceMap = searchParams.get('resultSourceMap')
       const stega = resultSourceMap === 'withKeyArraySelector' && !!token

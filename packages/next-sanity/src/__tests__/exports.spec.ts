@@ -45,6 +45,7 @@ test(`exports snapshot for the ${JSON.stringify(env)} condition`, {timeout: 15_0
         isCorsOriginError: function
         parseTags: function
         resolvePerspectiveFromCookies: function
+        resolveVariantFromCookies: function
       ./live/cache-life:
         sanity: object
       ./live/client-components:
@@ -65,6 +66,7 @@ test(`exports snapshot for the ${JSON.stringify(env)} condition`, {timeout: 15_0
         VisualEditing: function
       ./visual-editing/server-actions:
         perspectiveChangeAction: function
+        variantChangeAction: function
       ./webhook:
         parseBody: function
       "
