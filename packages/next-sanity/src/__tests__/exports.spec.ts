@@ -30,6 +30,7 @@ test(`exports snapshot for the ${JSON.stringify(env)} condition`, {timeout: 15_0
         toPlainText: function
         unstable__adapter: string
         unstable__environment: string
+        VARIANTS_STUDIO_CLIENT_OPTIONS: object
       ./draft-mode:
         defineEnableDraftMode: function
       ./hooks:
