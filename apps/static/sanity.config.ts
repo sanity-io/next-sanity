@@ -15,4 +15,7 @@ export default defineConfig({
   scheduledPublishing: {
     enabled: false,
   },
+  beta: {
+    variants: {enabled: true},
+  },
 })
