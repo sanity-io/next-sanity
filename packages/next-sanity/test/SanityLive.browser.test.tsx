@@ -3,6 +3,7 @@ import {Component, type ReactNode} from 'react'
 import {beforeEach, describe, expect, vi} from 'vitest'
 import {render} from 'vitest-browser-react'
 
+import {SanityLive as SanityLiveLazyClientComponent} from '../src/live/client-components'
 import SanityLiveClientComponent, {
   type SanityLiveProps,
 } from '../src/live/client-components/SanityLive'
@@ -62,11 +63,12 @@ class TestErrorBoundary extends Component<TestErrorBoundaryProps, TestErrorBound
 function defineSanityLiveClientComponent(
   overrides: Partial<SanityLiveProps>,
   configOverrides?: Partial<SanityLiveProps['config']>,
+  Component: React.ComponentType<SanityLiveProps> = SanityLiveClientComponent,
 ) {
   const client = createClient({projectId, dataset, apiVersion, useCdn: true})
   const {apiHost, useProjectHostname, requestTagPrefix} = client.config()
   return (
-    <SanityLiveClientComponent
+    <Component
       action="refresh"
       config={{
         projectId,
@@ -275,6 +277,27 @@ describe('SanityLiveClientComponent', () => {
       await vi.waitFor(() => expect(onReconnect).toHaveBeenCalled())
       const [event] = onReconnect.mock.lastCall!
       expect(event.type).toBe('reconnect')
+    })
+  })
+
+  describe('lazy wrapper (`next-sanity/live/client-components` entry)', () => {
+    test('loads SanityLiveClientComponent after mount and connects', async () => {
+      const onWelcome = vi.fn()
+      const onError = vi.fn()
+
+      await render(
+        defineSanityLiveClientComponent(
+          {onWelcome, onError},
+          undefined,
+          SanityLiveLazyClientComponent,
+        ),
+      )
+
+      await vi.waitUntil(() => onWelcome.mock.calls.length > 0 || onError.mock.calls.length > 0, {
+        timeout: 5_000,
+      })
+      expect(onError).not.toHaveBeenCalled()
+      expect(onWelcome).toHaveBeenCalled()
     })
   })
 
