@@ -7,8 +7,8 @@ import {apiVersion, dataset, projectId, renderToString} from './helpers'
  * In the App Router the Next.js compiler aliases `next/dynamic` to
  * `next/dist/shared/lib/app-dynamic.js`, where `ssr: false` works by throwing a
  * `BailoutToCSRError` during server rendering. Mimic that resolution so this test
- * exercises what would happen in Next.js if the wrapper regressed to
- * `dynamic(() => import('./SanityLive'), {ssr: false})`.
+ * exercises what would happen in Next.js if the wrapper regressed to rendering its
+ * `next/dynamic` component during server rendering (e.g. by removing the mount gate).
  */
 vi.mock('next/dynamic', async () => {
   const mod = await import('next/dist/shared/lib/app-dynamic.js')
