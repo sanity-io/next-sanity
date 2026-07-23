@@ -1,10 +1,5 @@
 import {unstable__adapter, unstable__environment} from 'next-sanity'
-import {
-  defineLive,
-  resolvePerspectiveFromCookies,
-  resolveVariantFromCookies,
-  type LivePerspective,
-} from 'next-sanity/live'
+import {defineLive, type LivePerspective} from 'next-sanity/live'
 import {cookies, draftMode} from 'next/headers'
 import Link from 'next/link'
 import {Suspense} from 'react'
@@ -13,6 +8,7 @@ import PostsLayout, {postsQuery} from '@/app/(website)/PostsLayout'
 import {client} from '@/app/sanity.client'
 
 import {ContentSourceMapDebug} from '../ContentSourceMapDebug'
+import {defaultPreviewCookies, resolvePreviewCookies} from '../resolvePreviewCookies'
 
 const token = process.env.SANITY_API_READ_TOKEN!
 const {sanityFetch} = defineLive({
@@ -51,8 +47,7 @@ async function CachedIndexPage({
 async function DynamicIndexPage() {
   const {isEnabled: isDraftMode} = await draftMode()
   const jar = isDraftMode ? await cookies() : null
-  const perspective = jar ? await resolvePerspectiveFromCookies({cookies: jar}) : 'published'
-  const variant = jar ? await resolveVariantFromCookies({cookies: jar}) : undefined
+  const {perspective, variant} = jar ? await resolvePreviewCookies(jar) : defaultPreviewCookies
   const stega = isDraftMode
 
   return <CachedIndexPage perspective={perspective} variant={variant} stega={stega} />
