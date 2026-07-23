@@ -1,5 +1,15 @@
 # next-sanity
 
+## 13.2.0
+
+### Minor Changes
+
+- [#3809](https://github.com/sanity-io/next-sanity/pull/3809) [`54fb137`](https://github.com/sanity-io/next-sanity/commit/54fb1372e1eba7199b9819734de34b8e23c5bec2) Thanks [@pedrobonamin](https://github.com/pedrobonamin)! - Add editing variant support: persist the variant selected in the Presentation tool in a `sanity-preview-variant` cookie (via `defineEnableDraftMode` and the new `variantChangeAction` wired to `onVariantChange`), resolve it with the new `resolveVariantFromCookies` helper, and pass the new `variant` option through `sanityFetch` to `client.fetch` so previews refetch with the selected variant.
+
+### Patch Changes
+
+- [#3827](https://github.com/sanity-io/next-sanity/pull/3827) [`1926bf8`](https://github.com/sanity-io/next-sanity/commit/1926bf812793466206074168e57ffc345c66ce70) Thanks [@renovate](https://github.com/apps/renovate)! - fix(deps): update dependency @sanity/visual-editing to ^5.7.2
+
 ## 13.1.7
 
 ### Patch Changes
