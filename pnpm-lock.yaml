@@ -3140,6 +3140,12 @@ packages:
     peerDependencies:
       '@sanity/client': ^7.24.0
 
+  '@sanity/preview-url-secret@4.1.0':
+    resolution: {integrity: sha512-Zha42V94Q7vnSHOyCHtSihChX7asoVrDq7BCQ6xyAzoGZKdbP7FIOiSahfIN9Z1ZUEe5PJh6/HGx9+6e/y50NA==}
+    engines: {node: '>=20.19 <22 || >=22.12'}
+    peerDependencies:
+      '@sanity/client': ^7.23.2
+
   '@sanity/prism-groq@1.1.2':
     resolution: {integrity: sha512-McMw9U5kuYAgIwyNodhFKdarM0cPme6UYBR6ms6YBNEO8Qqu5zGHydUeORaJ/w4qdFKGB1oWjBjy525ed6LXaQ==}
     peerDependencies:
@@ -9856,6 +9862,11 @@ snapshots:
       - '@sanity/types'
 
   '@sanity/preview-url-secret@4.1.1(@sanity/client@7.24.0)':
+    dependencies:
+      '@sanity/client': 7.24.0
+      '@sanity/uuid': 3.0.3
+
+  '@sanity/preview-url-secret@4.1.0(@sanity/client@7.24.0)':
     dependencies:
       '@sanity/client': 7.24.0
       '@sanity/uuid': 3.0.3

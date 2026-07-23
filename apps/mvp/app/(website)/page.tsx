@@ -1,5 +1,5 @@
 import {unstable__adapter, unstable__environment} from 'next-sanity'
-import {defineLive, resolvePerspectiveFromCookies, type LivePerspective} from 'next-sanity/live'
+import {defineLive, type LivePerspective} from 'next-sanity/live'
 import {cookies, draftMode} from 'next/headers'
 import Link from 'next/link'
 import {Suspense} from 'react'
@@ -8,6 +8,7 @@ import PostsLayout, {postsQuery} from '@/app/(website)/PostsLayout'
 import {client} from '@/app/sanity.client'
 
 import {ContentSourceMapDebug} from './ContentSourceMapDebug'
+import {defaultPreviewCookies, resolvePreviewCookies} from './resolvePreviewCookies'
 import SanityLiveErrorBoundary from './SanityLiveErrorBoundary'
 
 const token = process.env.SANITY_API_READ_TOKEN!
@@ -21,22 +22,25 @@ const {sanityFetch, SanityLive} = defineLive({
 
 async function CachedIndexPage({
   perspective,
+  variant,
   stega,
 }: {
   perspective: LivePerspective
+  variant?: string
   stega: boolean
 }) {
   'use cache'
   const {data, sourceMap, tags} = await sanityFetch({
     query: postsQuery.query,
     perspective,
+    variant,
     stega,
   })
 
   return (
     <>
       <ContentSourceMapDebug sourceMap={sourceMap} />
-      <p>{JSON.stringify({perspective, tags: tags.toSorted()})}</p>
+      <p>{JSON.stringify({perspective, variant, tags: tags.toSorted()})}</p>
       <PostsLayout data={data} draftMode={false} />
     </>
   )
@@ -44,12 +48,11 @@ async function CachedIndexPage({
 
 async function DynamicIndexPage() {
   const {isEnabled: isDraftMode} = await draftMode()
-  const perspective = isDraftMode
-    ? await resolvePerspectiveFromCookies({cookies: await cookies()})
-    : 'published'
+  const jar = isDraftMode ? await cookies() : null
+  const {perspective, variant} = jar ? await resolvePreviewCookies(jar) : defaultPreviewCookies
   const stega = isDraftMode
 
-  return <CachedIndexPage perspective={perspective} stega={stega} />
+  return <CachedIndexPage perspective={perspective} variant={variant} stega={stega} />
 }
 
 export default async function IndexPage() {

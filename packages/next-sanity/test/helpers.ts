@@ -41,6 +41,10 @@ interface SanityFetchMocks {
     perspective: LivePerspective
     token: string | null
   }
+  '{"variant": $variant, "token": $token}': {
+    variant: string | null
+    token: string | null
+  }
   '{"stega": $stega}': {stega: boolean}
 }
 export const getSanityFetchMock = <Query extends keyof SanityFetchMocks>(

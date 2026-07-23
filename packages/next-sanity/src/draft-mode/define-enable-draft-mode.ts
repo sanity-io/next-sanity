@@ -1,6 +1,6 @@
 import type {SanityClient} from '@sanity/client'
 import {validatePreviewUrl} from '@sanity/preview-url-secret'
-import {perspectiveCookieName} from '@sanity/preview-url-secret/constants'
+import {perspectiveCookieName, variantCookieName} from '@sanity/preview-url-secret/constants'
 import {cookies, draftMode} from 'next/headers'
 import {redirect} from 'next/navigation'
 
@@ -62,6 +62,7 @@ export function defineEnableDraftMode(options: DefineEnableDraftModeOptions): En
         isValid,
         redirectTo = '/',
         studioPreviewPerspective,
+        studioPreviewVariant,
       } = await validatePreviewUrl(client, request.url)
       if (!isValid) {
         return new Response('Invalid secret', {status: 401})
@@ -108,6 +109,31 @@ export function defineEnableDraftMode(options: DefineEnableDraftModeOptions): En
         cookieStore.set({
           name: perspectiveCookieName,
           value: studioPreviewPerspective,
+          httpOnly: true,
+          path: '/',
+          secure: isSecure,
+          sameSite: isSecure ? 'none' : 'lax',
+          partitioned,
+        })
+      }
+
+      if (studioPreviewVariant) {
+        cookieStore.set({
+          name: variantCookieName,
+          value: studioPreviewVariant,
+          httpOnly: true,
+          path: '/',
+          secure: isSecure,
+          sameSite: isSecure ? 'none' : 'lax',
+          partitioned,
+        })
+      } else {
+        // Unlike perspective, the variant is optional on the enable URL. Entering
+        // preview without a variant must clear any stale variant cookie from a
+        // previous session, passing matching attributes so partitioned cookies
+        // are actually removed.
+        cookieStore.delete({
+          name: variantCookieName,
           httpOnly: true,
           path: '/',
           secure: isSecure,

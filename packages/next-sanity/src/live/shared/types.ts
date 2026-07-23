@@ -47,6 +47,23 @@ export type DefinedFetchType = <const QueryString extends string>(options: {
    */
   perspective?: LivePerspective
   /**
+   * Editing variant used for the fetch, as the bare variant id (e.g. `Ab12cd34`).
+   *
+   * @remarks
+   * Requires `serverToken` to be configured in `defineLive()`
+   *
+   * @defaultValue
+   * The default is `undefined` (no variant, base content) unless
+   *  - `Cache Components` are disabled
+   *  - `defineLive()` was given a `serverToken`
+   *  - `defineLive()` is not set to `strict: true`
+   *  - `perspective` is not explicitly provided (an explicit `perspective` opts out of cookie resolution so fetches with explicit options stay free of dynamic API calls)
+   *  - `draftMode()` is enabled
+   *
+   * If all of the above conditions are met, then the default value will be resolved from attempting to read the `'sanity-preview-variant'` cookie and fall back to `undefined` if not set
+   */
+  variant?: string
+  /**
    * Enables stega encoding of the data. This is typically only used in draft
    * mode with `perspective: 'drafts'` and `@sanity/visual-editing`.
    *
@@ -214,6 +231,14 @@ export type StrictDefinedFetchType = <const QueryString extends string>(options:
   query: QueryString
   params?: QueryParams | Promise<QueryParams>
   perspective: LivePerspective
+  /**
+   * Editing variant used for the fetch, as the bare variant id (e.g. `Ab12cd34`).
+   *
+   * Stays optional in strict mode: the absence of a variant is a valid state
+   * (base content). With `strict: true` there is no cookie auto-resolution;
+   * only the explicit option is used.
+   */
+  variant?: string
   stega: boolean
   tags?: string[]
   requestTag?: string

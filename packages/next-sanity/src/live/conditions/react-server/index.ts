@@ -19,3 +19,4 @@ export type {
 export {isCorsOriginError} from '#live/isCorsOriginError'
 export {parseTags} from '#live/parseTags'
 export {resolvePerspectiveFromCookies} from '#live/resolvePerspectiveFromCookies'
+export {resolveVariantFromCookies} from '#live/resolveVariantFromCookies'
