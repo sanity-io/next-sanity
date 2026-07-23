@@ -1,9 +1,9 @@
-import {createClient, VARIANTS_STUDIO_CLIENT_OPTIONS} from 'next-sanity'
+import {createClient, variantsApiVersion} from 'next-sanity'
 
 export const client = createClient({
   projectId: process.env.NEXT_PUBLIC_SANITY_PROJECT_ID!,
   dataset: process.env.NEXT_PUBLIC_SANITY_DATASET!,
-  apiVersion: VARIANTS_STUDIO_CLIENT_OPTIONS.apiVersion,
+  apiVersion: variantsApiVersion,
   useCdn: false,
   perspective: 'published',
   resultSourceMap: 'withKeyArraySelector',
