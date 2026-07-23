@@ -1,5 +1,11 @@
 # next-sanity
 
+## 13.2.1
+
+### Patch Changes
+
+- [#3835](https://github.com/sanity-io/next-sanity/pull/3835) [`e32d6c7`](https://github.com/sanity-io/next-sanity/commit/e32d6c72efdcc6c8ae5c5336b136eab71306c141) Thanks [@renovate](https://github.com/apps/renovate)! - fix(deps): update dependency @portabletext/react to v7
+
 ## 13.2.0
 
 ### Minor Changes
