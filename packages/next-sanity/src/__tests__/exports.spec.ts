@@ -26,6 +26,7 @@ test(`exports snapshot for the ${JSON.stringify(env)} condition`, {timeout: 15_0
         isCorsOriginError: function
         mergeComponents: function
         PortableText: function
+        stegaBrand: function
         stegaClean: function
         toPlainText: function
         unstable__adapter: string

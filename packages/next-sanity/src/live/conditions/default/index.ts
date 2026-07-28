@@ -18,6 +18,11 @@ import type {
  * `<SanityLive />`. Resolve dynamic values from `draftMode()` and `cookies()`
  * outside `'use cache'` boundaries, then pass them into cached components.
  *
+ * `sanityFetch` brands `data` with stega string types when `stega` is `true`,
+ * a non-literal `boolean`, or omitted (react-server may auto-enable stega).
+ * Pass the literal `stega: false` for clean TypeGen types. Use `stegaClean`
+ * before comparing branded strings to literals.
+ *
  * @see [Live Content API](https://www.sanity.io/docs/content-lake/live-content-api)
  * @see [Sanity Live](https://www.sanity.io/live)
  *
@@ -51,6 +56,7 @@ import type {
  * export interface DynamicFetchOptions {
  *   perspective: LivePerspective
  *   variant?: string
+ *   // `boolean` brands `sanityFetch` `data`; use literal `false` for clean types
  *   stega: boolean
  * }
  *
