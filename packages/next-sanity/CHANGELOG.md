@@ -1,5 +1,11 @@
 # next-sanity
 
+## 13.2.3
+
+### Patch Changes
+
+- [#3857](https://github.com/sanity-io/next-sanity/pull/3857) [`b0e0720`](https://github.com/sanity-io/next-sanity/commit/b0e0720abf35b1ce04fbe76b5b159a4b7b31e249) Thanks [@renovate](https://github.com/apps/renovate)! - fix(deps): update sanity monorepo to v6.7.0
+
 ## 13.2.2
 
 ### Patch Changes
