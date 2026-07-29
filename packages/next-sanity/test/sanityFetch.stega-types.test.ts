@@ -30,7 +30,7 @@ describe('DefinedFetchType stega branding', () => {
     }
     type Data = Awaited<ReturnType<typeof sample>>['data']
     expectTypeOf<Data>().toEqualTypeOf<BrandedData>()
-    expectTypeOf<Data['title']>().toEqualTypeOf<StegaString<string>>()
+    expectTypeOf<Data['title']>().toEqualTypeOf<StegaString>()
     expectTypeOf<Data['_type']>().toEqualTypeOf<'post'>()
     expectTypeOf<Data['imageLocation']>().not.toEqualTypeOf<'left' | 'right'>()
   })
@@ -52,7 +52,7 @@ describe('DefinedFetchType stega branding', () => {
     }
     type Data = Awaited<ReturnType<typeof sample>>['data']
     expectTypeOf<Data>().toEqualTypeOf<BrandedData>()
-    expectTypeOf<Data['title']>().toEqualTypeOf<StegaString<string>>()
+    expectTypeOf<Data['title']>().toEqualTypeOf<StegaString>()
     expectTypeOf<Data['imageLocation']>().not.toEqualTypeOf<'left' | 'right'>()
   })
 
@@ -62,7 +62,7 @@ describe('DefinedFetchType stega branding', () => {
     }
     type Data = Awaited<ReturnType<typeof sample>>['data']
     expectTypeOf<Data>().toEqualTypeOf<BrandedData>()
-    expectTypeOf<Data['title']>().toEqualTypeOf<StegaString<string>>()
+    expectTypeOf<Data['title']>().toEqualTypeOf<StegaString>()
   })
 })
 
@@ -92,7 +92,7 @@ describe('StrictDefinedFetchType stega branding', () => {
     }
     type Data = Awaited<ReturnType<typeof sample>>['data']
     expectTypeOf<Data>().toEqualTypeOf<BrandedData>()
-    expectTypeOf<Data['title']>().toEqualTypeOf<StegaString<string>>()
+    expectTypeOf<Data['title']>().toEqualTypeOf<StegaString>()
   })
 
   test('requires stega', () => {
