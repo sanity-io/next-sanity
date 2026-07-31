@@ -31,7 +31,11 @@ type DefinedFetchResult<Data> = Promise<{
   tags: string[]
 }>
 
-type DefinedFetchSharedOptions<QueryString extends string> = {
+/**
+ * Options accepted by `sanityFetch()` returned by `defineLive({strict: false})`
+ * and `defineLive({strict: undefined})`.
+ */
+interface DefinedFetchOptions<QueryString extends string> {
   /**
    * GROQ query to execute.
    */
@@ -40,6 +44,22 @@ type DefinedFetchSharedOptions<QueryString extends string> = {
    * Parameters used by the GROQ query.
    */
   params?: QueryParams | Promise<QueryParams>
+  /**
+   * Content perspective used for the fetch.
+   *
+   * @remarks
+   * Requires `serverToken` to be configured in `defineLive()`
+   *
+   * @defaultValue
+   * The default is `'published'` unless
+   *  - `Cache Components` are disabled
+   *  - `defineLive()` was given a `serverToken`
+   *  - `defineLive()` is not set to `strict: true`
+   *  - `draftMode()` is enabled
+   *
+   * If all of the above conditions are met, then the default value will be resolved from attempting to read the `'sanity-preview-perspective'` cookie and fall back to `'drafts'` if not set
+   */
+  perspective?: LivePerspective
   /**
    * Editing variant used for the fetch, as the bare variant id (e.g. `Ab12cd34`).
    *
@@ -57,6 +77,30 @@ type DefinedFetchSharedOptions<QueryString extends string> = {
    * If all of the above conditions are met, then the default value will be resolved from attempting to read the `'sanity-preview-variant'` cookie and fall back to `undefined` if not set
    */
   variant?: string
+  /**
+   * Enables stega encoding of the data. This is typically only used in draft
+   * mode with `perspective: 'drafts'` and `@sanity/visual-editing`.
+   *
+   * Unless this option is the literal `false`, the returned `data` is
+   * stega-branded (`StegaBranded<ClientReturn<...>>`): strings that may carry
+   * stega payloads are typed as `StegaString` and must be cleaned with
+   * `stegaClean` before they can be compared against string literals. Pass the
+   * literal `stega: false` to keep clean TypeGen / {@link ClientReturn} types.
+   *
+   * @remarks
+   * Requires `serverToken` to be configured in `defineLive()`
+   *
+   * @defaultValue
+   * The default is `false` unless
+   *  - `Cache Components` are disabled
+   *  - `defineLive()` was given a `serverToken`
+   *  - `defineLive()` is not set to `strict: true`
+   *  - `defineLive()` was given a `client` that defines `stega.studioUrl`
+   *  - `draftMode()` is enabled
+   *
+   * If all of the above conditions are met, then the default value will be `true`
+   */
+  stega?: boolean
   /**
    * Additional cache tags to associate with this fetch.
    *
@@ -84,48 +128,38 @@ type DefinedFetchSharedOptions<QueryString extends string> = {
 }
 
 /**
- * Content perspective used for the fetch.
- *
- * @remarks
- * Requires `serverToken` to be configured in `defineLive()`
- *
- * @defaultValue
- * The default is `'published'` unless
- *  - `Cache Components` are disabled
- *  - `defineLive()` was given a `serverToken`
- *  - `defineLive()` is not set to `strict: true`
- *  - `draftMode()` is enabled
- *
- * If all of the above conditions are met, then the default value will be resolved from attempting to read the `'sanity-preview-perspective'` cookie and fall back to `'drafts'` if not set
+ * Like {@link DefinedFetchOptions} but with `stega` fixed to `true`, selecting
+ * the overload that brands the returned `data` with stega string types.
+ * All other options inherit their documentation from {@link DefinedFetchOptions}.
  */
-type DefinedFetchPerspectiveOption = {
-  perspective?: LivePerspective
+interface DefinedFetchStegaEnabledOptions<QueryString extends string>
+  extends DefinedFetchOptions<QueryString> {
+  /**
+   * Enables stega encoding of the data. This is typically only used in draft
+   * mode with `perspective: 'drafts'` and `@sanity/visual-editing`.
+   *
+   * With the literal `true`, the returned `data` is stega-branded
+   * (`StegaBranded<ClientReturn<...>>`): use `stegaClean` before comparing
+   * strings against literals.
+   *
+   * @remarks
+   * Requires `serverToken` to be configured in `defineLive()`
+   */
+  stega: true
 }
 
 /**
- * Enables stega encoding of the data. This is typically only used in draft
- * mode with `perspective: 'drafts'` and `@sanity/visual-editing`.
- *
- * Return `data` is stega-branded (`StegaBranded<ClientReturn<...>>`) when
- * `stega` is `true`, a non-literal `boolean`, or omitted (react-server may
- * auto-enable stega in draft mode). Pass the literal `stega: false` for clean
- * {@link ClientReturn} types.
- *
- * @remarks
- * Requires `serverToken` to be configured in `defineLive()`
- *
- * @defaultValue
- * The default is `false` unless
- *  - `Cache Components` are disabled
- *  - `defineLive()` was given a `serverToken`
- *  - `defineLive()` is not set to `strict: true`
- *  - `defineLive()` was given a `client` that defines `stega.studioUrl`
- *  - `draftMode()` is enabled
- *
- * If all of the above conditions are met, then the default value will be `true`
+ * Like {@link DefinedFetchOptions} but with `stega` fixed to `false`, selecting
+ * the overload that keeps the returned `data` free of stega branding.
+ * All other options inherit their documentation from {@link DefinedFetchOptions}.
  */
-type DefinedFetchStegaDoc = {
-  stega?: boolean
+interface DefinedFetchStegaDisabledOptions<QueryString extends string>
+  extends DefinedFetchOptions<QueryString> {
+  /**
+   * Disables stega encoding for this fetch. The returned `data` keeps clean
+   * TypeGen / {@link ClientReturn} types, no `stegaClean` needed.
+   */
+  stega: false
 }
 
 /**
@@ -141,46 +175,13 @@ type DefinedFetchStegaDoc = {
  */
 export type DefinedFetchType = {
   <const QueryString extends string>(
-    options: DefinedFetchSharedOptions<QueryString> &
-      DefinedFetchPerspectiveOption & {
-        /**
-         * Enables stega encoding of the data. This is typically only used in draft
-         * mode with `perspective: 'drafts'` and `@sanity/visual-editing`.
-         *
-         * When `true`, `data` is stega-branded (`StegaBranded<ClientReturn<...>>`).
-         *
-         * @remarks
-         * Requires `serverToken` to be configured in `defineLive()`
-         */
-        stega: true
-      },
+    options: DefinedFetchStegaEnabledOptions<QueryString>,
   ): DefinedFetchResult<FetchClientReturnStega<QueryString>>
   <const QueryString extends string>(
-    options: DefinedFetchSharedOptions<QueryString> &
-      DefinedFetchPerspectiveOption & {
-        /**
-         * Disables stega encoding. `data` keeps clean {@link ClientReturn} types.
-         *
-         * @remarks
-         * Requires `serverToken` to be configured in `defineLive()`
-         *
-         * @defaultValue
-         * The default is `false` unless
-         *  - `Cache Components` are disabled
-         *  - `defineLive()` was given a `serverToken`
-         *  - `defineLive()` is not set to `strict: true`
-         *  - `defineLive()` was given a `client` that defines `stega.studioUrl`
-         *  - `draftMode()` is enabled
-         *
-         * If all of the above conditions are met, then the default value will be `true`
-         */
-        stega: false
-      },
+    options: DefinedFetchStegaDisabledOptions<QueryString>,
   ): DefinedFetchResult<ClientReturn<QueryString, unknown>>
   <const QueryString extends string>(
-    options: DefinedFetchSharedOptions<QueryString> &
-      DefinedFetchPerspectiveOption &
-      DefinedFetchStegaDoc,
+    options: DefinedFetchOptions<QueryString>,
   ): DefinedFetchResult<FetchClientReturnStega<QueryString>>
 }
 
@@ -297,6 +298,81 @@ export interface StrictDefinedLiveProps extends Omit<DefinedLiveProps, 'includeD
 }
 
 /**
+ * Options accepted by `sanityFetch()` returned by `defineLive({strict: true})`.
+ * Like {@link DefinedFetchOptions} but with `perspective` and `stega` required,
+ * and no cookie or `draftMode()` auto-resolution of defaults.
+ */
+interface StrictDefinedFetchOptions<QueryString extends string>
+  extends DefinedFetchOptions<QueryString> {
+  /**
+   * Content perspective used for the fetch.
+   *
+   * Required when `strict: true` is set on `defineLive()`: there is no cookie
+   * auto-resolution; only the explicit option is used.
+   *
+   * @remarks
+   * Non-`'published'` perspectives require `serverToken` to be configured in `defineLive()`
+   */
+  perspective: LivePerspective
+  /**
+   * Editing variant used for the fetch, as the bare variant id (e.g. `Ab12cd34`).
+   *
+   * Stays optional in strict mode: the absence of a variant is a valid state
+   * (base content). With `strict: true` there is no cookie auto-resolution;
+   * only the explicit option is used.
+   */
+  variant?: string
+  /**
+   * Enables stega encoding of the data. This is typically only used in draft
+   * mode with `perspective: 'drafts'` and `@sanity/visual-editing`.
+   *
+   * Required when `strict: true` is set on `defineLive()`. Unless this option
+   * is the literal `false`, the returned `data` is stega-branded
+   * (`StegaBranded<ClientReturn<...>>`) — conservative: treat strings as
+   * possibly stega-encoded until cleaned with `stegaClean`.
+   *
+   * @remarks
+   * Requires `serverToken` to be configured in `defineLive()`
+   */
+  stega: boolean
+}
+
+/**
+ * Like {@link StrictDefinedFetchOptions} but with `stega` fixed to `true`,
+ * selecting the overload that brands the returned `data` with stega string types.
+ * All other options inherit their documentation from {@link StrictDefinedFetchOptions}.
+ */
+interface StrictDefinedFetchStegaEnabledOptions<QueryString extends string>
+  extends StrictDefinedFetchOptions<QueryString> {
+  /**
+   * Enables stega encoding of the data. This is typically only used in draft
+   * mode with `perspective: 'drafts'` and `@sanity/visual-editing`.
+   *
+   * With the literal `true`, the returned `data` is stega-branded
+   * (`StegaBranded<ClientReturn<...>>`): use `stegaClean` before comparing
+   * strings against literals.
+   *
+   * @remarks
+   * Requires `serverToken` to be configured in `defineLive()`
+   */
+  stega: true
+}
+
+/**
+ * Like {@link StrictDefinedFetchOptions} but with `stega` fixed to `false`,
+ * selecting the overload that keeps the returned `data` free of stega branding.
+ * All other options inherit their documentation from {@link StrictDefinedFetchOptions}.
+ */
+interface StrictDefinedFetchStegaDisabledOptions<QueryString extends string>
+  extends StrictDefinedFetchOptions<QueryString> {
+  /**
+   * Disables stega encoding for this fetch. The returned `data` keeps clean
+   * TypeGen / {@link ClientReturn} types, no `stegaClean` needed.
+   */
+  stega: false
+}
+
+/**
  * Like {@link DefinedFetchType} but with `perspective` and `stega` required.
  * Returned by `defineLive({strict: true})`.
  *
@@ -306,78 +382,13 @@ export interface StrictDefinedLiveProps extends Omit<DefinedLiveProps, 'includeD
  */
 export type StrictDefinedFetchType = {
   <const QueryString extends string>(
-    options: Omit<DefinedFetchSharedOptions<QueryString>, 'variant'> & {
-      /**
-       * Content perspective used for the fetch.
-       *
-       * Required when `strict: true` is set on `defineLive()`.
-       */
-      perspective: LivePerspective
-      /**
-       * Enables stega encoding of the data. This is typically only used in draft
-       * mode with `perspective: 'drafts'` and `@sanity/visual-editing`.
-       *
-       * When `true`, `data` is stega-branded (`StegaBranded<ClientReturn<...>>`).
-       */
-      stega: true
-      /**
-       * Editing variant used for the fetch, as the bare variant id (e.g. `Ab12cd34`).
-       *
-       * Stays optional in strict mode: the absence of a variant is a valid state
-       * (base content). With `strict: true` there is no cookie auto-resolution;
-       * only the explicit option is used.
-       */
-      variant?: string
-    },
+    options: StrictDefinedFetchStegaEnabledOptions<QueryString>,
   ): DefinedFetchResult<FetchClientReturnStega<QueryString>>
   <const QueryString extends string>(
-    options: Omit<DefinedFetchSharedOptions<QueryString>, 'variant'> & {
-      /**
-       * Content perspective used for the fetch.
-       *
-       * Required when `strict: true` is set on `defineLive()`.
-       */
-      perspective: LivePerspective
-      /**
-       * Disables stega encoding. `data` keeps clean {@link ClientReturn} types.
-       */
-      stega: false
-      /**
-       * Editing variant used for the fetch, as the bare variant id (e.g. `Ab12cd34`).
-       *
-       * Stays optional in strict mode: the absence of a variant is a valid state
-       * (base content). With `strict: true` there is no cookie auto-resolution;
-       * only the explicit option is used.
-       */
-      variant?: string
-    },
+    options: StrictDefinedFetchStegaDisabledOptions<QueryString>,
   ): DefinedFetchResult<ClientReturn<QueryString, unknown>>
   <const QueryString extends string>(
-    options: Omit<DefinedFetchSharedOptions<QueryString>, 'variant'> & {
-      /**
-       * Content perspective used for the fetch.
-       *
-       * Required when `strict: true` is set on `defineLive()`.
-       */
-      perspective: LivePerspective
-      /**
-       * Enables stega encoding of the data. This is typically only used in draft
-       * mode with `perspective: 'drafts'` and `@sanity/visual-editing`.
-       *
-       * When a non-literal `boolean`, `data` is stega-branded
-       * (`StegaBranded<ClientReturn<...>>`) — conservative: treat strings as
-       * possibly stega-encoded.
-       */
-      stega: boolean
-      /**
-       * Editing variant used for the fetch, as the bare variant id (e.g. `Ab12cd34`).
-       *
-       * Stays optional in strict mode: the absence of a variant is a valid state
-       * (base content). With `strict: true` there is no cookie auto-resolution;
-       * only the explicit option is used.
-       */
-      variant?: string
-    },
+    options: StrictDefinedFetchOptions<QueryString>,
   ): DefinedFetchResult<FetchClientReturnStega<QueryString>>
 }
 
