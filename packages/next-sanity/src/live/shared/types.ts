@@ -132,8 +132,9 @@ interface DefinedFetchOptions<QueryString extends string> {
  * the overload that brands the returned `data` with stega string types.
  * All other options inherit their documentation from {@link DefinedFetchOptions}.
  */
-interface DefinedFetchStegaEnabledOptions<QueryString extends string>
-  extends DefinedFetchOptions<QueryString> {
+interface DefinedFetchStegaEnabledOptions<
+  QueryString extends string,
+> extends DefinedFetchOptions<QueryString> {
   /**
    * Enables stega encoding of the data. This is typically only used in draft
    * mode with `perspective: 'drafts'` and `@sanity/visual-editing`.
@@ -153,8 +154,9 @@ interface DefinedFetchStegaEnabledOptions<QueryString extends string>
  * the overload that keeps the returned `data` free of stega branding.
  * All other options inherit their documentation from {@link DefinedFetchOptions}.
  */
-interface DefinedFetchStegaDisabledOptions<QueryString extends string>
-  extends DefinedFetchOptions<QueryString> {
+interface DefinedFetchStegaDisabledOptions<
+  QueryString extends string,
+> extends DefinedFetchOptions<QueryString> {
   /**
    * Disables stega encoding for this fetch. The returned `data` keeps clean
    * TypeGen / {@link ClientReturn} types, no `stegaClean` needed.
@@ -302,8 +304,9 @@ export interface StrictDefinedLiveProps extends Omit<DefinedLiveProps, 'includeD
  * Like {@link DefinedFetchOptions} but with `perspective` and `stega` required,
  * and no cookie or `draftMode()` auto-resolution of defaults.
  */
-interface StrictDefinedFetchOptions<QueryString extends string>
-  extends DefinedFetchOptions<QueryString> {
+interface StrictDefinedFetchOptions<
+  QueryString extends string,
+> extends DefinedFetchOptions<QueryString> {
   /**
    * Content perspective used for the fetch.
    *
@@ -342,8 +345,9 @@ interface StrictDefinedFetchOptions<QueryString extends string>
  * selecting the overload that brands the returned `data` with stega string types.
  * All other options inherit their documentation from {@link StrictDefinedFetchOptions}.
  */
-interface StrictDefinedFetchStegaEnabledOptions<QueryString extends string>
-  extends StrictDefinedFetchOptions<QueryString> {
+interface StrictDefinedFetchStegaEnabledOptions<
+  QueryString extends string,
+> extends StrictDefinedFetchOptions<QueryString> {
   /**
    * Enables stega encoding of the data. This is typically only used in draft
    * mode with `perspective: 'drafts'` and `@sanity/visual-editing`.
@@ -363,8 +367,9 @@ interface StrictDefinedFetchStegaEnabledOptions<QueryString extends string>
  * selecting the overload that keeps the returned `data` free of stega branding.
  * All other options inherit their documentation from {@link StrictDefinedFetchOptions}.
  */
-interface StrictDefinedFetchStegaDisabledOptions<QueryString extends string>
-  extends StrictDefinedFetchOptions<QueryString> {
+interface StrictDefinedFetchStegaDisabledOptions<
+  QueryString extends string,
+> extends StrictDefinedFetchOptions<QueryString> {
   /**
    * Disables stega encoding for this fetch. The returned `data` keeps clean
    * TypeGen / {@link ClientReturn} types, no `stegaClean` needed.
