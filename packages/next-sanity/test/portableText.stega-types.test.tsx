@@ -181,6 +181,11 @@ describe('stega-aware InferValue', () => {
     expectTypeOf<CleanBody[number]>().toExtend<PortableTextValue[number]>()
     expectTypeOf<BrandedBody[number]>().toExtend<PortableTextValue[number]>()
 
+    // `InferValue` normalizes in both directions: fed an already-branded
+    // result type it still accepts clean data, and vice versa
+    expectTypeOf<CleanBody>().toExtend<InferValue<StegaBranded<PageQueryResult>>>()
+    expectTypeOf<BrandedBody>().toExtend<InferValue<StegaBranded<PageQueryResult>>>()
+
     // but not arbitrary values
     expectTypeOf<string[]>().not.toExtend<PortableTextValue>()
     expectTypeOf<Array<{_type: 'callout'}>>().not.toExtend<PortableTextValue>()
