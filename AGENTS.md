@@ -48,3 +48,29 @@ The three condition files must expose the same public surface, but their runtime
 - `next-js` is the implementation used by Next.js when `cacheComponents: true` is enabled.
 
 When adding, removing, or changing an export from `next-sanity/live`, update all three condition entry points together, verify their exported names match exactly, and preserve the condition-specific runtime behavior.
+
+## Cursor Cloud specific instructions
+
+This is a pnpm + Turborepo monorepo. The publishable library is `packages/next-sanity`; `apps/mvp` (port 3000) and `apps/static` (port 3001) are Next.js demo apps, and `fixtures/*/*` are CI build guardrails. Standard commands live in the root `package.json` scripts (`build`, `dev`, `lint`, `test`, `test:e2e`) and per-app `package.json`; use those rather than duplicating them here.
+
+### Node version gotcha (important)
+
+`pnpm build` compiles `packages/next-sanity` with `tsdown`, which loads its `.ts` config using Node's native TypeScript stripping (`process.features.typescript`). That requires Node >= 22.18 (or 24). The VM's default `node` (`/exec-daemon/node`, currently v22.14) lacks it, so tsdown falls back to the `unrun` config loader, which is not installed, and the build fails with `Failed to import module "unrun"`.
+
+Use the pre-installed nvm Node (v22.22.2) for any build/dev/test work by prepending it to `PATH`:
+
+```bash
+export PATH="$HOME/.nvm/versions/node/v22.22.2/bin:$PATH"
+```
+
+`nvm use` alone is not enough because `/exec-daemon` sits ahead of nvm's shims in `PATH`. This nvm node also bundles the correct `pnpm` (10.34.5), so prepending it fixes both `node` and `pnpm` in one step. `pnpm install` itself works on the default node; only building/running needs the newer node. `pnpm test:e2e` (Vitest browser project) needs Chromium: `pnpm playwright install chromium`.
+
+### Demo app env
+
+`apps/mvp` and `apps/static` need a gitignored `.env.local` with `NEXT_PUBLIC_SANITY_PROJECT_ID` and `NEXT_PUBLIC_SANITY_DATASET` (see each app's `.env.local.example`). The example project `pv8y60vp/production` is publicly readable, so published content renders without a token. `SANITY_API_READ_TOKEN` is only required for draft mode, Presentation/visual-editing preview, and authenticated live queries — not for basic rendering.
+
+### Dev/runtime notes
+
+- Run a single app instead of `pnpm dev` (which starts the library watcher plus both apps): `pnpm --filter mvp dev` or `pnpm --filter static dev`.
+- `apps/mvp` runs Next.js 16 with Cache Components (`cacheComponents: true`) and the React Compiler. `next dev` auto-generates `apps/mvp/AGENTS.md` and `apps/mvp/CLAUDE.md` — these are generated artifacts, do not commit them.
+- In dev, CMS content edits are reflected on the next page reload.
