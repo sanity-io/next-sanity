@@ -1,5 +1,25 @@
 # next-sanity
 
+## 13.3.0
+
+### Minor Changes
+
+- [#3860](https://github.com/sanity-io/next-sanity/pull/3860) [`f213e29`](https://github.com/sanity-io/next-sanity/commit/f213e29041bd2007a1b802f0ed12885702fe13dc) Thanks [@stipsan](https://github.com/stipsan)! - feat: brand `sanityFetch` data with stega string types
+
+  `defineLive().sanityFetch` now types `data` with the stega branded string types introduced in `@sanity/client@7.25.0`:
+
+  - `stega: true` → `data` is `StegaBranded<ClientReturn<...>>`, so comparing possibly stega-encoded strings to literals is a compile error until cleaned with `stegaClean`
+  - `stega: false` → `data` keeps clean TypeGen / `ClientReturn` types
+  - `stega` as a non-literal `boolean`, or omitted → `data` is conservatively branded
+
+  `stegaBrand` and the `ClientReturnStega`, `StegaBranded`, `StegaString`, and `StegaCleaned` types are now re-exported from the main `next-sanity` entry, alongside the existing `stegaClean` export.
+
+### Patch Changes
+
+- [#3863](https://github.com/sanity-io/next-sanity/pull/3863) [`4de237c`](https://github.com/sanity-io/next-sanity/commit/4de237c41f63620207a7b9b092af15e223986db3) Thanks [@renovate](https://github.com/apps/renovate)! - fix(deps): update dependency @sanity/client to ^7.26.0
+
+- [#3864](https://github.com/sanity-io/next-sanity/pull/3864) [`80990d2`](https://github.com/sanity-io/next-sanity/commit/80990d2e8d5267cf736cc7a6b5a78627567f5f34) Thanks [@renovate](https://github.com/apps/renovate)! - fix(deps): update sanity monorepo to v6.8.0
+
 ## 13.2.3
 
 ### Patch Changes
