@@ -185,6 +185,16 @@ describe('stega-aware InferValue', () => {
     // result type it still accepts clean data, and vice versa
     expectTypeOf<CleanBody>().toExtend<InferValue<StegaBranded<PageQueryResult>>>()
     expectTypeOf<BrandedBody>().toExtend<InferValue<StegaBranded<PageQueryResult>>>()
+  })
+
+  test('branded data assigns to clean-typed props when strings are wide', () => {
+    // Mirrors handing a handler value to a component with TypeGen-typed props,
+    // like `<TimelineSection timelines={value.items} />` in
+    // `template-nextjs-personal-website`. Requires `@sanity/client@7.26.1`,
+    // which keeps symbol-keyed properties (TypeGen's
+    // `internalGroqTypeReferenceTo` reference marker) unbranded.
+    expectTypeOf<StegaBranded<TimelineItem>>().toExtend<TimelineItem>()
+    expectTypeOf<StegaBranded<TimelineItem[]>>().toExtend<TimelineItem[]>()
 
     // but not arbitrary values
     expectTypeOf<string[]>().not.toExtend<PortableTextValue>()
