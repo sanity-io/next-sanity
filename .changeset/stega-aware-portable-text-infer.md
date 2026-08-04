@@ -9,7 +9,12 @@ The `InferValue`, `InferComponents` and `InferStrictComponents` types re-exporte
 Re-usable components typed with `InferValue` no longer fail to type-check when given stega-branded data:
 
 ```tsx
-import {PortableText, type InferStrictComponents, type InferValue, type SanityQueries} from 'next-sanity'
+import {
+  PortableText,
+  type InferStrictComponents,
+  type InferValue,
+  type SanityQueries,
+} from "next-sanity"
 
 export function CustomPortableText(props: {value: InferValue<SanityQueries[keyof SanityQueries]>}) {
   const components = {

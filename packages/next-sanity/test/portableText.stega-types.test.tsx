@@ -1,8 +1,3 @@
-import type {ComponentProps} from 'react'
-import {describe, expectTypeOf, test} from 'vitest'
-
-import type {DefinedFetchType} from '#live/types'
-
 import type {
   InferComponents,
   InferStrictComponents,
@@ -13,6 +8,10 @@ import type {
   StegaString,
 } from 'next-sanity'
 import {PortableText, stegaClean} from 'next-sanity'
+import type {ComponentProps} from 'react'
+import {describe, expectTypeOf, test} from 'vitest'
+
+import type {DefinedFetchType} from '#live/types'
 
 /**
  * Mirrors the phantom marker `sanity typegen` puts on dereferenced references.
@@ -127,7 +126,13 @@ const components = {
       return <figure data-caption={value.caption}>{value.alt}</figure>
     },
     timeline: ({value}) => {
-      return <div>{value.items?.map((item) => <div key={item._key}>{item.title}</div>)}</div>
+      return (
+        <div>
+          {value.items?.map((item) => (
+            <div key={item._key}>{item.title}</div>
+          ))}
+        </div>
+      )
     },
     callout: ({value}) => {
       // literal unions that may be stega encoded must be cleaned before comparing
