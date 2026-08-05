@@ -13,17 +13,13 @@ When Sanity content is fetched inside a `layout.tsx`, the goal is to keep `child
 
 - The top-level `layout.tsx` component must not `await` dynamic APIs (other than `draftMode()`) or fetch data. `draftMode()` is the lone exception because Next.js bypasses caching when it's enabled and a `draftMode()`-only top-level component still prerenders into the static shell. Anything else (`cookies()`, `headers()`, `await params`, `await searchParams`, data fetching) reduces the static shell or slows draft-mode streaming.
 - Push [dynamic API calls](https://nextjs.org/docs/app/guides/streaming#push-dynamic-access-down) down to the leaf that needs them.
-- Two components fetching the same query don't need a shared helper to avoid duplicate requests: `cachedSanityFetch` keys its cache on the fetch options, so identical calls resolve from one cache entry.
+- Two components fetching the same query don't need a shared helper to avoid duplicate requests: `cachedFetch` keys its cache on the fetch options, so identical calls resolve from one cache entry.
 
 ## Pattern: cached components per draft/published branch
 
 ```tsx
 // src/app/(website)/layout.tsx
-import {
-  cachedSanityFetch,
-  getDynamicFetchOptions,
-  type DynamicFetchOptions,
-} from '@/sanity/lib/live'
+import {cachedFetch, getDynamicFetchOptions, type DynamicFetchOptions} from '@/sanity/lib/live'
 import {defineQuery} from 'next-sanity'
 import {draftMode} from 'next/headers'
 import {Suspense} from 'react'
@@ -59,7 +55,7 @@ async function DynamicNavbar() {
 }
 async function CachedNavbar({perspective, stega}: DynamicFetchOptions) {
   // Same options as CachedFooter → same cache entry, fetched once
-  const {data} = await cachedSanityFetch({query: settingsQuery, perspective, stega})
+  const {data} = await cachedFetch({query: settingsQuery, perspective, stega})
   return <Navbar data={data} />
 }
 
@@ -68,7 +64,7 @@ async function DynamicFooter() {
   return <CachedFooter perspective={perspective} stega={stega} />
 }
 async function CachedFooter({perspective, stega}: DynamicFetchOptions) {
-  const {data} = await cachedSanityFetch({query: settingsQuery, perspective, stega})
+  const {data} = await cachedFetch({query: settingsQuery, perspective, stega})
   return <Footer data={data} />
 }
 ```
@@ -100,7 +96,7 @@ async function CachedWebsiteLayout({
   stega,
 }: {children: ReactNode} & DynamicFetchOptions) {
   const settingsQuery = defineQuery(`*[_type == "settings"][0]`)
-  const {data} = await cachedSanityFetch({query: settingsQuery, perspective, stega})
+  const {data} = await cachedFetch({query: settingsQuery, perspective, stega})
 
   return (
     <>
@@ -118,11 +114,7 @@ Useful as a sanity check when adapting the pattern to a layout with only one dat
 
 ```tsx
 // src/app/(website)/layout.tsx
-import {
-  cachedSanityFetch,
-  getDynamicFetchOptions,
-  type DynamicFetchOptions,
-} from '@/sanity/lib/live'
+import {cachedFetch, getDynamicFetchOptions, type DynamicFetchOptions} from '@/sanity/lib/live'
 import {defineQuery} from 'next-sanity'
 import {draftMode} from 'next/headers'
 import {Suspense} from 'react'
@@ -148,7 +140,7 @@ async function DynamicFooter() {
 }
 async function Footer({perspective, stega}: DynamicFetchOptions) {
   const footerQuery = defineQuery(`*[_type == "footer"][0]`)
-  const {data} = await cachedSanityFetch({query: footerQuery, perspective, stega})
+  const {data} = await cachedFetch({query: footerQuery, perspective, stega})
   return <footer>{/* use `data` to render stuff */}</footer>
 }
 function FooterFallback() {

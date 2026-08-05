@@ -69,12 +69,12 @@ export default async function Page({params}: PageProps<'/[slug]'>) {
 
 Notes:
 
-- `Page` does **not** have a `'use cache'` directive. `draftMode()` is allowed inside `'use cache'`, but `Page` also `awaits` `params` (and may call `getDynamicFetchOptions()`, which reads `cookies()`), and those dynamic APIs are not allowed inside `'use cache'`. `<CachedPage>` (Layer 3) fetching through `cachedSanityFetch` is enough for `Page` to be prerendered as part of the static shell.
+- `Page` does **not** have a `'use cache'` directive. `draftMode()` is allowed inside `'use cache'`, but `Page` also `awaits` `params` (and may call `getDynamicFetchOptions()`, which reads `cookies()`), and those dynamic APIs are not allowed inside `'use cache'`. `<CachedPage>` (Layer 3) fetching through `cachedFetch` is enough for `Page` to be prerendered as part of the static shell.
 - Requires `generateStaticParams` if `params` is used as input to the fetch.
 - Not in draft mode → no `<Suspense>` boundary, maximizes the static shell.
 - In draft mode → `<DynamicPage />` inside `<Suspense>` will suspend twice:
   1. when `<DynamicPage>` awaits `getDynamicFetchOptions()`
-  2. when `<CachedPage />` awaits `cachedSanityFetch` with the resolved `perspective`/`stega`
+  2. when `<CachedPage />` awaits `cachedFetch` with the resolved `perspective`/`stega`
 
   A good fallback skeleton that doesn't cause layout shift is highly recommended.
 
@@ -97,11 +97,11 @@ async function DynamicPage({params}: Pick<PageProps<'/[slug]'>, 'params'>) {
 
 ## Layer 3: Cached component
 
-Receives only plain, serializable props and fetches through `cachedSanityFetch` — the shared `'use cache'` boundary in `live.ts` — so it needs no directive of its own:
+Receives only plain, serializable props and fetches through `cachedFetch` — the shared `'use cache'` boundary in `live.ts` — so it needs no directive of its own:
 
 ```tsx
 // src/app/[slug]/page.tsx (continued)
-import {cachedSanityFetch, type DynamicFetchOptions} from '@/sanity/lib/live'
+import {cachedFetch, type DynamicFetchOptions} from '@/sanity/lib/live'
 import {defineQuery} from 'next-sanity'
 
 async function CachedPage({
@@ -110,7 +110,7 @@ async function CachedPage({
   stega,
 }: Awaited<PageProps<'/[slug]'>['params']> & DynamicFetchOptions) {
   const pageQuery = defineQuery(`*[_type == "page" && slug.current == $slug][0]`)
-  const {data} = await cachedSanityFetch({
+  const {data} = await cachedFetch({
     query: pageQuery,
     params: {slug},
     perspective,

@@ -34,7 +34,7 @@ export default function Loading() {
 ```tsx
 // src/app/[slug]/page.tsx
 import {
-  cachedSanityFetch,
+  cachedFetch,
   getDynamicFetchOptions,
   sanityFetchStaticParams,
   type DynamicFetchOptions,
@@ -61,7 +61,7 @@ async function CachedPage({
   stega,
 }: Awaited<PageProps<'/[slug]'>['params']> & DynamicFetchOptions) {
   const pageQuery = defineQuery(`*[_type == "page" && slug.current == $slug][0]`)
-  const {data} = await cachedSanityFetch({
+  const {data} = await cachedFetch({
     query: pageQuery,
     params: {slug},
     perspective,
@@ -78,11 +78,7 @@ A `layout.tsx` can't use `loading.tsx` for fallback UI — [it's one level highe
 ```tsx
 // src/app/(website)/[slug]/layout.tsx
 
-import {
-  cachedSanityFetch,
-  getDynamicFetchOptions,
-  type DynamicFetchOptions,
-} from '@/sanity/lib/live'
+import {cachedFetch, getDynamicFetchOptions, type DynamicFetchOptions} from '@/sanity/lib/live'
 import {defineQuery} from 'next-sanity'
 import {Suspense} from 'react'
 
@@ -110,7 +106,7 @@ async function Footer({
   stega,
 }: Awaited<LayoutProps<'/[slug]'>['params']> & DynamicFetchOptions) {
   const footerQuery = defineQuery(`*[_type == "footer" && slug.current == $slug][0]`)
-  const {data} = await cachedSanityFetch({query: footerQuery, params: {slug}, perspective, stega})
+  const {data} = await cachedFetch({query: footerQuery, params: {slug}, perspective, stega})
   return <footer>{/* use `data` to render stuff */}</footer>
 }
 ```
