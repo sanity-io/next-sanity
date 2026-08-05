@@ -36,6 +36,7 @@ import type {
  *   resolvePerspectiveFromCookies,
  *   resolveVariantFromCookies,
  *   type LivePerspective,
+ *   type StrictDefinedFetchType,
  * } from 'next-sanity/live'
  *
  * const client = createClient({
@@ -52,6 +53,14 @@ import type {
  *   serverToken: token,
  *   strict: true,
  * })
+ *
+ * // The app's one shared 'use cache' boundary. `sanityFetch` calls
+ * // `cacheTag`/`cacheLife` internally but doesn't create the boundary —
+ * // this wrapper provides it once, so callers don't add their own.
+ * export const cachedFetch: StrictDefinedFetchType = async (options) => {
+ *   'use cache'
+ *   return sanityFetch(options)
+ * }
  *
  * export interface DynamicFetchOptions {
  *   perspective: LivePerspective
@@ -103,8 +112,8 @@ import type {
  * import {defineQuery} from 'next-sanity'
  *
  * import {
+ *   cachedFetch,
  *   getDynamicFetchOptions,
- *   sanityFetch,
  *   type DynamicFetchOptions,
  * } from '@/sanity/live'
  *
@@ -116,7 +125,7 @@ import type {
  * `)
  *
  * export async function generateStaticParams() {
- *   const {data} = await sanityFetch({
+ *   const {data} = await cachedFetch({
  *     query: POSTS_SLUGS_QUERY,
  *     perspective: 'published',
  *     stega: false,
@@ -152,9 +161,7 @@ import type {
  *   variant,
  *   stega,
  * }: {slug: string} & DynamicFetchOptions) {
- *   'use cache'
- *
- *   const {data} = await sanityFetch({
+ *   const {data} = await cachedFetch({
  *     query: POST_QUERY,
  *     params: {slug},
  *     perspective,
@@ -290,11 +297,11 @@ export {parseTags} from '#live/parseTags'
  * import {cookies, draftMode} from 'next/headers'
  * import {defineQuery} from 'next-sanity'
  * import {resolvePerspectiveFromCookies, type LivePerspective} from 'next-sanity/live'
- * import {sanityFetch, sanityFetchStaticParams} from '#sanity/live'
+ * import {cachedFetch, cachedFetchStaticParams} from '#sanity/live'
  *
  * export async function generateStaticParams() {
  *   const query = defineQuery(`*[_type == "page" && defined(slug.current)]{"slug": slug.current}`)
- *   return await sanityFetchStaticParams({query})
+ *   return await cachedFetchStaticParams({query})
  * }
  *
  * export default async function Page({params}: PageProps<'/[slug]'>) {
@@ -328,10 +335,8 @@ export {parseTags} from '#live/parseTags'
  *   perspective: LivePerspective
  *   stega: boolean
  * }) {
- *   'use cache'
- *
  *   const query = defineQuery(`*[_type == "page" && slug.current == $slug][0]`)
- *   const {data} = await sanityFetch({query, params: {slug}, perspective, stega})
+ *   const {data} = await cachedFetch({query, params: {slug}, perspective, stega})
  *
  *   return <article>...</article>
  * }
@@ -361,7 +366,7 @@ export const resolvePerspectiveFromCookies: typeof _resolvePerspectiveFromCookie
  *   resolveVariantFromCookies,
  *   type LivePerspective,
  * } from 'next-sanity/live'
- * import {sanityFetch} from '#sanity/live'
+ * import {cachedFetch} from '#sanity/live'
  *
  * export default async function Page({params}: PageProps<'/[slug]'>) {
  *   const {isEnabled: isDraftMode} = await draftMode()
@@ -398,10 +403,8 @@ export const resolvePerspectiveFromCookies: typeof _resolvePerspectiveFromCookie
  *   variant: string | undefined
  *   stega: boolean
  * }) {
- *   'use cache'
- *
  *   const query = defineQuery(`*[_type == "page" && slug.current == $slug][0]`)
- *   const {data} = await sanityFetch({query, params: {slug}, perspective, variant, stega})
+ *   const {data} = await cachedFetch({query, params: {slug}, perspective, variant, stega})
  *
  *   return <article>...</article>
  * }
