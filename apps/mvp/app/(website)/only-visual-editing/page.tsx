@@ -1,6 +1,6 @@
 import {unstable__adapter, unstable__environment} from 'next-sanity'
-import {defineLive, type LivePerspective} from 'next-sanity/live'
-import {cookies, draftMode} from 'next/headers'
+import {defineLive, type StrictDefinedFetchType} from 'next-sanity/live'
+import {draftMode} from 'next/headers'
 import Link from 'next/link'
 import {Suspense} from 'react'
 
@@ -8,7 +8,7 @@ import PostsLayout, {postsQuery} from '@/app/(website)/PostsLayout'
 import {client} from '@/app/sanity.client'
 
 import {ContentSourceMapDebug} from '../ContentSourceMapDebug'
-import {defaultPreviewCookies, resolvePreviewCookies} from '../resolvePreviewCookies'
+import {getDynamicFetchOptions, type DynamicFetchOptions} from '../resolvePreviewCookies'
 
 const token = process.env.SANITY_API_READ_TOKEN!
 const {sanityFetch} = defineLive({
@@ -18,17 +18,16 @@ const {sanityFetch} = defineLive({
   strict: true,
 })
 
-async function CachedIndexPage({
-  perspective,
-  variant,
-  stega,
-}: {
-  perspective: LivePerspective
-  variant?: string
-  stega: boolean
-}) {
+// The app's one shared 'use cache' boundary. `sanityFetch` calls
+// `cacheTag`/`cacheLife` internally but doesn't create the boundary —
+// this wrapper provides it once, so callers don't add their own.
+const cachedFetch: StrictDefinedFetchType = async (options) => {
   'use cache'
-  const {data, sourceMap, tags} = await sanityFetch({
+  return sanityFetch(options)
+}
+
+async function CachedIndexPage({perspective, variant, stega}: DynamicFetchOptions) {
+  const {data, sourceMap, tags} = await cachedFetch({
     query: postsQuery.query,
     perspective,
     variant,
@@ -45,10 +44,7 @@ async function CachedIndexPage({
 }
 
 async function DynamicIndexPage() {
-  const {isEnabled: isDraftMode} = await draftMode()
-  const jar = isDraftMode ? await cookies() : null
-  const {perspective, variant} = jar ? await resolvePreviewCookies(jar) : defaultPreviewCookies
-  const stega = isDraftMode
+  const {perspective, variant, stega} = await getDynamicFetchOptions()
 
   return <CachedIndexPage perspective={perspective} variant={variant} stega={stega} />
 }

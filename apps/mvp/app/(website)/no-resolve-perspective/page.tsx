@@ -1,5 +1,5 @@
 import {unstable__adapter, unstable__environment} from 'next-sanity'
-import {defineLive} from 'next-sanity/live'
+import {defineLive, type StrictDefinedFetchType} from 'next-sanity/live'
 import {draftMode} from 'next/headers'
 import Link from 'next/link'
 
@@ -17,20 +17,22 @@ const {sanityFetch, SanityLive} = defineLive({
   strict: true,
 })
 
-async function getPosts(perspective: 'drafts' | 'published') {
+// The app's one shared 'use cache' boundary. `sanityFetch` calls
+// `cacheTag`/`cacheLife` internally but doesn't create the boundary —
+// this wrapper provides it once, so callers don't add their own.
+const cachedFetch: StrictDefinedFetchType = async (options) => {
   'use cache'
-  const {data, sourceMap} = await sanityFetch({
-    query: postsQuery.query,
-    perspective,
-    stega: perspective !== 'published',
-  })
-  return {data, sourceMap}
+  return sanityFetch(options)
 }
 
 export default async function IndexPage() {
   const isDraftMode = (await draftMode()).isEnabled
   const perspective = isDraftMode ? 'drafts' : 'published'
-  const {data, sourceMap} = await getPosts(perspective)
+  const {data, sourceMap} = await cachedFetch({
+    query: postsQuery.query,
+    perspective,
+    stega: perspective !== 'published',
+  })
 
   return (
     <>

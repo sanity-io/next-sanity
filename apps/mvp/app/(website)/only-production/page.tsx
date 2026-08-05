@@ -1,5 +1,5 @@
 import {unstable__adapter, unstable__environment} from 'next-sanity'
-import {defineLive} from 'next-sanity/live'
+import {defineLive, type DefinedFetchType} from 'next-sanity/live'
 import Link from 'next/link'
 
 import PostsLayout, {postsQuery} from '@/app/(website)/PostsLayout'
@@ -9,16 +9,18 @@ import {ContentSourceMapDebug} from '../ContentSourceMapDebug'
 
 const {sanityFetch, SanityLive} = defineLive({client})
 
-async function getPosts() {
+// The app's one shared 'use cache' boundary. `sanityFetch` calls
+// `cacheTag`/`cacheLife` internally but doesn't create the boundary —
+// this wrapper provides it once, so callers don't add their own.
+const cachedFetch: DefinedFetchType = async (options) => {
   'use cache'
-  const {data, sourceMap} = await sanityFetch({
-    query: postsQuery.query,
-  })
-  return {data, sourceMap}
+  return sanityFetch(options)
 }
 
 export default async function IndexPage() {
-  const {data, sourceMap} = await getPosts()
+  const {data, sourceMap} = await cachedFetch({
+    query: postsQuery.query,
+  })
 
   return (
     <>
