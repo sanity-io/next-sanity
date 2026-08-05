@@ -27,14 +27,14 @@ The examples below use `/[slug]/page.tsx`, which needs:
 
 ```tsx
 // src/app/[slug]/page.tsx
-import {sanityFetchStaticParams} from '@/sanity/lib/live'
+import {cachedFetchStaticParams} from '@/sanity/lib/live'
 import {defineQuery} from 'next-sanity'
 
 export async function generateStaticParams() {
   const pageSlugsQuery = defineQuery(
     `*[_type == "page" && defined(slug.current)]{"slug": slug.current}`,
   )
-  const {data} = await sanityFetchStaticParams({query: pageSlugsQuery})
+  const {data} = await cachedFetchStaticParams({query: pageSlugsQuery})
   return data
 }
 ```

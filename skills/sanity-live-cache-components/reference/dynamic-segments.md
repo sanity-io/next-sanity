@@ -36,7 +36,7 @@ export default function Loading() {
 import {
   cachedFetch,
   getDynamicFetchOptions,
-  sanityFetchStaticParams,
+  cachedFetchStaticParams,
   type DynamicFetchOptions,
 } from '@/sanity/lib/live'
 import {defineQuery} from 'next-sanity'
@@ -45,7 +45,7 @@ export async function generateStaticParams() {
   const pageSlugsQuery = defineQuery(
     `*[_type == "page" && defined(slug.current)] | order(_updatedAt desc) [0...100]{"slug": slug.current}`,
   )
-  const {data} = await sanityFetchStaticParams({query: pageSlugsQuery})
+  const {data} = await cachedFetchStaticParams({query: pageSlugsQuery})
   return data
 }
 

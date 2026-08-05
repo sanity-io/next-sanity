@@ -6,9 +6,9 @@
 - [`live.ts`](#livets)
 - [`cachedFetch`](#cachedfetch)
 - [`sanityFetch`](#sanityfetch)
-- [`sanityFetchMetadata`](#sanityfetchmetadata)
+- [`cachedFetchMetadata`](#cachedfetchmetadata)
 - [`getDynamicFetchOptions`](#getdynamicfetchoptions)
-- [`sanityFetchStaticParams`](#sanityfetchstaticparams)
+- [`cachedFetchStaticParams`](#cachedfetchstaticparams)
 - [Anti-patterns to grep for](#anti-patterns-to-grep-for)
 
 ## `client.ts`
@@ -92,7 +92,7 @@ export async function getDynamicFetchOptions(): Promise<DynamicFetchOptions> {
 }
 
 // For usage within `generateStaticParams`
-export async function sanityFetchStaticParams<const QueryString extends string>({
+export async function cachedFetchStaticParams<const QueryString extends string>({
   query,
   params = {},
 }: {
@@ -104,7 +104,7 @@ export async function sanityFetchStaticParams<const QueryString extends string>(
 }
 
 // For usage within `generateMetadata` and `generateViewport`
-export async function sanityFetchMetadata<const QueryString extends string>({
+export async function cachedFetchMetadata<const QueryString extends string>({
   query,
   params = {},
   perspective,
@@ -202,7 +202,7 @@ Reach for this instead of `cachedFetch` only when caching the rendered JSX (not 
 - `stega: true` (combined with `stega.studioUrl` in `createClient` and `<VisualEditing>` in the root layout) renders click-to-edit overlays.
 - `getDynamicFetchOptions` resolves `perspective` from the `sanity-preview-perspective` cookie, which `<VisualEditing>` manages when the app is rendered inside Presentation Tool's preview iframe.
 
-## `sanityFetchMetadata`
+## `cachedFetchMetadata`
 
 For fetching data inside `generateMetadata`, `generateSitemaps`, `generateViewport`, `generateImageMetadata`, and the file-based metadata routes (`icon.tsx`, `apple-icon.tsx`, `manifest.ts`, `opengraph-image.tsx`, `twitter-image.tsx`, `robots.ts`, `sitemap.ts`).
 
@@ -211,13 +211,13 @@ It's `cachedFetch` with `stega` pinned to `false` (never wanted in these context
 Presentation Tool can open an app in a standalone preview window, so the correct content release must still be reflected in `<title>` and friends. Always resolve `perspective`:
 
 ```ts
-import {getDynamicFetchOptions, sanityFetchMetadata} from '@/sanity/lib/live'
+import {getDynamicFetchOptions, cachedFetchMetadata} from '@/sanity/lib/live'
 import {defineQuery} from 'next-sanity'
 
 export async function generateMetadata({params}: PageProps<'/[slug]'>) {
   const [{slug}, {perspective}] = await Promise.all([params, getDynamicFetchOptions()])
   const pageQuery = defineQuery(`*[_type == "page" && slug.current == $slug][0]`)
-  const {data} = await sanityFetchMetadata({query: pageQuery, params: {slug}, perspective})
+  const {data} = await cachedFetchMetadata({query: pageQuery, params: {slug}, perspective})
 }
 ```
 
@@ -231,12 +231,12 @@ Avoid calling `getDynamicFetchOptions` in the top-level body of a `layout.tsx` o
 
 When Cache Components are enabled, `<Suspense>` boundaries determine the static shell. For fully prerendered routes, render the Suspense tree only when in draft mode — see [three-layer-pattern.md](three-layer-pattern.md).
 
-## `sanityFetchStaticParams`
+## `cachedFetchStaticParams`
 
 Used inside `generateStaticParams`. `stega` is never wanted (the data feeds route params), and `perspective` cookies aren't available at build time anyway, so both are hardcoded.
 
-- Never call `sanityFetch` or `cachedFetch` directly inside `generateStaticParams` — always use `sanityFetchStaticParams` (which fetches through `cachedFetch` internally).
-- Never call `sanityFetchStaticParams` outside `generateStaticParams`.
+- Never call `sanityFetch` or `cachedFetch` directly inside `generateStaticParams` — always use `cachedFetchStaticParams` (which fetches through `cachedFetch` internally).
+- Never call `cachedFetchStaticParams` outside `generateStaticParams`.
 
 ## Anti-patterns to grep for
 
@@ -245,6 +245,6 @@ When migrating an existing app, these are the strings to search for and refactor
 - `perspective: 'published'` and `stega: false` hardcoded together in a `sanityFetch` / `cachedFetch` call inside a shared component → replace with `perspective` and `stega` props sourced from `getDynamicFetchOptions` via the three-layer pattern.
 - `sanityFetch(` directly inside a function whose body starts with `'use server'` → swap for `cachedFetch` and resolve `perspective`/`stega` via `getDynamicFetchOptions` inside the action.
 - `sanityFetch(` in a component without its own `'use cache'` directive → swap for `cachedFetch` (or add the directive if caching the rendered JSX is intended).
-- `sanityFetch(` inside `generateStaticParams` → swap for `sanityFetchStaticParams`.
-- `sanityFetch(` inside `generateMetadata` / `generateViewport` / `sitemap.ts` / `robots.ts` / `opengraph-image.tsx` etc. → swap for `sanityFetchMetadata` and resolve `perspective` via `getDynamicFetchOptions`.
+- `sanityFetch(` inside `generateStaticParams` → swap for `cachedFetchStaticParams`.
+- `sanityFetch(` inside `generateMetadata` / `generateViewport` / `sitemap.ts` / `robots.ts` / `opengraph-image.tsx` etc. → swap for `cachedFetchMetadata` and resolve `perspective` via `getDynamicFetchOptions`.
 - `await draftMode()` immediately followed by `await getDynamicFetchOptions()` at the top of a `page.tsx` or `layout.tsx` without a sibling `loading.tsx` → move the dynamic-API calls into a child component wrapped in `<Suspense>` so the static shell can prerender.
