@@ -235,7 +235,7 @@ When Cache Components are enabled, `<Suspense>` boundaries determine the static 
 
 Used inside `generateStaticParams`. `stega` is never wanted (the data feeds route params), and `perspective` cookies aren't available at build time anyway, so both are hardcoded.
 
-- Never call `sanityFetch` or `cachedFetch` inside `generateStaticParams` — always use `sanityFetchStaticParams`.
+- Never call `sanityFetch` or `cachedFetch` directly inside `generateStaticParams` — always use `sanityFetchStaticParams` (which fetches through `cachedFetch` internally).
 - Never call `sanityFetchStaticParams` outside `generateStaticParams`.
 
 ## Anti-patterns to grep for

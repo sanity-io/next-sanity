@@ -16,7 +16,10 @@ This skill assumes familiarity with Cache Components fundamentals — `'use cach
 Next.js ships official skills for the framework-generic workflows (see [Setting up your project for AI coding agents](https://nextjs.org/docs/app/guides/ai-agents)). This skill covers only the Sanity surface and defers everything else to them. Install them from the Next.js repository:
 
 ```bash
-npx skills add vercel/next.js --skill next-cache-components-adoption next-cache-components-optimizer next-partial-prefetching-adoption next-dev-loop
+npx skills add vercel/next.js --skill next-dev-loop
+npx skills add vercel/next.js --skill next-cache-components-adoption
+npx skills add vercel/next.js --skill next-cache-components-optimizer
+npx skills add vercel/next.js --skill next-partial-prefetching-adoption
 ```
 
 When their rules apply — blocking-route triage, `<Suspense>` placement, loading-UI reuse, `instant()` regression tests, link prefetch audits — follow them; don't re-derive that guidance from here.
