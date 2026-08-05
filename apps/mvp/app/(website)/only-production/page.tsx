@@ -12,13 +12,13 @@ const {sanityFetch, SanityLive} = defineLive({client})
 // The app's one shared 'use cache' boundary. `sanityFetch` calls
 // `cacheTag`/`cacheLife` internally but doesn't create the boundary —
 // this wrapper provides it once, so callers don't add their own.
-const cachedFetch: DefinedFetchType = async (options) => {
+const cachedSanity: DefinedFetchType = async (options) => {
   'use cache'
   return sanityFetch(options)
 }
 
 export default async function IndexPage() {
-  const {data, sourceMap} = await cachedFetch({
+  const {data, sourceMap} = await cachedSanity({
     query: postsQuery.query,
   })
 

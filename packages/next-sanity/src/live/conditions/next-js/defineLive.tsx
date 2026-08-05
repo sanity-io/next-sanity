@@ -64,7 +64,7 @@ import type {
  * // The app's one shared 'use cache' boundary. `sanityFetch` calls
  * // `cacheTag`/`cacheLife` internally but doesn't create the boundary —
  * // this wrapper provides it once, so callers don't add their own.
- * export const cachedFetch: StrictDefinedFetchType = async (options) => {
+ * export const cachedSanity: StrictDefinedFetchType = async (options) => {
  *   'use cache'
  *   return sanityFetch(options)
  * }
@@ -119,7 +119,7 @@ import type {
  * import {defineQuery} from 'next-sanity'
  *
  * import {
- *   cachedFetch,
+ *   cachedSanity,
  *   getDynamicFetchOptions,
  *   type DynamicFetchOptions,
  * } from '@/sanity/live'
@@ -132,7 +132,7 @@ import type {
  * `)
  *
  * export async function generateStaticParams() {
- *   const {data} = await cachedFetch({
+ *   const {data} = await cachedSanity({
  *     query: POSTS_SLUGS_QUERY,
  *     perspective: 'published',
  *     stega: false,
@@ -168,7 +168,7 @@ import type {
  *   variant,
  *   stega,
  * }: {slug: string} & DynamicFetchOptions) {
- *   const {data} = await cachedFetch({
+ *   const {data} = await cachedSanity({
  *     query: POST_QUERY,
  *     params: {slug},
  *     perspective,

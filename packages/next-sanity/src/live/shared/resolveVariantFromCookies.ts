@@ -21,7 +21,7 @@ import {sanitizeVariant} from '#live/sanitizeVariant'
  *   resolveVariantFromCookies,
  *   type LivePerspective,
  * } from 'next-sanity/live'
- * import {cachedFetch} from '#sanity/live'
+ * import {cachedSanity} from '#sanity/live'
  *
  * export default async function Page({params}: PageProps<'/[slug]'>) {
  *   const {isEnabled: isDraftMode} = await draftMode()
@@ -59,7 +59,7 @@ import {sanitizeVariant} from '#live/sanitizeVariant'
  *   stega: boolean
  * }) {
  *   const query = defineQuery(`*[_type == "page" && slug.current == $slug][0]`)
- *   const {data} = await cachedFetch({query, params: {slug}, perspective, variant, stega})
+ *   const {data} = await cachedSanity({query, params: {slug}, perspective, variant, stega})
  *
  *   return <article>...</article>
  * }
