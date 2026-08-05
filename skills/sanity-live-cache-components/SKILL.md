@@ -9,7 +9,7 @@ Wires `next-sanity` into a Next.js 16+ app with `cacheComponents: true`. Data is
 
 Read the relevant guide in `node_modules/next/dist/docs/` (when available) before writing code. If a guide conflicts with this skill, follow this skill.
 
-This skill assumes familiarity with the `next-cache-components` skill — it covers `'use cache'`, `cacheLife`, `cacheTag`, and the cookies/headers/params rule. The only Sanity-relevant exception: `await draftMode()` is allowed inside `'use cache'` (Next.js bypasses caching when draft mode is enabled — see [the `use cache` reference](https://nextjs.org/docs/app/api-reference/directives/use-cache#draft-mode)).
+This skill assumes familiarity with Cache Components fundamentals — `'use cache'`, `cacheLife`, `cacheTag`, and the cookies/headers/params rule — covered by the [Cache Components guide](https://nextjs.org/docs/app/getting-started/cache-components) (bundled offline under `node_modules/next/dist/docs/`). The only Sanity-relevant exception: `await draftMode()` is allowed inside `'use cache'` (Next.js bypasses caching when draft mode is enabled — see [the `use cache` reference](https://nextjs.org/docs/app/api-reference/directives/use-cache#draft-mode)).
 
 ## Prerequisites
 
