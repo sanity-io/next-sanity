@@ -14,11 +14,11 @@ import type {LivePerspective} from '#live/types'
  * import {cookies, draftMode} from 'next/headers'
  * import {defineQuery} from 'next-sanity'
  * import {resolvePerspectiveFromCookies, type LivePerspective} from 'next-sanity/live'
- * import {sanityFetch, sanityFetchStaticParams} from '#sanity/live'
+ * import {cachedSanity, cachedSanityStaticParams} from '#sanity/live'
  *
  * export async function generateStaticParams() {
  *   const query = defineQuery(`*[_type == "page" && defined(slug.current)]{"slug": slug.current}`)
- *   return await sanityFetchStaticParams({query})
+ *   return await cachedSanityStaticParams({query})
  * }
  *
  * export default async function Page({params}: PageProps<'/[slug]'>) {
@@ -52,10 +52,8 @@ import type {LivePerspective} from '#live/types'
  *   perspective: LivePerspective
  *   stega: boolean
  * }) {
- *   'use cache'
- *
  *   const query = defineQuery(`*[_type == "page" && slug.current == $slug][0]`)
- *   const {data} = await sanityFetch({query, params: {slug}, perspective, stega})
+ *   const {data} = await cachedSanity({query, params: {slug}, perspective, stega})
  *
  *   return <article>...</article>
  * }

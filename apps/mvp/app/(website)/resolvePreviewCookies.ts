@@ -3,12 +3,15 @@ import {
   resolveVariantFromCookies,
   type LivePerspective,
 } from 'next-sanity/live'
-import type {cookies} from 'next/headers'
+import {cookies, draftMode} from 'next/headers'
 
-export const defaultPreviewCookies: {perspective: LivePerspective; variant: string | undefined} = {
-  perspective: 'published',
-  variant: undefined,
+export interface DynamicFetchOptions {
+  perspective: LivePerspective
+  variant?: string
+  // `boolean` brands `sanityFetch` `data`; use literal `false` for clean types
+  stega: boolean
 }
+
 export async function resolvePreviewCookies(jar: Awaited<ReturnType<typeof cookies>>): Promise<{
   perspective: LivePerspective
   variant: string | undefined
@@ -19,4 +22,16 @@ export async function resolvePreviewCookies(jar: Awaited<ReturnType<typeof cooki
   ])
 
   return {perspective, variant}
+}
+
+// Resolve dynamic values outside 'use cache' boundaries.
+export async function getDynamicFetchOptions(): Promise<DynamicFetchOptions> {
+  const {isEnabled: isDraftMode} = await draftMode()
+  if (!isDraftMode) {
+    return {perspective: 'published', stega: false}
+  }
+
+  const jar = await cookies()
+  const {perspective, variant} = await resolvePreviewCookies(jar)
+  return {perspective, variant, stega: true}
 }

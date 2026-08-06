@@ -27,14 +27,14 @@ The examples below use `/[slug]/page.tsx`, which needs:
 
 ```tsx
 // src/app/[slug]/page.tsx
-import {sanityFetchStaticParams} from '@/sanity/lib/live'
+import {cachedSanityStaticParams} from '@/sanity/lib/live'
 import {defineQuery} from 'next-sanity'
 
 export async function generateStaticParams() {
   const pageSlugsQuery = defineQuery(
     `*[_type == "page" && defined(slug.current)]{"slug": slug.current}`,
   )
-  const {data} = await sanityFetchStaticParams({query: pageSlugsQuery})
+  const {data} = await cachedSanityStaticParams({query: pageSlugsQuery})
   return data
 }
 ```
@@ -69,12 +69,12 @@ export default async function Page({params}: PageProps<'/[slug]'>) {
 
 Notes:
 
-- `Page` does **not** have a `'use cache'` directive. `draftMode()` is allowed inside `'use cache'`, but `Page` also `awaits` `params` (and may call `getDynamicFetchOptions()`, which reads `cookies()`), and those dynamic APIs are not allowed inside `'use cache'`. It's enough for `<CachedPage>` (Layer 3) to carry `'use cache'` for `Page` to be prerendered as part of the static shell.
-- Requires `generateStaticParams` if `params` is used as input to `sanityFetch`.
+- `Page` does **not** have a `'use cache'` directive. `draftMode()` is allowed inside `'use cache'`, but `Page` also `awaits` `params` (and may call `getDynamicFetchOptions()`, which reads `cookies()`), and those dynamic APIs are not allowed inside `'use cache'`. `<CachedPage>` (Layer 3) fetching through `cachedSanity` is enough for `Page` to be prerendered as part of the static shell.
+- Requires `generateStaticParams` if `params` is used as input to the fetch.
 - Not in draft mode → no `<Suspense>` boundary, maximizes the static shell.
 - In draft mode → `<DynamicPage />` inside `<Suspense>` will suspend twice:
   1. when `<DynamicPage>` awaits `getDynamicFetchOptions()`
-  2. when `<CachedPage />` awaits `sanityFetch` with the resolved `perspective`/`stega`
+  2. when `<CachedPage />` awaits `cachedSanity` with the resolved `perspective`/`stega`
 
   A good fallback skeleton that doesn't cause layout shift is highly recommended.
 
@@ -97,11 +97,11 @@ async function DynamicPage({params}: Pick<PageProps<'/[slug]'>, 'params'>) {
 
 ## Layer 3: Cached component
 
-Has `'use cache'` and only receives plain, serializable props:
+Receives only plain, serializable props and fetches through `cachedSanity` — the shared `'use cache'` boundary in `live.ts` — so it needs no directive of its own:
 
 ```tsx
 // src/app/[slug]/page.tsx (continued)
-import {sanityFetch, type DynamicFetchOptions} from '@/sanity/lib/live'
+import {cachedSanity, type DynamicFetchOptions} from '@/sanity/lib/live'
 import {defineQuery} from 'next-sanity'
 
 async function CachedPage({
@@ -109,9 +109,8 @@ async function CachedPage({
   perspective,
   stega,
 }: Awaited<PageProps<'/[slug]'>['params']> & DynamicFetchOptions) {
-  'use cache'
   const pageQuery = defineQuery(`*[_type == "page" && slug.current == $slug][0]`)
-  const {data} = await sanityFetch({
+  const {data} = await cachedSanity({
     query: pageQuery,
     params: {slug},
     perspective,
@@ -121,9 +120,11 @@ async function CachedPage({
 }
 ```
 
+Variant: if the component's rendering itself is expensive (e.g. a large Portable Text tree) and worth caching alongside the data, give the component its own `'use cache'` directive and call the bare `sanityFetch` instead — see [live-helpers.md](live-helpers.md#sanityfetch). The props contract is identical.
+
 ## `searchParams` and other dynamic APIs
 
-If `searchParams` or other dynamic APIs are inputs to `sanityFetch` (or `params` is used without `generateStaticParams` or a `loading.tsx`), always render the `<Suspense>` tree and **stop branching on `draftMode`**. See [the streaming guide](https://nextjs.org/docs/app/guides/streaming#when-to-use-loadingjs-vs-suspense) for picking between `loading.tsx` and `<Suspense>`.
+If `searchParams` or other dynamic APIs are inputs to the fetch (or `params` is used without `generateStaticParams` or a `loading.tsx`), always render the `<Suspense>` tree and **stop branching on `draftMode`**. See [the streaming guide](https://nextjs.org/docs/app/guides/streaming#when-to-use-loadingjs-vs-suspense) for picking between `loading.tsx` and `<Suspense>`.
 
 ```tsx
 // src/app/[slug]/page.tsx (continued)
