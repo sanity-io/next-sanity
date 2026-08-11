@@ -33,10 +33,10 @@ catalogs:
       version: 7.0.2
 
 overrides:
-  '@next/env': 16.3.1-canary.0
+  '@next/env': 16.3.1-canary.12
   '@types/react': ^19.2.18
   '@types/react-dom': ^19.2.4
-  next: 16.3.1-canary.0
+  next: 16.3.1-canary.12
   react: ^19.2.8
   react-dom: ^19.2.8
   sanity: next
@@ -88,16 +88,16 @@ importers:
         version: 2.1.1
       '@sanity/themer':
         specifier: 'catalog:'
-        version: 0.3.3(react-dom@19.2.8)(react@19.2.8)(sanity@6.9.3-next.1)(styled-components@6.5.2)
+        version: 0.3.3(react-dom@19.2.8)(react@19.2.8)(sanity@6.9.3-next.2)(styled-components@6.5.2)
       '@sanity/vision':
         specifier: next
-        version: 6.9.3-next.1(@babel/runtime@7.29.7)(@codemirror/lint@6.9.7)(@codemirror/theme-one-dark@6.1.3)(codemirror@6.0.2)(react-dom@19.2.8)(react@19.2.8)(sanity@6.9.3-next.1)(styled-components@6.5.2)
+        version: 6.9.3-next.2(@babel/runtime@7.29.7)(@codemirror/lint@6.9.7)(@codemirror/theme-one-dark@6.1.3)(codemirror@6.0.2)(react-dom@19.2.8)(react@19.2.8)(sanity@6.9.3-next.2)(styled-components@6.5.2)
       groqd:
         specifier: 'catalog:'
         version: 1.7.1
       next:
-        specifier: 16.3.1-canary.0
-        version: 16.3.1-canary.0(@babel/core@7.29.7)(@types/node@24.13.3)(react-dom@19.2.8)(react@19.2.8)
+        specifier: 16.3.1-canary.12
+        version: 16.3.1-canary.12(@babel/core@7.29.7)(@types/node@24.13.3)(react-dom@19.2.8)(react@19.2.8)
       next-sanity:
         specifier: workspace:*
         version: link:../../packages/next-sanity
@@ -109,7 +109,7 @@ importers:
         version: 19.2.8(react@19.2.8)
       sanity:
         specifier: next
-        version: 6.9.3-next.1(@babel/core@7.29.7)(@babel/runtime@7.29.7)(@noble/hashes@2.2.0)(@rolldown/plugin-babel@0.2.3)(@sanity/sdk@2.19.0)(@types/node@24.13.3)(@types/react-dom@19.2.4)(@types/react@19.2.18)(esbuild@0.28.1)(jiti@2.7.0)(oxfmt@0.62.0)(react-dom@19.2.8)(react@19.2.8)(rolldown@1.2.2)(styled-components@6.5.2)(typescript@7.0.2)
+        version: 6.9.3-next.2(@babel/core@7.29.7)(@babel/runtime@7.29.7)(@noble/hashes@2.2.0)(@rolldown/plugin-babel@0.2.3)(@sanity/sdk@2.19.0)(@types/node@24.13.3)(@types/react-dom@19.2.4)(@types/react@19.2.18)(esbuild@0.28.1)(jiti@2.7.0)(oxfmt@0.62.0)(react-dom@19.2.8)(react@19.2.8)(rolldown@1.2.2)(styled-components@6.5.2)(typescript@7.0.2)
       sonner:
         specifier: ^2.0.7
         version: 2.0.7(react-dom@19.2.8)(react@19.2.8)
@@ -118,8 +118,8 @@ importers:
         version: 6.5.2(react-dom@19.2.8)(react@19.2.8)
     devDependencies:
       '@next/env':
-        specifier: 16.3.1-canary.0
-        version: 16.3.1-canary.0
+        specifier: 16.3.1-canary.12
+        version: 16.3.1-canary.12
       '@repo/typescript-config':
         specifier: workspace:*
         version: link:../../packages/typescript-config
@@ -155,13 +155,13 @@ importers:
         version: 2.1.1
       '@sanity/vision':
         specifier: next
-        version: 6.9.3-next.1(@babel/runtime@7.29.7)(@codemirror/lint@6.9.7)(@codemirror/theme-one-dark@6.1.3)(codemirror@6.0.2)(react-dom@19.2.8)(react@19.2.8)(sanity@6.9.3-next.1)(styled-components@6.5.2)
+        version: 6.9.3-next.2(@babel/runtime@7.29.7)(@codemirror/lint@6.9.7)(@codemirror/theme-one-dark@6.1.3)(codemirror@6.0.2)(react-dom@19.2.8)(react@19.2.8)(sanity@6.9.3-next.2)(styled-components@6.5.2)
       groqd:
         specifier: 'catalog:'
         version: 1.7.1
       next:
-        specifier: 16.3.1-canary.0
-        version: 16.3.1-canary.0(@babel/core@7.29.7)(@types/node@24.13.3)(react-dom@19.2.8)(react@19.2.8)
+        specifier: 16.3.1-canary.12
+        version: 16.3.1-canary.12(@babel/core@7.29.7)(@types/node@24.13.3)(react-dom@19.2.8)(react@19.2.8)
       next-sanity:
         specifier: workspace:*
         version: link:../../packages/next-sanity
@@ -173,14 +173,14 @@ importers:
         version: 19.2.8(react@19.2.8)
       sanity:
         specifier: next
-        version: 6.9.3-next.1(@babel/core@7.29.7)(@babel/runtime@7.29.7)(@noble/hashes@2.2.0)(@rolldown/plugin-babel@0.2.3)(@sanity/sdk@2.19.0)(@types/node@24.13.3)(@types/react-dom@19.2.4)(@types/react@19.2.18)(esbuild@0.28.1)(jiti@2.7.0)(oxfmt@0.62.0)(react-dom@19.2.8)(react@19.2.8)(rolldown@1.2.2)(styled-components@6.5.2)(typescript@7.0.2)
+        version: 6.9.3-next.2(@babel/core@7.29.7)(@babel/runtime@7.29.7)(@noble/hashes@2.2.0)(@rolldown/plugin-babel@0.2.3)(@sanity/sdk@2.19.0)(@types/node@24.13.3)(@types/react-dom@19.2.4)(@types/react@19.2.18)(esbuild@0.28.1)(jiti@2.7.0)(oxfmt@0.62.0)(react-dom@19.2.8)(react@19.2.8)(rolldown@1.2.2)(styled-components@6.5.2)(typescript@7.0.2)
       styled-components:
         specifier: 'catalog:'
         version: 6.5.2(react-dom@19.2.8)(react@19.2.8)
     devDependencies:
       '@next/env':
-        specifier: 16.3.1-canary.0
-        version: 16.3.1-canary.0
+        specifier: 16.3.1-canary.12
+        version: 16.3.1-canary.12
       '@repo/typescript-config':
         specifier: workspace:*
         version: link:../../packages/typescript-config
@@ -203,8 +203,8 @@ importers:
   fixtures/fail/server-only-live:
     dependencies:
       next:
-        specifier: 16.3.1-canary.0
-        version: 16.3.1-canary.0(@babel/core@7.29.7)(@types/node@24.13.3)(react-dom@19.2.8)(react@19.2.8)
+        specifier: 16.3.1-canary.12
+        version: 16.3.1-canary.12(@babel/core@7.29.7)(@types/node@24.13.3)(react-dom@19.2.8)(react@19.2.8)
       next-sanity:
         specifier: workspace:*
         version: link:../../../packages/next-sanity
@@ -231,8 +231,8 @@ importers:
   fixtures/pass/server-only-live:
     dependencies:
       next:
-        specifier: 16.3.1-canary.0
-        version: 16.3.1-canary.0(@babel/core@7.29.7)(@types/node@24.13.3)(react-dom@19.2.8)(react@19.2.8)
+        specifier: 16.3.1-canary.12
+        version: 16.3.1-canary.12(@babel/core@7.29.7)(@types/node@24.13.3)(react-dom@19.2.8)(react@19.2.8)
       next-sanity:
         specifier: workspace:*
         version: link:../../../packages/next-sanity
@@ -272,7 +272,7 @@ importers:
         version: 4.1.4(@sanity/client@7.26.2)
       '@sanity/visual-editing':
         specifier: ^6.0.1
-        version: 6.0.1(@sanity/client@7.26.2)(@types/react@19.2.18)(next@16.3.1-canary.0)(react-dom@19.2.8)(react@19.2.8)(styled-components@6.5.2)(typescript@7.0.2)
+        version: 6.0.1(@sanity/client@7.26.2)(@types/react@19.2.18)(next@16.3.1-canary.12)(react-dom@19.2.8)(react@19.2.8)(styled-components@6.5.2)(typescript@7.0.2)
       '@sanity/webhook':
         specifier: ^4.0.4
         version: 4.0.4
@@ -284,7 +284,7 @@ importers:
         version: 5.3.0
       sanity:
         specifier: next
-        version: 6.9.3-next.1(@babel/core@7.29.7)(@babel/runtime@7.29.7)(@noble/hashes@2.2.0)(@rolldown/plugin-babel@0.2.3)(@sanity/sdk@2.19.0)(@types/node@24.13.3)(@types/react-dom@19.2.4)(@types/react@19.2.18)(esbuild@0.28.1)(jiti@2.7.0)(oxfmt@0.62.0)(react-dom@19.2.8)(react@19.2.8)(rolldown@1.2.2)(styled-components@6.5.2)(typescript@7.0.2)
+        version: 6.9.3-next.2(@babel/core@7.29.7)(@babel/runtime@7.29.7)(@noble/hashes@2.2.0)(@rolldown/plugin-babel@0.2.3)(@sanity/sdk@2.19.0)(@types/node@24.13.3)(@types/react-dom@19.2.4)(@types/react@19.2.18)(esbuild@0.28.1)(jiti@2.7.0)(oxfmt@0.62.0)(react-dom@19.2.8)(react@19.2.8)(rolldown@1.2.2)(styled-components@6.5.2)(typescript@7.0.2)
     devDependencies:
       '@sanity/tsconfig':
         specifier: 'catalog:'
@@ -317,8 +317,8 @@ importers:
         specifier: ^2.15.0
         version: 2.15.0(@types/node@24.13.3)(typescript@7.0.2)
       next:
-        specifier: 16.3.1-canary.0
-        version: 16.3.1-canary.0(@babel/core@7.29.7)(@types/node@24.13.3)(react-dom@19.2.8)(react@19.2.8)
+        specifier: 16.3.1-canary.12
+        version: 16.3.1-canary.12(@babel/core@7.29.7)(@types/node@24.13.3)(react-dom@19.2.8)(react@19.2.8)
       publint:
         specifier: ^0.3.22
         version: 0.3.23
@@ -354,16 +354,16 @@ importers:
     dependencies:
       '@sanity/assist':
         specifier: ^6.1.19
-        version: 6.1.19(@types/react@19.2.18)(react-dom@19.2.8)(react@19.2.8)(sanity@6.9.3-next.1)(styled-components@6.5.2)
+        version: 6.1.19(@types/react@19.2.18)(react-dom@19.2.8)(react@19.2.8)(sanity@6.9.3-next.2)(styled-components@6.5.2)
       '@sanity/themer':
         specifier: 'catalog:'
-        version: 0.3.3(react-dom@19.2.8)(react@19.2.8)(sanity@6.9.3-next.1)(styled-components@6.5.2)
+        version: 0.3.3(react-dom@19.2.8)(react@19.2.8)(sanity@6.9.3-next.2)(styled-components@6.5.2)
       '@sanity/vision':
         specifier: next
-        version: 6.9.3-next.1(@babel/runtime@7.29.7)(@codemirror/lint@6.9.7)(@codemirror/theme-one-dark@6.1.3)(codemirror@6.0.2)(react-dom@19.2.8)(react@19.2.8)(sanity@6.9.3-next.1)(styled-components@6.5.2)
+        version: 6.9.3-next.2(@babel/runtime@7.29.7)(@codemirror/lint@6.9.7)(@codemirror/theme-one-dark@6.1.3)(codemirror@6.0.2)(react-dom@19.2.8)(react@19.2.8)(sanity@6.9.3-next.2)(styled-components@6.5.2)
       sanity:
         specifier: next
-        version: 6.9.3-next.1(@babel/core@7.29.7)(@babel/runtime@7.29.7)(@noble/hashes@2.2.0)(@rolldown/plugin-babel@0.2.3)(@sanity/sdk@2.19.0)(@types/node@24.13.3)(@types/react-dom@19.2.4)(@types/react@19.2.18)(esbuild@0.28.1)(jiti@2.7.0)(oxfmt@0.62.0)(react-dom@19.2.8)(react@19.2.8)(rolldown@1.2.2)(styled-components@6.5.2)(typescript@7.0.2)
+        version: 6.9.3-next.2(@babel/core@7.29.7)(@babel/runtime@7.29.7)(@noble/hashes@2.2.0)(@rolldown/plugin-babel@0.2.3)(@sanity/sdk@2.19.0)(@types/node@24.13.3)(@types/react-dom@19.2.4)(@types/react@19.2.18)(esbuild@0.28.1)(jiti@2.7.0)(oxfmt@0.62.0)(react-dom@19.2.8)(react@19.2.8)(rolldown@1.2.2)(styled-components@6.5.2)(typescript@7.0.2)
     devDependencies:
       '@repo/typescript-config':
         specifier: workspace:*
@@ -1960,57 +1960,57 @@ packages:
       '@emnapi/core': ^1.7.1 || ^2.0.0-alpha.3
       '@emnapi/runtime': ^1.7.1 || ^2.0.0-alpha.3
 
-  '@next/env@16.3.1-canary.0':
-    resolution: {integrity: sha512-e7XztmpP7tGw7y9++Yx4WwkAJONYXJk/YCV75eKoqVCrYMPbDNYLCPMCBojGoDrkSxSZ2WcO59TXzOIDTNz9Tg==}
+  '@next/env@16.3.1-canary.12':
+    resolution: {integrity: sha512-s4QGzN+YdhJDJewaqMKwv8ufdT1CNchZhkBl5/NDhl91fqrmA/ul0c/t6U4susJqokI1r89jFt9y2tgxcvi3/w==}
 
-  '@next/swc-darwin-arm64@16.3.1-canary.0':
-    resolution: {integrity: sha512-tNA4Zd5/ielRIWoFfwMUlU9wt6shQb2EAwSGP7r+DDVhDI/6MXdUTwbU7EshwCJQLMlnwpLaaMF2vp6ueSouBA==}
+  '@next/swc-darwin-arm64@16.3.1-canary.12':
+    resolution: {integrity: sha512-XeK42OTTqHWsV2apGnaeXoTYyjjNeHhf9yRNmhkP2ynaP5isbCOCcOcL4zdRtguPojZfdGBT1XBxDJMKU1J1UQ==}
     engines: {node: '>= 10'}
     cpu: [arm64]
     os: [darwin]
 
-  '@next/swc-darwin-x64@16.3.1-canary.0':
-    resolution: {integrity: sha512-MVbtJ6nTQXKPyw50QP3cGXf4hy7DCILqa6/guqf3x11Y7azQHlgr0f/+fQIMKgqIte8cuHb05OVWuT2IdAzchQ==}
+  '@next/swc-darwin-x64@16.3.1-canary.12':
+    resolution: {integrity: sha512-5BEiL6ITc+ZOjXHKsMjfO5J5iYbyysvyNHuFEgDI6kt2ZdLnvtczewo3vW0fuXrySBfEYXdGPrW+pUQX30H7zQ==}
     engines: {node: '>= 10'}
     cpu: [x64]
     os: [darwin]
 
-  '@next/swc-linux-arm64-gnu@16.3.1-canary.0':
-    resolution: {integrity: sha512-Oft1bbgFruAvX+DphRyzl0iDtQEOeOVv+R+Bhpxw66Uq7xUHIn2FNT634Vrcq1FyKE0vrT6hYepBnloqo3YBTQ==}
+  '@next/swc-linux-arm64-gnu@16.3.1-canary.12':
+    resolution: {integrity: sha512-kV3Vq4+Kx2IOqvvZ+U1T+N/4u1RuztM9IIapTKQt2Hk/GivG6VRJQzlMyS1NL9t45425PYvdJpw7XeMBYE0TwA==}
     engines: {node: '>= 10'}
     cpu: [arm64]
     os: [linux]
     libc: [glibc]
 
-  '@next/swc-linux-arm64-musl@16.3.1-canary.0':
-    resolution: {integrity: sha512-Z44NzrA6AWSEf6Q8hg+Eyx1+psTNIoB5DZDLV7JCk3Uq48PJNW/rfq8aojRtz8wlpqBkmFgm/mpoTdJ9Pm3Bcw==}
+  '@next/swc-linux-arm64-musl@16.3.1-canary.12':
+    resolution: {integrity: sha512-bkKk5EKC2lVo9HPNEv9H1iWiITDIa+ZK0DjMXSaUb+0z7vAIw6+T8X+bAtxw2gQWc5l57CPM8opdY9v/J3ffyw==}
     engines: {node: '>= 10'}
     cpu: [arm64]
     os: [linux]
     libc: [musl]
 
-  '@next/swc-linux-x64-gnu@16.3.1-canary.0':
-    resolution: {integrity: sha512-8z11HxYUc6CLeLSYYcGEmMwjos43eFXj412BcGKck7WwVDWmJ0HnF+QccLzEQP9CdvvnwFHhS2yTPFdoUUHjuw==}
+  '@next/swc-linux-x64-gnu@16.3.1-canary.12':
+    resolution: {integrity: sha512-eazMahCrGFs8LR7iQdaaTmFoQ9pjF0PjLv+wEavvC+ybqLqbs1+V/oCT/y3dOpJ67vaTGKikFK77J+12JPyEQQ==}
     engines: {node: '>= 10'}
     cpu: [x64]
     os: [linux]
     libc: [glibc]
 
-  '@next/swc-linux-x64-musl@16.3.1-canary.0':
-    resolution: {integrity: sha512-ITn7fk3v3AoE7i0/zQfHCoqRe2ja8vMAlqhDPWfzwKJEUQYzL2lbOUiZceKvFY9JY0jovpmksN1KTAgSivozjA==}
+  '@next/swc-linux-x64-musl@16.3.1-canary.12':
+    resolution: {integrity: sha512-XyVNt8ZQnsmiFnlwWmCAGcZo8taZqcRDCx/5ZaMAKokPVjfJu3UiShintqF2hbsNMQFkHqFK5r33vCt2IDTEeA==}
     engines: {node: '>= 10'}
     cpu: [x64]
     os: [linux]
     libc: [musl]
 
-  '@next/swc-win32-arm64-msvc@16.3.1-canary.0':
-    resolution: {integrity: sha512-EGGFEDIi0XG5FR2O1B+VhuK36qIKVFgHWIld225Jbj9sS17hVZOjtAua97nUX+PYbLOagkn+LrktJqWR2CtnqQ==}
+  '@next/swc-win32-arm64-msvc@16.3.1-canary.12':
+    resolution: {integrity: sha512-t7Xamkg38RrRlRFEcEAT8cmnzV3ucvM4oKdQi46fqMYKIczTNKqKWnWBSwN9NaWndDUliCyEso/wxC+fl6huGQ==}
     engines: {node: '>= 10'}
     cpu: [arm64]
     os: [win32]
 
-  '@next/swc-win32-x64-msvc@16.3.1-canary.0':
-    resolution: {integrity: sha512-nbU/xbjy5Ic0V4sAvT6Hd16B16/CPSoQv5wb4wGQvYnOFyu/W+iDmu5ilkdPiOfq+5InHh5uhSUuQlGRnBEXAw==}
+  '@next/swc-win32-x64-msvc@16.3.1-canary.12':
+    resolution: {integrity: sha512-upxNrKB7xq36Nbq55BwmjyYKz9bzRekaM6IwiaoUsanvFL7VFUI5Wq0863Ubghv/bqBqB1JIsIzN8wkWnVVhXw==}
     engines: {node: '>= 10'}
     cpu: [x64]
     os: [win32]
@@ -2977,8 +2977,8 @@ packages:
     resolution: {integrity: sha512-oJ5kZQV6C/DAlcpRLEU7AcVWXrSPuJb3Z1TQ9tm/qZOVWJENwWln45jtepQEYolTIuGx9jUlhYUi3hGIkOt8RA==}
     engines: {node: '>=18.2'}
 
-  '@sanity/diff@6.9.3-next.1':
-    resolution: {integrity: sha512-aW9kOVPUKZsOOywfcDUfb7+VRVJ5+aKa7W2q1rHZeM8y2naIPbPx3k59Gh51WAqZHEPEDWNaYs59GuVWvGfreA==}
+  '@sanity/diff@6.9.3-next.2':
+    resolution: {integrity: sha512-COo9EMNtTk0XqCHXaF3NnRfAIr7icEp0qBGiY2rQ8H0QIMTE3FUbHvt7gwGsXDDSR9EG4kZE+/gRxTUdAAj5PA==}
     engines: {node: '>=22.12'}
 
   '@sanity/eventsource@5.0.4':
@@ -3057,8 +3057,8 @@ packages:
   '@sanity/mutator@6.9.2':
     resolution: {integrity: sha512-ofpSj4EROW54yeo6FkkVaTEyUZQRNqSBEpycACRu9ZqusdtBSt90gklKHsG4N2vw11iUgvxDkW18HlJdiW4kaQ==}
 
-  '@sanity/mutator@6.9.3-next.1':
-    resolution: {integrity: sha512-krB1fPLvDfuE7M218LHVoFGFWAQyVoCwcM8PC+v6OwJTMfQHrzpZQtZE3qUWcNo9JXaP0rD7sIC36lDnwSapwQ==}
+  '@sanity/mutator@6.9.3-next.2':
+    resolution: {integrity: sha512-54ZHaXR6E2Z+0PDxHSGv7ZSTcY9koGP/epMlLelYvehKaef1gv5nZ5XexQkgug/KFsydkya7K8jAJZ9FUILihg==}
 
   '@sanity/presentation-comlink@2.2.3':
     resolution: {integrity: sha512-XRsLYFNq6DhMm+Ddt+lWzV4nuARmteYAYHrrbKFzpOpt9hCBsLjWbvTELxohEzhIFNoxbVBaRcY6GDB1/ANRFw==}
@@ -3086,8 +3086,8 @@ packages:
   '@sanity/schema@6.9.2':
     resolution: {integrity: sha512-k01v24uhByfKbOqgzlPlXVZ8yeW5qdzL3LtUUGgoikC1DEWBETY56Tc8u0R6eFmYPM8+I63L78TjbvtXYu2INQ==}
 
-  '@sanity/schema@6.9.3-next.1':
-    resolution: {integrity: sha512-QaL7vuuGWbq5Xkir/DWNa40JQeQ6peKfGE+DzC20Li6bOTFimL3C37LILxpfJGlTxJzImBHE4QDJ141MT5OVeg==}
+  '@sanity/schema@6.9.3-next.2':
+    resolution: {integrity: sha512-zodEwFmKRP4fpgil/O8ecHCaGRSr/6R6X+W3ZCI5VAD4hCDrmsBK2ICajfqiSwmt7/6t2tp5u7DlXFXX371jdQ==}
 
   '@sanity/sdk@2.19.0':
     resolution: {integrity: sha512-UOrxOmISioW22b0IyGgkRJCk1VnzmevH7jY8WZpANStmwa/4lsujRNlWOYeW3IguhIz0HptgtVfRXXyZwr9UXQ==}
@@ -3135,8 +3135,8 @@ packages:
     peerDependencies:
       '@types/react': ^19.2.18
 
-  '@sanity/types@6.9.3-next.1':
-    resolution: {integrity: sha512-9ssiU9p3+A0pzwzNjK8QarSOEUzdSpcbNvW83cpICAvbf8KjiAGdexuhHGhfgpbeLqTTWaJ1rJPM++fpIgAjEA==}
+  '@sanity/types@6.9.3-next.2':
+    resolution: {integrity: sha512-VQ0JIsTaT1wfJkAKIXK8pqFuDBT7JkCkeximi07vEUYW50hBvqz6DBlGGHEyQNvpv4+O14/0YmmWNIS89WEySg==}
     peerDependencies:
       '@types/react': ^19.2.18
 
@@ -3152,15 +3152,15 @@ packages:
     resolution: {integrity: sha512-H+ED8tks+XxytKwNIyRPXKcWp7/xQ6xjblE2HPjvV9xTnjhwQPNW2dIUsp26o4Ph7z93u9vhUt+42Z86fDa5Wg==}
     engines: {node: '>=22.12'}
 
-  '@sanity/util@6.9.3-next.1':
-    resolution: {integrity: sha512-Ll6a86Yem/gCGdquyySiHD96fctIV+mZT0283uaiRMaclDVb6G6v79nqGAopjru+qMfSjqdyiah+IoqQUqkJhg==}
+  '@sanity/util@6.9.3-next.2':
+    resolution: {integrity: sha512-uy8hEmNQu2Va39njhrxfQ2nVvjggbD06gOUE3hUGtrQ0SFSHFKyPVzTIBKzSaQ6GMW425Lr+SDZ3pE5BQR0h6w==}
     engines: {node: '>=22.12'}
 
   '@sanity/uuid@3.0.3':
     resolution: {integrity: sha512-aJvKuFwzcZKRwuIjrRPfXfXKpSdnLF4CnedV5WcX1n5SzhufvRNHIot5lkx1+Y1DwiMVQOZ5gDSPJH+P6Ao70A==}
 
-  '@sanity/vision@6.9.3-next.1':
-    resolution: {integrity: sha512-thzm8AVXqC2JfqE7cqKiZMHvbwWPfNevepWM4lb9hn/rSaJGxaMlGx+8cmFWPzRmFZ5IEc+rqx96jbc0TgWtCA==}
+  '@sanity/vision@6.9.3-next.2':
+    resolution: {integrity: sha512-Uov7M4n5GE35HT/PgYfyxMN72vf2NXL8cCqxgtm6O6P5gRhN5gyWDjL3JBFnST9hTcVUqGIxDwda0NKzl2BXOg==}
     peerDependencies:
       react: ^19.2.8
       sanity: ^6.0.0-0
@@ -3187,7 +3187,7 @@ packages:
     peerDependencies:
       '@sanity/client': ^7.26.2
       '@sveltejs/kit': '>= 2'
-      next: 16.3.1-canary.0
+      next: 16.3.1-canary.12
       react: ^19.2.8
       react-dom: ^19.2.8
       react-router: '>= 7'
@@ -3283,8 +3283,8 @@ packages:
   '@standard-schema/spec@1.1.0':
     resolution: {integrity: sha512-l2aFy5jALhniG5HgqrD6jXLi/rUWrKvqN/qJx6yoJsgKhblVd+iqqU4RCXavm/jPityDo5TCvKMnpjKnOriy0w==}
 
-  '@swc/helpers@0.5.15':
-    resolution: {integrity: sha512-JQ5TuMi45Owi4/BIMAJBoSQoOJu12oOk/gADqlcUL9JEdHB8vyjUSsxqeNXnmXHjYKMi2WcYtezGEEhqUI/E2g==}
+  '@swc/helpers@0.5.23':
+    resolution: {integrity: sha512-5lSsMOTXURePglDfvuAQUqkGek9Hg2kksOYay2m0+XR++b2NWYL/4sWyuvVBIs8oKnJaxkdi9whaL/sqN13afw==}
 
   '@tailwindcss/node@4.3.3':
     resolution: {integrity: sha512-/T8IKEsf9VTU6tLjgC7+sv2mOPtQxzE2jMw7u4Tt40Tx+QSZxpzh95/H6cMKoja9XuW7iMdLJYBB0o9G1CaAgg==}
@@ -5458,8 +5458,8 @@ packages:
     engines: {node: ^22 || ^24 || >=26}
     hasBin: true
 
-  next@16.3.1-canary.0:
-    resolution: {integrity: sha512-QOq+9E0ljYl5uKdoetbxrwlNguep6/0fwYPtT+SP0RDSeDDyZL4sqcu8AgGhmRjKdeHBrDH4u0MTdGiDJY7+Rw==}
+  next@16.3.1-canary.12:
+    resolution: {integrity: sha512-74JugNh9Yy4xNts/E8pixVhCqdbMpiAmH/KzxX3gwFWer8rc9yGG7RfG6jQ26x0fFHkwSaedE2jWzaK+LsHOtQ==}
     engines: {node: '>=20.9.0'}
     hasBin: true
     peerDependencies:
@@ -6028,8 +6028,8 @@ packages:
   safer-buffer@2.1.2:
     resolution: {integrity: sha512-YZo3K82SD7Riyi0E1EQPojLz7kpepnSQI9IyPbHHg1XXXevb5dJI7tpyN2ADxGcQbHG7vcyRHk0cbwqcQriUtg==}
 
-  sanity@6.9.3-next.1:
-    resolution: {integrity: sha512-1zWsxYwnSBz9JPA8X+5HWwy/4QFms8iz/B0XJTKr57gihQM9YM7n1ne4BPJD2IRGqLUWcncngdOFnME+sldgug==}
+  sanity@6.9.3-next.2:
+    resolution: {integrity: sha512-Pjhm0Lq7Fx5VoU80+cl+SKQD37w2UXiCvZEgd/b8jLbgCeC5d+MSnsHWyHGrHmGMU5PIWHRXNUz+qQmdgmXquA==}
     engines: {node: '>=22.12'}
     hasBin: true
     peerDependencies:
@@ -8703,30 +8703,30 @@ snapshots:
       '@tybys/wasm-util': 0.10.3
     optional: true
 
-  '@next/env@16.3.1-canary.0': {}
+  '@next/env@16.3.1-canary.12': {}
 
-  '@next/swc-darwin-arm64@16.3.1-canary.0':
+  '@next/swc-darwin-arm64@16.3.1-canary.12':
     optional: true
 
-  '@next/swc-darwin-x64@16.3.1-canary.0':
+  '@next/swc-darwin-x64@16.3.1-canary.12':
     optional: true
 
-  '@next/swc-linux-arm64-gnu@16.3.1-canary.0':
+  '@next/swc-linux-arm64-gnu@16.3.1-canary.12':
     optional: true
 
-  '@next/swc-linux-arm64-musl@16.3.1-canary.0':
+  '@next/swc-linux-arm64-musl@16.3.1-canary.12':
     optional: true
 
-  '@next/swc-linux-x64-gnu@16.3.1-canary.0':
+  '@next/swc-linux-x64-gnu@16.3.1-canary.12':
     optional: true
 
-  '@next/swc-linux-x64-musl@16.3.1-canary.0':
+  '@next/swc-linux-x64-musl@16.3.1-canary.12':
     optional: true
 
-  '@next/swc-win32-arm64-msvc@16.3.1-canary.0':
+  '@next/swc-win32-arm64-msvc@16.3.1-canary.12':
     optional: true
 
-  '@next/swc-win32-x64-msvc@16.3.1-canary.0':
+  '@next/swc-win32-x64-msvc@16.3.1-canary.12':
     optional: true
 
   '@noble/ed25519@3.1.0': {}
@@ -9331,7 +9331,7 @@ snapshots:
 
   '@sanity/asset-utils@2.3.0': {}
 
-  '@sanity/assist@6.1.19(@types/react@19.2.18)(react-dom@19.2.8)(react@19.2.8)(sanity@6.9.3-next.1)(styled-components@6.5.2)':
+  '@sanity/assist@6.1.19(@types/react@19.2.18)(react-dom@19.2.8)(react@19.2.8)(sanity@6.9.3-next.2)(styled-components@6.5.2)':
     dependencies:
       '@portabletext/types': 4.0.2
       '@sanity/client': 7.26.2
@@ -9346,7 +9346,7 @@ snapshots:
       react-fast-compare: 3.2.2
       rxjs: 7.8.2
       rxjs-exhaustmap-with-trailing: 2.1.1(rxjs@7.8.2)
-      sanity: 6.9.3-next.1(@babel/core@7.29.7)(@babel/runtime@7.29.7)(@noble/hashes@2.2.0)(@rolldown/plugin-babel@0.2.3)(@sanity/sdk@2.19.0)(@types/node@24.13.3)(@types/react-dom@19.2.4)(@types/react@19.2.18)(esbuild@0.28.1)(jiti@2.7.0)(oxfmt@0.62.0)(react-dom@19.2.8)(react@19.2.8)(rolldown@1.2.2)(styled-components@6.5.2)(typescript@7.0.2)
+      sanity: 6.9.3-next.2(@babel/core@7.29.7)(@babel/runtime@7.29.7)(@noble/hashes@2.2.0)(@rolldown/plugin-babel@0.2.3)(@sanity/sdk@2.19.0)(@types/node@24.13.3)(@types/react-dom@19.2.4)(@types/react@19.2.18)(esbuild@0.28.1)(jiti@2.7.0)(oxfmt@0.62.0)(react-dom@19.2.8)(react@19.2.8)(rolldown@1.2.2)(styled-components@6.5.2)(typescript@7.0.2)
       styled-components: 6.5.2(react-dom@19.2.8)(react@19.2.8)
     transitivePeerDependencies:
       - '@types/react'
@@ -9612,7 +9612,7 @@ snapshots:
     dependencies:
       '@sanity/diff-match-patch': 3.2.0
 
-  '@sanity/diff@6.9.3-next.1':
+  '@sanity/diff@6.9.3-next.2':
     dependencies:
       '@sanity/diff-match-patch': 3.2.0
 
@@ -9741,10 +9741,10 @@ snapshots:
       - '@types/react'
       - supports-color
 
-  '@sanity/mutator@6.9.3-next.1(@types/react@19.2.18)':
+  '@sanity/mutator@6.9.3-next.2(@types/react@19.2.18)':
     dependencies:
       '@sanity/diff-match-patch': 3.2.0
-      '@sanity/types': 6.9.3-next.1(@types/react@19.2.18)
+      '@sanity/types': 6.9.3-next.2(@types/react@19.2.18)
       '@sanity/uuid': 3.0.3
       debug: 4.4.3(supports-color@8.1.1)
       lodash-es: 4.18.1
@@ -9761,11 +9761,11 @@ snapshots:
     transitivePeerDependencies:
       - '@sanity/types'
 
-  '@sanity/presentation-comlink@2.2.3(@sanity/types@6.9.3-next.1)':
+  '@sanity/presentation-comlink@2.2.3(@sanity/types@6.9.3-next.2)':
     dependencies:
       '@sanity/client': 7.26.2
       '@sanity/comlink': 4.0.3
-      '@sanity/visual-editing-types': 2.0.14(@sanity/client@7.26.2)(@sanity/types@6.9.3-next.1)
+      '@sanity/visual-editing-types': 2.0.14(@sanity/client@7.26.2)(@sanity/types@6.9.3-next.2)
       xstate: 5.32.5
     transitivePeerDependencies:
       - '@sanity/types'
@@ -9850,11 +9850,11 @@ snapshots:
     transitivePeerDependencies:
       - '@types/react'
 
-  '@sanity/schema@6.9.3-next.1(@types/react@19.2.18)':
+  '@sanity/schema@6.9.3-next.2(@types/react@19.2.18)':
     dependencies:
       '@sanity/descriptors': 1.3.0
       '@sanity/generate-help-url': 4.0.0
-      '@sanity/types': 6.9.3-next.1(@types/react@19.2.18)
+      '@sanity/types': 6.9.3-next.2(@types/react@19.2.18)
       arrify: 3.0.0
       get-it: 8.8.3
       groq-js: 2.0.0
@@ -9909,7 +9909,7 @@ snapshots:
       '@actions/github': 9.1.1
       yaml: 2.9.0
 
-  '@sanity/themer@0.3.3(react-dom@19.2.8)(react@19.2.8)(sanity@6.9.3-next.1)(styled-components@6.5.2)':
+  '@sanity/themer@0.3.3(react-dom@19.2.8)(react@19.2.8)(sanity@6.9.3-next.2)(styled-components@6.5.2)':
     dependencies:
       '@sanity/color': 3.0.8
       '@sanity/icons': 5.2.1(react@19.2.8)
@@ -9919,7 +9919,7 @@ snapshots:
       react-refractor: 4.0.0(react@19.2.8)
       refractor: 5.0.0
     optionalDependencies:
-      sanity: 6.9.3-next.1(@babel/core@7.29.7)(@babel/runtime@7.29.7)(@noble/hashes@2.2.0)(@rolldown/plugin-babel@0.2.3)(@sanity/sdk@2.19.0)(@types/node@24.13.3)(@types/react-dom@19.2.4)(@types/react@19.2.18)(esbuild@0.28.1)(jiti@2.7.0)(oxfmt@0.62.0)(react-dom@19.2.8)(react@19.2.8)(rolldown@1.2.2)(styled-components@6.5.2)(typescript@7.0.2)
+      sanity: 6.9.3-next.2(@babel/core@7.29.7)(@babel/runtime@7.29.7)(@noble/hashes@2.2.0)(@rolldown/plugin-babel@0.2.3)(@sanity/sdk@2.19.0)(@types/node@24.13.3)(@types/react-dom@19.2.4)(@types/react@19.2.18)(esbuild@0.28.1)(jiti@2.7.0)(oxfmt@0.62.0)(react-dom@19.2.8)(react@19.2.8)(rolldown@1.2.2)(styled-components@6.5.2)(typescript@7.0.2)
       styled-components: 6.5.2(react-dom@19.2.8)(react@19.2.8)
     transitivePeerDependencies:
       - react-dom
@@ -9938,7 +9938,7 @@ snapshots:
       '@sanity/media-library-types': 1.6.0
       '@types/react': 19.2.18
 
-  '@sanity/types@6.9.3-next.1(@types/react@19.2.18)':
+  '@sanity/types@6.9.3-next.2(@types/react@19.2.18)':
     dependencies:
       '@sanity/client': 7.26.2
       '@sanity/media-library-types': 1.6.0
@@ -9969,12 +9969,12 @@ snapshots:
     transitivePeerDependencies:
       - '@types/react'
 
-  '@sanity/util@6.9.3-next.1(@types/react@19.2.18)':
+  '@sanity/util@6.9.3-next.2(@types/react@19.2.18)':
     dependencies:
       '@date-fns/tz': 1.5.0
       '@date-fns/utc': 2.1.1
       '@sanity/client': 7.26.2
-      '@sanity/types': 6.9.3-next.1(@types/react@19.2.18)
+      '@sanity/types': 6.9.3-next.2(@types/react@19.2.18)
       date-fns: 4.4.0
       rxjs: 7.8.2
     transitivePeerDependencies:
@@ -9984,7 +9984,7 @@ snapshots:
     dependencies:
       uuid: 11.1.1
 
-  '@sanity/vision@6.9.3-next.1(@babel/runtime@7.29.7)(@codemirror/lint@6.9.7)(@codemirror/theme-one-dark@6.1.3)(codemirror@6.0.2)(react-dom@19.2.8)(react@19.2.8)(sanity@6.9.3-next.1)(styled-components@6.5.2)':
+  '@sanity/vision@6.9.3-next.2(@babel/runtime@7.29.7)(@codemirror/lint@6.9.7)(@codemirror/theme-one-dark@6.1.3)(codemirror@6.0.2)(react-dom@19.2.8)(react@19.2.8)(sanity@6.9.3-next.2)(styled-components@6.5.2)':
     dependencies:
       '@codemirror/autocomplete': 6.20.3
       '@codemirror/commands': 6.10.4
@@ -10012,7 +10012,7 @@ snapshots:
       react: 19.2.8
       react-rx: 5.1.1(react@19.2.8)(rxjs@7.8.2)
       rxjs: 7.8.2
-      sanity: 6.9.3-next.1(@babel/core@7.29.7)(@babel/runtime@7.29.7)(@noble/hashes@2.2.0)(@rolldown/plugin-babel@0.2.3)(@sanity/sdk@2.19.0)(@types/node@24.13.3)(@types/react-dom@19.2.4)(@types/react@19.2.18)(esbuild@0.28.1)(jiti@2.7.0)(oxfmt@0.62.0)(react-dom@19.2.8)(react@19.2.8)(rolldown@1.2.2)(styled-components@6.5.2)(typescript@7.0.2)
+      sanity: 6.9.3-next.2(@babel/core@7.29.7)(@babel/runtime@7.29.7)(@noble/hashes@2.2.0)(@rolldown/plugin-babel@0.2.3)(@sanity/sdk@2.19.0)(@types/node@24.13.3)(@types/react-dom@19.2.4)(@types/react@19.2.18)(esbuild@0.28.1)(jiti@2.7.0)(oxfmt@0.62.0)(react-dom@19.2.8)(react@19.2.8)(rolldown@1.2.2)(styled-components@6.5.2)(typescript@7.0.2)
       use-effect-event: 2.0.3(react@19.2.8)
     transitivePeerDependencies:
       - '@babel/runtime'
@@ -10037,13 +10037,13 @@ snapshots:
     optionalDependencies:
       '@sanity/types': 6.9.2(@types/react@19.2.18)
 
-  '@sanity/visual-editing-types@2.0.14(@sanity/client@7.26.2)(@sanity/types@6.9.3-next.1)':
+  '@sanity/visual-editing-types@2.0.14(@sanity/client@7.26.2)(@sanity/types@6.9.3-next.2)':
     dependencies:
       '@sanity/client': 7.26.2
     optionalDependencies:
-      '@sanity/types': 6.9.3-next.1(@types/react@19.2.18)
+      '@sanity/types': 6.9.3-next.2(@types/react@19.2.18)
 
-  '@sanity/visual-editing@6.0.1(@sanity/client@7.26.2)(@types/react@19.2.18)(next@16.3.1-canary.0)(react-dom@19.2.8)(react@19.2.8)(styled-components@6.5.2)(typescript@7.0.2)':
+  '@sanity/visual-editing@6.0.1(@sanity/client@7.26.2)(@types/react@19.2.18)(next@16.3.1-canary.12)(react-dom@19.2.8)(react@19.2.8)(styled-components@6.5.2)(typescript@7.0.2)':
     dependencies:
       '@sanity/comlink': 4.0.3
       '@sanity/icons': 5.2.1(react@19.2.8)
@@ -10065,7 +10065,7 @@ snapshots:
       xstate: 5.32.5
     optionalDependencies:
       '@sanity/client': 7.26.2
-      next: 16.3.1-canary.0(@babel/core@7.29.7)(@types/node@24.13.3)(react-dom@19.2.8)(react@19.2.8)
+      next: 16.3.1-canary.12(@babel/core@7.29.7)(@types/node@24.13.3)(react-dom@19.2.8)(react@19.2.8)
     transitivePeerDependencies:
       - '@types/react'
       - typescript
@@ -10193,7 +10193,7 @@ snapshots:
 
   '@standard-schema/spec@1.1.0': {}
 
-  '@swc/helpers@0.5.15':
+  '@swc/helpers@0.5.23':
     dependencies:
       tslib: 2.8.1
 
@@ -12128,10 +12128,10 @@ snapshots:
 
   nanoid@6.0.1: {}
 
-  next@16.3.1-canary.0(@babel/core@7.29.7)(@types/node@24.13.3)(react-dom@19.2.8)(react@19.2.8):
+  next@16.3.1-canary.12(@babel/core@7.29.7)(@types/node@24.13.3)(react-dom@19.2.8)(react@19.2.8):
     dependencies:
-      '@next/env': 16.3.1-canary.0
-      '@swc/helpers': 0.5.15
+      '@next/env': 16.3.1-canary.12
+      '@swc/helpers': 0.5.23
       baseline-browser-mapping: 2.11.12
       caniuse-lite: 1.0.30001806
       postcss: 8.5.23
@@ -12139,14 +12139,14 @@ snapshots:
       react-dom: 19.2.8(react@19.2.8)
       styled-jsx: 5.1.6(@babel/core@7.29.7)(react@19.2.8)
     optionalDependencies:
-      '@next/swc-darwin-arm64': 16.3.1-canary.0
-      '@next/swc-darwin-x64': 16.3.1-canary.0
-      '@next/swc-linux-arm64-gnu': 16.3.1-canary.0
-      '@next/swc-linux-arm64-musl': 16.3.1-canary.0
-      '@next/swc-linux-x64-gnu': 16.3.1-canary.0
-      '@next/swc-linux-x64-musl': 16.3.1-canary.0
-      '@next/swc-win32-arm64-msvc': 16.3.1-canary.0
-      '@next/swc-win32-x64-msvc': 16.3.1-canary.0
+      '@next/swc-darwin-arm64': 16.3.1-canary.12
+      '@next/swc-darwin-x64': 16.3.1-canary.12
+      '@next/swc-linux-arm64-gnu': 16.3.1-canary.12
+      '@next/swc-linux-arm64-musl': 16.3.1-canary.12
+      '@next/swc-linux-x64-gnu': 16.3.1-canary.12
+      '@next/swc-linux-x64-musl': 16.3.1-canary.12
+      '@next/swc-win32-arm64-msvc': 16.3.1-canary.12
+      '@next/swc-win32-x64-msvc': 16.3.1-canary.12
       sharp: 0.35.3(@types/node@24.13.3)
     transitivePeerDependencies:
       - '@babel/core'
@@ -12738,7 +12738,7 @@ snapshots:
 
   safer-buffer@2.1.2: {}
 
-  sanity@6.9.3-next.1(@babel/core@7.29.7)(@babel/runtime@7.29.7)(@noble/hashes@2.2.0)(@rolldown/plugin-babel@0.2.3)(@sanity/sdk@2.19.0)(@types/node@24.13.3)(@types/react-dom@19.2.4)(@types/react@19.2.18)(esbuild@0.28.1)(jiti@2.7.0)(oxfmt@0.62.0)(react-dom@19.2.8)(react@19.2.8)(rolldown@1.2.2)(styled-components@6.5.2)(typescript@7.0.2):
+  sanity@6.9.3-next.2(@babel/core@7.29.7)(@babel/runtime@7.29.7)(@noble/hashes@2.2.0)(@rolldown/plugin-babel@0.2.3)(@sanity/sdk@2.19.0)(@types/node@24.13.3)(@types/react-dom@19.2.4)(@types/react@19.2.18)(esbuild@0.28.1)(jiti@2.7.0)(oxfmt@0.62.0)(react-dom@19.2.8)(react@19.2.8)(rolldown@1.2.2)(styled-components@6.5.2)(typescript@7.0.2):
     dependencies:
       '@algorithm.ts/lcs': 4.0.6
       '@date-fns/tz': 1.5.0
@@ -12770,7 +12770,7 @@ snapshots:
       '@sanity/client': 7.26.2
       '@sanity/color': 3.0.8
       '@sanity/comlink': 4.0.3
-      '@sanity/diff': 6.9.3-next.1
+      '@sanity/diff': 6.9.3-next.2
       '@sanity/diff-match-patch': 3.2.0
       '@sanity/diff-patch': 5.0.0
       '@sanity/eventsource': 5.0.4
@@ -12783,15 +12783,15 @@ snapshots:
       '@sanity/message-protocol': 0.24.0
       '@sanity/migrate': 8.0.2(@types/react@19.2.18)(xstate@5.32.5)
       '@sanity/mutate': 0.18.1(xstate@5.32.5)
-      '@sanity/mutator': 6.9.3-next.1(@types/react@19.2.18)
-      '@sanity/presentation-comlink': 2.2.3(@sanity/types@6.9.3-next.1)
+      '@sanity/mutator': 6.9.3-next.2(@types/react@19.2.18)
+      '@sanity/presentation-comlink': 2.2.3(@sanity/types@6.9.3-next.2)
       '@sanity/preview-url-secret': 4.1.4(@sanity/client@7.26.2)
       '@sanity/prism-groq': 1.1.2
-      '@sanity/schema': 6.9.3-next.1(@types/react@19.2.18)
+      '@sanity/schema': 6.9.3-next.2(@types/react@19.2.18)
       '@sanity/telemetry': 1.1.0(react@19.2.8)
-      '@sanity/types': 6.9.3-next.1(@types/react@19.2.18)
+      '@sanity/types': 6.9.3-next.2(@types/react@19.2.18)
       '@sanity/ui': 4.0.1(react-dom@19.2.8)(react@19.2.8)(styled-components@6.5.2)
-      '@sanity/util': 6.9.3-next.1(@types/react@19.2.18)
+      '@sanity/util': 6.9.3-next.2(@types/react@19.2.18)
       '@sanity/uuid': 3.0.3
       '@sanity/workbench': 0.1.0-alpha.36(@sanity/sdk@2.19.0)(react@19.2.8)(xstate@5.32.5)
       '@sentry/react': 10.69.0(react@19.2.8)
