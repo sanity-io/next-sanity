@@ -49,6 +49,10 @@ The three condition files must expose the same public surface, but their runtime
 
 When adding, removing, or changing an export from `next-sanity/live`, update all three condition entry points together, verify their exported names match exactly, and preserve the condition-specific runtime behavior.
 
+## AI Literacy Framework (AILF)
+
+`packages/ailf` (`@repo/ailf`) holds the AILF evaluation setup: `.ailf/ailf.config.ts` plus `.ailf/tasks/*.task.ts` scenario tasks paired with `*.reference.tsx` answer keys (multi-file solutions separated by `// --- path ---` comments; these are graded artefacts, intentionally excluded from oxlint, oxfmt, and the package tsconfig). Evals run remotely via `.github/workflows/ailf-eval.yml` (requires the `AILF_API_KEY` repo secret) on PRs touching `packages/ailf/**`, weekly, and via manual dispatch. Validate task files locally with `pnpm --filter @repo/ailf run ailf:validate` (no API key needed). See `packages/ailf/README.md` for how to add tasks.
+
 ## Cursor Cloud specific instructions
 
 This is a pnpm + Turborepo monorepo. The publishable library is `packages/next-sanity`; `apps/mvp` (port 3000) and `apps/static` (port 3001) are Next.js demo apps, and `fixtures/*/*` are CI build guardrails. Standard commands live in the root `package.json` scripts (`build`, `dev`, `lint`, `test`, `test:e2e`) and per-app `package.json`; use those rather than duplicating them here.
