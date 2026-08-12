@@ -1,0 +1,18 @@
+{
+  "name": "@repo/ailf",
+  "private": true,
+  "description": "AI Literacy Framework (AILF) evaluation configuration for next-sanity",
+  "type": "module",
+  "scripts": {
+    "ailf": "ailf",
+    "ailf:smoke": "AILF_CLASSIFICATION=adhoc ailf run --remote --debug",
+    "ailf:validate": "ailf validate tasks .ailf/tasks"
+  },
+  "devDependencies": {
+    "@repo/typescript-config": "workspace:*",
+    "@sanity/ailf": "^7.36.0"
+  },
+  "engines": {
+    "node": ">=22.12"
+  }
+}

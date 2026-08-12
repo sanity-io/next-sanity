@@ -3,6 +3,17 @@ packages:
   - fixtures/*/*
   - packages/*
 
+# Build scripts of @sanity/ailf's transitive deps are gated off because AILF runs
+# remote (--remote); flip a value to true if you need one built locally.
+allowBuilds:
+  '@playwright/browser-chromium': false
+  '@swc/core': false
+  better-sqlite3: false
+  esbuild: false
+  onnxruntime-node: false
+  protobufjs: false
+  sharp: false
+
 catalog:
   '@next/env': 16.3.1-canary.13
   '@sanity/client': ^7.26.2
