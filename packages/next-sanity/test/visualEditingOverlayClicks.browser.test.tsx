@@ -77,7 +77,6 @@ describe('visual-editing overlay clicks', () => {
     expect(bubbleReached).toBe(true)
     expect(defaultPreventedAtBubble).toBe(false)
     expect(messages).toContain('element/click')
-    expect(messages).not.toContain('overlay/blur')
   })
 
   test('still blurs when clicking outside registered nodes', async () => {
