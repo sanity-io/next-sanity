@@ -66,12 +66,14 @@ describe('visual-editing overlay clicks', () => {
     link.addEventListener('click', (event) => {
       bubbleReached = true
       defaultPreventedAtBubble = event.defaultPrevented
+      // Keep the Vitest iframe from following href after we have observed
+      // that the overlay did not already cancel the event.
+      event.preventDefault()
     })
 
     const click = new MouseEvent('click', {bubbles: true, cancelable: true})
     link.dispatchEvent(click)
 
-    expect(click.defaultPrevented).toBe(false)
     expect(bubbleReached).toBe(true)
     expect(defaultPreventedAtBubble).toBe(false)
     expect(messages).toContain('element/click')
