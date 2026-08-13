@@ -39,7 +39,7 @@ describe('visual-editing overlay clicks', () => {
     const link = document.createElement('a')
     link.href = '/projects/project-bravo'
     link.textContent = 'Project Bravo'
-    link.dataset.sanity = createDataAttribute({
+    link.dataset['sanity'] = createDataAttribute({
       id: 'project-bravo',
       type: 'project',
       path: 'title',
