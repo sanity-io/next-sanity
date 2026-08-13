@@ -20,42 +20,10 @@ describe('visual-editing overlay clicks', () => {
     document.body.replaceChildren()
   })
 
-  test('does not cancel clicks on hovered data-sanity links', async () => {
-    const OriginalIO = window.IntersectionObserver
-    window.IntersectionObserver = class ImmediateIntersectionObserver {
-      readonly root = null
-      readonly rootMargin = ''
-      readonly thresholds: readonly number[] = []
-      constructor(private readonly callback: IntersectionObserverCallback) {}
-      observe(element: Element) {
-        this.callback(
-          [{target: element, isIntersecting: true} as IntersectionObserverEntry],
-          this as unknown as IntersectionObserver,
-        )
-      }
-      unobserve() {}
-      disconnect() {}
-      takeRecords(): IntersectionObserverEntry[] {
-        return []
-      }
-    } as typeof IntersectionObserver
-    cleanups.push(() => {
-      window.IntersectionObserver = OriginalIO
-    })
-
+  async function mountHoveredLink() {
     const messages: OverlayMsg['type'][] = []
     const overlayRoot = document.createElement('div')
     document.body.append(overlayRoot)
-
-    const link = document.createElement('a')
-    link.href = '/projects/project-bravo'
-    link.textContent = 'Project Bravo'
-    link.dataset.sanity = createDataAttribute({
-      id: 'project-bravo',
-      type: 'project',
-      path: 'title',
-    }).toString()
-    document.body.append(link)
 
     const controller = createOverlayController({
       handler: (message) => {
@@ -68,11 +36,30 @@ describe('visual-editing overlay clicks', () => {
     })
     cleanups.push(() => controller.destroy())
 
+    const link = document.createElement('a')
+    link.href = '/projects/project-bravo'
+    link.textContent = 'Project Bravo'
+    link.dataset.sanity = createDataAttribute({
+      id: 'project-bravo',
+      type: 'project',
+      path: 'title',
+    }).toString()
+    // Append after create() so MutationObserver registers the node while
+    // `activated` is already true (avoids the IntersectionObserver race in
+    // activate(), which observes before flipping that flag).
+    document.body.append(link)
+
     await vi.waitFor(() => {
       expect(messages).toContain('element/activate')
     })
 
     link.dispatchEvent(new MouseEvent('mousemove', {bubbles: true, cancelable: true}))
+
+    return {link, messages}
+  }
+
+  test('does not cancel clicks on hovered data-sanity links', async () => {
+    const {link, messages} = await mountHoveredLink()
 
     let bubbleReached = false
     let defaultPreventedAtBubble = true
@@ -89,5 +76,18 @@ describe('visual-editing overlay clicks', () => {
     expect(defaultPreventedAtBubble).toBe(false)
     expect(messages).toContain('element/click')
     expect(messages).not.toContain('overlay/blur')
+  })
+
+  test('still blurs when clicking outside registered nodes', async () => {
+    const {messages} = await mountHoveredLink()
+
+    const outside = document.createElement('button')
+    outside.type = 'button'
+    outside.textContent = 'Outside'
+    document.body.append(outside)
+
+    outside.dispatchEvent(new MouseEvent('click', {bubbles: true, cancelable: true}))
+
+    expect(messages).toContain('overlay/blur')
   })
 })
