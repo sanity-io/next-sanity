@@ -1,0 +1,60 @@
+diff --git a/dist/SharedStateContext-Beil58pS.js b/dist/SharedStateContext-Beil58pS.js
+index 0b71b842781eb7e3bc10b0e6649ddc2989ea2aba..c71871c28035c557fed2ab4303cdacc7a9ccab7a 100644
+--- a/dist/SharedStateContext-Beil58pS.js
++++ b/dist/SharedStateContext-Beil58pS.js
+@@ -697,7 +697,6 @@ function createOverlayController({ handler, overlayElement, inFrame, inPopUp, op
+ 			click(event) {
+ 				let target = event.target;
+ 				if (element === getHoveredElement() && element.contains(target)) {
+-					inFrame && (event.preventDefault(), event.stopPropagation());
+ 					let sanity = elementsMap.get(element)?.sanity;
+ 					sanity && !activeDragSequence && handler({
+ 						type: "element/click",
+@@ -889,6 +888,10 @@ function createOverlayController({ handler, overlayElement, inFrame, inPopUp, op
+ 			element.dataset.sanityOverlayElement === "capture" && (event.preventDefault(), event.stopPropagation());
+ 			return;
+ 		}
++		let target = event.target;
++		if (isElementNode$1(target)) {
++			for (let el of elementSet) if (el.contains(target)) return;
++		}
+ 		hoverStack = [], handler({ type: "overlay/blur" });
+ 	}
+ 	function handleExclusivePluginClosed() {
+diff --git a/src/controller.ts b/src/controller.ts
+index 28c34497afb010cc0325f664f88b6a6d62975f4b..c111251d6a1684dd79e5eb7a30d5138f9c4ee7cf 100644
+--- a/src/controller.ts
++++ b/src/controller.ts
+@@ -191,12 +191,10 @@ export function createOverlayController({
+         const target = event.target as ElementNode | null
+ 
+         if (element === getHoveredElement() && element.contains(target)) {
+-          // Click events are only supported supported in iframes, not well supported in popups
+-          // @TODO presentation tool should report wether it's visible or not, so we can adapt properly and allow multi-window preview workflows
+-          if (inFrame) {
+-            event.preventDefault()
+-            event.stopPropagation()
+-          }
++          // Do not preventDefault or stopPropagation. Next.js <Link> (and other
++          // in-app routers) skip client navigation when default is cancelled.
++          // Presentation still receives `element/click` below. `handleBlur`
++          // ignores clicks on registered nodes so the overlay is not dismissed.
+ 
+           const sanity = elementsMap.get(element)?.sanity
+           if (sanity && !activeDragSequence) {
+@@ -547,6 +545,15 @@ export function createOverlayController({
+       return
+     }
+ 
++    const target = event.target
++    if (isElementNode(target)) {
++      for (const el of elementSet) {
++        if (el.contains(target)) {
++          return
++        }
++      }
++    }
++
+     hoverStack = []
+     handler({
+       type: 'overlay/blur',

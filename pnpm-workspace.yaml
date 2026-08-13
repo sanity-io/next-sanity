@@ -20,13 +20,14 @@ catalog:
   sanity: 6.9.2
   styled-components: ^6.5.2
   typescript: 7.0.2
+dedupeDirectDeps: true
 
 dedupePeers: true
-dedupeDirectDeps: true
 linkWorkspacePackages: deep
 
 overrides:
   '@next/env': 'catalog:'
+  '@sanity/vision': next
   '@types/react': 'catalog:'
   '@types/react-dom': 'catalog:'
   next: 'catalog:'
@@ -34,7 +35,8 @@ overrides:
   react-dom: 'catalog:'
   # sanity: 'catalog:'
   sanity: next
-  '@sanity/vision': next
+patchedDependencies:
+  '@sanity/visual-editing@6.0.1': patches/@sanity__visual-editing@6.0.1.patch
 
 peerDependencyRules:
   allowAny:

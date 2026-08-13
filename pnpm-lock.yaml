@@ -42,6 +42,11 @@ overrides:
   sanity: next
   '@sanity/vision': next
 
+patchedDependencies:
+  '@sanity/visual-editing@6.0.1':
+    hash: bf98145cd87266b7de35c416e8643424917fb06b4034d4342e8aab3083d942cf
+    path: patches/@sanity__visual-editing@6.0.1.patch
+
 importers:
 
   .:
@@ -272,7 +277,7 @@ importers:
         version: 4.1.4(@sanity/client@7.26.2)
       '@sanity/visual-editing':
         specifier: ^6.0.1
-        version: 6.0.1(@sanity/client@7.26.2)(@types/react@19.2.18)(next@16.3.1-canary.15)(react-dom@19.2.8)(react@19.2.8)(styled-components@6.5.2)(typescript@7.0.2)
+        version: 6.0.1(patch_hash=bf98145cd87266b7de35c416e8643424917fb06b4034d4342e8aab3083d942cf)(@sanity/client@7.26.2)(@types/react@19.2.18)(next@16.3.1-canary.15)(react-dom@19.2.8)(react@19.2.8)(styled-components@6.5.2)(typescript@7.0.2)
       '@sanity/webhook':
         specifier: ^4.0.4
         version: 4.0.4
@@ -10122,7 +10127,7 @@ snapshots:
     optionalDependencies:
       '@sanity/types': 6.9.2(@types/react@19.2.18)
 
-  '@sanity/visual-editing@6.0.1(@sanity/client@7.26.2)(@types/react@19.2.18)(next@16.3.1-canary.15)(react-dom@19.2.8)(react@19.2.8)(styled-components@6.5.2)(typescript@7.0.2)':
+  '@sanity/visual-editing@6.0.1(patch_hash=bf98145cd87266b7de35c416e8643424917fb06b4034d4342e8aab3083d942cf)(@sanity/client@7.26.2)(@types/react@19.2.18)(next@16.3.1-canary.15)(react-dom@19.2.8)(react@19.2.8)(styled-components@6.5.2)(typescript@7.0.2)':
     dependencies:
       '@sanity/comlink': 4.0.3
       '@sanity/icons': 5.2.1(react@19.2.8)
