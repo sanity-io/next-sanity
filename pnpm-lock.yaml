@@ -34,13 +34,13 @@ catalogs:
 
 overrides:
   '@next/env': 16.3.1-canary.15
+  '@sanity/vision': next
   '@types/react': ^19.2.18
   '@types/react-dom': ^19.2.4
   next: 16.3.1-canary.15
   react: ^19.2.8
   react-dom: ^19.2.8
   sanity: next
-  '@sanity/vision': next
 
 importers:
 
@@ -271,8 +271,8 @@ importers:
         specifier: ^4.1.4
         version: 4.1.4(@sanity/client@7.26.2)
       '@sanity/visual-editing':
-        specifier: ^6.0.1
-        version: 6.0.1(@sanity/client@7.26.2)(@types/react@19.2.18)(next@16.3.1-canary.15)(react-dom@19.2.8)(react@19.2.8)(styled-components@6.5.2)(typescript@7.0.2)
+        specifier: ^6.0.4
+        version: 6.0.4(@sanity/client@7.26.2)(@types/react@19.2.18)(next@16.3.1-canary.15)(react-dom@19.2.8)(react@19.2.8)(styled-components@6.5.2)(typescript@7.0.2)
       '@sanity/webhook':
         specifier: ^4.0.4
         version: 4.0.4
@@ -3160,6 +3160,14 @@ packages:
       react-dom: ^19.2.8
       styled-components: ^6.1
 
+  '@sanity/ui@4.0.3':
+    resolution: {integrity: sha512-IXZ01joAs1YDKhzcvW5+F+3hL5BsDLH3HB7WqpBqfTitQ0jmvyXr8quHQnsP8br3JyxEREmTEAIJhS8ABEXPXw==}
+    engines: {node: '>=22.12'}
+    peerDependencies:
+      react: ^19.2.8
+      react-dom: ^19.2.8
+      styled-components: ^6.1
+
   '@sanity/ui@5.0.0-alpha.3':
     resolution: {integrity: sha512-HON+yubVQfFfsipEtmlr6LrG+kcEw3pcBj5xIiDU8gZQI4tMwwRzJArBmVV1S1jcfcafkJA/kVmbcHZUb0SaIQ==}
     engines: {node: '>=20.19 <22 || >=22.12'}
@@ -3201,8 +3209,8 @@ packages:
       '@sanity/types':
         optional: true
 
-  '@sanity/visual-editing@6.0.1':
-    resolution: {integrity: sha512-Aw3ui8/3by/cxUhIkUMPBEE0EE6KJwQFpsKxrA5tpbX09Q6slhzj0/BQR13nqlLbZVK2iwG+ikdn1Grree8Mww==}
+  '@sanity/visual-editing@6.0.4':
+    resolution: {integrity: sha512-xtuQmWPDnFu4xEMaiyJvZ/GUBMppOmCMddF/y+uZWWcbBl56laAlxo1WYoj4DNQCQHqfhFFbwblVPdjnOu1eTQ==}
     engines: {node: '>=22.12'}
     peerDependencies:
       '@sanity/client': ^7.26.2
@@ -3211,7 +3219,7 @@ packages:
       react: ^19.2.8
       react-dom: ^19.2.8
       react-router: '>= 7'
-      styled-components: ^6.1
+      styled-components: ^6.5.2
       svelte: '>= 4'
     peerDependenciesMeta:
       '@sanity/client':
@@ -10010,6 +10018,20 @@ snapshots:
       styled-components: 6.5.2(react-dom@19.2.8)(react@19.2.8)
       use-effect-event: 2.0.3(react@19.2.8)
 
+  '@sanity/ui@4.0.3(react-dom@19.2.8)(react@19.2.8)(styled-components@6.5.2)':
+    dependencies:
+      '@floating-ui/react-dom': 2.1.9(react-dom@19.2.8)(react@19.2.8)
+      '@sanity/color': 3.0.8
+      '@sanity/icons': 5.2.1(react@19.2.8)
+      csstype: 3.2.3
+      motion: 13.1.0(react-dom@19.2.8)(react@19.2.8)
+      react: 19.2.8
+      react-dom: 19.2.8(react@19.2.8)
+      react-is: 19.2.8
+      react-refractor: 4.0.0(react@19.2.8)
+      styled-components: 6.5.2(react-dom@19.2.8)(react@19.2.8)
+      use-effect-event: 2.0.3(react@19.2.8)
+
   '@sanity/ui@5.0.0-alpha.3(react-dom@19.2.8)(react@19.2.8)':
     dependencies:
       '@sanity-labs/design-tokens': 0.0.2-alpha.4
@@ -10105,7 +10127,7 @@ snapshots:
     optionalDependencies:
       '@sanity/types': 6.9.2(@types/react@19.2.18)
 
-  '@sanity/visual-editing@6.0.1(@sanity/client@7.26.2)(@types/react@19.2.18)(next@16.3.1-canary.15)(react-dom@19.2.8)(react@19.2.8)(styled-components@6.5.2)(typescript@7.0.2)':
+  '@sanity/visual-editing@6.0.4(@sanity/client@7.26.2)(@types/react@19.2.18)(next@16.3.1-canary.15)(react-dom@19.2.8)(react@19.2.8)(styled-components@6.5.2)(typescript@7.0.2)':
     dependencies:
       '@sanity/comlink': 4.0.3
       '@sanity/icons': 5.2.1(react@19.2.8)
@@ -10113,7 +10135,7 @@ snapshots:
       '@sanity/presentation-comlink': 2.2.3(@sanity/types@6.9.2)
       '@sanity/preview-url-secret': 4.1.4(@sanity/client@7.26.2)
       '@sanity/types': 6.9.2(@types/react@19.2.18)
-      '@sanity/ui': 4.0.1(react-dom@19.2.8)(react@19.2.8)(styled-components@6.5.2)
+      '@sanity/ui': 4.0.3(react-dom@19.2.8)(react@19.2.8)(styled-components@6.5.2)
       '@sanity/visual-editing-csm': 3.0.15(@sanity/client@7.26.2)(@sanity/types@6.9.2)(typescript@7.0.2)
       '@vercel/stega': 1.1.0
       dequal: 2.0.3
