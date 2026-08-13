@@ -27,7 +27,6 @@ linkWorkspacePackages: deep
 
 overrides:
   '@next/env': 'catalog:'
-  '@sanity/vision': next
   '@types/react': 'catalog:'
   '@types/react-dom': 'catalog:'
   next: 'catalog:'
@@ -35,6 +34,7 @@ overrides:
   react-dom: 'catalog:'
   # sanity: 'catalog:'
   sanity: next
+  '@sanity/vision': next
 
 peerDependencyRules:
   allowAny:
