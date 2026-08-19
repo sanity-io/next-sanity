@@ -1,12 +1,11 @@
 import {perspectiveCookieName, variantCookieName} from '@sanity/preview-url-secret/constants'
 import {vercelStegaDecodeAll} from '@vercel/stega'
-import {createClient} from 'next-sanity'
 import {PHASE_PRODUCTION_BUILD} from 'next/constants'
 import {afterEach, describe, expect, test, vi} from 'vitest'
 
 import type {LivePerspective} from '#live/types'
 
-import {apiVersion, dataset, getSanityFetchMock, projectId} from './helpers'
+import {apiVersion, createClient, dataset, getSanityFetchMock, projectId} from './helpers'
 
 let isDraftMode = false
 let isDraftModeCalled = false

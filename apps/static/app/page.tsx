@@ -1,4 +1,3 @@
-import {unstable__adapter, unstable__environment} from 'next-sanity'
 import Link from 'next/link'
 
 import PostsLayout, {type PostsLayoutProps, query} from '@/app/PostsLayout'
@@ -13,8 +12,6 @@ export default async function IndexPage() {
     <>
       <div
         className="relative bg-gray-50 px-4 pt-16 pb-20 sm:px-6 lg:px-8 lg:pt-24 lg:pb-28"
-        data-adapter={unstable__adapter}
-        data-environment={unstable__environment}
       >
         <div className="absolute inset-0">
           <div className="h-1/3 bg-white sm:h-2/3" />
