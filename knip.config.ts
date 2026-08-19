@@ -2,7 +2,22 @@ import type {KnipConfig} from 'knip'
 
 const config: KnipConfig = {
   workspaces: {
-    '.': {},
+    '.': {
+      ignoreBinaries: [
+        // From @sanity/ailf (devDep of @repo/ailf); invoked via `pnpm exec ailf` in the ailf-eval workflow
+        'ailf',
+      ],
+    },
+    'packages/ailf': {
+      entry: ['.ailf/ailf.config.ts', '.ailf/tasks/*.task.ts'],
+      project: ['.ailf/**/*.ts'],
+      // Reference solutions are graded artefacts with multi-file content, not compiled code
+      ignore: ['.ailf/tasks/*.reference.tsx'],
+      ignoreDependencies: [
+        // Internal workspace config package used via tsconfig extends
+        '@repo/typescript-config',
+      ],
+    },
     'packages/next-sanity': {
       entry: ['src/**/index.ts', 'src/**/index.default.ts'],
       project: ['src/**/*.{ts,tsx}'],
