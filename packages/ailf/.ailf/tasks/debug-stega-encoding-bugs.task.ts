@@ -118,7 +118,9 @@ Explain what is going on, then show the corrected code.`,
         },
       ],
     },
+    // No hard `stega: false` guard: the metadata fix is judged by the
+    // `fixes-metadata-fetch` rubric criterion, which also accepts cleaning the
+    // returned strings instead of disabling stega for the fetch.
     {type: 'contains', value: 'stegaClean'},
-    {type: 'contains-any', value: ['stega: false', 'stega:false']},
   ],
 })
