@@ -15,14 +15,15 @@ The reference solution is never shown to the evaluated model and does not contri
 
 ## Task inventory
 
-| Task                                                                                               | Probes                                                                               |
-| -------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------ |
-| [`add-live-to-client-fetch-app`](.ailf/tasks/add-live-to-client-fetch-app.task.ts)                 | Adding Sanity Live to an App Router blog that fetches with plain `@sanity/client`    |
-| [`migrate-live-app-to-cache-components`](.ailf/tasks/migrate-live-app-to-cache-components.task.ts) | Migrating a Sanity Live app from ISR/revalidation to Cache Components with parity    |
-| [`add-live-to-cache-components-app`](.ailf/tasks/add-live-to-cache-components-app.task.ts)         | Adding Sanity Live to an app already on `cacheComponents` with raw client fetches    |
-| [`add-visual-editing-draft-mode`](.ailf/tasks/add-visual-editing-draft-mode.task.ts)               | Draft Mode + Visual Editing (`defineEnableDraftMode`, `VisualEditing`, Presentation) |
-| [`debug-stega-encoding-bugs`](.ailf/tasks/debug-stega-encoding-bugs.task.ts)                       | Diagnosing stega-encoded strings leaking into app logic, fixing with `stegaClean`    |
-| [`setup-typegen-strict-portable-text`](.ailf/tasks/setup-typegen-strict-portable-text.task.ts)     | Sanity TypeGen setup including strict Portable Text inference                        |
+| Task                                                                                               | Probes                                                                                |
+| -------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------- |
+| [`add-live-to-client-fetch-app`](.ailf/tasks/add-live-to-client-fetch-app.task.ts)                 | Adding Sanity Live to an App Router blog that fetches with plain `@sanity/client`     |
+| [`migrate-live-app-to-cache-components`](.ailf/tasks/migrate-live-app-to-cache-components.task.ts) | Migrating a Sanity Live app from ISR/revalidation to Cache Components with parity     |
+| [`add-live-to-cache-components-app`](.ailf/tasks/add-live-to-cache-components-app.task.ts)         | Adding Sanity Live to an app already on `cacheComponents` with raw client fetches     |
+| [`setup-sync-tag-invalidate-function`](.ailf/tasks/setup-sync-tag-invalidate-function.task.ts)     | Server-side invalidation with a Sync Tag Invalidate Function and `waitFor="function"` |
+| [`add-visual-editing-draft-mode`](.ailf/tasks/add-visual-editing-draft-mode.task.ts)               | Draft Mode + Visual Editing (`defineEnableDraftMode`, `VisualEditing`, Presentation)  |
+| [`debug-stega-encoding-bugs`](.ailf/tasks/debug-stega-encoding-bugs.task.ts)                       | Diagnosing stega-encoded strings leaking into app logic, fixing with `stegaClean`     |
+| [`setup-typegen-strict-portable-text`](.ailf/tasks/setup-typegen-strict-portable-text.task.ts)     | Sanity TypeGen setup including strict Portable Text inference                         |
 
 ## Running locally
 
