@@ -1,5 +1,11 @@
 # next-sanity
 
+## 13.3.4
+
+### Patch Changes
+
+- [#3889](https://github.com/sanity-io/next-sanity/pull/3889) [`1df9999`](https://github.com/sanity-io/next-sanity/commit/1df99999db355d7f75f4bbda484292be4aca9be8) Thanks [@renovate](https://github.com/apps/renovate)! - fix(deps): update dependency styled-components to ^6.5.3
+
 ## 13.3.3
 
 ### Patch Changes
