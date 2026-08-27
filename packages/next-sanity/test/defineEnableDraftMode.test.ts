@@ -127,11 +127,16 @@ afterEach(() => {
   vi.resetModules()
 })
 
-function createRequest(headers?: Record<string, string>) {
-  return new Request('https://example.com/api/draft-mode/enable?sanity-preview-secret=secret', {
-    headers,
-  })
+function createRequest(headers?: Record<string, string>, searchParams?: Record<string, string>) {
+  const url = new URL('https://example.com/api/draft-mode/enable?sanity-preview-secret=secret')
+  for (const [key, value] of Object.entries(searchParams ?? {})) {
+    url.searchParams.set(key, value)
+  }
+  return new Request(url, {headers})
 }
+
+const probeRedirect =
+  'REDIRECT:/api/draft-mode/enable?sanity-preview-secret=secret&sanity-preview-probe=1'
 
 describe('defineEnableDraftMode', () => {
   test('sets Partitioned cookies and flag cookie for cross-site iframe in production', async () => {
@@ -149,7 +154,7 @@ describe('defineEnableDraftMode', () => {
           'sec-fetch-site': 'cross-site',
         }),
       ),
-    ).rejects.toThrow('REDIRECT:/preview')
+    ).rejects.toThrow(probeRedirect)
 
     expect(draftModeEnable).toHaveBeenCalledOnce()
     expect(cookieSet).toHaveBeenCalledWith({
@@ -283,7 +288,7 @@ describe('defineEnableDraftMode', () => {
           'sec-fetch-site': 'cross-site',
         }),
       ),
-    ).rejects.toThrow('REDIRECT:/preview')
+    ).rejects.toThrow(probeRedirect)
 
     expect(cookieSet).toHaveBeenCalledWith({
       name: '__prerender_bypass',
@@ -341,7 +346,7 @@ describe('defineEnableDraftMode', () => {
           'sec-fetch-site': 'cross-site',
         }),
       ),
-    ).rejects.toThrow('REDIRECT:/preview')
+    ).rejects.toThrow(probeRedirect)
 
     expect(cookieSet).toHaveBeenCalledWith({
       name: variantCookieName,
@@ -371,11 +376,145 @@ describe('defineEnableDraftMode', () => {
           'sec-fetch-site': 'cross-site',
         }),
       ),
-    ).rejects.toThrow('REDIRECT:/preview')
+    ).rejects.toThrow(probeRedirect)
 
     expect(cookieSet.mock.calls.some((call) => call[0]?.name === variantCookieName)).toBe(false)
     expect(cookieDelete).toHaveBeenCalledWith({
       name: variantCookieName,
+      httpOnly: true,
+      path: '/',
+      secure: true,
+      sameSite: 'none',
+      partitioned: true,
+    })
+  })
+})
+
+async function importGET() {
+  const {defineEnableDraftMode} = await import('../src/draft-mode/define-enable-draft-mode')
+  return defineEnableDraftMode({
+    // oxlint-disable-next-line no-unsafe-type-assertion
+    client: {} as never,
+  }).GET
+}
+
+describe('cookie access fallback (Firefox ETP)', () => {
+  const iframeHeaders = {
+    'sec-fetch-dest': 'iframe',
+    'sec-fetch-site': 'cross-site',
+  }
+
+  test('skips the probe when the request already carries the bypass cookie', async () => {
+    vi.stubEnv('NODE_ENV', 'production')
+    isDraftMode = true
+    const GET = await importGET()
+
+    await expect(GET(createRequest(iframeHeaders))).rejects.toThrow('REDIRECT:/preview')
+    expect(draftModeEnable).not.toHaveBeenCalled()
+  })
+
+  test('redirects the probe request onwards when the cookie stuck', async () => {
+    vi.stubEnv('NODE_ENV', 'production')
+    isDraftMode = true
+    const GET = await importGET()
+
+    await expect(GET(createRequest(iframeHeaders, {'sanity-preview-probe': '1'}))).rejects.toThrow(
+      'REDIRECT:/preview',
+    )
+  })
+
+  test('serves the Storage Access API interstitial when the probe comes back cookieless', async () => {
+    vi.stubEnv('NODE_ENV', 'production')
+    const GET = await importGET()
+
+    const response = await GET(createRequest(iframeHeaders, {'sanity-preview-probe': '1'}))
+    expect(response.status).toBe(200)
+    expect(response.headers.get('content-type')).toBe('text/html; charset=utf-8')
+    expect(response.headers.get('cache-control')).toBe('no-store')
+    const html = await response.text()
+    expect(html).toContain('requestStorageAccess')
+    expect(html).toContain('var attempt = 1')
+    expect(html).toContain('sanity-preview-probe')
+    // The interstitial response retries the Set-Cookie attempt as well
+    expect(cookieSet).toHaveBeenCalledWith(
+      expect.objectContaining({name: '__prerender_bypass', partitioned: true}),
+    )
+  })
+
+  test('stops auto-retrying once the attempt limit is reached', async () => {
+    vi.stubEnv('NODE_ENV', 'production')
+    const GET = await importGET()
+
+    const response = await GET(createRequest(iframeHeaders, {'sanity-preview-probe': '2'}))
+    expect(response.status).toBe(200)
+    const html = await response.text()
+    expect(html).toContain('var attempt = 2')
+    expect(html).toContain('var maxAutoAttempts = 2')
+  })
+
+  test('asks probed requests with an inactive storage-access permission to retry', async () => {
+    vi.stubEnv('NODE_ENV', 'production')
+    validatePreviewUrl.mockResolvedValue({
+      isValid: true,
+      redirectTo: '/preview',
+      studioOrigin: 'https://my.sanity.studio',
+      studioPreviewPerspective: 'drafts',
+    })
+    const GET = await importGET()
+
+    const response = await GET(
+      createRequest(
+        {...iframeHeaders, 'sec-fetch-storage-access': 'inactive'},
+        {'sanity-preview-probe': '1'},
+      ),
+    )
+    expect(response.status).toBe(401)
+    expect(response.headers.get('activate-storage-access')).toBe(
+      'retry; allowed-origin="https://my.sanity.studio"',
+    )
+    expect(response.headers.get('vary')).toBe('Sec-Fetch-Storage-Access')
+    // No cookies are set on the retry response
+    expect(cookieSet).not.toHaveBeenCalled()
+  })
+
+  test('leaves the first attempt to CHIPS even when a storage-access permission exists', async () => {
+    vi.stubEnv('NODE_ENV', 'production')
+    const GET = await importGET()
+
+    await expect(
+      GET(createRequest({...iframeHeaders, 'sec-fetch-storage-access': 'inactive'})),
+    ).rejects.toThrow(probeRedirect)
+
+    expect(cookieSet).toHaveBeenCalledWith(
+      expect.objectContaining({name: '__prerender_bypass', partitioned: true}),
+    )
+  })
+
+  test('sets unpartitioned cookies and clears the flag cookie when storage access is active', async () => {
+    vi.stubEnv('NODE_ENV', 'production')
+    const GET = await importGET()
+
+    await expect(
+      GET(
+        createRequest(
+          {...iframeHeaders, 'sec-fetch-storage-access': 'active'},
+          {'sanity-preview-probe': '1'},
+        ),
+      ),
+    ).resolves.toHaveProperty('status', 200)
+
+    expect(cookieSet).toHaveBeenCalledWith({
+      name: '__prerender_bypass',
+      value: 'bypass-secret',
+      httpOnly: true,
+      path: '/',
+      secure: true,
+      sameSite: 'none',
+      partitioned: false,
+    })
+    expect(cookieSet.mock.calls.some((call) => call[0]?.name === partitionedCookieName)).toBe(false)
+    expect(cookieDelete).toHaveBeenCalledWith({
+      name: partitionedCookieName,
       httpOnly: true,
       path: '/',
       secure: true,

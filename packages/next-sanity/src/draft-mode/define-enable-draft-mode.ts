@@ -6,6 +6,8 @@ import {redirect} from 'next/navigation'
 
 import {partitionedCookieName} from '#live/constants'
 
+import {probeSearchParam, renderCookieAccessInterstitial} from './cookie-access-fallback'
+
 /**
  * @public
  */
@@ -36,7 +38,20 @@ export interface EnableDraftMode {
  * them despite third-party cookie blocking. Top-level / same-site requests keep
  * unpartitioned cookies so `draftMode().disable()` continues to work.
  *
+ * Some browsers reject even `Partitioned` cookies in cross-site iframes, for
+ * example Firefox with Enhanced Tracking Protection configured to block all
+ * third-party cookies ("Cookie has been rejected as third-party"). Because a
+ * silent redirect would then land on a preview that can never enter draft
+ * mode, cross-site iframe requests are redirected back to this route once with
+ * a probe search param to verify the cookies were stored. If they were not,
+ * the route responds with an interstitial that requests unpartitioned cookie
+ * access through the Storage Access API and retries, or explains how to
+ * unblock the preview when the browser refuses. Requests that carry the
+ * `Sec-Fetch-Storage-Access: inactive` header are asked to retry with the
+ * already-granted permission activated (Storage Access Headers).
+ *
  * @see https://github.com/sanity-io/sanity/issues/12806
+ * @see https://github.com/sanity-io/next-sanity/issues/3919
  *
  * @example
  * ```ts
@@ -56,11 +71,10 @@ export function defineEnableDraftMode(options: DefineEnableDraftModeOptions): En
   const {client} = options
   return {
     GET: async (request: Request) => {
-      // @TODO check if already in draft mode at a much earlier stage, and skip validation
-
       const {
         isValid,
         redirectTo = '/',
+        studioOrigin,
         studioPreviewPerspective,
         studioPreviewVariant,
       } = await validatePreviewUrl(client, request.url)
@@ -70,10 +84,9 @@ export function defineEnableDraftMode(options: DefineEnableDraftModeOptions): En
 
       const draftModeStore = await draftMode()
 
-      // Let's enable draft mode if it's not already enabled
-      if (!draftModeStore.isEnabled) {
-        draftModeStore.enable()
-      }
+      // A valid bypass cookie on the request proves the browser stores and
+      // sends the draft-mode cookies in this context.
+      const hasBypassCookie = draftModeStore.isEnabled
 
       const isProduction = process.env.NODE_ENV === 'production'
 
@@ -81,15 +94,57 @@ export function defineEnableDraftMode(options: DefineEnableDraftModeOptions): En
       // so we need an explicit option
       const isSecure = isProduction || (options.secureDevMode ?? false)
 
-      // Safari blocks unpartitioned third-party cookies. When the enable route is
-      // hit from a cross-site iframe (Presentation), opt into CHIPS so the cookies
-      // are stored under the studio's partition. Skip partitioning for top-level /
-      // same-site requests so draftMode().disable() can still clear them.
-      // https://github.com/sanity-io/sanity/issues/12806
-      const partitioned =
+      const crossSiteIframe =
         isSecure &&
         request.headers.get('sec-fetch-dest') === 'iframe' &&
         request.headers.get('sec-fetch-site') === 'cross-site'
+
+      const url = new URL(request.url)
+      const probedAttempt = Number.parseInt(url.searchParams.get(probeSearchParam) ?? '', 10)
+
+      // Storage Access Headers: `inactive` means the browser has already
+      // granted the `storage-access` permission but did not activate it for
+      // this navigation. Once a probe has proven that the partitioned cookies
+      // were rejected, ask the browser to retry the request with the
+      // permission active so the cookies below are stored in, and read from,
+      // the unpartitioned jar. Supporting browsers retry at most once. The
+      // first, un-probed attempt is deliberately excluded: CHIPS partitioned
+      // cookies are the reliable default for cross-site iframes, and a stale
+      // permission grant must not divert cookies into the unpartitioned jar
+      // in browsers where the partitioned jar works fine.
+      const storageAccess = request.headers.get('sec-fetch-storage-access')
+      if (
+        crossSiteIframe &&
+        !hasBypassCookie &&
+        storageAccess === 'inactive' &&
+        Number.isInteger(probedAttempt) &&
+        probedAttempt >= 1
+      ) {
+        return new Response(renderCookieAccessInterstitial({attempt: probedAttempt}), {
+          status: 401,
+          headers: {
+            'Activate-Storage-Access': `retry; allowed-origin=${studioOrigin ? `"${studioOrigin}"` : '*'}`,
+            'Content-Type': 'text/html; charset=utf-8',
+            'Cache-Control': 'no-store',
+            'Vary': 'Sec-Fetch-Storage-Access',
+          },
+        })
+      }
+
+      // Let's enable draft mode if it's not already enabled
+      if (!draftModeStore.isEnabled) {
+        draftModeStore.enable()
+      }
+
+      // Safari blocks unpartitioned third-party cookies. When the enable route is
+      // hit from a cross-site iframe (Presentation), opt into CHIPS so the cookies
+      // are stored under the studio's partition. Skip partitioning for top-level /
+      // same-site requests so draftMode().disable() can still clear them. Skip it
+      // as well when storage access is active for this request: those cookies
+      // belong in the unpartitioned jar the Storage Access API just unblocked -
+      // `Partitioned` would put them back in the jar the browser is blocking.
+      // https://github.com/sanity-io/sanity/issues/12806
+      const partitioned = crossSiteIframe && storageAccess !== 'active'
 
       // Override cookie header for draft mode for usage in live-preview
       // https://github.com/vercel/next.js/issues/49927
@@ -154,6 +209,39 @@ export function defineEnableDraftMode(options: DefineEnableDraftModeOptions): En
           secure: true,
           sameSite: 'none',
           partitioned: true,
+        })
+      } else if (crossSiteIframe) {
+        // Storage access is active, so the cookies above are unpartitioned.
+        // Clear a stale flag cookie so server actions stop partitioning writes.
+        cookieStore.delete({
+          name: partitionedCookieName,
+          httpOnly: true,
+          path: '/',
+          secure: true,
+          sameSite: 'none',
+          partitioned: true,
+        })
+      }
+
+      // Browsers with strict tracking protection can reject all of the cookies
+      // set above, even with `Partitioned`, and there is no server-side signal
+      // for it. Unless this request proves cookies already work, redirect back
+      // to this route once so the next request reveals whether they stuck.
+      if (crossSiteIframe && !hasBypassCookie) {
+        if (!Number.isInteger(probedAttempt) || probedAttempt < 1) {
+          url.searchParams.set(probeSearchParam, '1')
+          redirect(`${url.pathname}${url.search}`)
+        }
+
+        // The probe request came back without the cookie: the browser rejected
+        // it. Serve the Storage Access API interstitial instead of a preview
+        // that can never enter draft mode.
+        return new Response(renderCookieAccessInterstitial({attempt: probedAttempt}), {
+          status: 200,
+          headers: {
+            'Content-Type': 'text/html; charset=utf-8',
+            'Cache-Control': 'no-store',
+          },
         })
       }
 

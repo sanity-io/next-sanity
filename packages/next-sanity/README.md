@@ -18,6 +18,8 @@ The all-in-one [Sanity][sanity] toolkit for production-grade content-editable Ne
 - [Manual installation](#manual-installation)
   - [Install `next-sanity`](#install-next-sanity)
   - [Optional: peer dependencies for embedded Sanity Studio](#optional-peer-dependencies-for-embedded-sanity-studio)
+- [Troubleshooting](#troubleshooting)
+  - [Draft mode cookies are blocked in the Presentation Tool](#draft-mode-cookies-are-blocked-in-the-presentation-tool)
 - [Migration guides](#migration-guides)
 - [License](#license)
 
@@ -71,6 +73,23 @@ When using `npm` newer than `v7`, or `pnpm` newer than `v8`, you should end up w
 npx install-peerdeps --yarn next-sanity
 ```
 
+## Troubleshooting
+
+### Draft mode cookies are blocked in the Presentation Tool
+
+When the Presentation Tool loads your site in a cross-site iframe (for example a Studio hosted on `*.sanity.studio` previewing your production domain), `defineEnableDraftMode` sets the draft-mode cookies with the CHIPS `Partitioned` attribute so browsers that block third-party cookies (Chrome, Safari 18.4+) still store them.
+
+Some browser configurations reject even `Partitioned` cookies — most commonly Firefox with Enhanced Tracking Protection set to block all cross-site cookies, which logs errors like:
+
+```
+Cookie "__prerender_bypass" has been rejected as third-party.
+```
+
+`defineEnableDraftMode` detects this and shows a dialog inside the preview iframe that requests cookie access through the [Storage Access API][storage-access-api] and retries. If the browser denies storage access there is no programmatic escape hatch; the dialog then explains the remaining options:
+
+- Allow cross-site cookies for the Studio site — in Firefox, click the shield icon in the address bar and turn off Enhanced Tracking Protection for the Studio, then reload the preview.
+- Open the preview in a new tab, where the cookies are first-party and always allowed.
+
 ## Migration guides
 
 - [From `v12` to `v13`][migrate-v12-to-v13]
@@ -112,6 +131,7 @@ MIT-licensed. See [LICENSE][LICENSE].
 [sanity-next-client]: https://www.sanity.io/docs/nextjs/configure-sanity-client-nextjs
 [app-router-vised]: https://www.sanity.io/docs/visual-editing/visual-editing-with-next-js-app-router
 [sanity-reference-docs]: https://reference.sanity.io/next-sanity/
+[storage-access-api]: https://developer.mozilla.org/en-US/docs/Web/API/Storage_Access_API
 [sanity-next-caching]: https://www.sanity.io/docs/nextjs/caching-and-revalidation-in-nextjs
 [next-queries]: https://www.sanity.io/docs/nextjs/query-content-nextjs
 [next-sanity-intro]: https://www.sanity.io/docs/nextjs/introduction
