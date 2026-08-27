@@ -6,7 +6,11 @@ import {redirect} from 'next/navigation'
 
 import {partitionedCookieName} from '#live/constants'
 
-import {probeSearchParam, renderCookieAccessInterstitial} from './cookie-access-fallback'
+import {
+  cookieCheckSearchParam,
+  probeSearchParam,
+  renderCookieAccessInterstitial,
+} from './cookie-access-fallback'
 
 /**
  * @public
@@ -94,13 +98,23 @@ export function defineEnableDraftMode(options: DefineEnableDraftModeOptions): En
       // so we need an explicit option
       const isSecure = isProduction || (options.secureDevMode ?? false)
 
-      const crossSiteIframe =
-        isSecure &&
-        request.headers.get('sec-fetch-dest') === 'iframe' &&
-        request.headers.get('sec-fetch-site') === 'cross-site'
+      const fetchDest = request.headers.get('sec-fetch-dest')
+      const fetchSite = request.headers.get('sec-fetch-site')
+      const storageAccess = request.headers.get('sec-fetch-storage-access')
 
       const url = new URL(request.url)
       const probedAttempt = Number.parseInt(url.searchParams.get(probeSearchParam) ?? '', 10)
+      const isProbe = Number.isInteger(probedAttempt) && probedAttempt >= 1
+      const isCookieCheck = url.searchParams.has(cookieCheckSearchParam)
+
+      // The interstitial retries with `location.replace`, which is initiated
+      // by the embed itself. Fetch metadata then reports `same-origin` even
+      // though the iframe is still a third-party Presentation embed. Keep
+      // those navigations in this fallback when they carry the probe param.
+      const crossSiteIframe =
+        isSecure &&
+        fetchDest === 'iframe' &&
+        (fetchSite === 'cross-site' || (fetchSite === 'same-origin' && isProbe))
 
       // Storage Access Headers: `inactive` means the browser has already
       // granted the `storage-access` permission but did not activate it for
@@ -112,13 +126,12 @@ export function defineEnableDraftMode(options: DefineEnableDraftModeOptions): En
       // cookies are the reliable default for cross-site iframes, and a stale
       // permission grant must not divert cookies into the unpartitioned jar
       // in browsers where the partitioned jar works fine.
-      const storageAccess = request.headers.get('sec-fetch-storage-access')
       if (
         crossSiteIframe &&
         !hasBypassCookie &&
         storageAccess === 'inactive' &&
-        Number.isInteger(probedAttempt) &&
-        probedAttempt >= 1
+        isProbe &&
+        !isCookieCheck
       ) {
         return new Response(renderCookieAccessInterstitial({attempt: probedAttempt}), {
           status: 401,
@@ -144,7 +157,12 @@ export function defineEnableDraftMode(options: DefineEnableDraftModeOptions): En
       // belong in the unpartitioned jar the Storage Access API just unblocked -
       // `Partitioned` would put them back in the jar the browser is blocking.
       // https://github.com/sanity-io/sanity/issues/12806
-      const partitioned = crossSiteIframe && storageAccess !== 'active'
+      // Same-origin interstitial retries happen after `requestStorageAccess()`
+      // and must use the unpartitioned jar. Firefox does not send
+      // `Sec-Fetch-Storage-Access: active`, so infer the grant from the
+      // same-origin iframe navigation itself.
+      const partitioned =
+        crossSiteIframe && storageAccess !== 'active' && fetchSite !== 'same-origin'
 
       // Override cookie header for draft mode for usage in live-preview
       // https://github.com/vercel/next.js/issues/49927
@@ -228,8 +246,19 @@ export function defineEnableDraftMode(options: DefineEnableDraftModeOptions): En
       // for it. Unless this request proves cookies already work, redirect back
       // to this route once so the next request reveals whether they stuck.
       if (crossSiteIframe && !hasBypassCookie) {
-        if (!Number.isInteger(probedAttempt) || probedAttempt < 1) {
+        if (!isProbe) {
+          url.searchParams.delete(cookieCheckSearchParam)
           url.searchParams.set(probeSearchParam, '1')
+          redirect(`${url.pathname}${url.search}`)
+        }
+
+        // `active` (Storage Access Headers retry) and same-origin interstitial
+        // retries arrive cookieless because the previous response stored no
+        // cookies. They are new Set-Cookie attempts, not failed probes —
+        // verify the cookies just written before showing the interstitial.
+        const isUnpartitionedWrite = storageAccess === 'active' || fetchSite === 'same-origin'
+        if (isUnpartitionedWrite && !isCookieCheck) {
+          url.searchParams.set(cookieCheckSearchParam, '1')
           redirect(`${url.pathname}${url.search}`)
         }
 

@@ -138,6 +138,8 @@ function createRequest(headers?: Record<string, string>, searchParams?: Record<s
 const probeRedirect =
   'REDIRECT:/api/draft-mode/enable?sanity-preview-secret=secret&sanity-preview-probe=1'
 
+const cookieCheckRedirect = `${probeRedirect}&sanity-preview-check=1`
+
 describe('defineEnableDraftMode', () => {
   test('sets Partitioned cookies and flag cookie for cross-site iframe in production', async () => {
     vi.stubEnv('NODE_ENV', 'production')
@@ -490,7 +492,7 @@ describe('cookie access fallback (Firefox ETP)', () => {
     )
   })
 
-  test('sets unpartitioned cookies and clears the flag cookie when storage access is active', async () => {
+  test('sets unpartitioned cookies and re-probes when storage access is active', async () => {
     vi.stubEnv('NODE_ENV', 'production')
     const GET = await importGET()
 
@@ -501,7 +503,7 @@ describe('cookie access fallback (Firefox ETP)', () => {
           {'sanity-preview-probe': '1'},
         ),
       ),
-    ).resolves.toHaveProperty('status', 200)
+    ).rejects.toThrow(cookieCheckRedirect)
 
     expect(cookieSet).toHaveBeenCalledWith({
       name: '__prerender_bypass',
@@ -521,6 +523,65 @@ describe('cookie access fallback (Firefox ETP)', () => {
       sameSite: 'none',
       partitioned: true,
     })
+  })
+
+  test('keeps the iframe fallback when the interstitial retries same-origin', async () => {
+    vi.stubEnv('NODE_ENV', 'production')
+    const GET = await importGET()
+
+    await expect(
+      GET(
+        createRequest(
+          {'sec-fetch-dest': 'iframe', 'sec-fetch-site': 'same-origin'},
+          {'sanity-preview-probe': '2'},
+        ),
+      ),
+    ).rejects.toThrow(
+      'REDIRECT:/api/draft-mode/enable?sanity-preview-secret=secret&sanity-preview-probe=2&sanity-preview-check=1',
+    )
+
+    expect(cookieSet).toHaveBeenCalledWith({
+      name: '__prerender_bypass',
+      value: 'bypass-secret',
+      httpOnly: true,
+      path: '/',
+      secure: true,
+      sameSite: 'none',
+      partitioned: false,
+    })
+  })
+
+  test('serves the interstitial when an unpartitioned cookie check comes back cookieless', async () => {
+    vi.stubEnv('NODE_ENV', 'production')
+    const GET = await importGET()
+
+    const response = await GET(
+      createRequest(
+        {
+          'sec-fetch-dest': 'iframe',
+          'sec-fetch-site': 'same-origin',
+          'sec-fetch-storage-access': 'active',
+        },
+        {'sanity-preview-probe': '2', 'sanity-preview-check': '1'},
+      ),
+    )
+    expect(response.status).toBe(200)
+    const html = await response.text()
+    expect(html).toContain('var attempt = 2')
+    expect(html).toContain('sanity-preview-check')
+  })
+
+  test('does not treat a same-origin iframe without a probe as a cross-site fallback', async () => {
+    vi.stubEnv('NODE_ENV', 'production')
+    const GET = await importGET()
+
+    await expect(
+      GET(createRequest({'sec-fetch-dest': 'iframe', 'sec-fetch-site': 'same-origin'})),
+    ).rejects.toThrow('REDIRECT:/preview')
+
+    expect(cookieSet).toHaveBeenCalledWith(
+      expect.objectContaining({name: '__prerender_bypass', partitioned: false}),
+    )
   })
 })
 

@@ -27,6 +27,17 @@
 export const probeSearchParam = 'sanity-preview-probe'
 
 /**
+ * Search param added when the enable route has just written cookies on a
+ * request that already carried {@link probeSearchParam} (Storage Access
+ * Headers `active`, or a same-origin retry from the interstitial). Distinguishes
+ * that write from a failed probe so the next request can verify the cookies
+ * before the interstitial is shown again.
+ *
+ * @internal
+ */
+export const cookieCheckSearchParam = 'sanity-preview-check'
+
+/**
  * Automatic retries stop once this many Set-Cookie attempts have been probed;
  * beyond it the interstitial only retries on explicit user interaction.
  *
@@ -141,6 +152,7 @@ export function renderCookieAccessInterstitial(options: CookieAccessInterstitial
       ;(function () {
         'use strict'
         var PROBE_PARAM = ${JSON.stringify(probeSearchParam)}
+        var CHECK_PARAM = ${JSON.stringify(cookieCheckSearchParam)}
         var attempt = ${attempt}
         var maxAutoAttempts = ${maxAutoCookieAttempts}
         var button = document.getElementById('continue')
@@ -149,11 +161,13 @@ export function renderCookieAccessInterstitial(options: CookieAccessInterstitial
 
         var enableUrl = new URL(location.href)
         enableUrl.searchParams.delete(PROBE_PARAM)
+        enableUrl.searchParams.delete(CHECK_PARAM)
         document.getElementById('new-tab').href = enableUrl.href
 
         function retry() {
           var url = new URL(location.href)
           url.searchParams.set(PROBE_PARAM, String(attempt + 1))
+          url.searchParams.delete(CHECK_PARAM)
           location.replace(url.pathname + url.search)
         }
 
