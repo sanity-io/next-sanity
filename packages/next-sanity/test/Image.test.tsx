@@ -13,8 +13,10 @@
  * the vercel/next.js repo (test/unit/next-image-new.test.ts and
  * test/integration/image-component/*) and its image-component demo app.
  */
+import {vercelStegaCombine} from '@vercel/stega'
 import {Image, imageLoader, type ImageProps} from 'next-sanity/image'
 import NextImage, {getImageProps, type ImageProps as NextImageProps} from 'next/image'
+import type {ComponentProps} from 'react'
 import {afterEach, describe, expect, expectTypeOf, test, vi} from 'vitest'
 
 import {
@@ -211,6 +213,38 @@ describe('src URL construction', () => {
     for (const candidate of parseSrcSet(img.srcset)) {
       expect(candidate.params.fit).toBe('crop')
     }
+  })
+
+  test('strips stega-encoded metadata from the src', async () => {
+    // Content Source Maps embed invisible characters into strings. The
+    // default stega filter skips URLs (which is why `skip: false` is forced
+    // here), but custom `stega.filter` setups can encode them, which would
+    // corrupt the CDN request
+    const src = sanityImageUrl('stega-2000x1000.jpg')
+    const encoded = vercelStegaCombine(src, {origin: 'sanity.io', href: '/studio'}, false)
+    expect(encoded).not.toBe(src)
+
+    const {img} = await renderImage(<Image src={encoded} width={800} height={400} alt="" />)
+
+    expect(img.src).toBe(`${src}?h=960&w=1920&auto=format&fit=min`)
+  })
+
+  test('passes data: URLs through untouched, rendered unoptimized by next/image', async () => {
+    const src = 'data:image/png;base64,SGVsbG8='
+    const {img} = await renderImage(<Image src={src} width={800} height={400} alt="" />)
+
+    expect(img.src).toBe(src)
+    expect(img.srcset).toBeUndefined()
+    // data: URLs also disable lazy loading
+    expect(img.loading).toBeUndefined()
+  })
+
+  test('passes blob: URLs through untouched, rendered unoptimized by next/image', async () => {
+    const src = 'blob:https://example.com/9115d58c-bcda-ff47-86e5-083e9a2bcdbf'
+    const {img} = await renderImage(<Image src={src} width={800} height={400} alt="" />)
+
+    expect(img.src).toBe(src)
+    expect(img.srcset).toBeUndefined()
   })
 
   test('throws a TypeError for a relative src, unlike next/image which supports them', async () => {
@@ -823,20 +857,6 @@ describe('documented quirks', () => {
     expect(img.srcset).toBeDefined()
     expect(searchParamsOf(img.src)).toMatchObject({auto: 'format', w: '1920'})
   })
-
-  test('data: URLs render unoptimized, but the appended w/h params corrupt the payload', async () => {
-    // next/image renders data: URLs as-is (unoptimized), but the wrapper
-    // unconditionally appends w/h params to the URL. Sanity CDN URLs are the
-    // only supported src, so this documents what happens with invalid input.
-    const {img} = await renderImage(
-      <Image src="data:image/png;base64,SGVsbG8=" width={800} height={400} alt="" />,
-    )
-
-    expect(img.src).toBe('data:image/png;base64,SGVsbG8=?h=400&w=800')
-    expect(img.srcset).toBeUndefined()
-    // data: URLs also disable lazy loading
-    expect(img.loading).toBeUndefined()
-  })
 })
 
 describe('composing imageLoader with getImageProps', () => {
@@ -899,9 +919,13 @@ describe('type-level contract with next/image', () => {
     expectTypeOf<Required<ImageProps>['loader']>().toBeNever()
   })
 
+  test('ref is typed the same way next/image accepts it', () => {
+    expectTypeOf<ImageProps['ref']>().toEqualTypeOf<ComponentProps<typeof NextImage>['ref']>()
+  })
+
   test('every other next/image prop is accepted unchanged', () => {
-    expectTypeOf<Omit<ImageProps, 'src' | 'loader'>>().toEqualTypeOf<
-      Omit<NextImageProps, 'src' | 'loader'>
+    expectTypeOf<Omit<ImageProps, 'src' | 'loader' | 'ref'>>().toEqualTypeOf<
+      Omit<NextImageProps, 'src' | 'loader' | 'ref'>
     >()
   })
 })

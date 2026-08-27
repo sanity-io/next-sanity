@@ -1,3 +1,4 @@
+import {vercelStegaCombine} from '@vercel/stega'
 import {imageLoader} from 'next-sanity/image'
 import {expect, test} from 'vitest'
 
@@ -182,4 +183,15 @@ test('throws a TypeError for relative URLs', () => {
   expect(() =>
     imageLoader({src: '/images/local.jpg', width: 800, quality: undefined}),
   ).toThrowError(TypeError)
+})
+
+test('strips stega-encoded metadata from the src', () => {
+  const src = 'https://cdn.sanity.io/images/project/dataset/image.jpg'
+  const result = imageLoader({
+    src: vercelStegaCombine(src, {origin: 'sanity.io', href: '/studio'}, false),
+    width: 800,
+    quality: undefined,
+  })
+
+  expect(result).toBe(`${src}?auto=format&fit=max&w=800`)
 })
