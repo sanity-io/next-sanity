@@ -49,6 +49,16 @@ The three condition files must expose the same public surface, but their runtime
 
 When adding, removing, or changing an export from `next-sanity/live`, update all three condition entry points together, verify their exported names match exactly, and preserve the condition-specific runtime behavior.
 
+## `next-sanity/image` Test Suite
+
+Coverage of how `next-sanity/image` drives `next/image` lives in `packages/next-sanity/test`:
+
+- `Image.test.tsx` — server-rendering matrix across the `next/image` options (srcset/sizes generation, fill, quality, priority/preload, placeholders, dev-mode validation, documented quirks) plus type-level contract tests. The rendering and HTML-parsing helpers live in `helpers.image.ts`.
+- `Image.browser.test.tsx` — real-DOM behavior (onLoad/onError, blur placeholder removal, preload link injection, ref forwarding). The Sanity Image CDN is mocked in `test/mocks/browser.ts`: it serves a real 1x1 PNG, `missing-*` filenames return a 404, and `slow-*` filenames are delayed.
+- `imageLoader.test.ts` — pure URL-building behavior of the loader.
+
+Browser tests alias `next/image` to Next's ESM build (see `vitest.config.ts`) because the CommonJS interop hack in `next/image` breaks under vite's dependency optimizer, and `test/setupBrowser.ts` shims the `process`/`require` globals that Next.js bundlers normally provide. These tests intentionally pin current `next/image` behavior (default `deviceSizes`/`imageSizes`/`qualities`, preload link shape, deprecations), so expect to update them when bumping the `next` catalog version.
+
 ## AI Literacy Framework (AILF)
 
 `packages/ailf` (`@repo/ailf`) holds the AILF evaluation setup: `.ailf/ailf.config.ts` plus `.ailf/tasks/*.task.ts` scenario tasks paired with `*.reference.tsx` answer keys (multi-file solutions separated by `// --- path ---` comments; these are graded artefacts, intentionally excluded from oxlint, oxfmt, and the package tsconfig). Evals run remotely via `.github/workflows/ailf-eval.yml` (requires the `AILF_API_KEY` repo secret) on PRs touching `packages/ailf/**`, weekly, and via manual dispatch. Validate task files locally with `pnpm --filter @repo/ailf run ailf:validate` (no API key needed). See `packages/ailf/README.md` for how to add tasks.
