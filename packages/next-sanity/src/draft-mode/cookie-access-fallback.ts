@@ -29,10 +29,8 @@ export const probeSearchParam = 'sanity-preview-probe'
 /**
  * Automatic retries stop once this many Set-Cookie attempts have been probed;
  * beyond it the interstitial only retries on explicit user interaction.
- *
- * @internal
  */
-export const maxAutoCookieAttempts = 2
+const maxAutoCookieAttempts = 2
 
 /**
  * @internal

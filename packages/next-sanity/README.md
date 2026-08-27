@@ -85,7 +85,7 @@ Some browser configurations reject even `Partitioned` cookies — most commonly 
 Cookie "__prerender_bypass" has been rejected as third-party.
 ```
 
-`defineEnableDraftMode` detects this and shows a dialog inside the preview iframe that requests cookie access through the [Storage Access API][storage-access-api] and retries. If the browser denies storage access there is no programmatic escape hatch; the dialog then explains the remaining options:
+`defineEnableDraftMode` detects this and shows a dialog inside the preview iframe that requests cookie access through the [Storage Access API][storage-access-api] and retries. If the Presentation Tool reports "Unable to connect" on top of the preview, choose "Continue anyway" to interact with the dialog. If the browser denies storage access there is no programmatic escape hatch; the dialog then explains the remaining options:
 
 - Allow cross-site cookies for the Studio site — in Firefox, click the shield icon in the address bar and turn off Enhanced Tracking Protection for the Studio, then reload the preview.
 - Open the preview in a new tab, where the cookies are first-party and always allowed.
