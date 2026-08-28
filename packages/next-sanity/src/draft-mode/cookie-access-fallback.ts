@@ -33,6 +33,16 @@ export const probeSearchParam = 'sanity-preview-probe'
 const maxAutoCookieAttempts = 2
 
 /**
+ * Upper bound for the probe redirects issued by `defineEnableDraftMode`.
+ * Cookieless probe requests with storage access active re-probe (their
+ * Set-Cookie is the first one to target the just-unblocked unpartitioned jar),
+ * and this cap keeps that from looping when even those cookies are rejected.
+ *
+ * @internal
+ */
+export const maxProbeAttempts = 3
+
+/**
  * @internal
  */
 export interface CookieAccessInterstitialOptions {
@@ -125,7 +135,10 @@ export function renderCookieAccessInterstitial(options: CookieAccessInterstitial
           browser &mdash; in Firefox, open the shield icon in the address bar and turn off Enhanced
           Tracking Protection for the Studio, then reload the preview.
         </p>
-        <p><a id="new-tab" target="_blank">Open the preview in a new tab</a> instead.</p>
+        <p>
+          <a id="new-tab" target="_blank" rel="noopener noreferrer">Open the preview in a new tab</a>
+          instead.
+        </p>
       </div>
       <p id="status" role="status"></p>
       <noscript>

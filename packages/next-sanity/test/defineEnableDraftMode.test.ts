@@ -490,10 +490,12 @@ describe('cookie access fallback (Firefox ETP)', () => {
     )
   })
 
-  test('sets unpartitioned cookies and clears the flag cookie when storage access is active', async () => {
+  test('sets unpartitioned cookies, clears the flag cookie, and re-probes when storage access is active', async () => {
     vi.stubEnv('NODE_ENV', 'production')
     const GET = await importGET()
 
+    // The active request writes the unpartitioned jar for the first time, so
+    // those cookies get a probe hop of their own instead of the interstitial.
     await expect(
       GET(
         createRequest(
@@ -501,7 +503,9 @@ describe('cookie access fallback (Firefox ETP)', () => {
           {'sanity-preview-probe': '1'},
         ),
       ),
-    ).resolves.toHaveProperty('status', 200)
+    ).rejects.toThrow(
+      'REDIRECT:/api/draft-mode/enable?sanity-preview-secret=secret&sanity-preview-probe=2',
+    )
 
     expect(cookieSet).toHaveBeenCalledWith({
       name: '__prerender_bypass',
@@ -521,6 +525,40 @@ describe('cookie access fallback (Firefox ETP)', () => {
       sameSite: 'none',
       partitioned: true,
     })
+  })
+
+  test('stops re-probing active requests at the attempt cap', async () => {
+    vi.stubEnv('NODE_ENV', 'production')
+    const GET = await importGET()
+
+    const response = await GET(
+      createRequest(
+        {...iframeHeaders, 'sec-fetch-storage-access': 'active'},
+        {'sanity-preview-probe': '3'},
+      ),
+    )
+    expect(response.status).toBe(200)
+    expect(await response.text()).toContain('var attempt = 3')
+  })
+
+  test('treats interstitial retries as the cross-site iframe flow via the probe param', async () => {
+    vi.stubEnv('NODE_ENV', 'production')
+    const GET = await importGET()
+
+    // Retries are navigations initiated by the interstitial document itself,
+    // so Sec-Fetch-Site is same-origin even though the iframe is cross-site.
+    const response = await GET(
+      createRequest(
+        {'sec-fetch-dest': 'iframe', 'sec-fetch-site': 'same-origin'},
+        {'sanity-preview-probe': '2'},
+      ),
+    )
+    expect(response.status).toBe(200)
+    expect(await response.text()).toContain('var attempt = 2')
+    // The retry keeps re-attempting the partitioned CHIPS regime
+    expect(cookieSet).toHaveBeenCalledWith(
+      expect.objectContaining({name: '__prerender_bypass', partitioned: true}),
+    )
   })
 })
 

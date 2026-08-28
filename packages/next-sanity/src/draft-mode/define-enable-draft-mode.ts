@@ -6,7 +6,11 @@ import {redirect} from 'next/navigation'
 
 import {partitionedCookieName} from '#live/constants'
 
-import {probeSearchParam, renderCookieAccessInterstitial} from './cookie-access-fallback'
+import {
+  maxProbeAttempts,
+  probeSearchParam,
+  renderCookieAccessInterstitial,
+} from './cookie-access-fallback'
 
 /**
  * @public
@@ -94,13 +98,19 @@ export function defineEnableDraftMode(options: DefineEnableDraftModeOptions): En
       // so we need an explicit option
       const isSecure = isProduction || (options.secureDevMode ?? false)
 
+      const url = new URL(request.url)
+      const probedAttempt = Number.parseInt(url.searchParams.get(probeSearchParam) ?? '', 10)
+      const isProbe = Number.isInteger(probedAttempt) && probedAttempt >= 1
+
+      // `Sec-Fetch-Site` reflects the navigation's initiator, so retries
+      // initiated by the interstitial inside the cross-site iframe arrive as
+      // `same-origin`. The probe param only enters the flow through this
+      // route's own cross-site handling, so its presence carries the
+      // cross-site signal across those retries.
       const crossSiteIframe =
         isSecure &&
         request.headers.get('sec-fetch-dest') === 'iframe' &&
-        request.headers.get('sec-fetch-site') === 'cross-site'
-
-      const url = new URL(request.url)
-      const probedAttempt = Number.parseInt(url.searchParams.get(probeSearchParam) ?? '', 10)
+        (request.headers.get('sec-fetch-site') === 'cross-site' || isProbe)
 
       // Storage Access Headers: `inactive` means the browser has already
       // granted the `storage-access` permission but did not activate it for
@@ -113,13 +123,7 @@ export function defineEnableDraftMode(options: DefineEnableDraftModeOptions): En
       // permission grant must not divert cookies into the unpartitioned jar
       // in browsers where the partitioned jar works fine.
       const storageAccess = request.headers.get('sec-fetch-storage-access')
-      if (
-        crossSiteIframe &&
-        !hasBypassCookie &&
-        storageAccess === 'inactive' &&
-        Number.isInteger(probedAttempt) &&
-        probedAttempt >= 1
-      ) {
+      if (crossSiteIframe && !hasBypassCookie && storageAccess === 'inactive' && isProbe) {
         return new Response(renderCookieAccessInterstitial({attempt: probedAttempt}), {
           status: 401,
           headers: {
@@ -226,17 +230,23 @@ export function defineEnableDraftMode(options: DefineEnableDraftModeOptions): En
       // Browsers with strict tracking protection can reject all of the cookies
       // set above, even with `Partitioned`, and there is no server-side signal
       // for it. Unless this request proves cookies already work, redirect back
-      // to this route once so the next request reveals whether they stuck.
+      // to this route so the next request reveals whether they stuck. A
+      // cookieless probe with storage access active also re-probes: its
+      // Set-Cookie above is the first one to target the just-unblocked
+      // unpartitioned jar, so it deserves a probe of its own instead of being
+      // declared a failure - bounded to avoid redirect loops when even those
+      // cookies are rejected.
       if (crossSiteIframe && !hasBypassCookie) {
-        if (!Number.isInteger(probedAttempt) || probedAttempt < 1) {
-          url.searchParams.set(probeSearchParam, '1')
+        const attempt = isProbe ? probedAttempt : 0
+        if (attempt === 0 || (storageAccess === 'active' && attempt < maxProbeAttempts)) {
+          url.searchParams.set(probeSearchParam, String(attempt + 1))
           redirect(`${url.pathname}${url.search}`)
         }
 
         // The probe request came back without the cookie: the browser rejected
         // it. Serve the Storage Access API interstitial instead of a preview
         // that can never enter draft mode.
-        return new Response(renderCookieAccessInterstitial({attempt: probedAttempt}), {
+        return new Response(renderCookieAccessInterstitial({attempt}), {
           status: 200,
           headers: {
             'Content-Type': 'text/html; charset=utf-8',
