@@ -124,10 +124,16 @@ export function imageBuilderFor(
       'Unable to resolve the Sanity project id and dataset for the image. Pass the `projectId` and `dataset` props, or dereference the asset URL in the query (e.g. `asset->{url}`) so they can be read from it.',
     )
   }
+  // Keep the asset URL's host when it still points at the same project.
+  // Binding `projectId`/`dataset` (the documented wrapper) must not fall
+  // back to cdn.sanity.io and drop a custom CDN; only a *different*
+  // project or dataset should rebuild on the default host.
   return createImageUrlBuilder({
     projectId: resolvedProjectId,
     dataset: resolvedDataset,
-    ...(projectId === undefined && dataset === undefined && fromUrl?.baseUrl
+    ...(fromUrl?.baseUrl &&
+    resolvedProjectId === fromUrl.projectId &&
+    resolvedDataset === fromUrl.dataset
       ? {baseUrl: fromUrl.baseUrl}
       : {}),
   }).image(normalized)

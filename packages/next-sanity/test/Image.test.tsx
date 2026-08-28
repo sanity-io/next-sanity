@@ -502,6 +502,23 @@ describe('sanity image objects', () => {
     expect(img.src).toMatch(/^https:\/\/cdn\.example\.com\//)
   })
 
+  test('preserves custom CDN domains when projectId and dataset props match the asset URL', async () => {
+    const {img} = await renderImage(
+      <Image
+        src={{
+          asset: {
+            url: `https://cdn.example.com/images/${projectId}/${dataset}/customwrapper-2000x1000.jpg`,
+          },
+        }}
+        {...projectProps}
+        width={800}
+        alt=""
+      />,
+    )
+
+    expect(img.src).toMatch(/^https:\/\/cdn\.example\.com\//)
+  })
+
   test('explicit projectId and dataset props win over the asset URL', async () => {
     const {img} = await renderImage(
       <Image
