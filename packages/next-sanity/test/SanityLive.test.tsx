@@ -1,8 +1,7 @@
-import {createClient} from 'next-sanity'
 import {SanityLive as SanityLiveClientComponent} from 'next-sanity/live/client-components'
 import {afterEach, beforeAll, describe, expect, test, vi} from 'vitest'
 
-import {apiVersion, dataset, projectId, renderToString} from './helpers'
+import {apiVersion, createClient, dataset, projectId, renderToString} from './helpers'
 
 let isDraftMode = false
 let isDraftModeCalled = false
