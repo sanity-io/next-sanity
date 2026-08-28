@@ -16,11 +16,12 @@
  * test/integration/image-component/*) and its image-component demo app.
  */
 import {vercelStegaCombine} from '@vercel/stega'
-import {Image, imageLoader, type ImageProps} from 'next-sanity/image'
+import {Image, imageLoader, type ImageProps, type ImageSource} from 'next-sanity/image'
 import NextImage, {getImageProps, type ImageProps as NextImageProps} from 'next/image'
 import type {ComponentProps} from 'react'
 import {afterEach, describe, expect, expectTypeOf, test, vi} from 'vitest'
 
+import {dataset, projectId} from './helpers'
 import {
   parseSrcSet,
   parseStyle,
@@ -358,6 +359,359 @@ describe('srcset and sizes', () => {
 
     const candidates = parseSrcSet(img.srcset)
     expect(img.src).toBe(candidates.at(-1)?.url)
+  })
+})
+
+const assetRef = (name: string, dims = '2000x1000') => `image-${name}-${dims}-jpg`
+
+describe('sanity image objects', () => {
+  const projectProps = {projectId, dataset}
+
+  test('builds the URL from an asset reference and infers the intrinsic dimensions', async () => {
+    const {img} = await renderImage(
+      <Image
+        src={{asset: {_ref: assetRef('plainref'), _type: 'reference'}}}
+        {...projectProps}
+        alt=""
+      />,
+    )
+
+    expect(img.width).toBe('2000')
+    expect(img.height).toBe('1000')
+    expect(img.src).toBe(
+      `https://cdn.sanity.io/images/${projectId}/${dataset}/plainref-2000x1000.jpg?w=3840&h=1920&auto=format&fit=min`,
+    )
+  })
+
+  test('accepts the null members sanity typegen generates', async () => {
+    const {img} = await renderImage(
+      <Image
+        src={{asset: {_ref: assetRef('nullish'), _type: 'reference'}, crop: null, hotspot: null}}
+        {...projectProps}
+        width={800}
+        alt=""
+      />,
+    )
+
+    expect(img.width).toBe('800')
+    expect(img.height).toBe('400')
+  })
+
+  test('applies the Studio crop as a rect param and adjusts the intrinsic dimensions', async () => {
+    const {img} = await renderImage(
+      <Image
+        src={{
+          asset: {_ref: assetRef('cropped', '2000x3000')},
+          crop: {top: 0.1, bottom: 0.1, left: 0.1, right: 0.1},
+        }}
+        {...projectProps}
+        alt=""
+      />,
+    )
+
+    // The crop insets 10% on every side of the 2000x3000 original
+    expect(img.width).toBe('1600')
+    expect(img.height).toBe('2400')
+    expect(searchParamsOf(img.src).rect).toBe('200,300,1600,2400')
+  })
+
+  test('positions the crop around the hotspot when the requested aspect ratio differs', async () => {
+    const {img} = await renderImage(
+      <Image
+        src={{
+          asset: {_ref: assetRef('hotspotted', '2000x3000')},
+          crop: {top: 0.1, bottom: 0.1, left: 0.1, right: 0.1},
+          hotspot: {x: 0.75, y: 0.25, width: 0.2, height: 0.2},
+        }}
+        {...projectProps}
+        width={800}
+        height={400}
+        alt=""
+      />,
+    )
+
+    expect(img.width).toBe('800')
+    expect(img.height).toBe('400')
+    // The 2:1 region is pulled towards the hotspot (y=0.25) instead of the
+    // center of the cropped region
+    expect(searchParamsOf(img.src).rect).toBe('200,350,1600,800')
+    // Every srcset candidate keeps the same crop region while scaling w/h
+    expect(
+      parseSrcSet(img.srcset).map(
+        ({descriptor, params}) => `${params.rect} ${params.w}x${params.h} ${descriptor}`,
+      ),
+    ).toEqual(['200,350,1600,800 828x414 1x', '200,350,1600,800 1920x960 2x'])
+  })
+
+  test('defaults the hotspot size when the query only selects x and y', async () => {
+    const {img} = await renderImage(
+      <Image
+        src={{asset: {_ref: assetRef('pointspot')}, hotspot: {x: 0.75, y: 0.25}}}
+        {...projectProps}
+        width={500}
+        height={500}
+        alt=""
+      />,
+    )
+
+    // Without normalization the missing hotspot width/height would produce
+    // `rect=…,NaN,…`
+    expect(img.src).not.toContain('NaN')
+    expect(searchParamsOf(img.src).rect).toBe('1000,0,1000,1000')
+  })
+
+  test('centers the crop when no hotspot is set', async () => {
+    const {img} = await renderImage(
+      <Image
+        src={{asset: {_ref: assetRef('centered')}}}
+        {...projectProps}
+        width={500}
+        height={500}
+        alt=""
+      />,
+    )
+
+    expect(searchParamsOf(img.src).rect).toBe('500,0,1000,1000')
+  })
+
+  test('reads the project details from a dereferenced asset URL', async () => {
+    const {img} = await renderImage(
+      <Image src={{asset: {url: sanityImageUrl('deref-2000x1000.jpg')}}} alt="" />,
+    )
+
+    expect(img.width).toBe('2000')
+    expect(img.height).toBe('1000')
+    expect(img.src).toBe(
+      `https://cdn.sanity.io/images/${projectId}/${dataset}/deref-2000x1000.jpg?w=3840&h=1920&auto=format&fit=min`,
+    )
+  })
+
+  test('preserves custom CDN domains from dereferenced asset URLs', async () => {
+    const {img} = await renderImage(
+      <Image
+        src={{
+          asset: {
+            url: `https://cdn.example.com/images/${projectId}/${dataset}/custom-2000x1000.jpg`,
+          },
+        }}
+        width={800}
+        alt=""
+      />,
+    )
+
+    expect(img.src).toMatch(/^https:\/\/cdn\.example\.com\//)
+  })
+
+  test('explicit projectId and dataset props win over the asset URL', async () => {
+    const {img} = await renderImage(
+      <Image
+        src={{asset: {url: sanityImageUrl('elsewhere-2000x1000.jpg')}}}
+        projectId="otherproject"
+        dataset="blog"
+        width={800}
+        alt=""
+      />,
+    )
+
+    expect(img.src).toMatch(/^https:\/\/cdn\.sanity\.io\/images\/otherproject\/blog\//)
+  })
+
+  test('throws when the project details cannot be resolved', async () => {
+    const error = await renderImageError(
+      <Image src={{asset: {_ref: assetRef('detailless')}}} alt="" />,
+    )
+
+    expect(error).toBeInstanceOf(TypeError)
+    expect(error).toMatchObject({
+      message: expect.stringContaining(
+        'Unable to resolve the Sanity project id and dataset for the image',
+      ),
+    })
+  })
+
+  test('throws when the asset has no _ref, _id or url', async () => {
+    const error = await renderImageError(<Image src={{asset: {}}} {...projectProps} alt="" />)
+
+    expect(error).toBeInstanceOf(TypeError)
+    expect(error).toMatchObject({
+      message: expect.stringContaining(
+        'The `src` object must include an `asset` with a `_ref`, `_id`, or `url`.',
+      ),
+    })
+  })
+
+  test('accepts a bare asset id string', async () => {
+    const {img} = await renderImage(
+      <Image src={assetRef('bareid')} {...projectProps} width={800} alt="" />,
+    )
+
+    expect(img.width).toBe('800')
+    expect(img.height).toBe('400')
+    expect(img.src).toBe(
+      `https://cdn.sanity.io/images/${projectId}/${dataset}/bareid-2000x1000.jpg?w=1920&h=960&auto=format&fit=min`,
+    )
+  })
+
+  test('strips stega-encoded metadata from asset references', async () => {
+    const {img} = await renderImage(
+      <Image
+        src={{
+          asset: {_ref: vercelStegaCombine(assetRef('stegaref'), {origin: 'sanity.io'}, false)},
+        }}
+        {...projectProps}
+        width={800}
+        alt=""
+      />,
+    )
+
+    expect(img.src).toBe(
+      `https://cdn.sanity.io/images/${projectId}/${dataset}/stegaref-2000x1000.jpg?w=1920&h=960&auto=format&fit=min`,
+    )
+  })
+
+  test('fill skips dimension resolution but keeps the crop', async () => {
+    const {img} = await renderImage(
+      <Image
+        src={{
+          asset: {_ref: assetRef('fillcrop', '2000x3000')},
+          crop: {top: 0.1, bottom: 0.1, left: 0.1, right: 0.1},
+        }}
+        {...projectProps}
+        fill
+        alt=""
+      />,
+    )
+
+    expect(img.width).toBeUndefined()
+    expect(img.height).toBeUndefined()
+    expect(searchParamsOf(img.src)).toEqual({
+      rect: '200,300,1600,2400',
+      auto: 'format',
+      fit: 'max',
+      w: '3840',
+    })
+  })
+
+  test('a width prop derives the height from the cropped aspect ratio', async () => {
+    const {img} = await renderImage(
+      <Image
+        src={{
+          asset: {_ref: assetRef('cropaspect')},
+          crop: {top: 0, bottom: 0, left: 0.25, right: 0.25},
+        }}
+        {...projectProps}
+        width={300}
+        alt=""
+      />,
+    )
+
+    // The crop turns the 2000x1000 original into a square region
+    expect(img.width).toBe('300')
+    expect(img.height).toBe('300')
+    expect(searchParamsOf(img.src).rect).toBe('500,0,1000,1000')
+  })
+
+  test('placeholder="blur" uses the lqip from the image object', async () => {
+    const lqip = 'data:image/jpeg;base64,TFFJUA=='
+    const {img} = await renderImage(
+      <Image
+        src={{asset: {_ref: assetRef('lqip'), metadata: {lqip}}}}
+        {...projectProps}
+        width={800}
+        placeholder="blur"
+        alt=""
+      />,
+    )
+
+    expect(parseStyle(img.style)['background-image']).toContain(lqip)
+  })
+
+  test('an explicit blurDataURL wins over the lqip', async () => {
+    const lqip = 'data:image/jpeg;base64,TFFJUA=='
+    const blurDataURL = 'data:image/jpeg;base64,QkxVUg=='
+    const {img} = await renderImage(
+      <Image
+        src={{asset: {_ref: assetRef('lqipoverride'), metadata: {lqip}}}}
+        {...projectProps}
+        width={800}
+        placeholder="blur"
+        blurDataURL={blurDataURL}
+        alt=""
+      />,
+    )
+
+    expect(parseStyle(img.style)['background-image']).toContain(blurDataURL)
+    expect(parseStyle(img.style)['background-image']).not.toContain(lqip)
+  })
+
+  test('the lqip is unused without a placeholder prop', async () => {
+    const {img} = await renderImage(
+      <Image
+        src={{
+          asset: {
+            _ref: assetRef('lqipunused'),
+            metadata: {lqip: 'data:image/jpeg;base64,TFFJUA=='},
+          },
+        }}
+        {...projectProps}
+        width={800}
+        alt=""
+      />,
+    )
+
+    expect(parseStyle(img.style)['background-image']).toBeUndefined()
+  })
+})
+
+describe('queryParams', () => {
+  test('merges Sanity CDN params into the src and every candidate', async () => {
+    const src = sanityImageUrl('queryparams-2000x1000.jpg')
+    const {img} = await renderImage(
+      <Image src={src} width={800} height={400} queryParams={{blur: 50, sat: -100}} alt="" />,
+    )
+
+    for (const candidate of parseSrcSet(img.srcset)) {
+      expect(candidate.params).toMatchObject({blur: '50', sat: '-100'})
+    }
+  })
+
+  test('works with image objects, surviving the hotspot-aware rebuild', async () => {
+    const {img} = await renderImage(
+      <Image
+        src={{asset: {_ref: 'image-qpobject-2000x1000-jpg'}, hotspot: {x: 0.75, y: 0.25}}}
+        projectId={projectId}
+        dataset={dataset}
+        width={500}
+        height={500}
+        queryParams={{blur: 50}}
+        alt=""
+      />,
+    )
+
+    expect(searchParamsOf(img.src)).toMatchObject({blur: '50', rect: '1000,0,1000,1000'})
+  })
+
+  test('a q param is preserved when no quality prop is set', async () => {
+    const src = sanityImageUrl('queryparams-q-2000x1000.jpg')
+    const {img} = await renderImage(
+      <Image src={src} width={800} height={400} queryParams={{q: 80}} alt="" />,
+    )
+
+    for (const candidate of parseSrcSet(img.srcset)) {
+      expect(candidate.params.q).toBe('80')
+    }
+  })
+
+  test('sizing params are overridden by the resolved dimensions', async () => {
+    const src = sanityImageUrl('queryparams-w-2000x1000.jpg')
+    const {img} = await renderImage(
+      <Image src={src} width={800} height={400} queryParams={{w: 99}} alt="" />,
+    )
+
+    expect(img.width).toBe('800')
+    for (const candidate of parseSrcSet(img.srcset)) {
+      expect(candidate.params.w).not.toBe('99')
+    }
   })
 })
 
@@ -1004,8 +1358,35 @@ describe('composing imageLoader with getImageProps', () => {
 })
 
 describe('type-level contract with next/image', () => {
-  test('src only accepts strings, not static imports', () => {
-    expectTypeOf<ImageProps['src']>().toEqualTypeOf<string>()
+  test('src accepts URL strings, asset ids and image objects, not static imports', () => {
+    expectTypeOf<ImageProps['src']>().toEqualTypeOf<ImageSource>()
+  })
+
+  test('src accepts the shape sanity typegen generates for image fields', () => {
+    type TypegenImage = {
+      asset: {
+        _ref: string
+        _type: 'reference'
+        _weak?: boolean
+      }
+      media?: unknown
+      hotspot: {
+        x: number
+        y: number
+        height: number
+        width: number
+        _type: 'sanity.imageHotspot'
+      } | null
+      crop: {
+        top: number
+        bottom: number
+        left: number
+        right: number
+        _type: 'sanity.imageCrop'
+      } | null
+      _type: 'image'
+    }
+    expectTypeOf<TypegenImage>().toExtend<ImageSource>()
   })
 
   test('alt is required, like in next/image', () => {
@@ -1021,8 +1402,8 @@ describe('type-level contract with next/image', () => {
   })
 
   test('every other next/image prop is accepted unchanged', () => {
-    expectTypeOf<Omit<ImageProps, 'src' | 'loader' | 'ref'>>().toEqualTypeOf<
-      Omit<NextImageProps, 'src' | 'loader' | 'ref'>
-    >()
+    expectTypeOf<
+      Omit<ImageProps, 'src' | 'loader' | 'ref' | 'projectId' | 'dataset' | 'queryParams'>
+    >().toEqualTypeOf<Omit<NextImageProps, 'src' | 'loader' | 'ref'>>()
   })
 })
