@@ -147,6 +147,34 @@ describe('preload', () => {
   })
 })
 
+describe('sanity image objects', () => {
+  test('loads an image built from an asset reference with crop and hotspot', async () => {
+    const onLoad = vi.fn()
+    const screen = await render(
+      <Image
+        src={{
+          asset: {_ref: 'image-objectload-2000x3000-jpg'},
+          crop: {top: 0.1, bottom: 0.1, left: 0.1, right: 0.1},
+          hotspot: {x: 0.75, y: 0.25},
+        }}
+        projectId="pv8y60vp"
+        dataset="production"
+        width={800}
+        height={400}
+        loading="eager"
+        onLoad={onLoad}
+        alt=""
+      />,
+    )
+    const img = queryImg(screen.container)
+
+    await vi.waitFor(() => expect(onLoad).toHaveBeenCalledTimes(1))
+
+    expect(img.currentSrc).toContain('/images/pv8y60vp/production/objectload-2000x3000.jpg')
+    expect(img.currentSrc).toContain('rect=')
+  })
+})
+
 describe('refs', () => {
   test('forwards ref to the underlying <img> element', async () => {
     const ref = createRef<HTMLImageElement>()
