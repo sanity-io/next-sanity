@@ -1,4 +1,3 @@
-import {unstable__adapter, unstable__environment} from 'next-sanity'
 import {defineLive, type DefinedFetchType} from 'next-sanity/live'
 import Link from 'next/link'
 
@@ -27,8 +26,6 @@ export default async function IndexPage() {
       <ContentSourceMapDebug sourceMap={sourceMap} />
       <div
         className="relative bg-gray-50 px-4 pt-16 pb-20 sm:px-6 lg:px-8 lg:pt-24 lg:pb-28"
-        data-adapter={unstable__adapter}
-        data-environment={unstable__environment}
       >
         <div className="relative mx-auto max-w-7xl">
           <PostsLayout data={data} draftMode={false} />

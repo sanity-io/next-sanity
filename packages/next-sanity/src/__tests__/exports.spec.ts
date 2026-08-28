@@ -29,8 +29,6 @@ test(`exports snapshot for the ${JSON.stringify(env)} condition`, {timeout: 15_0
         stegaBrand: function
         stegaClean: function
         toPlainText: function
-        unstable__adapter: string
-        unstable__environment: string
         variantsApiVersion: string
       ./draft-mode:
         defineEnableDraftMode: function
