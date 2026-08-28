@@ -377,6 +377,23 @@ describe('intrinsic dimensions', () => {
     ).toEqual(['2048x1024 1x', '3840x1920 2x'])
   })
 
+  test('filename dimensions are read from the asset segment when a vanity name is appended', async () => {
+    // Documented CDN vanity paths append /original-name.ext after {id}-{w}x{h}.{ext}
+    const src = sanityImageUrl('vanity-2000x1000.jpg/hero.jpg')
+    const {img} = await renderImage(<Image src={src} alt="" />)
+
+    expect(img.width).toBe('2000')
+    expect(img.height).toBe('1000')
+  })
+
+  test('a vanity filename that looks like dimensions does not override the asset dimensions', async () => {
+    const src = sanityImageUrl('vanity-dims-2000x1000.jpg/hero-800x600.jpg')
+    const {img} = await renderImage(<Image src={src} alt="" />)
+
+    expect(img.width).toBe('2000')
+    expect(img.height).toBe('1000')
+  })
+
   test('height is derived from the aspect ratio when only width is set', async () => {
     const src = sanityImageUrl('derive-h-2000x1000.jpg')
     const {img} = await renderImage(<Image src={src} width={800} alt="" />)

@@ -7,9 +7,10 @@ interface ResolvedDimensions {
 
 /**
  * Sanity encodes the original dimensions of every image asset into its
- * filename, e.g. `…/Tb9Ew8CXIwaY6R1kjMvI0uRR-2000x3000.jpg`.
+ * filename, e.g. `…/Tb9Ew8CXIwaY6R1kjMvI0uRR-2000x3000.jpg`. A documented
+ * vanity filename may follow (`…/id-2000x3000.jpg/hero.jpg`).
  */
-const FILENAME_DIMENSIONS = /-(\d+)x(\d+)\.\w+$/
+const FILENAME_DIMENSIONS = /-(\d+)x(\d+)\.\w+(?:\/|$)/
 
 function parsePositiveInt(value: string | null | undefined): number | undefined {
   if (!value) return undefined
