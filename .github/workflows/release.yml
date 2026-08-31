@@ -12,10 +12,58 @@ permissions:
 
 jobs:
   release:
-    uses: sanity-io/.github/.github/workflows/changesets.yml@main
+    if: github.repository_owner == 'sanity-io'
+    runs-on: ubuntu-latest
+    env:
+      NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+      TURBO_TEAM: ${{ vars.TURBO_TEAM }}
+      TURBO_TOKEN: ${{ secrets.TURBO_TOKEN }}
     permissions:
       contents: read # for checkout
       id-token: write # to enable use of OIDC for npm provenance
-    with:
-      TURBO_TEAM: ${{ vars.TURBO_TEAM }}
-    secrets: inherit
+    steps:
+      - uses: actions/create-github-app-token@v3
+        id: app-token
+        with:
+          client-id: ${{ vars.ECOSPARK_CLIENT_ID }}
+          private-key: ${{ secrets.ECOSPARK_APP_PRIVATE_KEY }}
+      - uses: actions/checkout@v7
+        with:
+          fetch-depth: 0
+          token: ${{ steps.app-token.outputs.token }}
+          persist-credentials: false
+      - name: Get app token user id
+        id: get-user-id
+        run: echo "user-id=$(gh api "/users/${{ steps.app-token.outputs.app-slug }}[bot]" --jq .id)" >> "$GITHUB_OUTPUT"
+        env:
+          GH_TOKEN: ${{ steps.app-token.outputs.token }}
+      - name: Setup git user
+        run: |
+          git config --global user.name '${{ steps.app-token.outputs.app-slug }}[bot]'
+          git config --global user.email '${{ steps.get-user-id.outputs.user-id }}+${{ steps.app-token.outputs.app-slug }}[bot]@users.noreply.github.com'
+      - uses: pnpm/action-setup@v6
+      - uses: actions/setup-node@v7
+        with:
+          cache: pnpm
+          check-latest: true
+          node-version: lts/*
+      - name: Update npm to use trusted publishing (OIDC)
+        run: npm install -g npm@latest
+      - name: Authenticate with private npm
+        if: ${{ env.NPM_TOKEN != '' }}
+        run: echo "//registry.npmjs.org/:_authToken=${{ env.NPM_TOKEN }}" > ~/.npmrc
+      - run: pnpm install
+      - name: Remove npm auth
+        if: ${{ env.NPM_TOKEN != '' }}
+        run: rm -f ~/.npmrc
+      - name: Create Release Pull Request or Publish to npm
+        id: changesets
+        uses: changesets/action@8488615a623b1b9c987934bb89eae8af6a946ac1 # v2.1.1
+        with:
+          github-token: ${{ steps.app-token.outputs.token }}
+          publish-script: pnpm release
+          pr-title: Version Packages
+          commit-message: Version Packages
+        env:
+          GITHUB_TOKEN: ${{ steps.app-token.outputs.token }}
+          NPM_CONFIG_PROVENANCE: ${{ github.event.repository.visibility == 'public' && 'true' || 'false' }}
