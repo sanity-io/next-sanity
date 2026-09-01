@@ -44,6 +44,8 @@ jobs:
       matrix:
         # https://nodejs.org/en/about/releases/
         # https://pnpm.io/installation#compatibility
+        # pnpm 11 requires Node.js 22+
+
         # @TODO re-enable `current` once it recovers
         # node: [lts/-1, lts/*, current]
         node: [lts/-1, lts/*]
