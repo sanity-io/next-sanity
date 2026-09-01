@@ -1,5 +1,15 @@
 # next-sanity
 
+## 13.3.4
+
+### Patch Changes
+
+- [#3913](https://github.com/sanity-io/next-sanity/pull/3913) [`0f50132`](https://github.com/sanity-io/next-sanity/commit/0f501327f5ecf2f57d450491cf81c2eac23da16b) Thanks [@renovate](https://github.com/apps/renovate)! - fix(deps): update sanity monorepo to v6.11.0
+
+- [#3922](https://github.com/sanity-io/next-sanity/pull/3922) [`0d392da`](https://github.com/sanity-io/next-sanity/commit/0d392da527461b607855eef1de9949f817c730a7) Thanks [@stipsan](https://github.com/stipsan)! - Allow `@sanity/client` v8 as a peer while keeping v7. The installed dependency stays on v7, and `engines.node` is unchanged, so Node 20 apps are still valid.
+  
+  `next-sanity` no longer re-exports `unstable__adapter` and `unstable__environment`. Those names were always marked unstable and are not covered by semver. Client v8 removed them. Importing them from `next-sanity` will fail after this release on both v7 and v8.
+
 ## 13.3.3
 
 ### Patch Changes
