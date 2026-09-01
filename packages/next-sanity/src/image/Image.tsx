@@ -1,3 +1,4 @@
+'use client'
 import {stegaClean} from '@sanity/client/stega'
 import type {ImageUrlBuilder} from '@sanity/image-url'
 import NextImage, {type ImageProps as NextImageProps} from 'next/image'
