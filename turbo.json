@@ -6,6 +6,7 @@
       "dependsOn": ["^build"]
     },
     "typegen": {
+      "dependsOn": ["^typegen"],
       "inputs": ["$TURBO_DEFAULT$", "!sanity.types.ts"],
       "outputs": [".next/types/**", "sanity.types.ts", "next-env.d.ts"]
     },
