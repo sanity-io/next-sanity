@@ -1,6 +1,6 @@
 import type {ClientConfig, SanityClient} from '@sanity/client'
 import {evaluate, parse} from 'groq-js'
-import {defineGenerateStaticParams} from 'next-sanity/static-params'
+import {defineGenerateStaticParams, type StaticParams} from 'next-sanity/static-params'
 import {describe, expect, expectTypeOf, test, vi} from 'vitest'
 
 const dataset = [
@@ -164,25 +164,28 @@ describe('definition-time validation', () => {
     ).toThrow(/`limit` must be a positive integer, got 0/)
   })
 
-  test.each([{slug: ''}, {path: []}, {path: ['']}, {path: ['ok', '']}, {category: 'ok', slug: ''}])(
-    'rejects the fallback %j at definition time',
-    (fallback) => {
-      const {client} = createFakeClient()
-      const key = Object.keys(fallback).at(-1)
-      expect(() =>
-        defineGenerateStaticParams({
-          client,
-          filter: '_type == "post"',
-          params: Object.fromEntries(Object.keys(fallback).map((name) => [name, 'slug.current'])),
-          fallback,
-        }),
-      ).toThrow(
-        new TypeError(
-          `defineGenerateStaticParams: \`fallback.${key}\` must be a non-empty string or a non-empty array of non-empty strings`,
-        ),
-      )
-    },
-  )
+  test.each<StaticParams>([
+    {slug: ''},
+    {path: []},
+    {path: ['']},
+    {path: ['ok', '']},
+    {category: 'ok', slug: ''},
+  ])('rejects the fallback %j at definition time', (fallback) => {
+    const {client} = createFakeClient()
+    const key = Object.keys(fallback).at(-1)
+    expect(() =>
+      defineGenerateStaticParams({
+        client,
+        filter: '_type == "post"',
+        params: Object.fromEntries(Object.keys(fallback).map((name) => [name, 'slug.current'])),
+        fallback,
+      }),
+    ).toThrow(
+      new TypeError(
+        `defineGenerateStaticParams: \`fallback.${key}\` must be a non-empty string or a non-empty array of non-empty strings`,
+      ),
+    )
+  })
 })
 
 describe('generateStaticParams', () => {
