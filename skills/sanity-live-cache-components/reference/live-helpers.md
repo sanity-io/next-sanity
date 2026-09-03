@@ -9,6 +9,7 @@
 - [`sanityFetch`](#sanityfetch)
 - [`cachedSanity`](#cachedsanity)
 - [Without a `[perspective]` segment](#without-a-perspective-segment)
+- [`sanityFetchMetadata`](#sanityfetchmetadata)
 - [`generateStaticParams`](#generatestaticparams)
 
 ## `client.ts`
@@ -185,6 +186,39 @@ async function CachedPage({slug}: {slug: string}) {
 ```
 
 Content release previews in Presentation Tool need the release perspective, which this variant cannot see inside a cache. Prefer the `[perspective]` segment when releases matter.
+
+## `sanityFetchMetadata`
+
+`defineLive` also returns `sanityFetchMetadata` for `generateMetadata`, `generateViewport`, and the file-based metadata routes. It is `sanityFetch` with `stega` fixed to `false`, so `data` keeps its clean TypeGen type and `<title>` never carries stega characters. It owns its own `'use cache'` boundary, so call it directly:
+
+```tsx
+// src/app/[perspective]/[slug]/page.tsx
+import type {Metadata} from 'next'
+
+import {sanityFetchMetadata} from '@/sanity/lib/live'
+
+export async function generateMetadata({
+  params,
+}: PageProps<'/[perspective]/[slug]'>): Promise<Metadata> {
+  const {slug} = await params
+  const {data} = await sanityFetchMetadata({query: pageQuery, params: {slug}})
+  return {title: data?.title}
+}
+```
+
+The `perspective` rule is the same as `sanityFetch`. Presentation Tool can open a standalone preview window, so metadata should reflect the previewed perspective too. `sitemap.ts`, `robots.ts`, and `opengraph-image.tsx` cannot read root params, so pass `perspective: 'published'` there:
+
+```ts
+// src/app/sitemap.ts
+import type {MetadataRoute} from 'next'
+
+import {sanityFetchMetadata} from '@/sanity/lib/live'
+
+export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
+  const {data} = await sanityFetchMetadata({query: pageSlugsQuery, perspective: 'published'})
+  return data.map((page) => ({url: `https://example.com/${page.slug}`}))
+}
+```
 
 ## `generateStaticParams`
 
