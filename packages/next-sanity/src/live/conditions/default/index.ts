@@ -29,7 +29,10 @@ import type {
  * literal `stega: false`. Use `stegaClean` before comparing branded strings to
  * literals. `sanityFetchMetadata` is `sanityFetch` with `stega` fixed to
  * `false` for `generateMetadata` and the file-based metadata routes, where the
- * data never renders next to `<VisualEditing />`.
+ * data never renders next to `<VisualEditing />`. With Cache Components, two
+ * `defineLive` calls with the same client config, `serverToken`, `strict`
+ * flag, and `perspective` resolver name share one `sanityFetchMetadata` cache
+ * entry.
  *
  * @see [Live Content API](https://www.sanity.io/docs/content-lake/live-content-api)
  * @see [Sanity Live](https://www.sanity.io/live)

@@ -25,11 +25,25 @@ import type {
  * A `'use cache'` function serializes every binding it closes over into its
  * cache key, and `sanityFetch` closes over the client and the tokens. The
  * registry keeps them out of the key by handing the cached function a string
- * id instead. Two `defineLive` calls with the same client config and the same
- * token, strict, and resolver flags share an entry, which is also what their
+ * id instead. Two `defineLive` calls with the same client config, token,
+ * strict flag, and resolver name share an entry, which is also what their
  * fetches would return.
  */
 const fetchers = new Map<string, DefinedFetchType>()
+
+/**
+ * FNV-1a over the token, rendered as hex. Separates two `defineLive` calls
+ * that differ only by `serverToken` without putting the secret in the
+ * registry id, which the `'use cache'` key serializes.
+ */
+function fingerprint(value: string): string {
+  let hash = 0x811c9dc5
+  for (let i = 0; i < value.length; i++) {
+    hash ^= value.charCodeAt(i)
+    hash = Math.imul(hash, 0x01000193) >>> 0
+  }
+  return hash.toString(16)
+}
 
 function registerFetcher(id: string, sanityFetch: DefinedFetchType): string {
   fetchers.set(id, sanityFetch)
@@ -73,7 +87,10 @@ async function cachedMetadataFetch<const QueryString extends string>(
  * literal `stega: false`. Use `stegaClean` before comparing branded strings to
  * literals. `sanityFetchMetadata` is `sanityFetch` with `stega` fixed to
  * `false` for `generateMetadata` and the file-based metadata routes, where the
- * data never renders next to `<VisualEditing />`.
+ * data never renders next to `<VisualEditing />`. With Cache Components, two
+ * `defineLive` calls with the same client config, `serverToken`, `strict`
+ * flag, and `perspective` resolver name share one `sanityFetchMetadata` cache
+ * entry.
  *
  * @see [Live Content API](https://www.sanity.io/docs/content-lake/live-content-api)
  * @see [Sanity Live](https://www.sanity.io/live)
@@ -468,9 +485,9 @@ export function defineLive(config: DefineLiveOptions) {
       apiVersion,
       apiHost,
       useProjectHostname,
-      serverToken ? 'token' : 'no-token',
+      serverToken ? fingerprint(serverToken) : 'no-token',
       strict ? 'strict' : 'loose',
-      resolvePerspective ? 'resolver' : 'no-resolver',
+      resolvePerspective ? `resolver:${resolvePerspective.name}` : 'no-resolver',
     ].join(':'),
     sanityFetch,
   )
