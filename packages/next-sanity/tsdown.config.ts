@@ -17,8 +17,6 @@ export default defineConfig({
     './src/live/conditions/default/index.ts',
     './src/live/client-components/index.ts',
     './src/live/server-actions/index.ts',
-    './src/studio/client-component/index.ts',
-    './src/studio/index.ts',
     './src/visual-editing/client-component/index.ts',
     './src/visual-editing/index.ts',
     './src/visual-editing/server-actions/index.ts',
