@@ -102,9 +102,33 @@ describe.each([{cacheComponents: true}, {cacheComponents: false}])(
 
         // Then prove that the sanityFetch wrapper works correctly
         const {data, sourceMap, tags} = await sanityFetch({query, params})
-        expect(tags.length).toBe(1)
+        expect(tags).toEqual(['sanity:A'])
         expect(sourceMap).toBeNull()
         expect(data).toEqual(params)
+      })
+    })
+
+    describe('tags', () => {
+      const client = createClient({projectId, dataset, apiVersion, useCdn: true})
+      const {sanityFetch} = defineLive({client, browserToken: false, serverToken: false})
+      const {query, params} = getSanityFetchMock(
+        '{"perspective": $perspective, "useCdn": $useCdn}',
+        {
+          perspective: 'published',
+          useCdn: true,
+        },
+      )
+
+      test('returns the sync tags of the query with the cache tag prefix', async () => {
+        // The prefix is what `<SanityLive />` adds to the tags of a live event
+        // before revalidating, so the two have to agree.
+        const {tags} = await sanityFetch({query, params})
+        expect(tags).toEqual(['sanity:A'])
+      })
+
+      test('keeps custom tags ahead of the sync tags', async () => {
+        const {tags} = await sanityFetch({query, params, tags: ['home', 'posts']})
+        expect(tags).toEqual(['home', 'posts', 'sanity:A'])
       })
     })
 
