@@ -20,6 +20,7 @@ The all-in-one [Sanity][sanity] toolkit for production-grade content-editable Ne
   - [Install `next-sanity`](#install-next-sanity)
   - [Optional: embed Sanity Studio yourself](#optional-embed-sanity-studio-yourself)
 - [Static params for dynamic routes](#static-params-for-dynamic-routes)
+- [Invalidate the cache before live events reach the browser](#invalidate-the-cache-before-live-events-reach-the-browser)
 - [Migration guides](#migration-guides)
 - [License](#license)
 
@@ -199,6 +200,60 @@ export async function generateStaticParams() {
 
 The returned `query` string is the assembled GROQ. Pass it to `sanityFetch` from `next-sanity/live` with `perspective: 'published'` and `stega: false` when you want the fetch to carry cache tags.
 
+## Invalidate the cache before live events reach the browser
+
+By default every browser tab connected through `<SanityLive>` receives a live event the moment published content changes, and each tab calls a Server Action that expires the affected cache tags and refreshes the route. With [`<SanityLive waitFor="function">`][live-wait-for] Sanity instead invokes a [sync tag invalidate function][sync-tag-function] first, holds the event until that function calls `done()`, and only then lets browsers refresh. The cache is expired once, before anyone renders.
+
+`next-sanity` ships both halves. The route handler verifies a signed request and expires the tags; the companion package [`@sanity/next-sanity-functions`][next-sanity-functions] signs and sends it from the function.
+
+1. Pick a shared secret, for example `openssl rand -hex 32`, and set it as `SANITY_REVALIDATE_SECRET` on your Next.js deployment.
+
+2. Add the route handler:
+
+   ```ts
+   // app/api/revalidate/route.ts
+   import {defineInvalidateSyncTags} from 'next-sanity/live/invalidate'
+
+   export const {POST} = defineInvalidateSyncTags({secret: process.env.SANITY_REVALIDATE_SECRET})
+   ```
+
+   It responds `503` while the secret is unset, `401` to a missing, invalid, or stale signature (older than five minutes by default, configurable with `maxAge`), `400` to a malformed body, and `200` with the expired tags. Pass `profile: 'max'` to serve stale content while revalidating instead of expiring immediately.
+
+3. Declare and implement the function, then deploy it with `npx sanity blueprints deploy`:
+
+   ```ts
+   // sanity.blueprint.ts
+   import {defineBlueprint, defineSyncTagInvalidateFunction} from '@sanity/blueprints'
+
+   export default defineBlueprint({
+     resources: [
+       defineSyncTagInvalidateFunction({
+         name: 'invalidate-sync-tags',
+         event: {resource: {type: 'dataset', id: `${projectId}.${dataset}`}},
+       }),
+     ],
+   })
+   ```
+
+   ```ts
+   // functions/invalidate-sync-tags/index.ts
+   import {defineInvalidateSyncTagsHandler} from '@sanity/next-sanity-functions'
+
+   export const handler = defineInvalidateSyncTagsHandler({
+     secret: process.env.SANITY_REVALIDATE_SECRET,
+     urls: process.env.REVALIDATE_URLS,
+   })
+   ```
+
+   ```bash
+   npx sanity functions env add invalidate-sync-tags SANITY_REVALIDATE_SECRET <the same secret>
+   npx sanity functions env add invalidate-sync-tags REVALIDATE_URLS https://<your-site>/api/revalidate
+   ```
+
+   `REVALIDATE_URLS` takes a comma separated list when several deployments read the same dataset.
+
+Once the function is deployed, render `<SanityLive waitFor="function" />`. Until then leave `waitFor` unset, since Sanity would hold every event for a function that never calls `done()`. Draft Mode is unaffected either way, `includeDrafts` takes precedence.
+
 ## Migration guides
 
 - [From `v12` to `v13`][migrate-v12-to-v13]
@@ -233,6 +288,9 @@ MIT-licensed. See [LICENSE][LICENSE].
 [migrate-v11-to-v12]: https://github.com/sanity-io/next-sanity/blob/main/packages/next-sanity/MIGRATE-v11-to-v12.md
 [migrate-v12-to-v13]: https://github.com/sanity-io/next-sanity/blob/main/packages/next-sanity/MIGRATE-v12-to-v13.md
 [next-docs]: https://nextjs.org/docs
+[next-sanity-functions]: https://github.com/sanity-io/next-sanity/tree/main/packages/next-sanity-functions#readme
+[live-wait-for]: https://reference.sanity.io/next-sanity/
+[sync-tag-function]: https://www.sanity.io/docs/functions/sync-tag-function-quickstart
 [sanity]: https://www.sanity.io?utm_source=github&utm_medium=readme&utm_campaign=next-sanity
 [sanity-next-clean-starter]: https://www.sanity.io/templates/nextjs-sanity-clean
 [sanity-next-featured-starter]: https://www.sanity.io/templates/personal-website-with-built-in-content-editing

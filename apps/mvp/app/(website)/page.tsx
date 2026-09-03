@@ -4,6 +4,7 @@ import Link from 'next/link'
 import {Suspense} from 'react'
 
 import PostsLayout, {postsQuery} from '@/app/(website)/PostsLayout'
+import {liveWaitFor} from '@/app/liveWaitFor'
 import {client} from '@/app/sanity.client'
 
 import {ContentSourceMapDebug} from './ContentSourceMapDebug'
@@ -101,7 +102,7 @@ export default async function IndexPage() {
         </Link>
       </div>
       <SanityLiveErrorBoundary>
-        <SanityLive includeDrafts={isDraftMode} onError="throw" />
+        <SanityLive includeDrafts={isDraftMode} onError="throw" waitFor={liveWaitFor} />
       </SanityLiveErrorBoundary>
     </>
   )

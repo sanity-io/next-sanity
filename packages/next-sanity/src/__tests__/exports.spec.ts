@@ -50,6 +50,9 @@ test(`exports snapshot for the ${JSON.stringify(env)} condition`, {timeout: 15_0
         sanity: object
       ./live/client-components:
         SanityLive: function
+      ./live/invalidate:
+        defaultSignatureMaxAge: number
+        defineInvalidateSyncTags: function
       ./live/server-actions:
         revalidateSyncTagsAction: function
       ./static-params:
