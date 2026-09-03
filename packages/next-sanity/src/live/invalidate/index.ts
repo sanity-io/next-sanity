@@ -92,11 +92,11 @@ async function verifyInvalidateRequest(
   } catch {
     return reject(401, 'Malformed signature header')
   }
-  if (Math.abs(now - timestamp) > maxAge) {
-    return reject(401, 'Signature timestamp is outside the accepted window')
-  }
   if (!(await isValidSignature(rawBody, signature, secret))) {
     return reject(401, 'Invalid signature')
+  }
+  if (Math.abs(now - timestamp) > maxAge) {
+    return reject(401, 'Signature timestamp is outside the accepted window')
   }
 
   let payload: unknown
