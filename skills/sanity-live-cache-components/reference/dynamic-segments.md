@@ -11,7 +11,7 @@
 
 `generateStaticParams` returns only the 100 most recently updated pages. A sibling `loading.tsx` renders fallback UI, so `page.tsx` itself can skip the `<Suspense>` wrapper. The same fallback UI is reused in draft mode.
 
-`defineGenerateStaticParams` from `next-sanity/static-params` assembles the query from a GROQ filter and one GROQ expression per route param, parses every piece with `groq-js` when the module loads (a typo fails `next build` with the expression and position), fetches from the published perspective, and returns `[fallback]` instead of `[]`. Cache Components fails the build on an empty `generateStaticParams` result, so `fallback` is required and the page handles it with `notFound()`. The `fallback` shape types the result: a `string` value declares `[slug]`, a `string[]` value declares `[...slug]`.
+`defineGenerateStaticParams` from `next-sanity/static-params` assembles the query from a GROQ filter and one GROQ expression per route param. It parses every piece with `groq-js` when the module loads, so a typo fails `next build` with the expression and its position. At build time it fetches from the published perspective and returns `[fallback]` instead of `[]`. Cache Components fails the build on an empty `generateStaticParams` result, so `fallback` is required and the page handles it with `notFound()`. The `fallback` shape types the result. A `string` value declares `[slug]` and a `string[]` value declares `[...slug]`.
 
 This scales to thousands of pages without ballooning `next build` and without compromising UX in production:
 
