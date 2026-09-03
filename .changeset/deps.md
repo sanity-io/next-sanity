@@ -12,7 +12,7 @@ Require Node.js 22.12, Next.js 16.3, `@sanity/client` v8, and Sanity Studio v6
 
 **`@sanity/client` v8.** The dependency and the peer range are now `^8.0.0`. `next-sanity` re-exports `createClient` and the client types, so any `createClient` options you pass through `next-sanity` follow the v8 contract. The [`@sanity/client` v8.0.0 release notes](https://github.com/sanity-io/client/releases/tag/v8.0.0) list every removed option. The ones most projects hit are the `requester` config option, the per-request `proxy` option, and the `HttpRequestEvent`, `ResponseEvent`, and `ProgressEvent` types. Move a custom requester to a custom `fetch` and `headers`, and set `proxy` on the client instead of per request.
 
-**Sanity Studio v6 only.** The `sanity` peer range is now `^6.0.0`. Studio v5 is no longer supported by `next-sanity/studio`.
+**Sanity Studio v6.** `next-sanity` no longer declares a `sanity` peer dependency, because the `next-sanity/studio` entry points are gone in v14. If you embed a Studio in your app, install `sanity` v6 yourself. Studio v5 targets the `@sanity/client` v7 and Node.js 20 floors this release drops.
 
 **`@portabletext/react` v8.** `next-sanity` re-exports `@portabletext/react`, so `<PortableText />` rendering changes with it. Lists now nest as deeply as each block's `level` says. Content that starts a list deeper than level 1, or that skips levels, renders extra nested `<li>` wrappers instead of separate lists. Snapshot tests over such content need an update. The [`@portabletext/react` v8.0.0 release notes](https://github.com/portabletext/react-portabletext/releases/tag/v8.0.0) show the before and after markup and a CSS rule that hides the empty markers.
 
