@@ -2,7 +2,6 @@ import {perspectiveCookieName} from '@sanity/preview-url-secret/constants'
 import {NextResponse, type NextRequest} from 'next/server'
 
 import {sanitizePerspective} from '#live/sanitizePerspective'
-import type {LivePerspective} from '#live/types'
 
 /**
  * Set by `draftMode().enable()` and cleared by `draftMode().disable()`.
@@ -13,17 +12,29 @@ import type {LivePerspective} from '#live/types'
 const draftModeCookieName = '__prerender_bypass'
 
 /**
- * Reads the perspective a request should render with, using the same rule as
- * `sanityFetch` in strict mode: `'published'` unless draft mode is on, then the
- * sanitized `sanity-preview-perspective` cookie that Presentation Tool sets,
- * falling back to `'drafts'`.
+ * `validateApiPerspective` accepts any non-empty string as a release name, so
+ * the cookie value is checked against the character set a `[perspective]`
+ * route segment may hold before it is spliced into the pathname.
  */
-function resolveRequestPerspective(request: NextRequest): LivePerspective {
+const routeSegmentPattern = /^[A-Za-z0-9_,-]+$/
+
+/**
+ * Reads the `[perspective]` route segment a request should render with, using
+ * the same rule as `sanityFetch` in strict mode: `'published'` unless draft
+ * mode is on, then the sanitized `sanity-preview-perspective` cookie that
+ * Presentation Tool sets, falling back to `'drafts'`.
+ */
+function resolveRequestSegment(request: NextRequest): string {
   if (!request.cookies.has(draftModeCookieName)) {
     return 'published'
   }
   const cookie = request.cookies.get(perspectiveCookieName)
-  return cookie ? sanitizePerspective(cookie.value, 'drafts') : 'drafts'
+  if (!cookie) {
+    return 'drafts'
+  }
+  const perspective = sanitizePerspective(cookie.value, 'drafts')
+  const segment = Array.isArray(perspective) ? perspective.join(',') : perspective
+  return routeSegmentPattern.test(segment) ? segment : 'drafts'
 }
 
 /**
@@ -51,8 +62,7 @@ function resolveRequestPerspective(request: NextRequest): LivePerspective {
  */
 export function definePerspectiveProxy(): (request: NextRequest) => NextResponse {
   return function proxy(request) {
-    const perspective = resolveRequestPerspective(request)
-    const segment = Array.isArray(perspective) ? perspective.join(',') : perspective
+    const segment = resolveRequestSegment(request)
     const url = request.nextUrl.clone()
     url.pathname = `/${segment}${url.pathname === '/' ? '' : url.pathname}`
     return NextResponse.rewrite(url)
