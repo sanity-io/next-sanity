@@ -5,7 +5,10 @@
     "build": {
       "dependsOn": ["^build"]
     },
-    "typegen": {},
+    "typegen": {
+      "inputs": ["$TURBO_DEFAULT$", "!sanity.types.ts"],
+      "outputs": [".next/types/**", "sanity.types.ts", "next-env.d.ts"]
+    },
     "test": {
       "dependsOn": ["^build"],
       "cache": false,
