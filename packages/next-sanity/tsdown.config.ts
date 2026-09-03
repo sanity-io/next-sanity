@@ -16,6 +16,7 @@ export default defineConfig({
     './src/live/conditions/react-server/index.ts',
     './src/live/conditions/default/index.ts',
     './src/live/client-components/index.ts',
+    './src/live/invalidate/index.ts',
     './src/live/server-actions/index.ts',
     './src/studio/client-component/index.ts',
     './src/studio/index.ts',
