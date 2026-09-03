@@ -90,11 +90,11 @@
     "test:e2e": "vitest --project browser"
   },
   "dependencies": {
-    "@portabletext/react": "^7.0.1",
-    "@sanity/client": "^7.26.2",
+    "@portabletext/react": "^8.0.1",
+    "@sanity/client": "^8.5.0",
     "@sanity/generate-help-url": "^4.0.0",
-    "@sanity/preview-url-secret": "^4.1.4",
-    "@sanity/visual-editing": "^6.0.4",
+    "@sanity/preview-url-secret": "^4.1.5",
+    "@sanity/visual-editing": "^6.1.2",
     "@sanity/webhook": "^4.0.4",
     "groq": "^6.12.0",
     "history": "^5.3.0"
@@ -123,15 +123,15 @@
     "vitest-package-exports": "^1.2.0"
   },
   "peerDependencies": {
-    "@sanity/client": "^7.26.2 || ^8.0.0",
-    "next": "^16.0.0-0",
+    "@sanity/client": "^8.0.0",
+    "next": "^16.3.0",
     "react": "^19.2.3",
     "react-dom": "^19.2.3",
-    "sanity": "^5.29.0 || ^6.0.0",
+    "sanity": "^6.0.0",
     "styled-components": "^6.1"
   },
   "engines": {
-    "node": ">=20.19 <22 || >=22.12"
+    "node": ">=22.12"
   },
   "msw": {
     "workerDirectory": [
