@@ -199,10 +199,12 @@ function assembleQuery({filter, params, order, limit}: QueryPieces): string {
   assertGroq(filter, 'filter')
   const keys = Object.keys(params)
   if (keys.length === 0) {
-    throw new TypeError('defineGenerateStaticParams: `params` must declare at least one route param')
+    throw new TypeError(
+      'defineGenerateStaticParams: `params` must declare at least one route param',
+    )
   }
   for (const key of keys) {
-    assertGroq(params[key]!, `params.${key}`)
+    assertGroq(params[key], `params.${key}`)
   }
   if (limit !== undefined && (!Number.isInteger(limit) || limit < 1)) {
     throw new TypeError(
@@ -260,7 +262,7 @@ function pickRow<Shape extends StaticParams>(
   const picked: StaticParams = {}
   for (const key of keys) {
     const value = row[key]
-    if (!matchesKind(value, fallback[key]!)) return undefined
+    if (!matchesKind(value, fallback[key])) return undefined
     picked[key] = value
   }
   // Every key of `fallback` was checked against its declared kind, which is what `Shape` promises.

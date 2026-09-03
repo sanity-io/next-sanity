@@ -52,6 +52,9 @@ test(`exports snapshot for the ${JSON.stringify(env)} condition`, {timeout: 15_0
         SanityLive: function
       ./live/server-actions:
         revalidateSyncTagsAction: function
+      ./static-params:
+        defineGenerateStaticParams: function
+        ensureStaticParams: function
       ./studio:
         metadata: object
         NextStudio: function
