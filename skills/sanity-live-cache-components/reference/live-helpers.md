@@ -1,15 +1,15 @@
-# Live helpers: `client.ts` and `live.ts`
+# Live helpers: `client.ts`, `live.ts`, `proxy.ts`, and the root layout
 
 ## Contents
 
 - [`client.ts`](#clientts)
 - [`live.ts`](#livets)
-- [`cachedSanity`](#cachedsanity)
+- [`proxy.ts`](#proxyts)
+- [`app/[perspective]/layout.tsx`](#appperspectivelayouttsx)
 - [`sanityFetch`](#sanityfetch)
-- [`cachedSanityMetadata`](#cachedsanitymetadata)
-- [`getDynamicFetchOptions`](#getdynamicfetchoptions)
-- [`cachedSanityStaticParams`](#cachedsanitystaticparams)
-- [Anti-patterns to grep for](#anti-patterns-to-grep-for)
+- [`cachedSanity`](#cachedsanity)
+- [Without a `[perspective]` segment](#without-a-perspective-segment)
+- [`generateStaticParams`](#generatestaticparams)
 
 ## `client.ts`
 
@@ -31,10 +31,10 @@ export const client = createClient({
 })
 ```
 
-**If `client.ts` already exists**, leave its structure alone. Templates often centralize env-var reads in a separate `sanity/lib/api.ts` with an `assertValue` helper — keep that. Append only what's missing.
+**If `client.ts` already exists**, leave its structure alone. Templates often centralize env-var reads in a separate `sanity/lib/api.ts` with an `assertValue` helper. Keep that. Append only what's missing.
 
-- Use a modern `apiVersion` (e.g. today's date as a hardcoded string).
-- `stega.studioUrl` enables stega encoding. It can be a relative string when an embedded Studio is mounted via `NextStudio` from `next-sanity/studio`, otherwise an absolute URL (typically env-driven).
+- Use a modern `apiVersion` (for example today's date as a hardcoded string).
+- `stega.studioUrl` enables stega encoding. It can be a relative string when an embedded Studio is mounted, otherwise an absolute URL (typically env-driven).
 - Changing `apiVersion` or removing existing `stega.*` options can break callers.
 - Never remove an existing `token` from `createClient`. Private datasets require a client token even for published-content fetches.
 
@@ -42,18 +42,13 @@ export const client = createClient({
 
 Create `src/sanity/lib/live.ts` alongside `client.ts`. If it already exists, append only what's missing.
 
-`SANITY_API_READ_TOKEN` must never reach the client bundle. If the project already keeps it in a dedicated server-only module (commonly `src/sanity/lib/token.ts` with `import 'server-only'` at the top), import the token from there instead of inlining the `process.env` read. The example below inlines it for brevity — swap in the existing module if there is one.
+`SANITY_API_READ_TOKEN` must never reach the client bundle. If the project already keeps it in a dedicated server-only module (commonly `src/sanity/lib/token.ts` with `import 'server-only'` at the top), import the token from there instead of inlining the `process.env` read.
 
 ```ts
 // src/sanity/lib/live.ts
-import {type QueryParams} from 'next-sanity'
-import {
-  defineLive,
-  resolvePerspectiveFromCookies,
-  type LivePerspective,
-  type StrictDefinedFetchType,
-} from 'next-sanity/live'
-import {cookies, draftMode} from 'next/headers'
+import {defineLive} from 'next-sanity/live'
+import {perspective} from 'next/root-params'
+
 import {client} from './client'
 
 const token = process.env.SANITY_API_READ_TOKEN
@@ -66,185 +61,147 @@ export const {SanityLive, sanityFetch} = defineLive({
   serverToken: token,
   browserToken: token,
   strict: true,
-})
-
-// The app's one shared 'use cache' boundary. `sanityFetch` calls
-// `cacheTag`/`cacheLife` internally but doesn't create the boundary —
-// this wrapper provides it once, so callers don't add their own.
-export const cachedSanity: StrictDefinedFetchType = async (options) => {
-  'use cache'
-  return sanityFetch(options)
-}
-
-export interface DynamicFetchOptions {
-  perspective: LivePerspective
-  stega: boolean
-}
-export async function getDynamicFetchOptions(): Promise<DynamicFetchOptions> {
-  const {isEnabled: isDraftMode} = await draftMode()
-  if (!isDraftMode) {
-    return {perspective: 'published', stega: false}
-  }
-
-  const jar = await cookies()
-  const perspective = await resolvePerspectiveFromCookies({cookies: jar})
-  return {perspective: perspective ?? 'drafts', stega: true}
-}
-
-// For usage within `generateStaticParams`
-export async function cachedSanityStaticParams<const QueryString extends string>({
-  query,
-  params = {},
-}: {
-  query: QueryString
-  params?: QueryParams
-}) {
-  const {data} = await cachedSanity({query, params, perspective: 'published', stega: false})
-  return {data}
-}
-
-// For usage within `generateMetadata` and `generateViewport`
-export async function cachedSanityMetadata<const QueryString extends string>({
-  query,
-  params = {},
   perspective,
-}: {
-  query: QueryString
-  params?: QueryParams
-  perspective: LivePerspective
-}) {
-  const {data} = await cachedSanity({query, params, perspective, stega: false})
-  return {data}
+})
+```
+
+`perspective` is the root param getter that `next typegen` generates for `app/[perspective]/`. It is only called inside draft mode, and its value is sanitized, so a raw route segment is fine and an unknown value falls back to `'drafts'`.
+
+## `proxy.ts`
+
+Create `proxy.ts` next to `app/` (or under `src/` if the app lives there). `definePerspectiveProxy` reads the draft mode bypass cookie and the `sanity-preview-perspective` cookie that Presentation Tool sets, and rewrites `/x` to `/<perspective>/x`. Without the bypass cookie the perspective is `published`, so the prerendered tree serves every anonymous visitor.
+
+```ts
+// proxy.ts
+import {definePerspectiveProxy} from 'next-sanity/live/proxy'
+
+export const proxy = definePerspectiveProxy()
+
+// Next.js needs the matcher as a literal in this file.
+export const config = {
+  matcher: [
+    '/((?!_next|_vercel|api|studio|favicon|\\.well-known|robots\\.|sitemap\\.|[^/]*\\.).*)?',
+  ],
 }
 ```
 
-## `cachedSanity`
+- The matcher excludes Next.js internals, API routes, the Studio, and any path with a dot (static files). Add other top-level routes that live outside `app/[perspective]/` to the exclusion list.
+- A request the matcher excludes still reaches `app/[perspective]/` if no static route or `public/` file matches it, with the raw path segment as the perspective. Outside draft mode strict mode forces `published` anyway. Keep static assets in `public/` so they win over the dynamic segment.
+- The `/published/...` prefix is not a public URL. A direct request to `/published` is rewritten to `/published/published` and 404s, which keeps canonical URLs unique.
 
-The default way to fetch Sanity content anywhere server-side: React Server Components, layouts, server actions, and route handlers. It is `sanityFetch` wrapped in the app's single shared `'use cache'` boundary, so callers don't declare `'use cache'` themselves.
+## `app/[perspective]/layout.tsx`
 
-Why it works:
-
-- `perspective`, `stega`, `query`, and `params` are all serializable arguments, so they become part of the cache key automatically — published and draft content never share a cache entry, and identical fetches from different components deduplicate into one entry.
-- `sanityFetch` calls `cacheTag()` (with Content Lake sync tags) and `cacheLife()` inside the wrapper's cache scope, so `<SanityLive>` revalidation targets each entry precisely.
-- When draft mode is enabled, Next.js bypasses `'use cache'`, so draft content stays fresh per request without extra handling.
-
-The component calling it must still take `perspective` and `stega` as props (or resolve them via `getDynamicFetchOptions` outside the static shell). Never hardcode them in shared components.
-
-Pattern:
+Every page route moves under `app/[perspective]/`. The layout owns `generateStaticParams`, `<SanityLive>`, and `<VisualEditing>`.
 
 ```tsx
-import {cachedSanity, type DynamicFetchOptions} from '@/sanity/lib/live'
-import {defineQuery} from 'next-sanity'
+// src/app/[perspective]/layout.tsx
+import {SanityLive} from '@/sanity/lib/live'
+import {VisualEditing} from 'next-sanity/visual-editing'
+import {draftMode} from 'next/headers'
 
-async function CachedComponent({slug, perspective, stega}: {slug: string} & DynamicFetchOptions) {
-  const pageQuery = defineQuery(`*[_type == "page" && slug.current == $slug][0]`)
-  const {data} = await cachedSanity({query: pageQuery, params: {slug}, perspective, stega})
+export function generateStaticParams() {
+  return [{perspective: 'published'}]
+}
+
+export default async function RootLayout({children}: LayoutProps<'/[perspective]'>) {
+  const {isEnabled: isDraftMode} = await draftMode()
+  return (
+    <html lang="en">
+      <body>
+        {children}
+        <SanityLive />
+        {isDraftMode && <VisualEditing />}
+      </body>
+    </html>
+  )
 }
 ```
 
-Anti-pattern (hardcoded options break Visual Editing and content-release previewing):
-
-```tsx
-async function CachedComponent({slug}: {slug: string}) {
-  const {data} = await cachedSanity({
-    query: pageQuery,
-    params: {slug},
-    perspective: 'published', // hardcoded
-    stega: false, // hardcoded
-  })
-}
-```
-
-### Inside server actions
-
-`'use server'` boundaries cannot accept `perspective`/`stega` as inputs (server action inputs are untrusted). Resolve them inside the `'use server'` function and forward them to `cachedSanity`:
-
-```tsx
-import {cachedSanity, getDynamicFetchOptions} from '@/sanity/lib/live'
-import {defineQuery} from 'next-sanity'
-
-async function renderMore({page}: {page: string}) {
-  'use server'
-  const {perspective, stega} = await getDynamicFetchOptions()
-  const pagesQuery = defineQuery(`*[_type == "page"][0...$page]`)
-  const {data} = await cachedSanity({query: pagesQuery, params: {page}, perspective, stega})
-}
-```
-
-Anti-patterns:
-
-- Hardcoding `perspective`/`stega` inside the action.
-- Calling the bare `sanityFetch` inside `'use server'` — it has no cache boundary there.
-
-### Inside `route.ts`
-
-Use `cachedSanity` with `stega: false` hardcoded, and resolve only `perspective`. Route handlers don't render a DOM next to `<VisualEditing>`, so stega encoding only inflates the payload (and can cause downstream errors).
+`<SanityLive>` derives `includeDrafts` from `draftMode()`. Pass the prop only to override it.
 
 ## `sanityFetch`
 
-The bare fetcher returned by `defineLive`. It calls `cacheTag`/`cacheLife` internally, which **requires** a surrounding `'use cache'` scope — so the only place to call it directly is inside a component (or function) that carries its own `'use cache'` directive:
+The fetcher returned by `defineLive`. It calls `cacheTag`/`cacheLife` internally, which **requires** a surrounding `'use cache'` scope. Call it inside a component or function that carries the directive:
 
 ```tsx
-import {sanityFetch, type DynamicFetchOptions} from '@/sanity/lib/live'
+import {sanityFetch} from '@/sanity/lib/live'
 import {defineQuery} from 'next-sanity'
 
-async function CachedPage({slug, perspective, stega}: {slug: string} & DynamicFetchOptions) {
+const pageQuery = defineQuery(`*[_type == "page" && slug.current == $slug][0]`)
+
+async function CachedPage({slug}: {slug: string}) {
   'use cache'
-  const pageQuery = defineQuery(`*[_type == "page" && slug.current == $slug][0]`)
-  const {data} = await sanityFetch({query: pageQuery, params: {slug}, perspective, stega})
-  return <article>{/* expensive rendering, cached alongside the data */}</article>
+  const {data} = await sanityFetch({query: pageQuery, params: {slug}})
+  return <article>{/* use `data` */}</article>
 }
 ```
 
-Reach for this instead of `cachedSanity` only when caching the rendered JSX (not just the data) is worth an extra boundary — e.g. an expensive Portable Text render tree. The same rules apply: take `perspective` and `stega` as props, never hardcode them.
+Inside the cached scope `sanityFetch` reads `draftMode()`. Outside draft mode the fetch is `perspective: 'published'`, `stega: false`, regardless of what was passed, so the cached entry is always the published one. Inside draft mode Next.js does not cache, the perspective comes from the resolver, and `stega` defaults to `true` so `<VisualEditing>` overlays work.
 
-- `perspective` switches between published, drafts, and specific Sanity Content Releases.
-- `stega: true` (combined with `stega.studioUrl` in `createClient` and `<VisualEditing>` in the root layout) renders click-to-edit overlays.
-- `getDynamicFetchOptions` resolves `perspective` from the `sanity-preview-perspective` cookie, which `<VisualEditing>` manages when the app is rendered inside Presentation Tool's preview iframe.
+Pass options only to opt out:
 
-## `cachedSanityMetadata`
+- `stega: false` keeps clean TypeGen types for data that never renders next to `<VisualEditing>` (route handlers, metadata).
+- `perspective: 'published'` inside draft mode fetches published content on purpose, for example a "compare with live" panel.
 
-For fetching data inside `generateMetadata`, `generateSitemaps`, `generateViewport`, `generateImageMetadata`, and the file-based metadata routes (`icon.tsx`, `apple-icon.tsx`, `manifest.ts`, `opengraph-image.tsx`, `twitter-image.tsx`, `robots.ts`, `sitemap.ts`).
+Never pass `perspective` or `stega` through props to reach a cached component. That was the v13 pattern and it is gone.
 
-It's `cachedSanity` with `stega` pinned to `false` (never wanted in these contexts).
+## `cachedSanity`
 
-Presentation Tool can open an app in a standalone preview window, so the correct content release must still be reflected in `<title>` and friends. Always resolve `perspective`:
+Optional. When many callers fetch data without caching their rendered JSX, a shared boundary in `live.ts` saves each of them a directive:
 
 ```ts
-import {getDynamicFetchOptions, cachedSanityMetadata} from '@/sanity/lib/live'
-import {defineQuery} from 'next-sanity'
+// src/sanity/lib/live.ts (continued)
+import type {DefinedFetchType} from 'next-sanity/live'
 
-export async function generateMetadata({params}: PageProps<'/[slug]'>) {
-  const [{slug}, {perspective}] = await Promise.all([params, getDynamicFetchOptions()])
-  const pageQuery = defineQuery(`*[_type == "page" && slug.current == $slug][0]`)
-  const {data} = await cachedSanityMetadata({query: pageQuery, params: {slug}, perspective})
+export const cachedSanity: DefinedFetchType = async (options) => {
+  'use cache'
+  return sanityFetch(options)
 }
 ```
 
-Anti-pattern: hardcoding `perspective: 'published'` — content-release previewing won't work.
+`query` and `params` are the cache key. Two components fetching the same query share one entry. Use `cachedSanity` inside server actions and route handlers too, where a component-level directive is not available.
 
-## `getDynamicFetchOptions`
+Reach for the bare `sanityFetch` with a component-level `'use cache'` when caching the rendered tree is worth it, for example an expensive Portable Text render.
 
-Resolves `perspective` and `stega` outside the `'use cache'` boundary so they can be passed in as plain props. Calls `cookies()`, which is a dynamic API, so the call must live inside a `<Suspense>` boundary (or a route with a sibling `loading.tsx`) so it doesn't block the static shell from streaming.
+## Without a `[perspective]` segment
 
-Avoid calling `getDynamicFetchOptions` in the top-level body of a `layout.tsx` or `page.tsx` that should remain part of the static shell. The exception is routes that intentionally use a sibling `loading.tsx` for fallback UI (see [dynamic-segments.md](dynamic-segments.md)) — there the page can await `getDynamicFetchOptions` directly because `loading.tsx` provides the streaming fallback.
+Some apps cannot move every route under a dynamic root segment. Leave the `perspective` resolver off and pass `perspective` on each call. The types require it. Only the draft mode value is used, so the literal is almost always `'drafts'`:
 
-When Cache Components are enabled, `<Suspense>` boundaries determine the static shell. For fully prerendered routes, render the Suspense tree only when in draft mode — see [three-layer-pattern.md](three-layer-pattern.md).
+```ts
+export const {SanityLive, sanityFetch} = defineLive({
+  client,
+  serverToken: token,
+  browserToken: token,
+  strict: true,
+})
+```
 
-## `cachedSanityStaticParams`
+```tsx
+async function CachedPage({slug}: {slug: string}) {
+  'use cache'
+  const {data} = await sanityFetch({query: pageQuery, params: {slug}, perspective: 'drafts'})
+  return <article>{/* use `data` */}</article>
+}
+```
 
-Used inside `generateStaticParams`. `stega` is never wanted (the data feeds route params), and `perspective` cookies aren't available at build time anyway, so both are hardcoded.
+Content release previews in Presentation Tool need the release perspective, which this variant cannot see inside a cache. Prefer the `[perspective]` segment when releases matter.
 
-- Never call `sanityFetch` or `cachedSanity` directly inside `generateStaticParams` — always use `cachedSanityStaticParams` (which fetches through `cachedSanity` internally).
-- Never call `cachedSanityStaticParams` outside `generateStaticParams`.
+## `generateStaticParams`
 
-## Anti-patterns to grep for
+Build-time code has no draft mode and no request, so `sanityFetch` is the wrong tool. Use the plain client with `perspective: 'published'`:
 
-When migrating an existing app, these are the strings to search for and refactor:
+```ts
+// src/app/[perspective]/[slug]/page.tsx
+import {client} from '@/sanity/lib/client'
+import {defineQuery} from 'next-sanity'
 
-- `perspective: 'published'` and `stega: false` hardcoded together in a `sanityFetch` / `cachedSanity` call inside a shared component → replace with `perspective` and `stega` props sourced from `getDynamicFetchOptions` via the three-layer pattern.
-- `sanityFetch(` directly inside a function whose body starts with `'use server'` → swap for `cachedSanity` and resolve `perspective`/`stega` via `getDynamicFetchOptions` inside the action.
-- `sanityFetch(` in a component without its own `'use cache'` directive → swap for `cachedSanity` (or add the directive if caching the rendered JSX is intended).
-- `sanityFetch(` inside `generateStaticParams` → swap for `cachedSanityStaticParams`.
-- `sanityFetch(` inside `generateMetadata` / `generateViewport` / `sitemap.ts` / `robots.ts` / `opengraph-image.tsx` etc. → swap for `cachedSanityMetadata` and resolve `perspective` via `getDynamicFetchOptions`.
-- `await draftMode()` immediately followed by `await getDynamicFetchOptions()` at the top of a `page.tsx` or `layout.tsx` without a sibling `loading.tsx` → move the dynamic-API calls into a child component wrapped in `<Suspense>` so the static shell can prerender.
+const pageSlugsQuery = defineQuery(
+  `*[_type == "page" && defined(slug.current)]{"slug": slug.current}`,
+)
+
+export async function generateStaticParams() {
+  return client.fetch(pageSlugsQuery, {}, {perspective: 'published'})
+}
+```
+
+Every `[slug]` route under `[perspective]` needs a `generateStaticParams`, even a partial one. See [dynamic-segments.md](dynamic-segments.md).
