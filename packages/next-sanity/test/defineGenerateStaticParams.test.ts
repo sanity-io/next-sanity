@@ -163,6 +163,26 @@ describe('definition-time validation', () => {
       }),
     ).toThrow(/`limit` must be a positive integer, got 0/)
   })
+
+  test.each([{slug: ''}, {path: []}, {path: ['']}, {path: ['ok', '']}, {category: 'ok', slug: ''}])(
+    'rejects the fallback %j at definition time',
+    (fallback) => {
+      const {client} = createFakeClient()
+      const key = Object.keys(fallback).at(-1)
+      expect(() =>
+        defineGenerateStaticParams({
+          client,
+          filter: '_type == "post"',
+          params: Object.fromEntries(Object.keys(fallback).map((name) => [name, 'slug.current'])),
+          fallback,
+        }),
+      ).toThrow(
+        new TypeError(
+          `defineGenerateStaticParams: \`fallback.${key}\` must be a non-empty string or a non-empty array of non-empty strings`,
+        ),
+      )
+    },
+  )
 })
 
 describe('generateStaticParams', () => {
@@ -238,6 +258,37 @@ describe('generateStaticParams', () => {
       fallback: {slug: '_'},
     })
     await expect(generateStaticParams()).resolves.toEqual([{slug: 'ok'}, {slug: 'ok-2'}])
+  })
+
+  test('drops rows with an empty string or an empty catch-all', async () => {
+    const {client} = createFakeClient([{slug: ''}, {slug: 'ok'}])
+    const {generateStaticParams} = defineGenerateStaticParams({
+      client,
+      filter: '_type == "post"',
+      params: {slug: 'slug.current'},
+      fallback: {slug: '_'},
+    })
+    await expect(generateStaticParams()).resolves.toEqual([{slug: 'ok'}])
+
+    const catchAll = createFakeClient([{path: []}, {path: ['a', '']}, {path: ['a', 'b']}])
+    const docs = defineGenerateStaticParams({
+      client: catchAll.client,
+      filter: '_type == "doc"',
+      params: {path: 'string::split(slug.current, "/")'},
+      fallback: {path: ['_']},
+    })
+    await expect(docs.generateStaticParams()).resolves.toEqual([{path: ['a', 'b']}])
+  })
+
+  test('returns the fallback when only empty catch-alls match', async () => {
+    const {client} = createFakeClient([{path: []}])
+    const {generateStaticParams} = defineGenerateStaticParams({
+      client,
+      filter: '_type == "doc"',
+      params: {path: 'string::split(slug.current, "/")'},
+      fallback: {path: ['__placeholder__']},
+    })
+    await expect(generateStaticParams()).resolves.toEqual([{path: ['__placeholder__']}])
   })
 
   test('returns the fallback when nothing matches', async () => {
