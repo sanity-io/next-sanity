@@ -7,29 +7,28 @@ The package has no Next.js or React dependency, so a Sanity Function bundle that
 ## Install
 
 ```bash
-npm install @sanity/next-sanity-functions @sanity/functions
+npm install @sanity/next-sanity-functions @sanity/functions @sanity/blueprints
 ```
 
 ## Usage
 
-Declare the function in `sanity.blueprint.ts`, one per dataset:
+By default every browser tab connected through `<SanityLive>` reacts to a live event by calling a Server Action that expires the cache and refreshes the page, and the tabs race the revalidation. With `waitFor="function"` Sanity runs the function below first, holds the event until it calls `done()`, and only then lets browsers refresh. The full guide, with the deploy and CI steps, is in the [`next-sanity` README](https://github.com/sanity-io/next-sanity/tree/main/packages/next-sanity#invalidate-the-cache-before-live-events-reach-the-browser). The pieces are these.
+
+**1. Generate a secret** with `openssl rand -hex 32` and set it as `SANITY_REVALIDATE_SECRET` on the Next.js deployment.
+
+**2. Add the route handler.**
 
 ```ts
-import {defineBlueprint, defineSyncTagInvalidateFunction} from '@sanity/blueprints'
+// app/api/revalidate/route.ts
+import {defineInvalidateSyncTags} from 'next-sanity/live/invalidate'
 
-export default defineBlueprint({
-  resources: [
-    defineSyncTagInvalidateFunction({
-      name: 'invalidate-sync-tags',
-      event: {resource: {type: 'dataset', id: `${projectId}.${dataset}`}},
-    }),
-  ],
-})
+export const {POST} = defineInvalidateSyncTags({secret: process.env.SANITY_REVALIDATE_SECRET})
 ```
 
-Implement it in `functions/invalidate-sync-tags/index.ts`:
+**3. Add the function.**
 
 ```ts
+// functions/invalidate-sync-tags/index.ts
 import {defineInvalidateSyncTagsHandler} from '@sanity/next-sanity-functions'
 
 export const handler = defineInvalidateSyncTagsHandler({
@@ -38,24 +37,61 @@ export const handler = defineInvalidateSyncTagsHandler({
 })
 ```
 
-`urls` accepts a comma separated string, so one env var can fan out to several deployments. Every URL is called in parallel, each outcome is logged, and `done()` is always called so a failing origin never holds the live event back.
+`urls` splits a string on commas, so one `REVALIDATE_URL` can name several deployments. Every URL is called in parallel, each outcome is logged, and `done()` is always called so a failing origin never holds the live event back.
 
-Share the secret and the URLs with the deployed function:
-
-```bash
-npx sanity functions env add invalidate-sync-tags SANITY_REVALIDATE_SECRET <same value as the Next.js app>
-npx sanity functions env add invalidate-sync-tags REVALIDATE_URL https://www.example.com/api/revalidate
-```
-
-On the Next.js side, `app/api/revalidate/route.ts` is two lines:
+**4. Add the blueprint.** It scopes the function to one dataset and passes the two variables to the deployed function. Blueprint `env` is additive, so a missing value is left out and the deployed value survives.
 
 ```ts
-import {defineInvalidateSyncTags} from 'next-sanity/live/invalidate'
+// sanity.blueprint.ts
+import {loadEnvConfig} from '@next/env'
+import {defineBlueprint, defineSyncTagInvalidateFunction} from '@sanity/blueprints'
 
-export const {POST} = defineInvalidateSyncTags({secret: process.env.SANITY_REVALIDATE_SECRET})
+loadEnvConfig(__dirname, process.env.NODE_ENV !== 'production', {
+  info: () => null,
+  error: console.error,
+})
+
+const {
+  NEXT_PUBLIC_SANITY_PROJECT_ID,
+  NEXT_PUBLIC_SANITY_DATASET,
+  REVALIDATE_URL,
+  SANITY_REVALIDATE_SECRET,
+} = process.env
+
+const env: Record<string, string> = {}
+if (REVALIDATE_URL) env.REVALIDATE_URL = REVALIDATE_URL
+if (SANITY_REVALIDATE_SECRET) env.SANITY_REVALIDATE_SECRET = SANITY_REVALIDATE_SECRET
+
+export default defineBlueprint({
+  resources: [
+    defineSyncTagInvalidateFunction({
+      name: 'invalidate-sync-tags',
+      event: {
+        resource: {
+          type: 'dataset',
+          id: `${NEXT_PUBLIC_SANITY_PROJECT_ID}.${NEXT_PUBLIC_SANITY_DATASET}`,
+        },
+      },
+      env: Object.keys(env).length > 0 ? env : undefined,
+    }),
+  ],
+})
 ```
 
-### Composing your own handler
+**5. Deploy.** With `REVALIDATE_URL=https://<your-site>/api/revalidate` and `SANITY_REVALIDATE_SECRET` in `.env.local`, run `npx sanity blueprints init` once and then `npx sanity blueprints deploy`. From CI, use `sanity-io/blueprints-actions/plan@plan-v2` on pull requests and `sanity-io/blueprints-actions/deploy@deploy-v3` on the default branch. Then set `SANITY_LIVE_WAIT_FOR_FUNCTION=true` on the site, render `<SanityLive waitFor="function" />` when it is set, and redeploy the site.
+
+To run the function against a local dev server without deploying anything:
+
+```shell
+REVALIDATE_URL=http://localhost:3000/api/revalidate SANITY_REVALIDATE_SECRET=<secret> \
+  npx sanity functions test invalidate-sync-tags --data '{"syncTags": ["s1:example"]}'
+```
+
+## Why the request is signed
+
+`invalidateSyncTags` signs the body with `@sanity/webhook`, the same HMAC scheme Sanity uses for GROQ-powered webhooks. The signature covers the body and the time it was created, so a captured request cannot be edited or replayed after the receiver's `maxAge`, five minutes by default. A bearer token would be a static credential sent in the clear on every call, and any log line that captures it is enough to expire the cache at will. `defineInvalidateSyncTags` therefore accepts only signed requests.
+
+## Composing your own handler
 
 `invalidateSyncTags(syncTags, options)` is the send step on its own. It signs the body with `@sanity/webhook`, POSTs to every URL, and resolves to one delivery result per URL without throwing for a failed origin.
 
