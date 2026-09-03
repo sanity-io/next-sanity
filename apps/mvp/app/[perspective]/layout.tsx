@@ -21,6 +21,10 @@ async function toggleDraftMode() {
   }
 }
 
+export function generateStaticParams() {
+  return [{perspective: 'published'}]
+}
+
 export default async function RootLayout({children}: {children: React.ReactNode}) {
   const isDraftMode = (await draftMode()).isEnabled
   return (

@@ -426,7 +426,7 @@ export type AllSanitySchemaTypes =
   | SanityImageAsset
   | Geopoint
 
-// Source: app/(website)/PostTitle.tsx
+// Source: app/[perspective]/PostTitle.tsx
 // Variable: postTitleQuery
 // Query: *[_type == "post" && _id == $id][0].title
 export type PostTitleQueryResult = string | null

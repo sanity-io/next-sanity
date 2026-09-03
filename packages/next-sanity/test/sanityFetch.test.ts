@@ -531,88 +531,145 @@ describe.each([{cacheComponents: true}, {cacheComponents: false}])(
         dataset,
         apiVersion,
         useCdn: true,
-        // studioUrl ensures non-strict mode would otherwise call draftMode() to derive `stega`
         stega: {studioUrl: '/studio'},
       })
+      const {sanityFetch} = defineLive({client, serverToken, browserToken: false, strict: true})
 
-      test('throws when perspective is omitted', async () => {
-        const {sanityFetch} = defineLive({client, serverToken, browserToken: false, strict: true})
+      test('throws when perspective is omitted and no resolver is configured', async () => {
         await expect(
           // @ts-expect-error -- intentionally omitting `perspective` to assert strict validation
           sanityFetch({query: '{"perspective": $perspective, "useCdn": $useCdn}', stega: false}),
         ).rejects.toThrow(/requires an explicit `perspective` option/)
       })
 
-      test('throws when stega is omitted', async () => {
-        const {sanityFetch} = defineLive({client, serverToken, browserToken: false, strict: true})
-        await expect(
-          // @ts-expect-error -- intentionally omitting `stega` to assert strict validation
-          sanityFetch({
-            query: '{"perspective": $perspective, "useCdn": $useCdn}',
-            perspective: 'published',
-          }),
-        ).rejects.toThrow(/requires an explicit `stega` option/)
-      })
-
-      test('does not call draftMode() when perspective and stega are provided', async () => {
-        const {sanityFetch} = defineLive({client, serverToken, browserToken: false, strict: true})
-        isDraftMode = true
+      test('forces the published perspective outside draft mode', async () => {
         const {query, params} = getSanityFetchMock(
-          '{"perspective": $perspective, "useCdn": $useCdn}',
-          {perspective: 'published', useCdn: true},
+          '{"perspective": $perspective, "token": $token}',
+          {perspective: 'published', token: null},
         )
-
-        const {data} = await sanityFetch({query, params, perspective: 'published', stega: false})
+        const {data} = await sanityFetch({query, params, perspective: ['drafts', 'r5RGhbQN9']})
         expect(data).toEqual(params)
-        expect(isDraftModeCalled).not.toBe(true)
       })
 
-      test('uses the explicit perspective instead of the cookie', async () => {
-        const {sanityFetch} = defineLive({client, serverToken, browserToken: false, strict: true})
+      test('drops the variant outside draft mode', async () => {
+        const {query, params} = getSanityFetchMock('{"variant": $variant, "token": $token}', {
+          variant: null,
+          token: null,
+        })
+        const {data} = await sanityFetch({
+          query,
+          params,
+          perspective: 'drafts',
+          variant: 'Ab12cd34',
+        })
+        expect(data).toEqual(params)
+      })
+
+      test('leaves stega off outside draft mode when omitted', async () => {
+        const {query, params} = getSanityFetchMock('{"stega": $stega}', {stega: false})
+        const {data} = await sanityFetch({query, params, perspective: 'drafts'})
+        expect(data).toEqual({stega: 'false'})
+      })
+
+      test('uses the explicit perspective and the server token inside draft mode', async () => {
         isDraftMode = true
-        perspectiveCookieValue = ['drafts', 'r5RGhbQN9']
+        perspectiveCookieValue = 'published'
+        const perspective = ['drafts', 'r5RGhbQN9']
         const {query, params} = getSanityFetchMock(
-          '{"perspective": $perspective, "useCdn": $useCdn}',
-          {perspective: 'published', useCdn: true},
+          '{"perspective": $perspective, "token": $token}',
+          {perspective, token: `Bearer ${serverToken}`},
         )
-
-        const {data} = await sanityFetch({query, params, perspective: 'published', stega: false})
+        const {data} = await sanityFetch({query, params, perspective})
         expect(data).toEqual(params)
-        expect(isDraftModeCalled).not.toBe(true)
       })
 
-      test('uses the explicit variant instead of the cookie', async () => {
-        const {sanityFetch} = defineLive({client, serverToken, browserToken: false, strict: true})
+      test('forwards the explicit variant inside draft mode and ignores the cookie', async () => {
         isDraftMode = true
         variantCookieValue = 'cookieVariant'
         const {query, params} = getSanityFetchMock('{"variant": $variant, "token": $token}', {
           variant: 'explicitVariant',
           token: `Bearer ${serverToken}`,
         })
-
         const {data} = await sanityFetch({
           query,
           params,
           perspective: 'drafts',
           variant: 'explicitVariant',
-          stega: false,
         })
         expect(data).toEqual(params)
-        expect(isDraftModeCalled).not.toBe(true)
       })
 
-      test('ignores the cookie when variant is omitted', async () => {
-        const {sanityFetch} = defineLive({client, serverToken, browserToken: false, strict: true})
+      test('enables stega inside draft mode when omitted', async () => {
         isDraftMode = true
-        variantCookieValue = 'cookieVariant'
-        const {query, params} = getSanityFetchMock('{"variant": $variant, "token": $token}', {
-          variant: null,
-          token: `Bearer ${serverToken}`,
+        const {query, params} = getSanityFetchMock('{"stega": $stega}', {stega: true})
+        const {data} = await sanityFetch({query, params, perspective: 'published'})
+        expect(vercelStegaDecodeAll(JSON.stringify(data))).toHaveLength(1)
+      })
+
+      test('honours an explicit stega: false inside draft mode', async () => {
+        isDraftMode = true
+        const {query, params} = getSanityFetchMock('{"stega": $stega}', {stega: false})
+        const {data} = await sanityFetch({query, params, perspective: 'published', stega: false})
+        expect(data).toEqual({stega: 'false'})
+      })
+
+      describe('with a perspective resolver', () => {
+        const resolver = vi.fn<() => Promise<string | undefined>>()
+        afterEach(() => {
+          resolver.mockReset()
+        })
+        const {sanityFetch} = defineLive({
+          client,
+          serverToken,
+          browserToken: false,
+          strict: true,
+          perspective: resolver,
         })
 
-        const {data} = await sanityFetch({query, params, perspective: 'drafts', stega: false})
-        expect(data).toEqual(params)
-        expect(isDraftModeCalled).not.toBe(true)
+        test('makes perspective optional and skips the resolver outside draft mode', async () => {
+          const {query, params} = getSanityFetchMock(
+            '{"perspective": $perspective, "token": $token}',
+            {perspective: 'published', token: null},
+          )
+          const {data} = await sanityFetch({query, params})
+          expect(data).toEqual(params)
+          expect(resolver).not.toHaveBeenCalled()
+        })
+
+        test('sanitizes the resolved route segment inside draft mode', async () => {
+          isDraftMode = true
+          resolver.mockResolvedValue('drafts,r5RGhbQN9')
+          const {query, params} = getSanityFetchMock(
+            '{"perspective": $perspective, "token": $token}',
+            {perspective: ['drafts', 'r5RGhbQN9'], token: `Bearer ${serverToken}`},
+          )
+          const {data} = await sanityFetch({query, params})
+          expect(data).toEqual(params)
+          expect(resolver).toHaveBeenCalledTimes(1)
+        })
+
+        test('falls back to drafts when the resolver has no value', async () => {
+          isDraftMode = true
+          resolver.mockResolvedValue(undefined)
+          const {query, params} = getSanityFetchMock(
+            '{"perspective": $perspective, "token": $token}',
+            {perspective: 'drafts', token: `Bearer ${serverToken}`},
+          )
+          const {data} = await sanityFetch({query, params})
+          expect(data).toEqual(params)
+        })
+
+        test('prefers an explicit perspective over the resolver', async () => {
+          isDraftMode = true
+          resolver.mockResolvedValue('drafts')
+          const {query, params} = getSanityFetchMock(
+            '{"perspective": $perspective, "token": $token}',
+            {perspective: 'published', token: null},
+          )
+          const {data} = await sanityFetch({query, params, perspective: 'published', stega: false})
+          expect(data).toEqual(params)
+          expect(resolver).not.toHaveBeenCalled()
+        })
       })
     })
   },

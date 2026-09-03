@@ -53,6 +53,8 @@ test(`exports snapshot for the ${JSON.stringify(env)} condition`, {timeout: 15_0
       ./live/invalidate:
         defaultSignatureMaxAge: number
         defineInvalidateSyncTags: function
+      ./live/proxy:
+        definePerspectiveProxy: function
       ./live/server-actions:
         revalidateSyncTagsAction: function
       ./static-params:

@@ -23,7 +23,7 @@ async function fetchPost(slug: string) {
   return client.fetch(postQuery, {slug}, {perspective: 'published', stega: false})
 }
 
-export default async function PostPage({params}: PageProps<'/posts/[slug]'>) {
+export default async function PostPage({params}: PageProps<'/[perspective]/posts/[slug]'>) {
   const {slug} = await params
   if (slug === '__placeholder__') notFound()
   const post = await fetchPost(slug)

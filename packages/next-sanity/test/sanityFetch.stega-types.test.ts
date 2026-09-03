@@ -95,10 +95,18 @@ describe('StrictDefinedFetchType stega branding', () => {
     expectTypeOf<Data['title']>().toEqualTypeOf<StegaString>()
   })
 
-  test('requires stega', () => {
+  test('stega omitted returns branded data, since draft mode may enable it', () => {
     async function sample() {
-      // @ts-expect-error stega is required in strict mode
       return strictFetch({query, perspective: 'published'})
+    }
+    type Data = Awaited<ReturnType<typeof sample>>['data']
+    expectTypeOf<Data>().toEqualTypeOf<BrandedData>()
+  })
+
+  test('requires perspective', () => {
+    async function sample() {
+      // @ts-expect-error perspective is required in strict mode without a resolver
+      return strictFetch({query, stega: false})
     }
     void sample
   })
