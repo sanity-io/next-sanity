@@ -571,6 +571,12 @@ describe.each([{cacheComponents: true}, {cacheComponents: false}])(
         expect(data).toEqual({stega: 'false'})
       })
 
+      test('forces stega off outside draft mode even when passed explicitly', async () => {
+        const {query, params} = getSanityFetchMock('{"stega": $stega}', {stega: false})
+        const {data} = await sanityFetch({query, params, perspective: 'drafts', stega: true})
+        expect(data).toEqual({stega: 'false'})
+      })
+
       test('uses the explicit perspective and the server token inside draft mode', async () => {
         isDraftMode = true
         perspectiveCookieValue = 'published'

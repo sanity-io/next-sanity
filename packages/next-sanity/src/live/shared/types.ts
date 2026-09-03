@@ -98,8 +98,9 @@ interface DefinedFetchOptions<QueryString extends string> {
    * Requires `serverToken` to be configured in `defineLive()`
    *
    * @defaultValue
-   * With `strict: true` the default is `draftMode().isEnabled`, which is
-   * readable inside `'use cache'` scopes.
+   * With `strict: true` the fetch runs without stega outside draft mode, even
+   * when `stega: true` is passed, and defaults to `true` inside draft mode.
+   * `draftMode()` is readable inside `'use cache'` scopes.
    *
    * Otherwise the default is `false` unless
    *  - `Cache Components` are disabled
@@ -296,7 +297,8 @@ export interface DefineLiveOptions {
    * When `true`, `sanityFetch()` and `<SanityLive />` derive `stega` and
    * `includeDrafts` from `draftMode().isEnabled` when those options are
    * omitted. Outside draft mode every fetch is forced to the `'published'`
-   * perspective with no `variant`. Inside draft mode the perspective comes from
+   * perspective with `stega: false` and no `variant`, whatever the caller
+   * passed. Inside draft mode the perspective comes from
    * the explicit `perspective` option, or from the {@link DefineLiveOptions.perspective}
    * resolver. Cookies are never read, which is what makes `sanityFetch()` safe
    * to call inside `'use cache'` scopes.
@@ -370,7 +372,8 @@ interface StrictDefinedFetchStegaEnabledOptions<
    *
    * With the literal `true`, the returned `data` is stega-branded
    * (`StegaBranded<ClientReturn<...>>`): use `stegaClean` before comparing
-   * strings against literals.
+   * strings against literals. Outside draft mode the fetch still runs without
+   * stega; the branding only widens the type.
    *
    * @remarks
    * Requires `serverToken` to be configured in `defineLive()`
