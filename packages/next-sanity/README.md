@@ -113,16 +113,16 @@ By default every browser tab connected through `<SanityLive>` receives a live ev
 
    export const handler = defineInvalidateSyncTagsHandler({
      secret: process.env.SANITY_REVALIDATE_SECRET,
-     urls: process.env.REVALIDATE_URLS,
+     urls: process.env.REVALIDATE_URL,
    })
    ```
 
    ```bash
    npx sanity functions env add invalidate-sync-tags SANITY_REVALIDATE_SECRET <the same secret>
-   npx sanity functions env add invalidate-sync-tags REVALIDATE_URLS https://<your-site>/api/revalidate
+   npx sanity functions env add invalidate-sync-tags REVALIDATE_URL https://<your-site>/api/revalidate
    ```
 
-   `REVALIDATE_URLS` takes a comma separated list when several deployments read the same dataset.
+   `REVALIDATE_URL` takes a comma separated list when several deployments read the same dataset.
 
 Once the function is deployed, render `<SanityLive waitFor="function" />`. Until then leave `waitFor` unset, since Sanity would hold every event for a function that never calls `done()`. Draft Mode is unaffected either way, `includeDrafts` takes precedence.
 

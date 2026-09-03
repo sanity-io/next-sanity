@@ -27,8 +27,8 @@ export interface InvalidateSyncTagsOptions {
    *
    * @example
    * ```ts
-   * urls: process.env.REVALIDATE_URLS
-   * // REVALIDATE_URLS="https://www.example.com/api/revalidate,https://preview.example.com/api/revalidate"
+   * urls: process.env.REVALIDATE_URL
+   * // REVALIDATE_URL="https://www.example.com/api/revalidate,https://preview.example.com/api/revalidate"
    * ```
    */
   urls: string | readonly string[] | undefined
@@ -126,7 +126,7 @@ export async function invalidateSyncTags(
  *
  * export const handler = defineInvalidateSyncTagsHandler({
  *   secret: process.env.SANITY_REVALIDATE_SECRET,
- *   urls: process.env.REVALIDATE_URLS,
+ *   urls: process.env.REVALIDATE_URL,
  * });
  * ```
  *

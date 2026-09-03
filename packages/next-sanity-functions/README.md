@@ -34,7 +34,7 @@ import {defineInvalidateSyncTagsHandler} from '@sanity/next-sanity-functions'
 
 export const handler = defineInvalidateSyncTagsHandler({
   secret: process.env.SANITY_REVALIDATE_SECRET,
-  urls: process.env.REVALIDATE_URLS,
+  urls: process.env.REVALIDATE_URL,
 })
 ```
 
@@ -44,7 +44,7 @@ Share the secret and the URLs with the deployed function:
 
 ```bash
 npx sanity functions env add invalidate-sync-tags SANITY_REVALIDATE_SECRET <same value as the Next.js app>
-npx sanity functions env add invalidate-sync-tags REVALIDATE_URLS https://www.example.com/api/revalidate
+npx sanity functions env add invalidate-sync-tags REVALIDATE_URL https://www.example.com/api/revalidate
 ```
 
 On the Next.js side, `app/api/revalidate/route.ts` is two lines:
@@ -68,7 +68,7 @@ export const handler = syncTagInvalidateEventHandler(async ({event, done}) => {
   try {
     const deliveries = await invalidateSyncTags(syncTags, {
       secret: process.env.SANITY_REVALIDATE_SECRET,
-      urls: process.env.REVALIDATE_URLS,
+      urls: process.env.REVALIDATE_URL,
     })
     for (const delivery of deliveries) {
       if (!delivery.ok) console.error(delivery)
