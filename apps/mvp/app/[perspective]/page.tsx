@@ -1,3 +1,4 @@
+import {draftMode} from 'next/headers'
 import Link from 'next/link'
 import {perspective} from 'next/root-params'
 import {Suspense} from 'react'
@@ -11,12 +12,13 @@ import SanityLiveErrorBoundary from './SanityLiveErrorBoundary'
 async function CachedIndexPage() {
   'use cache'
   const {data, sourceMap, tags} = await sanityFetch({query: postsQuery.query})
+  const {isEnabled: isDraftMode} = await draftMode()
 
   return (
     <>
       <ContentSourceMapDebug sourceMap={sourceMap} />
       <p>{JSON.stringify({perspective: await perspective(), tags: tags.toSorted()})}</p>
-      <PostsLayout data={data} draftMode={false} />
+      <PostsLayout data={data} draftMode={isDraftMode} />
     </>
   )
 }

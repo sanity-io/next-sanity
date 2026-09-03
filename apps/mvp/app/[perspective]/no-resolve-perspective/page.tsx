@@ -1,4 +1,5 @@
 import {defineLive} from 'next-sanity/live'
+import {draftMode} from 'next/headers'
 import Link from 'next/link'
 import {Suspense} from 'react'
 
@@ -24,12 +25,13 @@ async function CachedIndexPage() {
     query: postsQuery.query,
     perspective: 'drafts',
   })
+  const {isEnabled: isDraftMode} = await draftMode()
 
   return (
     <>
       <ContentSourceMapDebug sourceMap={sourceMap} />
       <p>{JSON.stringify({tags: tags.toSorted()})}</p>
-      <PostsLayout data={data} draftMode={false} />
+      <PostsLayout data={data} draftMode={isDraftMode} />
     </>
   )
 }
