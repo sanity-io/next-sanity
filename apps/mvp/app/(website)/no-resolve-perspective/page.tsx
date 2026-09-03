@@ -3,6 +3,7 @@ import {draftMode} from 'next/headers'
 import Link from 'next/link'
 
 import PostsLayout, {postsQuery} from '@/app/(website)/PostsLayout'
+import {liveWaitFor} from '@/app/liveWaitFor'
 import {client} from '@/app/sanity.client'
 
 import {ContentSourceMapDebug} from '../ContentSourceMapDebug'
@@ -76,7 +77,7 @@ export default async function IndexPage() {
           Open Studio
         </Link>
       </div>
-      <SanityLive includeDrafts={isDraftMode} onError={onError} />
+      <SanityLive includeDrafts={isDraftMode} onError={onError} waitFor={liveWaitFor} />
     </>
   )
 }
