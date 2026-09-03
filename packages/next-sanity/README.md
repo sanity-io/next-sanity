@@ -300,8 +300,8 @@ What it does for you:
 
 - Assembles `*[<filter>] | order(<order>)[0...<limit>]{"slug": slug.current}` and parses the filter, every param expression, and the assembled query with `groq-js` when the module loads. A syntax error fails `next build` immediately and names the expression and its position.
 - Fetches with `perspective: 'published'`, `useCdn: true`, and stega and source maps off. Cookies are not available during `next build`, and param values are never rendered.
-- Drops documents whose param value is `null` or of the wrong kind, removes duplicates, and returns `[fallback]` when nothing remains. Cache Components fails the build when `generateStaticParams` returns `[]`, so the fallback is required. Handle it in the page with `notFound()`.
-- Types the result from `fallback`. A `string` value declares a `[slug]` segment and a `string[]` value declares a `[...slug]` or `[[...slug]]` segment, for example `params: {path: 'string::split(slug.current, "/")'}` with `fallback: {path: ['__placeholder__']}`.
+- Drops documents whose param value is `null`, empty, or of the wrong kind, removes duplicates, and returns `[fallback]` when nothing remains. Cache Components fails the build when `generateStaticParams` returns `[]`, so the fallback is required. Handle it in the page with `notFound()`.
+- Types the result from `fallback`. A `string` value declares a `[slug]` segment and a `string[]` value declares a `[...slug]` segment, for example `params: {path: 'string::split(slug.current, "/")'}` with `fallback: {path: ['__placeholder__']}`.
 - Forwards the parent segment's params to GROQ, so `app/[category]/[slug]/page.tsx` can use `filter: '_type == "post" && category->slug.current == $category'`.
 
 A root param that needs a constant value, such as `app/[perspective]/layout.tsx`, does not need the helper. Return the constant directly:

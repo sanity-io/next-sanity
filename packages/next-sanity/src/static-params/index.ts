@@ -2,7 +2,7 @@ import type {QueryParams, SanityClient} from '@sanity/client'
 import {GroqSyntaxError, parse} from 'groq-js'
 
 /**
- * A single route param value. `string` for `[slug]`, `string[]` for `[...slug]` and `[[...slug]]`.
+ * A single route param value. `string` for `[slug]`, `string[]` for `[...slug]`.
  * @public
  */
 export type StaticParamValue = string | string[]
@@ -54,8 +54,9 @@ export interface DefineGenerateStaticParamsOptions<Shape extends StaticParams> {
    * Returned as the only entry when the query yields no usable params, because
    * Cache Components fails `next build` when `generateStaticParams` returns `[]`.
    * Its shape also types the result. A `string` value declares a `[slug]` segment,
-   * a `string[]` value declares a `[...slug]` or `[[...slug]]` segment.
-   * Handle the placeholder in the page with `notFound()`.
+   * a `string[]` value declares a `[...slug]` segment. Each value must be a non-empty
+   * string or a non-empty array of non-empty strings, since Next.js cannot route an
+   * empty segment. Handle the placeholder in the page with `notFound()`.
    */
   fallback: Shape
   /**
@@ -116,8 +117,8 @@ export function ensureStaticParams<T extends Record<string, null | string | stri
  * module evaluation of the route file, so `next build` fails fast with the offending
  * expression and its position instead of a network error later in the build.
  * Documents are fetched from the published perspective. Rows whose param values are
- * `null` or of the wrong kind are dropped, duplicates are removed, and an empty result
- * becomes `[fallback]` via {@link ensureStaticParams}.
+ * `null`, empty, or of the wrong kind are dropped, duplicates are removed, and an empty
+ * result becomes `[fallback]` via {@link ensureStaticParams}.
  *
  * @example
  * ```tsx
@@ -170,6 +171,7 @@ export function defineGenerateStaticParams<Shape extends StaticParams>(
 ): DefinedGenerateStaticParams<Shape> {
   const {client, filter, params, fallback, order, limit} = options
   const query = assembleQuery({filter, params, order, limit})
+  assertFallback(fallback)
 
   const staticClient = client.withConfig({
     perspective: 'published',
@@ -220,6 +222,16 @@ function assembleQuery({filter, params, order, limit}: QueryPieces): string {
   return query
 }
 
+function assertFallback(fallback: StaticParams): void {
+  for (const key of Object.keys(fallback)) {
+    if (!isRoutableValue(fallback[key], fallback[key])) {
+      throw new TypeError(
+        `defineGenerateStaticParams: \`fallback.${key}\` must be a non-empty string or a non-empty array of non-empty strings`,
+      )
+    }
+  }
+}
+
 function assertGroq(source: string, where: string): void {
   try {
     parse(source)
@@ -262,7 +274,7 @@ function pickRow<Shape extends StaticParams>(
   const picked: StaticParams = {}
   for (const key of keys) {
     const value = row[key]
-    if (!matchesKind(value, fallback[key])) return undefined
+    if (!isRoutableValue(value, fallback[key])) return undefined
     picked[key] = value
   }
   // Every key of `fallback` was checked against its declared kind, which is what `Shape` promises.
@@ -274,9 +286,18 @@ function isRecord(value: unknown): value is Record<string, unknown> {
   return typeof value === 'object' && value !== null
 }
 
-function matchesKind(value: unknown, sample: StaticParamValue): value is StaticParamValue {
+function isNonEmptyString(value: unknown): value is string {
+  return typeof value === 'string' && value !== ''
+}
+
+/**
+ * `sample` decides the kind, `value` is what has to fit it. Empty strings and
+ * empty arrays never fit, since Next.js cannot route to an empty segment and a
+ * `[...slug]` route given `[]` would resolve to the parent path.
+ */
+function isRoutableValue(value: unknown, sample: StaticParamValue): value is StaticParamValue {
   if (Array.isArray(sample)) {
-    return Array.isArray(value) && value.every((item) => typeof item === 'string')
+    return Array.isArray(value) && value.length > 0 && value.every(isNonEmptyString)
   }
-  return typeof value === 'string'
+  return isNonEmptyString(value)
 }
