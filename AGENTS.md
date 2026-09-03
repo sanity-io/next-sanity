@@ -71,7 +71,7 @@ export PATH="$HOME/.nvm/versions/node/v22.22.2/bin:$PATH"
 
 ### Demo app env
 
-`apps/mvp` and `apps/static` need a gitignored `.env.local` with `NEXT_PUBLIC_SANITY_PROJECT_ID` and `NEXT_PUBLIC_SANITY_DATASET` (see each app's `.env.local.example`). The example project `pv8y60vp/production` is publicly readable, so published content renders without a token. `SANITY_API_READ_TOKEN` is only required for draft mode, Presentation/visual-editing preview, and authenticated live queries — not for basic rendering.
+`apps/mvp` and `apps/static` need a gitignored `.env.local` with `NEXT_PUBLIC_SANITY_PROJECT_ID` and `NEXT_PUBLIC_SANITY_DATASET` (see each app's `.env.local.example`). The example project `pv8y60vp/production` is publicly readable, so published content renders without a token. `SANITY_API_READ_TOKEN` is only required for draft mode, Presentation/visual-editing preview, and authenticated live queries — not for basic rendering. Leave `SANITY_REVALIDATE_SECRET` and `SANITY_LIVE_WAIT_FOR_FUNCTION` unset in Cloud for `apps/mvp`: no sync tag invalidate function is deployed for the demo project, so with `waitFor="function"` live events would never arrive.
 
 ### Dev/runtime notes
 
