@@ -672,5 +672,116 @@ describe.each([{cacheComponents: true}, {cacheComponents: false}])(
         })
       })
     })
+
+    describe('sanityFetchMetadata', () => {
+      const serverToken = 'sk456'
+      const client = createClient({
+        projectId,
+        dataset,
+        apiVersion,
+        useCdn: true,
+        stega: {studioUrl: '/studio'},
+      })
+
+      test('never brands data with stega, even inside draft mode', async () => {
+        isDraftMode = true
+        const {sanityFetchMetadata} = defineLive({client, serverToken, browserToken: false})
+        const {query, params} = getSanityFetchMock('{"stega": $stega}', {stega: false})
+        const {data} = await sanityFetchMetadata({query, params, perspective: 'drafts'})
+        expect(data).toEqual({stega: 'false'})
+      })
+
+      test('returns tags and sourceMap like sanityFetch', async () => {
+        const {sanityFetchMetadata} = defineLive({client, serverToken, browserToken: false})
+        const {query, params} = getSanityFetchMock('{"stega": $stega}', {stega: false})
+        const result = await sanityFetchMetadata({query, params, perspective: 'published'})
+        expect(result.tags).toEqual(['sanity:A'])
+        expect(result.sourceMap).toBeNull()
+      })
+
+      describe('strict mode without a resolver', () => {
+        const {sanityFetchMetadata} = defineLive({
+          client,
+          serverToken,
+          browserToken: false,
+          strict: true,
+        })
+
+        test('throws when perspective is omitted', async () => {
+          await expect(
+            // @ts-expect-error -- intentionally omitting `perspective` to assert strict validation
+            sanityFetchMetadata({query: '{"perspective": $perspective, "useCdn": $useCdn}'}),
+          ).rejects.toThrow(/requires an explicit `perspective` option/)
+        })
+
+        test('forces the published perspective outside draft mode', async () => {
+          const {query, params} = getSanityFetchMock(
+            '{"perspective": $perspective, "token": $token}',
+            {perspective: 'published', token: null},
+          )
+          const {data} = await sanityFetchMetadata({query, params, perspective: 'drafts'})
+          expect(data).toEqual(params)
+        })
+
+        test('uses the explicit perspective and the server token inside draft mode', async () => {
+          isDraftMode = true
+          const perspective = ['drafts', 'r5RGhbQN9']
+          const {query, params} = getSanityFetchMock(
+            '{"perspective": $perspective, "token": $token}',
+            {perspective, token: `Bearer ${serverToken}`},
+          )
+          const {data} = await sanityFetchMetadata({query, params, perspective})
+          expect(data).toEqual(params)
+        })
+      })
+
+      describe('strict mode with a perspective resolver', () => {
+        const resolver = vi.fn<() => Promise<string | undefined>>()
+        afterEach(() => {
+          resolver.mockReset()
+        })
+        const {sanityFetchMetadata} = defineLive({
+          client,
+          serverToken,
+          browserToken: false,
+          strict: true,
+          perspective: resolver,
+        })
+
+        test('skips the resolver outside draft mode', async () => {
+          const {query, params} = getSanityFetchMock(
+            '{"perspective": $perspective, "token": $token}',
+            {perspective: 'published', token: null},
+          )
+          const {data} = await sanityFetchMetadata({query, params})
+          expect(data).toEqual(params)
+          expect(resolver).not.toHaveBeenCalled()
+        })
+
+        test('resolves the perspective inside draft mode', async () => {
+          isDraftMode = true
+          resolver.mockResolvedValue('drafts,r5RGhbQN9')
+          const {query, params} = getSanityFetchMock(
+            '{"perspective": $perspective, "token": $token}',
+            {perspective: ['drafts', 'r5RGhbQN9'], token: `Bearer ${serverToken}`},
+          )
+          const {data} = await sanityFetchMetadata({query, params})
+          expect(data).toEqual(params)
+          expect(resolver).toHaveBeenCalledTimes(1)
+        })
+
+        test('lets metadata routes pass perspective explicitly', async () => {
+          isDraftMode = true
+          resolver.mockResolvedValue('drafts')
+          const {query, params} = getSanityFetchMock(
+            '{"perspective": $perspective, "token": $token}',
+            {perspective: 'published', token: null},
+          )
+          const {data} = await sanityFetchMetadata({query, params, perspective: 'published'})
+          expect(data).toEqual(params)
+          expect(resolver).not.toHaveBeenCalled()
+        })
+      })
+    })
   },
 )
