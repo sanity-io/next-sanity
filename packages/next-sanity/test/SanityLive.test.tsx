@@ -294,18 +294,34 @@ describe.each([{cacheComponents: true}, {cacheComponents: false}])(
       })
     })
     describe('strict mode', () => {
-      test('throws when includeDrafts is omitted', async () => {
-        const client = createClient({projectId, dataset, apiVersion, useCdn: false})
-        const {SanityLive} = defineLive({client, browserToken, strict: true})
-        await expect(
-          // @ts-expect-error -- intentionally omitting `includeDrafts` to assert strict validation
-          renderToString(<SanityLive />),
-        ).rejects.toThrow(/requires an explicit `includeDrafts` prop/)
+      const client = createClient({projectId, dataset, apiVersion, useCdn: false})
+      const {SanityLive} = defineLive({client, browserToken, strict: true})
+
+      test('derives includeDrafts from draftMode() when omitted and draft mode is off', async () => {
+        await renderToString(<SanityLive />)
+        expect(isDraftModeCalled).toBe(true)
+        expect(SanityLiveClientComponent).toHaveBeenLastCalledWith(
+          expect.objectContaining({
+            config: expect.objectContaining({token: undefined}),
+            includeDrafts: undefined,
+          }),
+          undefined,
+        )
+      })
+
+      test('derives includeDrafts from draftMode() when omitted and draft mode is on', async () => {
+        isDraftMode = true
+        await renderToString(<SanityLive />)
+        expect(SanityLiveClientComponent).toHaveBeenLastCalledWith(
+          expect.objectContaining({
+            config: expect.objectContaining({token: browserToken}),
+            includeDrafts: true,
+          }),
+          undefined,
+        )
       })
 
       test('does not call draftMode() when includeDrafts={false}', async () => {
-        const client = createClient({projectId, dataset, apiVersion, useCdn: false})
-        const {SanityLive} = defineLive({client, browserToken, strict: true})
         isDraftMode = true
         await renderToString(<SanityLive includeDrafts={false} />)
         expect(isDraftModeCalled).not.toBe(true)
@@ -319,8 +335,6 @@ describe.each([{cacheComponents: true}, {cacheComponents: false}])(
       })
 
       test('does not call draftMode() when includeDrafts={true}', async () => {
-        const client = createClient({projectId, dataset, apiVersion, useCdn: false})
-        const {SanityLive} = defineLive({client, browserToken, strict: true})
         await renderToString(<SanityLive includeDrafts />)
         expect(isDraftModeCalled).not.toBe(true)
         expect(SanityLiveClientComponent).toHaveBeenLastCalledWith(

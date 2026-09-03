@@ -4,8 +4,8 @@ import type {
   DefinedFetchType,
   DefinedLiveProps,
   DefineLiveOptions,
+  LivePerspectiveResolver,
   StrictDefinedFetchType,
-  StrictDefinedLiveProps,
 } from '#live/types'
 
 /**
@@ -13,15 +13,19 @@ import type {
  * and `<SanityLive />`, which connect your Sanity client to the Live Content API
  * so cached pages can update in response to fine-grained content changes.
  *
- * With `strict: true`, `perspective` and `stega` become required
- * `sanityFetch` options, and `includeDrafts` becomes required on
- * `<SanityLive />`. Resolve dynamic values from `draftMode()` and `cookies()`
- * outside `'use cache'` boundaries, then pass them into cached components.
+ * With `strict: true`, draft mode is the single source of truth. `sanityFetch`
+ * reads `draftMode()` itself, which Next.js allows inside `'use cache'`
+ * scopes. Outside draft mode every fetch is forced to `perspective: 'published'`
+ * with `stega: false`. Inside draft mode `stega` defaults to `true` and the
+ * perspective comes from the `perspective` resolver you hand `defineLive`.
+ * Pass the `[perspective]` root param getter from `next/root-params` and let
+ * `definePerspectiveProxy` from `next-sanity/live/proxy` rewrite requests into
+ * the `/[perspective]/...` route tree. `<SanityLive />` derives `includeDrafts`
+ * from `draftMode()` the same way. Cookies are never read.
  *
- * `sanityFetch` brands `data` with stega string types when `stega` is `true`,
- * a non-literal `boolean`, or omitted (react-server may auto-enable stega).
- * Pass the literal `stega: false` for clean TypeGen types. Use `stegaClean`
- * before comparing branded strings to literals.
+ * `sanityFetch` brands `data` with stega string types unless you pass the
+ * literal `stega: false`. Use `stegaClean` before comparing branded strings to
+ * literals.
  *
  * @see [Live Content API](https://www.sanity.io/docs/content-lake/live-content-api)
  * @see [Sanity Live](https://www.sanity.io/live)
@@ -29,15 +33,114 @@ import type {
  * @example
  * ```tsx
  * // sanity/live.ts
- * import {cookies, draftMode} from 'next/headers'
  * import {createClient} from 'next-sanity'
- * import {
- *   defineLive,
- *   resolvePerspectiveFromCookies,
- *   resolveVariantFromCookies,
- *   type LivePerspective,
- *   type StrictDefinedFetchType,
- * } from 'next-sanity/live'
+ * import {defineLive} from 'next-sanity/live'
+ * import {perspective} from 'next/root-params'
+ *
+ * const client = createClient({
+ *   projectId: process.env.NEXT_PUBLIC_SANITY_PROJECT_ID,
+ *   dataset: process.env.NEXT_PUBLIC_SANITY_DATASET,
+ *   useCdn: true,
+ *   perspective: 'published',
+ *   stega: {studioUrl: '/studio'},
+ * })
+ * const token = process.env.SANITY_API_READ_TOKEN
+ *
+ * export const {sanityFetch, SanityLive} = defineLive({
+ *   client,
+ *   browserToken: token,
+ *   serverToken: token,
+ *   strict: true,
+ *   perspective,
+ * })
+ * ```
+ *
+ * @example
+ * ```ts
+ * // proxy.ts
+ * import {definePerspectiveProxy} from 'next-sanity/live/proxy'
+ *
+ * export const proxy = definePerspectiveProxy()
+ *
+ * // Next.js needs the matcher as a literal in this file.
+ * export const config = {
+ *   matcher: ['/((?!_next|_vercel|api|studio|favicon|\\.well-known|robots\\.|sitemap\\.|[^/]*\\.).*)?'],
+ * }
+ * ```
+ *
+ * @example
+ * ```tsx
+ * // app/[perspective]/layout.tsx
+ * import {SanityLive} from '@/sanity/live'
+ *
+ * export async function generateStaticParams() {
+ *   return [{perspective: 'published'}]
+ * }
+ *
+ * export default function RootLayout({children}: LayoutProps<'/[perspective]'>) {
+ *   return (
+ *     <html lang="en">
+ *       <body>
+ *         {children}
+ *         <SanityLive />
+ *       </body>
+ *     </html>
+ *   )
+ * }
+ * ```
+ *
+ * @example
+ * ```tsx
+ * // app/[perspective]/[slug]/page.tsx
+ * import {Suspense} from 'react'
+ * import {defineQuery} from 'next-sanity'
+ *
+ * import {sanityFetch} from '@/sanity/live'
+ *
+ * const POST_QUERY = defineQuery(`
+ *   *[_type == "post" && slug.current == $slug][0]
+ * `)
+ *
+ * export default function Page({params}: PageProps<'/[perspective]/[slug]'>) {
+ *   return (
+ *     <Suspense fallback={<div>Loading...</div>}>
+ *       {params.then(({slug}) => <CachedPage slug={slug} />)}
+ *     </Suspense>
+ *   )
+ * }
+ *
+ * async function CachedPage({slug}: {slug: string}) {
+ *   'use cache'
+ *   const {data} = await sanityFetch({query: POST_QUERY, params: {slug}})
+ *
+ *   return <pre>{JSON.stringify(data, null, 2)}</pre>
+ * }
+ * ```
+ *
+ * @public
+ */
+export function defineLive(
+  config: DefineLiveOptions & {strict: true; perspective: LivePerspectiveResolver},
+): {
+  sanityFetch: DefinedFetchType
+  SanityLive: React.ComponentType<DefinedLiveProps>
+}
+/**
+ * Set up Sanity Live with `strict: true` and no `perspective` resolver.
+ * Draft mode still drives `stega` and `includeDrafts`, and every fetch outside
+ * draft mode is forced to `'published'`, but inside draft mode the perspective
+ * has to come from the caller, so `perspective` is required on every
+ * `sanityFetch` call. Use this when the app has no `[perspective]` route
+ * segment and passes the perspective through props instead.
+ *
+ * @see [Live Content API](https://www.sanity.io/docs/content-lake/live-content-api)
+ * @see [Sanity Live](https://www.sanity.io/live)
+ *
+ * @example
+ * ```tsx
+ * // sanity/live.ts
+ * import {createClient} from 'next-sanity'
+ * import {defineLive} from 'next-sanity/live'
  *
  * const client = createClient({
  *   projectId: process.env.NEXT_PUBLIC_SANITY_PROJECT_ID,
@@ -53,121 +156,27 @@ import type {
  *   serverToken: token,
  *   strict: true,
  * })
- *
- * // The app's one shared 'use cache' boundary. `sanityFetch` calls
- * // `cacheTag`/`cacheLife` internally but doesn't create the boundary —
- * // this wrapper provides it once, so callers don't add their own.
- * export const cachedSanity: StrictDefinedFetchType = async (options) => {
- *   'use cache'
- *   return sanityFetch(options)
- * }
- *
- * export interface DynamicFetchOptions {
- *   perspective: LivePerspective
- *   variant?: string
- *   // `boolean` brands `sanityFetch` `data`; use literal `false` for clean types
- *   stega: boolean
- * }
- *
- * // Resolve dynamic values outside 'use cache' boundaries.
- * export async function getDynamicFetchOptions(): Promise<DynamicFetchOptions> {
- *   const {isEnabled: isDraftMode} = await draftMode()
- *   if (!isDraftMode) {
- *     return {perspective: 'published', stega: false}
- *   }
- *
- *   const jar = await cookies()
- *   const perspective = await resolvePerspectiveFromCookies({cookies: jar})
- *   const variant = await resolveVariantFromCookies({cookies: jar})
- *   return {perspective: perspective ?? 'drafts', variant, stega: true}
- * }
- * ```
- *
- * @example
- * ```tsx
- * // app/layout.tsx
- * import {draftMode} from 'next/headers'
- *
- * import {SanityLive} from '@/sanity/live'
- *
- * export default async function RootLayout({children}: {children: React.ReactNode}) {
- *   const {isEnabled: isDraftMode} = await draftMode()
- *
- *   return (
- *     <html lang="en">
- *       <body>
- *         {children}
- *         <SanityLive includeDrafts={isDraftMode} />
- *       </body>
- *     </html>
- *   )
- * }
  * ```
  *
  * @example
  * ```tsx
  * // app/[slug]/page.tsx
- * import {draftMode} from 'next/headers'
- * import {Suspense} from 'react'
  * import {defineQuery} from 'next-sanity'
+ * import {sanityFetch} from '@/sanity/live'
  *
- * import {
- *   cachedSanity,
- *   getDynamicFetchOptions,
- *   type DynamicFetchOptions,
- * } from '@/sanity/live'
- *
- * const POSTS_SLUGS_QUERY = defineQuery(`
- *   *[_type == "post" && slug.current]{"slug": slug.current}
- * `)
  * const POST_QUERY = defineQuery(`
  *   *[_type == "post" && slug.current == $slug][0]
  * `)
  *
- * export async function generateStaticParams() {
- *   const {data} = await cachedSanity({
- *     query: POSTS_SLUGS_QUERY,
- *     perspective: 'published',
- *     stega: false,
- *   })
- *
- *   return data
- * }
- *
  * export default async function Page(props: PageProps<'/[slug]'>) {
- *   const {isEnabled: isDraftMode} = await draftMode()
- *   if (isDraftMode) {
- *     return (
- *       <Suspense fallback={<div>Loading...</div>}>
- *         <DynamicPage params={props.params} />
- *       </Suspense>
- *     )
- *   }
- *
  *   const {slug} = await props.params
- *   return <CachedPage slug={slug} perspective="published" stega={false} />
+ *   return <CachedPage slug={slug} />
  * }
  *
- * async function DynamicPage(props: Pick<PageProps<'/[slug]'>, 'params'>) {
- *   const {slug} = await props.params
- *   const {perspective, variant, stega} = await getDynamicFetchOptions()
- *
- *   return <CachedPage slug={slug} perspective={perspective} variant={variant} stega={stega} />
- * }
- *
- * async function CachedPage({
- *   slug,
- *   perspective,
- *   variant,
- *   stega,
- * }: {slug: string} & DynamicFetchOptions) {
- *   const {data} = await cachedSanity({
- *     query: POST_QUERY,
- *     params: {slug},
- *     perspective,
- *     variant,
- *     stega,
- *   })
+ * async function CachedPage({slug}: {slug: string}) {
+ *   'use cache'
+ *   // Outside draft mode this is a published fetch no matter what is passed.
+ *   const {data} = await sanityFetch({query: POST_QUERY, params: {slug}, perspective: 'drafts'})
  *
  *   return <pre>{JSON.stringify(data, null, 2)}</pre>
  * }
@@ -175,9 +184,9 @@ import type {
  *
  * @public
  */
-export function defineLive(config: DefineLiveOptions & {strict: true}): {
+export function defineLive(config: DefineLiveOptions & {strict: true; perspective?: undefined}): {
   sanityFetch: StrictDefinedFetchType
-  SanityLive: React.ComponentType<StrictDefinedLiveProps>
+  SanityLive: React.ComponentType<DefinedLiveProps>
 }
 /**
  * Set up Sanity Live. `defineLive` returns `sanityFetch` and `<SanityLive />`,
@@ -260,7 +269,7 @@ export function defineLive(config: DefineLiveOptions & {strict: true}): {
  *
  * @public
  */
-export function defineLive(config: DefineLiveOptions & {strict?: false}): {
+export function defineLive(config: DefineLiveOptions & {strict?: false; perspective?: undefined}): {
   sanityFetch: DefinedFetchType
   SanityLive: React.ComponentType<DefinedLiveProps>
 }
@@ -273,6 +282,7 @@ export type {
   DefinedLiveProps,
   DefineLiveOptions,
   LivePerspective,
+  LivePerspectiveResolver,
   SanityLiveAction,
   SanityLiveContext,
   SanityLiveOnError,
@@ -281,7 +291,6 @@ export type {
   SanityLiveOnRestart,
   SanityLiveOnWelcome,
   StrictDefinedFetchType,
-  StrictDefinedLiveProps,
 } from '#live/types'
 
 export {isCorsOriginError} from '#live/isCorsOriginError'

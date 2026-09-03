@@ -5,6 +5,7 @@ export type {
   DefinedLiveProps,
   DefineLiveOptions,
   LivePerspective,
+  LivePerspectiveResolver,
   SanityLiveAction,
   SanityLiveContext,
   SanityLiveOnError,
@@ -13,7 +14,6 @@ export type {
   SanityLiveOnRestart,
   SanityLiveOnWelcome,
   StrictDefinedFetchType,
-  StrictDefinedLiveProps,
 } from '#live/types'
 
 export {isCorsOriginError} from '#live/isCorsOriginError'
