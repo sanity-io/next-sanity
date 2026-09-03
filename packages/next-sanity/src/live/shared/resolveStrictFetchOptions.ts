@@ -18,10 +18,11 @@ export interface ResolvedFetchOptions {
 
 /**
  * The strict-mode contract: draft mode is the single source of truth.
- * Outside draft mode every fetch is the published fetch. Inside draft mode the
- * perspective comes from the caller or the configured resolver, and `stega`
- * defaults to on. Only `draftMode()` is read, which Next.js allows inside
- * `'use cache'` scopes, so callers never have to thread cookie values through.
+ * Outside draft mode every fetch is the published fetch with `stega: false`,
+ * whatever the caller passed. Inside draft mode the perspective comes from the
+ * caller or the configured resolver, and `stega` defaults to on. Only
+ * `draftMode()` is read, which Next.js allows inside `'use cache'` scopes, so
+ * callers never have to thread cookie values through.
  */
 export async function resolveStrictFetchOptions(
   input: StrictFetchInput,
@@ -33,7 +34,7 @@ export async function resolveStrictFetchOptions(
 
   const {isEnabled: isDraftMode} = await draftMode()
   if (!isDraftMode) {
-    return {perspective: 'published', variant: undefined, stega: input.stega ?? false}
+    return {perspective: 'published', variant: undefined, stega: false}
   }
 
   return {
