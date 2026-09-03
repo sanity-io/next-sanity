@@ -8,11 +8,11 @@ Require Node.js 22.12, Next.js 16.3, `@sanity/client` v8, and Sanity Studio v6
 
 **Node.js 22.12 or later.** The `engines.node` field is now `>=22.12`, the same range as `sanity`, `@sanity/client`, and `@portabletext/react`. Node.js 20 reached end of life in April 2026 and is no longer supported. The published bundle is compiled for the Node.js 22.12 target, so older runtimes are untested.
 
-**Next.js 16.3 or later.** The `next` peer range is now `^16.3.0`. Next.js canary releases in the 16.x line still satisfy it.
+**Next.js 16.3 or later.** The `next` peer range is now `^16.3.0`. pnpm resolves `16.4.0-canary.15` against it without a peer warning. Strict semver places prereleases of later minors outside the range, exactly as it did for the v13 range `^16.0.0-0`.
 
 **`@sanity/client` v8.** The dependency and the peer range are now `^8.0.0`. `next-sanity` re-exports `createClient` and the client types, so any `createClient` options you pass through `next-sanity` follow the v8 contract. The [`@sanity/client` v8.0.0 release notes](https://github.com/sanity-io/client/releases/tag/v8.0.0) list every removed option. The ones most projects hit are the `requester` config option, the per-request `proxy` option, and the `HttpRequestEvent`, `ResponseEvent`, and `ProgressEvent` types. Move a custom requester to a custom `fetch` and `headers`, and set `proxy` on the client instead of per request.
 
-**Sanity Studio v6 only.** The `sanity` peer range is now `^6.0.0`. Studio v5 is no longer supported by `next-sanity/studio`.
+**Sanity Studio v6 alongside `next-sanity`.** `next-sanity` v14 no longer declares a `sanity` peer dependency, because the studio entry points are gone. An app that embeds a Studio next to `next-sanity` installs `sanity` v6 itself. The Studio v5 range is gone.
 
 **`@portabletext/react` v8.** `next-sanity` re-exports `@portabletext/react`, so `<PortableText />` rendering changes with it. Lists now nest as deeply as each block's `level` says. Content that starts a list deeper than level 1, or that skips levels, renders extra nested `<li>` wrappers instead of separate lists. Snapshot tests over such content need an update. The [`@portabletext/react` v8.0.0 release notes](https://github.com/portabletext/react-portabletext/releases/tag/v8.0.0) show the before and after markup and a CSS rule that hides the empty markers.
 
