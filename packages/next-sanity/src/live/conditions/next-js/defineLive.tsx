@@ -41,6 +41,7 @@ async function cachedMetadataFetch<const QueryString extends string>(
   query: QueryString,
   params: QueryParams,
   perspective: LivePerspective | undefined,
+  variant: string | undefined,
   tags: string[] | undefined,
   requestTag: string | undefined,
 ): DefinedFetchResult<ClientReturn<QueryString, unknown>> {
@@ -51,7 +52,7 @@ async function cachedMetadataFetch<const QueryString extends string>(
       `sanityFetchMetadata() called before defineLive() registered fetcher ${fetcherId}`,
     )
   }
-  return sanityFetch({query, params, perspective, stega: false, tags, requestTag})
+  return sanityFetch({query, params, perspective, variant, stega: false, tags, requestTag})
 }
 
 /**
@@ -478,10 +479,19 @@ export function defineLive(config: DefineLiveOptions) {
     query,
     params = {},
     perspective,
+    variant,
     tags,
     requestTag,
   }) {
-    return cachedMetadataFetch(fetcherId, query, await params, perspective, tags, requestTag)
+    return cachedMetadataFetch(
+      fetcherId,
+      query,
+      await params,
+      perspective,
+      variant,
+      tags,
+      requestTag,
+    )
   }
 
   return {sanityFetch, sanityFetchMetadata, SanityLive}
