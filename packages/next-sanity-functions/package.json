@@ -1,0 +1,64 @@
+{
+  "name": "@sanity/next-sanity-functions",
+  "version": "0.0.0",
+  "description": "Sanity Functions helpers for next-sanity, signs and sends sync tag invalidations to Next.js",
+  "keywords": [
+    "live",
+    "next.js",
+    "sanity",
+    "sanity-functions",
+    "sanity.io",
+    "sync-tags"
+  ],
+  "homepage": "https://github.com/sanity-io/next-sanity/tree/main/packages/next-sanity-functions#readme",
+  "bugs": {
+    "url": "https://github.com/sanity-io/next-sanity/issues"
+  },
+  "license": "MIT",
+  "author": "Sanity.io <hello@sanity.io>",
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/sanity-io/next-sanity.git",
+    "directory": "packages/next-sanity-functions"
+  },
+  "files": [
+    "dist"
+  ],
+  "type": "module",
+  "sideEffects": false,
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": "./src/index.ts",
+    "./package.json": "./package.json"
+  },
+  "publishConfig": {
+    "exports": {
+      ".": "./dist/index.js",
+      "./package.json": "./package.json"
+    }
+  },
+  "scripts": {
+    "build": "tsdown --publint",
+    "dev": "tsdown --watch",
+    "prepack": "tsdown",
+    "test": "vitest"
+  },
+  "dependencies": {
+    "@sanity/webhook": "^4.0.4"
+  },
+  "devDependencies": {
+    "@sanity/functions": "^1.7.1",
+    "@sanity/tsconfig": "catalog:",
+    "@types/node": "catalog:",
+    "publint": "^0.3.23",
+    "tsdown": "^0.22.14",
+    "typescript": "catalog:",
+    "vitest": "^4.1.10"
+  },
+  "peerDependencies": {
+    "@sanity/functions": "^1.7.1"
+  },
+  "engines": {
+    "node": ">=22"
+  }
+}
