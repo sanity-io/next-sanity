@@ -9,14 +9,14 @@ import type {LivePerspective} from '#live/types'
  * Node instead of calling `globalThis.fetch`, so MSW (which only patches the
  * global) can no longer intercept requests made through a plain
  * `createClient()`. Route requests back through the global via the client's
- * internal `resolveFetch` escape hatch — the same one its own test suite uses
- * to inject `get-it/mock`. v7 ignores the unknown config key.
+ * internal `resolveFetch` escape hatch, the same one its own test suite uses
+ * to inject `get-it/mock`.
  */
 export function createClient(config: ClientConfig) {
   return createSanityClient({
     ...config,
     resolveFetch: () => fetch,
-  } as ClientConfig)
+  })
 }
 
 export const projectId = 'pv8y60vp'
