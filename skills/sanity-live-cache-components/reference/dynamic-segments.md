@@ -11,6 +11,8 @@
 
 `generateStaticParams` returns only the 100 most recently updated pages. A sibling `loading.tsx` renders fallback UI, so `page.tsx` itself can skip the `<Suspense>` wrapper. The same fallback UI is reused in draft mode.
 
+`defineGenerateStaticParams` from `next-sanity/static-params` assembles the query from a GROQ filter and one GROQ expression per route param. It parses every piece with `groq-js` when the module loads, so a typo fails `next build` with the expression and its position. At build time it fetches from the published perspective and returns `[fallback]` instead of `[]`. Cache Components fails the build on an empty `generateStaticParams` result, so `fallback` is required and the page handles it with `notFound()`. The `fallback` shape types the result. A `string` value declares `[slug]` and a `string[]` value declares `[...slug]`.
+
 This scales to thousands of pages without ballooning `next build` and without compromising UX in production:
 
 - Prerendered pages load instantly.
@@ -33,26 +35,26 @@ export default function Loading() {
 
 ```tsx
 // src/app/[slug]/page.tsx
-import {
-  cachedSanity,
-  getDynamicFetchOptions,
-  cachedSanityStaticParams,
-  type DynamicFetchOptions,
-} from '@/sanity/lib/live'
+import {cachedSanity, getDynamicFetchOptions, type DynamicFetchOptions} from '@/sanity/lib/live'
+import {client} from '@/sanity/lib/client'
 import {defineQuery} from 'next-sanity'
+import {defineGenerateStaticParams} from 'next-sanity/static-params'
+import {notFound} from 'next/navigation'
 
-export async function generateStaticParams() {
-  const pageSlugsQuery = defineQuery(
-    `*[_type == "page" && defined(slug.current)] | order(_updatedAt desc) [0...100]{"slug": slug.current}`,
-  )
-  const {data} = await cachedSanityStaticParams({query: pageSlugsQuery})
-  return data
-}
+export const {generateStaticParams} = defineGenerateStaticParams({
+  client,
+  filter: '_type == "page" && defined(slug.current)',
+  params: {slug: 'slug.current'},
+  fallback: {slug: '__placeholder__'},
+  order: '_updatedAt desc',
+  limit: 100,
+})
 
 // With sibling `loading.tsx`, skip the `<Suspense>` + `DynamicPage` indirection: await `params`
 // and `getDynamicFetchOptions` directly inside `Page`.
 export default async function Page({params}: PageProps<'/[slug]'>) {
   const [{slug}, {perspective, stega}] = await Promise.all([params, getDynamicFetchOptions()])
+  if (slug === '__placeholder__') notFound()
   return <CachedPage slug={slug} perspective={perspective} stega={stega} />
 }
 async function CachedPage({
@@ -68,6 +70,25 @@ async function CachedPage({
     stega,
   })
   return <article>{/* use `data` to render stuff */}</article>
+}
+```
+
+A nested segment such as `src/app/[category]/[slug]/page.tsx` receives the parent's params, and `defineGenerateStaticParams` forwards them to GROQ as variables:
+
+```tsx
+export const {generateStaticParams} = defineGenerateStaticParams({
+  client,
+  filter: '_type == "page" && category->slug.current == $category',
+  params: {slug: 'slug.current'},
+  fallback: {slug: '__placeholder__'},
+})
+```
+
+A root param with a constant value, such as `src/app/[perspective]/layout.tsx`, needs no helper. Return the constant, and Cache Components still gets its one required value:
+
+```ts
+export function generateStaticParams() {
+  return [{perspective: 'published'}]
 }
 ```
 

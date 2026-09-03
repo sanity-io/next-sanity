@@ -19,6 +19,7 @@ The all-in-one [Sanity][sanity] toolkit for production-grade content-editable Ne
   - [Requirements](#requirements)
   - [Install `next-sanity`](#install-next-sanity)
   - [Optional: embed Sanity Studio yourself](#optional-embed-sanity-studio-yourself)
+- [Static params for dynamic routes](#static-params-for-dynamic-routes)
 - [Migration guides](#migration-guides)
 - [License](#license)
 
@@ -144,6 +145,60 @@ export default function StudioPage() {
 }
 ```
 
+## Static params for dynamic routes
+
+`next-sanity/static-params` builds a [`generateStaticParams`][generate-static-params] from a GROQ filter and one GROQ expression per route param. It is server and build-time only, so import it from route files and never from Client Components.
+
+```tsx
+// app/posts/[slug]/page.tsx
+import {defineGenerateStaticParams} from 'next-sanity/static-params'
+import {notFound} from 'next/navigation'
+import {client} from '@/sanity/lib/client'
+
+export const {generateStaticParams} = defineGenerateStaticParams({
+  client,
+  filter: '_type == "post" && defined(slug.current)',
+  params: {slug: 'slug.current'},
+  fallback: {slug: '__placeholder__'},
+  order: '_updatedAt desc',
+  limit: 100,
+})
+
+export default async function Page({params}: PageProps<'/posts/[slug]'>) {
+  const {slug} = await params
+  if (slug === '__placeholder__') notFound()
+  // fetch and render the post
+}
+```
+
+What it does for you:
+
+- Assembles `*[<filter>] | order(<order>)[0...<limit>]{"slug": slug.current}` and parses the filter, every param expression, and the assembled query with `groq-js` when the module loads. A syntax error fails `next build` immediately and names the expression and its position.
+- Fetches with `perspective: 'published'`, `useCdn: true`, and stega and source maps off. Cookies are not available during `next build`, and param values are never rendered.
+- Drops documents whose param value is `null` or of the wrong kind, removes duplicates, and returns `[fallback]` when nothing remains. Cache Components fails the build when `generateStaticParams` returns `[]`, so the fallback is required. Handle it in the page with `notFound()`.
+- Types the result from `fallback`. A `string` value declares a `[slug]` segment and a `string[]` value declares a `[...slug]` or `[[...slug]]` segment, for example `params: {path: 'string::split(slug.current, "/")'}` with `fallback: {path: ['__placeholder__']}`.
+- Forwards the parent segment's params to GROQ, so `app/[category]/[slug]/page.tsx` can use `filter: '_type == "post" && category->slug.current == $category'`.
+
+A root param that needs a constant value, such as `app/[perspective]/layout.tsx`, does not need the helper. Return the constant directly:
+
+```ts
+export function generateStaticParams() {
+  return [{perspective: 'published'}]
+}
+```
+
+When you write the query yourself, `ensureStaticParams` applies the same fallback rule:
+
+```ts
+import {ensureStaticParams} from 'next-sanity/static-params'
+
+export async function generateStaticParams() {
+  return ensureStaticParams(await getArticleStaticParams(), {article: '_', section: '_'})
+}
+```
+
+The returned `query` string is the assembled GROQ. Pass it to `sanityFetch` from `next-sanity/live` with `perspective: 'published'` and `stega: false` when you want the fetch to carry cache tags.
+
 ## Migration guides
 
 - [From `v12` to `v13`][migrate-v12-to-v13]
@@ -164,6 +219,7 @@ export default function StudioPage() {
 MIT-licensed. See [LICENSE][LICENSE].
 
 [embedded-studio]: https://www.sanity.io/docs/nextjs/embedding-sanity-studio-in-nextjs
+[generate-static-params]: https://nextjs.org/docs/app/api-reference/functions/generate-static-params
 [LICENSE]: LICENSE
 [migrate-v1-to-v4]: https://github.com/sanity-io/next-sanity/blob/main/packages/next-sanity/MIGRATE-v1-to-v4.md
 [migrate-v4-to-v5-app]: https://github.com/sanity-io/next-sanity/blob/main/packages/next-sanity/MIGRATE-v4-to-v5-app-router.md
