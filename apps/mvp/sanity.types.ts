@@ -431,7 +431,12 @@ export type AllSanitySchemaTypes =
 // Query: *[_type == "post" && _id == $id][0].title
 export type PostTitleQueryResult = string | null
 
-// Source: app/(website)/posts/[slug]/page.tsx
+// Source: app/[perspective]/page.tsx
+// Variable: postsCountQuery
+// Query: count(*[_type == "post"])
+export type PostsCountQueryResult = number
+
+// Source: app/[perspective]/posts/[slug]/page.tsx
 // Variable: postQuery
 // Query: *[_type == "post" && slug.current == $slug][0]{title, "slug": slug.current, publishedAt}
 export type PostQueryResult = {
@@ -440,11 +445,24 @@ export type PostQueryResult = {
   publishedAt: string | null
 } | null
 
+// Source: app/sitemap.ts
+// Variable: postSlugsQuery
+// Query: *[_type == "post" && defined(slug.current)]{"slug": slug.current, _updatedAt}
+export type PostSlugsQueryResult = Array<{
+  slug: string | null
+  _updatedAt: string
+}>
+
 // Query TypeMap
-import '@sanity/client'
-declare module '@sanity/client' {
+declare global {
   interface SanityQueries {
     '*[_type == "post" && _id == $id][0].title': PostTitleQueryResult
+    'count(*[_type == "post"])': PostsCountQueryResult
     '*[_type == "post" && slug.current == $slug][0]{title, "slug": slug.current, publishedAt}': PostQueryResult
+    '*[_type == "post" && defined(slug.current)]{"slug": slug.current, _updatedAt}': PostSlugsQueryResult
   }
+}
+// Lets @sanity/client releases that predate the global registry read it too
+declare module '@sanity/client' {
+  interface SanityQueries extends globalThis.SanityQueries {}
 }

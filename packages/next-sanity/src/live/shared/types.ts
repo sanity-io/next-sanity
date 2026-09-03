@@ -25,7 +25,7 @@ type FetchClientReturnStega<QueryString extends string> = StegaBranded<
  */
 export type LivePerspective = Exclude<ClientPerspective, 'raw'>
 
-type DefinedFetchResult<Data> = Promise<{
+export type DefinedFetchResult<Data> = Promise<{
   data: Data
   sourceMap: ContentSourceMap | null
   tags: string[]
@@ -197,6 +197,42 @@ export type DefinedFetchType = {
     options: DefinedFetchOptions<QueryString>,
   ): DefinedFetchResult<FetchClientReturnStega<QueryString>>
 }
+
+/**
+ * Options accepted by `sanityFetchMetadata()`. Like {@link DefinedFetchOptions}
+ * without `stega`, which is always `false` for metadata.
+ */
+type DefinedFetchMetadataOptions<QueryString extends string> = Omit<
+  DefinedFetchOptions<QueryString>,
+  'stega'
+>
+
+/**
+ * Fetches data for `generateMetadata`, `generateViewport`, and the file-based
+ * metadata routes (`sitemap.ts`, `robots.ts`, `opengraph-image.tsx`, and so on).
+ *
+ * `stega` is always `false`, so `data` keeps clean TypeGen / {@link ClientReturn}
+ * types. `perspective` follows the same rule as `sanityFetch()`. Presentation
+ * Tool can open a standalone preview window, so `<title>` and friends should
+ * reflect the previewed perspective too.
+ *
+ * Returned by `defineLive()` unless `strict: true` is set without a
+ * `perspective` resolver, in which case `perspective` becomes required and
+ * {@link StrictDefinedFetchMetadataType} is returned instead.
+ */
+export type DefinedFetchMetadataType = <const QueryString extends string>(
+  options: DefinedFetchMetadataOptions<QueryString>,
+) => DefinedFetchResult<ClientReturn<QueryString, unknown>>
+
+/**
+ * Like {@link DefinedFetchMetadataType} but with `perspective` required.
+ * Returned by `defineLive({strict: true})` when no `perspective` resolver is
+ * configured. Metadata routes such as `sitemap.ts` cannot read root params, so
+ * pass `perspective: 'published'` there.
+ */
+export type StrictDefinedFetchMetadataType = <const QueryString extends string>(
+  options: DefinedFetchMetadataOptions<QueryString> & {perspective: LivePerspective},
+) => DefinedFetchResult<ClientReturn<QueryString, unknown>>
 
 /**
  * Render this in your root layout.tsx to make your page refresh, or revalidate, on new content live, automatically.

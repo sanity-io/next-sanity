@@ -1,6 +1,11 @@
 import {describe, expectTypeOf, test} from 'vitest'
 
-import type {DefinedFetchType, StrictDefinedFetchType} from '#live/types'
+import type {
+  DefinedFetchMetadataType,
+  DefinedFetchType,
+  StrictDefinedFetchMetadataType,
+  StrictDefinedFetchType,
+} from '#live/types'
 
 import type {ClientReturn, StegaBranded, StegaString} from '../src/client'
 
@@ -22,6 +27,8 @@ type BrandedData = StegaBranded<CleanData>
 // Type-only bindings — erased at runtime; nested samples below are never called.
 declare const sanityFetch: DefinedFetchType
 declare const strictFetch: StrictDefinedFetchType
+declare const sanityFetchMetadata: DefinedFetchMetadataType
+declare const strictFetchMetadata: StrictDefinedFetchMetadataType
 
 describe('DefinedFetchType stega branding', () => {
   test('stega: true returns branded data', () => {
@@ -109,5 +116,38 @@ describe('StrictDefinedFetchType stega branding', () => {
       return strictFetch({query, stega: false})
     }
     void sample
+  })
+})
+
+describe('DefinedFetchMetadataType', () => {
+  test('returns clean ClientReturn and rejects stega', () => {
+    async function sample() {
+      return sanityFetchMetadata({query})
+    }
+    type Data = Awaited<ReturnType<typeof sample>>['data']
+    expectTypeOf<Data>().toEqualTypeOf<CleanData>()
+    expectTypeOf<Data['imageLocation']>().toEqualTypeOf<'left' | 'right'>()
+
+    async function rejected() {
+      // @ts-expect-error stega is always false for metadata
+      return sanityFetchMetadata({query, stega: true})
+    }
+    void rejected
+  })
+})
+
+describe('StrictDefinedFetchMetadataType', () => {
+  test('returns clean ClientReturn and requires perspective', () => {
+    async function sample() {
+      return strictFetchMetadata({query, perspective: 'published'})
+    }
+    type Data = Awaited<ReturnType<typeof sample>>['data']
+    expectTypeOf<Data>().toEqualTypeOf<CleanData>()
+
+    async function rejected() {
+      // @ts-expect-error perspective is required in strict mode without a resolver
+      return strictFetchMetadata({query})
+    }
+    void rejected
   })
 })

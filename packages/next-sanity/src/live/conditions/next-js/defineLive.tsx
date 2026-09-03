@@ -1,3 +1,4 @@
+import type {ClientReturn, QueryParams} from 'next-sanity'
 import {sanity as sanityCacheLife} from 'next-sanity/live/cache-life'
 import {SanityLive as SanityLiveClientComponent} from 'next-sanity/live/client-components'
 import {revalidateSyncTagsAction} from 'next-sanity/live/server-actions'
@@ -9,12 +10,49 @@ import {cacheTagPrefix, defaultApiHost} from '#live/constants'
 import {preconnect} from '#live/preconnect'
 import {resolveStrictFetchOptions} from '#live/resolveStrictFetchOptions'
 import type {
+  DefinedFetchMetadataType,
+  DefinedFetchResult,
   DefinedFetchType,
   DefinedLiveProps,
   DefineLiveOptions,
+  LivePerspective,
   LivePerspectiveResolver,
+  StrictDefinedFetchMetadataType,
   StrictDefinedFetchType,
 } from '#live/types'
+
+/**
+ * A `'use cache'` function serializes every binding it closes over into its
+ * cache key, and `sanityFetch` closes over the client and the tokens. The
+ * registry keeps them out of the key by handing the cached function a string
+ * id instead. Two `defineLive` calls with the same client config and the same
+ * token, strict, and resolver flags share an entry, which is also what their
+ * fetches would return.
+ */
+const fetchers = new Map<string, DefinedFetchType>()
+
+function registerFetcher(id: string, sanityFetch: DefinedFetchType): string {
+  fetchers.set(id, sanityFetch)
+  return id
+}
+
+async function cachedMetadataFetch<const QueryString extends string>(
+  fetcherId: string,
+  query: QueryString,
+  params: QueryParams,
+  perspective: LivePerspective | undefined,
+  tags: string[] | undefined,
+  requestTag: string | undefined,
+): DefinedFetchResult<ClientReturn<QueryString, unknown>> {
+  'use cache'
+  const sanityFetch = fetchers.get(fetcherId)
+  if (!sanityFetch) {
+    throw new Error(
+      `sanityFetchMetadata() called before defineLive() registered fetcher ${fetcherId}`,
+    )
+  }
+  return sanityFetch({query, params, perspective, stega: false, tags, requestTag})
+}
 
 /**
  * Set up Sanity Live for Cache Components. `defineLive` returns `sanityFetch`
@@ -33,7 +71,9 @@ import type {
  *
  * `sanityFetch` brands `data` with stega string types unless you pass the
  * literal `stega: false`. Use `stegaClean` before comparing branded strings to
- * literals.
+ * literals. `sanityFetchMetadata` is `sanityFetch` with `stega` fixed to
+ * `false` for `generateMetadata` and the file-based metadata routes, where the
+ * data never renders next to `<VisualEditing />`.
  *
  * @see [Live Content API](https://www.sanity.io/docs/content-lake/live-content-api)
  * @see [Sanity Live](https://www.sanity.io/live)
@@ -131,6 +171,7 @@ export function defineLive(
   config: DefineLiveOptions & {strict: true; perspective: LivePerspectiveResolver},
 ): {
   sanityFetch: DefinedFetchType
+  sanityFetchMetadata: DefinedFetchMetadataType
   SanityLive: React.ComponentType<DefinedLiveProps>
 }
 /**
@@ -194,12 +235,14 @@ export function defineLive(
  */
 export function defineLive(config: DefineLiveOptions & {strict: true; perspective?: undefined}): {
   sanityFetch: StrictDefinedFetchType
+  sanityFetchMetadata: StrictDefinedFetchMetadataType
   SanityLive: React.ComponentType<DefinedLiveProps>
 }
 /**
- * Set up Sanity Live. `defineLive` returns `sanityFetch` and `<SanityLive />`,
- * which connect your Sanity client to the Live Content API so pages can serve
- * cached content and update in response to fine-grained content changes.
+ * Set up Sanity Live. `defineLive` returns `sanityFetch`, `sanityFetchMetadata`,
+ * and `<SanityLive />`, which connect your Sanity client to the Live Content API
+ * so pages can serve cached content and update in response to fine-grained
+ * content changes.
  *
  * @see [Live Content API](https://www.sanity.io/docs/content-lake/live-content-api)
  * @see [Sanity Live](https://www.sanity.io/live)
@@ -279,6 +322,7 @@ export function defineLive(config: DefineLiveOptions & {strict: true; perspectiv
  */
 export function defineLive(config: DefineLiveOptions & {strict?: false; perspective?: undefined}): {
   sanityFetch: DefinedFetchType
+  sanityFetchMetadata: DefinedFetchMetadataType
   SanityLive: React.ComponentType<DefinedLiveProps>
 }
 export function defineLive(config: DefineLiveOptions) {
@@ -416,5 +460,29 @@ export function defineLive(config: DefineLiveOptions) {
   }
   SanityLive.displayName = 'SanityLiveServerComponent'
 
-  return {sanityFetch, SanityLive}
+  const {projectId, dataset, apiVersion, apiHost, useProjectHostname} = client.config()
+  const fetcherId = registerFetcher(
+    [
+      projectId,
+      dataset,
+      apiVersion,
+      apiHost,
+      useProjectHostname,
+      serverToken ? 'token' : 'no-token',
+      strict ? 'strict' : 'loose',
+      resolvePerspective ? 'resolver' : 'no-resolver',
+    ].join(':'),
+    sanityFetch,
+  )
+  const sanityFetchMetadata: DefinedFetchMetadataType = async function sanityFetchMetadata({
+    query,
+    params = {},
+    perspective,
+    tags,
+    requestTag,
+  }) {
+    return cachedMetadataFetch(fetcherId, query, await params, perspective, tags, requestTag)
+  }
+
+  return {sanityFetch, sanityFetchMetadata, SanityLive}
 }

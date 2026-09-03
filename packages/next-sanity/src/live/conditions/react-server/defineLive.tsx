@@ -9,11 +9,13 @@ import {resolvePerspectiveFromCookies} from '#live/resolvePerspectiveFromCookies
 import {resolveStrictFetchOptions} from '#live/resolveStrictFetchOptions'
 import {resolveVariantFromCookies} from '#live/resolveVariantFromCookies'
 import type {
+  DefinedFetchMetadataType,
   DefinedFetchType,
   DefinedLiveProps,
   DefineLiveOptions,
   LivePerspective,
   LivePerspectiveResolver,
+  StrictDefinedFetchMetadataType,
   StrictDefinedFetchType,
 } from '#live/types'
 
@@ -34,7 +36,9 @@ import type {
  *
  * `sanityFetch` brands `data` with stega string types unless you pass the
  * literal `stega: false`. Use `stegaClean` before comparing branded strings to
- * literals.
+ * literals. `sanityFetchMetadata` is `sanityFetch` with `stega` fixed to
+ * `false` for `generateMetadata` and the file-based metadata routes, where the
+ * data never renders next to `<VisualEditing />`.
  *
  * @see [Live Content API](https://www.sanity.io/docs/content-lake/live-content-api)
  * @see [Sanity Live](https://www.sanity.io/live)
@@ -132,6 +136,7 @@ export function defineLive(
   config: DefineLiveOptions & {strict: true; perspective: LivePerspectiveResolver},
 ): {
   sanityFetch: DefinedFetchType
+  sanityFetchMetadata: DefinedFetchMetadataType
   SanityLive: React.ComponentType<DefinedLiveProps>
 }
 /**
@@ -195,12 +200,14 @@ export function defineLive(
  */
 export function defineLive(config: DefineLiveOptions & {strict: true; perspective?: undefined}): {
   sanityFetch: StrictDefinedFetchType
+  sanityFetchMetadata: StrictDefinedFetchMetadataType
   SanityLive: React.ComponentType<DefinedLiveProps>
 }
 /**
- * Set up Sanity Live. `defineLive` returns `sanityFetch` and `<SanityLive />`,
- * which connect your Sanity client to the Live Content API so pages can serve
- * cached content and update in response to fine-grained content changes.
+ * Set up Sanity Live. `defineLive` returns `sanityFetch`, `sanityFetchMetadata`,
+ * and `<SanityLive />`, which connect your Sanity client to the Live Content API
+ * so pages can serve cached content and update in response to fine-grained
+ * content changes.
  *
  * @see [Live Content API](https://www.sanity.io/docs/content-lake/live-content-api)
  * @see [Sanity Live](https://www.sanity.io/live)
@@ -280,6 +287,7 @@ export function defineLive(config: DefineLiveOptions & {strict: true; perspectiv
  */
 export function defineLive(config: DefineLiveOptions & {strict?: false; perspective?: undefined}): {
   sanityFetch: DefinedFetchType
+  sanityFetchMetadata: DefinedFetchMetadataType
   SanityLive: React.ComponentType<DefinedLiveProps>
 }
 export function defineLive(config: DefineLiveOptions) {
@@ -443,7 +451,11 @@ export function defineLive(config: DefineLiveOptions) {
   }
   SanityLive.displayName = 'SanityLiveServerComponent'
 
-  return {sanityFetch, SanityLive}
+  const sanityFetchMetadata: DefinedFetchMetadataType = function sanityFetchMetadata(options) {
+    return sanityFetch({...options, stega: false})
+  }
+
+  return {sanityFetch, sanityFetchMetadata, SanityLive}
 }
 
 async function resolveCookiePerspective(): Promise<LivePerspective | undefined> {

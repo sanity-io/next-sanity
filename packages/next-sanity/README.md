@@ -20,6 +20,7 @@ The all-in-one [Sanity][sanity] toolkit for production-grade content-editable Ne
   - [Install `next-sanity`](#install-next-sanity)
   - [Optional: embed Sanity Studio yourself](#optional-embed-sanity-studio-yourself)
 - [Sanity Live with Cache Components](#sanity-live-with-cache-components)
+  - [Metadata](#metadata)
 - [Static params for dynamic routes](#static-params-for-dynamic-routes)
 - [Invalidate the cache before live events reach the browser](#invalidate-the-cache-before-live-events-reach-the-browser)
 - [Migration guides](#migration-guides)
@@ -232,6 +233,42 @@ async function CachedPost({slug}: {slug: string}) {
 ```
 
 Without a `perspective` resolver, `sanityFetch` requires `perspective` on every call, both in the types and at runtime. The value only applies inside draft mode. The full pattern, including apps that cannot add a `[perspective]` segment, lives in the [`sanity-live-cache-components` skill][live-skill].
+
+### Metadata
+
+`defineLive` also returns `sanityFetchMetadata` for `generateMetadata`, `generateViewport`, and the file-based metadata routes. It is `sanityFetch` with `stega` fixed to `false`, so `data` keeps its clean TypeGen types, and it follows the same `perspective` rule. With Cache Components the library owns the `'use cache'` boundary, so no wrapper is needed:
+
+```tsx
+// app/[perspective]/[slug]/page.tsx
+import type {Metadata} from 'next'
+
+import {sanityFetchMetadata} from '@/sanity/live'
+
+export async function generateMetadata({
+  params,
+}: PageProps<'/[perspective]/[slug]'>): Promise<Metadata> {
+  const {slug} = await params
+  const {data} = await sanityFetchMetadata({query: POST_QUERY, params: {slug}})
+  return {title: data?.title}
+}
+```
+
+Metadata routes such as `sitemap.ts`, `robots.ts`, and `opengraph-image.tsx` cannot read root params, so pass the perspective explicitly there:
+
+```ts
+// app/sitemap.ts
+import type {MetadataRoute} from 'next'
+
+import {sanityFetchMetadata} from '@/sanity/live'
+
+export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
+  const {data} = await sanityFetchMetadata({query: POST_SLUGS_QUERY, perspective: 'published'})
+  return data.map((post) => ({
+    url: `https://example.com/${post.slug}`,
+    lastModified: post._updatedAt,
+  }))
+}
+```
 
 ## Static params for dynamic routes
 

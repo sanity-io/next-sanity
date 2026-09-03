@@ -1,13 +1,22 @@
+import type {Metadata} from 'next'
+import {defineQuery} from 'next-sanity'
 import Link from 'next/link'
 import {perspective} from 'next/root-params'
 import {Suspense} from 'react'
 
 import PostsLayout, {postsQuery} from '@/app/[perspective]/PostsLayout'
 import {liveWaitFor} from '@/app/liveWaitFor'
-import {sanityFetch, SanityLive} from '@/app/sanity.live'
+import {sanityFetch, sanityFetchMetadata, SanityLive} from '@/app/sanity.live'
 
 import {ContentSourceMapDebug} from './ContentSourceMapDebug'
 import SanityLiveErrorBoundary from './SanityLiveErrorBoundary'
+
+const postsCountQuery = defineQuery(`count(*[_type == "post"])`)
+
+export async function generateMetadata(): Promise<Metadata> {
+  const {data} = await sanityFetchMetadata({query: postsCountQuery})
+  return {title: `${data} posts`}
+}
 
 async function CachedIndexPage() {
   'use cache'
