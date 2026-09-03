@@ -1,70 +1,34 @@
-import {defineLive, type StrictDefinedFetchType} from 'next-sanity/live'
-import {draftMode} from 'next/headers'
 import Link from 'next/link'
+import {perspective} from 'next/root-params'
 import {Suspense} from 'react'
 
-import PostsLayout, {postsQuery} from '@/app/(website)/PostsLayout'
-import {client} from '@/app/sanity.client'
+import PostsLayout, {postsQuery} from '@/app/[perspective]/PostsLayout'
+import {sanityFetch, SanityLive} from '@/app/sanity.live'
 
 import {ContentSourceMapDebug} from './ContentSourceMapDebug'
-import {getDynamicFetchOptions, type DynamicFetchOptions} from './resolvePreviewCookies'
 import SanityLiveErrorBoundary from './SanityLiveErrorBoundary'
 
-const token = process.env.SANITY_API_READ_TOKEN!
-const {sanityFetch, SanityLive} = defineLive({
-  client,
-  serverToken: token,
-  // TDOO: setup experimental_taintUniqueValue here
-  browserToken: process.env.NEXT_PUBLIC_SANITY_API_BROWSER_TOKEN || token,
-  strict: true,
-})
-
-// The app's one shared 'use cache' boundary. `sanityFetch` calls
-// `cacheTag`/`cacheLife` internally but doesn't create the boundary —
-// this wrapper provides it once, so callers don't add their own.
-const cachedSanity: StrictDefinedFetchType = async (options) => {
+async function CachedIndexPage() {
   'use cache'
-  return sanityFetch(options)
-}
-
-async function CachedIndexPage({perspective, variant, stega}: DynamicFetchOptions) {
-  const {data, sourceMap, tags} = await cachedSanity({
-    query: postsQuery.query,
-    perspective,
-    variant,
-    stega,
-  })
+  const {data, sourceMap, tags} = await sanityFetch({query: postsQuery.query})
 
   return (
     <>
       <ContentSourceMapDebug sourceMap={sourceMap} />
-      <p>{JSON.stringify({perspective, variant, tags: tags.toSorted()})}</p>
+      <p>{JSON.stringify({perspective: await perspective(), tags: tags.toSorted()})}</p>
       <PostsLayout data={data} draftMode={false} />
     </>
   )
 }
 
-async function DynamicIndexPage() {
-  const {perspective, variant, stega} = await getDynamicFetchOptions()
-
-  return <CachedIndexPage perspective={perspective} variant={variant} stega={stega} />
-}
-
-export default async function IndexPage() {
-  const {isEnabled: isDraftMode} = await draftMode()
+export default function IndexPage() {
   return (
     <>
-      <div
-        className="relative bg-gray-50 px-4 pt-16 pb-20 sm:px-6 lg:px-8 lg:pt-24 lg:pb-28"
-      >
+      <div className="relative bg-gray-50 px-4 pt-16 pb-20 sm:px-6 lg:px-8 lg:pt-24 lg:pb-28">
         <div className="relative mx-auto max-w-7xl">
-          {isDraftMode ? (
-            <Suspense>
-              <DynamicIndexPage />
-            </Suspense>
-          ) : (
-            <CachedIndexPage perspective="published" stega={false} />
-          )}
+          <Suspense>
+            <CachedIndexPage />
+          </Suspense>
         </div>
       </div>
       <div className="flex gap-2 text-center">
@@ -101,7 +65,7 @@ export default async function IndexPage() {
         </Link>
       </div>
       <SanityLiveErrorBoundary>
-        <SanityLive includeDrafts={isDraftMode} onError="throw" />
+        <SanityLive onError="throw" />
       </SanityLiveErrorBoundary>
     </>
   )
