@@ -298,7 +298,7 @@ export {parseTags} from '#live/parseTags'
 
 /**
  * This helper is intended for use with Next.js Cache Components (`cacheComponents: true`),
- * where `cookies()` and `draftMode()` cannot be called inside `'use cache'` boundaries.
+ * where `cookies()` cannot be called inside `'use cache'` boundaries while `draftMode()` can.
  * Resolve the perspective once outside the cache boundary and pass it in as a prop / cache key.
  *
  * @example
@@ -359,7 +359,7 @@ export const resolvePerspectiveFromCookies: typeof _resolvePerspectiveFromCookie
 
 /**
  * This helper is intended for use with Next.js Cache Components (`cacheComponents: true`),
- * where `cookies()` and `draftMode()` cannot be called inside `'use cache'` boundaries.
+ * where `cookies()` cannot be called inside `'use cache'` boundaries while `draftMode()` can.
  * Resolve the variant once outside the cache boundary and pass it in as a prop / cache key.
  *
  * Unlike `resolvePerspectiveFromCookies` there is no fallback value: when no
