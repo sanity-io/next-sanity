@@ -1,4 +1,3 @@
-import '../globals.css'
 import type {Metadata, Viewport} from 'next'
 
 export const metadata: Metadata = {
@@ -14,11 +13,6 @@ export const viewport: Viewport = {
   viewportFit: 'cover',
 }
 
-export default function RootLayout({children}: {children: React.ReactNode}) {
-  return (
-    <html lang="en">
-      <head />
-      <body>{children}</body>
-    </html>
-  )
+export default function StudioLayout({children}: {children: React.ReactNode}) {
+  return children
 }

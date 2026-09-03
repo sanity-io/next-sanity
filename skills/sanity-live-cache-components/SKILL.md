@@ -167,7 +167,7 @@ export default async function RootLayout({children}: LayoutProps<'/'>) {
 
 ### With an embedded Sanity Studio
 
-If a route mounts `NextStudio` from `next-sanity/studio` (e.g. `app/studio/[[...index]]/page.tsx`), `<SanityLive>` must live in a layout the embedded studio doesn't share. Use [route groups](https://nextjs.org/docs/app/api-reference/file-conventions/route-groups): put `<SanityLive>` in `src/app/(website)/layout.tsx` and keep the rest of the app under `src/app/(website)`.
+If a route mounts the `Studio` component from `sanity` (e.g. `app/studio/[[...tool]]/page.tsx`), `<SanityLive>` must live in a layout the embedded studio doesn't share. Use [route groups](https://nextjs.org/docs/app/api-reference/file-conventions/route-groups): put `<SanityLive>` in `src/app/(website)/layout.tsx` and keep the rest of the app under `src/app/(website)`.
 
 ---
 

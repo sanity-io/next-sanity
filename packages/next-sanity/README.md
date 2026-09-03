@@ -18,7 +18,7 @@ The all-in-one [Sanity][sanity] toolkit for production-grade content-editable Ne
 - [Manual installation](#manual-installation)
   - [Requirements](#requirements)
   - [Install `next-sanity`](#install-next-sanity)
-  - [Optional: peer dependencies for embedded Sanity Studio](#optional-peer-dependencies-for-embedded-sanity-studio)
+  - [Optional: embed Sanity Studio yourself](#optional-embed-sanity-studio-yourself)
 - [Migration guides](#migration-guides)
 - [License](#license)
 
@@ -76,12 +76,72 @@ bun install next-sanity @sanity/image-url
 
 This also installs `@sanity/image-url` for [On-Demand Image Transformations][image-url] to render images from Sanity's CDN.
 
-### Optional: peer dependencies for embedded Sanity Studio
+### Optional: embed Sanity Studio yourself
 
-When using `npm` newer than `v7`, or `pnpm` newer than `v8`, you should end up with needed dependencies like `sanity` and `styled-components` when you installed `next-sanity`. In `yarn` `v1` you can use `install-peerdeps`:
+`next-sanity` no longer ships a `next-sanity/studio` entry point. To mount the Studio at a route in your Next.js app, install `sanity` and render its `Studio` component from a Client Component. `styled-components` is a peer dependency of both `sanity` and `next-sanity`, so most package managers install it for you.
 
 ```bash
-npx install-peerdeps --yarn next-sanity
+npm install sanity styled-components
+```
+
+The [Embedded Sanity Studio][embedded-studio] guide covers the recommended setup, a catch-all route that matches `basePath` in `sanity.config.ts`:
+
+```tsx
+// app/studio/[[...tool]]/page.tsx
+'use client'
+
+import {Studio} from 'sanity'
+
+import config from '@/sanity.config'
+
+export default function StudioPage() {
+  return <Studio config={config} />
+}
+```
+
+The former `metadata` and `viewport` exports were two small objects. Declare them in the route or its layout:
+
+```tsx
+// app/studio/[[...tool]]/layout.tsx
+import type {Metadata, Viewport} from 'next'
+
+export const metadata: Metadata = {referrer: 'same-origin', robots: 'noindex'}
+export const viewport: Viewport = {width: 'device-width', initialScale: 1, viewportFit: 'cover'}
+
+export default function StudioLayout({children}: {children: React.ReactNode}) {
+  return children
+}
+```
+
+If you relied on `history="hash"`, for example because your app is a static export, pass a hash history from the `history` package and load the Studio in the browser only:
+
+```tsx
+// app/studio/Studio.tsx
+'use client'
+
+import {createHashHistory} from 'history'
+import {Studio} from 'sanity'
+
+import config from '@/sanity.config'
+
+const history = createHashHistory()
+
+export default function StudioClient() {
+  return <Studio config={config} unstable_history={history} unstable_globalStyles />
+}
+```
+
+```tsx
+// app/studio/page.tsx
+'use client'
+
+import dynamic from 'next/dynamic'
+
+const Studio = dynamic(() => import('./Studio'), {ssr: false})
+
+export default function StudioPage() {
+  return <Studio />
+}
 ```
 
 ## Migration guides
