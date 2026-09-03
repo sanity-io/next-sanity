@@ -16,6 +16,7 @@ The all-in-one [Sanity][sanity] toolkit for production-grade content-editable Ne
 
 - [Quick Start](#quick-start)
 - [Manual installation](#manual-installation)
+  - [Requirements](#requirements)
   - [Install `next-sanity`](#install-next-sanity)
   - [Optional: peer dependencies for embedded Sanity Studio](#optional-peer-dependencies-for-embedded-sanity-studio)
 - [Migration guides](#migration-guides)
@@ -40,6 +41,18 @@ npx create-next-app@latest
 ```
 
 This README assumes you have chosen all of the default options, but should be fairly similar for most bootstrapped Next.js projects.
+
+### Requirements
+
+`next-sanity` v14 requires:
+
+- Node.js `>=22.12`, the same range as `sanity` and `@sanity/client`.
+- Next.js `^16.3.0`.
+- React and React DOM `^19.2.3`.
+- `@sanity/client` `^8.0.0`. `next-sanity` re-exports `createClient` from it.
+- `sanity` `^6.0.0` and `styled-components` `^6.1`, only if you embed Sanity Studio with `next-sanity/studio`.
+
+Run `npm view next-sanity engines peerDependencies` to read the exact ranges of the published version.
 
 ### Install `next-sanity`
 
