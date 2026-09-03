@@ -705,6 +705,77 @@ describe.each([{cacheComponents: true}, {cacheComponents: false}])(
         expect(result.sourceMap).toBeNull()
       })
 
+      test('keeps a fetcher per serverToken when the client config matches', async () => {
+        isDraftMode = true
+        const first = defineLive({
+          client,
+          serverToken: 'sk-first',
+          browserToken: false,
+          strict: true,
+        })
+        const second = defineLive({
+          client,
+          serverToken: 'sk-second',
+          browserToken: false,
+          strict: true,
+        })
+        const query = '{"perspective": $perspective, "token": $token}'
+        const firstMock = getSanityFetchMock(query, {
+          perspective: 'drafts',
+          token: 'Bearer sk-first',
+        })
+        const secondMock = getSanityFetchMock(query, {
+          perspective: 'drafts',
+          token: 'Bearer sk-second',
+        })
+        const [firstResult, secondResult] = await Promise.all([
+          first.sanityFetchMetadata({query, params: firstMock.params, perspective: 'drafts'}),
+          second.sanityFetchMetadata({query, params: secondMock.params, perspective: 'drafts'}),
+        ])
+        expect(firstResult.data).toEqual(firstMock.params)
+        expect(secondResult.data).toEqual(secondMock.params)
+      })
+
+      test('keeps a fetcher per perspective resolver name', async () => {
+        isDraftMode = true
+        const calls = {perspective: 0, locale: 0}
+        async function perspective() {
+          calls.perspective++
+          return 'drafts'
+        }
+        async function locale() {
+          calls.locale++
+          return 'published'
+        }
+        const first = defineLive({
+          client,
+          serverToken,
+          browserToken: false,
+          strict: true,
+          perspective,
+        })
+        const second = defineLive({
+          client,
+          serverToken,
+          browserToken: false,
+          strict: true,
+          perspective: locale,
+        })
+        const query = '{"perspective": $perspective, "token": $token}'
+        const firstMock = getSanityFetchMock(query, {
+          perspective: 'drafts',
+          token: `Bearer ${serverToken}`,
+        })
+        const secondMock = getSanityFetchMock(query, {perspective: 'published', token: null})
+        const [firstResult, secondResult] = await Promise.all([
+          first.sanityFetchMetadata({query, params: firstMock.params}),
+          second.sanityFetchMetadata({query, params: secondMock.params}),
+        ])
+        expect(firstResult.data).toEqual(firstMock.params)
+        expect(secondResult.data).toEqual(secondMock.params)
+        expect(calls).toEqual({perspective: 1, locale: 1})
+      })
+
       describe('strict mode without a resolver', () => {
         const {sanityFetchMetadata} = defineLive({
           client,
