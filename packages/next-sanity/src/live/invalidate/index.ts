@@ -74,10 +74,6 @@ function reject(status: 400 | 401 | 503, message: string): Verdict {
   return {ok: false, status, message}
 }
 
-/**
- * Verifies the signature before trusting anything in the body, then parses the body.
- * Pure so the status matrix is independent of Next.js.
- */
 async function verifyInvalidateRequest(
   rawBody: string,
   signature: string | null,
