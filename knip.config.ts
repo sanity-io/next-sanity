@@ -45,10 +45,13 @@ const config: KnipConfig = {
       ],
     },
     'apps/mvp': {
-      entry: ['app/**/*.{ts,tsx}'],
+      // Sanity Functions declared in sanity.blueprint.ts and bundled by the sanity CLI
+      entry: ['app/**/*.{ts,tsx}', 'functions/*/index.ts'],
       project: ['**/*.{ts,tsx}'],
       ignore: ['sanity.types.ts'],
       ignoreDependencies: [
+        // Peer dependency of @sanity/next-sanity-functions, installed for the Sanity Function bundle
+        '@sanity/functions',
         // Sanity Studio peer deps that are used at runtime
         '@sanity/vision',
         'styled-components',
