@@ -5,8 +5,7 @@ export const metadata: Metadata = {
   robots: 'noindex',
 }
 
-// The Studio draws into display cutouts, so viewport-fit=cover keeps its
-// navbar clear of the iPhone notch.
+// Studio's display-cutout CSS only applies under viewport-fit=cover.
 export const viewport: Viewport = {
   width: 'device-width',
   initialScale: 1,
