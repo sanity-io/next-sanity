@@ -4,9 +4,9 @@
 
 `defineLive` now returns `sanityFetchMetadata` next to `sanityFetch` and `<SanityLive />`, in all three export conditions.
 
-`sanityFetchMetadata` is `sanityFetch` with `stega` fixed to `false`. Its `data` keeps the clean TypeGen / `ClientReturn` type, and `stega` is not an accepted option. `perspective` follows the same rule as `sanityFetch`: forced to `published` outside draft mode, and inside draft mode taken from the call or from the `perspective` resolver handed to `defineLive`. In strict mode without a resolver `perspective` is required, and the new `StrictDefinedFetchMetadataType` reflects that.
+`sanityFetchMetadata` is `sanityFetch` with `stega` fixed to `false`. Its `data` keeps the clean TypeGen / `ClientReturn` type, and `stega` is not an accepted option. `perspective` is optional and follows the same default rule as `sanityFetch`: `published` outside draft mode, and inside draft mode the `perspective` resolver handed to `defineLive`, else the Presentation Tool cookie without Cache Components or `drafts` with them. An explicit `perspective` always wins. The new `DefinedFetchMetadataType` types it.
 
-With Cache Components the library owns the `'use cache'` boundary inside `sanityFetchMetadata`, so `generateMetadata` calls it directly. Metadata routes such as `sitemap.ts`, `robots.ts`, and `opengraph-image.tsx` cannot read root params, so pass `perspective: 'published'` there.
+With Cache Components the library owns the `'use cache'` boundary inside `sanityFetchMetadata`, so `generateMetadata` calls it directly. Metadata routes such as `sitemap.ts`, `robots.ts`, and `opengraph-image.tsx` cannot read root params, so pass `perspective: 'published'` there and the resolver is never called.
 
 Before:
 
@@ -16,7 +16,6 @@ export const {sanityFetch, SanityLive} = defineLive({
   client,
   serverToken,
   browserToken,
-  strict: true,
   perspective,
 })
 
@@ -34,7 +33,6 @@ export const {sanityFetch, sanityFetchMetadata, SanityLive} = defineLive({
   client,
   serverToken,
   browserToken,
-  strict: true,
   perspective,
 })
 ```

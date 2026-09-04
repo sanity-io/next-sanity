@@ -1,7 +1,6 @@
 export {defineLive} from './defineLive'
 
 export type {
-  DefinedFetchMetadataType,
   DefinedFetchType,
   DefinedLiveProps,
   DefineLiveOptions,
@@ -14,8 +13,6 @@ export type {
   SanityLiveOnReconnect,
   SanityLiveOnRestart,
   SanityLiveOnWelcome,
-  StrictDefinedFetchMetadataType,
-  StrictDefinedFetchType,
 } from '#live/types'
 
 export {isCorsOriginError} from '#live/isCorsOriginError'

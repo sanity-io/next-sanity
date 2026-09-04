@@ -61,7 +61,6 @@ export const {SanityLive, sanityFetch} = defineLive({
   client,
   serverToken: token,
   browserToken: token,
-  strict: true,
   perspective,
 })
 ```
@@ -87,7 +86,7 @@ export const config = {
 ```
 
 - The matcher excludes Next.js internals, API routes, the Studio, and any path with a dot (static files). Add other top-level routes that live outside `app/[perspective]/` to the exclusion list.
-- A request the matcher excludes still reaches `app/[perspective]/` if no static route or `public/` file matches it, with the raw path segment as the perspective. Outside draft mode strict mode forces `published` anyway. Keep static assets in `public/` so they win over the dynamic segment.
+- A request the matcher excludes still reaches `app/[perspective]/` if no static route or `public/` file matches it, with the raw path segment as the perspective. Outside draft mode `sanityFetch` defaults to `published` anyway. Keep static assets in `public/` so they win over the dynamic segment.
 - The `/published/...` prefix is not a public URL. A direct request to `/published` is rewritten to `/published/published` and 404s, which keeps canonical URLs unique.
 
 ## `app/[perspective]/layout.tsx`
@@ -137,12 +136,13 @@ async function CachedPage({slug}: {slug: string}) {
 }
 ```
 
-Inside the cached scope `sanityFetch` reads `draftMode()`. Outside draft mode the fetch is `perspective: 'published'`, `stega: false`, regardless of what was passed, so the cached entry is always the published one. Inside draft mode Next.js does not cache, the perspective comes from the resolver, and `stega` defaults to `true` so `<VisualEditing>` overlays work.
+Inside the cached scope `sanityFetch` reads `draftMode()`. Outside draft mode the defaults are `perspective: 'published'` and `stega: false`, so the cached entry is the published one. Inside draft mode Next.js does not cache, the perspective comes from the resolver, and `stega` defaults to `true` so `<VisualEditing>` overlays work.
 
-Pass options only to opt out:
+An explicit option always wins over the default, in either direction:
 
 - `stega: false` keeps clean TypeGen types for data that never renders next to `<VisualEditing>` (route handlers, metadata).
 - `perspective: 'published'` inside draft mode fetches published content on purpose, for example a "compare with live" panel.
+- `perspective: 'drafts'` outside draft mode fetches drafts. Do this only in a dynamic, authenticated route, never in a cached leaf.
 
 Never pass `perspective` or `stega` through props to reach a cached component. That was the v13 pattern and it is gone.
 
@@ -166,21 +166,20 @@ Reach for the bare `sanityFetch` with a component-level `'use cache'` when cachi
 
 ## Without a `[perspective]` segment
 
-Some apps cannot move every route under a dynamic root segment. Leave the `perspective` resolver off and pass `perspective` on each call. The types require it. Only the draft mode value is used, so the literal is almost always `'drafts'`:
+Some apps cannot move every route under a dynamic root segment. Leave the `perspective` resolver off. Inside draft mode the perspective is then `'drafts'`, because `cookies()` cannot be read inside `'use cache'`:
 
 ```ts
 export const {SanityLive, sanityFetch} = defineLive({
   client,
   serverToken: token,
   browserToken: token,
-  strict: true,
 })
 ```
 
 ```tsx
 async function CachedPage({slug}: {slug: string}) {
   'use cache'
-  const {data} = await sanityFetch({query: pageQuery, params: {slug}, perspective: 'drafts'})
+  const {data} = await sanityFetch({query: pageQuery, params: {slug}})
   return <article>{/* use `data` */}</article>
 }
 ```

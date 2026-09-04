@@ -13,17 +13,11 @@ const {sanityFetch, SanityLive} = defineLive({
   client,
   serverToken: token,
   browserToken: process.env.NEXT_PUBLIC_SANITY_API_BROWSER_TOKEN || token,
-  strict: true,
 })
 
 async function CachedIndexPage() {
   'use cache'
-  // Without a perspective resolver the caller names the draft mode perspective.
-  // Outside draft mode strict mode forces 'published' anyway.
-  const {data, sourceMap, tags} = await sanityFetch({
-    query: postsQuery.query,
-    perspective: 'drafts',
-  })
+  const {data, sourceMap, tags} = await sanityFetch({query: postsQuery.query})
 
   return (
     <>

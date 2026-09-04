@@ -74,7 +74,9 @@ npx install-peerdeps --yarn next-sanity
 
 ## Sanity Live with Cache Components
 
-With `cacheComponents: true`, `defineLive({strict: true})` makes draft mode the single source of truth. `sanityFetch` reads `draftMode()` itself, which Next.js allows inside `'use cache'`. Outside draft mode every fetch is forced to `perspective: 'published'` with `stega: false`. Inside draft mode `stega` defaults to `true` and the perspective comes from the `perspective` resolver you hand `defineLive`, or from the call site when there is no resolver. `<SanityLive />` derives `includeDrafts` from `draftMode()` the same way. Cookies are never read, so nothing has to be threaded through props.
+`draftMode()` decides the defaults of `sanityFetch` and `<SanityLive />`, and `sanityFetch` reads it itself, which Next.js allows inside `'use cache'`. Outside draft mode a fetch is `perspective: 'published'` with `stega: false` and no variant, and `<SanityLive />` leaves `includeDrafts` off. Inside draft mode `stega` defaults to `true`, `<SanityLive />` includes drafts, and the perspective comes from the `perspective` resolver you hand `defineLive`. An explicit option always wins, so `stega: false` stays off inside draft mode and `perspective: 'drafts'` is honoured outside it.
+
+Without a resolver the draft mode perspective comes from the Presentation Tool cookie when `cacheComponents` is off, and is `'drafts'` when it is on, because `cookies()` cannot be read inside `'use cache'`. With a resolver `sanityFetch` never reads cookies, so it behaves the same under either setting and nothing has to be threaded through props.
 
 The resolver is usually the `[perspective]` root param getter from `next/root-params`, with `definePerspectiveProxy` from `next-sanity/live/proxy` rewriting every request into the `/[perspective]/...` route tree based on the draft mode cookies:
 
@@ -91,7 +93,6 @@ export const {sanityFetch, SanityLive} = defineLive({
   client,
   serverToken: token,
   browserToken: token,
-  strict: true,
   perspective,
 })
 ```
@@ -156,7 +157,7 @@ async function CachedPost({slug}: {slug: string}) {
 }
 ```
 
-Without a `perspective` resolver, `sanityFetch` requires `perspective` on every call, both in the types and at runtime. The value only applies inside draft mode. The full pattern, including apps that cannot add a `[perspective]` segment, lives in the [`sanity-live-cache-components` skill][live-skill].
+Apps that cannot add a `[perspective]` segment leave the resolver off. Inside draft mode with `cacheComponents` on the perspective is then `'drafts'`, so content release previews in Presentation Tool need the segment. The full pattern lives in the [`sanity-live-cache-components` skill][live-skill].
 
 ### Metadata
 
