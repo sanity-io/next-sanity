@@ -132,7 +132,7 @@ describe('query inference', () => {
     const {query} = defineGenerateStaticParams({
       client,
       query:
-        '*[_type == "post" && slug.current == $slug][0]{title, "related": *[_type == "post" && slug.current != $slug][0...$limit]{title}}',
+        '*[_type == "post" && slug.current == $slug][0]{title, "related": *[_type == "post" && slug.current != $slug && language == $locale][0...3]{title}}',
     })
     expect(query).toBe('*[_type == "post" && defined(slug.current)]{"slug": slug.current}')
   })
@@ -158,11 +158,11 @@ describe('definition-time validation', () => {
       defineGenerateStaticParams({client, query: '*[_type == "post" && slug.current == $slug!!]'})
       expect.unreachable()
     } catch (error) {
-      expect(error).toMatchObject({cause: {name: 'GroqSyntaxError', position: 42}})
+      expect(error).toMatchObject({cause: {name: 'GroqSyntaxError', position: 41}})
       expect(error).toMatchInlineSnapshot(`
-        [Error: defineGenerateStaticParams: invalid GROQ in query at position 42
+        [Error: defineGenerateStaticParams: invalid GROQ in query at position 41
           "*[_type == \\"post\\" && slug.current == $slug!!]"
-          Syntax error in GROQ query at position 42: Unexpected end of query]
+          Syntax error in GROQ query at position 41: Unexpected end of query]
       `)
     }
   })
@@ -178,6 +178,7 @@ describe('definition-time validation', () => {
       '(slug.current == $slug || _id == $slug)',
     ],
     ['*[_type == "post" && slug.current == $slug + $suffix][0]', 'slug.current == $slug + $suffix'],
+    ['*[_type == "post" && $slug == slug.current + $suffix][0]', '$slug == slug.current + $suffix'],
   ])('rejects a $param that is not bound with == in %s', (query, offending) => {
     const {client} = createFakeClient()
     expect(() => defineGenerateStaticParams({client, query})).toThrow(
