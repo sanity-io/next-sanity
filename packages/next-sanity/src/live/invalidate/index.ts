@@ -16,8 +16,8 @@ export const defaultSignatureMaxAge: number = 5 * 60 * 1000
  */
 export interface DefineInvalidateSyncTagsOptions {
   /**
-   * The shared secret the sender signs requests with. Pass the env var directly, when it is unset
-   * the route responds with `503` until the deployment is configured.
+   * The shared secret the sender signs requests with. Pass the env var directly.
+   * While it is unset the route responds with `503`.
    *
    * @example
    * ```ts
@@ -26,15 +26,15 @@ export interface DefineInvalidateSyncTagsOptions {
    */
   secret: string | undefined
   /**
-   * Requests whose signature timestamp is older than this many milliseconds are rejected with `401`.
-   * `@sanity/webhook` signatures carry the timestamp they were created with, but do not expire on their own,
-   * so this window is what stops a captured request from being replayed later.
+   * The route responds `401` to a request whose signature timestamp is older than this many milliseconds.
+   * `@sanity/webhook` signatures carry their creation timestamp but do not expire on their own.
+   * This window is what stops a captured request from being replayed later.
    * @defaultValue {@link defaultSignatureMaxAge}
    */
   maxAge?: number
   /**
    * The second argument passed to `revalidateTag` for every tag.
-   * The default expires cache entries immediately so the `router.refresh()` that follows the live event renders fresh content on the first try.
+   * The default expires cache entries immediately, so the `router.refresh()` that follows the live event renders fresh content on the first try.
    * Pass `'max'` to serve stale content while revalidating in the background instead.
    * @defaultValue `{expire: 0}`
    */
@@ -55,7 +55,7 @@ export interface InvalidateSyncTags {
 export interface InvalidateSyncTagsResult {
   revalidated: true
   /**
-   * The cache tags that were expired, prefixed the same way `sanityFetch` tags cache entries.
+   * The expired cache tags, prefixed the same way `sanityFetch` tags cache entries.
    */
   tags: string[]
 }
@@ -88,7 +88,7 @@ async function verifyInvalidateRequest(
 
   let timestamp: number
   try {
-    ;({timestamp} = decodeSignatureHeader(signature))
+    timestamp = decodeSignatureHeader(signature).timestamp
   } catch {
     return reject(401, 'Malformed signature header')
   }
@@ -121,9 +121,9 @@ async function verifyInvalidateRequest(
 }
 
 /**
- * Sets up the route handler a sync tag invalidate Sanity Function calls before Sanity releases a live event to
- * `<SanityLive waitFor="function">` clients. It verifies the `@sanity/webhook` signature on the request, prefixes the
- * sync tags the same way `sanityFetch` tags cache entries, and expires each tag with `revalidateTag`.
+ * Returns the `POST` route handler a sync tag invalidate Sanity Function calls before Sanity releases a live event to
+ * `<SanityLive waitFor="function">` clients. The handler verifies the `@sanity/webhook` signature on the request.
+ * It prefixes the sync tags the same way `sanityFetch` tags cache entries and expires each tag with `revalidateTag`.
  *
  * Pair it with `defineInvalidateSyncTagsHandler` from `@sanity/next-sanity-functions` in the Sanity Function, which
  * signs the payload with the same secret.

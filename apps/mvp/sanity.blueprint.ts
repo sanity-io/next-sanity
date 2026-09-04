@@ -1,8 +1,10 @@
 import {loadEnvConfig} from '@next/env'
 import {defineBlueprint, defineSyncTagInvalidateFunction} from '@sanity/blueprints'
 
-const dev = process.env.NODE_ENV !== 'production'
-loadEnvConfig(__dirname, dev, {info: () => null, error: console.error})
+loadEnvConfig(__dirname, process.env.NODE_ENV !== 'production', {
+  info: () => null,
+  error: console.error,
+})
 
 const {
   NEXT_PUBLIC_SANITY_PROJECT_ID,

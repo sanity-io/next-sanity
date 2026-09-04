@@ -346,7 +346,7 @@ The returned `query` string is the assembled GROQ. Pass it to `sanityFetch` from
 
 ## Invalidate the cache before live events reach the browser
 
-By default every browser tab connected through `<SanityLive>` receives a live event the moment published content changes. Each tab then calls a Server Action that expires the affected cache tags and refreshes the route, and the tabs race the revalidation. With [`<SanityLive waitFor="function">`][live-wait-for] Sanity instead runs a [sync tag invalidate function][sync-tag-function] first, holds the event until that function calls `done()`, and only then lets browsers refresh. The cache is expired once, before anyone renders, and the first refresh shows fresh content.
+By default every browser tab connected through `<SanityLive>` receives a live event the moment published content changes. Each tab then calls a Server Action that expires the affected cache tags and refreshes the route, and the tabs race the revalidation. With [`<SanityLive waitFor="function">`][live-wait-for] Sanity instead runs a [sync tag invalidate function][sync-tag-function] first, holds the event until that function calls `done()`, and only then lets browsers refresh. The function expires the cache once, before any tab renders, so the first refresh shows fresh content.
 
 `next-sanity` ships both halves. `defineInvalidateSyncTags` from `next-sanity/live/invalidate` is the route handler that verifies a signed request and expires the tags. `defineInvalidateSyncTagsHandler` from the companion package [`@sanity/next-sanity-functions`][next-sanity-functions] signs and sends that request from the function.
 
@@ -385,7 +385,7 @@ export const handler = defineInvalidateSyncTagsHandler({
 
 `urls` splits a string on commas, so one `REVALIDATE_URL` can name several deployments that read the same dataset.
 
-**4. Add the blueprint.** It scopes the function to your dataset and bakes the function environment in at deploy time.
+**4. Add the blueprint.** It scopes the function to your dataset and sets the function's environment variables at deploy time.
 
 ```ts
 // sanity.blueprint.ts
@@ -425,7 +425,7 @@ export default defineBlueprint({
 })
 ```
 
-**5. Wire `waitFor`.** Render `<SanityLive waitFor="function" />` only where the function is deployed. An environment variable that is read at build time keeps local development and previews on the default behavior.
+**5. Wire `waitFor`.** Render `<SanityLive waitFor="function" />` only where the function is deployed. An environment variable read at build time keeps local development and previews on the default behavior.
 
 ```tsx
 <SanityLive
@@ -473,7 +473,7 @@ REVALIDATE_URL=http://localhost:3000/api/revalidate SANITY_REVALIDATE_SECRET=<se
 
 ### Why the request is signed
 
-The function signs the request body with [`@sanity/webhook`][sanity-webhook], the same HMAC scheme Sanity uses for GROQ-powered webhooks. The signature covers the body and the time it was created, so a captured request cannot be edited or replayed after `maxAge`. A bearer token would be a static credential sent in the clear on every call, and any log line that captures it is enough to expire your cache at will. That is why `defineInvalidateSyncTags` accepts only signed requests. A project that adopts this route from a hand-rolled bearer token setup, like the one the [personal website template][sanity-next-featured-starter] uses, swaps its function body for `defineInvalidateSyncTagsHandler` and drops the token.
+The function signs the request body with [`@sanity/webhook`][sanity-webhook], the same HMAC scheme Sanity uses for GROQ-powered webhooks. The signature covers the body and the time it was created, so a captured request cannot be edited or replayed after `maxAge`. A bearer token would be a static credential sent in the clear on every call, and any log line that captures it is enough to expire your cache at will. That is why `defineInvalidateSyncTags` accepts only signed requests. A project coming from a hand-rolled bearer token setup, like the [personal website template][sanity-next-featured-starter], swaps its function body for `defineInvalidateSyncTagsHandler` and drops the token.
 
 ## Migration guides
 
