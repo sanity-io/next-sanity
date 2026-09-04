@@ -7,7 +7,7 @@ import {sanitizePerspective} from '#live/sanitizePerspective'
  * Set by `draftMode().enable()` and cleared by `draftMode().disable()`.
  * Its presence is a hint, not proof, that draft mode is on. A forged cookie
  * only changes which `/[perspective]` tree renders, and `sanityFetch` still
- * forces `'published'` when Next.js reports draft mode as disabled.
+ * defaults to `'published'` when Next.js reports draft mode as disabled.
  */
 const draftModeCookieName = '__prerender_bypass'
 
@@ -20,9 +20,9 @@ const routeSegmentPattern = /^[A-Za-z0-9_,-]+$/
 
 /**
  * Reads the `[perspective]` route segment a request should render with, using
- * the same rule as `sanityFetch` in strict mode: `'published'` unless draft
- * mode is on, then the sanitized `sanity-preview-perspective` cookie that
- * Presentation Tool sets, falling back to `'drafts'`.
+ * the same rule as `sanityFetch` without Cache Components: `'published'`
+ * unless draft mode is on, then the sanitized `sanity-preview-perspective`
+ * cookie that Presentation Tool sets, falling back to `'drafts'`.
  */
 function resolveRequestSegment(request: NextRequest): string {
   if (!request.cookies.has(draftModeCookieName)) {

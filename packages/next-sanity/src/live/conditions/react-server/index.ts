@@ -13,7 +13,6 @@ export type {
   SanityLiveOnReconnect,
   SanityLiveOnRestart,
   SanityLiveOnWelcome,
-  StrictDefinedFetchType,
 } from '#live/types'
 
 export {isCorsOriginError} from '#live/isCorsOriginError'

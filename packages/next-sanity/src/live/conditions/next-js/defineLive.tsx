@@ -7,29 +7,35 @@ import {draftMode} from 'next/headers'
 
 import {cacheTagPrefix, defaultApiHost} from '#live/constants'
 import {preconnect} from '#live/preconnect'
-import {resolveStrictFetchOptions} from '#live/resolveStrictFetchOptions'
-import type {
-  DefinedFetchType,
-  DefinedLiveProps,
-  DefineLiveOptions,
-  LivePerspectiveResolver,
-  StrictDefinedFetchType,
-} from '#live/types'
+import {
+  resolveFetchOptions,
+  resolverSource,
+  type ResolveFetchOptionsConfig,
+} from '#live/resolveFetchOptions'
+import type {DefinedFetchType, DefinedLiveProps, DefineLiveOptions} from '#live/types'
 
 /**
- * Set up Sanity Live for Cache Components. `defineLive` returns `sanityFetch`
- * and `<SanityLive />`, which connect your Sanity client to the Live Content API
- * so cached pages can update in response to fine-grained content changes.
+ * Set up Sanity Live. `defineLive` returns `sanityFetch` and `<SanityLive />`,
+ * which connect your Sanity client to the Live Content API so pages can serve
+ * cached content and update in response to fine-grained content changes.
  *
- * With `strict: true`, draft mode is the single source of truth. `sanityFetch`
- * reads `draftMode()` itself, which Next.js allows inside `'use cache'`
- * scopes. Outside draft mode every fetch is forced to `perspective: 'published'`
- * with `stega: false`. Inside draft mode `stega` defaults to `true` and the
+ * `draftMode()` decides the defaults. Outside draft mode `sanityFetch` fetches
+ * `perspective: 'published'` with no stega and no variant, and `<SanityLive />`
+ * leaves `includeDrafts` off. Inside draft mode stega defaults on when the
+ * client has `stega.studioUrl`, `<SanityLive />` includes drafts, and the
  * perspective comes from the `perspective` resolver you hand `defineLive`.
- * Pass the `[perspective]` root param getter from `next/root-params` and let
- * `definePerspectiveProxy` from `next-sanity/live/proxy` rewrite requests into
- * the `/[perspective]/...` route tree. `<SanityLive />` derives `includeDrafts`
- * from `draftMode()` the same way. Cookies are never read.
+ * Without a resolver it comes from the Presentation Tool cookie when
+ * `cacheComponents` is off and is `'drafts'` when it is on, because `cookies()`
+ * cannot be read inside `'use cache'`. An explicit option always wins, in
+ * either direction: `stega: false` stays off inside draft mode and
+ * `perspective: 'drafts'` is honoured outside it.
+ *
+ * The resolver is usually the `[perspective]` root param getter from
+ * `next/root-params`, with `definePerspectiveProxy` from
+ * `next-sanity/live/proxy` rewriting requests into the `/[perspective]/...`
+ * route tree. With a resolver `sanityFetch` never reads cookies, so it behaves
+ * the same with `cacheComponents` on or off. `draftMode()` and root params are
+ * both allowed inside `'use cache'`.
  *
  * `sanityFetch` brands `data` with stega string types unless you pass the
  * literal `stega: false`. Use `stegaClean` before comparing branded strings to
@@ -58,7 +64,6 @@ import type {
  *   client,
  *   browserToken: token,
  *   serverToken: token,
- *   strict: true,
  *   perspective,
  * })
  * ```
@@ -125,123 +130,10 @@ import type {
  * }
  * ```
  *
- * @public
- */
-export function defineLive(
-  config: DefineLiveOptions & {strict: true; perspective: LivePerspectiveResolver},
-): {
-  sanityFetch: DefinedFetchType
-  SanityLive: React.ComponentType<DefinedLiveProps>
-}
-/**
- * Set up Sanity Live with `strict: true` and no `perspective` resolver.
- * Draft mode still drives `stega` and `includeDrafts`, and every fetch outside
- * draft mode is forced to `'published'`, but inside draft mode the perspective
- * has to come from the caller, so `perspective` is required on every
- * `sanityFetch` call. Use this when the app has no `[perspective]` route
- * segment and passes the perspective through props instead.
- *
- * @see [Live Content API](https://www.sanity.io/docs/content-lake/live-content-api)
- * @see [Sanity Live](https://www.sanity.io/live)
- *
  * @example
- * ```tsx
- * // sanity/live.ts
- * import {createClient} from 'next-sanity'
- * import {defineLive} from 'next-sanity/live'
- *
- * const client = createClient({
- *   projectId: process.env.NEXT_PUBLIC_SANITY_PROJECT_ID,
- *   dataset: process.env.NEXT_PUBLIC_SANITY_DATASET,
- *   useCdn: true,
- *   perspective: 'published',
- * })
- * const token = process.env.SANITY_API_READ_TOKEN
- *
- * export const {sanityFetch, SanityLive} = defineLive({
- *   client,
- *   browserToken: token,
- *   serverToken: token,
- *   strict: true,
- * })
- * ```
- *
- * @example
- * ```tsx
- * // app/[slug]/page.tsx
- * import {defineQuery} from 'next-sanity'
- * import {sanityFetch} from '@/sanity/live'
- *
- * const POST_QUERY = defineQuery(`
- *   *[_type == "post" && slug.current == $slug][0]
- * `)
- *
- * export default async function Page(props: PageProps<'/[slug]'>) {
- *   const {slug} = await props.params
- *   return <CachedPage slug={slug} />
- * }
- *
- * async function CachedPage({slug}: {slug: string}) {
- *   'use cache'
- *   // Outside draft mode this is a published fetch no matter what is passed.
- *   const {data} = await sanityFetch({query: POST_QUERY, params: {slug}, perspective: 'drafts'})
- *
- *   return <pre>{JSON.stringify(data, null, 2)}</pre>
- * }
- * ```
- *
- * @public
- */
-export function defineLive(config: DefineLiveOptions & {strict: true; perspective?: undefined}): {
-  sanityFetch: StrictDefinedFetchType
-  SanityLive: React.ComponentType<DefinedLiveProps>
-}
-/**
- * Set up Sanity Live. `defineLive` returns `sanityFetch` and `<SanityLive />`,
- * which connect your Sanity client to the Live Content API so pages can serve
- * cached content and update in response to fine-grained content changes.
- *
- * @see [Live Content API](https://www.sanity.io/docs/content-lake/live-content-api)
- * @see [Sanity Live](https://www.sanity.io/live)
- *
- * @example
- * ```tsx
- * import {createClient} from 'next-sanity'
- * import {defineLive} from 'next-sanity/live'
- *
- * const client = createClient({
- *   projectId: process.env.NEXT_PUBLIC_SANITY_PROJECT_ID,
- *   dataset: process.env.NEXT_PUBLIC_SANITY_DATASET,
- *   useCdn: true,
- *   perspective: 'published',
- * })
- * const token = process.env.SANITY_API_READ_TOKEN
- *
- * export const {sanityFetch, SanityLive} = defineLive({
- *   client,
- *   browserToken: token,
- *   serverToken: token,
- * })
- * ```
- *
- * @example
- * ```tsx
- * // app/layout.tsx
- * import {SanityLive} from '@/sanity/live'
- *
- * export default function RootLayout({children}: {children: React.ReactNode}) {
- *   return (
- *     <html lang="en">
- *       <body>
- *         {children}
- *         <SanityLive />
- *       </body>
- *     </html>
- *   )
- * }
- * ```
- *
- * @example
+ * Without a `[perspective]` segment, leave the resolver off. Outside draft mode
+ * nothing changes. Inside draft mode the perspective comes from the cookie when
+ * `cacheComponents` is off and is `'drafts'` when it is on.
  * ```tsx
  * // app/[slug]/page.tsx
  * import {defineQuery} from 'next-sanity'
@@ -266,10 +158,7 @@ export function defineLive(config: DefineLiveOptions & {strict: true; perspectiv
  *
  * export default async function Page(props: PageProps<'/[slug]'>) {
  *   const {slug} = await props.params
- *   const {data} = await sanityFetch({
- *     query: POST_QUERY,
- *     params: {slug},
- *   })
+ *   const {data} = await sanityFetch({query: POST_QUERY, params: {slug}})
  *
  *   return <pre>{JSON.stringify(data, null, 2)}</pre>
  * }
@@ -277,18 +166,11 @@ export function defineLive(config: DefineLiveOptions & {strict: true; perspectiv
  *
  * @public
  */
-export function defineLive(config: DefineLiveOptions & {strict?: false; perspective?: undefined}): {
+export function defineLive(config: DefineLiveOptions): {
   sanityFetch: DefinedFetchType
   SanityLive: React.ComponentType<DefinedLiveProps>
-}
-export function defineLive(config: DefineLiveOptions) {
-  const {
-    client: _client,
-    serverToken,
-    browserToken,
-    strict = false,
-    perspective: resolvePerspective,
-  } = config
+} {
+  const {client: _client, serverToken, browserToken, perspective: resolvePerspective} = config
 
   if (!_client) {
     throw new Error('`client` is required for `defineLive` to function')
@@ -312,6 +194,11 @@ export function defineLive(config: DefineLiveOptions) {
     perspective: 'published',
     stega: false,
   })
+  const fetchOptionsConfig: ResolveFetchOptionsConfig = {
+    serverToken,
+    studioUrlDefined: typeof client.config().stega.studioUrl !== 'undefined',
+    draft: resolverSource(resolvePerspective),
+  }
 
   const sanityFetch: DefinedFetchType = async function sanityFetch({
     query,
@@ -322,20 +209,15 @@ export function defineLive(config: DefineLiveOptions) {
     tags: customCacheTags = [],
     requestTag = 'next-loader.fetch.cache-components',
   }) {
-    const {perspective, variant, stega} = strict
-      ? await resolveStrictFetchOptions(
-          {perspective: _perspective, variant: _variant, stega: _stega},
-          resolvePerspective,
-        )
-      : {perspective: _perspective, variant: _variant, stega: _stega}
+    const {perspective, variant, stega} = await resolveFetchOptions(
+      {perspective: _perspective, variant: _variant, stega: _stega},
+      fetchOptionsConfig,
+    )
 
-    const useCdn = perspective ? perspective === 'published' : undefined
+    const useCdn = perspective === 'published'
     const isBuildPhase = process.env['NEXT_PHASE'] === PHASE_PRODUCTION_BUILD
-    const cacheMode = useCdn !== false && !isBuildPhase ? 'noStale' : undefined
-    const token =
-      ((perspective && perspective !== 'published') || stega) && serverToken
-        ? serverToken
-        : undefined
+    const cacheMode = useCdn && !isBuildPhase ? 'noStale' : undefined
+    const token = (!useCdn || stega) && serverToken ? serverToken : undefined
 
     const {result, resultSourceMap, syncTags} = await client.fetch(query, await params, {
       filterResponse: false,
@@ -382,7 +264,7 @@ export function defineLive(config: DefineLiveOptions) {
     const includeDrafts =
       typeof browserToken === 'string' &&
       !!browserToken &&
-      (_includeDrafts ?? (strict ? (await draftMode()).isEnabled : false))
+      (_includeDrafts ?? (await draftMode()).isEnabled)
     const shouldWaitFor = waitFor === 'function' && !includeDrafts ? waitFor : undefined
 
     // Preconnect to the Live Event API origin early, as the Sanity API is almost always on a different origin than the app
