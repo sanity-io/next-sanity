@@ -13,12 +13,18 @@ import {
 } from '#live/resolveFetchOptions'
 import {resolvePerspectiveFromCookies} from '#live/resolvePerspectiveFromCookies'
 import {resolveVariantFromCookies} from '#live/resolveVariantFromCookies'
-import type {DefinedFetchType, DefinedLiveProps, DefineLiveOptions} from '#live/types'
+import type {
+  DefinedFetchMetadataType,
+  DefinedFetchType,
+  DefinedLiveProps,
+  DefineLiveOptions,
+} from '#live/types'
 
 /**
- * Set up Sanity Live. `defineLive` returns `sanityFetch` and `<SanityLive />`,
- * which connect your Sanity client to the Live Content API so pages can serve
- * cached content and update in response to fine-grained content changes.
+ * Set up Sanity Live. `defineLive` returns `sanityFetch`, `sanityFetchMetadata`,
+ * and `<SanityLive />`, which connect your Sanity client to the Live Content API
+ * so pages can serve cached content and update in response to fine-grained
+ * content changes.
  *
  * `draftMode()` decides the defaults. Outside draft mode `sanityFetch` fetches
  * `perspective: 'published'` with no stega and no variant, and `<SanityLive />`
@@ -40,7 +46,11 @@ import type {DefinedFetchType, DefinedLiveProps, DefineLiveOptions} from '#live/
  *
  * `sanityFetch` brands `data` with stega string types unless you pass the
  * literal `stega: false`. Use `stegaClean` before comparing branded strings to
- * literals.
+ * literals. `sanityFetchMetadata` is `sanityFetch` with `stega` fixed to
+ * `false` for `generateMetadata` and the file-based metadata routes, where the
+ * data never renders next to `<VisualEditing />`. With Cache Components, two
+ * `defineLive` calls with the same client config, `serverToken`, and
+ * `perspective` resolver name share one `sanityFetchMetadata` cache entry.
  *
  * @see [Live Content API](https://www.sanity.io/docs/content-lake/live-content-api)
  * @see [Sanity Live](https://www.sanity.io/live)
@@ -169,6 +179,7 @@ import type {DefinedFetchType, DefinedLiveProps, DefineLiveOptions} from '#live/
  */
 export function defineLive(config: DefineLiveOptions): {
   sanityFetch: DefinedFetchType
+  sanityFetchMetadata: DefinedFetchMetadataType
   SanityLive: React.ComponentType<DefinedLiveProps>
 } {
   const {client: _client, serverToken, browserToken, perspective: resolvePerspective} = config
@@ -303,7 +314,11 @@ export function defineLive(config: DefineLiveOptions): {
   }
   SanityLive.displayName = 'SanityLiveServerComponent'
 
-  return {sanityFetch, SanityLive}
+  const sanityFetchMetadata: DefinedFetchMetadataType = function sanityFetchMetadata(options) {
+    return sanityFetch({...options, stega: false})
+  }
+
+  return {sanityFetch, sanityFetchMetadata, SanityLive}
 }
 
 const cookieSource: DraftModeSource = {

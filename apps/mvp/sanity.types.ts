@@ -431,10 +431,25 @@ export type AllSanitySchemaTypes =
 // Query: *[_type == "post" && _id == $id][0].title
 export type PostTitleQueryResult = string | null
 
+// Source: app/[perspective]/page.tsx
+// Variable: postsCountQuery
+// Query: count(*[_type == "post"])
+export type PostsCountQueryResult = number
+
+// Source: app/sitemap.ts
+// Variable: postSlugsQuery
+// Query: *[_type == "post" && defined(slug.current)]{"slug": slug.current, _updatedAt}
+export type PostSlugsQueryResult = Array<{
+  slug: string | null
+  _updatedAt: string
+}>
+
 // Query TypeMap
 import '@sanity/client'
 declare module '@sanity/client' {
   interface SanityQueries {
     '*[_type == "post" && _id == $id][0].title': PostTitleQueryResult
+    'count(*[_type == "post"])': PostsCountQueryResult
+    '*[_type == "post" && defined(slug.current)]{"slug": slug.current, _updatedAt}': PostSlugsQueryResult
   }
 }
