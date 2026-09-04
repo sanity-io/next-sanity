@@ -5,18 +5,16 @@ import {prerender} from 'react-dom/static'
 import type {LivePerspective} from '#live/types'
 
 /**
- * `@sanity/client` v8 (via get-it v9) resolves its own undici-backed fetch in
- * Node instead of calling `globalThis.fetch`, so MSW (which only patches the
- * global) can no longer intercept requests made through a plain
- * `createClient()`. Route requests back through the global via the client's
- * internal `resolveFetch` escape hatch — the same one its own test suite uses
- * to inject `get-it/mock`. v7 ignores the unknown config key.
+ * Under Node's default export conditions `@sanity/client` v8 fetches through
+ * its own undici instance and never calls `globalThis.fetch`, so MSW cannot
+ * intercept it. `resolveFetch` (marked `@internal` upstream) routes requests
+ * back through the global.
  */
 export function createClient(config: ClientConfig) {
   return createSanityClient({
     ...config,
     resolveFetch: () => fetch,
-  } as ClientConfig)
+  })
 }
 
 export const projectId = 'pv8y60vp'
