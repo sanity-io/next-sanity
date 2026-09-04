@@ -32,8 +32,10 @@ type DefinedFetchResult<Data> = Promise<{
 }>
 
 /**
- * Options accepted by `sanityFetch()` returned by `defineLive({strict: false})`
- * and `defineLive({strict: undefined})`.
+ * Options accepted by `sanityFetch()`.
+ *
+ * `draftMode()` decides the default of `perspective`, `variant`, and `stega`.
+ * An explicit value always wins, in either direction.
  */
 interface DefinedFetchOptions<QueryString extends string> {
   /**
@@ -48,16 +50,16 @@ interface DefinedFetchOptions<QueryString extends string> {
    * Content perspective used for the fetch.
    *
    * @remarks
-   * Requires `serverToken` to be configured in `defineLive()`
+   * Non-`'published'` perspectives require `serverToken` to be configured in `defineLive()`
    *
    * @defaultValue
-   * The default is `'published'` unless
-   *  - `Cache Components` are disabled
-   *  - `defineLive()` was given a `serverToken`
-   *  - `defineLive()` is not set to `strict: true`
-   *  - `draftMode()` is enabled
+   * `'published'` outside draft mode, or when `defineLive()` has no `serverToken`.
    *
-   * If all of the above conditions are met, then the default value will be resolved from attempting to read the `'sanity-preview-perspective'` cookie and fall back to `'drafts'` if not set
+   * Inside draft mode the default comes from the `perspective` resolver given
+   * to `defineLive()`, sanitized and falling back to `'drafts'`. Without a
+   * resolver it comes from the `'sanity-preview-perspective'` cookie when
+   * `cacheComponents` is off, and is `'drafts'` when `cacheComponents` is on,
+   * because `cookies()` cannot be read inside `'use cache'`.
    */
   perspective?: LivePerspective
   /**
@@ -67,14 +69,14 @@ interface DefinedFetchOptions<QueryString extends string> {
    * Requires `serverToken` to be configured in `defineLive()`
    *
    * @defaultValue
-   * The default is `undefined` (no variant, base content) unless
-   *  - `Cache Components` are disabled
-   *  - `defineLive()` was given a `serverToken`
-   *  - `defineLive()` is not set to `strict: true`
-   *  - `perspective` is not explicitly provided (an explicit `perspective` opts out of cookie resolution so fetches with explicit options stay free of dynamic API calls)
-   *  - `draftMode()` is enabled
+   * `undefined` (no variant, base content) outside draft mode, when
+   * `defineLive()` has a `perspective` resolver, when `cacheComponents` is on,
+   * or when `perspective` is passed explicitly (an explicit `perspective` opts
+   * out of cookie reads so a fetch with explicit options stays free of
+   * request-scoped reads).
    *
-   * If all of the above conditions are met, then the default value will be resolved from attempting to read the `'sanity-preview-variant'` cookie and fall back to `undefined` if not set
+   * Otherwise, inside draft mode with `cacheComponents` off, it is read from
+   * the `'sanity-preview-variant'` cookie.
    */
   variant?: string
   /**
@@ -91,14 +93,9 @@ interface DefinedFetchOptions<QueryString extends string> {
    * Requires `serverToken` to be configured in `defineLive()`
    *
    * @defaultValue
-   * The default is `false` unless
-   *  - `Cache Components` are disabled
-   *  - `defineLive()` was given a `serverToken`
-   *  - `defineLive()` is not set to `strict: true`
-   *  - `defineLive()` was given a `client` that defines `stega.studioUrl`
-   *  - `draftMode()` is enabled
-   *
-   * If all of the above conditions are met, then the default value will be `true`
+   * `false` outside draft mode. `true` inside draft mode when `defineLive()`
+   * has a `serverToken` and the `client` defines `stega.studioUrl`, in both
+   * export conditions.
    */
   stega?: boolean
   /**
@@ -167,9 +164,7 @@ interface DefinedFetchStegaDisabledOptions<
 /**
  * Fetches data through the configured Sanity client and returns the result
  * together with the source map and cache tags that Sanity Live uses for
- * targeted revalidation.
- *
- * Returned by `defineLive({strict: false})` and `defineLive({strict: undefined})`.
+ * targeted revalidation. Returned by `defineLive()`.
  *
  * Overloads brand `data` with stega string types when stega may be enabled
  * (`stega: true`, a non-literal `boolean`, or omitted). Literal `stega: false`
@@ -199,13 +194,7 @@ export interface DefinedLiveProps {
    * Requires `browserToken` to be configured in `defineLive()`
    *
    * @defaultValue
-   * The default is `false` unless
-   *  - `Cache Components` are disabled
-   *  - `defineLive()` was given a `browserToken`
-   *  - `defineLive()` is not set to `strict: true`
-   *  - `draftMode()` is enabled
-   *
-   * If all of the above conditions are met, then the default value will be `true`
+   * `draftMode().isEnabled` when `defineLive()` has a `browserToken`, otherwise `false`.
    */
   includeDrafts?: boolean
   /**
@@ -279,123 +268,36 @@ export interface DefineLiveOptions {
    */
   browserToken?: string | false
   /**
-   * Require explicit live-content options at every call site.
+   * Resolves the perspective for the current request when `sanityFetch()` is
+   * called without an explicit `perspective` inside draft mode. Never called
+   * outside draft mode. The returned string is sanitized, so a raw
+   * `[perspective]` route segment is fine, and an invalid or missing value
+   * falls back to `'drafts'`.
    *
-   * When `true`, `includeDrafts` is required on `<SanityLive />` and
-   * `perspective`/`stega` are required on `sanityFetch()`. This matches the
-   * explicit data flow needed inside Cache Components, where `draftMode()` and
-   * `cookies()` must be resolved outside `'use cache'` boundaries.
+   * Pass the `[perspective]` root param getter from `next/root-params` when a
+   * `proxy.ts` rewrites every page into a `/[perspective]/...` tree. With a
+   * resolver configured `sanityFetch()` never reads cookies, so it behaves the
+   * same with `cacheComponents` on or off. Without one, the draft mode
+   * perspective comes from the Presentation Tool cookie when `cacheComponents`
+   * is off and is `'drafts'` when it is on.
    *
-   * @defaultValue `false`
+   * @example
+   * ```ts
+   * import {perspective} from 'next/root-params'
+   *
+   * export const {sanityFetch, SanityLive} = defineLive({client, serverToken, browserToken, perspective})
+   * ```
    */
-  strict?: boolean
+  perspective?: LivePerspectiveResolver
 }
 
 /**
- * Like {@link DefinedLiveProps} but with `includeDrafts` required.
- * Returned by `defineLive({strict: true})`.
+ * Resolves the raw perspective for the current request, for example the
+ * `[perspective]` root param getter exported by `next/root-params`.
+ * Called by `sanityFetch()` only inside draft mode, so it never affects the
+ * cache key of published content.
  */
-export interface StrictDefinedLiveProps extends Omit<DefinedLiveProps, 'includeDrafts'> {
-  includeDrafts: boolean
-}
-
-/**
- * Options accepted by `sanityFetch()` returned by `defineLive({strict: true})`.
- * Like {@link DefinedFetchOptions} but with `perspective` and `stega` required,
- * and no cookie or `draftMode()` auto-resolution of defaults.
- */
-interface StrictDefinedFetchOptions<
-  QueryString extends string,
-> extends DefinedFetchOptions<QueryString> {
-  /**
-   * Content perspective used for the fetch.
-   *
-   * Required when `strict: true` is set on `defineLive()`: there is no cookie
-   * auto-resolution; only the explicit option is used.
-   *
-   * @remarks
-   * Non-`'published'` perspectives require `serverToken` to be configured in `defineLive()`
-   */
-  perspective: LivePerspective
-  /**
-   * Editing variant used for the fetch, as the bare variant id (e.g. `Ab12cd34`).
-   *
-   * Stays optional in strict mode: the absence of a variant is a valid state
-   * (base content). With `strict: true` there is no cookie auto-resolution;
-   * only the explicit option is used.
-   */
-  variant?: string
-  /**
-   * Enables stega encoding of the data. This is typically only used in draft
-   * mode with `perspective: 'drafts'` and `@sanity/visual-editing`.
-   *
-   * Required when `strict: true` is set on `defineLive()`. Unless this option
-   * is the literal `false`, the returned `data` is stega-branded
-   * (`StegaBranded<ClientReturn<...>>`) — conservative: treat strings as
-   * possibly stega-encoded until cleaned with `stegaClean`.
-   *
-   * @remarks
-   * Requires `serverToken` to be configured in `defineLive()`
-   */
-  stega: boolean
-}
-
-/**
- * Like {@link StrictDefinedFetchOptions} but with `stega` fixed to `true`,
- * selecting the overload that brands the returned `data` with stega string types.
- * All other options inherit their documentation from {@link StrictDefinedFetchOptions}.
- */
-interface StrictDefinedFetchStegaEnabledOptions<
-  QueryString extends string,
-> extends StrictDefinedFetchOptions<QueryString> {
-  /**
-   * Enables stega encoding of the data. This is typically only used in draft
-   * mode with `perspective: 'drafts'` and `@sanity/visual-editing`.
-   *
-   * With the literal `true`, the returned `data` is stega-branded
-   * (`StegaBranded<ClientReturn<...>>`): use `stegaClean` before comparing
-   * strings against literals.
-   *
-   * @remarks
-   * Requires `serverToken` to be configured in `defineLive()`
-   */
-  stega: true
-}
-
-/**
- * Like {@link StrictDefinedFetchOptions} but with `stega` fixed to `false`,
- * selecting the overload that keeps the returned `data` free of stega branding.
- * All other options inherit their documentation from {@link StrictDefinedFetchOptions}.
- */
-interface StrictDefinedFetchStegaDisabledOptions<
-  QueryString extends string,
-> extends StrictDefinedFetchOptions<QueryString> {
-  /**
-   * Disables stega encoding for this fetch. The returned `data` keeps clean
-   * TypeGen / {@link ClientReturn} types, no `stegaClean` needed.
-   */
-  stega: false
-}
-
-/**
- * Like {@link DefinedFetchType} but with `perspective` and `stega` required.
- * Returned by `defineLive({strict: true})`.
- *
- * Overloads brand `data` with stega string types when stega may be enabled
- * (`stega: true` or a non-literal `boolean`). Literal `stega: false` keeps
- * clean TypeGen / {@link ClientReturn} types.
- */
-export type StrictDefinedFetchType = {
-  <const QueryString extends string>(
-    options: StrictDefinedFetchStegaEnabledOptions<QueryString>,
-  ): DefinedFetchResult<FetchClientReturnStega<QueryString>>
-  <const QueryString extends string>(
-    options: StrictDefinedFetchStegaDisabledOptions<QueryString>,
-  ): DefinedFetchResult<ClientReturn<QueryString, unknown>>
-  <const QueryString extends string>(
-    options: StrictDefinedFetchOptions<QueryString>,
-  ): DefinedFetchResult<FetchClientReturnStega<QueryString>>
-}
+export type LivePerspectiveResolver = () => string | undefined | Promise<string | undefined>
 
 export interface SanityClientConfig extends Pick<
   InitializedClientConfig,

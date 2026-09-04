@@ -18,6 +18,7 @@ The all-in-one [Sanity][sanity] toolkit for production-grade content-editable Ne
 - [Manual installation](#manual-installation)
   - [Install `next-sanity`](#install-next-sanity)
   - [Optional: peer dependencies for embedded Sanity Studio](#optional-peer-dependencies-for-embedded-sanity-studio)
+- [Sanity Live with Cache Components](#sanity-live-with-cache-components)
 - [Migration guides](#migration-guides)
 - [License](#license)
 
@@ -71,6 +72,93 @@ When using `npm` newer than `v7`, or `pnpm` newer than `v8`, you should end up w
 npx install-peerdeps --yarn next-sanity
 ```
 
+## Sanity Live with Cache Components
+
+`draftMode()` decides the defaults of `sanityFetch` and `<SanityLive />`, and `sanityFetch` reads it itself, which Next.js allows inside `'use cache'`. Outside draft mode a fetch is `perspective: 'published'` with `stega: false` and no variant, and `<SanityLive />` leaves `includeDrafts` off. Inside draft mode `stega` defaults to `true`, `<SanityLive />` includes drafts, and the perspective comes from the `perspective` resolver you hand `defineLive`. An explicit option always wins, so `stega: false` stays off inside draft mode and `perspective: 'drafts'` is honoured outside it.
+
+Without a resolver the draft mode perspective comes from the Presentation Tool cookie when `cacheComponents` is off, and is `'drafts'` when it is on, because `cookies()` cannot be read inside `'use cache'`. With a resolver `sanityFetch` never reads cookies, so it behaves the same under either setting and nothing has to be threaded through props.
+
+The resolver is usually the `[perspective]` root param getter from `next/root-params`, with `definePerspectiveProxy` from `next-sanity/live/proxy` rewriting every request into the `/[perspective]/...` route tree based on the draft mode cookies:
+
+```ts
+// sanity/live.ts
+import {defineLive} from 'next-sanity/live'
+import {perspective} from 'next/root-params'
+
+import {client} from './client'
+
+const token = process.env.SANITY_API_READ_TOKEN
+
+export const {sanityFetch, SanityLive} = defineLive({
+  client,
+  serverToken: token,
+  browserToken: token,
+  perspective,
+})
+```
+
+```ts
+// proxy.ts
+import {definePerspectiveProxy} from 'next-sanity/live/proxy'
+
+export const proxy = definePerspectiveProxy()
+
+// Next.js needs the matcher as a literal in this file.
+export const config = {
+  matcher: [
+    '/((?!_next|_vercel|api|studio|favicon|\\.well-known|robots\\.|sitemap\\.|[^/]*\\.).*)?',
+  ],
+}
+```
+
+```tsx
+// app/[perspective]/layout.tsx
+import {SanityLive} from '@/sanity/live'
+
+export function generateStaticParams() {
+  return [{perspective: 'published'}]
+}
+
+export default function RootLayout({children}: LayoutProps<'/[perspective]'>) {
+  return (
+    <html lang="en">
+      <body>
+        {children}
+        <SanityLive />
+      </body>
+    </html>
+  )
+}
+```
+
+```tsx
+// app/[perspective]/[slug]/page.tsx
+import {defineQuery} from 'next-sanity'
+import {Suspense} from 'react'
+
+import {sanityFetch} from '@/sanity/live'
+
+const POST_QUERY = defineQuery(`*[_type == "post" && slug.current == $slug][0]`)
+
+export default function Page({params}: PageProps<'/[perspective]/[slug]'>) {
+  return (
+    <Suspense fallback={<p>Loading...</p>}>
+      {params.then(({slug}) => (
+        <CachedPost slug={slug} />
+      ))}
+    </Suspense>
+  )
+}
+
+async function CachedPost({slug}: {slug: string}) {
+  'use cache'
+  const {data} = await sanityFetch({query: POST_QUERY, params: {slug}})
+  return <pre>{JSON.stringify(data, null, 2)}</pre>
+}
+```
+
+Apps that cannot add a `[perspective]` segment leave the resolver off. Inside draft mode with `cacheComponents` on the perspective is then `'drafts'`, so content release previews in Presentation Tool need the segment. The full pattern lives in the [`sanity-live-cache-components` skill][live-skill].
+
 ## Migration guides
 
 - [From `v12` to `v13`][migrate-v12-to-v13]
@@ -92,6 +180,7 @@ MIT-licensed. See [LICENSE][LICENSE].
 
 [embedded-studio]: https://www.sanity.io/docs/nextjs/embedding-sanity-studio-in-nextjs
 [LICENSE]: LICENSE
+[live-skill]: https://github.com/sanity-io/next-sanity/tree/main/skills/sanity-live-cache-components
 [migrate-v1-to-v4]: https://github.com/sanity-io/next-sanity/blob/main/packages/next-sanity/MIGRATE-v1-to-v4.md
 [migrate-v4-to-v5-app]: https://github.com/sanity-io/next-sanity/blob/main/packages/next-sanity/MIGRATE-v4-to-v5-app-router.md
 [migrate-v4-to-v5-pages]: https://github.com/sanity-io/next-sanity/blob/main/packages/next-sanity/MIGRATE-v4-to-v5-pages-router.md

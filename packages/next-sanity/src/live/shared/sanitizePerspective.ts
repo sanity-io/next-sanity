@@ -6,6 +6,9 @@ export function sanitizePerspective(
   _perspective: unknown,
   fallback: 'drafts' | 'published',
 ): LivePerspective {
+  if (_perspective === undefined || _perspective === null || _perspective === '') {
+    return fallback
+  }
   const perspective =
     typeof _perspective === 'string' && _perspective.includes(',')
       ? _perspective.split(',')
