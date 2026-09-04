@@ -33,7 +33,7 @@ export const client = createClient({
 })
 
 // --- sanity/live.ts ---
-import {defineLive, type StrictDefinedFetchType} from 'next-sanity/live'
+import {defineLive, type DefinedFetchType} from 'next-sanity/live'
 
 import {client} from '@/lib/sanity'
 
@@ -43,13 +43,12 @@ export const {sanityFetch, SanityLive} = defineLive({
   client,
   serverToken: token,
   browserToken: token,
-  strict: true,
 })
 
 // The app's one shared 'use cache' boundary. `sanityFetch` calls
 // `cacheTag`/`cacheLife` internally but doesn't create the boundary —
 // this wrapper provides it once, so callers don't add their own.
-export const cachedSanity: StrictDefinedFetchType = async (options) => {
+export const cachedSanity: DefinedFetchType = async (options) => {
   'use cache'
   return sanityFetch(options)
 }
@@ -80,7 +79,7 @@ export default function RootLayout({children}: {children: React.ReactNode}) {
     <html lang="en">
       <body>
         {children}
-        <SanityLive includeDrafts={false} />
+        <SanityLive />
       </body>
     </html>
   )
