@@ -740,18 +740,8 @@ describe.each([{cacheComponents: true}, {cacheComponents: false}])(
 
       test('keeps a fetcher per serverToken when the client config matches', async () => {
         isDraftMode = true
-        const first = defineLive({
-          client,
-          serverToken: 'sk-first',
-          browserToken: false,
-          strict: true,
-        })
-        const second = defineLive({
-          client,
-          serverToken: 'sk-second',
-          browserToken: false,
-          strict: true,
-        })
+        const first = defineLive({client, serverToken: 'sk-first', browserToken: false})
+        const second = defineLive({client, serverToken: 'sk-second', browserToken: false})
         const query = '{"perspective": $perspective, "token": $token}'
         const firstMock = getSanityFetchMock(query, {
           perspective: 'drafts',
@@ -780,20 +770,8 @@ describe.each([{cacheComponents: true}, {cacheComponents: false}])(
           calls.locale++
           return 'published'
         }
-        const first = defineLive({
-          client,
-          serverToken,
-          browserToken: false,
-          strict: true,
-          perspective,
-        })
-        const second = defineLive({
-          client,
-          serverToken,
-          browserToken: false,
-          strict: true,
-          perspective: locale,
-        })
+        const first = defineLive({client, serverToken, browserToken: false, perspective})
+        const second = defineLive({client, serverToken, browserToken: false, perspective: locale})
         const query = '{"perspective": $perspective, "token": $token}'
         const firstMock = getSanityFetchMock(query, {
           perspective: 'drafts',
@@ -809,29 +787,54 @@ describe.each([{cacheComponents: true}, {cacheComponents: false}])(
         expect(calls).toEqual({perspective: 1, locale: 1})
       })
 
-      describe('strict mode without a resolver', () => {
-        const {sanityFetchMetadata} = defineLive({
-          client,
-          serverToken,
-          browserToken: false,
-          strict: true,
-        })
+      describe('without a perspective resolver', () => {
+        const {sanityFetchMetadata} = defineLive({client, serverToken, browserToken: false})
 
-        test('throws when perspective is omitted', async () => {
-          await expect(
-            // @ts-expect-error -- intentionally omitting `perspective` to assert strict validation
-            sanityFetchMetadata({query: '{"perspective": $perspective, "useCdn": $useCdn}'}),
-          ).rejects.toThrow(/requires an explicit `perspective` option/)
-        })
-
-        test('forces the published perspective outside draft mode', async () => {
+        test('defaults to the published perspective outside draft mode', async () => {
           const {query, params} = getSanityFetchMock(
             '{"perspective": $perspective, "token": $token}',
             {perspective: 'published', token: null},
           )
+          const {data} = await sanityFetchMetadata({query, params})
+          expect(data).toEqual(params)
+        })
+
+        test('honours an explicit perspective outside draft mode', async () => {
+          const {query, params} = getSanityFetchMock(
+            '{"perspective": $perspective, "token": $token}',
+            {perspective: 'drafts', token: `Bearer ${serverToken}`},
+          )
           const {data} = await sanityFetchMetadata({query, params, perspective: 'drafts'})
           expect(data).toEqual(params)
         })
+
+        test.runIf(!cacheComponents)(
+          'defaults to the perspective cookie inside draft mode',
+          async () => {
+            isDraftMode = true
+            perspectiveCookieValue = ['drafts', 'r5RGhbQN9']
+            const {query, params} = getSanityFetchMock(
+              '{"perspective": $perspective, "token": $token}',
+              {perspective: ['drafts', 'r5RGhbQN9'], token: `Bearer ${serverToken}`},
+            )
+            const {data} = await sanityFetchMetadata({query, params})
+            expect(data).toEqual(params)
+          },
+        )
+
+        test.runIf(cacheComponents)(
+          'defaults to "drafts" inside draft mode and ignores the perspective cookie',
+          async () => {
+            isDraftMode = true
+            perspectiveCookieValue = ['drafts', 'r5RGhbQN9']
+            const {query, params} = getSanityFetchMock(
+              '{"perspective": $perspective, "token": $token}',
+              {perspective: 'drafts', token: `Bearer ${serverToken}`},
+            )
+            const {data} = await sanityFetchMetadata({query, params})
+            expect(data).toEqual(params)
+          },
+        )
 
         test('uses the explicit perspective and the server token inside draft mode', async () => {
           isDraftMode = true
@@ -845,7 +848,7 @@ describe.each([{cacheComponents: true}, {cacheComponents: false}])(
         })
       })
 
-      describe('strict mode with a perspective resolver', () => {
+      describe('with a perspective resolver', () => {
         const resolver = vi.fn<() => Promise<string | undefined>>()
         afterEach(() => {
           resolver.mockReset()
@@ -854,7 +857,6 @@ describe.each([{cacheComponents: true}, {cacheComponents: false}])(
           client,
           serverToken,
           browserToken: false,
-          strict: true,
           perspective: resolver,
         })
 

@@ -1,7 +1,6 @@
 export {defineLive} from './defineLive'
 
 export type {
-  DefinedFetchMetadataType,
   DefinedFetchType,
   DefinedLiveProps,
   DefineLiveOptions,
