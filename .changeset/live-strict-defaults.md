@@ -2,16 +2,22 @@
 "next-sanity": major
 ---
 
-`defineLive({strict: true})` now makes draft mode the single source of truth instead of demanding every option on every call.
+`draftMode()` now controls the default of every `sanityFetch` and `<SanityLive />` option that v13 strict mode required, and the `strict` option is gone. An explicit value always wins, in either direction.
 
-- `sanityFetch` reads `draftMode()` itself, which Next.js allows inside `'use cache'`. Outside draft mode every fetch is forced to `perspective: 'published'`, `stega: false`, and no `variant`, whatever the caller passed. Inside draft mode `stega` defaults to `true`.
-- `stega` is no longer required on `sanityFetch`, and `includeDrafts` is no longer required on `<SanityLive />`. Both default to `draftMode().isEnabled`.
-- `perspective` is still required on `sanityFetch` unless `defineLive` receives a `perspective` resolver, typically the `[perspective]` root param getter from `next/root-params`. The resolver is only called inside draft mode and its value is sanitized, so a raw route segment is fine. The types enforce the rule: `sanityFetch` accepts an optional `perspective` exactly when a resolver was configured.
-- `StrictDefinedLiveProps` is removed. `<SanityLive />` takes `DefinedLiveProps` in every mode.
+| Option                              | Outside draft mode | Inside draft mode                                                                                                                                      |
+| ----------------------------------- | ------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| `perspective`                       | `'published'`      | the `perspective` resolver given to `defineLive`, else the Presentation Tool cookie (`cacheComponents: false`) or `'drafts'` (`cacheComponents: true`) |
+| `variant`                           | none               | the Presentation Tool cookie (`cacheComponents: false`, no resolver), else none                                                                        |
+| `stega`                             | `false`            | `true` when `defineLive` has a `serverToken` and the client has `stega.studioUrl`                                                                      |
+| `includeDrafts` on `<SanityLive />` | `false`            | `true` when `defineLive` has a `browserToken`                                                                                                          |
+
+- `perspective` and `stega` on `sanityFetch`, and `includeDrafts` on `<SanityLive />`, are optional in every export condition. Nothing throws for a missing option.
+- Passing an option overrides the default. `stega: false` inside draft mode stays off. `stega: true` or `perspective: 'drafts'` outside draft mode is honoured.
+- `sanityFetch` reads `draftMode()` itself, which Next.js allows inside `'use cache'`. Without a `serverToken` it does not read `draftMode()` at all.
+- The two server implementations now apply the same rule. The only difference left is where the draft mode perspective comes from when the call passes none. Without Cache Components `sanityFetch` reads the Presentation Tool cookies. With Cache Components it calls the `perspective` resolver and falls back to `'drafts'`, because `cookies()` cannot be read inside `'use cache'`. When a resolver is configured neither implementation reads cookies, so an app with a `[perspective]` root segment behaves the same under either setting.
+- `strict`, `StrictDefinedFetchType`, and `StrictDefinedLiveProps` are removed. Delete `strict: true` from your `defineLive` call.
 - New entry point `next-sanity/live/proxy` exports `definePerspectiveProxy()`, a `proxy.ts` function that rewrites `/x` to `/<perspective>/x` from the draft mode cookies. It is safe to import in the proxy runtime and never pulls in React server APIs. The `matcher` stays in your `proxy.ts` because Next.js needs it as a literal.
-- `sanitizePerspective` and `resolvePerspectiveFromCookies` now return the fallback for `undefined`, `null`, and `''` instead of an undefined perspective.
-
-Loose mode (`strict` omitted or `false`) is unchanged in both the `react-server` and the Cache Components implementation.
+- `sanitizePerspective` and `resolvePerspectiveFromCookies` return the fallback for `undefined`, `null`, and `''` instead of an undefined perspective.
 
 Before, with v13 strict mode, every option had to be resolved outside the cache and threaded through props:
 
@@ -73,7 +79,6 @@ export const {sanityFetch, SanityLive} = defineLive({
   client,
   serverToken,
   browserToken,
-  strict: true,
   perspective,
 })
 
@@ -119,4 +124,4 @@ async function CachedPage({slug}) {
 }
 ```
 
-Apps that cannot add a `[perspective]` root segment keep `defineLive({strict: true})` without a resolver and pass `perspective` on each call. Only the draft mode value matters, so `sanityFetch({query, perspective: 'drafts'})` inside `'use cache'` is a published fetch outside draft mode and a drafts fetch inside it.
+Apps that cannot add a `[perspective]` root segment leave the resolver off and call `sanityFetch({query})` as before. Inside draft mode the perspective is then the Presentation Tool cookie without Cache Components and `'drafts'` with them, so content release previews need the `[perspective]` segment when `cacheComponents` is on.

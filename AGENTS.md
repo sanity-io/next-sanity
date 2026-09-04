@@ -44,8 +44,10 @@ The three condition files must expose the same public surface, but their runtime
   defineLive({client})
   ```
 
-- `react-server` is the implementation used by Server Components when `cacheComponents` is not enabled.
-- `next-js` is the implementation used by Next.js when `cacheComponents: true` is enabled.
+- `react-server` is the implementation used by Server Components when `cacheComponents` is not enabled. It may read `cookies()`, so inside draft mode `sanityFetch` defaults `perspective` and `variant` from the Presentation Tool cookies when `defineLive` has no `perspective` resolver.
+- `next-js` is the implementation used by Next.js when `cacheComponents: true` is enabled. `sanityFetch` runs inside `'use cache'`, where `cookies()` is not readable, so inside draft mode it defaults `perspective` from the `perspective` resolver and falls back to `'drafts'`, with no `variant`.
+
+Both server conditions share `src/live/shared/resolveFetchOptions.ts`. `draftMode()` decides every default, an explicit option wins, and the draft mode source is the only thing each condition supplies. With a resolver configured neither condition reads cookies.
 
 When adding, removing, or changing an export from `next-sanity/live`, update all three condition entry points together, verify their exported names match exactly, and preserve the condition-specific runtime behavior.
 

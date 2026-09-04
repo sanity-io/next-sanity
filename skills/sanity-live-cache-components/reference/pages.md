@@ -119,7 +119,7 @@ async function CachedResults({term}: {term: string}) {
 
 ## Server actions
 
-`'use server'` functions cannot carry `'use cache'` themselves. Call `cachedSanity` (see [live-helpers.md](live-helpers.md#cachedsanity)) so the fetch runs inside the shared boundary. Strict mode still reads draft mode inside it, so nothing is threaded in from the action's untrusted inputs:
+`'use server'` functions cannot carry `'use cache'` themselves. Call `cachedSanity` (see [live-helpers.md](live-helpers.md#cachedsanity)) so the fetch runs inside the shared boundary. `sanityFetch` still reads draft mode inside it, so nothing is threaded in from the action's untrusted inputs:
 
 ```tsx
 import {cachedSanity} from '@/sanity/lib/live'

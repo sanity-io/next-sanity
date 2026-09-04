@@ -10,6 +10,5 @@ export const {sanityFetch, sanityFetchMetadata, SanityLive} = defineLive({
   serverToken: token,
   // TODO: setup experimental_taintUniqueValue here
   browserToken: process.env.NEXT_PUBLIC_SANITY_API_BROWSER_TOKEN || token,
-  strict: true,
   perspective,
 })
