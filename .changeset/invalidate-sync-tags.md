@@ -4,7 +4,7 @@
 
 feat(live): add `defineInvalidateSyncTags` at `next-sanity/live/invalidate`
 
-A route handler factory for the sync tag invalidate Sanity Function that backs `<SanityLive waitFor="function">`. It verifies the `@sanity/webhook` signature on the request, rejects signatures older than five minutes, prefixes the sync tags the same way `sanityFetch` tags cache entries, and expires each tag with `revalidateTag(tag, {expire: 0})`. Pair it with `defineInvalidateSyncTagsHandler` from the new `@sanity/next-sanity-functions` package in the function.
+`defineInvalidateSyncTags` returns the `POST` route handler that the sync tag invalidate Sanity Function behind `<SanityLive waitFor="function">` calls. The handler verifies the `@sanity/webhook` signature on the request and rejects signatures older than five minutes. It prefixes the sync tags the same way `sanityFetch` tags cache entries, then expires each tag with `revalidateTag(tag, {expire: 0})`. The function side is `defineInvalidateSyncTagsHandler` from the new `@sanity/next-sanity-functions` package.
 
 Before, the route was hand-rolled:
 

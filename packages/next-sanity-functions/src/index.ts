@@ -2,7 +2,7 @@ import {syncTagInvalidateEventHandler, type SyncTagInvalidateEventHandler} from 
 import {encodeSignatureHeader, SIGNATURE_HEADER_NAME} from '@sanity/webhook'
 
 /**
- * How long a single delivery may take before it is abandoned, in milliseconds.
+ * How long a single delivery may take before the sender gives up on it, in milliseconds.
  * Sanity holds the live event until the function calls `done()`, so a hanging origin must not stall the rest.
  * @public
  */
@@ -22,7 +22,7 @@ export interface InvalidateSyncTagsOptions {
    */
   secret: string | undefined
   /**
-   * One or more `defineInvalidateSyncTags` route URLs. A string is split on commas, so a single env var can fan out to
+   * One or more `defineInvalidateSyncTags` route URLs. A string splits on commas, so one env var can fan out to
    * several deployments.
    *
    * @example
@@ -68,11 +68,11 @@ function parseUrls(urls: InvalidateSyncTagsOptions['urls']): string[] {
 
 /**
  * Signs `{syncTags}` with `@sanity/webhook` and POSTs it to every URL in parallel.
- * Each delivery succeeds or fails on its own, the returned array has one entry per URL in the order given.
+ * Each delivery succeeds or fails on its own. The returned array has one entry per URL, in the order given.
  * Throws only when `secret` or `urls` is missing or malformed, never for a failed delivery.
  *
- * Use this when composing your own `syncTagInvalidateEventHandler`; the one-liner is
- * {@link defineInvalidateSyncTagsHandler}.
+ * Use this when composing your own `syncTagInvalidateEventHandler`.
+ * {@link defineInvalidateSyncTagsHandler} is the one-liner.
  *
  * @public
  */
@@ -111,12 +111,12 @@ export async function invalidateSyncTags(
 }
 
 /**
- * Defines a sync tag invalidate Sanity Function that forwards the tags to one or more Next.js deployments using
- * `defineInvalidateSyncTags` from `next-sanity/live/invalidate`, then tells Sanity it is done so the live event is
- * released to `<SanityLive waitFor="function">` clients.
+ * Returns a sync tag invalidate Sanity Function handler. It forwards the tags to one or more Next.js deployments
+ * that run `defineInvalidateSyncTags` from `next-sanity/live/invalidate`, then calls `done()` so Sanity releases the
+ * live event to `<SanityLive waitFor="function">` clients.
  *
- * Every delivery outcome is logged. Nothing thrown by a delivery, or by missing configuration, escapes the handler,
- * and `done()` is always called, because until it is Sanity holds the event back from every connected browser.
+ * The handler logs every delivery outcome. A failed delivery or missing configuration is logged, never thrown.
+ * `done()` is always called, because until it is Sanity holds the event back from every connected browser.
  *
  * @example
  * ```ts

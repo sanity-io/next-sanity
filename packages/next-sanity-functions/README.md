@@ -1,6 +1,6 @@
 # @sanity/next-sanity-functions
 
-Sanity Functions helpers for [`next-sanity`](https://github.com/sanity-io/next-sanity). It signs sync tag invalidations and sends them to the route handler `defineInvalidateSyncTags` from `next-sanity/live/invalidate` sets up, so `<SanityLive waitFor="function">` clients refresh only after the Next.js cache has been expired.
+Sanity Functions helpers for [`next-sanity`](https://github.com/sanity-io/next-sanity). The package signs sync tag invalidations and POSTs them to the route handler that `defineInvalidateSyncTags` from `next-sanity/live/invalidate` returns. `<SanityLive waitFor="function">` clients then refresh only after the Next.js cache has been expired.
 
 The package has no Next.js or React dependency, so a Sanity Function bundle that imports it stays small.
 
@@ -12,7 +12,7 @@ npm install @sanity/next-sanity-functions @sanity/functions @sanity/blueprints
 
 ## Usage
 
-By default every browser tab connected through `<SanityLive>` reacts to a live event by calling a Server Action that expires the cache and refreshes the page, and the tabs race the revalidation. With `waitFor="function"` Sanity runs the function below first, holds the event until it calls `done()`, and only then lets browsers refresh. The full guide, with the deploy and CI steps, is in the [`next-sanity` README](https://github.com/sanity-io/next-sanity/tree/main/packages/next-sanity#invalidate-the-cache-before-live-events-reach-the-browser). The pieces are these.
+By default every browser tab connected through `<SanityLive>` reacts to a live event by calling a Server Action that expires the cache and refreshes the page. The tabs race the revalidation. With `waitFor="function"` Sanity runs the function below first, holds the event until it calls `done()`, and only then lets browsers refresh. The full guide, with the deploy and CI steps, is in the [`next-sanity` README](https://github.com/sanity-io/next-sanity/tree/main/packages/next-sanity#invalidate-the-cache-before-live-events-reach-the-browser). The pieces are these.
 
 **1. Generate a secret** with `openssl rand -hex 32` and set it as `SANITY_REVALIDATE_SECRET` on the Next.js deployment.
 
@@ -37,9 +37,9 @@ export const handler = defineInvalidateSyncTagsHandler({
 })
 ```
 
-`urls` splits a string on commas, so one `REVALIDATE_URL` can name several deployments. Every URL is called in parallel, each outcome is logged, and `done()` is always called so a failing origin never holds the live event back.
+`urls` splits a string on commas, so one `REVALIDATE_URL` can name several deployments. The handler POSTs to every URL in parallel, logs each outcome, and always calls `done()`, so a failing origin never holds the live event back.
 
-**4. Add the blueprint.** It scopes the function to one dataset and passes the two variables to the deployed function. Blueprint `env` is additive, so a missing value is left out and the deployed value survives.
+**4. Add the blueprint.** It scopes the function to one dataset and passes the two variables to the deployed function. Blueprint `env` is additive. A value left out of the deploy keeps whatever is already deployed.
 
 ```ts
 // sanity.blueprint.ts
