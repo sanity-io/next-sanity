@@ -1,6 +1,6 @@
 ---
 name: sanity-live-cache-components
-description: Integrates Sanity Live with Next.js Cache Components in next-sanity v14+ apps. Sets up defineLive with strict mode and a [perspective] root param resolver, the definePerspectiveProxy rewrite, sanityFetch inside 'use cache', <SanityLive>, Visual Editing, Presentation Tool, and draft mode handling. Sequences with the official Next.js skills (next-cache-components-adoption, next-cache-components-optimizer, next-partial-prefetching-adoption, next-dev-loop). Use when configuring or migrating a Next.js app to cacheComponents with Sanity, when adding sanityFetch, when wiring <SanityLive>/<VisualEditing>, or when removing v13 perspective/stega prop-drilling.
+description: Integrates Sanity Live with Next.js Cache Components in next-sanity v14+ apps. Sets up defineLive with a [perspective] root param resolver, the definePerspectiveProxy rewrite, sanityFetch inside 'use cache', <SanityLive>, Visual Editing, Presentation Tool, and draft mode handling. Sequences with the official Next.js skills (next-cache-components-adoption, next-cache-components-optimizer, next-partial-prefetching-adoption, next-dev-loop). Use when configuring or migrating a Next.js app to cacheComponents with Sanity, when adding sanityFetch, when wiring <SanityLive>/<VisualEditing>, or when removing v13 perspective/stega prop-drilling.
 ---
 
 # Sanity Live + Cache Components
@@ -11,7 +11,7 @@ Read the relevant guide in `node_modules/next/dist/docs/` (when available) befor
 
 This skill assumes familiarity with Cache Components fundamentals. `'use cache'`, `cacheLife`, `cacheTag`, and the cookies/headers/params rule are covered by the [Cache Components guide](https://nextjs.org/docs/app/getting-started/cache-components) (bundled offline under `node_modules/next/dist/docs/`). Two facts carry the whole Sanity pattern:
 
-- `await draftMode()` is allowed inside `'use cache'`, and Next.js bypasses caching when draft mode is enabled ([`use cache` reference](https://nextjs.org/docs/app/api-reference/directives/use-cache#draft-mode)). `sanityFetch` in strict mode reads it for you.
+- `await draftMode()` is allowed inside `'use cache'`, and Next.js bypasses caching when draft mode is enabled ([`use cache` reference](https://nextjs.org/docs/app/api-reference/directives/use-cache#draft-mode)). `sanityFetch` reads it for you.
 - Root param getters from `next/root-params` are allowed inside `'use cache'` and only join the cache key when called ([`next/root-params` reference](https://nextjs.org/docs/app/api-reference/functions/next-root-params)). `sanityFetch` calls the `perspective` getter only inside draft mode.
 
 ## Where this skill fits
@@ -76,6 +76,7 @@ If the app is already using `defineLive`, this skill is a refactor, not a rewrit
 
 - **Don't overwrite `client.ts` or `live.ts`** if they exist. Append missing options. Preserve any existing `token` and `stega.*` settings. See [reference/live-helpers.md](reference/live-helpers.md).
 - **Delete v13 plumbing.** `getDynamicFetchOptions`, `DynamicFetchOptions`, `cachedSanity`, `withDraftMode`, `normalizePerspective`, and `perspective`/`stega` props on components all go. `sanityFetch` reads draft mode and the perspective itself.
+- **Search for `strict: true` on `defineLive`** and delete it. The option is gone in v14.
 - **Search for `includeDrafts={...}` on `<SanityLive>`** and remove the prop. It derives from draft mode.
 - **Search for `sanityFetch` calls inside `generateStaticParams`** and swap for the plain `client.fetch` with `perspective: 'published'`. Build-time code has no draft mode.
 - **Verify there is exactly one `<SanityLive>` and one `<VisualEditing>` in the tree.** Multiple renders are undefined behavior.
@@ -116,7 +117,6 @@ export const {SanityLive, sanityFetch} = defineLive({
   client,
   serverToken: token,
   browserToken: token,
-  strict: true,
   perspective,
 })
 ```
@@ -137,14 +137,14 @@ export const config = {
 
 Full file contents (including `client.ts`, the root layout with `generateStaticParams`, and what to do when the app cannot add a `[perspective]` segment) live in [reference/live-helpers.md](reference/live-helpers.md).
 
-What strict mode does:
+`draftMode()` decides the defaults, and an explicit option always wins:
 
-| Situation          | `perspective`                                  | `stega`               | `variant`           |
-| ------------------ | ---------------------------------------------- | --------------------- | ------------------- |
-| Outside draft mode | `'published'`, whatever the caller passed      | `false` unless passed | dropped             |
-| Inside draft mode  | the explicit option, else the resolver's value | `true` unless passed  | forwarded if passed |
+| Situation          | `perspective`                                | `stega`               | `variant`          |
+| ------------------ | -------------------------------------------- | --------------------- | ------------------ |
+| Outside draft mode | `'published'` unless passed                  | `false` unless passed | none unless passed |
+| Inside draft mode  | the resolver's sanitized value unless passed | `true` unless passed  | none unless passed |
 
-Without a `perspective` resolver, `sanityFetch` requires `perspective` on every call (a type error and a runtime throw when missing). Only the draft mode value matters, so `perspective: 'drafts'` is the usual literal.
+Without a `perspective` resolver the draft mode perspective is `'drafts'`, because `cookies()` cannot be read inside `'use cache'`. Content release previews then need the `[perspective]` segment.
 
 ---
 
@@ -200,7 +200,7 @@ Page/Layout (no 'use cache', awaits nothing dynamic)
 
 - `sanityFetch` calls `cacheTag`/`cacheLife` and needs a surrounding `'use cache'` scope. Put the directive on the leaf component or on a shared wrapper (see `cachedSanity` in [reference/live-helpers.md](reference/live-helpers.md)).
 - The top-level `Page` / `Layout` must **not** have `'use cache'` when it awaits `params`, `searchParams`, `cookies()`, or `headers()`. Pass the `params` promise into the Suspense boundary and await it inside.
-- Never pass `perspective` or `stega` props around. Strict mode resolves them inside the cached leaf, and the resolver only joins the cache key inside draft mode, where nothing is cached anyway.
+- Never pass `perspective` or `stega` props around. `sanityFetch` resolves them inside the cached leaf, and the resolver only joins the cache key inside draft mode, where nothing is cached anyway.
 - `draftMode()` is the only dynamic API a cached leaf may call, and `sanityFetch` already does.
 
 Pick the right reference for the file you're editing:
@@ -224,7 +224,7 @@ Use [`next-dev-loop`](https://github.com/vercel/next.js/tree/canary/skills/next-
 
 When auditing an app, search for these and refactor:
 
-- `getDynamicFetchOptions`, `DynamicFetchOptions`, `withDraftMode`, `normalizePerspective`, `resolvePerspectiveFromCookies` in app code. Delete them, strict mode owns that logic.
+- `getDynamicFetchOptions`, `DynamicFetchOptions`, `withDraftMode`, `normalizePerspective`, `resolvePerspectiveFromCookies` in app code. Delete them, `sanityFetch` owns that logic.
 - `perspective={` or `stega={` props on a component that calls `sanityFetch`. Remove the props and call `sanityFetch({query, params})`.
 - `includeDrafts={` on `<SanityLive>`. Remove it unless you are deliberately overriding draft mode.
 - `sanityFetch(` inside `generateStaticParams`. Swap for `client.fetch(query, params, {perspective: 'published'})`.
