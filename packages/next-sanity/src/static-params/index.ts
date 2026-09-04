@@ -28,7 +28,7 @@ export interface GenerateStaticParamsArgs {
  */
 export interface DefineGenerateStaticParamsOptions<Shape extends StaticParams> {
   /**
-   * The client used to fetch documents at build time. It is reconfigured with
+   * The client that fetches documents at build time. The helper reconfigures it with
    * `perspective: 'published'`, `useCdn: true`, and stega and source maps off, because
    * route params are never rendered and cookies are unavailable during `next build`.
    */
@@ -65,7 +65,7 @@ export interface DefineGenerateStaticParamsOptions<Shape extends StaticParams> {
   order?: string
   /**
    * Optional cap on the number of documents, applied as `[0...limit]` after `order`.
-   * Prerendering only the most relevant pages keeps `next build` fast; the rest render on demand.
+   * Prerender only the first `limit` documents in `order` and let the rest render on demand.
    */
   limit?: number
 }
@@ -113,12 +113,12 @@ export function ensureStaticParams<T extends Record<string, null | string | stri
  * Builds a `generateStaticParams` for a dynamic route from a GROQ filter and one GROQ
  * expression per route param.
  *
- * The query is assembled and parsed with `groq-js` when this function runs, which is at
- * module evaluation of the route file, so `next build` fails fast with the offending
- * expression and its position instead of a network error later in the build.
- * Documents are fetched from the published perspective. Rows whose param values are
- * `null`, empty, or of the wrong kind are dropped, duplicates are removed, and an empty
- * result becomes `[fallback]` via {@link ensureStaticParams}.
+ * This function assembles the query and parses it with `groq-js`. It runs when the route
+ * module loads, so a GROQ typo fails `next build` with the expression and its position
+ * before any network request. The returned `generateStaticParams` fetches from the
+ * published perspective, drops rows whose param values are `null`, empty, or of the wrong
+ * kind, removes duplicates, and returns `[fallback]` for an empty result via
+ * {@link ensureStaticParams}.
  *
  * @example
  * ```tsx
