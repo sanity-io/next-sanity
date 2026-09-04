@@ -462,17 +462,20 @@ describe.each([{cacheComponents: true}, {cacheComponents: false}])(
         },
       )
 
-      test.runIf(cacheComponents)('is not read from cookies when draft mode is enabled', async () => {
-        isDraftMode = true
-        variantCookieValue = 'Ab12cd34'
-        const {query, params} = getSanityFetchMock('{"variant": $variant, "token": $token}', {
-          variant: null,
-          token: `Bearer ${serverToken}`,
-        })
+      test.runIf(cacheComponents)(
+        'is not read from cookies when draft mode is enabled',
+        async () => {
+          isDraftMode = true
+          variantCookieValue = 'Ab12cd34'
+          const {query, params} = getSanityFetchMock('{"variant": $variant, "token": $token}', {
+            variant: null,
+            token: `Bearer ${serverToken}`,
+          })
 
-        const {data} = await sanityFetch({query, params})
-        expect(data).toEqual(params)
-      })
+          const {data} = await sanityFetch({query, params})
+          expect(data).toEqual(params)
+        },
+      )
 
       test('uses the explicit variant instead of the cookie', async () => {
         isDraftMode = true
