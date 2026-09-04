@@ -2,6 +2,7 @@ import {stegaClean} from '@sanity/client/stega'
 import NextImage, {type ImageProps as NextImageProps} from 'next/image'
 
 import {imageLoader} from './imageLoader'
+import {resolveImageDimensions} from './resolveImageDimensions'
 
 /**
  * @alpha
@@ -23,6 +24,15 @@ export interface ImageProps extends Omit<NextImageProps, 'loader' | 'src'> {
 }
 
 /**
+ * Renders an image from the Sanity Image CDN with `next/image`.
+ *
+ * Unlike `next/image`, `width` and `height` are optional: when omitted they
+ * are inferred from the URL, in order of precedence, from its `w`/`h` params
+ * (e.g. set by an `@sanity/image-url` builder), its `rect` crop param, or the
+ * original dimensions Sanity encodes in every asset filename. Providing only
+ * one dimension derives the other from the image's aspect ratio, like
+ * `next/image` does for static imports.
+ *
  * @alpha
  */
 export function Image(props: ImageProps): React.JSX.Element {
@@ -47,11 +57,22 @@ export function Image(props: ImageProps): React.JSX.Element {
       cause: err,
     })
   }
-  if (props.height) {
-    srcUrl.searchParams.set('h', `${props.height}`)
+  const {width, height} = resolveImageDimensions(srcUrl, props.width, props.height, props.fill)
+  // Encoding the resolved dimensions as CDN params lets the loader scale
+  // both axes proportionally for every srcset candidate.
+  if (height) {
+    srcUrl.searchParams.set('h', `${height}`)
   }
-  if (props.width) {
-    srcUrl.searchParams.set('w', `${props.width}`)
+  if (width) {
+    srcUrl.searchParams.set('w', `${width}`)
   }
-  return <NextImage {...rest} src={srcUrl.toString()} loader={imageLoader} />
+  return (
+    <NextImage
+      {...rest}
+      width={width}
+      height={height}
+      src={srcUrl.toString()}
+      loader={imageLoader}
+    />
+  )
 }
