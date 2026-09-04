@@ -67,7 +67,7 @@ Use the pre-installed nvm Node (v22.22.2) for any build/dev/test work by prepend
 export PATH="$HOME/.nvm/versions/node/v22.22.2/bin:$PATH"
 ```
 
-`nvm use` alone is not enough because `/exec-daemon` sits ahead of nvm's shims in `PATH`. This nvm node also bundles the correct `pnpm` (10.34.5), so prepending it fixes both `node` and `pnpm` in one step. `pnpm install` itself works on the default node; only building/running needs the newer node. `pnpm test:e2e` (Vitest browser project) needs Chromium: `pnpm playwright install chromium`.
+`nvm use` alone is not enough because `/exec-daemon` sits ahead of nvm's shims in `PATH`. This nvm node also bundles a pnpm, but the repo pins pnpm 11 via `packageManager`. Activate that version with Corepack (`corepack enable && corepack prepare`) after prepending nvm. `pnpm install` itself works on the default node; only building/running needs the newer node. `pnpm test:e2e` (Vitest browser project) needs Chromium: `pnpm playwright install chromium`.
 
 ### Demo app env
 
