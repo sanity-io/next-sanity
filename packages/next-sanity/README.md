@@ -50,7 +50,7 @@ This README assumes you have chosen all of the default options, but should be fa
 - Next.js `^16.3.0`.
 - React and React DOM `^19.2.3`.
 - `@sanity/client` `^8.0.0`. `next-sanity` re-exports `createClient` from it.
-- `sanity` `^6.0.0` and `styled-components` `^6.1`, only if you embed Sanity Studio with `next-sanity/studio`.
+- `sanity` `^6.0.0` and `styled-components` `^6.1`, only if the same app embeds a Sanity Studio.
 
 Run `npm view next-sanity engines peerDependencies` to read the exact ranges of the published version.
 
