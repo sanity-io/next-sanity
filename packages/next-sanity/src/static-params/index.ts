@@ -251,12 +251,12 @@ function pickStaticParams<Shape extends StaticParams>(rows: unknown, fallback: S
       `defineGenerateStaticParams: expected the query to return an array, got ${typeof rows}`,
     )
   }
-  const keys = Object.keys(fallback)
   const seen = new Set<string>()
   const result: Shape[] = []
   for (const row of rows) {
-    const picked = pickRow(row, keys, fallback)
-    if (picked === undefined) continue
+    if (!isRecord(row)) continue
+    const picked = pickKeys(row, fallback)
+    if (!hasShape(picked, fallback)) continue
     const identity = JSON.stringify(picked)
     if (seen.has(identity)) continue
     seen.add(identity)
@@ -265,21 +265,19 @@ function pickStaticParams<Shape extends StaticParams>(rows: unknown, fallback: S
   return result
 }
 
-function pickRow<Shape extends StaticParams>(
-  row: unknown,
-  keys: string[],
-  fallback: Shape,
-): Shape | undefined {
-  if (!isRecord(row)) return undefined
-  const picked: StaticParams = {}
-  for (const key of keys) {
-    const value = row[key]
-    if (!isRoutableValue(value, fallback[key])) return undefined
-    picked[key] = value
+function pickKeys(row: Record<string, unknown>, sample: StaticParams): Record<string, unknown> {
+  const picked: Record<string, unknown> = {}
+  for (const key of Object.keys(sample)) {
+    picked[key] = row[key]
   }
-  // Every key of `fallback` was checked against its declared kind, which is what `Shape` promises.
-  // oxlint-disable-next-line no-unsafe-type-assertion
-  return picked as Shape
+  return picked
+}
+
+function hasShape<Shape extends StaticParams>(
+  value: Record<string, unknown>,
+  sample: Shape,
+): value is Shape {
+  return Object.keys(sample).every((key) => isRoutableValue(value[key], sample[key]))
 }
 
 function isRecord(value: unknown): value is Record<string, unknown> {
@@ -291,9 +289,8 @@ function isNonEmptyString(value: unknown): value is string {
 }
 
 /**
- * `sample` decides the kind, `value` is what has to fit it. Empty strings and
- * empty arrays never fit, since Next.js cannot route to an empty segment and a
- * `[...slug]` route given `[]` would resolve to the parent path.
+ * Next.js only checks that a `[...slug]` value is an array and a `[slug]` value is a
+ * string, so `''` and `[]` pass its validation and would prerender an empty segment.
  */
 function isRoutableValue(value: unknown, sample: StaticParamValue): value is StaticParamValue {
   if (Array.isArray(sample)) {
