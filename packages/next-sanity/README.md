@@ -74,37 +74,53 @@ npx install-peerdeps --yarn next-sanity
 
 ## Static params for dynamic routes
 
-`next-sanity/static-params` builds a [`generateStaticParams`][generate-static-params] from a GROQ filter and one GROQ expression per route param. It is server and build-time only, so import it from route files and never from Client Components.
+`next-sanity/static-params` builds a [`generateStaticParams`][generate-static-params] from the page's own GROQ query. It is server and build-time only, so import it from route files and never from Client Components.
 
 ```tsx
 // app/posts/[slug]/page.tsx
-import {defineGenerateStaticParams} from 'next-sanity/static-params'
+import {defineQuery} from 'next-sanity'
+import {defineGenerateStaticParams, STATIC_PARAMS_PLACEHOLDER} from 'next-sanity/static-params'
 import {notFound} from 'next/navigation'
 import {client} from '@/sanity/lib/client'
 
-export const {generateStaticParams} = defineGenerateStaticParams({
-  client,
-  filter: '_type == "post" && defined(slug.current)',
-  params: {slug: 'slug.current'},
-  fallback: {slug: '__placeholder__'},
-  order: '_updatedAt desc',
-  limit: 100,
-})
+const postQuery = defineQuery(
+  `*[_type == "post" && slug.current == $slug][0]{title, "slug": slug.current, publishedAt}`,
+)
+
+export const {generateStaticParams} = defineGenerateStaticParams({client, query: postQuery})
 
 export default async function Page({params}: PageProps<'/posts/[slug]'>) {
   const {slug} = await params
-  if (slug === '__placeholder__') notFound()
-  // fetch and render the post
+  if (slug === STATIC_PARAMS_PLACEHOLDER) notFound()
+  const post = await client.fetch(postQuery, {slug})
+  // render the post
 }
 ```
 
-What it does for you:
+When the route module loads, `groq-js` parses the query and reads the root `*[...]` filter. Each `<expression> == $param` conjunct names a route param and the expression that produces it. The other conjuncts stay as constraints. The `[0]`, slices, `order()`, and projection after the filter are dropped. The query above becomes `*[_type == "post" && defined(slug.current)]{"slug": slug.current}`. A syntax error, a `$param` that is not bound with `==`, or a query without bindings fails `next build` with the offending expression before any network request.
 
-- Assembles `*[<filter>] | order(<order>)[0...<limit>]{"slug": slug.current}` and parses the filter, every param expression, and the assembled query with `groq-js` when the module loads. A syntax error fails `next build` immediately and names the expression and its position.
+At build time the returned `generateStaticParams` does the following:
+
 - Fetches with `perspective: 'published'`, `useCdn: true`, and stega and source maps off. Cookies are not available during `next build`, and param values are never rendered.
-- Drops documents whose param value is `null`, empty, or of the wrong kind, removes duplicates, and returns `[fallback]` when nothing remains. Cache Components fails the build when `generateStaticParams` returns `[]`, so the fallback is required. Handle it in the page with `notFound()`.
-- Types the result from `fallback`. A `string` value declares a `[slug]` segment and a `string[]` value declares a `[...slug]` segment, for example `params: {path: 'string::split(slug.current, "/")'}` with `fallback: {path: ['__placeholder__']}`.
-- Forwards the parent segment's params to GROQ, so `app/[category]/[slug]/page.tsx` can use `filter: '_type == "post" && category->slug.current == $category'`.
+- Drops documents whose param value is `null`, empty, or of the wrong kind, and removes duplicates.
+- Returns `[{slug: STATIC_PARAMS_PLACEHOLDER}]` when nothing remains. Cache Components fails the build when `generateStaticParams` returns `[]`, and the [Next.js error page][empty-generate-static-params] names this placeholder as the fallback. It also warns that a placeholder only validates the `notFound()` path, so the helper uses it only when the query returns nothing.
+- Turns a binding into a constraint when the parent segment already provides the param. For `app/[category]/[slug]/page.tsx` with `*[_type == "post" && category->slug.current == $category && slug.current == $slug][0]`, Next.js calls `generateStaticParams({params: {category}})` and the result is `{slug}[]`.
+
+Pass `order` and `limit` to prerender only the most recent documents, for example `order: '_updatedAt desc', limit: 100`.
+
+A catch-all segment needs a `fallback`, because the query cannot tell `[slug]` from `[...slug]`. A `string[]` value declares the catch-all and types the result:
+
+```ts
+const docQuery = defineQuery(`*[_type == "doc" && string::split(slug.current, "/") == $path][0]`)
+
+export const {generateStaticParams} = defineGenerateStaticParams({
+  client,
+  query: docQuery,
+  fallback: {path: [STATIC_PARAMS_PLACEHOLDER]},
+})
+```
+
+The result type defaults to `Record<string, string>[]`. Next.js checks the returned params against the route at build time, so a type annotation is optional. Pass the shape as a generic when you want it, `defineGenerateStaticParams<{slug: string}>({client, query})`.
 
 A root param that needs a constant value, such as `app/[perspective]/layout.tsx`, does not need the helper. Return the constant directly:
 
@@ -146,6 +162,7 @@ The returned `query` string is the assembled GROQ. Pass it to `sanityFetch` from
 MIT-licensed. See [LICENSE][LICENSE].
 
 [embedded-studio]: https://www.sanity.io/docs/nextjs/embedding-sanity-studio-in-nextjs
+[empty-generate-static-params]: https://nextjs.org/docs/messages/empty-generate-static-params
 [generate-static-params]: https://nextjs.org/docs/app/api-reference/functions/generate-static-params
 [LICENSE]: LICENSE
 [migrate-v1-to-v4]: https://github.com/sanity-io/next-sanity/blob/main/packages/next-sanity/MIGRATE-v1-to-v4.md
