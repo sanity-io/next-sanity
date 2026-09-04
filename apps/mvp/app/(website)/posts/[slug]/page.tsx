@@ -1,22 +1,20 @@
 import {defineQuery} from 'next-sanity'
-import {defineGenerateStaticParams} from 'next-sanity/static-params'
+import {defineGenerateStaticParams, STATIC_PARAMS_PLACEHOLDER} from 'next-sanity/static-params'
 import Link from 'next/link'
 import {notFound} from 'next/navigation'
 
 import {client} from '@/app/sanity.client'
 
-export const {generateStaticParams} = defineGenerateStaticParams({
-  client,
-  filter: '_type == "post" && defined(slug.current)',
-  params: {slug: 'slug.current'},
-  fallback: {slug: '__placeholder__'},
-  order: '_updatedAt desc',
-  limit: 100,
-})
-
 const postQuery = defineQuery(
   `*[_type == "post" && slug.current == $slug][0]{title, "slug": slug.current, publishedAt}`,
 )
+
+export const {generateStaticParams} = defineGenerateStaticParams({
+  client,
+  query: postQuery,
+  order: '_updatedAt desc',
+  limit: 100,
+})
 
 async function fetchPost(slug: string) {
   'use cache'
@@ -25,7 +23,7 @@ async function fetchPost(slug: string) {
 
 export default async function PostPage({params}: PageProps<'/posts/[slug]'>) {
   const {slug} = await params
-  if (slug === '__placeholder__') notFound()
+  if (slug === STATIC_PARAMS_PLACEHOLDER) notFound()
   const post = await fetchPost(slug)
   if (!post) notFound()
 
