@@ -88,7 +88,7 @@ async function verifyInvalidateRequest(
 
   let timestamp: number
   try {
-    ;({timestamp} = decodeSignatureHeader(signature))
+    timestamp = decodeSignatureHeader(signature).timestamp
   } catch {
     return reject(401, 'Malformed signature header')
   }
