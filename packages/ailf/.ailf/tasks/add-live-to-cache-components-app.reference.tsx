@@ -63,11 +63,7 @@ const POSTS_QUERY = defineQuery(`
 `)
 
 export async function getPosts() {
-  const {data} = await cachedSanity({
-    query: POSTS_QUERY,
-    perspective: 'published',
-    stega: false,
-  })
+  const {data} = await cachedSanity({query: POSTS_QUERY})
   return data
 }
 
