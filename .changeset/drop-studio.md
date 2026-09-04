@@ -8,7 +8,7 @@ feat(studio)!: remove the `next-sanity/studio` and `next-sanity/studio/client-co
 
 - `NextStudio`, `NextStudioProps`, `NextStudioLayout`, `NextStudioNoScript`, `metadata`, and `viewport` from `next-sanity/studio`
 - `NextStudio` and `NextStudioProps` from `next-sanity/studio/client-component`
-- the `history` dependency and the `sanity` peer dependency, which only these entry points used; `styled-components` stays a peer dependency because `@sanity/visual-editing` requires it
+- the `history` dependency and the `sanity` peer dependency, which only these entry points used. `styled-components` stays a peer dependency because `@sanity/visual-editing` requires it.
 
 Install `sanity` yourself if it is not already in your app:
 
@@ -36,7 +36,7 @@ export default function StudioPage() {
 export {metadata, viewport} from "next-sanity/studio"
 ```
 
-After, following the [Embedded Sanity Studio](https://www.sanity.io/docs/nextjs/embedding-sanity-studio-in-nextjs) guide, where the catch-all segment matches `basePath` in `sanity.config.ts`:
+After, as in the [Embedded Sanity Studio](https://www.sanity.io/docs/nextjs/embedding-sanity-studio-in-nextjs) guide. The catch-all segment matches `basePath` in `sanity.config.ts`:
 
 ```tsx
 // app/studio/[[...tool]]/page.tsx
@@ -63,7 +63,7 @@ export default function StudioLayout({children}: {children: React.ReactNode}) {
 }
 ```
 
-If you passed `history="hash"`, for example because your app is a static export and cannot serve a catch-all route, pass a hash history from the `history` package to `unstable_history` and render the Studio in the browser only:
+If you passed `history="hash"`, pass a hash history from the `history` package to `unstable_history` and render the Studio in the browser only. Static exports need this because they cannot serve a catch-all route:
 
 ```bash
 npm install history
@@ -98,4 +98,4 @@ export default function StudioPage() {
 }
 ```
 
-`NextStudio` also rendered a full-viewport wrapper, a `<noscript>` notice, and passed `unstable_globalStyles`. `Studio` from `sanity` fills its container, so wrap it in an element sized to the viewport if your layout does not already do that, and add a `<noscript>` element yourself if you want one.
+`NextStudio` also rendered a full-viewport wrapper and a `<noscript>` notice, and passed `unstable_globalStyles`. `Studio` from `sanity` fills its container. Wrap it in an element sized to the viewport if your layout does not already do that. Add a `<noscript>` element yourself if you want one.
