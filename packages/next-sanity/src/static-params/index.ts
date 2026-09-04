@@ -231,15 +231,11 @@ export function defineGenerateStaticParams<Shape extends StaticParams = Record<s
   }
 }
 
-/**
- * One top-level `&&` conjunct of the page query's root filter, in source order.
- * A binding is `<expr> == $param`. Everything else is a constraint.
- */
 type Conjunct = {kind: 'constraint'; groq: string} | {kind: 'binding'; param: string; expr: string}
 
 /**
- * groq-js 2.0.0 ships no declarations for its AST nodes, so these name the few shapes
- * the walk inspects. Every other node only matters as an opaque subtree.
+ * groq-js 2.0.0 publishes no declarations for its AST nodes, so the walk names the
+ * five shapes it inspects.
  */
 interface GroqNode {
   type: string
@@ -308,10 +304,8 @@ function inferStaticParamsQuery(query: string): Conjunct[] {
 }
 
 /**
- * Walks down the `base` chain from the query root to the filter that sits on `*`, and
- * returns the `expr` of every filter in that chain, outermost last. `*[A][B]` reads as
- * `*[A && B]`. A filter that sits on anything else, such as `*[A]{...}[B]`, is rejected
- * because `B` would refer to the projected shape.
+ * `*[A][B]` reads as `*[A && B]`. A filter after a projection, `*[A]{...}[B]`, would
+ * refer to the projected shape, so it is rejected.
  */
 function rootFilterExprs(root: GroqNode): GroqNode[] {
   let node: GroqNode | undefined = root
