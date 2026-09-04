@@ -182,10 +182,6 @@ export type DefinedFetchType = {
   ): DefinedFetchResult<FetchClientReturnStega<QueryString>>
 }
 
-/**
- * Options accepted by `sanityFetchMetadata()`. Like {@link DefinedFetchOptions}
- * without `stega`, which is always `false` for metadata.
- */
 type DefinedFetchMetadataOptions<QueryString extends string> = Omit<
   DefinedFetchOptions<QueryString>,
   'stega'
