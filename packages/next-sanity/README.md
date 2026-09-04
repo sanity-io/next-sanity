@@ -86,13 +86,13 @@ This also installs `@sanity/image-url` for [On-Demand Image Transformations][ima
 
 ### Optional: embed Sanity Studio yourself
 
-`next-sanity` no longer ships a `next-sanity/studio` entry point. To mount the Studio at a route in your Next.js app, install `sanity` and render its `Studio` component from a Client Component. `styled-components` is a peer dependency of both `sanity` and `next-sanity`, so most package managers install it for you.
+`next-sanity` no longer ships a `next-sanity/studio` entry point. To mount the Studio at a route in your Next.js app, install `sanity` and render its `Studio` component from a Client Component. `styled-components` is a peer dependency of both packages, so most package managers install it for you.
 
 ```bash
 npm install sanity styled-components
 ```
 
-The [Embedded Sanity Studio][embedded-studio] guide covers the recommended setup, a catch-all route that matches `basePath` in `sanity.config.ts`:
+The [Embedded Sanity Studio][embedded-studio] guide recommends a catch-all route whose segment matches `basePath` in `sanity.config.ts`:
 
 ```tsx
 // app/studio/[[...tool]]/page.tsx
@@ -121,7 +121,7 @@ export default function StudioLayout({children}: {children: React.ReactNode}) {
 }
 ```
 
-If you relied on `history="hash"`, for example because your app is a static export, pass a hash history from the `history` package and load the Studio in the browser only:
+If you relied on `history="hash"`, pass a hash history from the `history` package and load the Studio in the browser only. Static exports need this because they cannot serve a catch-all route:
 
 ```tsx
 // app/studio/Studio.tsx
