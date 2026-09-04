@@ -18,12 +18,6 @@ const draftModeCookieName = '__prerender_bypass'
  */
 const routeSegmentPattern = /^[A-Za-z0-9_,-]+$/
 
-/**
- * Reads the `[perspective]` route segment a request should render with, using
- * the same rule as `sanityFetch` without Cache Components: `'published'`
- * unless draft mode is on, then the sanitized `sanity-preview-perspective`
- * cookie that Presentation Tool sets, falling back to `'drafts'`.
- */
 function resolveRequestSegment(request: NextRequest): string {
   if (!request.cookies.has(draftModeCookieName)) {
     return 'published'

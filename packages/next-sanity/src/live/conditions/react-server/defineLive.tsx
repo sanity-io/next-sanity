@@ -306,10 +306,6 @@ export function defineLive(config: DefineLiveOptions): {
   return {sanityFetch, SanityLive}
 }
 
-/**
- * Without Cache Components `cookies()` is available in every Server Component,
- * so the Presentation Tool cookies name the draft mode perspective and variant.
- */
 const cookieSource: DraftModeSource = {
   perspective: async () => resolvePerspectiveFromCookies({cookies: await cookies()}),
   variant: async () => resolveVariantFromCookies({cookies: await cookies()}),
