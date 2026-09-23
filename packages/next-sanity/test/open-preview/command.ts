@@ -47,10 +47,18 @@ export const runOpenPreview: BrowserCommand<[], OpenPreviewResult> = async ({con
 
     const previewFrame = root.locator('iframe').first()
     await previewFrame.waitFor({state: 'attached'})
-    await previewFrame.contentFrame().getByText('Draft mode: On', {exact: true}).waitFor({
-      state: 'visible',
-      timeout: 60_000,
-    })
+    const previewContent = previewFrame.contentFrame()
+    try {
+      await previewContent.getByText('Draft mode: On', {exact: true}).waitFor({
+        state: 'visible',
+        timeout: 60_000,
+      })
+    } catch (cause) {
+      const body = await previewContent.locator('body').innerText()
+      throw new Error(`Presentation preview did not enable draft mode. Frame content:\n${body}`, {
+        cause,
+      })
+    }
 
     const iframeUrl = await previewFrame.getAttribute('src')
     if (!iframeUrl) {
