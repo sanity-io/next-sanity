@@ -54,18 +54,22 @@ export default async function setupOpenPreviewFixture(): Promise<() => void> {
   const projectId = process.env['SANITY_E2E_PROJECT_ID'] || 'ppsg7ml5'
   const dataset = process.env['SANITY_E2E_DATASET'] || 'test'
   const output: string[] = []
-  const app = spawn('pnpm', ['exec', 'next', 'dev', '--hostname', '0.0.0.0', '--port', '3000'], {
-    cwd: appDirectory,
-    env: {
-      ...process.env,
-      NEXT_PUBLIC_SANITY_DATASET: dataset,
-      NEXT_PUBLIC_SANITY_PROJECT_ID: projectId,
-      NEXT_PUBLIC_TEST_PREVIEW_ORIGIN: appOrigin,
-      NEXT_PUBLIC_TEST_PREVIEW_PATH: '/open-preview',
-      SANITY_API_READ_TOKEN: token,
+  const app = spawn(
+    'pnpm',
+    ['exec', 'next', 'dev', '--webpack', '--hostname', '0.0.0.0', '--port', '3000'],
+    {
+      cwd: appDirectory,
+      env: {
+        ...process.env,
+        NEXT_PUBLIC_SANITY_DATASET: dataset,
+        NEXT_PUBLIC_SANITY_PROJECT_ID: projectId,
+        NEXT_PUBLIC_TEST_PREVIEW_ORIGIN: appOrigin,
+        NEXT_PUBLIC_TEST_PREVIEW_PATH: '/open-preview',
+        SANITY_API_READ_TOKEN: token,
+      },
+      stdio: ['ignore', 'pipe', 'pipe'],
     },
-    stdio: ['ignore', 'pipe', 'pipe'],
-  })
+  )
 
   app.stdout?.on('data', (chunk: Buffer) => output.push(chunk.toString()))
   app.stderr?.on('data', (chunk: Buffer) => output.push(chunk.toString()))
