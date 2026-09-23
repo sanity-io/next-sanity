@@ -43,7 +43,8 @@ overrides:
   next: 'catalog:'
   react: 'catalog:'
   react-dom: 'catalog:'
-  # sanity: 'catalog:'
+  # Override at install time with `pnpm install --config.overrides.sanity=<pkg.pr.new URL>`
+  # to verify an unreleased Studio build.
   sanity: next
   '@sanity/vision': next
 

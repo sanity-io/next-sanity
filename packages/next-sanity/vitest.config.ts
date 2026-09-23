@@ -2,7 +2,9 @@ import react from '@vitejs/plugin-react'
 import {playwright} from '@vitest/browser-playwright'
 import {defineConfig, defaultExclude} from 'vitest/config'
 
-const browserTestFiles = 'test/**/*.browser.{test,spec}.tsx'
+import {runOpenPreview} from './test/open-preview/command'
+
+const browserTestFiles = 'test/**/*.browser.{test,spec}.{ts,tsx}'
 
 export default defineConfig({
   plugins: [react({})],
@@ -19,9 +21,11 @@ export default defineConfig({
       },
       {
         test: {
+          globalSetup: ['./test/open-preview/globalSetup.ts'],
           include: [browserTestFiles],
           name: 'browser',
           browser: {
+            commands: {runOpenPreview},
             enabled: true,
             provider: playwright(),
             instances: [{browser: 'chromium'}],
