@@ -2,7 +2,7 @@ import react from '@vitejs/plugin-react'
 import {playwright} from '@vitest/browser-playwright'
 import {defineConfig, defaultExclude} from 'vitest/config'
 
-import {runOpenPreview} from './test/open-preview/command'
+import {runOpenPreview} from './test/open-preview/command.ts'
 
 const browserTestFiles = 'test/**/*.browser.{test,spec}.{ts,tsx}'
 

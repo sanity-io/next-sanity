@@ -2,7 +2,7 @@ import {spawn, type ChildProcess} from 'node:child_process'
 import {fileURLToPath} from 'node:url'
 
 const appOrigin = 'http://127.0.0.1:3000'
-const appDirectory = fileURLToPath(new URL('../../../../../apps/mvp/', import.meta.url))
+const appDirectory = fileURLToPath(new URL('../../../../apps/mvp/', import.meta.url))
 const startupTimeout = 120_000
 
 function requireEnvironment(name: string): string {
