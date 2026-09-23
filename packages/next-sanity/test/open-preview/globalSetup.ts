@@ -39,6 +39,16 @@ async function waitForApp(
   return waitForApp(process, output, deadline)
 }
 
+async function warmStudio(output: string[]): Promise<void> {
+  const response = await fetch('http://localhost:3000/studio')
+  if (response.ok) return
+
+  const body = await response.text()
+  throw new Error(
+    `Studio compilation failed with status ${response.status}:\n${body}\n${output.join('')}`,
+  )
+}
+
 function stopApp(process: ChildProcess): void {
   if (!process.pid || process.exitCode !== null) return
 
@@ -77,6 +87,7 @@ export default async function setupOpenPreviewFixture(): Promise<() => void> {
 
   try {
     await waitForApp(app, output)
+    await warmStudio(output)
   } catch (error) {
     stopApp(app)
     throw error
