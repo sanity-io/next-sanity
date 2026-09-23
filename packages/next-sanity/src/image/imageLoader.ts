@@ -1,10 +1,11 @@
+import {stegaClean} from '@sanity/client/stega'
 import type {ImageLoader} from 'next/image'
 
 /**
  * @alpha
  */
 export const imageLoader: ImageLoader = ({src, width, quality}) => {
-  const url = new URL(src)
+  const url = new URL(stegaClean(src))
   url.searchParams.set('auto', 'format')
   if (!url.searchParams.has('fit')) {
     url.searchParams.set('fit', url.searchParams.has('h') ? 'min' : 'max')
