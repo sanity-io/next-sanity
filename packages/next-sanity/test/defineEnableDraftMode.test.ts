@@ -179,6 +179,14 @@ describe('defineEnableDraftMode', () => {
       sameSite: 'none',
       partitioned: true,
     })
+    const bypassSets = cookieSet.mock.calls.filter((call) => call[0]?.name === '__prerender_bypass')
+    const perspectiveSets = cookieSet.mock.calls.filter(
+      (call) => call[0]?.name === perspectiveCookieName,
+    )
+    expect(bypassSets).toHaveLength(1)
+    expect(perspectiveSets).toHaveLength(1)
+    expect(bypassSets[0]?.[0]?.partitioned).toBe(true)
+    expect(perspectiveSets[0]?.[0]?.partitioned).toBe(true)
   })
 
   test('does not partition cookies for top-level document requests', async () => {
