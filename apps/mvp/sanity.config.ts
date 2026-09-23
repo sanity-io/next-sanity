@@ -13,6 +13,8 @@ const theme = buildTheme({
 
 const projectId = process.env.NEXT_PUBLIC_SANITY_PROJECT_ID!
 const dataset = process.env.NEXT_PUBLIC_SANITY_DATASET!
+const previewOrigin = process.env.NEXT_PUBLIC_TEST_PREVIEW_ORIGIN
+const previewPath = process.env.NEXT_PUBLIC_TEST_PREVIEW_PATH || '/'
 
 const previewMode = {
   enable: `${process.env.NEXT_PUBLIC_TEST_BASE_PATH || ''}/api/draft-mode/enable`,
@@ -25,7 +27,11 @@ export default defineConfig({
   theme,
   plugins: [
     presentationTool({
-      previewUrl: {preview: `${process.env.NEXT_PUBLIC_TEST_BASE_PATH || ''}/`, previewMode},
+      previewUrl: {
+        origin: previewOrigin,
+        preview: `${process.env.NEXT_PUBLIC_TEST_BASE_PATH || ''}${previewPath}`,
+        previewMode,
+      },
     }),
     sharedConfig(),
   ],
