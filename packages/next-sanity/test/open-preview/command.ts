@@ -32,7 +32,7 @@ export const runOpenPreview: BrowserCommand<[], OpenPreviewResult> = async ({con
         authValue: JSON.stringify({token, time: new Date().toISOString()}),
       },
     )
-    await studioPage.goto(`${studioOrigin}/studio#/presentation`)
+    await studioPage.goto(`${studioOrigin}/studio#/presentation`, {waitUntil: 'domcontentloaded'})
 
     const root = studioPage.getByTestId('presentation-root')
     try {
