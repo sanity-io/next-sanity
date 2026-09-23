@@ -49,13 +49,13 @@ export const runOpenPreview: BrowserCommand<[], OpenPreviewResult> = async ({con
     await previewFrame.waitFor({state: 'attached'})
     const previewContent = previewFrame.contentFrame()
     try {
-      await previewContent.getByText('Draft mode: On', {exact: true}).waitFor({
+      await previewContent.getByTestId('open-preview-draft-mode').waitFor({
         state: 'visible',
         timeout: 60_000,
       })
     } catch (cause) {
       const body = await previewContent.locator('body').innerText()
-      throw new Error(`Presentation preview did not enable draft mode. Frame content:\n${body}`, {
+      throw new Error(`Presentation preview fixture did not load. Frame content:\n${body}`, {
         cause,
       })
     }
