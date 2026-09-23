@@ -43,8 +43,7 @@ overrides:
   next: 'catalog:'
   react: 'catalog:'
   react-dom: 'catalog:'
-  # Override at install time with `pnpm install --config.overrides.sanity=<pkg.pr.new URL>`
-  # to verify an unreleased Studio build.
+  # scripts/installE2EStudio.mjs temporarily replaces this to install a selected E2E Studio build.
   sanity: next
   '@sanity/vision': next
 

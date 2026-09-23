@@ -22,6 +22,10 @@ To test an unreleased Studio fix, select its `pkg.pr.new` package when installin
 same test:
 
 ```sh
-pnpm install --config.overrides.sanity=https://pkg.pr.new/sanity-io/sanity@<sha>
+pnpm test:e2e:install-studio https://pkg.pr.new/sanity-io/sanity@<sha>
 SANITY_TEST_STUDIO_AUTH_TOKEN=... pnpm test:e2e
 ```
+
+The installer temporarily changes the workspace override, installs without modifying the lockfile,
+and restores `pnpm-workspace.yaml` even if installation fails. A published baseline can be selected
+the same way, for example `pnpm test:e2e:install-studio 6.12.0`.
