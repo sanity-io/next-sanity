@@ -9,7 +9,7 @@ const nextConfig: NextConfig = {
   cacheComponents: true,
   cacheLife: {default: sanity},
   productionBrowserSourceMaps: true,
-  reactCompiler: true,
+  reactCompiler: !useWebpack,
   experimental: {
     ...(!useWebpack && {turbopackRustReactCompiler: true}),
     useTypeScriptCli: true,
