@@ -29,7 +29,9 @@ jobs:
       - uses: actions/setup-node@v7
         with:
           node-version: lts/*
-      - run: pnpm install --ignore-scripts
+      # Not --ignore-scripts: pnpm 11 fails an install with unapproved dependency
+      # build scripts, and this job is where that should surface.
+      - run: pnpm install
       - run: pnpm build --filter=./packages/*
       - run: pnpm typegen
       - run: pnpm lint --format github
@@ -44,6 +46,8 @@ jobs:
       matrix:
         # https://nodejs.org/en/about/releases/
         # https://pnpm.io/installation#compatibility
+        # pnpm 11 requires Node.js 22+
+
         # @TODO re-enable `current` once it recovers
         # node: [lts/-1, lts/*, current]
         node: [lts/-1, lts/*]
