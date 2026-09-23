@@ -85,6 +85,17 @@ export function defineEnableDraftMode(options: DefineEnableDraftModeOptions): En
       // hit from a cross-site iframe (Presentation), opt into CHIPS so the cookies
       // are stored under the studio's partition. Skip partitioning for top-level /
       // same-site requests so draftMode().disable() can still clear them.
+      // Do not also write unpartitioned copies here. Next's ResponseCookies map
+      // (and cookies().set) is keyed by name, not partition-key: a second set()
+      // last-write-wins and `replace()` rewrites Set-Cookie from that map, so
+      // you cannot emit two same-name lines that differ only by Partitioned.
+      // Partitioned-last would drop the unpartitioned cookie (Open preview still
+      // broken); unpartitioned-last would drop CHIPS and regress Safari.
+      // Even a raw dual Set-Cookie would not stay coherent: RequestCookies /
+      // parseCookie also last-win on duplicate Cookie names, while
+      // perspectiveChangeAction / variantChangeAction only rewrite the jar that
+      // matches the partitioned flag. Unupgraded Studios' Open preview must go
+      // through `previewMode.enable` instead.
       // https://github.com/sanity-io/sanity/issues/12806
       const partitioned =
         isSecure &&
