@@ -73,7 +73,14 @@ export const runOpenPreview: BrowserCommand<[], OpenPreviewResult> = async ({con
     await popup.waitForLoadState('domcontentloaded')
 
     const draftContent = popup.getByTestId('open-preview-draft-mode')
-    await draftContent.waitFor({state: 'visible'})
+    try {
+      await draftContent.waitFor({state: 'visible'})
+    } catch (cause) {
+      const body = await popup.locator('body').innerText()
+      throw new Error(`Open preview popup did not load at ${popup.url()}. Page content:\n${body}`, {
+        cause,
+      })
+    }
 
     return {
       iframeOrigin: new URL(iframeUrl).origin,
