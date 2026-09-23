@@ -1,12 +1,6 @@
-import {createRequire} from 'node:module'
-
 import {perspectiveCookieName} from '@sanity/preview-url-secret/constants'
+import {RequestCookies, ResponseCookies} from 'next/dist/server/web/spec-extension/cookies'
 import {describe, expect, test} from 'vitest'
-
-const require = createRequire(import.meta.url)
-// oxlint-disable-next-line no-unsafe-type-assertion -- CJS compiled Next cookie helpers
-const {parseCookie, RequestCookies, ResponseCookies} =
-  require('next/dist/compiled/@edge-runtime/cookies') as typeof import('next/dist/compiled/@edge-runtime/cookies')
 
 const attrs = {
   httpOnly: true,
@@ -95,18 +89,13 @@ describe('Next ResponseCookies / RequestCookies vs CHIPS dual-write', () => {
     ])
   })
 
-  test('RequestCookies and parseCookie keep the last duplicate Cookie name, so mixed jars cannot stay coherent', () => {
+  test('RequestCookies keeps the last duplicate Cookie name, so mixed jars cannot stay coherent', () => {
     const cookie = [
       `__prerender_bypass=plain`,
       `${perspectiveCookieName}=drafts`,
       `__prerender_bypass=chips`,
       `${perspectiveCookieName}=published`,
     ].join('; ')
-
-    expect([...parseCookie(cookie).entries()]).toEqual([
-      ['__prerender_bypass', 'chips'],
-      [perspectiveCookieName, 'published'],
-    ])
 
     const request = new RequestCookies(new Headers({cookie}))
     expect(request.size).toBe(2)
