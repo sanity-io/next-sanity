@@ -10,6 +10,7 @@ const nextConfig: NextConfig = {
   cacheLife: {default: sanity},
   productionBrowserSourceMaps: true,
   reactCompiler: !useWebpack,
+  transpilePackages: ['@sanity/workbench'],
   experimental: {
     ...(!useWebpack && {turbopackRustReactCompiler: true}),
     useTypeScriptCli: true,
