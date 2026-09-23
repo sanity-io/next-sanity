@@ -35,7 +35,15 @@ export const runOpenPreview: BrowserCommand<[], OpenPreviewResult> = async ({con
     await studioPage.goto(`${studioOrigin}/studio#/presentation`)
 
     const root = studioPage.getByTestId('presentation-root')
-    await root.waitFor({state: 'visible', timeout: 60_000})
+    try {
+      await root.waitFor({state: 'visible', timeout: 60_000})
+    } catch (cause) {
+      const body = await studioPage.locator('body').innerText()
+      throw new Error(
+        `Presentation did not load at ${studioPage.url()}. Page content:\n${body.slice(0, 2_000)}`,
+        {cause},
+      )
+    }
 
     const previewFrame = root.locator('iframe').first()
     await previewFrame.waitFor({state: 'attached'})
