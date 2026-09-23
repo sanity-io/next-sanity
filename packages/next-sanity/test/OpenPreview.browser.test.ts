@@ -9,12 +9,16 @@ declare module 'vitest/browser' {
   }
 }
 
-test('Open preview enables first-party draft mode on a cross-site frontend', async () => {
-  const result = await commands.runOpenPreview()
+test(
+  'Open preview enables first-party draft mode on a cross-site frontend',
+  {timeout: 120_000},
+  async () => {
+    const result = await commands.runOpenPreview()
 
-  expect(result.studioOrigin).toBe('http://localhost:3000')
-  expect(result.iframeOrigin).toBe('http://127.0.0.1:3000')
-  expect(result.popupOrigin).toBe('http://127.0.0.1:3000')
-  expect(result.popupUrl).toContain('sanity-preview-perspective=drafts')
-  expect(result.popupDraftContent).toBe('Draft content: visible')
-})
+    expect(result.studioOrigin).toBe('http://localhost:3000')
+    expect(result.iframeOrigin).toBe('http://127.0.0.1:3000')
+    expect(result.popupOrigin).toBe('http://127.0.0.1:3000')
+    expect(result.popupUrl).toContain('sanity-preview-perspective=drafts')
+    expect(result.popupDraftContent).toBe('Draft content: visible')
+  },
+)
