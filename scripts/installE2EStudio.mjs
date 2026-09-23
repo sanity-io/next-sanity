@@ -1,9 +1,35 @@
 import {spawnSync} from 'node:child_process'
-import {readFileSync, writeFileSync} from 'node:fs'
+import {readdirSync, readFileSync, rmSync, writeFileSync} from 'node:fs'
+import {join} from 'node:path'
 import {fileURLToPath} from 'node:url'
 
 const workspaceConfigPath = fileURLToPath(new URL('../pnpm-workspace.yaml', import.meta.url))
+const storeDirectory = fileURLToPath(new URL('../node_modules/.pnpm/', import.meta.url))
+const nextBuildDirectory = fileURLToPath(new URL('../apps/mvp/.next/', import.meta.url))
 const packageSpec = process.argv[2]
+
+/**
+ * pkg.pr.new builds all report the same semver, so webpack happily bundles two
+ * of them at once and the Studio dies on `Duplicate instances of context
+ * "sanity/_singletons/…" with incompatible versions`. Drop previously installed
+ * Studio copies and the app's build cache before installing the selected one.
+ */
+function removeStaleStudioBuilds() {
+  rmSync(nextBuildDirectory, {force: true, recursive: true})
+
+  let entries = []
+  try {
+    entries = readdirSync(storeDirectory)
+  } catch {
+    return
+  }
+
+  for (const entry of entries) {
+    if (/^sanity@https?/.test(entry)) {
+      rmSync(join(storeDirectory, entry), {force: true, recursive: true})
+    }
+  }
+}
 
 if (!packageSpec) {
   throw new Error(
@@ -29,6 +55,7 @@ if (!pnpmCli) {
 
 try {
   writeFileSync(workspaceConfigPath, selectedConfig)
+  removeStaleStudioBuilds()
   const result = spawnSync(process.execPath, [pnpmCli, 'install', '--lockfile=false', '--force'], {
     cwd: fileURLToPath(new URL('..', import.meta.url)),
     stdio: 'inherit',
