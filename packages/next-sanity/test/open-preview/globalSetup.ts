@@ -65,6 +65,7 @@ export default async function setupOpenPreviewFixture(): Promise<() => void> {
         NEXT_PUBLIC_SANITY_PROJECT_ID: projectId,
         NEXT_PUBLIC_TEST_PREVIEW_ORIGIN: appOrigin,
         NEXT_PUBLIC_TEST_PREVIEW_PATH: '/open-preview',
+        NEXT_E2E_WEBPACK: 'true',
         SANITY_API_READ_TOKEN: token,
       },
       stdio: ['ignore', 'pipe', 'pipe'],

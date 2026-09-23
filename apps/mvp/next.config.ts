@@ -1,6 +1,8 @@
 import type {NextConfig} from 'next'
 import {sanity} from 'next-sanity/live/cache-life'
 
+const useWebpack = process.env.NEXT_E2E_WEBPACK === 'true'
+
 const nextConfig: NextConfig = {
   // basePath: process.env.NEXT_PUBLIC_TEST_BASE_PATH,
   // trailingSlash: true,
@@ -9,7 +11,7 @@ const nextConfig: NextConfig = {
   productionBrowserSourceMaps: true,
   reactCompiler: true,
   experimental: {
-    turbopackRustReactCompiler: true,
+    ...(!useWebpack && {turbopackRustReactCompiler: true}),
     useTypeScriptCli: true,
   },
   logging: {
