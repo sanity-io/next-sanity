@@ -37,7 +37,7 @@ export type PostsLayoutProps = {
 
 async function RandomNumber() {
   'use cache'
-  // oxlint-disable-next-line react/react-compiler
+  // oxlint-disable-next-line react/purity
   const random = Math.random()
   return <p className="mt-6">Random number: {random}</p>
 }
