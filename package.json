@@ -16,6 +16,8 @@
     "start": "turbo watch build start",
     "test": "turbo test",
     "test:e2e": "pnpm --filter next-sanity test:e2e",
+    "test:e2e:install-studio": "node scripts/installE2EStudio.mjs",
+    "test:e2e:open-preview": "pnpm --filter next-sanity test:e2e:open-preview",
     "typegen": "turbo typegen"
   },
   "dependencies": {
