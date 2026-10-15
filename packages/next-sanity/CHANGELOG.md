@@ -1,5 +1,15 @@
 # next-sanity
 
+## 13.3.5
+
+### Patch Changes
+
+- [#3933](https://github.com/sanity-io/next-sanity/pull/3933) [`c2006cd`](https://github.com/sanity-io/next-sanity/commit/c2006cdbbe2fa1aa69c0102c62aec9c5d3ada23c) Thanks [@renovate](https://github.com/apps/renovate)! - fix(deps): update sanity monorepo to v6.12.0
+
+- [#3938](https://github.com/sanity-io/next-sanity/pull/3938) [`402d074`](https://github.com/sanity-io/next-sanity/commit/402d074a3b84a0a3208207fbdf3a9a2f260b63f8) Thanks [@renovate](https://github.com/apps/renovate)! - fix(deps): update dependency @sanity/client to ^7.27.0
+
+- [#3958](https://github.com/sanity-io/next-sanity/pull/3958) [`15558f6`](https://github.com/sanity-io/next-sanity/commit/15558f6897b81fdd88988561abbf1a9538078bc1) Thanks [@renovate](https://github.com/apps/renovate)! - fix(deps): update dependency styled-components to ^6.6.0
+
 ## 13.3.4
 
 ### Patch Changes
