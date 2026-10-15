@@ -36,9 +36,7 @@ export default async function IndexPage() {
   return (
     <>
       <ContentSourceMapDebug sourceMap={sourceMap} />
-      <div
-        className="relative bg-gray-50 px-4 pt-16 pb-20 sm:px-6 lg:px-8 lg:pt-24 lg:pb-28"
-      >
+      <div className="relative bg-gray-50 px-4 pt-16 pb-20 sm:px-6 lg:px-8 lg:pt-24 lg:pb-28">
         <div className="relative mx-auto max-w-7xl">
           <PostsLayout data={data} draftMode={isDraftMode} />
         </div>
