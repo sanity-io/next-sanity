@@ -1,10 +1,12 @@
 /**
  * Comprehensive coverage of how `next-sanity/image` drives `next/image`.
  *
- * `<Image>` is a thin wrapper: it encodes the `width`/`height` props as `w`/`h`
- * params on the Sanity CDN URL, then delegates rendering to `next/image` with
- * `imageLoader` as the `loader`. That means the rendered `<img>` markup is
- * produced by `next/image` itself, so these tests pin down the full contract:
+ * `<Image>` is a thin wrapper: it resolves the display dimensions (from props,
+ * URL params or the intrinsic dimensions Sanity encodes into asset filenames),
+ * encodes them as `w`/`h` params on the Sanity CDN URL, then delegates
+ * rendering to `next/image` with `imageLoader` as the `loader`. That means the
+ * rendered `<img>` markup is produced by `next/image` itself, so these tests
+ * pin down the full contract:
  * which of the many `next/image` options work through the wrapper, what URLs
  * the loader generates for each `srcset` candidate, and which dev-mode
  * validations still fire.
@@ -356,6 +358,100 @@ describe('srcset and sizes', () => {
 
     const candidates = parseSrcSet(img.srcset)
     expect(img.src).toBe(candidates.at(-1)?.url)
+  })
+})
+
+describe('intrinsic dimensions', () => {
+  test('a bare CDN URL renders with the dimensions encoded in the asset filename', async () => {
+    const src = sanityImageUrl('bare-2000x1000.jpg')
+    const {img} = await renderImage(<Image src={src} alt="" />)
+
+    expect(img.width).toBe('2000')
+    expect(img.height).toBe('1000')
+    // The inferred dimensions are encoded as CDN params too, so every srcset
+    // candidate keeps the aspect ratio
+    expect(
+      parseSrcSet(img.srcset).map(
+        ({descriptor, params}) => `${params.w}x${params.h} ${descriptor}`,
+      ),
+    ).toEqual(['2048x1024 1x', '3840x1920 2x'])
+  })
+
+  test('height is derived from the aspect ratio when only width is set', async () => {
+    const src = sanityImageUrl('derive-h-2000x1000.jpg')
+    const {img} = await renderImage(<Image src={src} width={800} alt="" />)
+
+    expect(img.width).toBe('800')
+    expect(img.height).toBe('400')
+  })
+
+  test('width is derived from the aspect ratio when only height is set', async () => {
+    const src = sanityImageUrl('derive-w-2000x1000.jpg')
+    const {img} = await renderImage(<Image src={src} height={250} alt="" />)
+
+    expect(img.width).toBe('500')
+    expect(img.height).toBe('250')
+  })
+
+  test('w/h params from an @sanity/image-url builder are used as the display dimensions', async () => {
+    // urlFor(image).width(500).height(250).url()
+    const src = sanityImageUrl('built-2000x1000.jpg', '?w=500&h=250')
+    const {img} = await renderImage(<Image src={src} alt="" />)
+
+    expect(img.width).toBe('500')
+    expect(img.height).toBe('250')
+    expect(
+      parseSrcSet(img.srcset).map(
+        ({descriptor, params}) => `${params.w}x${params.h} ${descriptor}`,
+      ),
+    ).toEqual(['640x320 1x', '1080x540 2x'])
+  })
+
+  test('a single w param derives the height from the filename aspect ratio', async () => {
+    // urlFor(image).width(500).url()
+    const src = sanityImageUrl('built-w-2000x1000.jpg', '?w=500')
+    const {img} = await renderImage(<Image src={src} alt="" />)
+
+    expect(img.width).toBe('500')
+    expect(img.height).toBe('250')
+  })
+
+  test('the rect crop param takes precedence over the filename dimensions', async () => {
+    // urlFor(image).url() with a crop set in the Studio: the CDN serves the
+    // rect region, so the crop dimensions are the intrinsic dimensions
+    const src = sanityImageUrl('rect-2000x1000.jpg', '?rect=40,20,1000,500')
+    const {img} = await renderImage(<Image src={src} alt="" />)
+
+    expect(img.width).toBe('1000')
+    expect(img.height).toBe('500')
+    for (const candidate of parseSrcSet(img.srcset)) {
+      expect(candidate.params.rect).toBe('40,20,1000,500')
+    }
+  })
+
+  test('a width prop combined with a rect param derives the height from the crop aspect ratio', async () => {
+    const src = sanityImageUrl('rect-derive-3000x3000.jpg', '?rect=0,0,1000,500')
+    const {img} = await renderImage(<Image src={src} width={800} alt="" />)
+
+    expect(img.width).toBe('800')
+    expect(img.height).toBe('400')
+  })
+
+  test('explicit width and height props win over URL params and intrinsic dimensions', async () => {
+    const src = sanityImageUrl('explicit-2000x1000.jpg', '?w=500&h=250&rect=0,0,1000,500')
+    const {img} = await renderImage(<Image src={src} width={100} height={100} alt="" />)
+
+    expect(img.width).toBe('100')
+    expect(img.height).toBe('100')
+  })
+
+  test('inference is skipped for fill images', async () => {
+    const src = sanityImageUrl('fill-skip-2000x1000.jpg')
+    const {img} = await renderImage(<Image src={src} fill alt="" />)
+
+    expect(img.width).toBeUndefined()
+    expect(img.height).toBeUndefined()
+    expect(searchParamsOf(img.src)).toEqual({auto: 'format', fit: 'max', w: '3840'})
   })
 })
 
@@ -746,9 +842,10 @@ describe('other next/image props', () => {
 })
 
 describe('next/image dev-mode validation still applies', () => {
-  test('throws when width and height are missing without fill', async () => {
+  test('throws when dimensions are missing and cannot be inferred from the URL', async () => {
     const error = await renderImageError(
-      <Image src={sanityImageUrl('missing-dims-2000x1000.jpg')} alt="" />,
+      // No w/h params, no rect and no dimensions in the filename
+      <Image src={sanityImageUrl('missing-dims.jpg')} alt="" />,
     )
 
     expect(error).toMatchObject({
@@ -756,9 +853,9 @@ describe('next/image dev-mode validation still applies', () => {
     })
   })
 
-  test('throws when only width is provided', async () => {
+  test('throws when only width is provided and the height cannot be inferred', async () => {
     const error = await renderImageError(
-      <Image src={sanityImageUrl('missing-height-2000x1000.jpg')} width={800} alt="" />,
+      <Image src={sanityImageUrl('missing-height.jpg')} width={800} alt="" />,
     )
 
     expect(error).toMatchObject({
