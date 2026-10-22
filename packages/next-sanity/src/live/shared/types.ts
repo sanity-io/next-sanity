@@ -1,9 +1,9 @@
 import type {StegaBranded} from '@sanity/client/stega'
 import type {
+  ClientParams,
   ClientPerspective,
   ClientReturn,
   ContentSourceMap,
-  QueryParams,
   SanityClient,
   InitializedClientConfig,
   LiveEvent,
@@ -42,8 +42,13 @@ interface DefinedFetchOptions<QueryString extends string> {
   query: QueryString
   /**
    * Parameters used by the GROQ query.
+   *
+   * When `query` is a branded GROQ query, such as the default export of a
+   * `.groq` file imported through `@sanity-labs/groq-content-mapper`, the
+   * params are checked against the params type it carries. Otherwise any
+   * `QueryParams` are accepted. See {@link ClientParams}.
    */
-  params?: QueryParams | Promise<QueryParams>
+  params?: ClientParams<QueryString> | Promise<ClientParams<QueryString>>
   /**
    * Content perspective used for the fetch.
    *
