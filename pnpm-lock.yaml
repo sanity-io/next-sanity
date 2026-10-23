@@ -277,8 +277,8 @@ importers:
         specifier: ^4.0.0
         version: 4.0.0
       '@sanity/preview-url-secret':
-        specifier: ^4.1.4
-        version: 4.1.4(@sanity/client@7.28.0)
+        specifier: ^4.1.5
+        version: 4.1.5(@sanity/client@7.28.0)
       '@sanity/visual-editing':
         specifier: ^6.2.0
         version: 6.2.0(@sanity/client@7.28.0)(@types/react@19.2.18)(next@16.4.0-canary.16)(react-dom@19.2.8)(react@19.2.8)(styled-components@6.6.0)(typescript@7.0.2)(vitest@4.1.10)
@@ -4435,12 +4435,6 @@ packages:
   '@sanity/presentation-comlink@2.2.3':
     resolution: {integrity: sha512-XRsLYFNq6DhMm+Ddt+lWzV4nuARmteYAYHrrbKFzpOpt9hCBsLjWbvTELxohEzhIFNoxbVBaRcY6GDB1/ANRFw==}
     engines: {node: '>=20.19 <22 || >=22.12'}
-
-  '@sanity/preview-url-secret@4.1.4':
-    resolution: {integrity: sha512-FZvWDDUd9ezeKHXnNeDitjJUUrOft+SKGLstNPYo5jtsxaTyFQCmXOlD0HVGNON+FnlJ3BKaw7UyncPJPJ8hhQ==}
-    engines: {node: '>=20.19 <22 || >=22.12'}
-    peerDependencies:
-      '@sanity/client': ^7.26.2
 
   '@sanity/preview-url-secret@4.1.5':
     resolution: {integrity: sha512-XDmLWn734GI0ssfegDjp24LwSKkPqwPkzwg9klApVfUFFWqfWt9o/WTN2+Vc940TV6fzD7hmVcWCwccMrPXGvQ==}
@@ -15118,11 +15112,6 @@ snapshots:
       xstate: 5.33.2
     transitivePeerDependencies:
       - '@sanity/types'
-
-  '@sanity/preview-url-secret@4.1.4(@sanity/client@7.28.0)':
-    dependencies:
-      '@sanity/client': 7.28.0
-      '@sanity/uuid': 3.0.3
 
   '@sanity/preview-url-secret@4.1.5(@sanity/client@7.28.0)':
     dependencies:
