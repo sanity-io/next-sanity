@@ -425,3 +425,20 @@ export type AllSanitySchemaTypes =
   | SanityAssetSourceData
   | SanityImageAsset
   | Geopoint
+
+// Source: app/posts/[slug]/page.tsx
+// Variable: postQuery
+// Query: *[_type == "post" && slug.current == $slug][0]{title, "slug": slug.current, publishedAt}
+export type PostQueryResult = {
+  title: string | null
+  slug: string | null
+  publishedAt: string | null
+} | null
+
+// Query TypeMap
+import '@sanity/client'
+declare module '@sanity/client' {
+  interface SanityQueries {
+    '*[_type == "post" && slug.current == $slug][0]{title, "slug": slug.current, publishedAt}': PostQueryResult
+  }
+}
