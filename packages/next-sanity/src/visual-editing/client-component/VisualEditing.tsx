@@ -53,6 +53,38 @@ export default function VisualEditing(props: VisualEditingProps): React.JSX.Elem
   const router = useRouter()
   const [navigate, setNavigate] = useState<HistoryAdapterNavigate | undefined>()
 
+  // When draft mode was enabled through the Storage Access API fallback in
+  // `defineEnableDraftMode` (browsers that reject cross-site cookies even with
+  // CHIPS, e.g. Firefox with strict Enhanced Tracking Protection), the
+  // draft-mode cookies live in the unpartitioned jar. Storage access is
+  // granted per document in some browsers, so re-activate the existing grant
+  // for this document to keep the cookies flowing on RSC requests and server
+  // actions. This never prompts: without a prior grant `requestStorageAccess`
+  // rejects and the partitioned-cookie behavior stays untouched.
+  // https://github.com/sanity-io/next-sanity/issues/3919
+  useEffect(() => {
+    if (
+      window.self === window.top ||
+      typeof document.hasStorageAccess !== 'function' ||
+      typeof document.requestStorageAccess !== 'function'
+    ) {
+      return undefined
+    }
+    const controller = new AbortController()
+    document
+      .hasStorageAccess()
+      .then(async (hasAccess) => {
+        if (hasAccess || controller.signal.aborted) return
+        const permission = await navigator.permissions.query({name: 'storage-access'})
+        if (permission.state !== 'granted' || controller.signal.aborted) return
+        await document.requestStorageAccess()
+      })
+      .catch(() => {
+        // Not granted or unsupported - cookies keep using the partitioned jar.
+      })
+    return () => controller.abort()
+  }, [])
+
   const history = useMemo<HistoryAdapter>(
     () => ({
       subscribe: (_navigate) => {
