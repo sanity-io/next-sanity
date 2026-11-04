@@ -148,20 +148,10 @@ describe('preload', () => {
 })
 
 describe('refs', () => {
-  test('forwards ref to the underlying <img> element at runtime, but the prop is not typed', async () => {
+  test('forwards ref to the underlying <img> element', async () => {
     const ref = createRef<HTMLImageElement>()
     await render(
-      <Image
-        // @ts-expect-error -- `ImageProps` does not accept `ref` because the
-        // next/image props type omits it. next/image itself re-adds it via
-        // forwardRef, so it works at runtime; typing it is a candidate for a
-        // future ergonomics improvement.
-        ref={ref}
-        src={sanityImageUrl('ref-2000x1000.jpg')}
-        width={800}
-        height={400}
-        alt=""
-      />,
+      <Image ref={ref} src={sanityImageUrl('ref-2000x1000.jpg')} width={800} height={400} alt="" />,
     )
 
     expect(ref.current).toBeInstanceOf(HTMLImageElement)
