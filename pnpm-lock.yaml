@@ -95,6 +95,9 @@ importers:
       groqd:
         specifier: 'catalog:'
         version: 1.7.1
+      history:
+        specifier: ^5.3.0
+        version: 5.3.0
       next:
         specifier: 16.4.0-canary.15
         version: 16.4.0-canary.15(@babel/core@7.29.7)(@opentelemetry/api@1.9.1)(@types/node@24.13.3)(react-dom@19.2.8)(react@19.2.8)
@@ -159,6 +162,9 @@ importers:
       groqd:
         specifier: 'catalog:'
         version: 1.7.1
+      history:
+        specifier: ^5.3.0
+        version: 5.3.0
       next:
         specifier: 16.4.0-canary.15
         version: 16.4.0-canary.15(@babel/core@7.29.7)(@opentelemetry/api@1.9.1)(@types/node@24.13.3)(react-dom@19.2.8)(react@19.2.8)
@@ -288,12 +294,6 @@ importers:
       groq:
         specifier: ^6.12.0
         version: 6.12.0
-      history:
-        specifier: ^5.3.0
-        version: 5.3.0
-      sanity:
-        specifier: next
-        version: 6.13.0-next.7(@babel/core@7.29.7)(@babel/runtime@7.29.7)(@noble/hashes@2.3.0)(@rolldown/plugin-babel@0.2.3)(@sanity/sdk@3.0.0)(@types/node@24.13.3)(@types/react-dom@19.2.5)(@types/react@19.2.18)(esbuild@0.28.2)(jiti@2.7.0)(oxfmt@0.63.0)(react-dom@19.2.8)(react@19.2.8)(rolldown@1.2.7)(styled-components@6.5.3)(typescript@7.0.2)(vitest@4.1.10)
     devDependencies:
       '@sanity/tsconfig':
         specifier: 'catalog:'
@@ -14448,11 +14448,11 @@ snapshots:
   '@rolldown/binding-win32-x64-msvc@1.2.7':
     optional: true
 
-  '@rolldown/plugin-babel@0.2.3(@babel/core@7.29.7)(@babel/runtime@7.29.7)(rolldown@1.2.7)(vite@8.2.1)':
+  '@rolldown/plugin-babel@0.2.3(@babel/core@7.29.7)(@babel/runtime@7.29.7)(rolldown@1.2.3)(vite@8.2.1)':
     dependencies:
       '@babel/core': 7.29.7
       picomatch: 4.0.5
-      rolldown: 1.2.7
+      rolldown: 1.2.3
     optionalDependencies:
       '@babel/runtime': 7.29.7
       vite: 8.2.1(@types/node@24.13.3)(esbuild@0.28.2)(jiti@2.7.0)(tsx@4.23.12)(yaml@2.9.0)
@@ -16255,7 +16255,7 @@ snapshots:
       '@rolldown/pluginutils': 1.0.1
       vite: 8.2.1(@types/node@24.13.3)(esbuild@0.28.2)(jiti@2.7.0)(tsx@4.23.12)(yaml@2.9.0)
     optionalDependencies:
-      '@rolldown/plugin-babel': 0.2.3(@babel/core@7.29.7)(@babel/runtime@7.29.7)(rolldown@1.2.7)(vite@8.2.1)
+      '@rolldown/plugin-babel': 0.2.3(@babel/core@7.29.7)(@babel/runtime@7.29.7)(rolldown@1.2.3)(vite@8.2.1)
 
   '@vitejs/plugin-react@6.1.1(@rolldown/plugin-babel@0.2.3)(vite@8.2.2)':
     dependencies:
