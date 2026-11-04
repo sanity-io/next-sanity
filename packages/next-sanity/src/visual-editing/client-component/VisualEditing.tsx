@@ -15,10 +15,6 @@ import {addPathPrefix, normalizePathTrailingSlash, removePathPrefix} from './uti
  */
 export interface VisualEditingProps extends Omit<VisualEditingOptions, 'history'> {
   /**
-   * @deprecated The histoy adapter is already implemented
-   */
-  history?: never
-  /**
    * If next.config.ts is configured with a basePath we try to configure it automatically,
    * you can disable this by setting basePath to ''.
    * @example basePath="/my-custom-base-path"
