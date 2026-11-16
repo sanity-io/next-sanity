@@ -119,6 +119,7 @@ export async function renderImageError(element: React.JSX.Element): Promise<unkn
 export interface SanityImageParams {
   auto?: string
   blur?: string
+  crop?: string
   fit?: string
   h?: string
   q?: string
