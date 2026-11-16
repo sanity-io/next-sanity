@@ -15,8 +15,18 @@
  * the vercel/next.js repo (test/unit/next-image-new.test.ts and
  * test/integration/image-component/*) and its image-component demo app.
  */
+import type {StegaBranded} from '@sanity/client/stega'
 import {vercelStegaCombine} from '@vercel/stega'
-import {Image, imageLoader, type ImageProps, type ImageSource} from 'next-sanity/image'
+import {
+  Image,
+  imageLoader,
+  isImageWithAsset,
+  type ImageProps,
+  type ImageSource,
+  type InferImageValue,
+  type InferStrictImageValue,
+  type SanityImageLike,
+} from 'next-sanity/image'
 import NextImage, {getImageProps, type ImageProps as NextImageProps} from 'next/image'
 import type {ComponentProps} from 'react'
 import {afterEach, describe, expect, expectTypeOf, test, vi} from 'vitest'
@@ -397,6 +407,23 @@ describe('sanity image objects', () => {
     expect(img.height).toBe('400')
   })
 
+  test('fills omitted crop insets with zero', async () => {
+    const {img} = await renderImage(
+      <Image
+        src={{
+          asset: {_ref: assetRef('partialcrop', '2000x3000')},
+          crop: {left: 0.1},
+        }}
+        {...projectProps}
+        width={800}
+        height={400}
+        alt=""
+      />,
+    )
+
+    expect(searchParamsOf(img.src).rect).toBe('200,1050,1800,900')
+  })
+
   test('applies the Studio crop as a rect param and adjusts the intrinsic dimensions', async () => {
     const {img} = await renderImage(
       <Image
@@ -454,10 +481,28 @@ describe('sanity image objects', () => {
       />,
     )
 
-    // Without normalization the missing hotspot width/height would produce
-    // `rect=…,NaN,…`
+    // `@sanity/image-url` fills in the missing width/height. The crop is
+    // positioned on the hotspot center, so `{x, y}` matches a hotspot of any
+    // size at that point, and the rect is never `NaN`.
     expect(img.src).not.toContain('NaN')
     expect(searchParamsOf(img.src).rect).toBe('1000,0,1000,1000')
+  })
+
+  test('positions the crop on x when the hotspot projection omits y', async () => {
+    const {img} = await renderImage(
+      <Image
+        src={{asset: {_ref: assetRef('xspot')}, hotspot: {x: 0.1}}}
+        {...projectProps}
+        width={500}
+        height={500}
+        alt=""
+      />,
+    )
+
+    // x=0.1 pulls the square to the left edge. Omitting the hotspot would
+    // center it at rect=500,0,1000,1000.
+    expect(img.src).not.toContain('NaN')
+    expect(searchParamsOf(img.src).rect).toBe('0,0,1000,1000')
   })
 
   test('centers the crop when no hotspot is set', async () => {
@@ -557,6 +602,53 @@ describe('sanity image objects', () => {
         'The `src` object must include an `asset` with a `_ref`, `_id`, or `url`.',
       ),
     })
+  })
+
+  test('throws the same error when asset is null', async () => {
+    const error = await renderImageError(
+      <Image src={{asset: null, crop: null, hotspot: null}} {...projectProps} alt="" />,
+    )
+
+    expect(error).toBeInstanceOf(TypeError)
+    expect(error).toMatchObject({
+      message: expect.stringContaining(
+        'The `src` object must include an `asset` with a `_ref`, `_id`, or `url`.',
+      ),
+    })
+  })
+
+  test('ignores a document _id and builds from the asset reference', async () => {
+    const {img} = await renderImage(
+      <Image
+        src={{_id: 'drafts.not-an-image-asset', asset: {_ref: assetRef('docid')}}}
+        {...projectProps}
+        width={800}
+        alt=""
+      />,
+    )
+
+    expect(img.src).toContain('/docid-2000x1000.jpg')
+  })
+
+  test('accepts an asset reference and an asset document', async () => {
+    const assetUrl = `https://cdn.example.com/images/${projectId}/${dataset}/assetdoc-2000x1000.jpg`
+    const {img: fromRef} = await renderImage(
+      <Image src={{_ref: assetRef('refdoc')}} {...projectProps} width={800} alt="" />,
+    )
+    const {img: fromAsset} = await renderImage(
+      <Image src={{_id: assetRef('assetdoc'), url: assetUrl}} width={800} alt="" />,
+    )
+
+    expect(fromRef.src).toContain('/refdoc-2000x1000.jpg')
+    expect(fromAsset.src).toMatch(
+      new RegExp(`^https://cdn\\.example\\.com/images/${projectId}/${dataset}/assetdoc-`),
+    )
+  })
+
+  test('isImageWithAsset rejects images that have no asset yet', () => {
+    expect(isImageWithAsset({asset: {_ref: assetRef('guard')}, alt: 'Cover'})).toBe(true)
+    expect(isImageWithAsset({asset: null, alt: 'Cover'})).toBe(false)
+    expect(isImageWithAsset(null)).toBe(false)
   })
 
   test('accepts a bare asset id string', async () => {
@@ -1426,35 +1518,66 @@ describe('composing imageLoader with getImageProps', () => {
 })
 
 describe('type-level contract with next/image', () => {
+  type TypegenImage = {
+    asset: {
+      _ref: string
+      _type: 'reference'
+      _weak?: boolean
+    }
+    media?: unknown
+    hotspot: {
+      x: number
+      y: number
+      height: number
+      width: number
+      _type: 'sanity.imageHotspot'
+    } | null
+    crop: {
+      top: number
+      bottom: number
+      left: number
+      right: number
+      _type: 'sanity.imageCrop'
+    } | null
+    _type: 'image'
+  }
+
   test('src accepts URL strings, asset ids and image objects, not static imports', () => {
     expectTypeOf<ImageProps['src']>().toEqualTypeOf<ImageSource>()
   })
 
   test('src accepts the shape sanity typegen generates for image fields', () => {
-    type TypegenImage = {
-      asset: {
-        _ref: string
-        _type: 'reference'
-        _weak?: boolean
-      }
-      media?: unknown
-      hotspot: {
-        x: number
-        y: number
-        height: number
-        width: number
-        _type: 'sanity.imageHotspot'
-      } | null
-      crop: {
-        top: number
-        bottom: number
-        left: number
-        right: number
-        _type: 'sanity.imageCrop'
-      } | null
-      _type: 'image'
-    }
     expectTypeOf<TypegenImage>().toExtend<ImageSource>()
+    expectTypeOf<SanityImageLike>().toExtend<ImageSource>()
+  })
+
+  test('InferImageValue collects image shapes and accepts stega-branded results', () => {
+    type Query = {
+      title: string
+      cover: TypegenImage | null
+      gallery: Array<{image: TypegenImage | null}>
+    }
+    type DraftImage = {
+      asset?: {_ref: string; _type: 'reference'} | null
+      alt?: string
+    }
+    type DraftQuery = {cover: DraftImage | null}
+
+    expectTypeOf<InferImageValue<Query>>().toEqualTypeOf<TypegenImage>()
+    expectTypeOf<NonNullable<Query['cover']>>().toExtend<InferStrictImageValue<Query>>()
+    expectTypeOf<NonNullable<StegaBranded<Query>['cover']>>().toExtend<
+      InferStrictImageValue<Query>
+    >()
+    // `alt` is a string stega may encode, so the inferred value is the clean
+    // image and the branded image, not the clean image alone.
+    expectTypeOf<InferImageValue<DraftQuery>>().toEqualTypeOf<
+      DraftImage | StegaBranded<DraftImage>
+    >()
+    expectTypeOf<DraftImage>().toExtend<InferImageValue<DraftQuery>>()
+    expectTypeOf<StegaBranded<DraftImage>>().toExtend<InferImageValue<DraftQuery>>()
+    expectTypeOf<DraftImage & {asset: {_ref: string; _type: 'reference'}}>().toExtend<
+      InferStrictImageValue<DraftQuery>
+    >()
   })
 
   test('alt is required, like in next/image', () => {

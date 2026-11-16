@@ -138,17 +138,29 @@ export function Image(props: ImageProps): React.JSX.Element {
   }
 
   // Use the low-quality image preview from the image object for blur
-  // placeholders, unless an explicit blurDataURL is provided.
-  const lqip = typeof src === 'object' ? src.asset?.metadata?.lqip : undefined
+  // placeholders, unless an explicit blurDataURL is provided. `metadata` is
+  // not part of the image-url source type; read it structurally so a query
+  // that selects `asset->metadata.lqip` still feeds the placeholder.
+  const lqip = lqipFrom(src)
 
   return (
     <NextImage
       {...rest}
       width={width}
       height={height}
-      blurDataURL={blurDataURL ?? (typeof lqip === 'string' && lqip !== '' ? lqip : undefined)}
+      blurDataURL={blurDataURL ?? lqip}
       src={srcUrl.toString()}
       loader={imageLoader}
     />
   )
+}
+
+function lqipFrom(src: ImageSource): string | undefined {
+  if (typeof src !== 'object' || src === null || !('asset' in src)) return
+  const asset = src.asset
+  if (typeof asset !== 'object' || asset === null || !('metadata' in asset)) return
+  const metadata = asset.metadata
+  if (typeof metadata !== 'object' || metadata === null || !('lqip' in metadata)) return
+  const lqip = metadata.lqip
+  return typeof lqip === 'string' && lqip !== '' ? lqip : undefined
 }

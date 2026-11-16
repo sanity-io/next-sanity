@@ -95,7 +95,8 @@ export function PostCard({post}: {post: {mainImage: SanityImageObject}}) {
 }
 ```
 
-- The crop set in the Studio is applied, and when the requested aspect ratio differs, the crop is positioned around the image's hotspot.
+- The crop set in the Studio is applied, and when the requested aspect ratio differs, the crop is positioned around the image's hotspot. Partial crop and hotspot projections are filled in by `@sanity/image-url` (missing crop insets are `0`; a hotspot that only has `x` and `y` is positioned on that point).
+- `InferImageValue` and `InferStrictImageValue` collect those image shapes from a TypeGen query result, including stega-branded `sanityFetch` results. `isImageWithAsset` narrows an image to one that has an asset.
 - `width` and `height` are optional: they are inferred from the asset (and adjusted for the crop), and providing only one dimension derives the other from the aspect ratio — like `next/image` does for static imports.
 - With `placeholder="blur"`, the low-quality image preview is used automatically when the query includes it. Keep the asset's `url` (or `_id`) next to the metadata when dereferencing, so the image can still be built: `asset->{url, metadata{lqip}}`.
 - `projectId` and `dataset` can be omitted when the query dereferences the asset URL (`asset->{url}`): they are read from the URL. Consider wrapping the component once in your app to bind them.
