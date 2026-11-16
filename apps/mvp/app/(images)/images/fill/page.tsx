@@ -26,18 +26,18 @@ export default async function FillPage() {
       <DemoSection
         title="object-fit"
         code={`<div className="relative h-64">
-  <Image src={post.image} fill sizes="33vw" className="object-cover" alt="…" />
+  <Image src={post.image} fill sizes="(min-width: 640px) 33vw, 100vw" className="object-cover" alt="…" />
 </div>`}
       >
         <div className="grid gap-4 sm:grid-cols-3">
           <Figure caption="object-cover">
             <div className="relative h-64 overflow-hidden rounded-lg">
-              <Image src={post.image} fill sizes="33vw" className="object-cover" alt={alt} />
+              <Image src={post.image} fill sizes="(min-width: 640px) 33vw, 100vw" className="object-cover" alt={alt} />
             </div>
           </Figure>
           <Figure caption="object-contain">
             <div className="relative h-64 overflow-hidden rounded-lg bg-zinc-100">
-              <Image src={post.image} fill sizes="33vw" className="object-contain" alt={alt} />
+              <Image src={post.image} fill sizes="(min-width: 640px) 33vw, 100vw" className="object-contain" alt={alt} />
             </div>
           </Figure>
           <Figure caption="object-cover + object-top">
@@ -45,7 +45,7 @@ export default async function FillPage() {
               <Image
                 src={post.image}
                 fill
-                sizes="33vw"
+                sizes="(min-width: 640px) 33vw, 100vw"
                 className="object-cover object-top"
                 alt={alt}
               />
@@ -71,7 +71,7 @@ export default async function FillPage() {
         code={`<img
   data-nimg="fill"
   style="position:absolute;height:100%;width:100%;…"
-  sizes="33vw"
+  sizes="(min-width: 640px) 33vw, 100vw"
   srcset="….jpg?rect=…&auto=format&fit=max&w=640 640w, … 3840w"
 />`}
       >

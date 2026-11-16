@@ -28,7 +28,7 @@ function themedImageProps(invert: boolean) {
 
 export default function ThemePage() {
   const {
-    props: {srcSet: darkSrcSet},
+    props: {srcSet: darkSrcSet, sizes: darkSizes},
   } = themedImageProps(true)
   const {props: lightProps} = themedImageProps(false)
 
@@ -49,17 +49,17 @@ export default function ThemePage() {
         code={`import {getImageProps} from 'next/image'
 import {imageLoader} from 'next-sanity/image'
 
-const common = {loader: imageLoader, width: 780, height: 585, alt: '…'}
-const {props: {srcSet: dark}} = getImageProps({...common, src: \`\${poster}?invert=true\`})
+const common = {loader: imageLoader, width: 780, height: 585, sizes: '(min-width: 896px) 832px, 100vw', alt: '…'}
+const {props: {srcSet: dark, sizes}} = getImageProps({...common, src: \`\${poster}?invert=true\`})
 const {props: light} = getImageProps({...common, src: poster})
 
 <picture>
-  <source media="(prefers-color-scheme: dark)" srcSet={dark} />
+  <source media="(prefers-color-scheme: dark)" srcSet={dark} sizes={sizes} />
   <img {...light} />
 </picture>`}
       >
         <picture>
-          <source media="(prefers-color-scheme: dark)" srcSet={darkSrcSet} />
+          <source media="(prefers-color-scheme: dark)" srcSet={darkSrcSet} sizes={darkSizes} />
           {/* alt is part of lightProps, returned by getImageProps */}
           <img {...lightProps} className="h-auto w-full rounded-lg" />
         </picture>
