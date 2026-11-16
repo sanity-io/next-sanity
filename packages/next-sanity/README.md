@@ -23,6 +23,7 @@ The all-in-one [Sanity][sanity] toolkit for production-grade content-editable Ne
   - [Check that it works](#check-that-it-works)
   - [Good to know](#good-to-know)
   - [Why the request is signed](#why-the-request-is-signed)
+- [Static params for dynamic routes](#static-params-for-dynamic-routes)
 - [Migration guides](#migration-guides)
 - [License](#license)
 
@@ -207,6 +208,76 @@ REVALIDATE_URL=http://localhost:3000/api/revalidate SANITY_REVALIDATE_SECRET=<se
 
 The function signs the request body with [`@sanity/webhook`][sanity-webhook], the same HMAC scheme Sanity uses for GROQ-powered webhooks. The signature covers the body and the time it was created, so a captured request cannot be edited or replayed after `maxAge`. A bearer token would be a static credential sent in the clear on every call, and any log line that captures it is enough to expire your cache at will. That is why `defineInvalidateSyncTags` accepts only signed requests. A project coming from a hand-rolled bearer token setup, like the [personal website template][sanity-next-featured-starter], swaps its function body for `defineInvalidateSyncTagsHandler` and drops the token.
 
+## Static params for dynamic routes
+
+`next-sanity/static-params` builds a [`generateStaticParams`][generate-static-params] from the page's own GROQ query. It is server and build-time only, so import it from route files and never from Client Components.
+
+```tsx
+// app/posts/[slug]/page.tsx
+import {defineQuery} from 'next-sanity'
+import {defineGenerateStaticParams, STATIC_PARAMS_PLACEHOLDER} from 'next-sanity/static-params'
+import {notFound} from 'next/navigation'
+import {client} from '@/sanity/lib/client'
+
+const postQuery = defineQuery(
+  `*[_type == "post" && slug.current == $slug][0]{title, "slug": slug.current, publishedAt}`,
+)
+
+export const {generateStaticParams} = defineGenerateStaticParams({client, query: postQuery})
+
+export default async function Page({params}: PageProps<'/posts/[slug]'>) {
+  const {slug} = await params
+  if (slug === STATIC_PARAMS_PLACEHOLDER) notFound()
+  const post = await client.fetch(postQuery, {slug})
+  // render the post
+}
+```
+
+When the route module loads, `groq-js` parses the query and reads the root `*[...]` filter. Each `<expression> == $param` conjunct names a route param and the expression that produces it. The other conjuncts stay as constraints. The `[0]`, slices, `order()`, and projection after the filter are dropped. The query above becomes `*[_type == "post" && defined(slug.current)]{"slug": slug.current}`. A syntax error, a `$param` that is not bound with `==`, or a query without bindings fails `next build` with the offending expression before any network request.
+
+At build time the returned `generateStaticParams` does the following:
+
+- Fetches with `perspective: 'published'`, `useCdn: true`, and stega and source maps off. Cookies are not available during `next build`, and param values are never rendered.
+- Drops documents whose param value is `null`, empty, or of the wrong kind, and removes duplicates.
+- Returns `[{slug: STATIC_PARAMS_PLACEHOLDER}]` when nothing remains. Cache Components fails the build when `generateStaticParams` returns `[]`, and the [Next.js error page][empty-generate-static-params] names this placeholder as the fallback. It also warns that a placeholder only validates the `notFound()` path, so the helper uses it only when the query returns nothing.
+- Turns a binding into a constraint when the parent segment already provides the param. For `app/[category]/[slug]/page.tsx` with `*[_type == "post" && category->slug.current == $category && slug.current == $slug][0]`, Next.js calls `generateStaticParams({params: {category}})` and the result is `{slug}[]`.
+
+Pass `order` and `limit` to prerender only the most recent documents, for example `order: '_updatedAt desc', limit: 100`.
+
+A catch-all segment needs a `fallback`, because the query cannot tell `[slug]` from `[...slug]`. A `string[]` value declares the catch-all and types the result:
+
+```ts
+const docQuery = defineQuery(`*[_type == "doc" && string::split(slug.current, "/") == $path][0]`)
+
+export const {generateStaticParams} = defineGenerateStaticParams({
+  client,
+  query: docQuery,
+  fallback: {path: [STATIC_PARAMS_PLACEHOLDER]},
+})
+```
+
+The result type defaults to `Record<string, string>[]`. Next.js checks the returned params against the route at build time, so a type annotation is optional. Pass the shape as a generic when you want it, `defineGenerateStaticParams<{slug: string}>({client, query})`.
+
+A root param that needs a constant value, such as `app/[perspective]/layout.tsx`, does not need the helper. Return the constant directly:
+
+```ts
+export function generateStaticParams() {
+  return [{perspective: 'published'}]
+}
+```
+
+When you write the query yourself, `ensureStaticParams` applies the same fallback rule:
+
+```ts
+import {ensureStaticParams} from 'next-sanity/static-params'
+
+export async function generateStaticParams() {
+  return ensureStaticParams(await getArticleStaticParams(), {article: '_', section: '_'})
+}
+```
+
+The returned `query` string is the assembled GROQ. Pass it to `sanityFetch` from `next-sanity/live` with `perspective: 'published'` and `stega: false` when you want the fetch to carry cache tags.
+
 ## Migration guides
 
 - [From `v12` to `v13`][migrate-v12-to-v13]
@@ -227,6 +298,8 @@ The function signs the request body with [`@sanity/webhook`][sanity-webhook], th
 MIT-licensed. See [LICENSE][LICENSE].
 
 [embedded-studio]: https://www.sanity.io/docs/nextjs/embedding-sanity-studio-in-nextjs
+[empty-generate-static-params]: https://nextjs.org/docs/messages/empty-generate-static-params
+[generate-static-params]: https://nextjs.org/docs/app/api-reference/functions/generate-static-params
 [LICENSE]: LICENSE
 [migrate-v1-to-v4]: https://github.com/sanity-io/next-sanity/blob/main/packages/next-sanity/MIGRATE-v1-to-v4.md
 [migrate-v4-to-v5-app]: https://github.com/sanity-io/next-sanity/blob/main/packages/next-sanity/MIGRATE-v4-to-v5-app-router.md

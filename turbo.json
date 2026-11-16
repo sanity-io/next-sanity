@@ -5,7 +5,9 @@
     "build": {
       "dependsOn": ["^build"]
     },
-    "typegen": {},
+    "typegen": {
+      "cache": false
+    },
     "test": {
       "dependsOn": ["^build"],
       "cache": false,
