@@ -61,8 +61,8 @@ console.log(__filename)
 **Output (shims: true):**
 
 ```js
-import {fileURLToPath} from 'node:url'
 import {dirname} from 'node:path'
+import {fileURLToPath} from 'node:url'
 
 const __filename = fileURLToPath(import.meta.url)
 const __dirname = dirname(__filename)
@@ -193,9 +193,9 @@ export default defineConfig({
 Shims add minimal runtime overhead:
 
 ```js
+import {dirname} from 'node:path'
 // Added to output when shims enabled
 import {fileURLToPath} from 'node:url'
-import {dirname} from 'node:path'
 
 const __filename = fileURLToPath(import.meta.url)
 const __dirname = dirname(__filename)

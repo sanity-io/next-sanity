@@ -80,6 +80,7 @@ add(1, 2)
 
 ```ts
 import {readFile} from 'node:fs/promises'
+
 import init, {add} from 'some-pkg'
 import wasmUrl from 'some-pkg/add_bg.wasm?url'
 

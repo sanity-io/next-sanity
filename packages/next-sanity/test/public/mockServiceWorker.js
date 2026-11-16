@@ -156,10 +156,7 @@ addEventListener('message', function (event) {
 addEventListener('fetch', function (event) {
   // Opening the DevTools triggers the "only-if-cached" request
   // that cannot be handled by the worker. Bypass such requests.
-  if (
-    event.request.cache === 'only-if-cached' &&
-    event.request.mode !== 'same-origin'
-  ) {
+  if (event.request.cache === 'only-if-cached' && event.request.mode !== 'same-origin') {
     return
   }
 
@@ -233,8 +230,7 @@ async function readStoredActiveClientIds() {
  * and an earlier success cannot clear the flag of a later failure.
  */
 function storeActiveClientIds() {
-  activeClientIdsStorePromise =
-    activeClientIdsStorePromise.then(writeActiveClientIds)
+  activeClientIdsStorePromise = activeClientIdsStorePromise.then(writeActiveClientIds)
   return activeClientIdsStorePromise
 }
 
@@ -278,9 +274,7 @@ async function handleRequest(event) {
     }
 
     pending.add(responsePromise)
-    responsePromise
-      .finally(() => pending.delete(responsePromise))
-      .catch(() => {})
+    responsePromise.finally(() => pending.delete(responsePromise)).catch(() => {})
   }
 
   let response
@@ -344,9 +338,7 @@ async function handleRequest(event) {
           },
         },
       },
-      responseClone && responseClone.body
-        ? [serializedRequest.body, responseClone.body]
-        : [],
+      responseClone && responseClone.body ? [serializedRequest.body, responseClone.body] : [],
     )
   }
 
@@ -425,9 +417,7 @@ async function getResponse(event, client, requestId) {
     const acceptHeader = headers.get('accept')
     if (acceptHeader) {
       const values = acceptHeader.split(',').map((value) => value.trim())
-      const filteredValues = values.filter(
-        (value) => value !== 'msw/passthrough',
-      )
+      const filteredValues = values.filter((value) => value !== 'msw/passthrough')
 
       if (filteredValues.length > 0) {
         headers.set('accept', filteredValues.join(', '))
@@ -436,7 +426,7 @@ async function getResponse(event, client, requestId) {
       }
     }
 
-    return fetch(requestClone, { headers })
+    return fetch(requestClone, {headers})
   }
 
   // Bypass mocking when the client is not active.
@@ -515,10 +505,7 @@ function sendToClient(client, message, transferrables = []) {
       resolve(event.data)
     }
 
-    client.postMessage(message, [
-      channel.port2,
-      ...transferrables.filter(Boolean),
-    ])
+    client.postMessage(message, [channel.port2, ...transferrables.filter(Boolean)])
   })
 }
 

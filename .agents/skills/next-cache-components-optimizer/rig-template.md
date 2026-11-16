@@ -38,8 +38,8 @@ build/run obstacles, accumulated as you first hit them).
    `experimental.exposeTestingApiInProductionBuild` for every measured build,
    and never for real production? Spellings: an explicit
    `EXPOSE_TESTING_API=1` for local production builds; `process.env.DEPLOY_ENV
-=== 'staging'` for a generic CI/staging env var; `process.env.VERCEL_ENV ===
-'preview'` on Vercel.
+   === 'staging'` for a generic CI/staging env var; `process.env.VERCEL_ENV ===
+   'preview'` on Vercel.
 3. **RUN**: how is the Playwright suite invoked, and against which
    `BASE_URL`?
 4. **TEST USER**: which account does the suite run as, and how does login
