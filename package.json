@@ -16,20 +16,22 @@
     "start": "turbo watch build start",
     "test": "turbo test",
     "test:e2e": "pnpm --filter next-sanity test:e2e",
+    "test:e2e:install-studio": "node scripts/installE2EStudio.mjs",
+    "test:e2e:open-preview": "pnpm --filter next-sanity test:e2e:open-preview",
     "typegen": "turbo typegen"
   },
   "dependencies": {
-    "@changesets/changelog-github": "^1.0.0",
-    "@changesets/cli": "^3.0.1",
-    "oxfmt": "^0.63.0",
-    "oxlint": "^1.78.0",
-    "oxlint-tsgolint": "^7.0.2001",
-    "playwright": "^1.62.1",
-    "turbo": "^2.10.12"
+    "@changesets/changelog-github": "^1.0.1",
+    "@changesets/cli": "^3.0.3",
+    "oxfmt": "^0.79.0",
+    "oxlint": "^1.94.0",
+    "oxlint-tsgolint": "^7.0.2007",
+    "playwright": "^1.65.1",
+    "turbo": "^2.11.11"
   },
   "devDependencies": {
-    "knip": "^6.32.2",
-    "pkg-pr-new": "^0.0.87"
+    "knip": "^6.45.1",
+    "pkg-pr-new": "^0.0.93"
   },
-  "packageManager": "pnpm@10.34.5"
+  "packageManager": "pnpm@12.21.0"
 }

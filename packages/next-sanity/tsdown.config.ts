@@ -9,6 +9,7 @@ export default defineConfig({
   entry: [
     './src/draft-mode/index.ts',
     './src/hooks/index.ts',
+    './src/image/client-component/index.ts',
     './src/image/index.ts',
     './src/index.ts',
     './src/live/cache-life.ts',

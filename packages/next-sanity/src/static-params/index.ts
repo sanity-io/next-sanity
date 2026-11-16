@@ -1,5 +1,5 @@
 import type {QueryParams, SanityClient} from '@sanity/client'
-import {GroqSyntaxError, parse, unparse} from 'groq-js'
+import {GroqSyntaxError, type ExprNode, parse, unparse} from 'groq-js'
 
 /**
  * A single route param value. `string` for `[slug]`, `string[]` for `[...slug]`.
@@ -233,46 +233,8 @@ export function defineGenerateStaticParams<Shape extends StaticParams = Record<s
 
 type Conjunct = {kind: 'constraint'; groq: string} | {kind: 'binding'; param: string; expr: string}
 
-/**
- * groq-js 2.0.0 publishes no declarations for its AST nodes, so the walk names the
- * five shapes it inspects.
- */
-interface GroqNode {
-  type: string
-  base?: GroqNode
-}
-
-interface FilterNode extends GroqNode {
-  type: 'Filter'
-  base: GroqNode
-  expr: GroqNode
-}
-
-interface AndNode extends GroqNode {
-  type: 'And'
-  left: GroqNode
-  right: GroqNode
-}
-
-interface GroupNode extends GroqNode {
-  type: 'Group'
-  base: GroqNode
-}
-
-interface OpCallNode extends GroqNode {
-  type: 'OpCall'
-  op: string
-  left: GroqNode
-  right: GroqNode
-}
-
-interface ParameterNode extends GroqNode {
-  type: 'Parameter'
-  name: string
-}
-
 function inferStaticParamsQuery(query: string): Conjunct[] {
-  const root: GroqNode = parseGroq(query, 'query')
+  const root = parseGroq(query, 'query')
   const plan: Conjunct[] = []
   const boundBy = new Map<string, string>()
   for (const node of rootFilterExprs(root).flatMap((expr) => conjuncts(expr))) {
@@ -307,10 +269,10 @@ function inferStaticParamsQuery(query: string): Conjunct[] {
  * `*[A][B]` reads as `*[A && B]`. A filter after a projection, `*[A]{...}[B]`, would
  * refer to the projected shape, so it is rejected.
  */
-function rootFilterExprs(root: GroqNode): GroqNode[] {
-  let node: GroqNode | undefined = root
-  while (node && !isFilter(node)) node = node.base
-  const exprs: GroqNode[] = []
+function rootFilterExprs(root: ExprNode): ExprNode[] {
+  let node: ExprNode | undefined = root
+  while (node && !isFilter(node)) node = parentBase(node)
+  const exprs: ExprNode[] = []
   while (node && isFilter(node)) {
     exprs.unshift(node.expr)
     node = node.base
@@ -319,7 +281,7 @@ function rootFilterExprs(root: GroqNode): GroqNode[] {
   throw new Error('defineGenerateStaticParams: the query must start with `*[...]`')
 }
 
-function conjuncts(expr: GroqNode, out: GroqNode[] = []): GroqNode[] {
+function conjuncts(expr: ExprNode, out: ExprNode[] = []): ExprNode[] {
   if (isGroup(expr) && (isAnd(expr.base) || isOpCall(expr.base))) return conjuncts(expr.base, out)
   if (isAnd(expr)) {
     conjuncts(expr.left, out)
@@ -330,7 +292,7 @@ function conjuncts(expr: GroqNode, out: GroqNode[] = []): GroqNode[] {
   return out
 }
 
-function asBinding(node: GroqNode): {param: string; expr: string} | undefined {
+function asBinding(node: ExprNode): {param: string; expr: string} | undefined {
   if (!isOpCall(node) || node.op !== '==') return undefined
   if (isParameter(node.left) && isParameter(node.right)) {
     throw new Error(
@@ -353,23 +315,68 @@ function containsParameter(node: unknown): boolean {
   return Object.values(node).some(containsParameter)
 }
 
-function isFilter(node: GroqNode): node is FilterNode {
+function parentBase(node: ExprNode): ExprNode | undefined {
+  switch (node.type) {
+    case 'AccessAttribute':
+      return node.base
+    case 'AccessElement':
+    case 'ArrayCoerce':
+    case 'Asc':
+    case 'Deref':
+    case 'Desc':
+    case 'Filter':
+    case 'FlatMap':
+    case 'Group':
+    case 'Map':
+    case 'Neg':
+    case 'Not':
+    case 'PipeFuncCall':
+    case 'Pos':
+    case 'Projection':
+    case 'Slice':
+      return node.base
+    case 'And':
+    case 'Array':
+    case 'Context':
+    case 'Everything':
+    case 'FuncCall':
+    case 'InRange':
+    case 'Object':
+    case 'OpCall':
+    case 'Or':
+    case 'Parameter':
+    case 'Parent':
+    case 'Select':
+    case 'SelectorFuncCall':
+    case 'SelectorNested':
+    case 'This':
+    case 'Tuple':
+    case 'Value':
+      return undefined
+    default: {
+      const unreachable: never = node
+      return unreachable
+    }
+  }
+}
+
+function isFilter(node: ExprNode): node is Extract<ExprNode, {type: 'Filter'}> {
   return node.type === 'Filter'
 }
 
-function isAnd(node: GroqNode): node is AndNode {
+function isAnd(node: ExprNode): node is Extract<ExprNode, {type: 'And'}> {
   return node.type === 'And'
 }
 
-function isGroup(node: GroqNode): node is GroupNode {
+function isGroup(node: ExprNode): node is Extract<ExprNode, {type: 'Group'}> {
   return node.type === 'Group'
 }
 
-function isOpCall(node: GroqNode): node is OpCallNode {
+function isOpCall(node: ExprNode): node is Extract<ExprNode, {type: 'OpCall'}> {
   return node.type === 'OpCall'
 }
 
-function isParameter(node: GroqNode): node is ParameterNode {
+function isParameter(node: ExprNode): node is Extract<ExprNode, {type: 'Parameter'}> {
   return node.type === 'Parameter'
 }
 
@@ -419,10 +426,9 @@ function assertFallback(fallback: Partial<StaticParams>, plan: Conjunct[]): void
   }
 }
 
-function parseGroq(source: string, where: string): GroqNode {
+function parseGroq(source: string, where: string): ExprNode {
   try {
-    const root: GroqNode = parse(source)
-    return root
+    return parse(source)
   } catch (error) {
     const position = error instanceof GroqSyntaxError ? ` at position ${error.position}` : ''
     const message = error instanceof Error ? error.message : String(error)

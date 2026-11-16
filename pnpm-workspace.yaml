@@ -10,26 +10,27 @@ allowBuilds:
   '@swc/core': false
   better-sqlite3: false
   esbuild: false
+  msw: false
   onnxruntime-node: false
   protobufjs: false
   sharp: false
 
 catalog:
-  '@next/env': 16.4.0-canary.15
+  '@next/env': 16.5.0-canary.52
   '@sanity/client': ^8.11.0
-  '@sanity/image-url': ^2.1.1
-  '@sanity/themer': ^0.3.3
+  '@sanity/image-url': ^2.2.0
+  '@sanity/themer': ^0.10.7
   '@sanity/tsconfig': ^2.2.1
-  '@sanity/vision': 6.12.0
-  '@types/node': ^24.13.3
-  '@types/react': ^19.2.18
-  '@types/react-dom': ^19.2.5
+  '@sanity/vision': 6.23.0
+  '@types/node': ^24.19.2
+  '@types/react': ^19.3.0
+  '@types/react-dom': ^19.3.0
   groqd: ^1.7.1
-  next: 16.4.0-canary.15
-  react: ^19.2.8
-  react-dom: ^19.2.8
-  sanity: 6.12.0
-  styled-components: ^6.5.3
+  next: 16.5.0-canary.52
+  react: ^19.3.1
+  react-dom: ^19.3.1
+  sanity: 6.23.0
+  styled-components: ^6.6.0
   typescript: 7.0.2
 
 dedupePeers: true
@@ -43,7 +44,7 @@ overrides:
   next: 'catalog:'
   react: 'catalog:'
   react-dom: 'catalog:'
-  # sanity: 'catalog:'
+  # scripts/installE2EStudio.mjs temporarily replaces this to install a selected E2E Studio build.
   sanity: next
   '@sanity/vision': next
 
@@ -53,3 +54,32 @@ peerDependencyRules:
     - react-dom
 
 preferWorkspacePackages: true
+
+# Mirrors the `min-age-exceptions` preset in sanity-io/renovate-config: these are
+# updated without a minimum release age (and Next.js is tracked on `canary`), so
+# pnpm's default 1 day `minimumReleaseAge` would otherwise reject the lockfile.
+minimumReleaseAgeExclude:
+  - '@portabletext/*'
+  - '@sanity/*'
+  - create-sanity
+  - get-it
+  - groq
+  - groq-js
+  - mendoza
+  - next-sanity
+  - react-rx
+  - sanity
+  - use-effect-event
+  - '@next/*'
+  - '@oxfmt/*'
+  - '@oxlint-tsgolint/*'
+  - '@oxlint/*'
+  - '@types/*'
+  - next
+  - oxfmt
+  - oxlint
+  - oxlint-tsgolint
+  - pnpm
+  - react
+  - react-dom
+  - react-is

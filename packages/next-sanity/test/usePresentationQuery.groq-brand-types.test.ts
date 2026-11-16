@@ -26,6 +26,11 @@ declare const postsBySearch: GroqQuery<
   PostsBySearchResult,
   PostsBySearchParams
 >
+declare const allPosts: GroqQuery<
+  '*[_type == "post"]{_id, title}',
+  PostsBySearchResult,
+  Record<string, never>
+>
 
 const registeredQuery = defineQuery('*[_type == "author"][0]{name}')
 declare module '@sanity/client' {
@@ -34,8 +39,12 @@ declare module '@sanity/client' {
   }
 }
 
+const params: PostsBySearchParams = {searchQuery: 'foo', start: 0, end: 10}
+
+// The hooks below are only referenced through `typeof`, never called. They are named `use...`
+// so `react/rules-of-hooks` accepts the `usePresentationQuery` calls inside them.
 function usePlainQuery(query: string) {
-  return usePresentationQuery({query})
+  return usePresentationQuery({query, params: {anything: 'goes', n: 1}})
 }
 
 describe('usePresentationQuery with a branded query', () => {
@@ -44,11 +53,9 @@ describe('usePresentationQuery with a branded query', () => {
     expectTypeOf<Active['data']>().toEqualTypeOf<PostsBySearchResult>()
   })
 
-  test('the hook call itself narrows to the branded result when active', () => {
-    // Named `use...` and never called: it is only used through `typeof` below, so it is
-    // type-checked as a custom hook without actually running React hook rules at runtime.
+  test('the hook call narrows to the branded result when active', () => {
     function useSample() {
-      const result = usePresentationQuery({query: postsBySearch})
+      const result = usePresentationQuery({query: postsBySearch, params})
       // The inactive branch types `perspective` as `null`; narrowing on it picks the active branch.
       if (result.perspective != null) {
         return result.data
@@ -58,29 +65,61 @@ describe('usePresentationQuery with a branded query', () => {
     expectTypeOf<ReturnType<typeof useSample>>().toEqualTypeOf<PostsBySearchResult | null>()
   })
 
-  test('params still accept any QueryParams, unbranded by the query', () => {
+  test('accepts matching params, inline or as a promise', () => {
     function useSample() {
-      // `usePresentationQuery`'s own params type isn't sourced from the query brand, so
-      // params checking is unaffected by this feature: only `data` is branded.
-      return usePresentationQuery({query: postsBySearch, params: {anything: 'goes'}})
+      usePresentationQuery({query: postsBySearch, params: {searchQuery: 'foo', start: 0, end: 10}})
+      usePresentationQuery({query: postsBySearch, params: Promise.resolve(params)})
+      // Leaving params out is accepted, as it is for `client.fetch`
+      usePresentationQuery({query: postsBySearch})
+      usePresentationQuery({query: allPosts, params: {}})
+    }
+    void useSample
+  })
+
+  test('rejects excess, missing and mistyped params', () => {
+    function useSample() {
+      usePresentationQuery({
+        query: postsBySearch,
+        // @ts-expect-error `extra` is not a param of the query
+        params: {searchQuery: 'foo', start: 0, end: 10, extra: true},
+      })
+      usePresentationQuery({
+        query: postsBySearch,
+        // @ts-expect-error `start` and `end` are missing
+        params: {searchQuery: 'foo'},
+      })
+      usePresentationQuery({
+        query: postsBySearch,
+        // @ts-expect-error `start` must be a number
+        params: {searchQuery: 'foo', start: '0', end: 10},
+      })
+      // @ts-expect-error the query takes no params
+      usePresentationQuery({query: allPosts, params: {slug: 'foo'}})
     }
     void useSample
   })
 })
 
 describe('usePresentationQuery without a brand keeps its existing behavior', () => {
-  test('a plain string resolves the same as ClientReturn with no brand', () => {
+  test('a plain string falls back to ClientReturn and accepts any params', () => {
     type Data = ReturnType<typeof usePlainQuery>['data']
-    // `ClientReturn<string>` falls back to `any` here, which already absorbs the inactive
-    // branch's `null`, matching `usePresentationQuery`'s pre-existing (unbranded) behavior.
+    // `ClientReturn<string>` is `any`, which already absorbs the inactive branch's `null`.
     expectTypeOf<Data>().toEqualTypeOf<ClientReturn<string>>()
   })
 
-  test('a defineQuery query registered in SanityQueries resolves through TypeGen, as before', () => {
+  test('a defineQuery query registered in SanityQueries resolves through TypeGen', () => {
     function useSample() {
-      return usePresentationQuery({query: registeredQuery})
+      return usePresentationQuery({query: registeredQuery, params: {anything: 'goes'}})
     }
     type Data = ReturnType<typeof useSample>['data']
-    expectTypeOf<Data>().toEqualTypeOf<ClientReturn<typeof registeredQuery> | null>()
+    expectTypeOf<Data>().toEqualTypeOf<{name: string} | null>()
+  })
+
+  test('an explicit query type argument resolves as before', () => {
+    function useSample() {
+      return usePresentationQuery<'*[_type == "author"][0]{name}'>({query: registeredQuery})
+    }
+    type Data = ReturnType<typeof useSample>['data']
+    expectTypeOf<Data>().toEqualTypeOf<{name: string} | null>()
   })
 })

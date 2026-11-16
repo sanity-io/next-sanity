@@ -16,10 +16,10 @@ Let's look at a simple app using `v4`, and then walk through how to migrate it t
 ### `pages/index.tsx`
 
 ```tsx
-import {lazy} from 'react'
-import {PreviewSuspense} from 'next-sanity/preview'
 import {DocumentsCount, query} from 'components/DocumentsCount'
 import {getClient} from 'lib/sanity.client'
+import {PreviewSuspense} from 'next-sanity/preview'
+import {lazy} from 'react'
 
 const PreviewDocumentsCount = lazy(() => import('components/PreviewDocumentsCount'))
 
@@ -60,8 +60,8 @@ export default function PreviewDocumentsCount({token}) {
 ### `lib/sanity.preview.ts`
 
 ```js
-import {definePreview} from 'next-sanity/preview'
 import {getClient} from 'lib/sanity.client'
+import {definePreview} from 'next-sanity/preview'
 
 const {projectId, dataset} = getClient().config()
 export const usePreview = definePreview({projectId, dataset})
@@ -102,8 +102,8 @@ export default function IndexPage({preview, data}) {
 ### `components/PreviewDocumentsCount.tsx`:
 
 ```tsx
-import {useLiveQuery} from 'next-sanity/preview'
 import {query, DocumentsCount} from 'components/DocumentsCount'
+import {useLiveQuery} from 'next-sanity/preview'
 
 export default function PreviewDocumentsCount({data: initialData}) {
   const [data, loading] = useLiveQuery(initialData, query)
@@ -119,9 +119,9 @@ export default function PreviewDocumentsCount({data: initialData}) {
 ### `components/PreviewProvider.tsx`
 
 ```tsx
-import {useMemo} from 'react'
-import {LiveQueryProvider} from 'next-sanity/preview'
 import {getClient} from 'lib/sanity.client'
+import {LiveQueryProvider} from 'next-sanity/preview'
+import {useMemo} from 'react'
 
 export default function PreviewProvider({
   children,

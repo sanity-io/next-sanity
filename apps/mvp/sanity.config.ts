@@ -6,13 +6,14 @@ import {defineConfig} from 'sanity'
 import {presentationTool, type PreviewUrlResolverOptions} from 'sanity/presentation'
 
 const theme = buildTheme({
-  accent: '#1cb485',
-  text: '#5c9199',
-  background: {dark: '#0d1415', light: '#fcfdfd'},
+  dark: {accent: '#1cb485', text: '#5c9199', background: '#0d1415'},
+  light: {accent: '#1cb485', text: '#5c9199', background: '#fcfdfd'},
 })
 
 const projectId = process.env.NEXT_PUBLIC_SANITY_PROJECT_ID!
 const dataset = process.env.NEXT_PUBLIC_SANITY_DATASET!
+const previewOrigin = process.env.NEXT_PUBLIC_TEST_PREVIEW_ORIGIN
+const previewPath = process.env.NEXT_PUBLIC_TEST_PREVIEW_PATH || '/'
 
 const previewMode = {
   enable: `${process.env.NEXT_PUBLIC_TEST_BASE_PATH || ''}/api/draft-mode/enable`,
@@ -25,7 +26,11 @@ export default defineConfig({
   theme,
   plugins: [
     presentationTool({
-      previewUrl: {preview: `${process.env.NEXT_PUBLIC_TEST_BASE_PATH || ''}/`, previewMode},
+      previewUrl: {
+        origin: previewOrigin,
+        preview: `${process.env.NEXT_PUBLIC_TEST_BASE_PATH || ''}${previewPath}`,
+        previewMode,
+      },
     }),
     sharedConfig(),
   ],
