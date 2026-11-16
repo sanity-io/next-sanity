@@ -431,7 +431,7 @@ export type AllSanitySchemaTypes =
 // Query: *[_type == "post" && _id == $id][0].title
 export type PostTitleQueryResult = string | null
 
-// Source: app/(website)/posts/[slug]/page.tsx
+// Source: app/[perspective]/posts/[slug]/page.tsx
 // Variable: postQuery
 // Query: *[_type == "post" && slug.current == $slug][0]{title, "slug": slug.current, publishedAt}
 export type PostQueryResult = {
