@@ -1,5 +1,4 @@
-'use client'
-export {Image, type ImageProps} from './Image'
+export {Image, type ImageProps} from 'next-sanity/image/client-component'
 export {imageLoader} from './imageLoader'
 export type {ImageSource, SanityImageObject} from './resolveImageSource'
 export {isImageWithAsset} from '@sanity/image-url'
