@@ -121,6 +121,7 @@ export interface SanityImageParams {
   blur?: string
   crop?: string
   fit?: string
+  flip?: string
   h?: string
   q?: string
   rect?: string
