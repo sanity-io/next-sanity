@@ -3,10 +3,11 @@ import {encodeSignatureHeader, SIGNATURE_HEADER_NAME} from '@sanity/webhook'
 
 /**
  * How long a single delivery may take before the sender gives up on it, in milliseconds.
- * Sanity holds the live event until the function calls `done()`, so a hanging origin must not stall the rest.
+ * Sanity Functions default to a 10s execution limit and hold the live event until `done()` runs, so this stays
+ * below that budget: a hanging origin must abort early enough for signing overhead and `done()` to still finish.
  * @public
  */
-export const defaultDeliveryTimeout: number = 10_000
+export const defaultDeliveryTimeout: number = 8_000
 
 /**
  * @public
