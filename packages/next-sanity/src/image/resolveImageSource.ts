@@ -1,15 +1,29 @@
 import {stegaClean} from '@sanity/client/stega'
-import {createImageUrlBuilder, type ImageUrlBuilder} from '@sanity/image-url'
+import {
+  createImageUrlBuilder,
+  isImageWithAsset,
+  type ImageUrlBuilder,
+  type SanityImageAssetLike,
+  type SanityImageLike,
+  type SanityImageSource,
+  type SanityReference,
+} from '@sanity/image-url'
 
 /**
- * The subset of a Sanity image field that `next-sanity/image` understands.
- * It matches what `sanity typegen` generates for image fields, so GROQ
- * results can be passed to the `src` prop directly. All members tolerate
- * `null`, and extra fields (like `_type` and `_key`) are ignored.
+ * Image value accepted by `next-sanity/image`. Matches {@link SanityImageLike}
+ * from `@sanity/image-url` (the shapes `sanity typegen` generates, including
+ * an image whose asset has not been uploaded yet) and keeps the fields those
+ * queries actually select: `alt`, a document `_id`, and `asset.metadata.lqip`.
  *
  * @alpha
  */
 export interface SanityImageObject {
+  /** Present when the value is an image document rather than a field. Ignored when `asset` is set. */
+  _id?: string | null
+  _type?: string
+  _key?: string | null
+  alt?: string | null
+  media?: unknown
   asset?: {
     /** Set when the query returns the reference as-is, e.g. `asset` */
     _ref?: string | null
@@ -43,18 +57,24 @@ export interface SanityImageObject {
     height?: number | null
     _type?: string
   } | null
-  _type?: string
-  _key?: string | null
-  media?: unknown
 }
 
 /**
  * The `src` prop of the `Image` component: a Sanity Image CDN URL, a Sanity
- * image asset id (`image-…`), or an image object from a GROQ query.
+ * image asset id (`image-…`), an asset reference (`{_ref}`) or asset document
+ * (`{_id}`), or an image object from a GROQ query.
+ *
+ * `@sanity/image-url`'s `SanityAsset` type is not included: its index
+ * signature would also accept a `next/image` static import.
  *
  * @alpha
  */
-export type ImageSource = string | SanityImageObject
+export type ImageSource =
+  | string
+  | SanityImageObject
+  | SanityImageLike
+  | SanityImageAssetLike
+  | SanityReference
 
 /**
  * Matches the pathname of Sanity Image CDN URLs:
@@ -62,15 +82,13 @@ export type ImageSource = string | SanityImageObject
  */
 const ASSET_URL_PATH = /^\/images\/([^/]+)\/([^/]+)\//
 
+const ASSET_ERROR = 'The `src` object must include an `asset` with a `_ref`, `_id`, or `url`.'
+
 /**
  * Sanity image asset ids look like `image-{hash}-{width}x{height}-{format}`.
  */
 export function isSanityAssetId(src: string): boolean {
   return src.startsWith('image-')
-}
-
-function cleanString(value: string | null | undefined): string | undefined {
-  return typeof value === 'string' ? stegaClean(value) : undefined
 }
 
 interface ParsedAssetUrl {
@@ -108,16 +126,17 @@ export interface ImageProjectOptions {
  * back to parsing them from the asset URL when the query dereferences it.
  * The asset URL's origin is kept (preserving custom CDN domains) whenever it
  * belongs to the resolved project and dataset.
+ *
+ * Crop and hotspot coordinates are passed through as queried. `@sanity/image-url`
+ * fills in anything the projection left out: missing crop insets are `0`, and
+ * a hotspot missing `width`/`height` (or `x`/`y`) uses that library's defaults.
  */
 export function imageBuilderFor(
-  source: string | SanityImageObject,
+  source: ImageSource,
   {projectId, dataset}: ImageProjectOptions,
 ): ImageUrlBuilder {
-  const normalized = normalizeSource(source)
-  const fromUrl =
-    typeof normalized === 'object' && normalized.asset.url
-      ? parseAssetUrl(normalized.asset.url)
-      : undefined
+  const prepared = prepareSource(source)
+  const fromUrl = prepared.assetUrl ? parseAssetUrl(prepared.assetUrl) : undefined
   const resolvedProjectId = projectId ?? fromUrl?.projectId
   const resolvedDataset = dataset ?? fromUrl?.dataset
   if (!resolvedProjectId || !resolvedDataset) {
@@ -131,48 +150,120 @@ export function imageBuilderFor(
     projectId: resolvedProjectId,
     dataset: resolvedDataset,
     ...(sameProject ? {baseUrl: fromUrl.baseUrl} : {}),
-  }).image(normalized)
+  }).image(prepared.value)
 }
 
-function normalizeSource(source: string | SanityImageObject) {
+interface PreparedSource {
+  value: SanityImageSource
+  assetUrl?: string
+}
+
+function prepareSource(source: ImageSource): PreparedSource {
   if (typeof source === 'string') {
-    return stegaClean(source)
+    return {value: stegaClean(source)}
   }
-  const id = cleanString(source.asset?._id) ?? cleanString(source.asset?._ref)
-  const url = cleanString(source.asset?.url)
-  if (!id && !url) {
-    throw new TypeError('The `src` object must include an `asset` with a `_ref`, `_id`, or `url`.')
+  if (!isRecord(source)) {
+    throw new TypeError(ASSET_ERROR)
   }
-  // Schema fields are optional, so `sanity typegen` marks every crop and
-  // hotspot member as optional too: missing crop insets mean "not cropped on
-  // that side", and a crop of all zeros is no crop at all.
-  const crop = source.crop
-    ? {
-        top: source.crop.top ?? 0,
-        bottom: source.crop.bottom ?? 0,
-        left: source.crop.left ?? 0,
-        right: source.crop.right ?? 0,
-      }
-    : undefined
-  const hasCrop = crop && (crop.top || crop.bottom || crop.left || crop.right)
-  // The hotspot width/height describe the size of the hotspot region.
-  // `@sanity/image-url` requires them, but queries often select only
-  // `hotspot {x, y}`: default to a zero-sized hotspot (a point) then.
-  const hotspot =
-    typeof source.hotspot?.x === 'number' && typeof source.hotspot.y === 'number'
-      ? {
-          x: source.hotspot.x,
-          y: source.hotspot.y,
-          width: source.hotspot.width ?? 0,
-          height: source.hotspot.height ?? 0,
-        }
-      : undefined
-  return {
-    asset: {
-      ...(id ? {_id: id} : {}),
-      ...(url ? {url} : {}),
-    },
-    ...(hasCrop ? {crop} : {}),
-    ...(hotspot ? {hotspot} : {}),
+
+  // Image fields can carry the parent document's `_id`. `@sanity/image-url`
+  // treats a top-level `_id` as an asset id, so rebuild the image from
+  // `asset`/`crop`/`hotspot` only and let the library default the rest.
+  if ('asset' in source || 'crop' in source || 'hotspot' in source) {
+    const image = toImageLike(source)
+    if (!isImageWithAsset(image)) {
+      throw new TypeError(ASSET_ERROR)
+    }
+    return {value: image, assetUrl: urlOf(image.asset)}
   }
+
+  const ref = stringField(source, '_ref')
+  if (ref) {
+    return {value: {_ref: stegaClean(ref)}}
+  }
+
+  const id = stringField(source, '_id')
+  if (id) {
+    const url = stringField(source, 'url')
+    const cleanedUrl = url ? stegaClean(url) : undefined
+    const asset: SanityImageAssetLike = cleanedUrl
+      ? {_id: stegaClean(id), url: cleanedUrl}
+      : {_id: stegaClean(id)}
+    return {value: asset, assetUrl: cleanedUrl}
+  }
+
+  throw new TypeError(ASSET_ERROR)
+}
+
+function toImageLike(source: Record<string, unknown>): SanityImageLike {
+  const image: SanityImageLike = {
+    asset: 'asset' in source ? copyAsset(source['asset']) : undefined,
+  }
+  if ('crop' in source) image.crop = copyCrop(source['crop'])
+  if ('hotspot' in source) image.hotspot = copyHotspot(source['hotspot'])
+  return image
+}
+
+function copyAsset(asset: unknown): SanityImageLike['asset'] {
+  if (!isRecord(asset)) return null
+  const url = stringField(asset, 'url')
+  const ref = stringField(asset, '_ref')
+  const id = stringField(asset, '_id')
+  const cleanedUrl = url ? stegaClean(url) : undefined
+  const cleanedRef = ref ? stegaClean(ref) : undefined
+  const cleanedId = id ? stegaClean(id) : undefined
+  if (cleanedUrl && cleanedId) return {_id: cleanedId, url: cleanedUrl}
+  if (cleanedUrl) return {url: cleanedUrl}
+  if (cleanedRef) return {_ref: cleanedRef}
+  if (cleanedId) return {_id: cleanedId}
+  return null
+}
+
+function copyCrop(value: unknown): SanityImageLike['crop'] {
+  if (value === null) return null
+  if (!isRecord(value)) return undefined
+  const crop: NonNullable<SanityImageLike['crop']> = {}
+  const top = numberField(value, 'top')
+  const bottom = numberField(value, 'bottom')
+  const left = numberField(value, 'left')
+  const right = numberField(value, 'right')
+  if (top !== undefined) crop.top = top
+  if (bottom !== undefined) crop.bottom = bottom
+  if (left !== undefined) crop.left = left
+  if (right !== undefined) crop.right = right
+  return crop
+}
+
+function copyHotspot(value: unknown): SanityImageLike['hotspot'] {
+  if (value === null) return null
+  if (!isRecord(value)) return undefined
+  const hotspot: NonNullable<SanityImageLike['hotspot']> = {}
+  const x = numberField(value, 'x')
+  const y = numberField(value, 'y')
+  const width = numberField(value, 'width')
+  const height = numberField(value, 'height')
+  if (x !== undefined) hotspot.x = x
+  if (y !== undefined) hotspot.y = y
+  if (width !== undefined) hotspot.width = width
+  if (height !== undefined) hotspot.height = height
+  return hotspot
+}
+
+function stringField(record: Record<string, unknown>, key: string): string | undefined {
+  const value = record[key]
+  return typeof value === 'string' ? value : undefined
+}
+
+function numberField(record: Record<string, unknown>, key: string): number | undefined {
+  const value = record[key]
+  return typeof value === 'number' ? value : undefined
+}
+
+function urlOf(asset: NonNullable<SanityImageLike['asset']>): string | undefined {
+  if ('url' in asset && typeof asset.url === 'string') return asset.url
+  return undefined
+}
+
+function isRecord(value: unknown): value is Record<string, unknown> {
+  return typeof value === 'object' && value !== null
 }
