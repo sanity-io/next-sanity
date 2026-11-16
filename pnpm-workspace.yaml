@@ -56,4 +56,9 @@ peerDependencyRules:
 preferWorkspacePackages: true
 
 # Next canaries and sanity@next publish more than once a day.
-minimumReleaseAge: 0
+# Everything else keeps the default one-day release-age gate.
+minimumReleaseAgeExclude:
+  - next
+  - '@next/*'
+  - sanity
+  - '@sanity/*'
