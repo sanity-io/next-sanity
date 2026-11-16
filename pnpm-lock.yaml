@@ -62,8 +62,8 @@ importers:
         specifier: ^7.0.2007
         version: 7.0.2007
       playwright:
-        specifier: ^1.62.1
-        version: 1.62.1
+        specifier: ^1.65.1
+        version: 1.65.1
       turbo:
         specifier: ^2.10.12
         version: 2.10.12
@@ -257,7 +257,7 @@ importers:
         version: link:../typescript-config
       '@sanity/ailf':
         specifier: ^7.36.0
-        version: 7.36.0(@aws-sdk/credential-provider-node@3.972.79)(@noble/hashes@2.3.0)(@smithy/signature-v4@5.7.0)(@swc/helpers@0.5.24)(@types/json-schema@7.0.15)(@types/node@24.19.2)(@types/react@19.2.18)(pg@8.23.0)(playwright-core@1.62.1)(socks@2.8.9)
+        version: 7.36.0(@aws-sdk/credential-provider-node@3.972.79)(@noble/hashes@2.3.0)(@smithy/signature-v4@5.7.0)(@swc/helpers@0.5.24)(@types/json-schema@7.0.15)(@types/node@24.19.2)(@types/react@19.2.18)(pg@8.23.0)(playwright-core@1.65.1)(socks@2.8.9)
 
   packages/next-sanity:
     dependencies:
@@ -312,7 +312,7 @@ importers:
         version: 6.0.5(@rolldown/plugin-babel@0.2.4)(vite@8.2.1)
       '@vitest/browser-playwright':
         specifier: ^4.1.10
-        version: 4.1.10(msw@2.15.0)(playwright@1.62.1)(vite@8.2.1)(vitest@4.1.10)
+        version: 4.1.10(msw@2.15.0)(playwright@1.65.1)(vite@8.2.1)(vitest@4.1.10)
       '@vitest/coverage-v8':
         specifier: ^4.1.10
         version: 4.1.10(@vitest/browser@4.1.10)(vitest@4.1.10)
@@ -7027,11 +7027,6 @@ packages:
   fs.realpath@1.0.0:
     resolution: {integrity: sha512-OO0pH2lK6a0hZnAdau5ItzHPI6pUlvI7jMVnxUQRtw4owF2wk8lOSabtGDCTP4Ggrg2MbGnWO9X8K1t4+fGMDw==}
 
-  fsevents@2.3.2:
-    resolution: {integrity: sha512-xiqMQR4xAeHTuB9uWm+fFRcIOgKBMiOBP+eXiyT7jsgVCq1bkVygt00oASowB7EdtpOHaaPgKt812P9ab+DDKA==}
-    engines: {node: ^8.16.0 || ^10.6.0 || >=11.0.0}
-    os: [darwin]
-
   fsevents@2.3.3:
     resolution: {integrity: sha512-5xoDfX+fL7faATnagmWPpbFtwh/R77WmMMqqHGS65C3vvB0YHrgF+B1YmZ3441tMj5n63k0212XNoJwzlhffQw==}
     engines: {node: ^8.16.0 || ^10.6.0 || >=11.0.0}
@@ -8784,6 +8779,11 @@ packages:
     engines: {node: '>=20'}
     hasBin: true
 
+  playwright-core@1.65.1:
+    resolution: {integrity: sha512-hqPpz7blSMPxWVdoeE1yiBSzXsKiVOd2k+kjCvmUywD2GPO2Dd9HfcWnq9NN0GHbNZDFgZ9JfBFr+X5/BLo0qw==}
+    engines: {node: '>=20'}
+    hasBin: true
+
   playwright-extra@4.3.6:
     resolution: {integrity: sha512-q2rVtcE8V8K3vPVF1zny4pvwZveHLH8KBuVU2MoE3Jw4OKVoBWsHI9CH9zPydovHHOCDxjGN2Vg+2m644q3ijA==}
     engines: {node: '>=12'}
@@ -8796,8 +8796,8 @@ packages:
       playwright-core:
         optional: true
 
-  playwright@1.62.1:
-    resolution: {integrity: sha512-0M+L3LAD8/nm554LOla9Ayx0j0tmFZ0FBcoQ7F1VuVHpM/XpiC8RcDzBQB8W5+hA8L22THxELzeF+2WcUzvcLg==}
+  playwright@1.65.1:
+    resolution: {integrity: sha512-vJ1FuoOrNwOKHUIVEvSt3jT1L+wjjDpwhwIstKtfvTh8XIG4FG4bIFuvNdMxi81LGfAhUgUZleVFaOLY4RIUUw==}
     engines: {node: '>=20'}
     hasBin: true
 
@@ -14457,7 +14457,7 @@ snapshots:
       - styled-components
       - vitest
 
-  '@sanity/ailf@7.36.0(@aws-sdk/credential-provider-node@3.972.79)(@noble/hashes@2.3.0)(@smithy/signature-v4@5.7.0)(@swc/helpers@0.5.24)(@types/json-schema@7.0.15)(@types/node@24.19.2)(@types/react@19.2.18)(pg@8.23.0)(playwright-core@1.62.1)(socks@2.8.9)':
+  '@sanity/ailf@7.36.0(@aws-sdk/credential-provider-node@3.972.79)(@noble/hashes@2.3.0)(@smithy/signature-v4@5.7.0)(@swc/helpers@0.5.24)(@types/json-schema@7.0.15)(@types/node@24.19.2)(@types/react@19.2.18)(pg@8.23.0)(playwright-core@1.65.1)(socks@2.8.9)':
     dependencies:
       '@google-cloud/bigquery': 8.3.1
       '@google-cloud/storage': 7.22.0
@@ -14475,7 +14475,7 @@ snapshots:
       jiti: 2.7.0
       js-yaml: 4.3.1
       oxc-parser: 0.129.0
-      promptfoo: 0.120.27(@aws-sdk/credential-provider-node@3.972.79)(@noble/hashes@2.3.0)(@smithy/signature-v4@5.7.0)(@swc/helpers@0.5.24)(@types/json-schema@7.0.15)(@types/node@24.19.2)(@types/react@19.2.18)(pg@8.23.0)(playwright-core@1.62.1)(socks@2.8.9)
+      promptfoo: 0.120.27(@aws-sdk/credential-provider-node@3.972.79)(@noble/hashes@2.3.0)(@smithy/signature-v4@5.7.0)(@swc/helpers@0.5.24)(@types/json-schema@7.0.15)(@types/node@24.19.2)(@types/react@19.2.18)(pg@8.23.0)(playwright-core@1.65.1)(socks@2.8.9)
       zod: 4.4.3
     transitivePeerDependencies:
       - '@aws-sdk/client-rds-data'
@@ -16154,11 +16154,11 @@ snapshots:
     optionalDependencies:
       '@rolldown/plugin-babel': 0.2.4(@babel/core@7.29.7)(@babel/runtime@7.29.7)(rolldown@1.2.19)(vite@8.3.8)
 
-  '@vitest/browser-playwright@4.1.10(msw@2.15.0)(playwright@1.62.1)(vite@8.2.1)(vitest@4.1.10)':
+  '@vitest/browser-playwright@4.1.10(msw@2.15.0)(playwright@1.65.1)(vite@8.2.1)(vitest@4.1.10)':
     dependencies:
       '@vitest/browser': 4.1.10(msw@2.15.0)(vite@8.2.1)(vitest@4.1.10)
       '@vitest/mocker': 4.1.10(msw@2.15.0)(vite@8.2.1)
-      playwright: 1.62.1
+      playwright: 1.65.1
       tinyrainbow: 3.1.1
       vitest: 4.1.10(@opentelemetry/api@1.9.1)(@types/node@24.19.2)(@vitest/browser-playwright@4.1.10)(@vitest/coverage-v8@4.1.10)(jsdom@29.1.1)(msw@2.15.0)(vite@8.2.1)
     transitivePeerDependencies:
@@ -16167,11 +16167,11 @@ snapshots:
       - utf-8-validate
       - vite
 
-  '@vitest/browser-playwright@4.1.10(msw@2.15.0)(playwright@1.62.1)(vite@8.3.8)(vitest@4.1.10)':
+  '@vitest/browser-playwright@4.1.10(msw@2.15.0)(playwright@1.65.1)(vite@8.3.8)(vitest@4.1.10)':
     dependencies:
       '@vitest/browser': 4.1.10(msw@2.15.0)(vite@8.3.8)(vitest@4.1.10)
       '@vitest/mocker': 4.1.10(msw@2.15.0)(vite@8.3.8)
-      playwright: 1.62.1
+      playwright: 1.65.1
       tinyrainbow: 3.1.1
       vitest: 4.1.10(@opentelemetry/api@1.9.1)(@types/node@24.19.2)(@vitest/browser-playwright@4.1.10)(@vitest/coverage-v8@4.1.10)(jsdom@29.1.1)(msw@2.15.0)(vite@8.3.8)
     transitivePeerDependencies:
@@ -17737,9 +17737,6 @@ snapshots:
     optional: true
 
   fs.realpath@1.0.0:
-    optional: true
-
-  fsevents@2.3.2:
     optional: true
 
   fsevents@2.3.3:
@@ -19679,23 +19676,24 @@ snapshots:
     transitivePeerDependencies:
       - react
 
-  playwright-core@1.62.1: {}
+  playwright-core@1.62.1:
+    optional: true
 
-  playwright-extra@4.3.6(playwright-core@1.62.1)(playwright@1.62.1):
+  playwright-core@1.65.1: {}
+
+  playwright-extra@4.3.6(playwright-core@1.65.1)(playwright@1.65.1):
     dependencies:
       debug: 4.4.3(supports-color@8.1.1)
     optionalDependencies:
-      playwright: 1.62.1
-      playwright-core: 1.62.1
+      playwright: 1.65.1
+      playwright-core: 1.65.1
     transitivePeerDependencies:
       - supports-color
     optional: true
 
-  playwright@1.62.1:
+  playwright@1.65.1:
     dependencies:
-      playwright-core: 1.62.1
-    optionalDependencies:
-      fsevents: 2.3.2
+      playwright-core: 1.65.1
 
   pluralize-esm@9.0.5: {}
 
@@ -19764,7 +19762,7 @@ snapshots:
     dependencies:
       lodash.isplainobject: 4.0.6
 
-  promptfoo@0.120.27(@aws-sdk/credential-provider-node@3.972.79)(@noble/hashes@2.3.0)(@smithy/signature-v4@5.7.0)(@swc/helpers@0.5.24)(@types/json-schema@7.0.15)(@types/node@24.19.2)(@types/react@19.2.18)(pg@8.23.0)(playwright-core@1.62.1)(socks@2.8.9):
+  promptfoo@0.120.27(@aws-sdk/credential-provider-node@3.972.79)(@noble/hashes@2.3.0)(@smithy/signature-v4@5.7.0)(@swc/helpers@0.5.24)(@types/json-schema@7.0.15)(@types/node@24.19.2)(@types/react@19.2.18)(pg@8.23.0)(playwright-core@1.65.1)(socks@2.8.9):
     dependencies:
       '@anthropic-ai/sdk': 0.78.0(zod@4.4.3)
       '@apidevtools/json-schema-ref-parser': 15.5.1(@types/json-schema@7.0.15)
@@ -19883,8 +19881,8 @@ snapshots:
       natural: 8.1.1(@opentelemetry/api@1.9.1)(gcp-metadata@8.1.4)(socks@2.8.9)
       node-sql-parser: 5.4.0
       pdf-parse: 2.4.5
-      playwright: 1.62.1
-      playwright-extra: 4.3.6(playwright-core@1.62.1)(playwright@1.62.1)
+      playwright: 1.65.1
+      playwright-extra: 4.3.6(playwright-core@1.65.1)(playwright@1.65.1)
       puppeteer-extra-plugin-stealth: 2.11.2(playwright-extra@4.3.6)
       read-excel-file: 7.0.3
       sharp: 0.34.5
@@ -20049,7 +20047,7 @@ snapshots:
       puppeteer-extra-plugin: 3.2.3(playwright-extra@4.3.6)
       puppeteer-extra-plugin-user-preferences: 2.4.1(playwright-extra@4.3.6)
     optionalDependencies:
-      playwright-extra: 4.3.6(playwright-core@1.62.1)(playwright@1.62.1)
+      playwright-extra: 4.3.6(playwright-core@1.65.1)(playwright@1.65.1)
     transitivePeerDependencies:
       - supports-color
     optional: true
@@ -20061,7 +20059,7 @@ snapshots:
       puppeteer-extra-plugin: 3.2.3(playwright-extra@4.3.6)
       rimraf: 3.0.2
     optionalDependencies:
-      playwright-extra: 4.3.6(playwright-core@1.62.1)(playwright@1.62.1)
+      playwright-extra: 4.3.6(playwright-core@1.65.1)(playwright@1.65.1)
     transitivePeerDependencies:
       - supports-color
     optional: true
@@ -20073,7 +20071,7 @@ snapshots:
       puppeteer-extra-plugin: 3.2.3(playwright-extra@4.3.6)
       puppeteer-extra-plugin-user-data-dir: 2.4.1(playwright-extra@4.3.6)
     optionalDependencies:
-      playwright-extra: 4.3.6(playwright-core@1.62.1)(playwright@1.62.1)
+      playwright-extra: 4.3.6(playwright-core@1.65.1)(playwright@1.65.1)
     transitivePeerDependencies:
       - supports-color
     optional: true
@@ -20084,7 +20082,7 @@ snapshots:
       debug: 4.4.3(supports-color@8.1.1)
       merge-deep: 3.0.3
     optionalDependencies:
-      playwright-extra: 4.3.6(playwright-core@1.62.1)(playwright@1.62.1)
+      playwright-extra: 4.3.6(playwright-core@1.65.1)(playwright@1.65.1)
     transitivePeerDependencies:
       - supports-color
     optional: true
@@ -21634,7 +21632,7 @@ snapshots:
     optionalDependencies:
       '@opentelemetry/api': 1.9.1
       '@types/node': 24.19.2
-      '@vitest/browser-playwright': 4.1.10(msw@2.15.0)(playwright@1.62.1)(vite@8.2.1)(vitest@4.1.10)
+      '@vitest/browser-playwright': 4.1.10(msw@2.15.0)(playwright@1.65.1)(vite@8.2.1)(vitest@4.1.10)
       '@vitest/coverage-v8': 4.1.10(@vitest/browser@4.1.10)(vitest@4.1.10)
       jsdom: 29.1.1(@noble/hashes@2.3.0)
     transitivePeerDependencies:
@@ -21665,7 +21663,7 @@ snapshots:
     optionalDependencies:
       '@opentelemetry/api': 1.9.1
       '@types/node': 24.19.2
-      '@vitest/browser-playwright': 4.1.10(msw@2.15.0)(playwright@1.62.1)(vite@8.3.8)(vitest@4.1.10)
+      '@vitest/browser-playwright': 4.1.10(msw@2.15.0)(playwright@1.65.1)(vite@8.3.8)(vitest@4.1.10)
       '@vitest/coverage-v8': 4.1.10(@vitest/browser@4.1.10)(vitest@4.1.10)
       jsdom: 29.1.1(@noble/hashes@2.3.0)
     transitivePeerDependencies:
