@@ -502,6 +502,25 @@ describe('sanity image objects', () => {
     expect(img.src).toMatch(/^https:\/\/cdn\.example\.com\//)
   })
 
+  test('preserves custom CDN domains when matching projectId and dataset props are bound', async () => {
+    const {img} = await renderImage(
+      <Image
+        src={{
+          asset: {
+            url: `https://cdn.example.com/images/${projectId}/${dataset}/custombound-2000x1000.jpg`,
+          },
+        }}
+        {...projectProps}
+        width={800}
+        alt=""
+      />,
+    )
+
+    expect(img.src).toMatch(
+      new RegExp(`^https://cdn\\.example\\.com/images/${projectId}/${dataset}/custombound-`),
+    )
+  })
+
   test('explicit projectId and dataset props win over the asset URL', async () => {
     const {img} = await renderImage(
       <Image
@@ -711,6 +730,32 @@ describe('queryParams', () => {
     expect(img.width).toBe('800')
     for (const candidate of parseSrcSet(img.srcset)) {
       expect(candidate.params.w).not.toBe('99')
+    }
+  })
+
+  test('sizing params never feed dimension inference', async () => {
+    const src = sanityImageUrl('queryparams-wh-2000x1000.jpg')
+    const {img} = await renderImage(<Image src={src} queryParams={{w: 10, h: 10}} alt="" />)
+
+    expect(img.width).toBe('2000')
+    expect(img.height).toBe('1000')
+  })
+
+  test('a rect param cannot replace the hotspot-aware crop', async () => {
+    const {img} = await renderImage(
+      <Image
+        src={{asset: {_ref: 'image-qprect-2000x1000-jpg'}, hotspot: {x: 0.75, y: 0.25}}}
+        projectId={projectId}
+        dataset={dataset}
+        width={500}
+        height={500}
+        queryParams={{rect: '0,0,10,10', blur: 50}}
+        alt=""
+      />,
+    )
+
+    for (const candidate of parseSrcSet(img.srcset)) {
+      expect(candidate.params).toMatchObject({blur: '50', rect: '1000,0,1000,1000'})
     }
   })
 })

@@ -40,9 +40,9 @@ export interface ImageProps extends Omit<NextImageProps, 'loader' | 'src'> {
   /**
    * Additional [Sanity Image CDN params](https://www.sanity.io/docs/image-urls)
    * merged into the image URL, e.g. `{blur: 50, sat: -100}`. Sizing params
-   * (`w`, `h`, `rect`) should come from the `width`/`height` props and the
-   * image object instead: they are overridden by the resolved dimensions, and
-   * `auto`, `fit` and `q` are managed by the loader.
+   * (`w`, `h`, `rect`) are ignored: they come from the `width`/`height` props,
+   * the URL and the image object's crop and hotspot. `auto` and `fit` are
+   * managed by the loader.
    */
   queryParams?: Record<string, string | number>
   /**
@@ -51,12 +51,15 @@ export interface ImageProps extends Omit<NextImageProps, 'loader' | 'src'> {
   ref?: React.ComponentProps<typeof NextImage>['ref']
 }
 
+const SIZING_PARAMS = new Set(['w', 'h', 'rect'])
+
 function applyQueryParams(
   url: URL,
   queryParams: Record<string, string | number> | undefined,
 ): void {
   if (!queryParams) return
   for (const [key, value] of Object.entries(queryParams)) {
+    if (SIZING_PARAMS.has(key)) continue
     url.searchParams.set(key, `${value}`)
   }
 }

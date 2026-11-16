@@ -105,8 +105,9 @@ export interface ImageProjectOptions {
 /**
  * Configures an `@sanity/image-url` builder for an image object or asset id.
  * The project details come from the `projectId`/`dataset` options, falling
- * back to parsing them (and the base URL, preserving custom CDN domains) from
- * the asset URL when the query dereferences it.
+ * back to parsing them from the asset URL when the query dereferences it.
+ * The asset URL's origin is kept (preserving custom CDN domains) whenever it
+ * belongs to the resolved project and dataset.
  */
 export function imageBuilderFor(
   source: string | SanityImageObject,
@@ -124,12 +125,12 @@ export function imageBuilderFor(
       'Unable to resolve the Sanity project id and dataset for the image. Pass the `projectId` and `dataset` props, or dereference the asset URL in the query (e.g. `asset->{url}`) so they can be read from it.',
     )
   }
+  const sameProject =
+    fromUrl?.projectId === resolvedProjectId && fromUrl.dataset === resolvedDataset
   return createImageUrlBuilder({
     projectId: resolvedProjectId,
     dataset: resolvedDataset,
-    ...(projectId === undefined && dataset === undefined && fromUrl?.baseUrl
-      ? {baseUrl: fromUrl.baseUrl}
-      : {}),
+    ...(sameProject ? {baseUrl: fromUrl.baseUrl} : {}),
   }).image(normalized)
 }
 
