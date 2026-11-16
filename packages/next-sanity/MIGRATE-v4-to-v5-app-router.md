@@ -16,11 +16,11 @@ Let's look at a simple app using `v4`, and then walk through how to migrate it t
 ### `app/page.tsx`
 
 ```tsx
-import {draftMode} from 'next/headers'
-import {PreviewSuspense} from 'next-sanity/preview'
 import {DocumentsCount, query} from 'components/DocumentsCount'
 import PreviewDocumentsCount from 'components/PreviewDocumentsCount'
 import {getClient} from 'lib/sanity.client'
+import {PreviewSuspense} from 'next-sanity/preview'
+import {draftMode} from 'next/headers'
 
 export default async function IndexPage() {
   const preview = draftMode().isEnabled ? {token: process.env.SANITY_API_READ_TOKEN} : undefined
@@ -59,8 +59,8 @@ export default function PreviewDocumentsCount({token}) {
 ```js
 'use client'
 
-import {definePreview} from 'next-sanity/preview'
 import {getClient} from 'lib/sanity.client'
+import {definePreview} from 'next-sanity/preview'
 
 const {projectId, dataset} = getClient().config()
 export const usePreview = definePreview({projectId, dataset})
@@ -71,11 +71,11 @@ export const usePreview = definePreview({projectId, dataset})
 ### `app/page.tsx`
 
 ```tsx
-import {draftMode} from 'next/headers'
 import {DocumentsCount, query} from 'components/DocumentsCount'
 import PreviewDocumentsCount from 'components/PreviewDocumentsCount'
 import PreviewProvider from 'components/PreviewProvider'
 import {getClient} from 'lib/sanity.client'
+import {draftMode} from 'next/headers'
 
 export default async function IndexPage() {
   const preview = draftMode().isEnabled ? {token: process.env.SANITY_API_READ_TOKEN} : undefined
@@ -99,8 +99,8 @@ export default async function IndexPage() {
 ```tsx
 'use client'
 
-import {useLiveQuery} from 'next-sanity/preview'
 import {query, DocumentsCount} from 'components/DocumentsCount'
+import {useLiveQuery} from 'next-sanity/preview'
 
 export default function PreviewDocumentsCount({data: initialData}) {
   const [data, loading] = useLiveQuery(initialData, query)
@@ -118,9 +118,9 @@ export default function PreviewDocumentsCount({data: initialData}) {
 ```tsx
 'use client'
 
-import {useMemo} from 'react'
-import {LiveQueryProvider} from 'next-sanity/preview'
 import {getClient} from 'lib/sanity.client'
+import {LiveQueryProvider} from 'next-sanity/preview'
+import {useMemo} from 'react'
 
 export default function PreviewProvider({
   children,
