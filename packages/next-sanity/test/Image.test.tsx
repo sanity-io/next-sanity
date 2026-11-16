@@ -393,6 +393,29 @@ describe('intrinsic dimensions', () => {
     expect(img.height).toBe('250')
   })
 
+  test('derived dimensions are clamped to 1px for extreme aspect ratios', async () => {
+    const wide = await renderImage(
+      <Image src={sanityImageUrl('clamp-h-2000x5.jpg')} width={100} alt="" />,
+    )
+    expect(wide.img.width).toBe('100')
+    expect(wide.img.height).toBe('1')
+
+    const tall = await renderImage(
+      <Image src={sanityImageUrl('clamp-w-5x2000.jpg')} height={100} alt="" />,
+    )
+    expect(tall.img.width).toBe('1')
+    expect(tall.img.height).toBe('100')
+  })
+
+  test('a vanity filename after the asset filename does not hide its dimensions', async () => {
+    const src = sanityImageUrl('vanity-2000x1000.jpg/my-photo-800x800.jpg')
+    const {img} = await renderImage(<Image src={src} alt="" />)
+
+    expect(img.width).toBe('2000')
+    expect(img.height).toBe('1000')
+    expect(img.src).toMatch(/\/vanity-2000x1000\.jpg\/my-photo-800x800\.jpg\?/)
+  })
+
   test('w/h params from an @sanity/image-url builder are used as the display dimensions', async () => {
     // urlFor(image).width(500).height(250).url()
     const src = sanityImageUrl('built-2000x1000.jpg', '?w=500&h=250')

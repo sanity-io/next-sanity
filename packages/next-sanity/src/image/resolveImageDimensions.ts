@@ -7,9 +7,11 @@ interface ResolvedDimensions {
 
 /**
  * Sanity encodes the original dimensions of every image asset into its
- * filename, e.g. `…/Tb9Ew8CXIwaY6R1kjMvI0uRR-2000x3000.jpg`.
+ * filename, e.g. `…/Tb9Ew8CXIwaY6R1kjMvI0uRR-2000x3000.jpg`. The CDN also
+ * accepts a vanity filename after it (`…-2000x3000.jpg/my-photo.jpg`), so the
+ * match may be followed by one more path segment, which is ignored.
  */
-const FILENAME_DIMENSIONS = /-(\d+)x(\d+)\.\w+$/
+const FILENAME_DIMENSIONS = /-(\d+)x(\d+)\.\w+(?:\/[^/]+)?$/
 
 function parsePositiveInt(value: string | null | undefined): number | undefined {
   if (!value) return undefined
@@ -70,10 +72,18 @@ export function resolveImageDimensions(
     return {width, height}
   }
   if (width !== undefined) {
-    return {width, height: Math.round((Number(width) / intrinsic.width) * intrinsic.height)}
+    return {width, height: scale(width, intrinsic.width, intrinsic.height)}
   }
   if (height !== undefined) {
-    return {width: Math.round((Number(height) / intrinsic.height) * intrinsic.width), height}
+    return {width: scale(height, intrinsic.height, intrinsic.width), height}
   }
   return intrinsic
+}
+
+/**
+ * Scales `known` from the `from` axis onto the `to` axis, clamped to 1px so
+ * extreme aspect ratios never collapse the derived dimension to zero.
+ */
+function scale(known: Dimension, from: number, to: number): number {
+  return Math.max(1, Math.round((Number(known) / from) * to))
 }
