@@ -29,7 +29,7 @@ jobs:
       - uses: actions/setup-node@v7
         with:
           node-version: lts/*
-      # Not --ignore-scripts: pnpm 11 fails an install with unapproved dependency
+      # Not --ignore-scripts: pnpm 11+ fails an install with unapproved dependency
       # build scripts, and this job is where that should surface.
       - run: pnpm install
       - run: pnpm build --filter=./packages/*
@@ -46,8 +46,7 @@ jobs:
       matrix:
         # https://nodejs.org/en/about/releases/
         # https://pnpm.io/installation#compatibility
-        # pnpm 11 requires Node.js 22+
-
+        # The library build needs Node >= 22.18. tsdown loads its config with native TypeScript stripping.
         # @TODO re-enable `current` once it recovers
         # node: [lts/-1, lts/*, current]
         node: [lts/-1, lts/*]
