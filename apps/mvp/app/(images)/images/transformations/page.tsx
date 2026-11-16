@@ -31,8 +31,9 @@ export default async function TransformationsPage() {
             Sanity Image CDN params
           </a>{' '}
           into every srcset candidate — visual effects without any image processing in your app.
-          Sizing stays managed by the component: <code>w</code>, <code>h</code>, <code>fit</code>{' '}
-          and <code>auto=format</code> are still set by the loader.
+          Sizing stays managed by the component: <code>w</code>, <code>h</code> and{' '}
+          <code>auto=format</code> are set by the loader, which also chooses <code>fit</code> unless{' '}
+          <code>queryParams</code> includes one.
         </>
       }
     >
