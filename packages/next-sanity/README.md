@@ -101,7 +101,7 @@ export function PostCard({post}: {post: {mainImage: SanityImageObject}}) {
 - With `placeholder="blur"`, the low-quality image preview is used automatically when the query includes it. Keep the asset's `url` (or `_id`) next to the metadata when dereferencing, so the image can still be built: `asset->{url, metadata{lqip}}`.
 - `projectId` and `dataset` can be omitted when the query dereferences the asset URL (`asset->{url}`): they are read from the URL. Consider wrapping the component once in your app to bind them.
 - URL strings work too: `src` accepts `asset->url` values and URLs built with `@sanity/image-url`, inferring dimensions from the URL's params and filename.
-- Everything else works like [`next/image`][next-image-docs]: `sizes`, `fill`, `preload`, `placeholder`, `quality` (values other than `75` must be listed in [`images.qualities`][next-image-qualities] since Next.js 16), event handlers and refs. Use the `queryParams` prop for additional [image transformations][image-url], e.g. `queryParams={{blur: 50}}`.
+- Everything else works like [`next/image`][next-image-docs]: `sizes`, `fill`, `preload`, `placeholder`, `quality` (values other than `75` must be listed in [`images.qualities`][next-image-qualities] since Next.js 16), event handlers and refs. Use the `queryParams` prop for additional [image transformations][image-url], e.g. `queryParams={{blur: 50}}`. On image objects and asset ids, `fit`, the crop mode (`crop`) and a focal point (`fp-x` with `fp-y`) are forwarded to the URL builder so they affect the crop and hotspot; sizing params (`w`, `h`, `rect`) are ignored.
 
 > [!NOTE]
 > The `next-sanity/image` API is in alpha and may change in a minor release.

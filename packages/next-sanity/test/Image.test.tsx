@@ -16,6 +16,7 @@
  * test/integration/image-component/*) and its image-component demo app.
  */
 import type {StegaBranded} from '@sanity/client/stega'
+import {createImageUrlBuilder, type CropMode, type FitMode} from '@sanity/image-url'
 import {vercelStegaCombine} from '@vercel/stega'
 import {
   Image,
@@ -813,7 +814,15 @@ describe('queryParams', () => {
       />,
     )
 
-    expect(searchParamsOf(img.src)).toMatchObject({blur: '50', rect: '1000,0,1000,1000'})
+    // No `fit` was requested, so the loader still supplies `fit=min` and the
+    // hotspot rect is the one `@sanity/image-url` emits without a fit mode.
+    expect(searchParamsOf(img.src)).toMatchObject({
+      blur: '50',
+      fit: 'min',
+      rect: '1000,0,1000,1000',
+    })
+    expect((img.src ?? '').match(/[?&]fit=/g)).toHaveLength(1)
+    expect((img.src ?? '').match(/[?&]blur=/g)).toHaveLength(1)
   })
 
   test('a q param is preserved when no quality prop is set', async () => {
@@ -864,7 +873,265 @@ describe('queryParams', () => {
       expect(candidate.params).toMatchObject({blur: '50', rect: '1000,0,1000,1000'})
     }
   })
+
+  test.each(['clip', 'crop', 'fill', 'fillmax', 'max', 'scale', 'min'] as const)(
+    'forwards queryParams.fit=%s to the image URL builder',
+    async (fit) => {
+      const source = {
+        asset: {_ref: assetRef(`fit${fit}`)},
+        hotspot: {x: 0.75, y: 0.25},
+      }
+      // `blur` is listed first on purpose. The builder emits `fit` with the
+      // sizing params, and params it does not consume are appended afterwards.
+      // Appending `fit` instead would keep this object order and put `blur` first.
+      const {img} = await renderImage(
+        <Image
+          src={source}
+          projectId={projectId}
+          dataset={dataset}
+          width={500}
+          height={500}
+          queryParams={{blur: 50, fit}}
+          alt=""
+        />,
+      )
+
+      const built = builderUrl(source, {width: 500, height: 500, fit})
+      for (const candidate of parseSrcSet(img.srcset)) {
+        expect(candidate.params.fit).toBe(fit)
+        expect(candidate.params.blur).toBe('50')
+        expect(candidate.params.rect).toBe(built.searchParams.get('rect') ?? undefined)
+        expect(candidate.url.match(/[?&]fit=/g)).toHaveLength(1)
+        expect(candidate.url.match(/[?&]blur=/g)).toHaveLength(1)
+        expect(candidate.url.indexOf('fit=')).toBeLessThan(candidate.url.indexOf('blur='))
+      }
+    },
+  )
+
+  test('forwards fit for a bare asset id', async () => {
+    const source = assetRef('fitid')
+    const {img} = await renderImage(
+      <Image
+        src={source}
+        projectId={projectId}
+        dataset={dataset}
+        width={500}
+        height={500}
+        queryParams={{fit: 'scale'}}
+        alt=""
+      />,
+    )
+
+    const built = builderUrl(source, {width: 500, height: 500, fit: 'scale'})
+    for (const candidate of parseSrcSet(img.srcset)) {
+      expect(candidate.params.fit).toBe('scale')
+      expect(candidate.params.rect).toBe(built.searchParams.get('rect') ?? undefined)
+      expect(candidate.url.match(/[?&]fit=/g)).toHaveLength(1)
+    }
+  })
+
+  test('a studio crop is resolved with the requested fit', async () => {
+    const source = {
+      asset: {_ref: assetRef('fitcrop', '2000x3000')},
+      crop: {top: 0.1, bottom: 0.1, left: 0.1, right: 0.1},
+      hotspot: {x: 0.75, y: 0.25, width: 0.2, height: 0.2},
+    }
+    const {img} = await renderImage(
+      <Image
+        src={source}
+        projectId={projectId}
+        dataset={dataset}
+        width={800}
+        height={400}
+        queryParams={{fit: 'max', blur: 5}}
+        alt=""
+      />,
+    )
+
+    const built = builderUrl(source, {width: 800, height: 400, fit: 'max'})
+    for (const candidate of parseSrcSet(img.srcset)) {
+      expect(candidate.params.fit).toBe('max')
+      expect(candidate.params.blur).toBe('5')
+      expect(candidate.params.rect).toBe(built.searchParams.get('rect') ?? undefined)
+      expect(candidate.url.match(/[?&]fit=/g)).toHaveLength(1)
+      expect(candidate.url.indexOf('fit=')).toBeLessThan(candidate.url.indexOf('blur='))
+    }
+  })
+
+  test('forwards a crop mode to the builder instead of appending it after the rect', async () => {
+    const source = {
+      asset: {_ref: assetRef('cropmode', '2000x3000')},
+      crop: {top: 0.1, bottom: 0.1, left: 0.1, right: 0.1},
+      hotspot: {x: 0.2, y: 0.8, width: 0.2, height: 0.2},
+    }
+    const {img} = await renderImage(
+      <Image
+        src={source}
+        projectId={projectId}
+        dataset={dataset}
+        width={500}
+        height={500}
+        queryParams={{crop: 'entropy', blur: 10}}
+        alt=""
+      />,
+    )
+
+    const built = builderUrl(source, {width: 500, height: 500, crop: 'entropy'})
+    for (const candidate of parseSrcSet(img.srcset)) {
+      expect(candidate.params.crop).toBe('entropy')
+      expect(candidate.params.blur).toBe('10')
+      expect(candidate.params.rect).toBe(built.searchParams.get('rect') ?? undefined)
+      expect(candidate.url.match(/[?&]crop=/g)).toHaveLength(1)
+    }
+  })
+
+  test('forwards a focal point to the builder', async () => {
+    const source = {
+      asset: {_ref: assetRef('focal')},
+      hotspot: {x: 0.75, y: 0.25},
+    }
+    const {img} = await renderImage(
+      <Image
+        src={source}
+        projectId={projectId}
+        dataset={dataset}
+        width={500}
+        height={500}
+        queryParams={{'fp-x': 0, 'fp-y': 1, 'blur': 5, 'fit': 'crop'}}
+        alt=""
+      />,
+    )
+
+    const built = builderUrl(source, {
+      width: 500,
+      height: 500,
+      fit: 'crop',
+      focalPoint: {x: 0, y: 1},
+    })
+    for (const candidate of parseSrcSet(img.srcset)) {
+      expect(candidate.params['fp-x']).toBe('0')
+      expect(candidate.params['fp-y']).toBe('1')
+      expect(candidate.params.fit).toBe('crop')
+      expect(candidate.params.blur).toBe('5')
+      expect(candidate.params.rect).toBe(built.searchParams.get('rect') ?? undefined)
+      expect(candidate.url.match(/[?&]fp-x=/g)).toHaveLength(1)
+      expect(candidate.url.match(/[?&]fp-y=/g)).toHaveLength(1)
+      expect(candidate.url.match(/[?&]fit=/g)).toHaveLength(1)
+    }
+  })
+
+  test('a focal point needs both axes before it replaces the hotspot rect', async () => {
+    const {img} = await renderImage(
+      <Image
+        src={{asset: {_ref: assetRef('focalone')}, hotspot: {x: 0.75, y: 0.25}}}
+        projectId={projectId}
+        dataset={dataset}
+        width={500}
+        height={500}
+        queryParams={{'fp-x': 0.2, 'blur': 5}}
+        alt=""
+      />,
+    )
+
+    expect(searchParamsOf(img.src)).toMatchObject({
+      'fp-x': '0.2',
+      'blur': '5',
+      'rect': '1000,0,1000,1000',
+      'fit': 'min',
+    })
+    expect((img.src ?? '').match(/[?&]fp-x=/g)).toHaveLength(1)
+  })
+
+  test('queryParams.fit on a CDN URL is kept once and does not invent a rect', async () => {
+    const src = sanityImageUrl('queryfit-2000x1000.jpg')
+    const {img} = await renderImage(
+      <Image src={src} width={800} height={400} queryParams={{fit: 'clip', blur: 20}} alt="" />,
+    )
+
+    for (const candidate of parseSrcSet(img.srcset)) {
+      expect(candidate.params.fit).toBe('clip')
+      expect(candidate.params.blur).toBe('20')
+      expect(candidate.params.rect).toBeUndefined()
+      expect(candidate.url.match(/[?&]fit=/g)).toHaveLength(1)
+      expect(candidate.url.match(/[?&]blur=/g)).toHaveLength(1)
+    }
+  })
+
+  test('fill keeps an explicit fit instead of the loader default', async () => {
+    const {img} = await renderImage(
+      <Image
+        src={{
+          asset: {_ref: assetRef('fillfit', '2000x3000')},
+          crop: {top: 0.1, bottom: 0.1, left: 0.1, right: 0.1},
+        }}
+        projectId={projectId}
+        dataset={dataset}
+        fill
+        queryParams={{fit: 'clip'}}
+        alt=""
+      />,
+    )
+
+    expect(searchParamsOf(img.src)).toMatchObject({
+      rect: '200,300,1600,2400',
+      auto: 'format',
+      fit: 'clip',
+    })
+    expect((img.src ?? '').match(/[?&]fit=/g)).toHaveLength(1)
+  })
+
+  test('an invalid fit mode fails', async () => {
+    const error = await renderImageError(
+      <Image
+        src={{asset: {_ref: assetRef('badfit')}}}
+        projectId={projectId}
+        dataset={dataset}
+        width={100}
+        queryParams={{fit: 'stretch'}}
+        alt=""
+      />,
+    )
+
+    expect(error).toBeInstanceOf(TypeError)
+    expect(error).toMatchObject({message: expect.stringContaining('stretch')})
+  })
+
+  test('an invalid crop mode fails', async () => {
+    const error = await renderImageError(
+      <Image
+        src={{asset: {_ref: assetRef('badcrop')}}}
+        projectId={projectId}
+        dataset={dataset}
+        width={100}
+        queryParams={{crop: 'middle'}}
+        alt=""
+      />,
+    )
+
+    expect(error).toBeInstanceOf(TypeError)
+    expect(error).toMatchObject({message: expect.stringContaining('middle')})
+  })
 })
+
+function builderUrl(
+  source: ImageSource,
+  options: {
+    width: number
+    height: number
+    fit?: FitMode
+    crop?: CropMode
+    focalPoint?: {x: number; y: number}
+  },
+): URL {
+  let builder = createImageUrlBuilder({projectId, dataset})
+    .image(source)
+    .width(options.width)
+    .height(options.height)
+  if (options.fit) builder = builder.fit(options.fit)
+  if (options.crop) builder = builder.crop(options.crop)
+  if (options.focalPoint) builder = builder.focalPoint(options.focalPoint.x, options.focalPoint.y)
+  return new URL(builder.url())
+}
 
 describe('intrinsic dimensions', () => {
   test('a bare CDN URL renders with the dimensions encoded in the asset filename', async () => {
