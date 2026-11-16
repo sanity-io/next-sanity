@@ -3,6 +3,14 @@ import {setupWorker} from 'msw/browser'
 
 import type {SseMockTags} from '../helpers'
 
+/**
+ * A 1x1 transparent PNG served for Sanity Image CDN requests, so image tests
+ * exercise real load/decode behavior without hitting the network.
+ */
+const pngBase64 =
+  'iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNkYPhfDwAChwGA60e6kgAAAABJRU5ErkJggg=='
+const pngBytes = () => Uint8Array.from(atob(pngBase64), (char) => char.charCodeAt(0))
+
 const accessControlExposeHeaders =
   'ETag, X-Sanity-Deprecated, X-Sanity-Warning, X-Sanity-Shard, traceparent'
 const accessControlMaxAge = '600'
@@ -25,6 +33,15 @@ const getEventId = () => {
 }
 
 export const worker = setupWorker(
+  // Sanity Image CDN mock used by the `next-sanity/image` browser tests.
+  // `missing-*` filenames fail with a 404 to test error handling.
+  http.get('https://cdn.sanity.io/images/:projectId/:dataset/:fileName', ({params}) => {
+    const fileName = String(params['fileName'])
+    if (fileName.startsWith('missing-')) {
+      return new HttpResponse(null, {status: 404})
+    }
+    return new HttpResponse(pngBytes(), {headers: {'content-type': 'image/png'}})
+  }),
   http.options(
     'https://*.api.sanity.io/:apiVersion/data/live/events/:dataset',
     () => new HttpResponse(null, {status: 204, headers: corsHeaders}),

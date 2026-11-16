@@ -32,6 +32,8 @@ export default function Loading() {
 ```
 
 ```tsx
+import {defineQuery} from 'next-sanity'
+
 // src/app/[slug]/page.tsx
 import {
   cachedSanity,
@@ -39,7 +41,6 @@ import {
   cachedSanityStaticParams,
   type DynamicFetchOptions,
 } from '@/sanity/lib/live'
-import {defineQuery} from 'next-sanity'
 
 export async function generateStaticParams() {
   const pageSlugsQuery = defineQuery(
@@ -78,9 +79,10 @@ A `layout.tsx` can't use `loading.tsx` for fallback UI — [it's one level highe
 ```tsx
 // src/app/(website)/[slug]/layout.tsx
 
-import {cachedSanity, getDynamicFetchOptions, type DynamicFetchOptions} from '@/sanity/lib/live'
 import {defineQuery} from 'next-sanity'
 import {Suspense} from 'react'
+
+import {cachedSanity, getDynamicFetchOptions, type DynamicFetchOptions} from '@/sanity/lib/live'
 
 export default function WebsiteLayout({children, params}: LayoutProps<'/[slug]'>) {
   return (

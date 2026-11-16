@@ -6,9 +6,8 @@ import {defineConfig} from 'sanity'
 import {presentationTool, type PreviewUrlResolverOptions} from 'sanity/presentation'
 
 const theme = buildTheme({
-  accent: '#1cb485',
-  text: '#5c9199',
-  background: {dark: '#0d1415', light: '#fcfdfd'},
+  dark: {accent: '#1cb485', text: '#5c9199', background: '#0d1415'},
+  light: {accent: '#1cb485', text: '#5c9199', background: '#fcfdfd'},
 })
 
 const projectId = process.env.NEXT_PUBLIC_SANITY_PROJECT_ID!

@@ -1,8 +1,7 @@
-import {createClient} from 'next-sanity'
 import {SanityLive as SanityLiveClientComponent} from 'next-sanity/live/client-components'
-import {afterEach, beforeAll, describe, expect, test, vi} from 'vitest'
+import {afterEach, beforeEach, describe, expect, test, vi} from 'vitest'
 
-import {apiVersion, dataset, projectId, renderToString} from './helpers'
+import {apiVersion, createClient, dataset, projectId, renderToString} from './helpers'
 
 let isDraftMode = false
 let isDraftModeCalled = false
@@ -41,7 +40,7 @@ describe.each([{cacheComponents: true}, {cacheComponents: false}])(
 
     describe('minimum required config', () => {
       let html: string
-      beforeAll(async () => {
+      beforeEach(async () => {
         const client = createClient({projectId, dataset, apiVersion, useCdn: false})
         const {SanityLive} = defineLive({client})
         html = await renderToString(<SanityLive />)
@@ -95,7 +94,7 @@ describe.each([{cacheComponents: true}, {cacheComponents: false}])(
     describe('supports custom api host', () => {
       const apiHost = 'https://api.example.com'
       let html: string
-      beforeAll(async () => {
+      beforeEach(async () => {
         const client = createClient({
           apiHost,
           useProjectHostname: false,

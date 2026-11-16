@@ -52,8 +52,9 @@ The recommended way to opt in to guaranteed live content updates is to implement
 We recommend using `revalidateTag` with the `max` cache profile to invalidate the cache tags, and using dedicated client components if you want to drive specific experiences that have to be real-time ([example](https://github.com/sanity-io/lcapi-examples/blob/9f40340b4d147a6a6bcf26e10045388b951d3212/next-enterprise/src/app/Reactions.tsx#L35-L67)), but if you want to have the same instant experience as `next-sanity@12` you can set `{expire: 0}` in your route handler:
 
 ```ts
-import {revalidateTag} from 'next/cache'
 import {timingSafeEqual} from 'node:crypto'
+
+import {revalidateTag} from 'next/cache'
 
 export async function POST(request: Request) {
   const expectedSecret = process.env.SANITY_REVALIDATE_TAGS_SECRET
@@ -108,9 +109,9 @@ export default function RootLayout({children}: {children: React.ReactNode}) {
 If you want to restore the previous default behavior without implementing an [Invalidate Sync Tags Function](https://www.sanity.io/docs/changelog/7a491dd1-67e8-41e0-9a89-eb9704055dc6), you may do so by setting a custom `action` prop on `<SanityLive>`:
 
 ```tsx
+import {parseTags} from 'next-sanity/live'
 import {revalidateTag, updateTag} from 'next/cache'
 import {draftMode} from 'next/headers'
-import {parseTags} from 'next-sanity/live'
 
 export default function RootLayout({children}: {children: React.ReactNode}) {
   return (
@@ -428,9 +429,10 @@ export function onGoAway(event: LiveEventGoAway, intervalOnGoAway: number | fals
 ```
 
 ```tsx
+import {SanityLive} from '@/sanity/lib/live'
+
 // app/layout.tsx
 import {onGoAway} from './client-functions'
-import {SanityLive} from '@/sanity/lib/live'
 
 export default function Layout({children}: {children: React.ReactNode}) {
   return (
@@ -465,9 +467,10 @@ export const onGoAway: SanityLiveOnGoaway = (event, {includeDrafts}, setPollingI
 ```
 
 ```tsx
+import {SanityLive} from '@/sanity/lib/live'
+
 // app/layout.tsx
 import {onGoAway} from './client-functions'
-import {SanityLive} from '@/sanity/lib/live'
 
 export default function Layout({children}: {children: React.ReactNode}) {
   return (
@@ -508,9 +511,10 @@ Use the `resolvePerspectiveFromCookies` server-component helper instead. Here's 
 #### Before
 
 ```tsx
+import {VisualEditing} from 'next-sanity/visual-editing'
 // app/layout.tsx
 import {draftMode} from 'next/headers'
-import {VisualEditing} from 'next-sanity/visual-editing'
+
 import {SanityLive} from '@/sanity/lib/live'
 
 export default async function RootLayout({children}: {children: React.ReactNode}) {
@@ -556,10 +560,12 @@ In this example the `DebugStatus` component will log `Perspective: "unknown"` in
 #### After
 
 ```tsx
+import {VisualEditing} from 'next-sanity/visual-editing'
 // app/layout.tsx
 import {draftMode} from 'next/headers'
-import {VisualEditing} from 'next-sanity/visual-editing'
+
 import {SanityLive} from '@/sanity/lib/live'
+
 import {DraftModePerspective} from './DraftModePerspectiveProvider'
 
 export default async function RootLayout({children}: {children: React.ReactNode}) {
@@ -659,6 +665,7 @@ For use case a) you can use the `useIsPresentationTool` hook instead. For use ca
 // app/layout.tsx
 import {VisualEditing} from 'next-sanity/visual-editing'
 import {draftMode} from 'next/headers'
+
 import {SanityLive} from '@/sanity/lib/live'
 
 import {DebugStatus} from './DebugStatus'
@@ -721,6 +728,7 @@ export function useIsLivePreview() {
 // app/layout.tsx
 import {VisualEditing} from 'next-sanity/visual-editing'
 import {draftMode} from 'next/headers'
+
 import {SanityLive} from '@/sanity/lib/live'
 
 import {DebugStatus} from './DebugStatus'

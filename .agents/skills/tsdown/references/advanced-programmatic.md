@@ -179,8 +179,9 @@ try {
 ### Automated Workflow
 
 ```ts
-import {build} from 'tsdown'
 import {execSync} from 'child_process'
+
+import {build} from 'tsdown'
 
 async function release() {
   // Clean
@@ -211,8 +212,9 @@ release().catch(console.error)
 ### Build with Post-Processing
 
 ```ts
-import {build} from 'tsdown'
 import {copyFileSync} from 'fs'
+
+import {build} from 'tsdown'
 
 await build({
   entry: ['src/index.ts'],
@@ -248,9 +250,9 @@ spawn('tsdown', ['--watch'], {
 ### With Task Runner
 
 ```ts
+import gulp from 'gulp'
 // gulpfile.js
 import {build} from 'tsdown'
-import gulp from 'gulp'
 
 gulp.task('build', async () => {
   await build({
@@ -268,9 +270,9 @@ gulp.task('watch', () => {
 ### With Custom CLI
 
 ```ts
+import {Command} from 'commander'
 // scripts/cli.ts
 import {build} from 'tsdown'
-import {Command} from 'commander'
 
 const program = new Command()
 

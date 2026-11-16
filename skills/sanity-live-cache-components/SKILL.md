@@ -146,10 +146,11 @@ The helpers exported from `live.ts`:
 - Preserve any existing optional callback props on `<SanityLive>` when migrating: `onError`, `onWelcome`, `onReconnect`. They are commonly wired to a toast/notification helper and silently dropping them regresses UX.
 
 ```tsx
-// src/app/layout.tsx
-import {SanityLive} from '@/sanity/lib/live'
 import {VisualEditing} from 'next-sanity/visual-editing'
 import {draftMode} from 'next/headers'
+
+// src/app/layout.tsx
+import {SanityLive} from '@/sanity/lib/live'
 
 export default async function RootLayout({children}: LayoutProps<'/'>) {
   const {isEnabled: isDraftMode} = await draftMode()
