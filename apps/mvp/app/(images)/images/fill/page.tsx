@@ -32,12 +32,24 @@ export default async function FillPage() {
         <div className="grid gap-4 sm:grid-cols-3">
           <Figure caption="object-cover">
             <div className="relative h-64 overflow-hidden rounded-lg">
-              <Image src={post.image} fill sizes="(min-width: 640px) 33vw, 100vw" className="object-cover" alt={alt} />
+              <Image
+                src={post.image}
+                fill
+                sizes="(min-width: 640px) 33vw, 100vw"
+                className="object-cover"
+                alt={alt}
+              />
             </div>
           </Figure>
           <Figure caption="object-contain">
             <div className="relative h-64 overflow-hidden rounded-lg bg-zinc-100">
-              <Image src={post.image} fill sizes="(min-width: 640px) 33vw, 100vw" className="object-contain" alt={alt} />
+              <Image
+                src={post.image}
+                fill
+                sizes="(min-width: 640px) 33vw, 100vw"
+                className="object-contain"
+                alt={alt}
+              />
             </div>
           </Figure>
           <Figure caption="object-cover + object-top">
