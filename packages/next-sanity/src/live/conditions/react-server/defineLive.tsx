@@ -1,3 +1,4 @@
+import type {QueryParams} from 'next-sanity'
 import {SanityLive as SanityLiveClientComponent} from 'next-sanity/live/client-components'
 import {revalidateSyncTagsAction} from 'next-sanity/live/server-actions'
 import {PHASE_PRODUCTION_BUILD} from 'next/constants'
@@ -334,9 +335,10 @@ export function defineLive(config: DefineLiveOptions) {
       ((perspective && perspective !== 'published') || stega) && serverToken
         ? serverToken
         : undefined
+    const resolvedParams = await (params as QueryParams | Promise<QueryParams>)
 
     // 1. Fetch the tags first, with an uncached request, but that does not count towards the Sanity API quota
-    const {syncTags} = await client.fetch(query, await params, {
+    const {syncTags} = await client.fetch(query, resolvedParams, {
       filterResponse: false,
       perspective,
       variant,
@@ -352,7 +354,7 @@ export function defineLive(config: DefineLiveOptions) {
     const cacheTags = [...tags, ...(syncTags?.map((tag) => `${cacheTagPrefix}${tag}`) || [])]
 
     // 2. Then fetch the data, using the fetch cache with specified tags
-    const {result, resultSourceMap} = await client.fetch(query, await params, {
+    const {result, resultSourceMap} = await client.fetch(query, resolvedParams, {
       filterResponse: false,
       perspective,
       variant,

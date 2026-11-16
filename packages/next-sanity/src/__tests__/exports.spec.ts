@@ -40,6 +40,9 @@ test(`exports snapshot for the ${JSON.stringify(env)} condition`, {timeout: 15_0
       ./image:
         Image: function
         imageLoader: function
+        isImageWithAsset: function
+      ./image/client-component:
+        Image: function
       ./live:
         defineLive: function
         isCorsOriginError: function

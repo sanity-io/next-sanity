@@ -16,21 +16,21 @@ allowBuilds:
   sharp: false
 
 catalog:
-  '@next/env': 16.3.1-canary.15
-  '@sanity/client': ^7.26.2
-  '@sanity/image-url': ^2.1.1
+  '@next/env': 16.5.0-canary.52
+  '@sanity/client': ^7.28.0
+  '@sanity/image-url': ^2.2.0
   '@sanity/themer': ^0.3.3
   '@sanity/tsconfig': ^2.2.1
-  '@sanity/vision': 6.11.0
-  '@types/node': ^24.13.3
+  '@sanity/vision': 6.12.0
+  '@types/node': ^24.19.2
   '@types/react': ^19.2.18
   '@types/react-dom': ^19.2.5
   groqd: ^1.7.1
-  next: 16.3.1-canary.15
+  next: 16.5.0-canary.52
   react: ^19.2.8
   react-dom: ^19.2.8
-  sanity: 6.11.0
-  styled-components: ^6.5.3
+  sanity: 6.12.0
+  styled-components: ^6.6.0
   typescript: 7.0.2
 
 dedupePeers: true
@@ -54,3 +54,6 @@ peerDependencyRules:
     - react-dom
 
 preferWorkspacePackages: true
+
+# Next canaries and sanity@next publish more than once a day.
+minimumReleaseAge: 0

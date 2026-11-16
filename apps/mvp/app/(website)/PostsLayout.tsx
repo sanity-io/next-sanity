@@ -66,7 +66,6 @@ export default function Posts(props: PostsLayoutProps) {
                 {post.mainImage ? (
                   <Image
                     data-sanity={dataAttribute('mainImage')}
-                    // @ts-expect-error - TODO: fix this
                     src={post.mainImage}
                     width={512}
                     height={380}
@@ -88,7 +87,6 @@ export default function Posts(props: PostsLayoutProps) {
                       {post.author?.image ? (
                         <Image
                           className="rounded-full"
-                          // @ts-expect-error - TODO: fix this
                           src={post.author.image}
                           height={40}
                           width={40}

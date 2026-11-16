@@ -1,3 +1,5 @@
+import {http} from 'msw'
+import type {SetupWorker} from 'msw/browser'
 import {createClient} from 'next-sanity'
 import {Component, type ReactNode} from 'react'
 import {beforeEach, describe, expect, vi} from 'vitest'
@@ -116,6 +118,92 @@ describe('SanityLiveClientComponent', () => {
     await vi.waitUntil(() => onWelcome.mock.calls.length > 0 || onError.mock.calls.length > 0)
     expect(onError).not.toHaveBeenCalled()
     expect(onWelcome).toHaveBeenCalled()
+  })
+
+  describe('events request', () => {
+    const eventsUrl = 'https://*.api.sanity.io/:apiVersion/data/live/events/:dataset'
+
+    /**
+     * Records the request the browser makes for the event stream. Returning
+     * `undefined` hands the request on to the SSE handler, so the component
+     * still gets its `welcome` and the test can wait on `onWelcome`.
+     */
+    function captureEventsRequest(worker: SetupWorker) {
+      const requests: Request[] = []
+      worker.use(
+        http.get(eventsUrl, ({request}) => {
+          requests.push(request)
+          return undefined
+        }),
+      )
+      return requests
+    }
+
+    test('connects to the API host for the configured dataset and version', async ({worker}) => {
+      const requests = captureEventsRequest(worker)
+      try {
+        const onWelcome = vi.fn()
+        await renderMock({onWelcome})
+        await vi.waitFor(() => expect(onWelcome).toHaveBeenCalled())
+
+        const [request] = requests
+        const url = new URL(request.url)
+        expect(url.origin).toBe(`https://${projectId}.api.sanity.io`)
+        expect(url.pathname).toBe(`/v${apiVersion}/data/live/events/${dataset}`)
+        expect(url.searchParams.get('tag')).toBe('next-loader.live')
+        expect(url.searchParams.has('includeDrafts')).toBe(false)
+        expect(url.searchParams.has('waitFor')).toBe(false)
+        expect(request.headers.has('authorization')).toBe(false)
+      } finally {
+        worker.resetHandlers()
+      }
+    })
+
+    test('includeDrafts sends the browser token and asks for drafts', async ({worker}) => {
+      const requests = captureEventsRequest(worker)
+      try {
+        const onWelcome = vi.fn()
+        await renderMock({onWelcome, includeDrafts: true}, {token: 'sk123'})
+        await vi.waitFor(() => expect(onWelcome).toHaveBeenCalled())
+
+        const [request] = requests
+        expect(new URL(request.url).searchParams.get('includeDrafts')).toBe('true')
+        expect(request.headers.get('authorization')).toBe('Bearer sk123')
+        // Handlers receive the same context, so they can tell drafts apart.
+        expect(onWelcome.mock.lastCall?.[1]).toEqual({includeDrafts: true, waitFor: undefined})
+      } finally {
+        worker.resetHandlers()
+      }
+    })
+
+    test('waitFor="function" is forwarded to the event stream', async ({worker}) => {
+      const requests = captureEventsRequest(worker)
+      try {
+        const onWelcome = vi.fn()
+        await renderMock({onWelcome, waitFor: 'function'})
+        await vi.waitFor(() => expect(onWelcome).toHaveBeenCalled())
+
+        const [request] = requests
+        expect(new URL(request.url).searchParams.get('waitFor')).toBe('function')
+        expect(onWelcome.mock.lastCall?.[1]).toEqual({includeDrafts: false, waitFor: 'function'})
+      } finally {
+        worker.resetHandlers()
+      }
+    })
+
+    test('requestTag is prefixed with the client requestTagPrefix', async ({worker}) => {
+      const requests = captureEventsRequest(worker)
+      try {
+        const onWelcome = vi.fn()
+        await renderMock({onWelcome, requestTag: 'live'}, {requestTagPrefix: 'storefront'})
+        await vi.waitFor(() => expect(onWelcome).toHaveBeenCalled())
+
+        const [request] = requests
+        expect(new URL(request.url).searchParams.get('tag')).toBe('storefront.live')
+      } finally {
+        worker.resetHandlers()
+      }
+    })
   })
 
   describe('action', () => {
