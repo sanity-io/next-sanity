@@ -44,6 +44,7 @@ If you have separate config files, use `mergeConfig`:
 ```ts
 // vitest.config.ts
 import {defineConfig, mergeConfig} from 'vitest/config'
+
 import viteConfig from './vite.config'
 
 export default mergeConfig(

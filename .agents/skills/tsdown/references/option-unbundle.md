@@ -112,9 +112,9 @@ export default defineConfig({
 **Usage:**
 
 ```ts
+import {Button} from 'my-lib/components/button'
 // Users can import specific utilities
 import {helper} from 'my-lib/utils/helper'
-import {Button} from 'my-lib/components/button'
 ```
 
 ### Monorepo Shared Package

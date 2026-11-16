@@ -242,8 +242,8 @@ export default defineConfig({
 Some Vite Vue plugins may work:
 
 ```ts
-import Vue from 'unplugin-vue/rolldown'
 import Components from 'unplugin-vue-components/rolldown'
+import Vue from 'unplugin-vue/rolldown'
 
 export default defineConfig({
   entry: ['src/index.ts'],

@@ -54,6 +54,7 @@ import {
   type StrictDefinedFetchType,
 } from 'next-sanity/live'
 import {cookies, draftMode} from 'next/headers'
+
 import {client} from './client'
 
 const token = process.env.SANITY_API_READ_TOKEN
@@ -133,8 +134,9 @@ The component calling it must still take `perspective` and `stega` as props (or 
 Pattern:
 
 ```tsx
-import {cachedSanity, type DynamicFetchOptions} from '@/sanity/lib/live'
 import {defineQuery} from 'next-sanity'
+
+import {cachedSanity, type DynamicFetchOptions} from '@/sanity/lib/live'
 
 async function CachedComponent({slug, perspective, stega}: {slug: string} & DynamicFetchOptions) {
   const pageQuery = defineQuery(`*[_type == "page" && slug.current == $slug][0]`)
@@ -160,8 +162,9 @@ async function CachedComponent({slug}: {slug: string}) {
 `'use server'` boundaries cannot accept `perspective`/`stega` as inputs (server action inputs are untrusted). Resolve them inside the `'use server'` function and forward them to `cachedSanity`:
 
 ```tsx
-import {cachedSanity, getDynamicFetchOptions} from '@/sanity/lib/live'
 import {defineQuery} from 'next-sanity'
+
+import {cachedSanity, getDynamicFetchOptions} from '@/sanity/lib/live'
 
 async function renderMore({page}: {page: string}) {
   'use server'
@@ -185,8 +188,9 @@ Use `cachedSanity` with `stega: false` hardcoded, and resolve only `perspective`
 The bare fetcher returned by `defineLive`. It calls `cacheTag`/`cacheLife` internally, which **requires** a surrounding `'use cache'` scope — so the only place to call it directly is inside a component (or function) that carries its own `'use cache'` directive:
 
 ```tsx
-import {sanityFetch, type DynamicFetchOptions} from '@/sanity/lib/live'
 import {defineQuery} from 'next-sanity'
+
+import {sanityFetch, type DynamicFetchOptions} from '@/sanity/lib/live'
 
 async function CachedPage({slug, perspective, stega}: {slug: string} & DynamicFetchOptions) {
   'use cache'
@@ -211,8 +215,9 @@ It's `cachedSanity` with `stega` pinned to `false` (never wanted in these contex
 Presentation Tool can open an app in a standalone preview window, so the correct content release must still be reflected in `<title>` and friends. Always resolve `perspective`:
 
 ```ts
-import {getDynamicFetchOptions, cachedSanityMetadata} from '@/sanity/lib/live'
 import {defineQuery} from 'next-sanity'
+
+import {getDynamicFetchOptions, cachedSanityMetadata} from '@/sanity/lib/live'
 
 export async function generateMetadata({params}: PageProps<'/[slug]'>) {
   const [{slug}, {perspective}] = await Promise.all([params, getDynamicFetchOptions()])

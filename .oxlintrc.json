@@ -38,5 +38,13 @@
     "jsx-no-jsx-as-prop": "off",
     "consistent-return": "off",
     "eslint/no-underscore-dangle": "off"
-  }
+  },
+  "overrides": [
+    {
+      "files": ["**/*-types.test.ts", "**/*-types.test.tsx"],
+      "rules": {
+        "unicorn/consistent-function-scoping": "off"
+      }
+    }
+  ]
 }

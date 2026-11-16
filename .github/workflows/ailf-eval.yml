@@ -60,7 +60,7 @@ jobs:
         # `!cancelled()` (not `always()`): a run superseded via cancel-in-progress
         # must not post a "no report" placeholder over a newer run's comment.
         if: ${{ !cancelled() && github.event_name == 'pull_request' }}
-        uses: actions/github-script@v8
+        uses: actions/github-script@v9
         with:
           script: |
             const fs = require('fs');

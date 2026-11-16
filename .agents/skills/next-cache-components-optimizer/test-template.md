@@ -21,8 +21,9 @@ needed; if the shell is intermittently absent, treat it as a real blocker or mar
 never as a warming race. Do not add waits or hovers.
 
 ```ts
-import {test, expect} from '@playwright/test'
 import {instant} from '@next/playwright'
+import {test, expect} from '@playwright/test'
+
 // Use the auth/setup helpers your e2e suite already has. Run as the test user
 // (defined in SKILL.md phase B).
 import {logIntoTestAccount, testUrl} from '../helpers'
