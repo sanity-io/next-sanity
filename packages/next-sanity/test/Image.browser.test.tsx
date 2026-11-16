@@ -1,3 +1,4 @@
+import {http} from 'msw'
 /**
  * Real-DOM coverage of `next-sanity/image`, complementing the server-rendering
  * matrix in `Image.test.tsx` with the interactive behavior that only exists in
@@ -7,6 +8,7 @@
  * The Sanity Image CDN is mocked in `mocks/browser.ts`, which serves a real
  * 1x1 PNG so the browser goes through genuine fetch/decode work.
  */
+import type {SetupWorker} from 'msw/browser'
 import {Image} from 'next-sanity/image'
 import {createRef} from 'react'
 import {describe, expect, vi} from 'vitest'
@@ -21,6 +23,25 @@ function queryImg(container: HTMLElement): HTMLImageElement {
   const img = container.querySelector('img')
   if (!img) throw new Error('Expected an <img> element to be rendered')
   return img
+}
+
+/**
+ * Holds every CDN request for `fileName` until the returned `release` is
+ * called, then hands it on to the default CDN mock. Lets a test assert the
+ * in-flight state without racing the response.
+ */
+function holdCdnResponse(worker: SetupWorker, fileName: string): () => void {
+  let release!: () => void
+  const released = new Promise<void>((resolve) => {
+    release = resolve
+  })
+  worker.use(
+    http.get(`https://cdn.sanity.io/images/:projectId/:dataset/${fileName}`, async () => {
+      await released
+      return undefined
+    }),
+  )
+  return release
 }
 
 describe('loading', () => {
@@ -87,50 +108,64 @@ describe('loading', () => {
 })
 
 describe('blur placeholder', () => {
-  test('shows the blur placeholder while loading and removes it after load', async () => {
-    const screen = await render(
-      <Image
-        // The mock delays `slow-*` responses so the loading state is observable
-        src={sanityImageUrl('slow-blur-2000x1000.jpg')}
-        width={800}
-        height={400}
-        loading="eager"
-        placeholder="blur"
-        blurDataURL={blurDataURL}
-        alt=""
-      />,
-    )
-    const img = queryImg(screen.container)
+  test('shows the blur placeholder while loading and removes it after load', async ({worker}) => {
+    const release = holdCdnResponse(worker, 'blur-2000x1000.jpg')
+    try {
+      const screen = await render(
+        <Image
+          src={sanityImageUrl('blur-2000x1000.jpg')}
+          width={800}
+          height={400}
+          loading="eager"
+          placeholder="blur"
+          blurDataURL={blurDataURL}
+          alt=""
+        />,
+      )
+      const img = queryImg(screen.container)
 
-    expect(img.style.backgroundImage).toContain('data:image/svg+xml')
+      expect(img.style.backgroundImage).toContain('data:image/svg+xml')
 
-    await vi.waitFor(() => expect(img.style.backgroundImage).toBe(''), {timeout: 5000})
+      release()
+      await vi.waitFor(() => expect(img.style.backgroundImage).toBe(''))
+    } finally {
+      release()
+      worker.resetHandlers()
+    }
   })
 })
 
 describe('error handling', () => {
-  test('fires onError and reveals the alt text when the image fails to load', async () => {
-    const onError = vi.fn()
-    const screen = await render(
-      <Image
-        // The mock responds with a 404 for `missing-*` filenames
-        src={sanityImageUrl('missing-2000x1000.jpg')}
-        width={800}
-        height={400}
-        loading="eager"
-        onError={onError}
-        alt="Broken image"
-      />,
-    )
-    const img = queryImg(screen.container)
+  test('fires onError and reveals the alt text when the image fails to load', async ({worker}) => {
+    const release = holdCdnResponse(worker, 'missing-2000x1000.jpg')
+    try {
+      const onError = vi.fn()
+      const screen = await render(
+        <Image
+          // The mock responds with a 404 for `missing-*` filenames
+          src={sanityImageUrl('missing-2000x1000.jpg')}
+          width={800}
+          height={400}
+          loading="eager"
+          onError={onError}
+          alt="Broken image"
+        />,
+      )
+      const img = queryImg(screen.container)
 
-    // The alt text is hidden with a transparent color while loading
-    expect(img.style.color).toBe('transparent')
+      // The alt text is hidden with a transparent color while loading
+      expect(img.style.color).toBe('transparent')
+      expect(onError).not.toHaveBeenCalled()
 
-    await vi.waitFor(() => expect(onError).toHaveBeenCalledTimes(1))
-    // After the error, next/image removes the transparent color so the
-    // alt text becomes visible
-    await vi.waitFor(() => expect(img.style.color).toBe(''))
+      release()
+      await vi.waitFor(() => expect(onError).toHaveBeenCalledTimes(1))
+      // After the error, next/image removes the transparent color so the
+      // alt text becomes visible
+      await vi.waitFor(() => expect(img.style.color).toBe(''))
+    } finally {
+      release()
+      worker.resetHandlers()
+    }
   })
 })
 

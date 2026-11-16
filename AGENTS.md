@@ -54,7 +54,7 @@ When adding, removing, or changing an export from `next-sanity/live`, update all
 Coverage of how `next-sanity/image` drives `next/image` lives in `packages/next-sanity/test`:
 
 - `Image.test.tsx` — server-rendering matrix across the `next/image` options (srcset/sizes generation, fill, quality, priority/preload, placeholders, dev-mode validation, documented quirks) plus type-level contract tests. The rendering and HTML-parsing helpers live in `helpers.image.ts`.
-- `Image.browser.test.tsx` — real-DOM behavior (onLoad/onError, blur placeholder removal, preload link injection, ref forwarding). The Sanity Image CDN is mocked in `test/mocks/browser.ts`: it serves a real 1x1 PNG, `missing-*` filenames return a 404, and `slow-*` filenames are delayed.
+- `Image.browser.test.tsx` — real-DOM behavior (onLoad/onError, blur placeholder removal, preload link injection, ref forwarding). The Sanity Image CDN is mocked in `test/mocks/browser.ts`: it serves a real 1x1 PNG and `missing-*` filenames return a 404. To assert in-flight state, hold the response with `holdCdnResponse` instead of relying on timing.
 - `imageLoader.test.ts` — pure URL-building behavior of the loader.
 
 Browser tests alias `next/image` to Next's ESM build (see `vitest.config.ts`) because the CommonJS interop hack in `next/image` breaks under vite's dependency optimizer, and `test/setupBrowser.ts` shims the `process`/`require` globals that Next.js bundlers normally provide. These tests intentionally pin current `next/image` behavior (default `deviceSizes`/`imageSizes`/`qualities`, preload link shape, deprecations), so expect to update them when bumping the `next` catalog version.

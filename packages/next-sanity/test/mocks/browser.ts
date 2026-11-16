@@ -1,4 +1,4 @@
-import {delay, http, HttpResponse, sse} from 'msw'
+import {http, HttpResponse, sse} from 'msw'
 import {setupWorker} from 'msw/browser'
 
 import type {SseMockTags} from '../helpers'
@@ -34,16 +34,11 @@ const getEventId = () => {
 
 export const worker = setupWorker(
   // Sanity Image CDN mock used by the `next-sanity/image` browser tests.
-  // Filename conventions control the response:
-  // - `missing-*` fails with a 404 to test error handling
-  // - `slow-*` delays the response so loading states can be observed
-  http.get('https://cdn.sanity.io/images/:projectId/:dataset/:fileName', async ({params}) => {
+  // `missing-*` filenames fail with a 404 to test error handling.
+  http.get('https://cdn.sanity.io/images/:projectId/:dataset/:fileName', ({params}) => {
     const fileName = String(params['fileName'])
     if (fileName.startsWith('missing-')) {
       return new HttpResponse(null, {status: 404})
-    }
-    if (fileName.startsWith('slow-')) {
-      await delay(150)
     }
     return new HttpResponse(pngBytes(), {headers: {'content-type': 'image/png'}})
   }),
