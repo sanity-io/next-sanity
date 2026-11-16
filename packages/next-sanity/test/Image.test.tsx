@@ -1494,6 +1494,90 @@ describe('fill hotspot object-position', () => {
     expect(parseStyle(img.style)['object-position']).toBe('75% 25%')
   })
 
+  test('rotates the hotspot when the CDN orients the image 90 degrees', async () => {
+    const {img} = await renderImage(
+      <Image
+        src={{asset: {_ref: assetRef('fillor90')}, hotspot}}
+        {...projectProps}
+        fill
+        queryParams={{or: 90}}
+        alt=""
+      />,
+    )
+
+    expect(searchParamsOf(img.src).or).toBe('90')
+    // Clockwise 90 maps (x, y) -> (1 - y, x).
+    expect(parseStyle(img.style)['object-position']).toBe('75% 75%')
+  })
+
+  test('rotates the hotspot for or=180 and or=270', async () => {
+    const {img: img180} = await renderImage(
+      <Image
+        src={{asset: {_ref: assetRef('fillor180')}, hotspot}}
+        {...projectProps}
+        fill
+        queryParams={{or: 180}}
+        alt=""
+      />,
+    )
+    const {img: img270} = await renderImage(
+      <Image
+        src={{asset: {_ref: assetRef('fillor270')}, hotspot}}
+        {...projectProps}
+        fill
+        queryParams={{or: 270}}
+        alt=""
+      />,
+    )
+
+    expect(parseStyle(img180.style)['object-position']).toBe('25% 75%')
+    expect(parseStyle(img270.style)['object-position']).toBe('25% 25%')
+  })
+
+  test('applies flip before orientation, matching the CDN', async () => {
+    const {img} = await renderImage(
+      <Image
+        src={{asset: {_ref: assetRef('fillflipor')}, hotspot}}
+        {...projectProps}
+        fill
+        queryParams={{flip: 'h', or: 90}}
+        alt=""
+      />,
+    )
+
+    // flip=h -> (0.25, 0.25), then or=90 -> (0.75, 0.25).
+    expect(parseStyle(img.style)['object-position']).toBe('75% 25%')
+  })
+
+  test('rotates the crop-relative position, not the original hotspot', async () => {
+    const {img} = await renderImage(
+      <Image
+        src={{asset: {_ref: assetRef('fillorcrop', '2000x3000')}, crop, hotspot}}
+        {...projectProps}
+        fill
+        queryParams={{or: 90}}
+        alt=""
+      />,
+    )
+
+    // Crop-relative position is 81.25% 18.75%. Clockwise 90 maps to 81.25% 81.25%.
+    expect(parseStyle(img.style)['object-position']).toBe('81.25% 81.25%')
+  })
+
+  test('an unrecognized or value does not move the hotspot', async () => {
+    const {img} = await renderImage(
+      <Image
+        src={{asset: {_ref: assetRef('fillorunknown')}, hotspot}}
+        {...projectProps}
+        fill
+        queryParams={{or: 45}}
+        alt=""
+      />,
+    )
+
+    expect(parseStyle(img.style)['object-position']).toBe('75% 25%')
+  })
+
   test('uses the hotspot fraction when the crop consumes that axis', async () => {
     const {img} = await renderImage(
       <Image

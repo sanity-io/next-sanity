@@ -14,8 +14,9 @@ import type {ImageSource} from './resolveImageSource'
  * whole image out of the box. Missing coordinates use the same defaults as
  * `@sanity/image-url`: a hotspot axis falls back to `0.5`, a crop inset to `0`.
  *
- * `queryParams.flip` is applied by the CDN after that crop, so `h` / `v` /
- * `hv` mirror the clamped point. An explicit `style.objectPosition` or
+ * `queryParams.flip` and `queryParams.or` are applied by the CDN after that
+ * crop (flip, then orientation), so `h` / `v` / `hv` mirror the clamped point
+ * and `90` / `180` / `270` rotate it. An explicit `style.objectPosition` or
  * `objectPosition` prop always wins. `style` is applied after the prop by
  * `next/image`, so when both are set the style value is the one that renders.
  */
@@ -25,11 +26,12 @@ export function resolveFillStyle(
   style: CSSProperties | undefined,
   objectPosition: string | undefined,
   flip: string | number | undefined,
+  orientation: string | number | undefined,
 ): CSSProperties | undefined {
   if (!fill || isExplicit(style?.objectPosition) || isExplicit(objectPosition)) {
     return style
   }
-  const position = hotspotObjectPosition(source, flip)
+  const position = hotspotObjectPosition(source, flip, orientation)
   if (!position) return style
   return {...style, objectPosition: position}
 }
@@ -41,6 +43,7 @@ function isExplicit(value: unknown): boolean {
 function hotspotObjectPosition(
   source: ImageSource,
   flip: string | number | undefined,
+  orientation: string | number | undefined,
 ): string | undefined {
   if (typeof source !== 'object' || source === null || !('hotspot' in source)) return
   const hotspot = source.hotspot
@@ -49,10 +52,12 @@ function hotspotObjectPosition(
   const crop = 'crop' in source && isRecord(source.crop) ? source.crop : undefined
   let x = clamp01(relativeToCrop(coordinate(hotspot, 'x', 0.5), crop, 'left', 'right'))
   let y = clamp01(relativeToCrop(coordinate(hotspot, 'y', 0.5), crop, 'top', 'bottom'))
+  // Match the CDN: flip the cropped image, then apply orientation.
   const axes = flipAxes(flip)
   if (axes.horizontal) x = 1 - x
   if (axes.vertical) y = 1 - y
-  return `${formatPercent(x)} ${formatPercent(y)}`
+  const rotated = rotatePoint(x, y, orientation)
+  return `${formatPercent(rotated.x)} ${formatPercent(rotated.y)}`
 }
 
 /**
@@ -65,6 +70,22 @@ function flipAxes(flip: string | number | undefined): {horizontal: boolean; vert
   if (flip === 'v') return {horizontal: false, vertical: true}
   if (flip === 'hv') return {horizontal: true, vertical: true}
   return {horizontal: false, vertical: false}
+}
+
+/**
+ * The CDN accepts `or=0|90|180|270` (clockwise) on the cropped image after
+ * flip. Anything else is left unrotated.
+ */
+function rotatePoint(
+  x: number,
+  y: number,
+  orientation: string | number | undefined,
+): {x: number; y: number} {
+  const degrees = typeof orientation === 'string' ? Number(orientation) : orientation
+  if (degrees === 90) return {x: 1 - y, y: x}
+  if (degrees === 180) return {x: 1 - x, y: 1 - y}
+  if (degrees === 270) return {x: y, y: 1 - x}
+  return {x, y}
 }
 
 function clamp01(value: number): number {
