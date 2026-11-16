@@ -1,5 +1,35 @@
 # next-sanity
 
+## 13.5.0
+
+### Minor Changes
+
+- [#3926](https://github.com/sanity-io/next-sanity/pull/3926) [`7d3b549`](https://github.com/sanity-io/next-sanity/commit/7d3b549416e90c21a25c70565f1c523de36ab2bf) Thanks [@stipsan](https://github.com/stipsan)! - feat(image): infer `width` and `height` from the Sanity CDN URL. `<Image src={url} alt="" />` now renders without explicit dimensions: they resolve from the URL's `w`/`h` params (e.g. set by an `@sanity/image-url` builder), its `rect` crop param, or the original dimensions Sanity encodes into every asset filename. Providing only one dimension derives the other from the image's aspect ratio, like `next/image` does for static imports.
+
+- [#3927](https://github.com/sanity-io/next-sanity/pull/3927) [`dc580f6`](https://github.com/sanity-io/next-sanity/commit/dc580f6ded1ae98c7d2390ae35db4b7158b75ca4) Thanks [@stipsan](https://github.com/stipsan)! - feat(image): accept Sanity image objects and asset ids as `src`. `<Image src={post.mainImage} projectId={projectId} dataset={dataset} alt="…" />` builds the CDN URL with `@sanity/image-url` 2.2, applies the crop set in the Studio, positions the crop around the hotspot when the requested aspect ratio differs, and uses `asset->metadata.lqip` for `placeholder="blur"` when no `blurDataURL` is given. `projectId` and `dataset` are read from the asset URL when the query dereferences it (`asset->{url}`). The new `queryParams` prop merges additional Sanity Image CDN params (e.g. `{blur: 50}`) into the image URL.
+  
+  `src` accepts the TypeGen image shapes from `@sanity/image-url` (`SanityImageLike`, asset documents, and references). Missing crop and hotspot coordinates use that library's defaults. `InferImageValue`, `InferStrictImageValue`, and `isImageWithAsset` are re-exported from `next-sanity/image`, and the `Infer*` types also accept stega-branded query results.
+  
+  `imageLoader` and `isImageWithAsset` are plain functions that can be called from Server Components, for example with `getImageProps` for art-directed `<picture>` elements. The `'use client'` boundary now sits on the `Image` component alone, via the new `next-sanity/image/client-component` entry point.
+
+### Patch Changes
+
+- [#3951](https://github.com/sanity-io/next-sanity/pull/3951) [`5eac63d`](https://github.com/sanity-io/next-sanity/commit/5eac63d06a3fc68b89caa27bb07723c095050132) Thanks [@renovate](https://github.com/apps/renovate)! - fix(deps): update sanity monorepo to v6.23.0
+
+- [#3959](https://github.com/sanity-io/next-sanity/pull/3959) [`e03bf17`](https://github.com/sanity-io/next-sanity/commit/e03bf173d9064c8f4cfae55be8a3a652860891e5) Thanks [@renovate](https://github.com/apps/renovate)! - fix(deps): update dependency @sanity/preview-url-secret to ^4.1.5
+
+- [#3978](https://github.com/sanity-io/next-sanity/pull/3978) [`d926231`](https://github.com/sanity-io/next-sanity/commit/d926231e61fa1b2bd4cea12cc6e5d96ba5ccdbd5) Thanks [@renovate](https://github.com/apps/renovate)! - fix(deps): update dependency @sanity/visual-editing to ^6.2.1
+
+- [#3925](https://github.com/sanity-io/next-sanity/pull/3925) [`69bb550`](https://github.com/sanity-io/next-sanity/commit/69bb55095d67f21ed51cecc6f7043ba23d52970a) Thanks [@stipsan](https://github.com/stipsan)! - fix(image): pass `data:` and `blob:` srcs through untouched. They render unoptimized, like in `next/image`, instead of being corrupted by appended CDN params.
+
+- [#3997](https://github.com/sanity-io/next-sanity/pull/3997) [`0e6a1c5`](https://github.com/sanity-io/next-sanity/commit/0e6a1c532f083fc6362ab5cf88b4c4881e3fe8bd) Thanks [@stipsan](https://github.com/stipsan)! - fix(image): default `object-position` to the hotspot when `fill` is set. An image object with a hotspot now anchors the browser crop on that point (`75% 25%` for `x: 0.75, y: 0.25`), shifted so it stays aligned with the Studio crop the CDN serves. A point outside the crop is pinned to the nearest edge, and a `flip` query param (`h`, `v`, `hv`) is mirrored. `style.objectPosition` and the `objectPosition` prop still override it.
+
+- [#3996](https://github.com/sanity-io/next-sanity/pull/3996) [`3b1d193`](https://github.com/sanity-io/next-sanity/commit/3b1d19327f26d95fcc6312b39d980bc4224b3c96) Thanks [@stipsan](https://github.com/stipsan)! - fix(image): forward `queryParams.fit` to the image URL builder. For image objects and asset ids, `fit` was appended after `@sanity/image-url` had already computed the crop and hotspot `rect`, so the requested fit mode never influenced that rect. `fit`, the crop mode (`crop`) and a focal point (`fp-x` and `fp-y`) are now passed to the builder before the URL is generated, and those params are not repeated on the final URL. URLs that do not set `fit` are unchanged.
+
+- [#3925](https://github.com/sanity-io/next-sanity/pull/3925) [`69bb550`](https://github.com/sanity-io/next-sanity/commit/69bb55095d67f21ed51cecc6f7043ba23d52970a) Thanks [@stipsan](https://github.com/stipsan)! - fix(image): type the `ref` prop on `Image`. It was already forwarded to the underlying `<img>` element at runtime, but TypeScript rejected it.
+
+- [#3925](https://github.com/sanity-io/next-sanity/pull/3925) [`69bb550`](https://github.com/sanity-io/next-sanity/commit/69bb55095d67f21ed51cecc6f7043ba23d52970a) Thanks [@stipsan](https://github.com/stipsan)! - fix(image): strip stega-encoded metadata from `src` in `Image` and `imageLoader`, so custom `stega.filter` setups that encode URLs can't corrupt CDN requests.
+
 ## 13.4.0
 
 ### Minor Changes
