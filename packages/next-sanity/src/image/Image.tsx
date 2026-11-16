@@ -156,10 +156,11 @@ export function Image(props: ImageProps): React.JSX.Element {
 }
 
 function lqipFrom(src: ImageSource): string | undefined {
-  if (typeof src !== 'object' || src === null || !('asset' in src)) return
-  const asset = src.asset
-  if (typeof asset !== 'object' || asset === null || !('metadata' in asset)) return
-  const metadata = asset.metadata
+  if (typeof src !== 'object' || src === null) return
+  // An image object keeps its metadata on `asset`, an asset document keeps it on the root.
+  const holder: unknown = 'asset' in src ? src.asset : src
+  if (typeof holder !== 'object' || holder === null || !('metadata' in holder)) return
+  const metadata = holder.metadata
   if (typeof metadata !== 'object' || metadata === null || !('lqip' in metadata)) return
   const lqip = metadata.lqip
   return typeof lqip === 'string' && lqip !== '' ? lqip : undefined

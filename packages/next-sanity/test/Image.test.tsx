@@ -737,6 +737,20 @@ describe('sanity image objects', () => {
     expect(parseStyle(img.style)['background-image']).toContain(lqip)
   })
 
+  test('placeholder="blur" uses the lqip from an asset document', async () => {
+    const lqip = 'data:image/jpeg;base64,QVNTRVQ='
+    const assetDocument = {
+      _id: 'image-assetdoclqip-2000x1000-jpg',
+      url: `https://cdn.example.com/images/${projectId}/${dataset}/assetdoclqip-2000x1000.jpg`,
+      metadata: {lqip},
+    }
+    const {img} = await renderImage(
+      <Image src={assetDocument} width={800} placeholder="blur" alt="" />,
+    )
+
+    expect(parseStyle(img.style)['background-image']).toContain(lqip)
+  })
+
   test('an explicit blurDataURL wins over the lqip', async () => {
     const lqip = 'data:image/jpeg;base64,TFFJUA=='
     const blurDataURL = 'data:image/jpeg;base64,QkxVUg=='
