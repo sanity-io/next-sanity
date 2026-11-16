@@ -1,3 +1,4 @@
+import type {QueryParams} from 'next-sanity'
 import {sanity as sanityCacheLife} from 'next-sanity/live/cache-life'
 import {SanityLive as SanityLiveClientComponent} from 'next-sanity/live/client-components'
 import {revalidateSyncTagsAction} from 'next-sanity/live/server-actions'
@@ -217,9 +218,13 @@ export function defineLive(config: DefineLiveOptions): {
     const useCdn = perspective === 'published'
     const isBuildPhase = process.env['NEXT_PHASE'] === PHASE_PRODUCTION_BUILD
     const cacheMode = useCdn && !isBuildPhase ? 'noStale' : undefined
-    const token = (!useCdn || stega) && serverToken ? serverToken : undefined
+    const token =
+      ((perspective && perspective !== 'published') || stega) && serverToken
+        ? serverToken
+        : undefined
+    const resolvedParams = await (params as QueryParams | Promise<QueryParams>)
 
-    const {result, resultSourceMap, syncTags} = await client.fetch(query, await params, {
+    const {result, resultSourceMap, syncTags} = await client.fetch(query, resolvedParams, {
       filterResponse: false,
       perspective,
       variant,
