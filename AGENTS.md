@@ -59,6 +59,10 @@ Coverage of how `next-sanity/image` drives `next/image` lives in `packages/next-
 
 Browser tests alias `next/image` to Next's ESM build (see `vitest.config.ts`) because the CommonJS interop hack in `next/image` breaks under vite's dependency optimizer, and `test/setupBrowser.ts` shims the `process`/`require` globals that Next.js bundlers normally provide. These tests intentionally pin current `next/image` behavior (default `deviceSizes`/`imageSizes`/`qualities`, preload link shape, deprecations), so expect to update them when bumping the `next` catalog version.
 
+## Draft Mode E2E Fixture
+
+`fixtures/e2e/draft-mode` is a Cache Components app that runs `defineEnableDraftMode`, `defineLive` (`sanityFetch` inside `'use cache'`, `SanityLive`), `VisualEditing` and a Server Action draft mode toggle against a real `next build` + `next start` and `next dev`. `test/mock-sanity.mjs` stands in for the Sanity APIs (queries with Content Source Maps, preview URL secrets, Live events), and `src/app/presentation` emulates the Studio side of the Presentation comlink handshake from `127.0.0.1` so the preview on `localhost` loads in a cross-site iframe, optionally with third-party cookies blocked. It runs as part of `pnpm test:e2e` (its `test:e2e` script uses `node --test` and Playwright's Chromium, and needs the `next-sanity` build); set `E2E_MODES=start` or `E2E_MODES=dev` to run one mode. Because the `next` catalog follows `canary`, this is the guard for Next.js draft mode regressions, including the "Unexpected cache miss" warnings draft mode used to log with `partialPrefetching`.
+
 ## AI Literacy Framework (AILF)
 
 `packages/ailf` (`@repo/ailf`) holds the AILF evaluation setup: `.ailf/ailf.config.ts` plus `.ailf/tasks/*.task.ts` scenario tasks paired with `*.reference.tsx` answer keys (multi-file solutions separated by `// --- path ---` comments; these are graded artefacts, intentionally excluded from oxlint, oxfmt, and the package tsconfig). Evals run remotely via `.github/workflows/ailf-eval.yml` (requires the `AILF_API_KEY` repo secret) on PRs touching `packages/ailf/**`, weekly, and via manual dispatch. Validate task files locally with `pnpm --filter @repo/ailf run ailf:validate` (no API key needed). See `packages/ailf/README.md` for how to add tasks.
@@ -77,7 +81,7 @@ Use the pre-installed nvm Node (v22.22.2) for any build/dev/test work by prepend
 export PATH="$HOME/.nvm/versions/node/v22.22.2/bin:$PATH"
 ```
 
-`nvm use` alone is not enough because `/exec-daemon` sits ahead of nvm's shims in `PATH`. This nvm node also bundles a pnpm, but the repo pins pnpm 12 via `packageManager`. Activate that version with Corepack (`corepack enable && corepack prepare`) after prepending nvm. `pnpm install` itself works on the default node; only building/running needs the newer node. `pnpm test:e2e` (Vitest browser project) needs Chromium: `pnpm playwright install chromium`.
+`nvm use` alone is not enough because `/exec-daemon` sits ahead of nvm's shims in `PATH`. This nvm node also bundles a pnpm, but the repo pins pnpm 12 via `packageManager`. Activate that version with Corepack (`corepack enable && corepack prepare`) after prepending nvm. `pnpm install` itself works on the default node; only building/running needs the newer node. `pnpm test:e2e` (the Vitest browser project plus the draft mode fixture) needs Chromium: `pnpm playwright install chromium`. Turbo fails to spawn tasks on this VM with `Exec format error` (this affects `pnpm build` and `pnpm test:e2e`), so run the steps directly: `pnpm --filter next-sanity build`, then `pnpm -r --workspace-concurrency=1 run test:e2e`.
 
 ### Demo app env
 

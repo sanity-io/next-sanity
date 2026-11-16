@@ -1,0 +1,27 @@
+{
+  "name": "@fixtures/e2e/draft-mode",
+  "private": true,
+  "description": "Draft mode, Live and Presentation against a real `next build`/`next start` and `next dev`, with a mocked Sanity API",
+  "type": "module",
+  "scripts": {
+    "test:e2e": "node --test test/draft-mode.test.mjs",
+    "typegen": "next typegen"
+  },
+  "dependencies": {
+    "@sanity/client": "catalog:",
+    "@sanity/comlink": "^4.0.3",
+    "@sanity/presentation-comlink": "^2.2.3",
+    "next": "catalog:",
+    "next-sanity": "workspace:*",
+    "react": "catalog:",
+    "react-dom": "catalog:"
+  },
+  "devDependencies": {
+    "@repo/typescript-config": "workspace:*",
+    "@types/node": "catalog:",
+    "@types/react": "catalog:",
+    "@types/react-dom": "catalog:",
+    "playwright": "^1.65.1",
+    "typescript": "catalog:"
+  }
+}
