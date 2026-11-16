@@ -26,9 +26,10 @@ Page/Layout (Layer 1)
 The examples below use `/[slug]/page.tsx`, which needs:
 
 ```tsx
+import {defineQuery} from 'next-sanity'
+
 // src/app/[slug]/page.tsx
 import {cachedSanityStaticParams} from '@/sanity/lib/live'
-import {defineQuery} from 'next-sanity'
 
 export async function generateStaticParams() {
   const pageSlugsQuery = defineQuery(
@@ -100,9 +101,10 @@ async function DynamicPage({params}: Pick<PageProps<'/[slug]'>, 'params'>) {
 Receives only plain, serializable props and fetches through `cachedSanity` — the shared `'use cache'` boundary in `live.ts` — so it needs no directive of its own:
 
 ```tsx
+import {defineQuery} from 'next-sanity'
+
 // src/app/[slug]/page.tsx (continued)
 import {cachedSanity, type DynamicFetchOptions} from '@/sanity/lib/live'
-import {defineQuery} from 'next-sanity'
 
 async function CachedPage({
   slug,

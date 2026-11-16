@@ -19,17 +19,17 @@ catalog:
   '@next/env': 16.5.0-canary.52
   '@sanity/client': ^7.28.0
   '@sanity/image-url': ^2.2.0
-  '@sanity/themer': ^0.3.3
+  '@sanity/themer': ^0.10.7
   '@sanity/tsconfig': ^2.2.1
-  '@sanity/vision': 6.12.0
+  '@sanity/vision': 6.23.0
   '@types/node': ^24.19.2
-  '@types/react': ^19.2.18
-  '@types/react-dom': ^19.2.5
+  '@types/react': ^19.3.0
+  '@types/react-dom': ^19.3.0
   groqd: ^1.7.1
   next: 16.5.0-canary.52
-  react: ^19.2.8
-  react-dom: ^19.2.8
-  sanity: 6.12.0
+  react: ^19.3.1
+  react-dom: ^19.3.1
+  sanity: 6.23.0
   styled-components: ^6.6.0
   typescript: 7.0.2
 
@@ -55,10 +55,31 @@ peerDependencyRules:
 
 preferWorkspacePackages: true
 
-# Next canaries and sanity@next publish more than once a day.
-# Everything else keeps the default one-day release-age gate.
+# Mirrors the `min-age-exceptions` preset in sanity-io/renovate-config: these are
+# updated without a minimum release age (and Next.js is tracked on `canary`), so
+# pnpm's default 1 day `minimumReleaseAge` would otherwise reject the lockfile.
 minimumReleaseAgeExclude:
-  - next
-  - '@next/*'
-  - sanity
+  - '@portabletext/*'
   - '@sanity/*'
+  - create-sanity
+  - get-it
+  - groq
+  - groq-js
+  - mendoza
+  - next-sanity
+  - react-rx
+  - sanity
+  - use-effect-event
+  - '@next/*'
+  - '@oxfmt/*'
+  - '@oxlint-tsgolint/*'
+  - '@oxlint/*'
+  - '@types/*'
+  - next
+  - oxfmt
+  - oxlint
+  - oxlint-tsgolint
+  - pnpm
+  - react
+  - react-dom
+  - react-is

@@ -25,8 +25,8 @@ The `useTheme` hook is still available if you're building abstractions that need
 You can `useTheme` to replace `useBackgroundColorsFromTheme` and `useTextFontFamilyFromTheme`:
 
 ```tsx
-import {useMemo} from 'react'
 import {useTheme} from 'next-sanity/studio'
+import {useMemo} from 'react'
 import type {StudioProps} from 'sanity'
 export default function MyComponent(props: Pick<StudioProps, 'config'>) {
   const theme = useTheme(config)
@@ -62,9 +62,9 @@ The files that are imported here are the same as the [Next `/pages` example](#us
 `pages/index.tsx`
 
 ```tsx
-import {createPreviewSubscriptionHook} from 'next-sanity'
 import {DocumentsCount, query} from 'components/DocumentsCount'
 import {client, projectId, dataset} from 'lib/sanity.client'
+import {createPreviewSubscriptionHook} from 'next-sanity'
 
 export const getStaticProps = async ({preview = false}) => {
   const data = await client.fetch(query)
@@ -84,8 +84,8 @@ export default function IndexPage({preview, data: initialData}) {
 `components/PreviewDocumentsCount.tsx`
 
 ```tsx
-import {definePreview} from 'next-sanity/preview'
 import {projectId, dataset} from 'lib/sanity.client'
+import {definePreview} from 'next-sanity/preview'
 
 const usePreview = definePreview({projectId, dataset})
 export default function PreviewDocumentsCount() {
@@ -97,10 +97,10 @@ export default function PreviewDocumentsCount() {
 `pages/index.tsx`
 
 ```tsx
-import {lazy} from 'react'
-import {PreviewSuspense} from 'next-sanity/preview'
 import {DocumentsCount, query} from 'components/DocumentsCount'
 import {client} from 'lib/sanity.client'
+import {PreviewSuspense} from 'next-sanity/preview'
+import {lazy} from 'react'
 
 const PreviewDocumentsCount = lazy(() => import('components/PreviewDocumentsCount'))
 
@@ -144,8 +144,8 @@ export default function Page() {
 Then you can achieve the same functionality using `@sanity/preview-kit` and `suspend-react`:
 
 ```tsx
-import {suspend} from 'suspend-react'
 import {_checkAuth} from '@sanity/preview-kit'
+import {suspend} from 'suspend-react'
 
 const projectId = process.env.NEXT_PUBLIC_SANITY_PROJECT_ID
 const useCheckAuth = () =>

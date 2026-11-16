@@ -95,8 +95,8 @@ export default defineConfig({
 ### Basic Plugin Usage
 
 ```ts
-import {defineConfig} from 'tsdown'
 import SomePlugin from 'some-plugin'
+import {defineConfig} from 'tsdown'
 
 export default defineConfig({
   entry: ['src/index.ts'],

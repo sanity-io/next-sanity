@@ -191,11 +191,11 @@ export * from './modal';
 ### Accessing Files Across Package Boundaries
 
 ```typescript
-// BAD: Reaching into another package
-import {Button} from '../../packages/ui/src/button'
-
 // GOOD: Install and import properly
 import {Button} from '@repo/ui/button'
+
+// BAD: Reaching into another package
+import {Button} from '../../packages/ui/src/button'
 ```
 
 ### Shared Code in Apps

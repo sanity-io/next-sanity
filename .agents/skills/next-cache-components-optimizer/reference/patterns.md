@@ -76,9 +76,9 @@ export default async function Layout({children}) {
 ```
 
 ```tsx
+import {cookies} from 'next/headers'
 // ✅ after — start the read without awaiting, pass the promise to a Suspense child
 import {Suspense} from 'react'
-import {cookies} from 'next/headers'
 
 export default function Layout({children}: {children: React.ReactNode}) {
   const cookieStore = cookies() // not awaited → does not block the shell
@@ -237,12 +237,12 @@ export async function generateMetadata() {
 ```
 
 ```tsx
+import {cookies} from 'next/headers'
+import {connection} from 'next/server'
 // ✅ option C — metadata genuinely needs runtime data (cookies/headers):
 // keep generateMetadata dynamic, and add a dynamic-marker component to the
 // page so the rest of the page still prerenders into the shell.
 import {Suspense} from 'react'
-import {connection} from 'next/server'
-import {cookies} from 'next/headers'
 
 export async function generateMetadata() {
   const token = (await cookies()).get('token')?.value

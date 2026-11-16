@@ -18,6 +18,8 @@ export default defineConfig({
         },
       },
       {
+        // Serves the MSW service worker at `/mockServiceWorker.js`.
+        publicDir: 'test/public',
         resolve: {
           alias: {
             // The interop hack `next/image` uses to flatten its CommonJS

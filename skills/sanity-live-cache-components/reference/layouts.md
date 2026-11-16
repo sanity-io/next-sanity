@@ -18,11 +18,12 @@ When Sanity content is fetched inside a `layout.tsx`, the goal is to keep `child
 ## Pattern: cached components per draft/published branch
 
 ```tsx
-// src/app/(website)/layout.tsx
-import {cachedSanity, getDynamicFetchOptions, type DynamicFetchOptions} from '@/sanity/lib/live'
 import {defineQuery} from 'next-sanity'
 import {draftMode} from 'next/headers'
 import {Suspense} from 'react'
+
+// src/app/(website)/layout.tsx
+import {cachedSanity, getDynamicFetchOptions, type DynamicFetchOptions} from '@/sanity/lib/live'
 
 const settingsQuery = defineQuery(`*[_type == "settings"][0]`)
 
@@ -113,11 +114,12 @@ async function CachedWebsiteLayout({
 Useful as a sanity check when adapting the pattern to a layout with only one data-driven section:
 
 ```tsx
-// src/app/(website)/layout.tsx
-import {cachedSanity, getDynamicFetchOptions, type DynamicFetchOptions} from '@/sanity/lib/live'
 import {defineQuery} from 'next-sanity'
 import {draftMode} from 'next/headers'
 import {Suspense} from 'react'
+
+// src/app/(website)/layout.tsx
+import {cachedSanity, getDynamicFetchOptions, type DynamicFetchOptions} from '@/sanity/lib/live'
 
 export default async function WebsiteLayout({children}: LayoutProps<'/'>) {
   const {isEnabled: isDraftMode} = await draftMode()
