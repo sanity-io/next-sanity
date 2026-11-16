@@ -1,5 +1,0 @@
-{
-  "$schema": "https://openapi.vercel.sh/vercel.json",
-  "installCommand": "mkdir -p /tmp/pnpm-bin && (command -v corepack || npm i --prefix /tmp/cp corepack) && PATH=$PATH:/tmp/cp/node_modules/.bin corepack enable pnpm --install-directory /tmp/pnpm-bin && PATH=/tmp/pnpm-bin:$PATH pnpm install --frozen-lockfile",
-  "buildCommand": "mkdir -p /tmp/pnpm-bin && (command -v corepack || npm i --prefix /tmp/cp corepack) && PATH=$PATH:/tmp/cp/node_modules/.bin corepack enable pnpm --install-directory /tmp/pnpm-bin && PATH=/tmp/pnpm-bin:$PATH pnpm turbo run build --filter=mvp"
-}
