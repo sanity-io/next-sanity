@@ -177,8 +177,8 @@ function applyQueryParams(
  * With `fill`, the browser crops the image to its parent. When `src` is an
  * image object with a hotspot, `object-position` defaults to that hotspot as
  * percentages of the cropped image, clamped so the image still covers the
- * box. A `flip` query param is mirrored. `style.objectPosition` and the
- * `objectPosition` prop override it.
+ * box. A `flip` query param is mirrored, then an `or` rotation is applied
+ * clockwise. `style.objectPosition` and the `objectPosition` prop override it.
  *
  * @alpha
  */
@@ -207,6 +207,7 @@ export function Image(props: ImageProps): React.JSX.Element {
     style,
     objectPosition,
     queryParams?.['flip'],
+    queryParams?.['or'],
   )
 
   // data: and blob: URLs can't point to the Sanity Image CDN and don't support

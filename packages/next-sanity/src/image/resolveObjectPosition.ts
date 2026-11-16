@@ -14,10 +14,11 @@ import type {ImageSource} from './resolveImageSource'
  * whole image out of the box. Missing coordinates use the same defaults as
  * `@sanity/image-url`: a hotspot axis falls back to `0.5`, a crop inset to `0`.
  *
- * `queryParams.flip` is applied by the CDN after that crop, so `h` / `v` /
- * `hv` mirror the clamped point. An explicit `style.objectPosition` or
- * `objectPosition` prop always wins. `style` is applied after the prop by
- * `next/image`, so when both are set the style value is the one that renders.
+ * The CDN then flips that crop (`h` / `v` / `hv`) and rotates it clockwise
+ * (`or` of `90`, `180`, or `270`), so the clamped point is mirrored and then
+ * rotated to match. An explicit `style.objectPosition` or `objectPosition`
+ * prop always wins. `style` is applied after the prop by `next/image`, so
+ * when both are set the style value is the one that renders.
  */
 export function resolveFillStyle(
   source: ImageSource,
@@ -25,11 +26,12 @@ export function resolveFillStyle(
   style: CSSProperties | undefined,
   objectPosition: string | undefined,
   flip: string | number | undefined,
+  orientation: string | number | undefined,
 ): CSSProperties | undefined {
   if (!fill || isExplicit(style?.objectPosition) || isExplicit(objectPosition)) {
     return style
   }
-  const position = hotspotObjectPosition(source, flip)
+  const position = hotspotObjectPosition(source, flip, orientation)
   if (!position) return style
   return {...style, objectPosition: position}
 }
@@ -41,6 +43,7 @@ function isExplicit(value: unknown): boolean {
 function hotspotObjectPosition(
   source: ImageSource,
   flip: string | number | undefined,
+  orientation: string | number | undefined,
 ): string | undefined {
   if (typeof source !== 'object' || source === null || !('hotspot' in source)) return
   const hotspot = source.hotspot
@@ -52,7 +55,23 @@ function hotspotObjectPosition(
   const axes = flipAxes(flip)
   if (axes.horizontal) x = 1 - x
   if (axes.vertical) y = 1 - y
-  return `${formatPercent(x)} ${formatPercent(y)}`
+  const rotated = rotateClockwise(x, y, orientation)
+  return `${formatPercent(rotated.x)} ${formatPercent(rotated.y)}`
+}
+
+/**
+ * `or` rotates the flipped crop clockwise. `0` and anything other than `90`,
+ * `180`, or `270` leaves the point where the flip put it.
+ */
+function rotateClockwise(
+  x: number,
+  y: number,
+  orientation: string | number | undefined,
+): {x: number; y: number} {
+  if (orientation === 90 || orientation === '90') return {x: 1 - y, y: x}
+  if (orientation === 180 || orientation === '180') return {x: 1 - x, y: 1 - y}
+  if (orientation === 270 || orientation === '270') return {x: y, y: 1 - x}
+  return {x, y}
 }
 
 /**
