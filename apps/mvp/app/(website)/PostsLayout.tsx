@@ -1,6 +1,7 @@
 import {createDataAttribute} from 'next-sanity'
 
 import {q} from '#groqd'
+import {studioUrl} from '@/app/sanity.client'
 
 import {Image} from './Image'
 import {PostTitle} from './PostTitle'
@@ -50,7 +51,7 @@ export default function Posts(props: PostsLayoutProps) {
       <div className={`mx-auto mt-12 grid max-w-lg gap-5 lg:max-w-none lg:grid-cols-3`}>
         {posts.map((post) => {
           const dataAttribute = createDataAttribute({
-            baseUrl: '/studio',
+            baseUrl: studioUrl,
             workspace: 'stable',
             id: post._id,
             type: post._type,

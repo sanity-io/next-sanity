@@ -69,7 +69,7 @@ Browser tests alias `next/image` to Next's ESM build (see `vitest.config.ts`) be
 
 ## Cursor Cloud specific instructions
 
-This is a pnpm + Turborepo monorepo. The publishable library is `packages/next-sanity`; `apps/mvp` (port 3000) and `apps/static` (port 3001) are Next.js demo apps, and `fixtures/*/*` are CI build guardrails. Standard commands live in the root `package.json` scripts (`build`, `dev`, `lint`, `test`, `test:e2e`) and per-app `package.json`; use those rather than duplicating them here.
+This is a pnpm + Turborepo monorepo. The publishable library is `packages/next-sanity`; `apps/mvp` (port 3000) and `apps/static` (port 3001) are Next.js demo apps, `apps/studio` (port 3333) is the standalone Sanity Studio they share, and `fixtures/*/*` are CI build guardrails. Standard commands live in the root `package.json` scripts (`build`, `dev`, `lint`, `test`, `test:e2e`) and per-app `package.json`; use those rather than duplicating them here.
 
 ### Node version gotcha (important)
 
@@ -85,10 +85,12 @@ export PATH="$HOME/.nvm/versions/node/v22.22.2/bin:$PATH"
 
 ### Demo app env
 
-`apps/mvp` and `apps/static` need a gitignored `.env.local` with `NEXT_PUBLIC_SANITY_PROJECT_ID` and `NEXT_PUBLIC_SANITY_DATASET` (see each app's `.env.local.example`). The example project `pv8y60vp/production` is publicly readable, so published content renders without a token. `SANITY_API_READ_TOKEN` is only required for draft mode, Presentation/visual-editing preview, and authenticated live queries — not for basic rendering.
+`apps/mvp` and `apps/static` need a gitignored `.env.local` with `NEXT_PUBLIC_SANITY_PROJECT_ID` and `NEXT_PUBLIC_SANITY_DATASET`, and `apps/studio` needs `SANITY_STUDIO_PROJECT_ID` and `SANITY_STUDIO_DATASET` (see each app's `.env.local.example`). The example project `pv8y60vp/production` is publicly readable, so published content renders without a token. `SANITY_API_READ_TOKEN` is only required for draft mode, Presentation/visual-editing preview, and authenticated live queries — not for basic rendering.
 
 ### Dev/runtime notes
 
-- Run a single app instead of `pnpm dev` (which starts the library watcher plus both apps): `pnpm --filter mvp dev` or `pnpm --filter static dev`.
-- `apps/mvp` runs Next.js 16 with Cache Components (`cacheComponents: true`) and the React Compiler. `next dev` auto-generates `apps/mvp/AGENTS.md` and `apps/mvp/CLAUDE.md` — these are generated artifacts, do not commit them.
+- Run a single app instead of `pnpm dev` (which starts the library watcher plus all apps): `pnpm --filter mvp dev`, `pnpm --filter static dev` or `pnpm --filter studio dev`.
+- `apps/mvp` runs Next.js 16 with Cache Components (`cacheComponents: true`) and the React Compiler. `next dev` auto-generates `apps/mvp/AGENTS.md` and `apps/mvp/CLAUDE.md` — these are generated artifacts and are gitignored.
+- The Studio is not embedded in either Next.js app. Locally the apps link to it through `NEXT_PUBLIC_SANITY_STUDIO_URL` (default `http://localhost:3333`), and its Presentation tool previews `SANITY_STUDIO_PREVIEW_ORIGIN` (default `http://localhost:3000`). On Vercel, `@vercel/related-projects` replaces those with the matching preview or production deployment: the Next apps look up the Studio project named `next-sanity-studio`, and the Studio looks up `next-sanity`. The Studio project id is still the placeholder `prj_REPLACE_WITH_NEXT_SANITY_STUDIO_PROJECT_ID` in `apps/mvp/vercel.json` and `apps/static/vercel.json`.
+- `apps/studio/schema.json` is committed and is the schema both Next.js apps run TypeGen against. After changing `apps/studio/schemas/**`, run `pnpm typegen` (it extracts the schema first, then regenerates each app's `sanity.types.ts`) and commit the results; CI fails when `schema.json` is stale. `sanity dev` and `sanity build` in `apps/studio` also refresh it.
 - In dev, CMS content edits are reflected on the next page reload.

@@ -1,6 +1,6 @@
 import type {BrowserCommand} from 'vitest/node'
 
-const studioOrigin = 'http://localhost:3000'
+export const studioOrigin = 'http://localhost:3333'
 
 export interface OpenPreviewResult {
   iframeOrigin: string
@@ -32,7 +32,7 @@ export const runOpenPreview: BrowserCommand<[], OpenPreviewResult> = async ({con
         authValue: JSON.stringify({token, time: new Date().toISOString()}),
       },
     )
-    await studioPage.goto(`${studioOrigin}/studio#/presentation`, {waitUntil: 'domcontentloaded'})
+    await studioPage.goto(`${studioOrigin}/presentation`, {waitUntil: 'domcontentloaded'})
 
     const root = studioPage.getByTestId('presentation-root')
     try {

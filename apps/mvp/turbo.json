@@ -3,13 +3,20 @@
   "extends": ["//"],
   "tasks": {
     "build": {
+      "inputs": ["$TURBO_DEFAULT$", ".env*"],
       "env": [
         "NEXT_PUBLIC_SANITY_PROJECT_ID",
         "NEXT_PUBLIC_SANITY_DATASET",
-        "NEXT_PUBLIC_TEST_BASE_PATH",
-        "SANITY_API_READ_TOKEN"
+        "NEXT_PUBLIC_SANITY_STUDIO_URL",
+        "SANITY_API_READ_TOKEN",
+        "VERCEL_ENV",
+        "VERCEL_RELATED_PROJECTS"
       ],
-      "outputs": [".next/**", "!.next/cache/**", "public/studio/static/**"]
+      "outputs": [".next/**", "!.next/cache/**"]
+    },
+    "typegen": {
+      "cache": false,
+      "dependsOn": ["studio#typegen"]
     }
   }
 }

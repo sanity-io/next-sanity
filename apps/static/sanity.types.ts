@@ -14,7 +14,7 @@
 
 export declare const internalGroqTypeReferenceTo: unique symbol
 
-// Source: schema.json
+// Source: ../studio/schema.json
 export type SanityImageAssetReference = {
   _ref: string
   _type: 'reference'

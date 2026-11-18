@@ -1,8 +1,8 @@
 # Open preview integration test
 
-`OpenPreview.browser.test.ts` starts the MVP Next.js app once and drives its embedded Studio with
-the Playwright provider behind Vitest Browser Mode. The browser opens Studio at
-`http://localhost:3000/studio` and Presentation previews
+`OpenPreview.browser.test.ts` starts the `apps/mvp` Next.js app and the standalone `apps/studio`
+Studio once, then drives the Studio with the Playwright provider behind Vitest Browser Mode. The
+browser opens Studio at `http://localhost:3333/presentation` and Presentation previews
 `http://127.0.0.1:3000/open-preview`. These are different browser sites, so the test covers the
 partitioned-cookie behavior that only occurs when Studio and the frontend are cross-site.
 
@@ -33,12 +33,10 @@ and restores `pnpm-workspace.yaml` even if installation fails. A published basel
 the same way, for example `pnpm test:e2e:install-studio 6.12.0`.
 
 Every `pkg.pr.new` build of a PR reports the same semver, so two of them can end up installed at
-once and webpack then bundles both. Studio crashes on `Duplicate instances of context
-"sanity/_singletons/…" with incompatible versions` and the test reports a Presentation tree that
-never loads. The installer removes previously installed `pkg.pr.new` Studio copies and
-`apps/mvp/.next` before installing the selected build.
+once and the Studio's Vite dependency cache can mix them. Studio crashes on `Duplicate instances of
+context "sanity/_singletons/…" with incompatible versions` and the test reports a Presentation tree
+that never loads. The installer removes previously installed `pkg.pr.new` Studio copies and
+`apps/studio/node_modules/.sanity/vite` before installing the selected build.
 
-The fixture serves Next on `0.0.0.0:3000`, which is IPv4 only. On hosts where `localhost` resolves
-to `::1` first and has no IPv6 listener, Node's `fetch` falls back to IPv4 while the browser may
-not, so Studio can fail to load at `http://localhost:3000` even though readiness on
-`http://127.0.0.1:3000` succeeded.
+The fixture serves Next on `0.0.0.0:3000` with webpack (`NEXT_E2E_WEBPACK`). Under Turbopack dev the
+Open preview popup intermittently renders without draft mode and the test flakes.

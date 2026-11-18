@@ -14,7 +14,7 @@
 
 export declare const internalGroqTypeReferenceTo: unique symbol
 
-// Source: schema.json
+// Source: ../studio/schema.json
 export type SanityImageAssetReference = {
   _ref: string
   _type: 'reference'
@@ -432,9 +432,12 @@ export type AllSanitySchemaTypes =
 export type PostTitleQueryResult = string | null
 
 // Query TypeMap
-import '@sanity/client'
-declare module '@sanity/client' {
+declare global {
   interface SanityQueries {
     '*[_type == "post" && _id == $id][0].title': PostTitleQueryResult
   }
+}
+// Lets @sanity/client releases that predate the global registry read it too
+declare module '@sanity/client' {
+  interface SanityQueries extends globalThis.SanityQueries {}
 }
