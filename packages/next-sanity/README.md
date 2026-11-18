@@ -19,6 +19,7 @@ The all-in-one [Sanity][sanity] toolkit for production-grade content-editable Ne
   - [Install `next-sanity`](#install-next-sanity)
   - [Optional: peer dependencies for embedded Sanity Studio](#optional-peer-dependencies-for-embedded-sanity-studio)
 - [Rendering images (alpha)](#rendering-images-alpha)
+- [Sanity Live with Cache Components](#sanity-live-with-cache-components)
 - [Static params for dynamic routes](#static-params-for-dynamic-routes)
 - [Troubleshooting](#troubleshooting)
   - [Draft mode cookies are blocked in the Presentation Tool](#draft-mode-cookies-are-blocked-in-the-presentation-tool)
@@ -110,6 +111,93 @@ export function PostCard({post}: {post: {mainImage: SanityImageObject}}) {
 > [!NOTE]
 > The `next-sanity/image` API is in alpha and may change in a minor release.
 
+## Sanity Live with Cache Components
+
+`draftMode()` decides the defaults of `sanityFetch` and `<SanityLive />`, and `sanityFetch` reads it itself, which Next.js allows inside `'use cache'`. Outside draft mode a fetch is `perspective: 'published'` with `stega: false` and no variant, and `<SanityLive />` leaves `includeDrafts` off. Inside draft mode `stega` defaults to `true`, `<SanityLive />` includes drafts, and the perspective comes from the `perspective` resolver you hand `defineLive`. An explicit option always wins, so `stega: false` stays off inside draft mode and `perspective: 'drafts'` is honoured outside it.
+
+Without a resolver the draft mode perspective comes from the Presentation Tool cookie when `cacheComponents` is off, and is `'drafts'` when it is on, because `cookies()` cannot be read inside `'use cache'`. With a resolver `sanityFetch` never reads cookies, so it behaves the same under either setting and nothing has to be threaded through props.
+
+The resolver is usually the `[perspective]` root param getter from `next/root-params`, with `definePerspectiveProxy` from `next-sanity/live/proxy` rewriting every request into the `/[perspective]/...` route tree based on the draft mode cookies:
+
+```ts
+// sanity/live.ts
+import {defineLive} from 'next-sanity/live'
+import {perspective} from 'next/root-params'
+
+import {client} from './client'
+
+const token = process.env.SANITY_API_READ_TOKEN
+
+export const {sanityFetch, SanityLive} = defineLive({
+  client,
+  serverToken: token,
+  browserToken: token,
+  perspective,
+})
+```
+
+```ts
+// proxy.ts
+import {definePerspectiveProxy} from 'next-sanity/live/proxy'
+
+export const proxy = definePerspectiveProxy()
+
+// Next.js needs the matcher as a literal in this file.
+export const config = {
+  matcher: [
+    '/((?!_next|_vercel|api|studio|favicon|\\.well-known|robots\\.|sitemap\\.|[^/]*\\.).*)?',
+  ],
+}
+```
+
+```tsx
+// app/[perspective]/layout.tsx
+import {SanityLive} from '@/sanity/live'
+
+export function generateStaticParams() {
+  return [{perspective: 'published'}]
+}
+
+export default function RootLayout({children}: LayoutProps<'/[perspective]'>) {
+  return (
+    <html lang="en">
+      <body>
+        {children}
+        <SanityLive />
+      </body>
+    </html>
+  )
+}
+```
+
+```tsx
+// app/[perspective]/[slug]/page.tsx
+import {defineQuery} from 'next-sanity'
+import {Suspense} from 'react'
+
+import {sanityFetch} from '@/sanity/live'
+
+const POST_QUERY = defineQuery(`*[_type == "post" && slug.current == $slug][0]`)
+
+export default function Page({params}: PageProps<'/[perspective]/[slug]'>) {
+  return (
+    <Suspense fallback={<p>Loading...</p>}>
+      {params.then(({slug}) => (
+        <CachedPost slug={slug} />
+      ))}
+    </Suspense>
+  )
+}
+
+async function CachedPost({slug}: {slug: string}) {
+  'use cache'
+  const {data} = await sanityFetch({query: POST_QUERY, params: {slug}})
+  return <pre>{JSON.stringify(data, null, 2)}</pre>
+}
+```
+
+Apps that cannot add a `[perspective]` segment leave the resolver off. Inside draft mode with `cacheComponents` on the perspective is then `'drafts'`, so content release previews in Presentation Tool need the segment. The full pattern lives in the [`sanity-live-cache-components` skill][live-skill].
+
 ## Static params for dynamic routes
 
 `next-sanity/static-params` builds a [`generateStaticParams`][generate-static-params] from the page's own GROQ query. It is server and build-time only, so import it from route files and never from Client Components.
@@ -119,6 +207,7 @@ export function PostCard({post}: {post: {mainImage: SanityImageObject}}) {
 import {defineQuery} from 'next-sanity'
 import {defineGenerateStaticParams, STATIC_PARAMS_PLACEHOLDER} from 'next-sanity/static-params'
 import {notFound} from 'next/navigation'
+
 import {client} from '@/sanity/lib/client'
 
 const postQuery = defineQuery(
@@ -220,6 +309,7 @@ MIT-licensed. See [LICENSE][LICENSE].
 [empty-generate-static-params]: https://nextjs.org/docs/messages/empty-generate-static-params
 [generate-static-params]: https://nextjs.org/docs/app/api-reference/functions/generate-static-params
 [LICENSE]: LICENSE
+[live-skill]: https://github.com/sanity-io/next-sanity/tree/main/skills/sanity-live-cache-components
 [migrate-v1-to-v4]: https://github.com/sanity-io/next-sanity/blob/main/packages/next-sanity/MIGRATE-v1-to-v4.md
 [migrate-v4-to-v5-app]: https://github.com/sanity-io/next-sanity/blob/main/packages/next-sanity/MIGRATE-v4-to-v5-app-router.md
 [migrate-v4-to-v5-pages]: https://github.com/sanity-io/next-sanity/blob/main/packages/next-sanity/MIGRATE-v4-to-v5-pages-router.md

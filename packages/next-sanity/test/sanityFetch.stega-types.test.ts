@@ -1,6 +1,6 @@
 import {describe, expectTypeOf, test} from 'vitest'
 
-import type {DefinedFetchType, StrictDefinedFetchType} from '#live/types'
+import type {DefinedFetchType, DefineLiveOptions, LivePerspective} from '#live/types'
 
 import type {ClientReturn, StegaBranded, StegaString} from '../src/client'
 
@@ -21,7 +21,6 @@ type BrandedData = StegaBranded<CleanData>
 
 // Type-only bindings — erased at runtime; nested samples below are never called.
 declare const sanityFetch: DefinedFetchType
-declare const strictFetch: StrictDefinedFetchType
 
 describe('DefinedFetchType stega branding', () => {
   test('stega: true returns branded data', () => {
@@ -66,40 +65,14 @@ describe('DefinedFetchType stega branding', () => {
   })
 })
 
-describe('StrictDefinedFetchType stega branding', () => {
-  test('stega: true returns branded data', () => {
-    async function sample() {
-      return strictFetch({query, perspective: 'published', stega: true})
-    }
-    type Data = Awaited<ReturnType<typeof sample>>['data']
-    expectTypeOf<Data>().toEqualTypeOf<BrandedData>()
-    expectTypeOf<Data['imageLocation']>().not.toEqualTypeOf<'left' | 'right'>()
+describe('DefineLiveOptions', () => {
+  test('perspective is optional on every sanityFetch call', () => {
+    expectTypeOf<Parameters<DefinedFetchType>[0]['perspective']>().toEqualTypeOf<
+      LivePerspective | undefined
+    >()
   })
 
-  test('stega: false returns clean ClientReturn', () => {
-    async function sample() {
-      return strictFetch({query, perspective: 'published', stega: false})
-    }
-    type Data = Awaited<ReturnType<typeof sample>>['data']
-    expectTypeOf<Data>().toEqualTypeOf<CleanData>()
-    expectTypeOf<Data['imageLocation']>().toEqualTypeOf<'left' | 'right'>()
-  })
-
-  test('stega: boolean returns branded data', () => {
-    async function sample() {
-      const stega = false as boolean
-      return strictFetch({query, perspective: 'drafts', stega})
-    }
-    type Data = Awaited<ReturnType<typeof sample>>['data']
-    expectTypeOf<Data>().toEqualTypeOf<BrandedData>()
-    expectTypeOf<Data['title']>().toEqualTypeOf<StegaString>()
-  })
-
-  test('requires stega', () => {
-    async function sample() {
-      // @ts-expect-error stega is required in strict mode
-      return strictFetch({query, perspective: 'published'})
-    }
-    void sample
+  test('has no strict option', () => {
+    expectTypeOf<DefineLiveOptions>().not.toHaveProperty('strict')
   })
 })

@@ -137,15 +137,15 @@ Show all the files that need to change, and any new files.`,
         },
         {
           id: 'provides-use-cache-boundary',
-          text: "`sanityFetch` calls happen inside a `'use cache'` boundary (for example one shared cached wrapper function around `sanityFetch`), since with Cache Components `sanityFetch` tags the cache but does not create the boundary itself.",
+          text: "`sanityFetch` calls happen inside a `'use cache'` boundary (a cached leaf component, or one shared cached wrapper function around `sanityFetch`), since with Cache Components `sanityFetch` tags the cache but does not create the boundary itself.",
         },
         {
           id: 'draft-mode-parity',
-          text: 'Draft mode still works: dynamic values from `draftMode()` (and cookies) are resolved outside the cached code path and passed in, with the draft-mode render path wrapped in `<Suspense>` so the published path stays prerenderable.',
+          text: 'Draft mode still works with no app-level plumbing. The cached leaves call `sanityFetch({query, params})` and let it read `draftMode()` itself, so one code path serves published visitors and draft previews. Dynamic `params` are awaited inside a `<Suspense>` boundary (or covered by a sibling `loading.tsx`) so the published path stays prerenderable.',
         },
         {
           id: 'live-updates-preserved',
-          text: '`<SanityLive />` stays rendered so published pages keep revalidating in response to content changes.',
+          text: '`<SanityLive />` stays rendered once in the root layout, without an `includeDrafts` prop, so published pages keep revalidating on content changes and draft mode keeps receiving live draft updates.',
         },
       ],
     },
@@ -155,11 +155,15 @@ Show all the files that need to change, and any new files.`,
       criteria: [
         {
           id: 'no-dynamic-apis-inside-use-cache',
-          text: "Does not call `draftMode()`, `cookies()`, or `headers()` inside `'use cache'` functions or components.",
+          text: "Does not call `cookies()` or `headers()` inside `'use cache'` functions or components. `draftMode()` is allowed there and `sanityFetch` reads it itself.",
         },
         {
-          id: 'explicit-fetch-options',
-          text: 'Cached fetches pass explicit `perspective` and `stega` options (for example via `strict: true` on `defineLive`) instead of relying on request-time auto-detection inside the cache boundary.',
+          id: 'no-fetch-option-plumbing',
+          text: 'Cached fetches leave `perspective` and `stega` to their draft-mode-driven defaults. The solution does not pass `strict` to `defineLive`, does not import `StrictDefinedFetchType`, does not resolve `draftMode()` or cookies outside the cache to thread `perspective`, `variant`, or `stega` through props or arguments, and does not branch a page on `draftMode()` between a cached and a dynamic subtree.',
+        },
+        {
+          id: 'perspective-left-to-sanity-fetch',
+          text: "The draft-mode perspective is resolved by `sanityFetch`, not by app code. Either no resolver is configured (inside draft mode the perspective falls back to `'drafts'`), or the app adds an `app/[perspective]/` root segment whose layout has `generateStaticParams` returning `published`, a `proxy.ts` that exports `definePerspectiveProxy()` from `next-sanity/live/proxy`, and passes the `perspective` getter from `next/root-params` to `defineLive`. Reading the Presentation Tool cookie in app code to pick a perspective is wrong.",
         },
         {
           id: 'no-manual-cache-tag-plumbing',
@@ -174,5 +178,7 @@ Show all the files that need to change, and any new files.`,
     {type: 'contains', value: 'cacheComponents'},
     {type: 'contains', value: "'use cache'"},
     {type: 'contains-any', value: ['cache-life', 'cacheLife']},
+    {type: 'not-contains', value: 'StrictDefinedFetchType'},
+    {type: 'not-contains', value: 'strict: true'},
   ],
 })

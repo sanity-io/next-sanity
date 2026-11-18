@@ -145,24 +145,48 @@ describe.each([{cacheComponents: true}, {cacheComponents: false}])(
           undefined,
         )
       })
-      test.runIf(!cacheComponents)(
-        'includeDrafts is true by default if draftMode is enabled',
-        async () => {
-          const client = createClient({projectId, dataset, apiVersion, useCdn: true})
-          const {SanityLive} = defineLive({client, browserToken})
-          isDraftMode = true
-          await renderToString(<SanityLive />)
-          expect(SanityLiveClientComponent).toHaveBeenLastCalledWith(
-            expect.objectContaining({
-              config: expect.objectContaining({
-                token: browserToken,
-              }),
-              includeDrafts: true,
+      test('includeDrafts is true by default if draftMode is enabled', async () => {
+        const client = createClient({projectId, dataset, apiVersion, useCdn: true})
+        const {SanityLive} = defineLive({client, browserToken})
+        isDraftMode = true
+        await renderToString(<SanityLive />)
+        expect(SanityLiveClientComponent).toHaveBeenLastCalledWith(
+          expect.objectContaining({
+            config: expect.objectContaining({
+              token: browserToken,
             }),
-            undefined,
-          )
-        },
-      )
+            includeDrafts: true,
+          }),
+          undefined,
+        )
+      })
+      test('does not call draftMode() when includeDrafts={false}', async () => {
+        const client = createClient({projectId, dataset, apiVersion, useCdn: true})
+        const {SanityLive} = defineLive({client, browserToken})
+        isDraftMode = true
+        await renderToString(<SanityLive includeDrafts={false} />)
+        expect(isDraftModeCalled).not.toBe(true)
+        expect(SanityLiveClientComponent).toHaveBeenLastCalledWith(
+          expect.objectContaining({
+            config: expect.objectContaining({token: undefined}),
+            includeDrafts: undefined,
+          }),
+          undefined,
+        )
+      })
+      test('does not call draftMode() when includeDrafts={true}', async () => {
+        const client = createClient({projectId, dataset, apiVersion, useCdn: true})
+        const {SanityLive} = defineLive({client, browserToken})
+        await renderToString(<SanityLive includeDrafts />)
+        expect(isDraftModeCalled).not.toBe(true)
+        expect(SanityLiveClientComponent).toHaveBeenLastCalledWith(
+          expect.objectContaining({
+            config: expect.objectContaining({token: browserToken}),
+            includeDrafts: true,
+          }),
+          undefined,
+        )
+      })
       test('includeDrafts is never true if browserToken is not set', async () => {
         const client = createClient({projectId, dataset, apiVersion, useCdn: true})
         const {SanityLive} = defineLive({client})
@@ -288,45 +312,6 @@ describe.each([{cacheComponents: true}, {cacheComponents: false}])(
           expect.objectContaining({
             action,
             waitFor: 'function',
-          }),
-          undefined,
-        )
-      })
-    })
-    describe('strict mode', () => {
-      test('throws when includeDrafts is omitted', async () => {
-        const client = createClient({projectId, dataset, apiVersion, useCdn: false})
-        const {SanityLive} = defineLive({client, browserToken, strict: true})
-        await expect(
-          // @ts-expect-error -- intentionally omitting `includeDrafts` to assert strict validation
-          renderToString(<SanityLive />),
-        ).rejects.toThrow(/requires an explicit `includeDrafts` prop/)
-      })
-
-      test('does not call draftMode() when includeDrafts={false}', async () => {
-        const client = createClient({projectId, dataset, apiVersion, useCdn: false})
-        const {SanityLive} = defineLive({client, browserToken, strict: true})
-        isDraftMode = true
-        await renderToString(<SanityLive includeDrafts={false} />)
-        expect(isDraftModeCalled).not.toBe(true)
-        expect(SanityLiveClientComponent).toHaveBeenLastCalledWith(
-          expect.objectContaining({
-            config: expect.objectContaining({token: undefined}),
-            includeDrafts: undefined,
-          }),
-          undefined,
-        )
-      })
-
-      test('does not call draftMode() when includeDrafts={true}', async () => {
-        const client = createClient({projectId, dataset, apiVersion, useCdn: false})
-        const {SanityLive} = defineLive({client, browserToken, strict: true})
-        await renderToString(<SanityLive includeDrafts />)
-        expect(isDraftModeCalled).not.toBe(true)
-        expect(SanityLiveClientComponent).toHaveBeenLastCalledWith(
-          expect.objectContaining({
-            config: expect.objectContaining({token: browserToken}),
-            includeDrafts: true,
           }),
           undefined,
         )
