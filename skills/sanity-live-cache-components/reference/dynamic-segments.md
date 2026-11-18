@@ -1,6 +1,6 @@
 # High-performance dynamic segments
 
-[Dynamic routes](https://nextjs.org/docs/app/api-reference/file-conventions/dynamic-routes) should always implement `generateStaticParams`, even if only a subset of pages — see [the Cache Components note on dynamic routes](https://nextjs.org/docs/app/api-reference/file-conventions/dynamic-routes#with-cache-components). Whether to use `loading.tsx` or `<Suspense>` for fallback UI depends on the use case — see [the streaming guide](https://nextjs.org/docs/app/guides/streaming#when-to-use-loadingjs-vs-suspense).
+[Dynamic routes](https://nextjs.org/docs/app/api-reference/file-conventions/dynamic-routes) should always implement `generateStaticParams`, even if only a subset of pages. See [the Cache Components note on dynamic routes](https://nextjs.org/docs/app/api-reference/file-conventions/dynamic-routes#with-cache-components). Whether to use `loading.tsx` or `<Suspense>` for fallback UI depends on the use case. See [the streaming guide](https://nextjs.org/docs/app/guides/streaming#when-to-use-loadingjs-vs-suspense).
 
 ## Contents
 
@@ -9,7 +9,7 @@
 
 ## Case 1: `page.tsx` with `loading.tsx` + partial `generateStaticParams`
 
-`generateStaticParams` returns only the 100 most recently updated pages. A sibling `loading.tsx` renders fallback UI, so `page.tsx` itself can skip the `<Suspense>` wrapper. The same fallback UI is reused in draft mode.
+`generateStaticParams` returns only the 100 most recently updated pages. A sibling `loading.tsx` renders fallback UI, so `page.tsx` itself can skip the `<Suspense>` wrapper and await `params` directly.
 
 `defineGenerateStaticParams` from `next-sanity/static-params` reads the page's own GROQ query. Each `<expression> == $param` conjunct in the root `*[...]` filter becomes a route param, the other conjuncts stay as constraints, and the `[0]` and projection are dropped. `groq-js` parses the query when the module loads, so a typo or an unbound `$param` fails `next build` with the offending expression. At build time it fetches from the published perspective and returns `[{slug: STATIC_PARAMS_PLACEHOLDER}]` instead of `[]`. Cache Components fails the build on an empty result. The [Next.js error page](https://nextjs.org/docs/messages/empty-generate-static-params) names this placeholder as the fallback and warns that it only validates the `notFound()` path, so the helper uses it only when the query returns nothing. The page handles the placeholder with `notFound()`.
 
@@ -17,13 +17,13 @@ This scales to thousands of pages without ballooning `next build` and without co
 
 - Prerendered pages load instantly.
 - Pages not prerendered start rendering on `<Link>` hover (or when scrolled into view), so on click:
-  - If prerendering finished in time → serves instantly, no loading state.
-  - If not → instantly shows the cached `loading.tsx` fallback.
+  - If prerendering finished in time, the page serves instantly with no loading state.
+  - If not, the cached `loading.tsx` fallback shows instantly.
 
-Add a sibling `src/app/[slug]/loading.tsx` that renders the same skeleton you would otherwise pass to `<Suspense>`. Keep it cheap and free of layout shift:
+Add a sibling `src/app/[perspective]/[slug]/loading.tsx` that renders the same skeleton you would otherwise pass to `<Suspense>`. Keep it cheap and free of layout shift:
 
 ```tsx
-// src/app/[slug]/loading.tsx
+// src/app/[perspective]/[slug]/loading.tsx
 export default function Loading() {
   return (
     <article aria-busy>
@@ -34,12 +34,13 @@ export default function Loading() {
 ```
 
 ```tsx
-// src/app/[slug]/page.tsx
-import {cachedSanity, getDynamicFetchOptions, type DynamicFetchOptions} from '@/sanity/lib/live'
-import {client} from '@/sanity/lib/client'
 import {defineQuery} from 'next-sanity'
 import {defineGenerateStaticParams, STATIC_PARAMS_PLACEHOLDER} from 'next-sanity/static-params'
 import {notFound} from 'next/navigation'
+
+// src/app/[perspective]/[slug]/page.tsx
+import {client} from '@/sanity/lib/client'
+import {sanityFetch} from '@/sanity/lib/live'
 
 const pageQuery = defineQuery(`*[_type == "page" && slug.current == $slug][0]`)
 
@@ -50,25 +51,18 @@ export const {generateStaticParams} = defineGenerateStaticParams({
   limit: 100,
 })
 
-// With sibling `loading.tsx`, skip the `<Suspense>` + `DynamicPage` indirection: await `params`
-// and `getDynamicFetchOptions` directly inside `Page`.
-export default async function Page({params}: PageProps<'/[slug]'>) {
-  const [{slug}, {perspective, stega}] = await Promise.all([params, getDynamicFetchOptions()])
+// With a sibling `loading.tsx`, `Page` can await `params` directly.
+// `sanityFetch` reads draft mode itself, so perspective and stega are not threaded through.
+export default async function Page({params}: PageProps<'/[perspective]/[slug]'>) {
+  const {slug} = await params
   if (slug === STATIC_PARAMS_PLACEHOLDER) notFound()
-  return <CachedPage slug={slug} perspective={perspective} stega={stega} />
+  return <CachedPage slug={slug} />
 }
-async function CachedPage({
-  slug,
-  perspective,
-  stega,
-}: Awaited<PageProps<'/[slug]'>['params']> & DynamicFetchOptions) {
-  const {data} = await cachedSanity({
-    query: pageQuery,
-    params: {slug},
-    perspective,
-    stega,
-  })
-  return <article>{/* use `data` to render stuff */}</article>
+
+async function CachedPage({slug}: {slug: string}) {
+  'use cache'
+  const {data} = await sanityFetch({query: pageQuery, params: {slug}})
+  return <article>{/* use `data` */}</article>
 }
 ```
 
@@ -104,41 +98,34 @@ export function generateStaticParams() {
 
 ## Case 2: `layout.tsx` with non-blocking dynamic `params`
 
-A `layout.tsx` can't use `loading.tsx` for fallback UI — [it's one level higher in the hierarchy](https://nextjs.org/docs/app/getting-started/project-structure#component-hierarchy). To fetch data that depends on dynamic `params` without blocking `children` from streaming, pass the unawaited `params` promise into a `<Suspense>` boundary and await it inside.
+A `layout.tsx` can't use `loading.tsx` for fallback UI. [It's one level higher in the hierarchy](https://nextjs.org/docs/app/getting-started/project-structure#component-hierarchy). To fetch data that depends on dynamic `params` without blocking `children` from streaming, pass the unawaited `params` promise into a `<Suspense>` boundary and await it inside.
 
 ```tsx
-// src/app/(website)/[slug]/layout.tsx
-
 import {defineQuery} from 'next-sanity'
 import {Suspense} from 'react'
 
-import {cachedSanity, getDynamicFetchOptions, type DynamicFetchOptions} from '@/sanity/lib/live'
+// src/app/[perspective]/[slug]/layout.tsx
+import {sanityFetch} from '@/sanity/lib/live'
 
-export default function WebsiteLayout({children, params}: LayoutProps<'/[slug]'>) {
+const footerQuery = defineQuery(`*[_type == "footer" && slug.current == $slug][0]`)
+
+export default function SlugLayout({children, params}: LayoutProps<'/[perspective]/[slug]'>) {
   return (
     <>
       {children}
-      {/* The footer renders below the fold, no fallback needed */}
+      {/* Below the fold, no fallback needed. `params` is awaited inside Suspense so `children` streams in parallel. */}
       <Suspense>
-        <DynamicFooter
-          // Don't await `params` here — pass the promise and await inside Suspense so `children` streams in parallel
-          params={params}
-        />
+        {params.then(({slug}) => (
+          <CachedFooter slug={slug} />
+        ))}
       </Suspense>
     </>
   )
 }
-async function DynamicFooter({params}: Pick<LayoutProps<'/[slug]'>, 'params'>) {
-  const [{slug}, {perspective, stega}] = await Promise.all([params, getDynamicFetchOptions()])
-  return <Footer slug={slug} perspective={perspective} stega={stega} />
-}
-async function Footer({
-  slug,
-  perspective,
-  stega,
-}: Awaited<LayoutProps<'/[slug]'>['params']> & DynamicFetchOptions) {
-  const footerQuery = defineQuery(`*[_type == "footer" && slug.current == $slug][0]`)
-  const {data} = await cachedSanity({query: footerQuery, params: {slug}, perspective, stega})
-  return <footer>{/* use `data` to render stuff */}</footer>
+
+async function CachedFooter({slug}: {slug: string}) {
+  'use cache'
+  const {data} = await sanityFetch({query: footerQuery, params: {slug}})
+  return <footer>{/* use `data` */}</footer>
 }
 ```

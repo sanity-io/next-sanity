@@ -1,7 +1,7 @@
 import {defineQuery} from 'groq'
 import {describe, expectTypeOf, test} from 'vitest'
 
-import type {DefinedFetchType, StrictDefinedFetchType} from '#live/types'
+import type {DefinedFetchType} from '#live/types'
 
 import {
   createClient,
@@ -44,7 +44,6 @@ const params: PostsBySearchParams = {searchQuery: 'foo', start: 0, end: 10}
 
 // Type-only bindings — erased at runtime; nested samples below are never called.
 declare const sanityFetch: DefinedFetchType
-declare const strictFetch: StrictDefinedFetchType
 
 describe('DefinedFetchType with a branded query', () => {
   test('infers the result from the brand', () => {
@@ -100,15 +99,15 @@ describe('DefinedFetchType with a branded query', () => {
   })
 })
 
-describe('StrictDefinedFetchType with a branded query', () => {
+describe('DefinedFetchType with explicit perspective and stega', () => {
   test('infers the result and checks params', () => {
     async function sample() {
-      return strictFetch({query: postsBySearch, params, perspective: 'published', stega: false})
+      return sanityFetch({query: postsBySearch, params, perspective: 'published', stega: false})
     }
     expectTypeOf<Awaited<ReturnType<typeof sample>>['data']>().toEqualTypeOf<PostsBySearchResult>()
 
     async function invalid() {
-      return strictFetch({
+      return sanityFetch({
         query: postsBySearch,
         // @ts-expect-error `end` is missing
         params: {searchQuery: 'foo', start: 0},
@@ -158,7 +157,7 @@ describe('queries without a brand keep their existing types', () => {
       return sanityFetch({query, params, stega: false})
     }
     async function loadAsync<const Q extends string>(query: Q, params: Promise<QueryParams>) {
-      return strictFetch({query, params, perspective: 'published', stega: false})
+      return sanityFetch({query, params, perspective: 'published', stega: false})
     }
     void load
     void loadAsync

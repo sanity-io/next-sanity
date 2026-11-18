@@ -18,7 +18,6 @@ export const {sanityFetch, SanityLive} = defineLive({
   client,
   serverToken: 'server-token',
   browserToken: 'browser-token',
-  strict: true,
 })
 
 export const postQuery = `*[_type == "post" && slug.current == $slug][0]{_id, _type, title}`

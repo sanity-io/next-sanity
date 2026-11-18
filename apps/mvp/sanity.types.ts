@@ -426,12 +426,12 @@ export type AllSanitySchemaTypes =
   | SanityImageAsset
   | Geopoint
 
-// Source: app/(website)/PostTitle.tsx
+// Source: app/[perspective]/PostTitle.tsx
 // Variable: postTitleQuery
 // Query: *[_type == "post" && _id == $id][0].title
 export type PostTitleQueryResult = string | null
 
-// Source: app/(website)/posts/[slug]/page.tsx
+// Source: app/[perspective]/posts/[slug]/page.tsx
 // Variable: postQuery
 // Query: *[_type == "post" && slug.current == $slug][0]{title, "slug": slug.current, publishedAt}
 export type PostQueryResult = {
@@ -441,10 +441,13 @@ export type PostQueryResult = {
 } | null
 
 // Query TypeMap
-import '@sanity/client'
-declare module '@sanity/client' {
+declare global {
   interface SanityQueries {
     '*[_type == "post" && _id == $id][0].title': PostTitleQueryResult
     '*[_type == "post" && slug.current == $slug][0]{title, "slug": slug.current, publishedAt}': PostQueryResult
   }
+}
+// Lets @sanity/client releases that predate the global registry read it too
+declare module '@sanity/client' {
+  interface SanityQueries extends globalThis.SanityQueries {}
 }

@@ -155,7 +155,7 @@ Show all the files that need to change, and any new files.`,
         },
         {
           id: 'no-dynamic-apis-inside-use-cache',
-          text: "Does not call `draftMode()`, `cookies()`, or `headers()` inside `'use cache'` functions.",
+          text: "Does not call `cookies()` or `headers()` inside `'use cache'` functions. `draftMode()` is allowed there and `sanityFetch` reads it itself.",
         },
         {
           id: 'keeps-server-components',
