@@ -5,7 +5,7 @@ import {client} from '@/app/sanity.client'
 
 const token = process.env.SANITY_API_READ_TOKEN!
 
-export const {sanityFetch, SanityLive} = defineLive({
+export const {sanityFetch, sanityFetchMetadata, SanityLive} = defineLive({
   client,
   serverToken: token,
   // TODO: setup experimental_taintUniqueValue here

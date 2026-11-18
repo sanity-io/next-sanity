@@ -711,5 +711,189 @@ describe.each([{cacheComponents: true}, {cacheComponents: false}])(
         })
       })
     })
+
+    describe('sanityFetchMetadata', () => {
+      const serverToken = 'sk456'
+      const client = createClient({
+        projectId,
+        dataset,
+        apiVersion,
+        useCdn: true,
+        stega: {studioUrl: '/studio'},
+      })
+
+      test('never brands data with stega, even inside draft mode', async () => {
+        isDraftMode = true
+        const {sanityFetchMetadata} = defineLive({client, serverToken, browserToken: false})
+        const {query, params} = getSanityFetchMock('{"stega": $stega}', {stega: false})
+        const {data} = await sanityFetchMetadata({query, params, perspective: 'drafts'})
+        expect(data).toEqual({stega: 'false'})
+      })
+
+      test('returns tags and sourceMap like sanityFetch', async () => {
+        const {sanityFetchMetadata} = defineLive({client, serverToken, browserToken: false})
+        const {query, params} = getSanityFetchMock('{"stega": $stega}', {stega: false})
+        const result = await sanityFetchMetadata({query, params, perspective: 'published'})
+        expect(result.tags).toEqual(['sanity:A'])
+        expect(result.sourceMap).toBeNull()
+      })
+
+      test('keeps a fetcher per serverToken when the client config matches', async () => {
+        isDraftMode = true
+        const first = defineLive({client, serverToken: 'sk-first', browserToken: false})
+        const second = defineLive({client, serverToken: 'sk-second', browserToken: false})
+        const query = '{"perspective": $perspective, "token": $token}'
+        const firstMock = getSanityFetchMock(query, {
+          perspective: 'drafts',
+          token: 'Bearer sk-first',
+        })
+        const secondMock = getSanityFetchMock(query, {
+          perspective: 'drafts',
+          token: 'Bearer sk-second',
+        })
+        const [firstResult, secondResult] = await Promise.all([
+          first.sanityFetchMetadata({query, params: firstMock.params, perspective: 'drafts'}),
+          second.sanityFetchMetadata({query, params: secondMock.params, perspective: 'drafts'}),
+        ])
+        expect(firstResult.data).toEqual(firstMock.params)
+        expect(secondResult.data).toEqual(secondMock.params)
+      })
+
+      test('keeps a fetcher per perspective resolver name', async () => {
+        isDraftMode = true
+        const calls = {perspective: 0, locale: 0}
+        async function perspective() {
+          calls.perspective++
+          return 'drafts'
+        }
+        async function locale() {
+          calls.locale++
+          return 'published'
+        }
+        const first = defineLive({client, serverToken, browserToken: false, perspective})
+        const second = defineLive({client, serverToken, browserToken: false, perspective: locale})
+        const query = '{"perspective": $perspective, "token": $token}'
+        const firstMock = getSanityFetchMock(query, {
+          perspective: 'drafts',
+          token: `Bearer ${serverToken}`,
+        })
+        const secondMock = getSanityFetchMock(query, {perspective: 'published', token: null})
+        const [firstResult, secondResult] = await Promise.all([
+          first.sanityFetchMetadata({query, params: firstMock.params}),
+          second.sanityFetchMetadata({query, params: secondMock.params}),
+        ])
+        expect(firstResult.data).toEqual(firstMock.params)
+        expect(secondResult.data).toEqual(secondMock.params)
+        expect(calls).toEqual({perspective: 1, locale: 1})
+      })
+
+      describe('without a perspective resolver', () => {
+        const {sanityFetchMetadata} = defineLive({client, serverToken, browserToken: false})
+
+        test('defaults to the published perspective outside draft mode', async () => {
+          const {query, params} = getSanityFetchMock(
+            '{"perspective": $perspective, "token": $token}',
+            {perspective: 'published', token: null},
+          )
+          const {data} = await sanityFetchMetadata({query, params})
+          expect(data).toEqual(params)
+        })
+
+        test('honours an explicit perspective outside draft mode', async () => {
+          const {query, params} = getSanityFetchMock(
+            '{"perspective": $perspective, "token": $token}',
+            {perspective: 'drafts', token: `Bearer ${serverToken}`},
+          )
+          const {data} = await sanityFetchMetadata({query, params, perspective: 'drafts'})
+          expect(data).toEqual(params)
+        })
+
+        test.runIf(!cacheComponents)(
+          'defaults to the perspective cookie inside draft mode',
+          async () => {
+            isDraftMode = true
+            perspectiveCookieValue = ['drafts', 'r5RGhbQN9']
+            const {query, params} = getSanityFetchMock(
+              '{"perspective": $perspective, "token": $token}',
+              {perspective: ['drafts', 'r5RGhbQN9'], token: `Bearer ${serverToken}`},
+            )
+            const {data} = await sanityFetchMetadata({query, params})
+            expect(data).toEqual(params)
+          },
+        )
+
+        test.runIf(cacheComponents)(
+          'defaults to "drafts" inside draft mode and ignores the perspective cookie',
+          async () => {
+            isDraftMode = true
+            perspectiveCookieValue = ['drafts', 'r5RGhbQN9']
+            const {query, params} = getSanityFetchMock(
+              '{"perspective": $perspective, "token": $token}',
+              {perspective: 'drafts', token: `Bearer ${serverToken}`},
+            )
+            const {data} = await sanityFetchMetadata({query, params})
+            expect(data).toEqual(params)
+          },
+        )
+
+        test('uses the explicit perspective and the server token inside draft mode', async () => {
+          isDraftMode = true
+          const perspective = ['drafts', 'r5RGhbQN9']
+          const {query, params} = getSanityFetchMock(
+            '{"perspective": $perspective, "token": $token}',
+            {perspective, token: `Bearer ${serverToken}`},
+          )
+          const {data} = await sanityFetchMetadata({query, params, perspective})
+          expect(data).toEqual(params)
+        })
+      })
+
+      describe('with a perspective resolver', () => {
+        const resolver = vi.fn<() => Promise<string | undefined>>()
+        afterEach(() => {
+          resolver.mockReset()
+        })
+        const {sanityFetchMetadata} = defineLive({
+          client,
+          serverToken,
+          browserToken: false,
+          perspective: resolver,
+        })
+
+        test('skips the resolver outside draft mode', async () => {
+          const {query, params} = getSanityFetchMock(
+            '{"perspective": $perspective, "token": $token}',
+            {perspective: 'published', token: null},
+          )
+          const {data} = await sanityFetchMetadata({query, params})
+          expect(data).toEqual(params)
+          expect(resolver).not.toHaveBeenCalled()
+        })
+
+        test('resolves the perspective inside draft mode', async () => {
+          isDraftMode = true
+          resolver.mockResolvedValue('drafts,r5RGhbQN9')
+          const {query, params} = getSanityFetchMock(
+            '{"perspective": $perspective, "token": $token}',
+            {perspective: ['drafts', 'r5RGhbQN9'], token: `Bearer ${serverToken}`},
+          )
+          const {data} = await sanityFetchMetadata({query, params})
+          expect(data).toEqual(params)
+          expect(resolver).toHaveBeenCalledTimes(1)
+        })
+
+        test('lets metadata routes pass perspective explicitly', async () => {
+          isDraftMode = true
+          resolver.mockResolvedValue('drafts')
+          const {query, params} = getSanityFetchMock(
+            '{"perspective": $perspective, "token": $token}',
+            {perspective: 'published', token: null},
+          )
+          const {data} = await sanityFetchMetadata({query, params, perspective: 'published'})
+          expect(data).toEqual(params)
+          expect(resolver).not.toHaveBeenCalled()
+        })
+      })
+    })
   },
 )

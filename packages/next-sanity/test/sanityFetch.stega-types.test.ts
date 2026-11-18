@@ -1,6 +1,11 @@
 import {describe, expectTypeOf, test} from 'vitest'
 
-import type {DefinedFetchType, DefineLiveOptions, LivePerspective} from '#live/types'
+import type {
+  DefinedFetchMetadataType,
+  DefinedFetchType,
+  DefineLiveOptions,
+  LivePerspective,
+} from '#live/types'
 
 import type {ClientReturn, StegaBranded, StegaString} from '../src/client'
 
@@ -21,6 +26,7 @@ type BrandedData = StegaBranded<CleanData>
 
 // Type-only bindings — erased at runtime; nested samples below are never called.
 declare const sanityFetch: DefinedFetchType
+declare const sanityFetchMetadata: DefinedFetchMetadataType
 
 describe('DefinedFetchType stega branding', () => {
   test('stega: true returns branded data', () => {
@@ -74,5 +80,28 @@ describe('DefineLiveOptions', () => {
 
   test('has no strict option', () => {
     expectTypeOf<DefineLiveOptions>().not.toHaveProperty('strict')
+  })
+})
+
+describe('DefinedFetchMetadataType', () => {
+  test('returns clean ClientReturn and rejects stega', () => {
+    async function sample() {
+      return sanityFetchMetadata({query})
+    }
+    type Data = Awaited<ReturnType<typeof sample>>['data']
+    expectTypeOf<Data>().toEqualTypeOf<CleanData>()
+    expectTypeOf<Data['imageLocation']>().toEqualTypeOf<'left' | 'right'>()
+
+    async function rejected() {
+      // @ts-expect-error stega is always false for metadata
+      return sanityFetchMetadata({query, stega: true})
+    }
+    void rejected
+  })
+
+  test('perspective is optional', () => {
+    expectTypeOf<Parameters<DefinedFetchMetadataType>[0]['perspective']>().toEqualTypeOf<
+      LivePerspective | undefined
+    >()
   })
 })
