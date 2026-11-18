@@ -1,5 +1,17 @@
 # next-sanity
 
+## 13.5.1
+
+### Patch Changes
+
+- [#4003](https://github.com/sanity-io/next-sanity/pull/4003) [`ddd3d04`](https://github.com/sanity-io/next-sanity/commit/ddd3d04e1768a01700cb842616324af550b03e95) Thanks [@renovate](https://github.com/apps/renovate)! - fix(deps): update sanity monorepo to v6.24.0
+
+- [#3923](https://github.com/sanity-io/next-sanity/pull/3923) [`9169ce2`](https://github.com/sanity-io/next-sanity/commit/9169ce2fd4edc01462b53b07ea4d6b1b4efb9573) Thanks [@stipsan](https://github.com/stipsan)! - fix: Presentation draft mode when Firefox blocks third-party cookies
+  
+  Firefox can reject the draft-mode cookies (`Cookie "…" has been rejected as third-party`), even when they are `Partitioned`. The preview then never entered draft mode. `defineEnableDraftMode` now asks for cookie access inside the preview, and tells you how to allow cookies for the Studio if the browser refuses.
+
+- [#4000](https://github.com/sanity-io/next-sanity/pull/4000) [`1c0db7c`](https://github.com/sanity-io/next-sanity/commit/1c0db7cd6d4152be81bb5ac9ede7fd7c960193e7) Thanks [@stipsan](https://github.com/stipsan)! - fix(image): rotate the fill `object-position` with `queryParams.or`. The CDN turns the cropped image clockwise after any flip, so `90`, `180`, and `270` now move the hotspot the same way. `style.objectPosition` and the `objectPosition` prop still override it.
+
 ## 13.5.0
 
 ### Minor Changes
