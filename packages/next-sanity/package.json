@@ -95,7 +95,7 @@
     "test:e2e:open-preview": "vitest --project open-preview"
   },
   "dependencies": {
-    "@portabletext/react": "^7.0.1",
+    "@portabletext/react": "^8.0.1",
     "@sanity/client": "^8.11.0",
     "@sanity/generate-help-url": "^4.0.0",
     "@sanity/image-url": "catalog:",
@@ -132,14 +132,14 @@
   },
   "peerDependencies": {
     "@sanity/client": "^8.11.0",
-    "next": "^16.0.0-0",
+    "next": "^16.3.0",
     "react": "^19.2.3",
     "react-dom": "^19.2.3",
-    "sanity": "^5.29.0 || ^6.0.0",
+    "sanity": "^6.0.0",
     "styled-components": "^6.1"
   },
   "engines": {
-    "node": ">=20.19 <22 || >=22.12"
+    "node": ">=22.12"
   },
   "msw": {
     "workerDirectory": [
