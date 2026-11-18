@@ -1,5 +1,5 @@
 ---
-"next-sanity": patch
+'next-sanity': patch
 ---
 
 fix: Presentation draft mode when Firefox blocks third-party cookies
