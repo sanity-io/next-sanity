@@ -1306,6 +1306,429 @@ describe('fill', () => {
   })
 })
 
+describe('fill hotspot object-position', () => {
+  const projectProps = {projectId, dataset}
+  const hotspot = {x: 0.75, y: 0.25, width: 0.2, height: 0.2}
+  const crop = {top: 0.1, bottom: 0.1, left: 0.1, right: 0.1}
+
+  test('defaults object-position to the hotspot when fill is set', async () => {
+    const {img} = await renderImage(
+      <Image src={{asset: {_ref: assetRef('fillspot')}, hotspot}} {...projectProps} fill alt="" />,
+    )
+
+    expect(img.width).toBeUndefined()
+    expect(img.height).toBeUndefined()
+    expect(parseStyle(img.style)['object-position']).toBe('75% 25%')
+  })
+
+  test('measures the hotspot against the cropped image the CDN serves', async () => {
+    const {img} = await renderImage(
+      <Image
+        src={{asset: {_ref: assetRef('fillspotcrop', '2000x3000')}, crop, hotspot}}
+        {...projectProps}
+        fill
+        alt=""
+      />,
+    )
+
+    // Crop insets 10% on every side. The hotspot (0.75, 0.25) lands at
+    // (0.75-0.1)/0.8 = 81.25% and (0.25-0.1)/0.8 = 18.75% of that region.
+    expect(searchParamsOf(img.src).rect).toBe('200,300,1600,2400')
+    expect(parseStyle(img.style)['object-position']).toBe('81.25% 18.75%')
+  })
+
+  test('fills omitted hotspot and crop coordinates the way @sanity/image-url does', async () => {
+    const {img} = await renderImage(
+      <Image
+        src={{
+          asset: {_ref: assetRef('fillpartial')},
+          crop: {top: 0.25},
+          hotspot: {x: 0.1},
+        }}
+        {...projectProps}
+        fill
+        alt=""
+      />,
+    )
+
+    // y defaults to 0.5 and the missing crop insets to 0.
+    // x: 0.1/1 = 10%. y: (0.5-0.25)/(1-0.25) = 33.333%.
+    expect(parseStyle(img.style)['object-position']).toBe('10% 33.333%')
+  })
+
+  test('keeps a hotspot of 0 at the start of the axis', async () => {
+    const {img} = await renderImage(
+      <Image
+        src={{asset: {_ref: assetRef('fillzero')}, hotspot: {x: 0, y: 0}}}
+        {...projectProps}
+        fill
+        alt=""
+      />,
+    )
+
+    expect(parseStyle(img.style)['object-position']).toBe('0% 0%')
+  })
+
+  test('pins a hotspot outside the crop to the nearest edge', async () => {
+    const {img} = await renderImage(
+      <Image
+        src={{
+          asset: {_ref: assetRef('filloutside')},
+          crop: {left: 0.8},
+          hotspot: {x: 0.2, y: 0.5},
+        }}
+        {...projectProps}
+        fill
+        alt=""
+      />,
+    )
+
+    // (0.2-0.8)/(1-0.8) = -300%, which would slide the image out of the box.
+    // The nearest edge of the cropped image is the left.
+    expect(parseStyle(img.style)['object-position']).toBe('0% 50%')
+  })
+
+  test('pins a hotspot past the far edge of the crop', async () => {
+    const {img} = await renderImage(
+      <Image
+        src={{
+          asset: {_ref: assetRef('filloutsidefar')},
+          crop: {right: 0.8},
+          hotspot: {x: 0.9, y: 0.5},
+        }}
+        {...projectProps}
+        fill
+        alt=""
+      />,
+    )
+
+    // (0.9-0)/(1-0.8) = 450%, pinned to the right edge.
+    expect(parseStyle(img.style)['object-position']).toBe('100% 50%')
+  })
+
+  test('mirrors the hotspot when the CDN flips the image horizontally', async () => {
+    const {img} = await renderImage(
+      <Image
+        src={{asset: {_ref: assetRef('fillfliph')}, hotspot}}
+        {...projectProps}
+        fill
+        queryParams={{flip: 'h'}}
+        alt=""
+      />,
+    )
+
+    expect(searchParamsOf(img.src).flip).toBe('h')
+    expect(parseStyle(img.style)['object-position']).toBe('25% 25%')
+  })
+
+  test('mirrors the vertical axis for flip=v', async () => {
+    const {img} = await renderImage(
+      <Image
+        src={{asset: {_ref: assetRef('fillflipv')}, hotspot}}
+        {...projectProps}
+        fill
+        queryParams={{flip: 'v'}}
+        alt=""
+      />,
+    )
+
+    expect(parseStyle(img.style)['object-position']).toBe('75% 75%')
+  })
+
+  test('mirrors both axes for flip=hv', async () => {
+    const {img} = await renderImage(
+      <Image
+        src={{asset: {_ref: assetRef('fillfliphv')}, hotspot}}
+        {...projectProps}
+        fill
+        queryParams={{flip: 'hv'}}
+        alt=""
+      />,
+    )
+
+    expect(parseStyle(img.style)['object-position']).toBe('25% 75%')
+  })
+
+  test('mirrors the crop-relative position, not the original hotspot', async () => {
+    const {img} = await renderImage(
+      <Image
+        src={{asset: {_ref: assetRef('fillflipcrop', '2000x3000')}, crop, hotspot}}
+        {...projectProps}
+        fill
+        queryParams={{flip: 'h'}}
+        alt=""
+      />,
+    )
+
+    // Crop-relative position is 81.25% 18.75%. Horizontal flip mirrors x.
+    expect(parseStyle(img.style)['object-position']).toBe('18.75% 18.75%')
+  })
+
+  test('an explicit object-position wins over a flip', async () => {
+    const {img} = await renderImage(
+      <Image
+        src={{asset: {_ref: assetRef('fillflipoverride')}, hotspot}}
+        {...projectProps}
+        fill
+        queryParams={{flip: 'h'}}
+        style={{objectPosition: 'top left'}}
+        alt=""
+      />,
+    )
+
+    expect(searchParamsOf(img.src).flip).toBe('h')
+    expect(parseStyle(img.style)['object-position']).toBe('top left')
+  })
+
+  test('an unrecognized flip value does not move the hotspot', async () => {
+    const {img} = await renderImage(
+      <Image
+        src={{asset: {_ref: assetRef('fillflipunknown')}, hotspot}}
+        {...projectProps}
+        fill
+        queryParams={{flip: 'horizontal'}}
+        alt=""
+      />,
+    )
+
+    expect(parseStyle(img.style)['object-position']).toBe('75% 25%')
+  })
+
+  test('rotates the hotspot clockwise when the CDN rotates the image', async () => {
+    const {img} = await renderImage(
+      <Image
+        src={{asset: {_ref: assetRef('fillor90')}, hotspot}}
+        {...projectProps}
+        fill
+        queryParams={{or: 90}}
+        alt=""
+      />,
+    )
+
+    // (0.75, 0.25) rotated 90° clockwise is (0.75, 0.75).
+    expect(searchParamsOf(img.src).or).toBe('90')
+    expect(parseStyle(img.style)['object-position']).toBe('75% 75%')
+  })
+
+  test('rotates 180 and 270 degrees', async () => {
+    const half = await renderImage(
+      <Image
+        src={{asset: {_ref: assetRef('fillor180')}, hotspot}}
+        {...projectProps}
+        fill
+        queryParams={{or: 180}}
+        alt=""
+      />,
+    )
+    const three = await renderImage(
+      <Image
+        src={{asset: {_ref: assetRef('fillor270')}, hotspot}}
+        {...projectProps}
+        fill
+        queryParams={{or: '270'}}
+        alt=""
+      />,
+    )
+
+    expect(parseStyle(half.img.style)['object-position']).toBe('25% 75%')
+    expect(parseStyle(three.img.style)['object-position']).toBe('25% 25%')
+  })
+
+  test('rotates the flipped point, matching the CDN order', async () => {
+    const {img} = await renderImage(
+      <Image
+        src={{asset: {_ref: assetRef('fillorflip')}, hotspot}}
+        {...projectProps}
+        fill
+        queryParams={{flip: 'h', or: 90}}
+        alt=""
+      />,
+    )
+
+    // Flip first: (0.25, 0.25). Then 90° clockwise: (0.75, 0.25).
+    expect(parseStyle(img.style)['object-position']).toBe('75% 25%')
+  })
+
+  test('rotates the crop-relative hotspot', async () => {
+    const {img} = await renderImage(
+      <Image
+        src={{asset: {_ref: assetRef('fillorcrop', '2000x3000')}, crop, hotspot}}
+        {...projectProps}
+        fill
+        queryParams={{or: 90}}
+        alt=""
+      />,
+    )
+
+    // Crop-relative (81.25%, 18.75%) rotated 90° clockwise.
+    expect(parseStyle(img.style)['object-position']).toBe('81.25% 81.25%')
+  })
+
+  test('an unrecognized orientation does not rotate the hotspot', async () => {
+    const {img} = await renderImage(
+      <Image
+        src={{asset: {_ref: assetRef('fillorunknown')}, hotspot}}
+        {...projectProps}
+        fill
+        queryParams={{or: 45}}
+        alt=""
+      />,
+    )
+
+    expect(parseStyle(img.style)['object-position']).toBe('75% 25%')
+  })
+
+  test('an explicit object-position wins over a rotation', async () => {
+    const {img} = await renderImage(
+      <Image
+        src={{asset: {_ref: assetRef('filloroverride')}, hotspot}}
+        {...projectProps}
+        fill
+        queryParams={{or: 90}}
+        style={{objectPosition: 'top left'}}
+        alt=""
+      />,
+    )
+
+    expect(searchParamsOf(img.src).or).toBe('90')
+    expect(parseStyle(img.style)['object-position']).toBe('top left')
+  })
+
+  test('uses the hotspot fraction when the crop consumes that axis', async () => {
+    const {img} = await renderImage(
+      <Image
+        src={{
+          asset: {_ref: assetRef('filldegenerate')},
+          crop: {left: 1},
+          hotspot: {x: 0.75, y: 0.25},
+        }}
+        {...projectProps}
+        fill
+        alt=""
+      />,
+    )
+
+    expect(parseStyle(img.style)['object-position']).toBe('75% 25%')
+  })
+
+  test('leaves object-position unset when the image has no hotspot', async () => {
+    const {img} = await renderImage(
+      <Image
+        src={{
+          asset: {_ref: assetRef('fillnocrop', '2000x3000')},
+          crop,
+          hotspot: null,
+        }}
+        {...projectProps}
+        fill
+        alt=""
+      />,
+    )
+
+    expect(parseStyle(img.style)['object-position']).toBeUndefined()
+  })
+
+  test('leaves object-position unset when width and height crop on the CDN', async () => {
+    const {img} = await renderImage(
+      <Image
+        src={{asset: {_ref: assetRef('sizedspot', '2000x3000')}, hotspot}}
+        {...projectProps}
+        width={800}
+        height={400}
+        alt=""
+      />,
+    )
+
+    // The 2:1 frame is cropped toward the hotspot by the CDN. The element
+    // matches that frame, so the browser does not need an object-position.
+    expect(searchParamsOf(img.src).rect).toBe('0,250,2000,1000')
+    expect(parseStyle(img.style)['object-position']).toBeUndefined()
+  })
+
+  test('keeps caller styles and adds the hotspot position', async () => {
+    const {img} = await renderImage(
+      <Image
+        src={{asset: {_ref: assetRef('fillstyle')}, hotspot}}
+        {...projectProps}
+        fill
+        style={{objectFit: 'cover', borderRadius: '4px'}}
+        alt=""
+      />,
+    )
+
+    expect(parseStyle(img.style)).toMatchObject({
+      'object-fit': 'cover',
+      'object-position': '75% 25%',
+      'border-radius': '4px',
+    })
+  })
+
+  test('style.objectPosition overrides the hotspot', async () => {
+    const {img} = await renderImage(
+      <Image
+        src={{asset: {_ref: assetRef('fillstylepos')}, hotspot}}
+        {...projectProps}
+        fill
+        style={{objectFit: 'cover', objectPosition: 'top left'}}
+        alt=""
+      />,
+    )
+
+    expect(parseStyle(img.style)['object-position']).toBe('top left')
+    expect(parseStyle(img.style)['object-fit']).toBe('cover')
+  })
+
+  test('the objectPosition prop overrides the hotspot', async () => {
+    vi.spyOn(console, 'warn').mockImplementation(() => {})
+    const {img} = await renderImage(
+      <Image
+        src={{asset: {_ref: assetRef('fillproppos')}, hotspot}}
+        {...projectProps}
+        fill
+        objectPosition="bottom right"
+        alt=""
+      />,
+    )
+
+    expect(parseStyle(img.style)['object-position']).toBe('bottom right')
+  })
+
+  test('style.objectPosition wins when the prop is also set', async () => {
+    vi.spyOn(console, 'warn').mockImplementation(() => {})
+    const {img} = await renderImage(
+      <Image
+        src={{asset: {_ref: assetRef('fillbothpos')}, hotspot}}
+        {...projectProps}
+        fill
+        objectPosition="bottom right"
+        style={{objectPosition: 'top left'}}
+        alt=""
+      />,
+    )
+
+    expect(parseStyle(img.style)['object-position']).toBe('top left')
+  })
+
+  test('positions the blur placeholder on the same hotspot', async () => {
+    const blurDataURL = 'data:image/jpeg;base64,SGVsbG8='
+    const {img} = await renderImage(
+      <Image
+        src={{asset: {_ref: assetRef('fillblur')}, hotspot}}
+        {...projectProps}
+        fill
+        placeholder="blur"
+        blurDataURL={blurDataURL}
+        alt=""
+      />,
+    )
+
+    expect(parseStyle(img.style)).toMatchObject({
+      'object-position': '75% 25%',
+      'background-position': '75% 25%',
+    })
+  })
+})
+
 describe('quality', () => {
   test('adds the q param to the src and every srcset candidate', async () => {
     const src = sanityImageUrl('quality-2000x1000.jpg')

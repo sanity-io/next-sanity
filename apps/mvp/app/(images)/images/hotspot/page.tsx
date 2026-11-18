@@ -25,8 +25,9 @@ export default async function HotspotPage() {
         <>
           Editors mark the important part of an image once, in the Studio. Pass the image object —{' '}
           <code>{'mainImage{asset, crop, hotspot}'}</code> — and every rendition keeps that part in
-          frame: when the requested aspect ratio differs, the crop region is positioned around the
-          hotspot instead of blindly taking the center.
+          frame. With <code>width</code> and <code>height</code>, the CDN crop is positioned around
+          the hotspot. With <code>fill</code>, <code>object-position</code> defaults to the same
+          point, measured against the cropped image.
         </>
       }
     >
@@ -84,6 +85,65 @@ export default async function HotspotPage() {
               ))}
             </div>
           </div>
+        </div>
+      </DemoSection>
+
+      <DemoSection
+        title="Filling a box"
+        description={
+          <>
+            <code>fill</code> has no fixed aspect ratio, so the browser crops with{' '}
+            <code>object-fit: cover</code>. <code>object-position</code> defaults to the hotspot
+            (shifted for the Studio crop). <code>style.objectPosition</code> and the{' '}
+            <code>objectPosition</code> prop replace that default.
+          </>
+        }
+        code={`<div className="relative h-40">
+  <Image src={post.image} fill className="object-cover" alt="…" />
+</div>
+<Image
+  src={post.image}
+  fill
+  className="object-cover"
+  style={{objectPosition: 'left top'}}
+  alt="…"
+/>`}
+      >
+        <div className="grid gap-4 sm:grid-cols-3">
+          <Figure caption="hotspot">
+            <div className="relative h-40 overflow-hidden rounded-lg">
+              <Image
+                src={image}
+                fill
+                sizes="(min-width: 640px) 33vw, 100vw"
+                className="object-cover"
+                alt={alt}
+              />
+            </div>
+          </Figure>
+          <Figure caption="no hotspot (centered)">
+            <div className="relative h-40 overflow-hidden rounded-lg">
+              <Image
+                src={{asset: image.asset}}
+                fill
+                sizes="(min-width: 640px) 33vw, 100vw"
+                className="object-cover"
+                alt={alt}
+              />
+            </div>
+          </Figure>
+          <Figure caption="style.objectPosition: left top">
+            <div className="relative h-40 overflow-hidden rounded-lg">
+              <Image
+                src={image}
+                fill
+                sizes="(min-width: 640px) 33vw, 100vw"
+                className="object-cover"
+                style={{objectPosition: 'left top'}}
+                alt={alt}
+              />
+            </div>
+          </Figure>
         </div>
       </DemoSection>
 

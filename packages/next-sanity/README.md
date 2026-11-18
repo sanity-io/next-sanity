@@ -20,6 +20,8 @@ The all-in-one [Sanity][sanity] toolkit for production-grade content-editable Ne
   - [Optional: peer dependencies for embedded Sanity Studio](#optional-peer-dependencies-for-embedded-sanity-studio)
 - [Rendering images (alpha)](#rendering-images-alpha)
 - [Static params for dynamic routes](#static-params-for-dynamic-routes)
+- [Troubleshooting](#troubleshooting)
+  - [Draft mode cookies are blocked in the Presentation Tool](#draft-mode-cookies-are-blocked-in-the-presentation-tool)
 - [Migration guides](#migration-guides)
 - [License](#license)
 
@@ -97,6 +99,7 @@ export function PostCard({post}: {post: {mainImage: SanityImageObject}}) {
 ```
 
 - The crop set in the Studio is applied, and when the requested aspect ratio differs, the crop is positioned around the image's hotspot. Partial crop and hotspot projections are filled in by `@sanity/image-url` (missing crop insets are `0`; a hotspot that only has `x` and `y` is positioned on that point).
+- With `fill`, the browser crops the image to its parent. When `src` is an image object with a hotspot, `object-position` defaults to that hotspot as percentages of the cropped image (`x: 0.75, y: 0.25` becomes `75% 25%`, shifted when a Studio crop is set), so `object-fit: cover` keeps the subject in frame. A hotspot outside the crop is pinned to the nearest edge. `queryParams={{flip: 'h'}}` (`v` or `hv` too) mirrors that default, and `queryParams={{or: 90}}` (`180` or `270` too) rotates it clockwise, so it follows the image the CDN serves. `style={{objectPosition: '…'}}` and the `objectPosition` prop override the default.
 - `InferImageValue` and `InferStrictImageValue` collect those image shapes from a TypeGen query result, including stega-branded `sanityFetch` results. `isImageWithAsset` narrows an image to one that has an asset.
 - `width` and `height` are optional: they are inferred from the asset (and adjusted for the crop), and providing only one dimension derives the other from the aspect ratio — like `next/image` does for static imports.
 - With `placeholder="blur"`, the low-quality image preview is used automatically when the query includes it. Keep the asset's `url` (or `_id`) next to the metadata when dereferencing, so the image can still be built: `asset->{url, metadata{lqip}}`.
@@ -177,6 +180,23 @@ export async function generateStaticParams() {
 
 The returned `query` string is the assembled GROQ. Pass it to `sanityFetch` from `next-sanity/live` with `perspective: 'published'` and `stega: false` when you want the fetch to carry cache tags.
 
+## Troubleshooting
+
+### Draft mode cookies are blocked in the Presentation Tool
+
+When the Presentation Tool loads your site in a cross-site iframe (for example a Studio hosted on `*.sanity.studio` previewing your production domain), `defineEnableDraftMode` sets the draft-mode cookies with the CHIPS `Partitioned` attribute so browsers that block third-party cookies (Chrome, Safari 18.4+) still store them.
+
+Some browser configurations reject even `Partitioned` cookies — most commonly Firefox with Enhanced Tracking Protection set to block all cross-site cookies, which logs errors like:
+
+```
+Cookie "__prerender_bypass" has been rejected as third-party.
+```
+
+`defineEnableDraftMode` detects this and shows a dialog inside the preview iframe that requests cookie access through the [Storage Access API][storage-access-api] and retries. If the Presentation Tool reports "Unable to connect" on top of the preview, choose "Continue anyway" to interact with the dialog. If the browser denies storage access there is no programmatic escape hatch; the dialog then explains the remaining options:
+
+- Allow cross-site cookies for the Studio site — in Firefox, click the shield icon in the address bar and turn off Enhanced Tracking Protection for the Studio, then reload the preview.
+- Open the preview in a new tab, where the cookies are first-party and always allowed.
+
 ## Migration guides
 
 - [From `v12` to `v13`][migrate-v12-to-v13]
@@ -223,6 +243,7 @@ MIT-licensed. See [LICENSE][LICENSE].
 [sanity-next-client]: https://www.sanity.io/docs/nextjs/configure-sanity-client-nextjs
 [app-router-vised]: https://www.sanity.io/docs/visual-editing/visual-editing-with-next-js-app-router
 [sanity-reference-docs]: https://reference.sanity.io/next-sanity/
+[storage-access-api]: https://developer.mozilla.org/en-US/docs/Web/API/Storage_Access_API
 [sanity-next-caching]: https://www.sanity.io/docs/nextjs/caching-and-revalidation-in-nextjs
 [next-queries]: https://www.sanity.io/docs/nextjs/query-content-nextjs
 [next-sanity-intro]: https://www.sanity.io/docs/nextjs/introduction

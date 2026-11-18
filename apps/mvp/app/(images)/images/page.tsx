@@ -19,7 +19,7 @@ const demos = [
   {
     href: '/images/hotspot',
     title: 'Hotspot & crop',
-    description: 'Studio crops at any aspect ratio',
+    description: 'Studio crops, and hotspot-aware fill',
   },
   {
     href: '/images/transformations',

@@ -5,6 +5,7 @@ import NextImage, {type ImageProps as NextImageProps} from 'next/image'
 import {imageLoader} from './imageLoader'
 import {resolveImageDimensions} from './resolveImageDimensions'
 import {imageBuilderFor, isSanityAssetId, type ImageSource} from './resolveImageSource'
+import {resolveFillStyle} from './resolveObjectPosition'
 
 /**
  * @alpha
@@ -173,10 +174,26 @@ function applyQueryParams(
  * the requested dimensions change the aspect ratio, and `placeholder="blur"`
  * uses `asset->metadata.lqip` when no `blurDataURL` is provided.
  *
+ * With `fill`, the browser crops the image to its parent. When `src` is an
+ * image object with a hotspot, `object-position` defaults to that hotspot as
+ * percentages of the cropped image, clamped so the image still covers the
+ * box. A `flip` query param is mirrored, then an `or` rotation is applied
+ * clockwise. `style.objectPosition` and the `objectPosition` prop override it.
+ *
  * @alpha
  */
 export function Image(props: ImageProps): React.JSX.Element {
-  const {loader, src, projectId, dataset, queryParams, blurDataURL, ...rest} = props
+  const {
+    loader,
+    src,
+    projectId,
+    dataset,
+    queryParams,
+    blurDataURL,
+    style,
+    objectPosition,
+    ...rest
+  } = props
   if (loader) {
     throw new TypeError(
       'The `loader` prop is not supported on `Image` components. Use `next/image` directly to use a custom loader.',
@@ -184,12 +201,29 @@ export function Image(props: ImageProps): React.JSX.Element {
   }
 
   const source = typeof src === 'string' ? stegaClean(src) : src
+  const resolvedStyle = resolveFillStyle(
+    source,
+    props.fill,
+    style,
+    objectPosition,
+    queryParams?.['flip'],
+    queryParams?.['or'],
+  )
 
   // data: and blob: URLs can't point to the Sanity Image CDN and don't support
   // transformation params: pass them through untouched and let `next/image`
   // render them unoptimized.
   if (typeof source === 'string' && (source.startsWith('data:') || source.startsWith('blob:'))) {
-    return <NextImage {...rest} blurDataURL={blurDataURL} src={source} loader={imageLoader} />
+    return (
+      <NextImage
+        {...rest}
+        blurDataURL={blurDataURL}
+        src={source}
+        loader={imageLoader}
+        style={resolvedStyle}
+        objectPosition={objectPosition}
+      />
+    )
   }
 
   let builder: ImageUrlBuilder | undefined
@@ -249,6 +283,8 @@ export function Image(props: ImageProps): React.JSX.Element {
       blurDataURL={blurDataURL ?? lqip}
       src={srcUrl.toString()}
       loader={imageLoader}
+      style={resolvedStyle}
+      objectPosition={objectPosition}
     />
   )
 }
