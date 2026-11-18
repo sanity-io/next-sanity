@@ -34,7 +34,7 @@ export const client = createClient({
 **If `client.ts` already exists**, leave its structure alone. Templates often centralize env-var reads in a separate `sanity/lib/api.ts` with an `assertValue` helper — keep that. Append only what's missing.
 
 - Use a modern `apiVersion` (e.g. today's date as a hardcoded string).
-- `stega.studioUrl` enables stega encoding. It can be a relative string when an embedded Studio is mounted via `NextStudio` from `next-sanity/studio`, otherwise an absolute URL (typically env-driven).
+- `stega.studioUrl` enables stega encoding. It can be a relative string when the Studio is embedded at a route in the same app, otherwise an absolute URL (typically env-driven).
 - Changing `apiVersion` or removing existing `stega.*` options can break callers.
 - Never remove an existing `token` from `createClient`. Private datasets require a client token even for published-content fetches.
 

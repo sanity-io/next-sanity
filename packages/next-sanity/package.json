@@ -7,9 +7,7 @@
     "next.js",
     "preview",
     "sanity",
-    "sanity.io",
-    "studio",
-    "studio-v3"
+    "sanity.io"
   ],
   "homepage": "https://github.com/sanity-io/next-sanity#readme",
   "bugs": {
@@ -51,8 +49,6 @@
     "./live/client-components": "./src/live/client-components/index.ts",
     "./live/server-actions": "./src/live/server-actions/index.ts",
     "./static-params": "./src/static-params/index.ts",
-    "./studio": "./src/studio/index.ts",
-    "./studio/client-component": "./src/studio/client-component/index.ts",
     "./visual-editing": "./src/visual-editing/index.ts",
     "./visual-editing/client-component": "./src/visual-editing/client-component/index.ts",
     "./visual-editing/server-actions": "./src/visual-editing/server-actions/index.ts",
@@ -75,8 +71,6 @@
       "./live/client-components": "./dist/live/client-components/index.js",
       "./live/server-actions": "./dist/live/server-actions/index.js",
       "./static-params": "./dist/static-params/index.js",
-      "./studio": "./dist/studio/index.js",
-      "./studio/client-component": "./dist/studio/client-component/index.js",
       "./visual-editing": "./dist/visual-editing/index.js",
       "./visual-editing/client-component": "./dist/visual-editing/client-component/index.js",
       "./visual-editing/server-actions": "./dist/visual-editing/server-actions/index.js",
@@ -103,8 +97,7 @@
     "@sanity/visual-editing": "^6.2.1",
     "@sanity/webhook": "^4.0.4",
     "groq": "^6.24.0",
-    "groq-js": "^2.0.0",
-    "history": "^5.3.0"
+    "groq-js": "^2.0.0"
   },
   "devDependencies": {
     "@sanity/tsconfig": "catalog:",
@@ -121,7 +114,6 @@
     "publint": "^0.3.25",
     "react": "catalog:",
     "react-dom": "catalog:",
-    "sanity": "catalog:",
     "styled-components": "catalog:",
     "tsdown": "^0.23.7",
     "typescript": "catalog:",
@@ -135,7 +127,6 @@
     "next": "^16.0.0-0",
     "react": "^19.2.3",
     "react-dom": "^19.2.3",
-    "sanity": "^5.29.0 || ^6.0.0",
     "styled-components": "^6.1"
   },
   "engines": {
