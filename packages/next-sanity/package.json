@@ -49,6 +49,7 @@
     },
     "./live/cache-life": "./src/live/cache-life.ts",
     "./live/client-components": "./src/live/client-components/index.ts",
+    "./live/invalidate": "./src/live/invalidate/index.ts",
     "./live/server-actions": "./src/live/server-actions/index.ts",
     "./static-params": "./src/static-params/index.ts",
     "./studio": "./src/studio/index.ts",
@@ -73,6 +74,7 @@
       },
       "./live/cache-life": "./dist/live/cache-life.js",
       "./live/client-components": "./dist/live/client-components/index.js",
+      "./live/invalidate": "./dist/live/invalidate/index.js",
       "./live/server-actions": "./dist/live/server-actions/index.js",
       "./static-params": "./dist/static-params/index.js",
       "./studio": "./dist/studio/index.js",
@@ -107,6 +109,7 @@
     "history": "^5.3.0"
   },
   "devDependencies": {
+    "@sanity/next-sanity-functions": "workspace:*",
     "@sanity/tsconfig": "catalog:",
     "@types/node": "catalog:",
     "@types/react": "catalog:",
