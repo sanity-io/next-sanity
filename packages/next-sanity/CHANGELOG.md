@@ -1,5 +1,127 @@
 # next-sanity
 
+## 14.0.0-next.0
+
+### Major Changes
+
+- [#4009](https://github.com/sanity-io/next-sanity/pull/4009) [`9c8602b`](https://github.com/sanity-io/next-sanity/commit/9c8602b8221b497e0b94b1d379ce91b00d35cc3c) Thanks [@stipsan](https://github.com/stipsan)! - feat(visual-editing)!: remove the deprecated `history` prop from `VisualEditingProps`
+  
+  `<VisualEditing />` from `next-sanity/visual-editing` implements the history adapter for the Next.js App Router itself. The `history` prop was typed `never` and marked `@deprecated` for several major versions. It is now gone from `VisualEditingProps`.
+  
+  Before, passing `history` was a type error against `never`:
+  
+  ```tsx
+  import {VisualEditing} from "next-sanity/visual-editing"
+  
+  // Type error: `history` is `never`
+  ;<VisualEditing history={myHistoryAdapter} />
+  ```
+  
+  After, passing `history` is an excess property error. There is nothing to migrate. Drop the prop if you still spell it out:
+  
+  ```tsx
+  import {VisualEditing} from "next-sanity/visual-editing"
+  
+  ;<VisualEditing />
+  ```
+  
+  The runtime behavior is unchanged. `<VisualEditing />` keeps wiring `next/navigation` into the `@sanity/visual-editing` history adapter for you.
+  
+  This is the only API in `next-sanity` v13 that carried an `@deprecated` marker outside of `next-sanity/studio`, which is removed in a separate change.
+
+### Minor Changes
+
+- [#4009](https://github.com/sanity-io/next-sanity/pull/4009) [`8399854`](https://github.com/sanity-io/next-sanity/commit/8399854478ec6d30e114bf30568f0ed7d7f690a6) Thanks [@stipsan](https://github.com/stipsan)! - Add `next-sanity/static-params` with `defineGenerateStaticParams`, `ensureStaticParams`, and `STATIC_PARAMS_PLACEHOLDER`.
+  
+  Cache Components fails `next build` when `generateStaticParams` returns `[]`. A typo in the GROQ that lists your slugs used to surface as an opaque network error deep in the build. `defineGenerateStaticParams` takes the page's own query. It parses it with `groq-js` when the route module loads and reads the root `*[...]` filter. Each `<expression> == $param` conjunct becomes a route param, the other conjuncts stay as constraints, and the `[0]`, slices, `order()`, and projection are dropped. A syntax error, a `$param` that is not bound with `==`, or a query without bindings fails the build with the offending expression. At build time it fetches published documents, drops rows with `null` or mistyped values, and returns `[{slug: STATIC_PARAMS_PLACEHOLDER}]` instead of an empty array. `ensureStaticParams` is the fallback rule on its own for hand-written queries.
+  
+  Before:
+  
+  ```ts
+  const postQuery = defineQuery(`*[_type == "post" && slug.current == $slug][0]{title}`)
+  
+  export async function generateStaticParams() {
+    const {data} = await sanityFetchStaticParams({
+      query: `*[_type == "post" && defined(slug.current)]{"slug": slug.current}`,
+    })
+    return data.length > 0 ? data : [{slug: "__placeholder__"}]
+  }
+  
+  export default async function Page({params}: PageProps<"/posts/[slug]">) {
+    const {slug} = await params
+    if (slug === "__placeholder__") notFound()
+    // ...
+  }
+  ```
+  
+  After:
+  
+  ```ts
+  import {defineGenerateStaticParams, STATIC_PARAMS_PLACEHOLDER} from "next-sanity/static-params"
+  
+  const postQuery = defineQuery(`*[_type == "post" && slug.current == $slug][0]{title}`)
+  
+  export const {generateStaticParams} = defineGenerateStaticParams({client, query: postQuery})
+  
+  export default async function Page({params}: PageProps<"/posts/[slug]">) {
+    const {slug} = await params
+    if (slug === STATIC_PARAMS_PLACEHOLDER) notFound()
+    // ...
+  }
+  ```
+  
+  Pass `order` and `limit` to prerender only the most recent documents. A nested segment such as `app/[category]/[slug]/page.tsx` receives the parent's params from Next.js, and a binding the parent already provides becomes a GROQ constraint instead of a generated param. A catch-all segment needs `fallback: {path: [STATIC_PARAMS_PLACEHOLDER]}`, because the query cannot tell `[slug]` from `[...slug]`. The result type defaults to `Record<string, string>[]` and takes a generic, `defineGenerateStaticParams<{slug: string}>(...)`, when you want it narrower.
+
+- [#4009](https://github.com/sanity-io/next-sanity/pull/4009) [`0c82bcb`](https://github.com/sanity-io/next-sanity/commit/0c82bcb6df81fa517f9016961966b092c8977324) Thanks [@stipsan](https://github.com/stipsan)! - feat: infer `sanityFetch` types from branded `.groq` queries
+  
+  Keep a query in its own `.groq` file, import it, and `sanityFetch` knows what comes back and which params it needs. You don't pass a generic, and you don't need a `SanityQueries` entry.
+  
+  Before, the result type came from a TypeGen `SanityQueries` registration or a hand-written annotation, and `params` accepted any object:
+  
+  ```ts
+  const postsBySearch = defineQuery(
+    `*[_type == "post" && title match $q] | order(publishedAt desc) [$start...$end] {_id, title, slug}`,
+  )
+  
+  // `data` is typed only if `sanity typegen` registered this exact string in `SanityQueries`.
+  // `params` is plain `QueryParams`, so a typo in `$start` slips through.
+  const {data} = await sanityFetch({query: postsBySearch, params: {q, start: 0, end: 10}})
+  ```
+  
+  After:
+  
+  ```ts
+  import postsBySearch from "./postsBySearch.groq" with {type: "text"}
+  
+  const {data} = await sanityFetch({query: postsBySearch, params: {q, start: 0, end: 10}})
+  //     ^? the query's result type, stega-branded unless you pass `stega: false`
+  await sanityFetch({query: postsBySearch, params: {q}})
+  //                                       ^^^^^^ error: `start` and `end` are missing
+  ```
+  
+  This works with any query string that carries the `__groqResult` and `__groqParams` brands. The default export of a `.groq` file imported through [`@sanity-labs/groq-content-mapper`](https://github.com/sanity-labs/groq-content-mapper) is one. The mapper runs on TypeScript 7.1 and later with `tsc --runExternalCode`, and is configured in `tsconfig.json`:
+  
+  ```jsonc
+  {
+    "contentMappers": [
+      {
+        "package": "@sanity-labs/groq-content-mapper",
+        "extensions": [".groq"],
+        "options": {
+          "schema": "./schema.json", // the file `sanity schema extract` writes by default
+          // "schemas": [{"include": "src/queries/shop", "schema": "schemas/shop.json"}], // only needed if you query more than one project or dataset
+        },
+      },
+    ],
+  }
+  ```
+  
+  Reading the brand is experimental, both in `@sanity/client` and here, and it follows `@sanity-labs/groq-content-mapper` as that package evolves. Plain strings, `defineQuery`, TypeGen `SanityQueries` registrations and wrappers that are generic over the query string resolve exactly as before. Leaving `params` out is still accepted for every query, as it is for `client.fetch`.
+  
+  `sanityFetch` reuses the `ClientReturn` and `ClientParams` types from `@sanity/client`, so `next-sanity` now depends on `@sanity/client@^8.11.0`, and the `@sanity/client` peer range is `^8.11.0`. `@sanity/preview-url-secret` moves to `^4.1.5` and `@sanity/visual-editing` to `^6.2.1`, which accepts `@sanity/client` v8 as a peer. `client.fetch` on a client from `next-sanity`'s `createClient` infers the same types.
+  
+  `usePresentationQuery` from `next-sanity/hooks` infers `data` and `params` the same way. `@sanity/visual-editing@6.2` types the hook's `params` option with `ClientParams`, so a branded query checks its params there too.
+
 ## 13.5.1
 
 ### Patch Changes
