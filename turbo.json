@@ -11,6 +11,11 @@
       "cache": false,
       "persistent": true
     },
+    "test:e2e": {
+      "dependsOn": ["^build"],
+      "cache": false,
+      "passThroughEnv": ["E2E_MODES"]
+    },
     "dev": {
       "cache": false,
       "persistent": true
