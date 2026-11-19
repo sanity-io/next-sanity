@@ -1,5 +1,6 @@
 export * from './client'
 export * from './create-data-attribute'
+export * from './define-generate-static-params'
 export * from '@portabletext/react'
 // Shadows the `Infer*` types from `@portabletext/react` with stega-aware
 // versions that accept both clean and stega-branded `sanityFetch` results.

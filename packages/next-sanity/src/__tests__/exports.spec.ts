@@ -21,6 +21,7 @@ test(`exports snapshot for the ${JSON.stringify(env)} condition`, {timeout: 15_0
         createClient: function
         createDataAttribute: function
         defaultComponents: object
+        defineGenerateStaticParams: function
         defineQuery: function
         groq: function
         isCorsOriginError: function
