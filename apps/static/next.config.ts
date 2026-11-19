@@ -1,10 +1,12 @@
-import {withRelatedProject} from '@vercel/related-projects'
+import {relatedProjects, withRelatedProject} from '@vercel/related-projects'
 import type {NextConfig} from 'next'
 
-// Same contract as `apps/mvp/next.config.ts`: the Studio project is named
-// `next-sanity-studio`, and its id placeholder lives in this app's `vercel.json`.
+// Same lookup as `apps/mvp/next.config.ts`: the Studio project is matched by its id in `vercel.json`.
+const studioProject = relatedProjects({noThrow: true}).find(
+  ({project}) => project.id === 'prj_jWPnVeIEPKmKzDLTSf1Sx7sl9wHu',
+)
 const studioUrl = withRelatedProject({
-  projectName: 'next-sanity-studio',
+  projectName: studioProject?.project.name ?? '',
   defaultHost: process.env.NEXT_PUBLIC_SANITY_STUDIO_URL || 'http://localhost:3333',
 })
 
