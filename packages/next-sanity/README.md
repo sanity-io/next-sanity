@@ -19,6 +19,7 @@ The all-in-one [Sanity][sanity] toolkit for production-grade content-editable Ne
   - [Install `next-sanity`](#install-next-sanity)
   - [Optional: peer dependencies for embedded Sanity Studio](#optional-peer-dependencies-for-embedded-sanity-studio)
 - [Rendering images (alpha)](#rendering-images-alpha)
+- [Static params](#static-params)
 - [Troubleshooting](#troubleshooting)
   - [Draft mode cookies are blocked in the Presentation Tool](#draft-mode-cookies-are-blocked-in-the-presentation-tool)
 - [Migration guides](#migration-guides)
@@ -108,6 +109,34 @@ export function PostCard({post}: {post: {mainImage: SanityImageObject}}) {
 
 > [!NOTE]
 > The `next-sanity/image` API is in alpha and may change in a minor release.
+
+## Static params
+
+`defineGenerateStaticParams` creates `generateStaticParams` for a route with a `[slug]` segment. It fetches the published documents of one `type` that have a `slug`, and returns `{slug}` params.
+
+```ts
+// app/posts/[slug]/page.tsx
+import {defineGenerateStaticParams} from 'next-sanity'
+
+import {client} from '@/sanity/lib/client'
+
+export const {generateStaticParams} = defineGenerateStaticParams({client, type: 'post'})
+```
+
+Without TypeGen types, `type` is a `string`. To limit it to the document types that have a top-level `slug` field, register the `AllSanitySchemaTypes` union that `sanity typegen` generates:
+
+```ts
+// sanity.d.ts
+import type {AllSanitySchemaTypes} from './sanity.types'
+
+declare global {
+  interface SanityTypegen {
+    AllSanitySchemaTypes: AllSanitySchemaTypes
+  }
+}
+```
+
+If there are no documents of that type, it returns a placeholder slug, since Cache Components fails the build on an empty `generateStaticParams` result.
 
 ## Troubleshooting
 
