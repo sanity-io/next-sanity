@@ -7,17 +7,15 @@
   },
   "scripts": {
     "analyze": "next experimental-analyze",
-    "build": "next build --profile && sanity manifest extract --path public/studio/static",
+    "build": "next build --profile",
     "dev": "next dev",
     "start": "next start",
     "type-check": "next typegen && tsc --noEmit",
-    "typegen": "sanity schema extract --force && sanity typegen generate"
+    "typegen": "next typegen && sanity typegen generate && oxfmt sanity.types.ts"
   },
   "dependencies": {
-    "@repo/sanity-config": "workspace:*",
     "@sanity/client": "catalog:",
-    "@sanity/themer": "catalog:",
-    "@sanity/vision": "catalog:",
+    "@vercel/related-projects": "catalog:",
     "groqd": "catalog:",
     "next": "catalog:",
     "next-sanity": "workspace:*",
@@ -28,7 +26,6 @@
     "styled-components": "catalog:"
   },
   "devDependencies": {
-    "@next/env": "catalog:",
     "@repo/typescript-config": "workspace:*",
     "@tailwindcss/postcss": "^4.3.5",
     "@types/node": "catalog:",

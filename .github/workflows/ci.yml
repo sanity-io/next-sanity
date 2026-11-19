@@ -23,6 +23,8 @@ jobs:
       TURBO_TEAM: ${{ vars.TURBO_TEAM }}
       NEXT_PUBLIC_SANITY_DATASET: ${{ secrets.NEXT_PUBLIC_SANITY_DATASET }}
       NEXT_PUBLIC_SANITY_PROJECT_ID: ${{ secrets.NEXT_PUBLIC_SANITY_PROJECT_ID }}
+      SANITY_STUDIO_DATASET: ${{ secrets.NEXT_PUBLIC_SANITY_DATASET }}
+      SANITY_STUDIO_PROJECT_ID: ${{ secrets.NEXT_PUBLIC_SANITY_PROJECT_ID }}
     steps:
       - uses: actions/checkout@v7
       - uses: pnpm/action-setup@v6
@@ -34,6 +36,12 @@ jobs:
       - run: pnpm install
       - run: pnpm build --filter=./packages/*
       - run: pnpm typegen
+      - name: Check that the committed schema and TypeGen output are up to date
+        run: |
+          if ! git diff --exit-code -- apps/studio/schema.json 'apps/*/sanity.types.ts'; then
+            echo "::error::apps/studio/schema.json or sanity.types.ts is out of date. Run \`pnpm typegen\` and commit the result."
+            exit 1
+          fi
       - run: pnpm lint --format github
       - run: pnpm knip --reporter github-actions
 

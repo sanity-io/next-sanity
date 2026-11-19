@@ -5,17 +5,20 @@ import {fileURLToPath} from 'node:url'
 
 const workspaceConfigPath = fileURLToPath(new URL('../pnpm-workspace.yaml', import.meta.url))
 const storeDirectory = fileURLToPath(new URL('../node_modules/.pnpm/', import.meta.url))
-const nextBuildDirectory = fileURLToPath(new URL('../apps/mvp/.next/', import.meta.url))
+const studioViteCacheDirectory = fileURLToPath(
+  new URL('../apps/studio/node_modules/.sanity/vite/', import.meta.url),
+)
 const packageSpec = process.argv[2]
 
 /**
- * pkg.pr.new builds all report the same semver, so webpack happily bundles two
+ * pkg.pr.new builds all report the same semver, so the bundler can pick up two
  * of them at once and the Studio dies on `Duplicate instances of context
  * "sanity/_singletons/…" with incompatible versions`. Drop previously installed
- * Studio copies and the app's build cache before installing the selected one.
+ * Studio copies and the Studio's Vite dependency cache before installing the
+ * selected one.
  */
 function removeStaleStudioBuilds() {
-  rmSync(nextBuildDirectory, {force: true, recursive: true})
+  rmSync(studioViteCacheDirectory, {force: true, recursive: true})
 
   let entries = []
   try {

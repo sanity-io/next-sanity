@@ -15,7 +15,7 @@ test(
   async () => {
     const result = await commands.runOpenPreview()
 
-    expect(result.studioOrigin).toBe('http://localhost:3000')
+    expect(result.studioOrigin).toBe('http://localhost:3333')
     expect(result.iframeOrigin).toBe('http://127.0.0.1:3000')
     expect(result.popupOrigin).toBe('http://127.0.0.1:3000')
     expect(result.popupUrl).toContain('sanity-preview-perspective=drafts')

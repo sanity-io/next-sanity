@@ -3,8 +3,19 @@
   "extends": ["//"],
   "tasks": {
     "build": {
-      "env": ["NEXT_PUBLIC_SANITY_PROJECT_ID", "NEXT_PUBLIC_SANITY_DATASET"],
+      "inputs": ["$TURBO_DEFAULT$", ".env*"],
+      "env": [
+        "NEXT_PUBLIC_SANITY_PROJECT_ID",
+        "NEXT_PUBLIC_SANITY_DATASET",
+        "NEXT_PUBLIC_SANITY_STUDIO_URL",
+        "VERCEL_ENV",
+        "VERCEL_RELATED_PROJECTS"
+      ],
       "outputs": [".next/**", "!.next/cache/**", "out/**"]
+    },
+    "typegen": {
+      "cache": false,
+      "dependsOn": ["studio#typegen"]
     }
   }
 }

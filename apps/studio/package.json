@@ -1,0 +1,32 @@
+{
+  "name": "studio",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "sanity build && sanity manifest extract --path dist/static",
+    "deploy": "sanity deploy",
+    "dev": "sanity dev",
+    "schema:extract": "sanity schema extract --force --path schema.json",
+    "start": "sanity preview",
+    "type-check": "tsc --noEmit",
+    "typegen": "pnpm schema:extract"
+  },
+  "dependencies": {
+    "@sanity/assist": "^6.3.0",
+    "@sanity/themer": "catalog:",
+    "@sanity/vision": "catalog:",
+    "@vercel/related-projects": "catalog:",
+    "react": "catalog:",
+    "react-dom": "catalog:",
+    "sanity": "catalog:",
+    "styled-components": "catalog:"
+  },
+  "devDependencies": {
+    "@repo/typescript-config": "workspace:*",
+    "@types/react": "catalog:",
+    "typescript": "catalog:"
+  },
+  "engines": {
+    "node": "20 || 22 || 24 || 26"
+  }
+}

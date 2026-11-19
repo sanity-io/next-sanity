@@ -26,15 +26,6 @@ const config: KnipConfig = {
         'styled-components',
       ],
     },
-    'packages/sanity-config': {
-      project: ['src/**/*.{ts,tsx}'],
-      ignoreDependencies: [
-        // Peer dependency listed as devDependency for type resolution
-        'styled-components',
-        // Internal workspace config package used via tsconfig extends
-        '@repo/typescript-config',
-      ],
-    },
     'packages/typescript-config': {
       entry: ['base.json'],
     },
@@ -45,13 +36,10 @@ const config: KnipConfig = {
       ],
     },
     'apps/mvp': {
-      entry: ['app/**/*.{ts,tsx}'],
+      entry: ['app/**/*.{ts,tsx}', 'sanity.cli.ts'],
       project: ['**/*.{ts,tsx}'],
       ignore: ['sanity.types.ts'],
       ignoreDependencies: [
-        // Sanity Studio peer deps that are used at runtime
-        '@sanity/vision',
-        'styled-components',
         // CSS framework referenced via PostCSS config
         'tailwindcss',
         // Internal workspace config package used via tsconfig extends
@@ -60,13 +48,10 @@ const config: KnipConfig = {
       paths: {'@/*': ['./*']},
     },
     'apps/static': {
-      entry: ['app/**/*.{ts,tsx}'],
+      entry: ['app/**/*.{ts,tsx}', 'sanity.cli.ts'],
       project: ['**/*.{ts,tsx}'],
       ignore: ['sanity.types.ts'],
       ignoreDependencies: [
-        // Sanity Studio peer deps that are used at runtime
-        '@sanity/vision',
-        'styled-components',
         // CSS framework referenced via PostCSS config
         'tailwindcss',
         // Internal workspace config package used via tsconfig extends

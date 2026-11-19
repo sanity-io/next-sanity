@@ -3,7 +3,7 @@ import {draftMode} from 'next/headers'
 import Link from 'next/link'
 
 import PostsLayout, {postsQuery} from '@/app/(website)/PostsLayout'
-import {client} from '@/app/sanity.client'
+import {client, studioUrl} from '@/app/sanity.client'
 
 import {ContentSourceMapDebug} from '../ContentSourceMapDebug'
 import {onError} from './client-functions'
@@ -68,7 +68,7 @@ export default async function IndexPage() {
         </Link>
         <Link
           prefetch={false}
-          href="/studio"
+          href={studioUrl}
           className="mx-2 my-4 inline-block rounded-full border border-gray-200 px-4 py-1 text-sm font-semibold text-gray-600 hover:border-transparent hover:bg-gray-600 hover:text-white focus:ring-2 focus:ring-gray-600 focus:ring-offset-2 focus:outline-hidden"
         >
           Open Studio

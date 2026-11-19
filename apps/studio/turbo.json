@@ -1,0 +1,22 @@
+{
+  "$schema": "https://turbo.build/schema.json",
+  "extends": ["//"],
+  "tasks": {
+    "build": {
+      "inputs": ["$TURBO_DEFAULT$", ".env*"],
+      "env": [
+        "SANITY_STUDIO_PROJECT_ID",
+        "SANITY_STUDIO_DATASET",
+        "SANITY_STUDIO_PREVIEW_ORIGIN",
+        "SANITY_STUDIO_PREVIEW_PATH",
+        "VERCEL_ENV",
+        "VERCEL_RELATED_PROJECTS"
+      ],
+      "outputs": ["dist/**", "schema.json"]
+    },
+    "typegen": {
+      "cache": false,
+      "env": ["SANITY_STUDIO_PROJECT_ID", "SANITY_STUDIO_DATASET"]
+    }
+  }
+}
