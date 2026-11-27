@@ -159,6 +159,44 @@ export type Slug = {
   source?: string
 }
 
+export type SanityReleaseMetadata = {
+  _type: 'sanity.releaseMetadata'
+  title?: string
+  description?: string
+  releaseType?: 'asap' | 'scheduled' | 'undecided'
+  intendedPublishAt?: string
+  cardinality?: 'many' | 'one'
+}
+
+export type SystemRelease = {
+  _id: string
+  _type: 'system.release'
+  _createdAt: string
+  _updatedAt: string
+  _rev: string
+  name?: string
+  state?:
+    | 'active'
+    | 'archiving'
+    | 'unarchiving'
+    | 'archived'
+    | 'published'
+    | 'publishing'
+    | 'scheduled'
+    | 'scheduling'
+  error?: {
+    message?: string
+  }
+  publishAt?: string
+  publishedAt?: string
+  metadata?: SanityReleaseMetadata
+  finalDocumentStates?: Array<{
+    id?: string
+    _key: string
+  }>
+  userId?: string
+}
+
 export type SanityAssistInstructionTask = {
   _type: 'sanity.assist.instructionTask'
   path?: string
@@ -404,6 +442,8 @@ export type AllSanitySchemaTypes =
   | SanityImageHotspot
   | Author
   | Slug
+  | SanityReleaseMetadata
+  | SystemRelease
   | SanityAssistInstructionTask
   | SanityAssistTaskStatus
   | SanityAssistSchemaTypeAnnotations
