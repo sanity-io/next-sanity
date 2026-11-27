@@ -181,8 +181,8 @@ catalogs:
       specifier: ^2.2.0
       version: 2.2.0
     '@sanity/themer':
-      specifier: ^0.10.7
-      version: 0.10.7
+      specifier: ^0.11.1
+      version: 0.11.1
     '@sanity/tsconfig':
       specifier: ^2.2.1
       version: 2.2.1
@@ -356,7 +356,7 @@ importers:
         version: 6.3.0(@types/react@19.3.0)(react-dom@19.3.1)(react@19.3.1)(sanity@6.25.0-next.13)(styled-components@6.6.0)(vitest@5.1.0)
       '@sanity/themer':
         specifier: 'catalog:'
-        version: 0.10.7(@types/react@19.3.0)(react-dom@19.3.1)(react@19.3.1)(sanity@6.25.0-next.13)(styled-components@6.6.0)(typescript@7.0.2)
+        version: 0.11.1(@types/react@19.3.0)(react-dom@19.3.1)(react@19.3.1)(sanity@6.25.0-next.13)(styled-components@6.6.0)(typescript@7.0.2)
       '@sanity/vision':
         specifier: next
         version: 6.25.0-next.13(@babel/runtime@7.29.14)(@codemirror/theme-one-dark@6.1.3)(@shikijs/themes@4.6.0)(@types/react@19.3.0)(codemirror@6.0.2)(react-dom@19.3.1)(react@19.3.1)(sanity@6.25.0-next.13)(styled-components@6.6.0)(vitest@5.1.0)
@@ -4608,8 +4608,8 @@ packages:
       styled-components:
         optional: true
 
-  '@sanity/themer@0.10.7':
-    resolution: {integrity: sha512-c9LazNfUKf5CDQLHTyaXHKricHXhJIJbdxFgytqEWmGbqpAAJdf/etHDP6qEKqvy8qCKcrlZo/Rjgb2Q6sBxbg==}
+  '@sanity/themer@0.11.1':
+    resolution: {integrity: sha512-MZQGfWeaCOPLFMevMGtJXP5MTllEgmtBdxjkY9n8SzLhqifZJ8Sa48bh8uChdTDz6CV86f8UTa39a5rwQ8sSPA==}
     engines: {node: '>=20.19 <22 || >=22.12'}
     peerDependencies:
       react: ^19.3.1
@@ -4641,6 +4641,14 @@ packages:
 
   '@sanity/ui@4.4.12':
     resolution: {integrity: sha512-6vUZBrg1gK3e2FIZ/6cSjJusKsoyAWdDGD8KT5b/ckFMi9rYHBrYKuO8yIeUTSOcClvyI+q4RzY+Bz+rIRmqyQ==}
+    engines: {node: '>=22.12'}
+    peerDependencies:
+      react: ^19.3.1
+      react-dom: ^19.3.1
+      styled-components: ^6.1 || ^7.0.0-0
+
+  '@sanity/ui@4.4.14':
+    resolution: {integrity: sha512-FWPcRFG8+vPNoqskQWj93PZiIAC5xN3yTu1cYEvVVJjJEebq2lC4WFprwG1+8bm4ZkEVeTFOkrgk3tuiouYnPg==}
     engines: {node: '>=22.12'}
     peerDependencies:
       react: ^19.3.1
@@ -15371,7 +15379,7 @@ snapshots:
     dependencies:
       '@sanity/color': 3.0.9
       '@sanity/icons': 5.4.0(react@19.3.1)
-      '@sanity/ui': 4.4.12(react-dom@19.3.1)(react@19.3.1)(styled-components@6.6.0)
+      '@sanity/ui': 4.4.14(react-dom@19.3.1)(react@19.3.1)(styled-components@6.6.0)
       react: 19.3.1
       react-compiler-runtime: 1.0.0(react@19.3.1)
     optionalDependencies:
@@ -15381,12 +15389,12 @@ snapshots:
       - react-dom
       - remix
 
-  '@sanity/themer@0.10.7(@types/react@19.3.0)(react-dom@19.3.1)(react@19.3.1)(sanity@6.25.0-next.13)(styled-components@6.6.0)(typescript@7.0.2)':
+  '@sanity/themer@0.11.1(@types/react@19.3.0)(react-dom@19.3.1)(react@19.3.1)(sanity@6.25.0-next.13)(styled-components@6.6.0)(typescript@7.0.2)':
     dependencies:
       '@sanity/color': 3.0.9
       '@sanity/icons': 5.4.0(react@19.3.1)
       '@sanity/themer-legacy': 0.2.2(react-dom@19.3.1)(react@19.3.1)(sanity@6.25.0-next.13)(styled-components@6.6.0)
-      '@sanity/ui': 4.4.12(react-dom@19.3.1)(react@19.3.1)(styled-components@6.6.0)
+      '@sanity/ui': 4.4.14(react-dom@19.3.1)(react@19.3.1)(styled-components@6.6.0)
       '@xstate/react': 6.1.0(@types/react@19.3.0)(react@19.3.1)(xstate@5.33.4)
       dequal: 2.0.3
       motion: 14.14.0(react-dom@19.3.1)(react@19.3.1)
@@ -15436,6 +15444,23 @@ snapshots:
       '@sanity/icons': 5.4.0(react@19.3.1)
       clsx: 2.1.1
       csstype: 3.2.4
+      motion: 14.14.0(react-dom@19.3.1)(react@19.3.1)
+      react: 19.3.1
+      react-dom: 19.3.1(react@19.3.1)
+      react-is: 19.3.1
+      react-refractor: 4.0.0(react@19.3.1)
+      styled-components: 6.6.0(react-dom@19.3.1)(react@19.3.1)
+      use-effect-event: 2.0.4(react@19.3.1)
+    transitivePeerDependencies:
+      - remix
+
+  '@sanity/ui@4.4.14(react-dom@19.3.1)(react@19.3.1)(styled-components@6.6.0)':
+    dependencies:
+      '@floating-ui/react-dom': 2.1.9(react-dom@19.3.1)(react@19.3.1)
+      '@sanity/color': 3.0.9
+      '@sanity/icons': 5.4.0(react@19.3.1)
+      clsx: 2.1.1
+      csstype: 3.2.3
       motion: 14.14.0(react-dom@19.3.1)(react@19.3.1)
       react: 19.3.1
       react-dom: 19.3.1(react@19.3.1)
