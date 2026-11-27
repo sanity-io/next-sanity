@@ -43,7 +43,7 @@ if (!packageSpec) {
 
 const originalConfig = readFileSync(workspaceConfigPath, 'utf8')
 const selectedConfig = originalConfig.replace(
-  /^  sanity: next$/m,
+  /^  sanity: (?:next|7\.0\.0-next-major\.\d+)$/m,
   `  sanity: '${packageSpec.replaceAll("'", "''")}'`,
 )
 

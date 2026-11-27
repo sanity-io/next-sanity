@@ -1,5 +1,6 @@
 import {useMemo} from 'react'
-import {Studio, type StudioProps} from 'sanity'
+import type {StudioProps} from 'sanity'
+import {Studio} from 'sanity/_dangerously_use_private_internals_that_do_not_follow_semver-1'
 
 import {NextStudioLayout} from '../NextStudioLayout'
 import {NextStudioNoScript} from '../NextStudioNoScript'
@@ -27,7 +28,7 @@ export interface NextStudioProps extends StudioProps {
  * Override how the Studio renders by passing children.
  * This is useful for advanced use cases where you're using StudioProvider and StudioLayout instead of Studio:
  * ```
- * import {StudioProvider, StudioLayout} from 'sanity'
+ * import {StudioProvider, StudioLayout} from 'sanity/_dangerously_use_private_internals_that_do_not_follow_semver-1'
  * import {NextStudio} from 'next-sanity/studio'
  * <NextStudio config={config}>
  *   <StudioProvider config={config}>

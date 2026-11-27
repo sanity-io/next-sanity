@@ -83,6 +83,8 @@ export PATH="$HOME/.nvm/versions/node/v22.22.2/bin:$PATH"
 
 `nvm use` alone is not enough because `/exec-daemon` sits ahead of nvm's shims in `PATH`. This nvm node also bundles a pnpm, but the repo pins pnpm 12 via `packageManager`. Activate that version with Corepack (`corepack enable && corepack prepare`) after prepending nvm. `pnpm install` itself works on the default node; only building/running needs the newer node. `pnpm test:e2e` (the Vitest browser project plus the draft mode fixture) needs Chromium: `pnpm playwright install chromium`. Turbo fails to spawn tasks on this VM with `Exec format error` (this affects `pnpm build` and `pnpm test:e2e`), so run the steps directly: `pnpm --filter next-sanity build`, then `pnpm -r --workspace-concurrency=1 run test:e2e`.
 
+`sanity@7` requires Node >= 24.11. When the workspace installs a v7 `sanity` (the `next-major` dist-tag), use the nvm Node 24 (`$HOME/.nvm/versions/node/v24.19.0/bin`) instead of v22.22.2.
+
 ### Demo app env
 
 `apps/mvp` and `apps/static` need a gitignored `.env.local` with `NEXT_PUBLIC_SANITY_PROJECT_ID` and `NEXT_PUBLIC_SANITY_DATASET`, and `apps/studio` needs `SANITY_STUDIO_PROJECT_ID` and `SANITY_STUDIO_DATASET` (see each app's `.env.local.example`). The example project `pv8y60vp/production` is publicly readable, so published content renders without a token. `SANITY_API_READ_TOKEN` is only required for draft mode, Presentation/visual-editing preview, and authenticated live queries — not for basic rendering.

@@ -21,7 +21,7 @@ catalog:
   '@sanity/image-url': ^2.2.0
   '@sanity/themer': ^0.10.7
   '@sanity/tsconfig': ^2.2.1
-  '@sanity/vision': 6.24.0
+  '@sanity/vision': 7.0.0-next-major.20261127112435
   '@types/node': ^24.19.2
   '@types/react': ^19.3.0
   '@types/react-dom': ^19.3.0
@@ -30,7 +30,7 @@ catalog:
   next: 16.5.0-canary.54
   react: ^19.3.1
   react-dom: ^19.3.1
-  sanity: 6.24.0
+  sanity: 7.0.0-next-major.20261127112435
   styled-components: ^6.6.0
   typescript: 7.0.2
 
@@ -46,8 +46,8 @@ overrides:
   react: 'catalog:'
   react-dom: 'catalog:'
   # scripts/installE2EStudio.mjs temporarily replaces this to install a selected E2E Studio build.
-  sanity: next
-  '@sanity/vision': next
+  sanity: 7.0.0-next-major.20261127112435
+  '@sanity/vision': 7.0.0-next-major.20261127112435
 
 peerDependencyRules:
   allowAny:
@@ -84,3 +84,6 @@ minimumReleaseAgeExclude:
   - react
   - react-dom
   - react-is
+patchedDependencies:
+  '@sanity/assist@6.3.0': patches/@sanity__assist@6.3.0.patch
+  '@sanity/themer@0.10.7': patches/@sanity__themer@0.10.7.patch
